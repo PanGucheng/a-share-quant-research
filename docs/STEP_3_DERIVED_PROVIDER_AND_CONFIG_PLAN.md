@@ -204,6 +204,12 @@ configs/workflow_lightgbm_alpha158_all_stock_shsz_community_20260609.yaml
 outputs/reports/provider_validation_all_stock_shsz_community_20260609.md
 ```
 
+数据质量预检报告：
+
+```text
+outputs/data_quality_all_stock_shsz_preflight/all_stock_shsz_2020-01-02_2020-01-31
+```
+
 验证摘要：
 
 | item | value |
@@ -215,4 +221,14 @@ outputs/reports/provider_validation_all_stock_shsz_community_20260609.md
 | `$volume` non-null rows | `35` |
 | `$amount` non-null rows | `35` |
 
-下一步建议先对 `all_stock_shsz` 跑数据质量检查，再决定是否直接执行完整宽股票池 qrun。
+质量预检摘要：
+
+| item | value |
+| --- | ---: |
+| date range | `2020-01-02` to `2020-01-31` |
+| expected instruments per day | `3760` to `3775` |
+| avg coverage rate | `0.9946` |
+| min coverage rate | `0.9936` |
+| OHLCVA missing rate | `0.5394%` |
+
+下一步可以执行完整宽股票池 qrun。该任务预计明显慢于 CSI500 基线，应使用提权或普通 PowerShell 运行，不在受限沙盒内运行。

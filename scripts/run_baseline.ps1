@@ -10,9 +10,11 @@ $ConfigName = if ($SafeMode) { "workflow_lightgbm_alpha158_csi500_sandbox.yaml" 
 if (-not $ConfigPath) {
     $ConfigPath = Join-Path $ProjectRoot (Join-Path "configs" $ConfigName)
 }
+$ConfigStem = [System.IO.Path]::GetFileNameWithoutExtension($ConfigPath)
+$ExperimentName = "qlib_baseline_$ConfigStem"
 $OutputRoot = Join-Path $ProjectRoot "outputs/mlruns_validated"
 $QrunWrapper = Join-Path $ProjectRoot "scripts/qrun_with_project_tmp.py"
-$LogPath = Join-Path $ProjectRoot ("logs/qrun_lightgbm_alpha158_csi500_{0}.log" -f (Get-Date -Format "yyyyMMdd_HHmmss"))
+$LogPath = Join-Path $ProjectRoot ("logs/qrun_{0}_{1}.log" -f $ConfigStem, (Get-Date -Format "yyyyMMdd_HHmmss"))
 $TempRoot = Join-Path $ProjectRoot "tmp"
 
 New-Item -ItemType Directory -Force $TempRoot | Out-Null
@@ -30,7 +32,7 @@ if ($SafeMode) {
     Remove-Item Env:\QLIB_BASELINE_SAFE_MODE -ErrorAction SilentlyContinue
 }
 & $PythonExe -c "import os, tempfile; tempfile.tempdir=os.environ['TMP']; print('python_tempdir', tempfile.gettempdir())"
-& $PythonExe $QrunWrapper $ConfigPath -e qlib_baseline_lightgbm_alpha158_csi500 -u $OutputRoot *>&1 | Tee-Object -FilePath $LogPath
+& $PythonExe $QrunWrapper $ConfigPath -e $ExperimentName -u $OutputRoot *>&1 | Tee-Object -FilePath $LogPath
 if ($LASTEXITCODE -ne 0) {
     throw "qrun failed with exit code $LASTEXITCODE. See log: $LogPath"
 }
