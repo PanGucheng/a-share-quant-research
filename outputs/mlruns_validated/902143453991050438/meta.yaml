@@ -1,0 +1,7 @@
+artifact_location: file:E:\qlib_prj\qlib_baseline\outputs\mlruns_validated/902143453991050438
+creation_time: 1781148959045
+experiment_id: '902143453991050438'
+last_update_time: 1781148959045
+lifecycle_stage: active
+name: qlib_baseline_lightgbm_alpha158_csi500
+workspace: default

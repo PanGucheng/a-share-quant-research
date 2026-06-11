@@ -1,0 +1,24 @@
+# Runtime scratch files
+tmp/
+*.tmp
+
+# Earlier failed/interrupted experiment attempts.
+# The validated baseline result is kept under outputs/mlruns_validated/.
+outputs/mlruns/
+outputs/mlruns_validated/filelock
+outputs/mlruns_validated/902143453991050438/a1f6b81fdc774125b9b91826cf899a77/
+
+# Keep only the successful validated qrun log.
+logs/*.log
+!logs/qrun_lightgbm_alpha158_csi500_20260611_113628.log
+
+# Local Python/cache noise
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Editor and OS noise
+.vscode/
+.idea/
+Thumbs.db
+Desktop.ini

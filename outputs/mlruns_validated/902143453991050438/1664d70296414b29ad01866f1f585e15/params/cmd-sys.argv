@@ -1,0 +1,1 @@
+E:\qlib_prj\qlib_baseline\scripts\qrun_with_project_tmp.py E:\qlib_prj\qlib_baseline\configs\workflow_lightgbm_alpha158_csi500.yaml -e qlib_baseline_lightgbm_alpha158_csi500 -u E:\qlib_prj\qlib_baseline\outputs\mlruns_validated

@@ -1,0 +1,14 @@
+artifact_uri: file:E:\qlib_prj\qlib_baseline\outputs\mlruns_validated/902143453991050438/1664d70296414b29ad01866f1f585e15/artifacts
+end_time: 1781149125122
+entry_point_name: ''
+experiment_id: '902143453991050438'
+lifecycle_stage: active
+run_id: 1664d70296414b29ad01866f1f585e15
+run_name: mlflow_recorder
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1781148997204
+status: 3
+tags: []
+user_id: PanGucheng
