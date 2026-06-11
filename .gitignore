@@ -30,6 +30,9 @@ outputs/data_quality_spans_community/
 outputs/data_quality_all_stock_shsz_preflight/
 outputs/data_quality_test/
 
+# Large model diagnostic artifacts.
+outputs/linear_factor_model/*/predictions.csv
+
 # Local Python/cache noise
 __pycache__/
 *.py[cod]

@@ -231,3 +231,34 @@ outputs/reports/factor_label_comparison.csv
 - 线性模型 sanity check 应同时测试 `label_1d_t1` 和 `label_5d_t1`。
 - 因子方向需要显式元数据，例如 `rev_5` 正向、`std_20/amplitude_20/ret_20` 负向。
 - 下一轮因子库应加入稳健流动性因子和风险惩罚类组合因子。
+
+## 11. 线性模型 sanity check
+
+状态：已完成第一轮。
+
+新增脚本：
+
+```text
+scripts/run_linear_factor_model.py
+```
+
+报告：
+
+```text
+outputs/reports/linear_factor_model_sanity_check.md
+```
+
+结果摘要：
+
+| market | label | Rank IC | Rank ICIR |
+| --- | --- | ---: | ---: |
+| `csi500` | `label_1d_t1` | `0.013532` | `0.113278` |
+| `all_stock_shsz_liquid2000` | `label_1d_t1` | `0.029948` | `0.326393` |
+| `csi500` | `label_5d_t1` | `0.003396` | `0.027699` |
+| `all_stock_shsz_liquid2000` | `label_5d_t1` | `-0.000956` | `-0.009671` |
+
+结论：
+
+- 基础因子的线性组合对 1 日标签有解释力，尤其在 `liquid2000` 上更明显。
+- 同一组因子对 5 日标签不稳定，不能直接把 1 日反转逻辑外推到 5 日。
+- 下一步不急着做 XGBoost/CatBoost，应先补因子方向元数据、稳健流动性因子和风险惩罚类因子。
