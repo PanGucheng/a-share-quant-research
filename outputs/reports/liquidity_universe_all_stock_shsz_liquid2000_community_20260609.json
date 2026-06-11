@@ -1,0 +1,14 @@
+{
+  "provider_uri": "E:\\qlib_prj\\qlib_data\\cn_data_community_20260609_derived",
+  "source_market": "all_stock_shsz",
+  "source_path": "E:\\qlib_prj\\qlib_data\\cn_data_community_20260609_derived\\instruments\\all_stock_shsz.txt",
+  "start_time": "2016-01-01",
+  "end_time": "2016-12-31",
+  "candidate_instruments": 3038,
+  "min_valid_days": 180,
+  "top_n": 2000,
+  "selected_instruments": 2000,
+  "output": "outputs\\universes\\community_20260609\\all_stock_shsz_liquid2000.txt",
+  "min_selected_median_amount": 62731.3046875,
+  "max_selected_median_amount": 55372268.0
+}

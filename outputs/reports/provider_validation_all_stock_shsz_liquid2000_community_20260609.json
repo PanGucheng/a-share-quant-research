@@ -1,0 +1,22 @@
+{
+  "provider_uri": "E:\\qlib_prj\\qlib_data\\cn_data_community_20260609_derived",
+  "market": "all_stock_shsz_liquid2000",
+  "membership_file": "E:\\qlib_prj\\qlib_data\\cn_data_community_20260609_derived\\instruments\\all_stock_shsz_liquid2000.txt",
+  "membership_rows": 2000,
+  "membership_instruments": 2000,
+  "start_time": "2020-01-02",
+  "end_time": "2020-01-10",
+  "sample_symbols": [
+    "SH600000",
+    "SH600004",
+    "SH600006",
+    "SH600008",
+    "SH600009"
+  ],
+  "feature_rows": 35,
+  "field_non_null": {
+    "$close": 35,
+    "$volume": 35,
+    "$amount": 35
+  }
+}
