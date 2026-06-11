@@ -1,0 +1,76 @@
+# Environment
+
+This document records the environment used by the reproducible A-share Qlib baseline.
+
+## Project Paths
+
+- Project root: `E:/qlib_prj/qlib_baseline`
+- Qlib source: `E:/qlib_prj/qlib_clone`
+- Qlib data: `E:/qlib_prj/qlib_data/cn_data`
+- Conda environment: `qlib_env`
+- Python executable: `E:/anaconda_envs/qlib_env/python.exe`
+
+## Python
+
+- Python version: `3.10.19`
+
+## Qlib Source
+
+- Editable install location: `E:/qlib_prj/qlib_clone`
+- Current commit: `d5379c5 docs: replace broken RD-Agent demo links in README (#2150)`
+- Current local source status:
+
+```text
+ M examples/benchmarks/LightGBM/workflow_config_lightgbm_Alpha158_csi500.yaml
+```
+
+The `qlib_clone` directory is treated as an upstream source dependency and reference copy. Business code should stay in `qlib_baseline`.
+
+## Key Packages
+
+| package | version | note |
+| --- | --- | --- |
+| pyqlib | `0.1.dev6` | Editable install from `E:/qlib_prj/qlib_clone` |
+| lightgbm | `4.6.0` | Baseline model backend |
+| pandas | `2.3.3` | Data processing |
+| numpy | `2.2.6` | Numeric backend |
+| mlflow | `3.10.0` | Experiment record storage |
+| PyYAML | `6.0.3` | YAML config parsing |
+
+## Baseline Data Snapshot
+
+- Provider URI: `E:/qlib_prj/qlib_data/cn_data`
+- Region: `cn`
+- Frequency: `day`
+- Calendar count: `4943`
+- Calendar start: `1999-11-10`
+- Calendar end: `2020-09-25`
+- `all.txt` lines: `3875`
+- `csi300.txt` lines: `820`
+- `csi500.txt` lines: `2017`
+- Feature instrument directories: `3875`
+
+Observed fields for `sh600000`:
+
+```text
+change.day.bin
+close.day.bin
+factor.day.bin
+high.day.bin
+low.day.bin
+open.day.bin
+volume.day.bin
+```
+
+Known limitation: this data snapshot does not contain `amount.day.bin`, so amount-related diagnostics are expected to report 100% missing for the current baseline data.
+
+## Directory Boundaries
+
+- `qlib_baseline`: business project, scripts, configs, reports, and custom diagnostics.
+- `qlib_clone`: upstream qlib source dependency and reference. Do not add business modules here.
+- `qlib_data/cn_data`: read-only baseline data for step 1. Do not overwrite this data while solidifying the baseline.
+
+## Captured On
+
+- Date: `2026-06-11`
+- Timezone from workspace context: `Asia/Shanghai`

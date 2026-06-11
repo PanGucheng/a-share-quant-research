@@ -6,11 +6,17 @@ tmp/
 # The validated baseline result is kept under outputs/mlruns_validated/.
 outputs/mlruns/
 outputs/mlruns_validated/filelock
+outputs/mlruns_validated/902143453991050438/*/
+!outputs/mlruns_validated/902143453991050438/1664d70296414b29ad01866f1f585e15/
 outputs/mlruns_validated/902143453991050438/a1f6b81fdc774125b9b91826cf899a77/
 
 # Keep only the successful validated qrun log.
 logs/*.log
 !logs/qrun_lightgbm_alpha158_csi500_20260611_113628.log
+
+# Generated data quality outputs.
+outputs/data_quality/
+outputs/data_quality_test/
 
 # Local Python/cache noise
 __pycache__/

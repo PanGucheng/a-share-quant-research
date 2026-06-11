@@ -1,0 +1,19 @@
+qlib:
+  provider_uri: "E:/qlib_prj/qlib_data/cn_data"
+  region: "cn"
+  freq: "day"
+
+diagnosis:
+  market: "csi500"
+  start_time: "2017-01-01"
+  end_time: "2020-08-01"
+  output_dir: "outputs/data_quality"
+
+thresholds:
+  max_abs_daily_return: 0.25
+  max_abs_close_jump: 0.35
+  suspicious_adjusted_return: 0.50
+  long_zero_run_days: 20
+  long_gap_days: 20
+  long_missing_ratio: 0.50
+
