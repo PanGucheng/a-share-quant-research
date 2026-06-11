@@ -75,6 +75,8 @@ outputs/reports/provider_validation_all_stock_shsz_liquid2000_community_20260609
 
 ### 实验 A：`liquid2000` 原策略复跑
 
+状态：已完成。
+
 目的：只改变股票池，不改变模型和策略参数，判断流动性过滤是否改善组合表现。
 
 命令：
@@ -89,6 +91,31 @@ powershell -ExecutionPolicy Bypass -File .\scripts\run_baseline.ps1 -ConfigPath 
 - qrun 完成。
 - 写入 `outputs/reports/baseline_summary.csv`。
 - 与 `all_stock_shsz` 和 `csi500` 对比 IC、Rank IC、年化超额收益、IR、最大回撤。
+
+结果：
+
+```text
+Experiment ID: 365355581238963703
+Run ID: 8902c70d60f14afa8064275c1db3404a
+Config: configs/workflow_lightgbm_alpha158_all_stock_shsz_liquid2000_community_20260609.yaml
+Log: logs/qrun_workflow_lightgbm_alpha158_all_stock_shsz_liquid2000_community_20260609_20260612_002008.log
+```
+
+| metric | all_stock_shsz | liquid2000 |
+| --- | ---: | ---: |
+| IC | `0.176501` | `0.072184` |
+| ICIR | `1.629054` | `0.846341` |
+| Rank IC | `0.072703` | `0.062222` |
+| Rank ICIR | `0.819241` | `0.665992` |
+| excess return with cost annualized return | `-0.060844` | `0.054915` |
+| excess return with cost information ratio | `-0.379644` | `0.312190` |
+| excess return with cost max drawdown | `-0.351861` | `-0.169295` |
+
+Interpretation:
+
+- Liquidity filtering reduced headline IC but made the portfolio result usable again.
+- The current model and TopK strategy are not enough for a raw broad universe.
+- `liquid2000` is a better starting universe than raw `all_stock_shsz` for the next portfolio experiments.
 
 ### 实验 B：TopK 参数扫描
 
@@ -122,3 +149,9 @@ SH601313
 - 记录与 `all_stock_shsz`、`csi500` 的对比。
 - 至少形成一个“继续使用宽股票池”或“回到 CSI 指数池优先”的阶段性判断。
 - 明确下一轮是否做 TopK 参数扫描。
+
+当前阶段性判断：
+
+- CSI500 仍作为主要基线锚点。
+- 宽股票池路线可以继续，但必须从 `liquid2000` 这类可交易性更好的 universe 开始。
+- 下一轮优先做 `liquid2000` 上的 TopK 参数扫描，而不是继续扩大股票池。
