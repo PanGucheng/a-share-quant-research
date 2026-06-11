@@ -11,6 +11,9 @@ outputs/mlruns_validated/902143453991050438/*/
 outputs/mlruns_validated/902143453991050438/a1f6b81fdc774125b9b91826cf899a77/
 outputs/mlruns_validated/853240997789502366/
 outputs/mlruns_validated/365355581238963703/
+outputs/mlruns_validated/441016757506069138/
+outputs/mlruns_validated/979893573690720104/
+outputs/mlruns_validated/649002761809471200/
 
 # Keep only the successful validated qrun log.
 logs/*.log
