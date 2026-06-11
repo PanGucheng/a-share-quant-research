@@ -38,6 +38,8 @@ outputs/universes/community_20260609/all_stock_shsz.txt
 
 ### 任务 1：创建派生 provider 构建脚本
 
+状态：已完成。
+
 新增：
 
 ```text
@@ -60,6 +62,8 @@ scripts/build_derived_provider.ps1
 
 ### 任务 2：新增 provider 初始化检查
 
+状态：已完成。
+
 新增：
 
 ```text
@@ -79,6 +83,8 @@ scripts/validate_provider.py
 - 对 `all_stock_shsz` 能读到成分并抽样取数。
 
 ### 任务 3：新增 qrun 配置生成器
+
+状态：已完成。
 
 新增：
 
@@ -108,6 +114,8 @@ configs/workflow_lightgbm_alpha158_all_stock_shsz_community_20260609.yaml
 
 ### 任务 4：小样本 qlib 读取验证
 
+状态：已完成。
+
 先不跑完整 qrun，先执行：
 
 ```powershell
@@ -122,6 +130,8 @@ E:\anaconda_envs\qlib_env\python.exe scripts\validate_provider.py --provider-uri
 - 能读取样本字段。
 
 ### 任务 5：完整 qrun 验证
+
+状态：待专项运行。
 
 完整 qrun 继续使用普通权限或提权执行：
 
@@ -151,7 +161,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\run_baseline.ps1 -ConfigPath 
 
 - 先做小样本读取验证。
 - 完整 qrun 前先跑数据质量检查。
-- 后续可增加流动性过滤股票池，例如 `all_stock_shsz_liquid`.
+- 后续可增加流动性过滤股票池，例如 `all_stock_shsz_liquid`。
 
 ### 风险 3：宽股票池回测和 Alpha158 计算更慢
 
@@ -167,3 +177,42 @@ powershell -ExecutionPolicy Bypass -File .\scripts\run_baseline.ps1 -ConfigPath 
 - 配置生成器可生成 provider-specific qrun YAML。
 - 至少完成一次小样本 provider 验证。
 - 是否执行完整宽股票池 qrun，有明确日志和结果记录。
+
+## 6. 当前执行结果
+
+已构建派生 provider：
+
+```text
+E:/qlib_prj/qlib_data/cn_data_community_20260609_derived
+```
+
+构建报告：
+
+```text
+outputs/reports/derived_provider_community_20260609.md
+```
+
+已生成 qrun 配置：
+
+```text
+configs/workflow_lightgbm_alpha158_all_stock_shsz_community_20260609.yaml
+```
+
+小样本验证报告：
+
+```text
+outputs/reports/provider_validation_all_stock_shsz_community_20260609.md
+```
+
+验证摘要：
+
+| item | value |
+| --- | ---: |
+| universe rows | `5532` |
+| sample symbols | `SH600000`, `SH600004`, `SH600006`, `SH600007`, `SH600008` |
+| sample feature rows | `35` |
+| `$close` non-null rows | `35` |
+| `$volume` non-null rows | `35` |
+| `$amount` non-null rows | `35` |
+
+下一步建议先对 `all_stock_shsz` 跑数据质量检查，再决定是否直接执行完整宽股票池 qrun。
