@@ -14,6 +14,7 @@ It does not train models, run backtests, calculate Alpha158 IC, screen factors, 
 - Time range issues: instrument start/end date and long internal gaps
 - Dynamic membership coverage: if `instruments/<market>.txt` exists, expected instruments are calculated from each membership date range instead of treating the entire historical union as active every day.
 - Lifecycle clipping: if `instruments/all.txt` exists, membership intervals are clipped to each instrument's broad lifecycle range before expected coverage is calculated.
+- Expected missing spans: continuous missing ranges inside expected membership/lifecycle dates, useful for later suspension-source reconciliation.
 
 ## Run
 
@@ -54,6 +55,7 @@ CSV outputs:
 - `volume_amount_anomalies.csv`
 - `return_anomalies.csv`
 - `instrument_availability.csv`
+- `expected_missing_spans.csv`
 - `date_coverage.csv`
 - `abnormal_instruments.csv`
 - `abnormal_dates.csv`

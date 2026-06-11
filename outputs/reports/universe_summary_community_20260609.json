@@ -1,0 +1,85 @@
+{
+  "provider_uri": "E:\\qlib_prj\\qlib_data\\cn_data_community_20260609",
+  "feature_instruments": 6106,
+  "feature_prefix_counts": {
+    "BJ": 568,
+    "SH": 2459,
+    "SZ": 3079
+  },
+  "instrument_files": [
+    {
+      "file": "all.txt",
+      "rows": 6106,
+      "unique_instruments": 6106,
+      "prefix_counts": {
+        "BJ": 568,
+        "SH": 2459,
+        "SZ": 3079
+      },
+      "feature_missing_instruments": 0,
+      "start_time": "2000-01-04",
+      "end_time": "2026-06-09"
+    },
+    {
+      "file": "csi1000.txt",
+      "rows": 32005,
+      "unique_instruments": 2744,
+      "prefix_counts": {
+        "SH": 1117,
+        "SZ": 1627
+      },
+      "feature_missing_instruments": 0,
+      "start_time": "2014-10-31",
+      "end_time": "2026-06-09"
+    },
+    {
+      "file": "csi300.txt",
+      "rows": 15898,
+      "unique_instruments": 939,
+      "prefix_counts": {
+        "SH": 542,
+        "SZ": 397
+      },
+      "feature_missing_instruments": 1,
+      "start_time": "2005-04-08",
+      "end_time": "2026-06-09"
+    },
+    {
+      "file": "csi500.txt",
+      "rows": 22000,
+      "unique_instruments": 1774,
+      "prefix_counts": {
+        "SH": 913,
+        "SZ": 861
+      },
+      "feature_missing_instruments": 0,
+      "start_time": "2007-01-31",
+      "end_time": "2026-06-09"
+    },
+    {
+      "file": "csi800.txt",
+      "rows": 58404,
+      "unique_instruments": 1993,
+      "prefix_counts": {
+        "SH": 1071,
+        "SZ": 922
+      },
+      "feature_missing_instruments": 0,
+      "start_time": "2007-01-22",
+      "end_time": "2026-06-09"
+    },
+    {
+      "file": "csiall.txt",
+      "rows": 119178,
+      "unique_instruments": 5718,
+      "prefix_counts": {
+        "BJ": 342,
+        "SH": 2366,
+        "SZ": 3010
+      },
+      "feature_missing_instruments": 0,
+      "start_time": "2011-08-31",
+      "end_time": "2026-06-09"
+    }
+  ]
+}

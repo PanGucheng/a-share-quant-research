@@ -21,6 +21,7 @@ from data_quality.rules import (
     aggregate_rule_counts,
     date_coverage,
     field_missing_rate,
+    expected_missing_spans,
     instrument_availability,
     normalize_feature_frame,
     row_issue_frame,
@@ -196,6 +197,7 @@ def run_diagnosis(config: dict[str, Any]) -> Path:
 
     issues = row_issue_frame(frame, thresholds)
     availability, gaps = instrument_availability(frame, calendar, thresholds, membership)
+    missing_spans = expected_missing_spans(frame, calendar, membership)
     coverage = date_coverage(frame, calendar, instrument_count, membership)
     overview = build_overview(config, frame, calendar, instrument_count, membership, issues, availability, coverage)
     rule_counts = aggregate_rule_counts(issues)
@@ -209,6 +211,7 @@ def run_diagnosis(config: dict[str, Any]) -> Path:
         "volume_amount_anomalies": select_category(issues, ["volume_amount"]),
         "return_anomalies": select_category(issues, ["return"]),
         "instrument_availability": availability,
+        "expected_missing_spans": missing_spans,
         "date_coverage": coverage,
         "abnormal_instruments": abnormal_instruments(issues, availability),
         "abnormal_dates": abnormal_dates(issues, coverage),

@@ -50,6 +50,7 @@ def build_markdown_report(
     rule_counts = tables["rule_counts"]
     missing = tables["field_missing_rate"]
     availability = tables["instrument_availability"]
+    missing_spans = tables["expected_missing_spans"]
     coverage = tables["date_coverage"]
 
     lowest_scores = availability.nsmallest(10, "availability_score")[
@@ -59,6 +60,7 @@ def build_markdown_report(
         ["datetime", "covered_instrument_count", "expected_instrument_count", "coverage_rate"]
     ]
     top_rules = rule_counts.head(15)
+    longest_missing_spans = missing_spans.head(15)
 
     lines = [
         "# A-share Qlib Data Quality Report",
@@ -100,6 +102,10 @@ def build_markdown_report(
         "",
         _markdown_table(lowest_scores) if not lowest_scores.empty else "No instrument availability rows.",
         "",
+        "## Longest Expected Missing Spans",
+        "",
+        _markdown_table(longest_missing_spans) if not longest_missing_spans.empty else "No expected missing spans.",
+        "",
         "## Lowest Date Coverage",
         "",
         _markdown_table(lowest_coverage) if not lowest_coverage.empty else "No date coverage rows.",
@@ -114,6 +120,7 @@ def build_markdown_report(
         "- `volume_amount_anomalies.csv`: volume and amount issue detail.",
         "- `return_anomalies.csv`: return and close-jump issue detail.",
         "- `instrument_availability.csv`: per-instrument availability and score.",
+        "- `expected_missing_spans.csv`: continuous missing spans within expected membership/lifecycle dates.",
         "- `date_coverage.csv`: per-date coverage statistics.",
         "- `abnormal_instruments.csv`: instruments with row-level or structural issues.",
         "- `abnormal_dates.csv`: dates with row-level issues or incomplete coverage.",

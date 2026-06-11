@@ -96,6 +96,12 @@ outputs/data_quality_lifecycle_old/csi500_2017-01-01_2020-08-01
 outputs/data_quality_lifecycle_community/csi500_2017-01-01_2020-08-01
 ```
 
+Expected-missing-span report from the upgraded checker:
+
+```text
+outputs/data_quality_spans_community/csi500_2017-01-01_2020-08-01
+```
+
 Lifecycle-clipped dynamic-membership overview:
 
 | metric | historical baseline | community 2026-06-09 |
@@ -132,7 +138,7 @@ Interpretation:
 - Dynamic index membership handling changes the interpretation substantially: average coverage is above 96% for both providers, not around 59%.
 - Lifecycle clipping is now applied before expected membership coverage is calculated. It clips 646 historical baseline membership rows and only 14 community-provider rows.
 - Minimum date coverage improves from zero in the historical baseline to about 90.40% in the community provider.
-- Missing OHLCVA rows still exist and must be interpreted with lifecycle and suspension awareness.
+- Missing OHLCVA rows still exist and must be interpreted with lifecycle and suspension awareness. The upgraded checker now emits the longest continuous missing spans inside expected membership/lifecycle dates; the largest community-provider spans in this scope are `SH600673` with 219 trade days, `SH600655` with 207 trade days, and `SH600086` / `SZ002147` with 189 trade days.
 
 ## Baseline Qrun Comparison
 
@@ -197,11 +203,14 @@ Done in this step:
 3. The community provider has been imported and initialized successfully.
 4. The community provider has completed the same LightGBM Alpha158 CSI500 qrun baseline.
 5. Initial field validation found that `vwap = amount / volume * 10` for sampled rows.
+6. Data quality checks now emit expected missing spans for suspension-source reconciliation.
+7. Universe policy has been documented. CSI universes remain unchanged; broad all-market stock research should use Shanghai/Shenzhen stocks by default and exclude BSE unless explicitly studied.
+8. A derived Shanghai/Shenzhen stock universe was generated at `outputs/universes/community_20260609/all_stock_shsz.txt`.
 
 Remaining follow-up:
 
-1. Add suspension-aware missing-data checks.
+1. Reconcile the longest expected missing spans with a suspension or trading-status source.
 2. Verify adjustment factor and `adjclose` semantics with a few known corporate-action cases.
 3. Confirm `amount` and `volume` units from upstream documentation or raw source tables.
-4. Decide whether Beijing Stock Exchange instruments should be included or filtered for each research universe.
+4. Create a provider-specific derived data directory or copy step for reviewed generated universe files.
 5. Create a reusable config templating pattern for provider-specific qrun configs.

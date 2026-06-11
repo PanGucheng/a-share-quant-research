@@ -166,7 +166,8 @@ def row_issue_frame(frame: pd.DataFrame, thresholds: Thresholds) -> pd.DataFrame
     )
 
     base_cols = ["instrument", "datetime", *FIELDS]
-    issues = []
+    issue_columns = ["instrument", "datetime", "category", "rule", *FIELDS, "daily_return", "close_jump"]
+    issue_rows = []
     for category, rule, mask in checks:
         if mask.index is not frame.index:
             source = ordered.loc[mask.fillna(False), base_cols + ["daily_return", "close_jump"]]
@@ -177,11 +178,13 @@ def row_issue_frame(frame: pd.DataFrame, thresholds: Thresholds) -> pd.DataFrame
         if not source.empty:
             source.insert(2, "category", category)
             source.insert(3, "rule", rule)
-            issues.append(source)
+            issue_rows.extend(source[issue_columns].to_dict("records"))
 
-    if not issues:
-        return pd.DataFrame(columns=["instrument", "datetime", "category", "rule", *FIELDS, "daily_return", "close_jump"])
-    return pd.concat(issues, ignore_index=True).sort_values(["datetime", "instrument", "category", "rule"])
+    if not issue_rows:
+        return pd.DataFrame(columns=issue_columns)
+    return pd.DataFrame.from_records(issue_rows, columns=issue_columns).sort_values(
+        ["datetime", "instrument", "category", "rule"]
+    )
 
 
 def instrument_availability(
@@ -267,6 +270,60 @@ def instrument_availability(
         )
 
     return pd.DataFrame(rows).sort_values("availability_score"), pd.DataFrame(gap_rows)
+
+
+def expected_missing_spans(
+    frame: pd.DataFrame,
+    calendar: pd.DatetimeIndex,
+    membership: pd.DataFrame | None = None,
+) -> pd.DataFrame:
+    calendar = pd.DatetimeIndex(calendar)
+    membership = normalize_membership_frame(membership)
+    rows = []
+
+    for instrument, group in frame.groupby("instrument", sort=True):
+        expected_calendar = expected_calendar_for_instrument(instrument, calendar, membership)
+        if len(expected_calendar) == 0:
+            continue
+
+        valid_mask = group[FIELDS].notna().any(axis=1)
+        valid_dates = set(pd.DatetimeIndex(group.loc[valid_mask, "datetime"]).intersection(expected_calendar))
+        missing_mask = [dt not in valid_dates for dt in expected_calendar]
+
+        start = None
+        end = None
+        length = 0
+        for dt, is_missing in zip(expected_calendar, missing_mask):
+            if is_missing:
+                if start is None:
+                    start = dt
+                end = dt
+                length += 1
+            elif start is not None:
+                rows.append(
+                    {
+                        "instrument": instrument,
+                        "start_time": start,
+                        "end_time": end,
+                        "missing_trade_days": length,
+                    }
+                )
+                start = None
+                end = None
+                length = 0
+        if start is not None:
+            rows.append(
+                {
+                    "instrument": instrument,
+                    "start_time": start,
+                    "end_time": end,
+                    "missing_trade_days": length,
+                }
+            )
+
+    if not rows:
+        return pd.DataFrame(columns=["instrument", "start_time", "end_time", "missing_trade_days"])
+    return pd.DataFrame(rows).sort_values(["missing_trade_days", "instrument"], ascending=[False, True])
 
 
 def date_coverage(
