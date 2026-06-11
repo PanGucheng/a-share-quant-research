@@ -1,0 +1,8 @@
+provider_uri: E:/qlib_prj/qlib_data/cn_data_community_20260609_derived
+market: csi500
+start_time: 2017-01-01
+end_time: 2020-08-01
+label: label_1d_t1
+quantiles: 5
+min_count: 50
+output_dir: outputs/factor_research/csi500_2017-01-01_2020-08-01

@@ -159,3 +159,49 @@ outputs/factor_research/<market>_<start>_<end>/
 - 有明确的因子入选/剔除规则。
 - 模型扩展计划被约束在对照实验范围内。
 - 不因为单次回测收益高而跳过因子解释。
+
+## 9. 当前执行结果
+
+状态：第一版因子研究模块已完成。
+
+新增模块：
+
+```text
+factor_research/
+scripts/run_factor_research.ps1
+```
+
+已实现基础因子：
+
+```text
+ret_5
+ret_10
+ret_20
+rev_5
+std_20
+amplitude_20
+amount_mean_20
+amount_std_20
+volume_ratio_5_20
+corr_ret_volume_20
+```
+
+已生成报告：
+
+```text
+outputs/factor_research/csi500_2017-01-01_2020-08-01/factor_research_report.md
+outputs/factor_research/all_stock_shsz_liquid2000_2017-01-01_2020-08-01/factor_research_report.md
+outputs/reports/factor_research_initial_comparison.md
+```
+
+初步结论：
+
+- `liquid2000` 上短期反转 `rev_5` 的 Rank IC 高于 `csi500`。
+- 高波动、高振幅因子在两个股票池里都偏负向。
+- 流动性水平适合作为股票池过滤条件，但原始 `amount_mean_20` 本身不是明显正向 alpha。
+
+下一步：
+
+1. 增加稳健流动性因子，降低极端成交额样本影响。
+2. 增加 `label_5d_t1` 的因子评价。
+3. 在因子结果基础上做线性模型 sanity check。
