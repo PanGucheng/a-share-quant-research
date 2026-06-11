@@ -75,6 +75,7 @@ def build_markdown_report(
         "",
         f"- Instrument count: `{_metric_value(metrics, 'instrument_count')}`",
         f"- Membership rows: `{_metric_value(metrics, 'membership_rows')}`",
+        f"- Membership rows clipped to lifecycle: `{_metric_value(metrics, 'membership_clipped_rows')}`",
         f"- Dynamic membership enabled: `{_metric_value(metrics, 'dynamic_membership_enabled')}`",
         f"- Calendar trading days: `{_metric_value(metrics, 'calendar_trade_days')}`",
         f"- Raw data rows: `{_metric_value(metrics, 'raw_rows')}`",

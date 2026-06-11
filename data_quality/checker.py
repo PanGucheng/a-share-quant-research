@@ -77,13 +77,10 @@ def init_qlib(config: dict[str, Any]) -> None:
     C.joblib_backend = "sequential"
 
 
-def load_membership(config: dict[str, Any]) -> pd.DataFrame | None:
-    qlib_conf = config["qlib"]
-    diagnosis = config["diagnosis"]
-    market = diagnosis["market"]
-    path = Path(qlib_conf["provider_uri"]) / "instruments" / f"{market}.txt"
+def read_instrument_ranges(path: Path) -> pd.DataFrame:
+    rows = []
     if not path.exists():
-        return None
+        return pd.DataFrame(columns=["instrument", "start_time", "end_time"])
     rows = []
     with path.open("r", encoding="utf-8") as file:
         for line in file:
@@ -91,7 +88,52 @@ def load_membership(config: dict[str, Any]) -> pd.DataFrame | None:
             if len(parts) < 3:
                 continue
             rows.append({"instrument": parts[0], "start_time": parts[1], "end_time": parts[2]})
-    return pd.DataFrame(rows)
+    frame = pd.DataFrame(rows)
+    if frame.empty:
+        return pd.DataFrame(columns=["instrument", "start_time", "end_time"])
+    frame["instrument"] = frame["instrument"].astype(str).str.upper()
+    frame["start_time"] = pd.to_datetime(frame["start_time"])
+    frame["end_time"] = pd.to_datetime(frame["end_time"])
+    return frame
+
+
+def load_membership(config: dict[str, Any]) -> pd.DataFrame | None:
+    qlib_conf = config["qlib"]
+    diagnosis = config["diagnosis"]
+    market = diagnosis["market"]
+    provider_uri = Path(qlib_conf["provider_uri"])
+    membership = read_instrument_ranges(provider_uri / "instruments" / f"{market}.txt")
+    if membership.empty:
+        config["_membership_diagnostics"] = {"membership_rows": 0, "membership_clipped_rows": 0}
+        return None
+
+    lifecycle = read_instrument_ranges(provider_uri / "instruments" / "all.txt")
+    clipped_rows = 0
+    if not lifecycle.empty:
+        bounds = (
+            lifecycle.groupby("instrument")
+            .agg(lifecycle_start=("start_time", "min"), lifecycle_end=("end_time", "max"))
+            .reset_index()
+        )
+        membership = membership.merge(bounds, on="instrument", how="left")
+        has_lifecycle = membership["lifecycle_start"].notna()
+        clipped_start = membership["start_time"].copy()
+        clipped_end = membership["end_time"].copy()
+        clipped_start.loc[has_lifecycle] = clipped_start.loc[has_lifecycle].combine(
+            membership.loc[has_lifecycle, "lifecycle_start"], max
+        )
+        clipped_end.loc[has_lifecycle] = clipped_end.loc[has_lifecycle].combine(
+            membership.loc[has_lifecycle, "lifecycle_end"], min
+        )
+        clipped_rows = int(
+            (has_lifecycle & ((clipped_start != membership["start_time"]) | (clipped_end != membership["end_time"]))).sum()
+        )
+        membership["start_time"] = clipped_start
+        membership["end_time"] = clipped_end
+        membership = membership.loc[membership["start_time"] <= membership["end_time"], ["instrument", "start_time", "end_time"]]
+
+    config["_membership_diagnostics"] = {"membership_rows": len(membership), "membership_clipped_rows": clipped_rows}
+    return membership
 
 
 def load_qlib_features(config: dict[str, Any]) -> tuple[pd.DataFrame, pd.DatetimeIndex, int]:
@@ -121,6 +163,7 @@ def build_overview(
     coverage: pd.DataFrame,
 ) -> pd.DataFrame:
     active_counts = coverage["expected_instrument_count"].dropna()
+    membership_diagnostics = config.get("_membership_diagnostics", {})
     metrics = [
         ("market", config["diagnosis"]["market"]),
         ("start_time", config["diagnosis"]["start_time"]),
@@ -128,6 +171,7 @@ def build_overview(
         ("provider_uri", config["qlib"]["provider_uri"]),
         ("instrument_count", instrument_count),
         ("membership_rows", 0 if membership is None else len(membership)),
+        ("membership_clipped_rows", membership_diagnostics.get("membership_clipped_rows", 0)),
         ("dynamic_membership_enabled", membership is not None),
         ("calendar_trade_days", len(calendar)),
         ("raw_rows", len(frame)),

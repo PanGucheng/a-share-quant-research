@@ -19,6 +19,8 @@ outputs/data_quality/
 outputs/data_quality_community/
 outputs/data_quality_dynamic_old/
 outputs/data_quality_dynamic_community/
+outputs/data_quality_lifecycle_old/
+outputs/data_quality_lifecycle_community/
 outputs/data_quality_test/
 
 # Local Python/cache noise

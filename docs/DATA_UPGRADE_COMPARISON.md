@@ -89,21 +89,29 @@ outputs/data_quality_dynamic_old/csi500_2017-01-01_2020-08-01
 outputs/data_quality_dynamic_community/csi500_2017-01-01_2020-08-01
 ```
 
-Dynamic-membership overview:
+Lifecycle-clipped dynamic-membership reports:
+
+```text
+outputs/data_quality_lifecycle_old/csi500_2017-01-01_2020-08-01
+outputs/data_quality_lifecycle_community/csi500_2017-01-01_2020-08-01
+```
+
+Lifecycle-clipped dynamic-membership overview:
 
 | metric | historical baseline | community 2026-06-09 |
 | --- | ---: | ---: |
 | instrument count | `812` | `816` |
-| membership rows | `2017` | `22000` |
+| membership rows after lifecycle clipping | `1880` | `21999` |
+| membership rows clipped | `646` | `14` |
 | calendar trade days | `871` | `871` |
 | raw rows | `433947` | `435352` |
 | total issue rows | `506712` | `77523` |
-| avg availability score | `96.8246` | `97.0255` |
+| avg availability score | `96.8254` | `97.0405` |
 | min availability score | `40.0` | `40.0` |
-| avg expected instruments per day | `499.9851` | `500.0` |
-| min expected instruments per day | `499` | `500` |
+| avg expected instruments per day | `499.9816` | `499.8301` |
+| min expected instruments per day | `499` | `498` |
 | max expected instruments per day | `500` | `500` |
-| avg coverage rate | `0.9631` | `0.9700` |
+| avg coverage rate | `0.9631` | `0.9703` |
 | min coverage rate | `0.0` | `0.9040` |
 
 Field missing rates:
@@ -122,6 +130,7 @@ Interpretation:
 - The community provider fixes the main baseline problem: `amount` is no longer structurally missing.
 - Total issue rows fall sharply, mostly because `amount_missing` is no longer universal.
 - Dynamic index membership handling changes the interpretation substantially: average coverage is above 96% for both providers, not around 59%.
+- Lifecycle clipping is now applied before expected membership coverage is calculated. It clips 646 historical baseline membership rows and only 14 community-provider rows.
 - Minimum date coverage improves from zero in the historical baseline to about 90.40% in the community provider.
 - Missing OHLCVA rows still exist and must be interpreted with lifecycle and suspension awareness.
 
@@ -184,15 +193,15 @@ Do not delete or overwrite `E:/qlib_prj/qlib_data/cn_data`.
 Done in this step:
 
 1. Data quality checks now use dynamic index membership intervals from `instruments/<market>.txt`.
-2. The community provider has been imported and initialized successfully.
-3. The community provider has completed the same LightGBM Alpha158 CSI500 qrun baseline.
-4. Initial field validation found that `vwap = amount / volume * 10` for sampled rows.
+2. Data quality checks now clip index membership intervals to the broad lifecycle ranges in `all.txt`.
+3. The community provider has been imported and initialized successfully.
+4. The community provider has completed the same LightGBM Alpha158 CSI500 qrun baseline.
+5. Initial field validation found that `vwap = amount / volume * 10` for sampled rows.
 
 Remaining follow-up:
 
-1. Add lifecycle-aware missing-data checks using listing and delisting dates beyond index membership.
-2. Add suspension-aware missing-data checks.
-3. Verify adjustment factor and `adjclose` semantics with a few known corporate-action cases.
-4. Confirm `amount` and `volume` units from upstream documentation or raw source tables.
-5. Decide whether Beijing Stock Exchange instruments should be included or filtered for each research universe.
-6. Create a reusable config templating pattern for provider-specific qrun configs.
+1. Add suspension-aware missing-data checks.
+2. Verify adjustment factor and `adjclose` semantics with a few known corporate-action cases.
+3. Confirm `amount` and `volume` units from upstream documentation or raw source tables.
+4. Decide whether Beijing Stock Exchange instruments should be included or filtered for each research universe.
+5. Create a reusable config templating pattern for provider-specific qrun configs.

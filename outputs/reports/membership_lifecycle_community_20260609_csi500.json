@@ -1,0 +1,20 @@
+{
+  "provider_uri": "E:\\qlib_prj\\qlib_data\\cn_data_community_20260609",
+  "market": "csi500",
+  "calendar_start": "2000-01-04",
+  "calendar_end": "2026-06-09",
+  "calendar_days": 6403,
+  "lifecycle_rows": 6106,
+  "lifecycle_instruments": 6106,
+  "membership_rows": 22000,
+  "membership_instruments": 1774,
+  "feature_instruments": 6106,
+  "interval_issue_rows": 14,
+  "missing_lifecycle_rows": 0,
+  "starts_before_lifecycle_rows": 0,
+  "ends_after_lifecycle_rows": 14,
+  "missing_feature_dir_rows": 0,
+  "avg_active_count": 367.0935498984851,
+  "min_active_count": 0,
+  "max_active_count": 500
+}

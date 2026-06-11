@@ -13,6 +13,7 @@ It does not train models, run backtests, calculate Alpha158 IC, screen factors, 
 - Coverage issues: per-instrument valid days, missing ratio, per-date coverage, long-missing instruments
 - Time range issues: instrument start/end date and long internal gaps
 - Dynamic membership coverage: if `instruments/<market>.txt` exists, expected instruments are calculated from each membership date range instead of treating the entire historical union as active every day.
+- Lifecycle clipping: if `instruments/all.txt` exists, membership intervals are clipped to each instrument's broad lifecycle range before expected coverage is calculated.
 
 ## Run
 
@@ -58,7 +59,7 @@ CSV outputs:
 - `abnormal_dates.csv`
 - `long_gaps.csv`
 
-`overview.csv` includes `membership_rows`, `dynamic_membership_enabled`, and expected-instrument-count statistics when a market membership file is available.
+`overview.csv` includes `membership_rows`, `membership_clipped_rows`, `dynamic_membership_enabled`, and expected-instrument-count statistics when a market membership file is available.
 
 Markdown report:
 
