@@ -161,7 +161,7 @@ Interpretation:
 
 ### 实验 C：异常流动性核查
 
-状态：待执行。
+状态：已完成第一轮。
 
 需要核查：
 
@@ -170,6 +170,19 @@ SH601313
 ```
 
 它在 2016 年 `$amount` 中位数排名异常靠前。下一步应检查该标的是否为真实股票、指数/特殊符号误入、或数据口径异常。
+
+核查报告：
+
+```text
+outputs/reports/instrument_inspection_SH601313_2016.md
+```
+
+结论：
+
+- `SH601313` 是真实 A 股标的江南嘉捷，不是指数代码。
+- 本地 qlib 字段关系正常，`amount / volume * 10` 与 `$vwap` 基本一致。
+- 该标的是极端高流动性观察值，会显著影响基于 median `$amount` 的流动性排序。
+- 下一版流动性 universe 应加入稳健排序规则，例如 winsorized amount、z-score cap，或成交额集中度约束。
 
 ### 实验 D：因子研究模块衔接
 

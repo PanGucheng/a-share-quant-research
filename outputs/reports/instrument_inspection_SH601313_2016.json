@@ -1,0 +1,111 @@
+{
+  "provider_uri": "E:\\qlib_prj\\qlib_data\\cn_data_community_20260609_derived",
+  "instrument": "SH601313",
+  "start_time": "2016-01-01",
+  "end_time": "2016-12-31",
+  "rows": 244,
+  "amount_non_null": 244,
+  "amount_min": 14070987.0,
+  "amount_median": 55372268.0,
+  "amount_mean": 85044456.0,
+  "amount_max": 702812992.0,
+  "volume_median": 25081004.0,
+  "max_abs_daily_return": 0.10031843185424805,
+  "max_abs_vwap_diff": 3.814697265625e-06,
+  "memberships": {
+    "all": [
+      {
+        "start_time": "2012-01-16",
+        "end_time": "2018-02-14"
+      }
+    ],
+    "all_stock_shsz": [
+      {
+        "start_time": "2012-01-16",
+        "end_time": "2018-02-14"
+      }
+    ],
+    "all_stock_shsz_liquid2000": [
+      {
+        "start_time": "2012-01-16",
+        "end_time": "2018-02-14"
+      }
+    ],
+    "csi1000": [
+      {
+        "start_time": "2015-05-29",
+        "end_time": "2015-06-29"
+      },
+      {
+        "start_time": "2015-06-30",
+        "end_time": "2015-12-30"
+      },
+      {
+        "start_time": "2015-12-31",
+        "end_time": "2016-06-29"
+      }
+    ],
+    "csiall": [
+      {
+        "start_time": "2012-07-31",
+        "end_time": "2013-01-30"
+      },
+      {
+        "start_time": "2013-01-31",
+        "end_time": "2013-04-25"
+      },
+      {
+        "start_time": "2013-04-26",
+        "end_time": "2013-07-30"
+      },
+      {
+        "start_time": "2013-07-31",
+        "end_time": "2013-09-29"
+      },
+      {
+        "start_time": "2013-09-30",
+        "end_time": "2013-12-30"
+      },
+      {
+        "start_time": "2013-12-31",
+        "end_time": "2014-06-29"
+      },
+      {
+        "start_time": "2014-06-30",
+        "end_time": "2014-12-30"
+      },
+      {
+        "start_time": "2014-12-31",
+        "end_time": "2015-01-29"
+      },
+      {
+        "start_time": "2015-01-30",
+        "end_time": "2015-06-29"
+      },
+      {
+        "start_time": "2015-06-30",
+        "end_time": "2015-12-30"
+      },
+      {
+        "start_time": "2015-12-31",
+        "end_time": "2016-06-29"
+      },
+      {
+        "start_time": "2016-06-30",
+        "end_time": "2016-12-29"
+      },
+      {
+        "start_time": "2016-12-30",
+        "end_time": "2017-06-29"
+      },
+      {
+        "start_time": "2017-06-30",
+        "end_time": "2017-12-28"
+      },
+      {
+        "start_time": "2017-12-29",
+        "end_time": "2018-06-28"
+      }
+    ]
+  }
+}
