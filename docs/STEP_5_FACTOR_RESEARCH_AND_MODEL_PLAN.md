@@ -304,3 +304,46 @@ score normalization: daily cross-sectional 1%/99% winsorized z-score, clipped to
 - `rev_5` 直接选股换手较高，成本和组合暴露会显著侵蚀表现。
 - 低风险组合相对没那么差，但仍不能作为可用策略。
 - 下一步应做分层 long-short、行业/市值/流动性暴露检查，再决定是否把因子打分接入 Qlib 策略配置。
+
+## 13. 分层 long-short 诊断
+
+状态：已完成第一轮。
+
+新增脚本：
+
+```text
+scripts/run_factor_long_short.py
+scripts/summarize_factor_long_short.py
+```
+
+报告：
+
+```text
+outputs/reports/factor_long_short_comparison.md
+outputs/reports/factor_long_short_comparison.csv
+```
+
+诊断口径：
+
+```text
+label: label_1d_t1
+quantile: top 20% long, bottom 20% short
+cost: 5 bps per one-way turnover
+```
+
+结果摘要：
+
+| market | signal | net annualized return | net IR |
+| --- | --- | ---: | ---: |
+| `all_stock_shsz_liquid2000` | `std_20` | `0.140036` | `0.923612` |
+| `all_stock_shsz_liquid2000` | `amplitude_20` | `0.143531` | `0.912179` |
+| `all_stock_shsz_liquid2000` | `score` | `0.125890` | `0.859777` |
+| `all_stock_shsz_liquid2000` | `rev_5` | `0.094322` | `0.763515` |
+| `csi500` | `score` | `-0.090962` | `-0.473142` |
+
+结论：
+
+- `liquid2000` 上 long-short 信号为正，而前一轮 long-only TopK 为负，说明排序信号存在，但简单多头组合吸收了不利暴露。
+- `csi500` 上同类 long-short 诊断为负，进一步支持继续以 `liquid2000` 作为因子研究主股票池。
+- 低波动、低振幅是当前最稳定的横截面排序信号。
+- 下一步应检查 long leg / short leg 的流动性、波动、动量暴露，并尝试做分组内选股或风险约束后的 long-only 组合。
