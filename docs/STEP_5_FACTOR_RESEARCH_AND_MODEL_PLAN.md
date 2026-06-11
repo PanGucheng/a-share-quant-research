@@ -205,3 +205,29 @@ outputs/reports/factor_research_initial_comparison.md
 1. 增加稳健流动性因子，降低极端成交额样本影响。
 2. 增加 `label_5d_t1` 的因子评价。
 3. 在因子结果基础上做线性模型 sanity check。
+
+## 10. 标签周期对比结果
+
+状态：已完成 `label_5d_t1` 第一轮评价。
+
+新增报告：
+
+```text
+outputs/factor_research/csi500_2017-01-01_2020-08-01_label5d/factor_research_report.md
+outputs/factor_research/all_stock_shsz_liquid2000_2017-01-01_2020-08-01_label5d/factor_research_report.md
+outputs/reports/factor_label_comparison.md
+outputs/reports/factor_label_comparison.csv
+```
+
+关键观察：
+
+- `label_5d_t1` 下，`std_20`、`amplitude_20`、`ret_20` 的负向 Rank IC 更强。
+- `rev_5` 在 1 日和 5 日标签下都为正，但 5 日标签明显衰减。
+- `all_stock_shsz_liquid2000` 的因子分离度整体强于 `csi500`。
+- 原始流动性因子更适合作为 universe/tradability 过滤，而不是直接作为正向 alpha。
+
+对后续的影响：
+
+- 线性模型 sanity check 应同时测试 `label_1d_t1` 和 `label_5d_t1`。
+- 因子方向需要显式元数据，例如 `rev_5` 正向、`std_20/amplitude_20/ret_20` 负向。
+- 下一轮因子库应加入稳健流动性因子和风险惩罚类组合因子。
