@@ -32,6 +32,7 @@ outputs/data_quality_test/
 
 # Large model diagnostic artifacts.
 outputs/linear_factor_model/*/predictions.csv
+outputs/factor_score_portfolio/*/holdings.csv
 
 # Local Python/cache noise
 __pycache__/

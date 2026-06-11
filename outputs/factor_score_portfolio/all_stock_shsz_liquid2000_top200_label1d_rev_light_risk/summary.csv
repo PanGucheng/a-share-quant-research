@@ -1,0 +1,2 @@
+﻿start_date,end_date,trading_days,gross_annualized_return,net_annualized_return,universe_annualized_return,gross_annualized_excess,net_annualized_excess,gross_excess_ir,net_excess_ir,net_max_drawdown,average_turnover,average_daily_cost,topk,cost_bps,score_weights,score_clip,min_count
+2017-02-07,2020-07-29,849,-0.04451173543930054,-0.09581738710403442,-0.0063362717628479,-0.04084014892578125,-0.09233063459396362,-0.55513468048787,-1.3360691931549717,-0.5269257426261902,0.4377915194346289,0.00021889575971731451,200,5.0,"rev_5:1,std_20:-0.25,amplitude_20:-0.25",3.0,100

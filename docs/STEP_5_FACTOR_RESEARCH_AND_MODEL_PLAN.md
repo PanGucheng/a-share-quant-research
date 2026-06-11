@@ -262,3 +262,45 @@ outputs/reports/linear_factor_model_sanity_check.md
 - 基础因子的线性组合对 1 日标签有解释力，尤其在 `liquid2000` 上更明显。
 - 同一组因子对 5 日标签不稳定，不能直接把 1 日反转逻辑外推到 5 日。
 - 下一步不急着做 XGBoost/CatBoost，应先补因子方向元数据、稳健流动性因子和风险惩罚类因子。
+
+## 12. 因子打分组合第一轮
+
+状态：已完成第一轮规则组合验证。
+
+新增脚本：
+
+```text
+scripts/run_factor_score_portfolio.py
+scripts/summarize_factor_score_portfolios.py
+```
+
+报告：
+
+```text
+outputs/reports/factor_score_portfolio_scan.md
+outputs/reports/factor_score_portfolio_scan.csv
+```
+
+回测口径：
+
+```text
+label: label_1d_t1
+cost: 5 bps per one-way turnover
+score normalization: daily cross-sectional 1%/99% winsorized z-score, clipped to +/-3
+```
+
+结果摘要：
+
+| portfolio | net annualized excess | net excess IR | average turnover |
+| --- | ---: | ---: | ---: |
+| `liquid2000 low_risk_only` | `-0.037848` | `-0.362253` | `0.071484` |
+| `liquid2000 rev_5 + low risk` | `-0.067818` | `-0.784255` | `0.187962` |
+| `liquid2000 rev_5 only` | `-0.140270` | `-1.859341` | `0.420521` |
+| `csi500 rev_5 + low risk` | `-0.118672` | `-1.518602` | `0.198092` |
+
+结论：
+
+- 单因子 Rank IC 为正，不等于简单 TopK 组合可交易。
+- `rev_5` 直接选股换手较高，成本和组合暴露会显著侵蚀表现。
+- 低风险组合相对没那么差，但仍不能作为可用策略。
+- 下一步应做分层 long-short、行业/市值/流动性暴露检查，再决定是否把因子打分接入 Qlib 策略配置。
