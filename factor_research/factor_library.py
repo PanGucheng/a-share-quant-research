@@ -60,4 +60,17 @@ FACTOR_COLUMNS = [
     "corr_ret_volume_20",
 ]
 
+FACTOR_METADATA = {
+    "ret_5": {"category": "momentum", "expected_direction": "watch"},
+    "ret_10": {"category": "momentum", "expected_direction": "watch"},
+    "ret_20": {"category": "momentum", "expected_direction": "watch"},
+    "rev_5": {"category": "reversal", "expected_direction": "positive"},
+    "std_20": {"category": "risk", "expected_direction": "negative"},
+    "amplitude_20": {"category": "risk", "expected_direction": "negative"},
+    "amount_mean_20": {"category": "liquidity", "expected_direction": "watch"},
+    "amount_std_20": {"category": "liquidity", "expected_direction": "watch"},
+    "volume_ratio_5_20": {"category": "liquidity", "expected_direction": "watch"},
+    "corr_ret_volume_20": {"category": "price_volume", "expected_direction": "watch"},
+}
+
 LABEL_COLUMNS = ["label_1d_t1", "label_5d_t1"]

@@ -4,7 +4,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from factor_research.factor_library import BASE_FIELDS, FACTOR_COLUMNS, LABEL_COLUMNS, add_basic_factors
+from factor_research.factor_library import BASE_FIELDS, FACTOR_COLUMNS, FACTOR_METADATA, LABEL_COLUMNS, add_basic_factors
 from factor_research.report import write_markdown_report
 
 
@@ -75,13 +75,20 @@ def factor_summary(frame: pd.DataFrame, ic_series: pd.DataFrame, label: str) -> 
         factor_ic = ic_series[ic_series["factor"] == factor]
         ic = factor_ic["ic"].dropna()
         rank_ic = factor_ic["rank_ic"].dropna()
+        metadata = FACTOR_METADATA.get(factor, {})
+        expected_direction = metadata.get("expected_direction", "watch")
+        direction_sign = {"positive": 1, "negative": -1}.get(expected_direction)
+        mean_rank_ic = rank_ic.mean() if not rank_ic.empty else np.nan
         rows.append(
             {
                 "factor": factor,
+                "category": metadata.get("category", "unknown"),
+                "expected_direction": expected_direction,
                 "coverage": len(valid) / total_rows if total_rows else np.nan,
                 "mean_ic": ic.mean() if not ic.empty else np.nan,
                 "icir": ic.mean() / ic.std() if len(ic) > 1 and ic.std() else np.nan,
-                "mean_rank_ic": rank_ic.mean() if not rank_ic.empty else np.nan,
+                "mean_rank_ic": mean_rank_ic,
+                "directional_mean_rank_ic": mean_rank_ic * direction_sign if direction_sign is not None else np.nan,
                 "rank_icir": rank_ic.mean() / rank_ic.std() if len(rank_ic) > 1 and rank_ic.std() else np.nan,
                 "valid_rows": int(len(valid)),
             }

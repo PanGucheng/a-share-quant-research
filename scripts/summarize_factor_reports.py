@@ -5,6 +5,10 @@ from pathlib import Path
 import pandas as pd
 
 
+def format_float(value) -> str:
+    return "" if pd.isna(value) else f"{value:.6f}"
+
+
 def load_summary(path: Path, market: str, label: str) -> pd.DataFrame:
     frame = pd.read_csv(path)
     frame.insert(0, "label", label)
@@ -15,27 +19,47 @@ def load_summary(path: Path, market: str, label: str) -> pd.DataFrame:
 def write_markdown(frame: pd.DataFrame, output: Path):
     output.parent.mkdir(parents=True, exist_ok=True)
     display = frame[
-        ["market", "label", "factor", "coverage", "mean_rank_ic", "rank_icir", "mean_ic", "icir", "valid_rows"]
+        [
+            "market",
+            "label",
+            "factor",
+            "category",
+            "expected_direction",
+            "coverage",
+            "mean_rank_ic",
+            "directional_mean_rank_ic",
+            "rank_icir",
+            "mean_ic",
+            "icir",
+            "valid_rows",
+        ]
     ].copy()
-    display = display.sort_values(["market", "label", "mean_rank_ic"], key=lambda s: s.abs() if s.name == "mean_rank_ic" else s, ascending=[True, True, False])
+    display = display.sort_values(
+        ["market", "label", "mean_rank_ic"],
+        key=lambda s: s.abs() if s.name == "mean_rank_ic" else s,
+        ascending=[True, True, False],
+    )
 
     lines = [
         "# Factor Label Comparison",
         "",
-        "| market | label | factor | coverage | mean_rank_ic | rank_icir | mean_ic | icir | valid_rows |",
-        "| --- | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: |",
+        "| market | label | factor | category | expected_direction | coverage | mean_rank_ic | directional_mean_rank_ic | rank_icir | mean_ic | icir | valid_rows |",
+        "| --- | --- | --- | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |",
     ]
     for row in display.itertuples(index=False):
         lines.append(
-            "| {market} | {label} | {factor} | {coverage:.6f} | {mean_rank_ic:.6f} | {rank_icir:.6f} | {mean_ic:.6f} | {icir:.6f} | {valid_rows} |".format(
+            "| {market} | {label} | {factor} | {category} | {expected_direction} | {coverage} | {mean_rank_ic} | {directional_mean_rank_ic} | {rank_icir} | {mean_ic} | {icir} | {valid_rows} |".format(
                 market=row.market,
                 label=row.label,
                 factor=row.factor,
-                coverage=row.coverage,
-                mean_rank_ic=row.mean_rank_ic,
-                rank_icir=row.rank_icir,
-                mean_ic=row.mean_ic,
-                icir=row.icir,
+                category=row.category,
+                expected_direction=row.expected_direction,
+                coverage=format_float(row.coverage),
+                mean_rank_ic=format_float(row.mean_rank_ic),
+                directional_mean_rank_ic=format_float(row.directional_mean_rank_ic),
+                rank_icir=format_float(row.rank_icir),
+                mean_ic=format_float(row.mean_ic),
+                icir=format_float(row.icir),
                 valid_rows=row.valid_rows,
             )
         )
