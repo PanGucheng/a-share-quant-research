@@ -1,0 +1,396 @@
+{
+  "provider_uri": "E:\\qlib_prj\\qlib_data\\cn_data_community_20260609",
+  "exists": true,
+  "total_size_bytes": 709803127,
+  "total_size_mb": 676.92,
+  "calendar_files": {
+    "day.txt": {
+      "count": 6403,
+      "start": "2000-01-04",
+      "end": "2026-06-09"
+    },
+    "day_future.txt": {
+      "count": 6543,
+      "start": "2000-01-04",
+      "end": "2026-12-31"
+    }
+  },
+  "instrument_files": {
+    "all.txt": {
+      "count": 6106,
+      "sample": [
+        "BJ430017\t2023-05-31\t2025-09-30",
+        "BJ430047\t2021-11-15\t2025-09-30",
+        "BJ430090\t2021-11-15\t2025-09-30"
+      ]
+    },
+    "csi1000.txt": {
+      "count": 32005,
+      "sample": [
+        "SZ001872\t2014-10-31\t2015-05-28",
+        "SZ001914\t2014-10-31\t2015-05-28",
+        "SH600680\t2014-10-31\t2015-05-28"
+      ]
+    },
+    "csi300.txt": {
+      "count": 15898,
+      "sample": [
+        "SZ000001\t2005-04-08\t2005-06-30",
+        "SZ000002\t2005-04-08\t2005-06-30",
+        "SZ000009\t2005-04-08\t2005-06-30"
+      ]
+    },
+    "csi500.txt": {
+      "count": 22000,
+      "sample": [
+        "SZ000006\t2007-01-31\t2007-07-30",
+        "SZ000016\t2007-01-31\t2007-07-30",
+        "SZ000028\t2007-01-31\t2007-07-30"
+      ]
+    },
+    "csi800.txt": {
+      "count": 58404,
+      "sample": [
+        "SZ000016\t2007-01-22\t2007-01-22",
+        "SZ000036\t2007-01-22\t2007-01-22",
+        "SZ000037\t2007-01-22\t2007-01-22"
+      ]
+    },
+    "csiall.txt": {
+      "count": 119178,
+      "sample": [
+        "SZ000001\t2011-08-31\t2012-01-30",
+        "SZ000002\t2011-08-31\t2012-01-30",
+        "SZ000005\t2011-08-31\t2012-01-30"
+      ]
+    }
+  },
+  "feature_instrument_count": 6106,
+  "fields": [
+    "adjclose",
+    "amount",
+    "change",
+    "close",
+    "factor",
+    "high",
+    "low",
+    "open",
+    "volume",
+    "vwap"
+  ],
+  "field_presence_in_sample": {
+    "adjclose": 20,
+    "amount": 20,
+    "change": 20,
+    "close": 20,
+    "factor": 20,
+    "high": 20,
+    "low": 20,
+    "open": 20,
+    "volume": 20,
+    "vwap": 20
+  },
+  "sample_instruments": [
+    {
+      "instrument": "bj430017",
+      "fields": [
+        "adjclose",
+        "amount",
+        "change",
+        "close",
+        "factor",
+        "high",
+        "low",
+        "open",
+        "volume",
+        "vwap"
+      ]
+    },
+    {
+      "instrument": "bj430047",
+      "fields": [
+        "adjclose",
+        "amount",
+        "change",
+        "close",
+        "factor",
+        "high",
+        "low",
+        "open",
+        "volume",
+        "vwap"
+      ]
+    },
+    {
+      "instrument": "bj430090",
+      "fields": [
+        "adjclose",
+        "amount",
+        "change",
+        "close",
+        "factor",
+        "high",
+        "low",
+        "open",
+        "volume",
+        "vwap"
+      ]
+    },
+    {
+      "instrument": "bj430139",
+      "fields": [
+        "adjclose",
+        "amount",
+        "change",
+        "close",
+        "factor",
+        "high",
+        "low",
+        "open",
+        "volume",
+        "vwap"
+      ]
+    },
+    {
+      "instrument": "bj430198",
+      "fields": [
+        "adjclose",
+        "amount",
+        "change",
+        "close",
+        "factor",
+        "high",
+        "low",
+        "open",
+        "volume",
+        "vwap"
+      ]
+    },
+    {
+      "instrument": "bj430300",
+      "fields": [
+        "adjclose",
+        "amount",
+        "change",
+        "close",
+        "factor",
+        "high",
+        "low",
+        "open",
+        "volume",
+        "vwap"
+      ]
+    },
+    {
+      "instrument": "bj430418",
+      "fields": [
+        "adjclose",
+        "amount",
+        "change",
+        "close",
+        "factor",
+        "high",
+        "low",
+        "open",
+        "volume",
+        "vwap"
+      ]
+    },
+    {
+      "instrument": "bj430425",
+      "fields": [
+        "adjclose",
+        "amount",
+        "change",
+        "close",
+        "factor",
+        "high",
+        "low",
+        "open",
+        "volume",
+        "vwap"
+      ]
+    },
+    {
+      "instrument": "bj430476",
+      "fields": [
+        "adjclose",
+        "amount",
+        "change",
+        "close",
+        "factor",
+        "high",
+        "low",
+        "open",
+        "volume",
+        "vwap"
+      ]
+    },
+    {
+      "instrument": "bj430478",
+      "fields": [
+        "adjclose",
+        "amount",
+        "change",
+        "close",
+        "factor",
+        "high",
+        "low",
+        "open",
+        "volume",
+        "vwap"
+      ]
+    },
+    {
+      "instrument": "bj430489",
+      "fields": [
+        "adjclose",
+        "amount",
+        "change",
+        "close",
+        "factor",
+        "high",
+        "low",
+        "open",
+        "volume",
+        "vwap"
+      ]
+    },
+    {
+      "instrument": "bj430510",
+      "fields": [
+        "adjclose",
+        "amount",
+        "change",
+        "close",
+        "factor",
+        "high",
+        "low",
+        "open",
+        "volume",
+        "vwap"
+      ]
+    },
+    {
+      "instrument": "bj430556",
+      "fields": [
+        "adjclose",
+        "amount",
+        "change",
+        "close",
+        "factor",
+        "high",
+        "low",
+        "open",
+        "volume",
+        "vwap"
+      ]
+    },
+    {
+      "instrument": "bj430564",
+      "fields": [
+        "adjclose",
+        "amount",
+        "change",
+        "close",
+        "factor",
+        "high",
+        "low",
+        "open",
+        "volume",
+        "vwap"
+      ]
+    },
+    {
+      "instrument": "bj430685",
+      "fields": [
+        "adjclose",
+        "amount",
+        "change",
+        "close",
+        "factor",
+        "high",
+        "low",
+        "open",
+        "volume",
+        "vwap"
+      ]
+    },
+    {
+      "instrument": "bj430718",
+      "fields": [
+        "adjclose",
+        "amount",
+        "change",
+        "close",
+        "factor",
+        "high",
+        "low",
+        "open",
+        "volume",
+        "vwap"
+      ]
+    },
+    {
+      "instrument": "bj830779",
+      "fields": [
+        "adjclose",
+        "amount",
+        "change",
+        "close",
+        "factor",
+        "high",
+        "low",
+        "open",
+        "volume",
+        "vwap"
+      ]
+    },
+    {
+      "instrument": "bj830799",
+      "fields": [
+        "adjclose",
+        "amount",
+        "change",
+        "close",
+        "factor",
+        "high",
+        "low",
+        "open",
+        "volume",
+        "vwap"
+      ]
+    },
+    {
+      "instrument": "bj830809",
+      "fields": [
+        "adjclose",
+        "amount",
+        "change",
+        "close",
+        "factor",
+        "high",
+        "low",
+        "open",
+        "volume",
+        "vwap"
+      ]
+    },
+    {
+      "instrument": "bj830832",
+      "fields": [
+        "adjclose",
+        "amount",
+        "change",
+        "close",
+        "factor",
+        "high",
+        "low",
+        "open",
+        "volume",
+        "vwap"
+      ]
+    }
+  ],
+  "archives": []
+}

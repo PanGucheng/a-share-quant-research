@@ -1,12 +1,15 @@
 param(
-    [switch]$SafeMode
+    [switch]$SafeMode,
+    [string]$ConfigPath
 )
 
 $ErrorActionPreference = "Continue"
 
 $ProjectRoot = Split-Path -Parent (Split-Path -Parent $PSCommandPath)
 $ConfigName = if ($SafeMode) { "workflow_lightgbm_alpha158_csi500_sandbox.yaml" } else { "workflow_lightgbm_alpha158_csi500.yaml" }
-$ConfigPath = Join-Path $ProjectRoot (Join-Path "configs" $ConfigName)
+if (-not $ConfigPath) {
+    $ConfigPath = Join-Path $ProjectRoot (Join-Path "configs" $ConfigName)
+}
 $OutputRoot = Join-Path $ProjectRoot "outputs/mlruns_validated"
 $QrunWrapper = Join-Path $ProjectRoot "scripts/qrun_with_project_tmp.py"
 $LogPath = Join-Path $ProjectRoot ("logs/qrun_lightgbm_alpha158_csi500_{0}.log" -f (Get-Date -Format "yyyyMMdd_HHmmss"))

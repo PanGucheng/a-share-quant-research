@@ -64,6 +64,55 @@ def field_missing_rate(frame: pd.DataFrame) -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 
+def normalize_membership_frame(membership: pd.DataFrame | None) -> pd.DataFrame | None:
+    if membership is None or membership.empty:
+        return None
+    required = {"instrument", "start_time", "end_time"}
+    missing = required - set(membership.columns)
+    if missing:
+        raise ValueError(f"Membership frame is missing columns: {sorted(missing)}")
+    result = membership.copy()
+    result["instrument"] = result["instrument"].astype(str).str.upper()
+    result["start_time"] = pd.to_datetime(result["start_time"])
+    result["end_time"] = pd.to_datetime(result["end_time"])
+    return result.sort_values(["instrument", "start_time", "end_time"]).reset_index(drop=True)
+
+
+def expected_calendar_for_instrument(
+    instrument: str,
+    calendar: pd.DatetimeIndex,
+    membership: pd.DataFrame | None,
+) -> pd.DatetimeIndex:
+    if membership is None or membership.empty:
+        return pd.DatetimeIndex(calendar)
+    instrument_membership = membership.loc[membership["instrument"] == str(instrument).upper()]
+    if instrument_membership.empty:
+        return pd.DatetimeIndex(calendar)
+    masks = []
+    for row in instrument_membership.itertuples(index=False):
+        masks.append((calendar >= row.start_time) & (calendar <= row.end_time))
+    if not masks:
+        return pd.DatetimeIndex([])
+    expected = masks[0]
+    for mask in masks[1:]:
+        expected = expected | mask
+    return pd.DatetimeIndex(calendar[expected])
+
+
+def dynamic_membership_coverage(
+    calendar: pd.DatetimeIndex,
+    membership: pd.DataFrame | None,
+) -> pd.DataFrame:
+    calendar = pd.DatetimeIndex(calendar)
+    if membership is None or membership.empty:
+        return pd.DataFrame({"datetime": calendar, "expected_instrument_count": np.nan})
+    rows = []
+    for dt in calendar:
+        active = membership[(membership["start_time"] <= dt) & (membership["end_time"] >= dt)]["instrument"].nunique()
+        rows.append({"datetime": dt, "expected_instrument_count": int(active)})
+    return pd.DataFrame(rows)
+
+
 def row_issue_frame(frame: pd.DataFrame, thresholds: Thresholds) -> pd.DataFrame:
     checks: list[tuple[str, str, pd.Series]] = []
 
@@ -139,33 +188,38 @@ def instrument_availability(
     frame: pd.DataFrame,
     calendar: pd.DatetimeIndex,
     thresholds: Thresholds,
+    membership: pd.DataFrame | None = None,
 ) -> tuple[pd.DataFrame, pd.DataFrame]:
     calendar = pd.DatetimeIndex(calendar)
-    expected_days = len(calendar)
+    membership = normalize_membership_frame(membership)
     rows = []
     gap_rows = []
 
     for instrument, group in frame.groupby("instrument", sort=True):
+        expected_calendar = expected_calendar_for_instrument(instrument, calendar, membership)
+        expected_days = len(expected_calendar)
         group = group.sort_values("datetime")
         valid_mask = group[FIELDS].notna().any(axis=1)
         close_valid = group["close"].notna()
         valid_dates = pd.DatetimeIndex(group.loc[valid_mask, "datetime"])
+        valid_dates_in_scope = valid_dates.intersection(expected_calendar)
         valid_days = int(valid_mask.sum())
-        missing_days = max(expected_days - valid_days, 0)
+        valid_days_in_scope = len(valid_dates_in_scope)
+        missing_days = max(expected_days - valid_days_in_scope, 0)
         missing_ratio = missing_days / expected_days if expected_days else np.nan
-        start = valid_dates.min() if len(valid_dates) else pd.NaT
-        end = valid_dates.max() if len(valid_dates) else pd.NaT
+        start = valid_dates_in_scope.min() if len(valid_dates_in_scope) else pd.NaT
+        end = valid_dates_in_scope.max() if len(valid_dates_in_scope) else pd.NaT
 
         zero_volume_max, zero_volume_runs = consecutive_true_runs(group["volume"].fillna(np.nan).eq(0))
         zero_amount_max, zero_amount_runs = consecutive_true_runs(group["amount"].fillna(np.nan).eq(0))
 
         internal_missing = []
         if pd.notna(start) and pd.notna(end):
-            expected_between = calendar[(calendar >= start) & (calendar <= end)]
-            observed = set(valid_dates)
+            expected_between = expected_calendar[(expected_calendar >= start) & (expected_calendar <= end)]
+            observed = set(valid_dates_in_scope)
             internal_missing = [dt for dt in expected_between if dt not in observed]
 
-        internal_missing_mask = pd.Series(calendar.isin(internal_missing), index=calendar)
+        internal_missing_mask = pd.Series(expected_calendar.isin(internal_missing), index=expected_calendar)
         max_gap, gap_count = consecutive_true_runs(internal_missing_mask)
         if max_gap >= thresholds.long_gap_days:
             gap_rows.append(
@@ -191,7 +245,8 @@ def instrument_availability(
             {
                 "instrument": instrument,
                 "expected_trade_days": expected_days,
-                "valid_trade_days": valid_days,
+                "valid_trade_days": valid_days_in_scope,
+                "raw_valid_trade_days": valid_days,
                 "missing_trade_days": missing_days,
                 "missing_ratio": missing_ratio,
                 "start_time": start,
@@ -214,12 +269,27 @@ def instrument_availability(
     return pd.DataFrame(rows).sort_values("availability_score"), pd.DataFrame(gap_rows)
 
 
-def date_coverage(frame: pd.DataFrame, calendar: pd.DatetimeIndex, instrument_count: int) -> pd.DataFrame:
+def date_coverage(
+    frame: pd.DataFrame,
+    calendar: pd.DatetimeIndex,
+    instrument_count: int,
+    membership: pd.DataFrame | None = None,
+) -> pd.DataFrame:
     valid = frame.assign(has_data=frame[FIELDS].notna().any(axis=1))
     coverage = valid.groupby("datetime")["has_data"].sum().reindex(pd.DatetimeIndex(calendar), fill_value=0)
     result = coverage.rename("covered_instrument_count").reset_index().rename(columns={"index": "datetime"})
-    result["expected_instrument_count"] = instrument_count
-    result["coverage_rate"] = result["covered_instrument_count"] / instrument_count if instrument_count else np.nan
+    membership = normalize_membership_frame(membership)
+    if membership is None:
+        result["expected_instrument_count"] = instrument_count
+    else:
+        dynamic_expected = dynamic_membership_coverage(pd.DatetimeIndex(calendar), membership)
+        result = result.merge(dynamic_expected, on="datetime", how="left")
+        result["expected_instrument_count"] = result["expected_instrument_count"].fillna(0).astype(int)
+    result["coverage_rate"] = np.where(
+        result["expected_instrument_count"].gt(0),
+        result["covered_instrument_count"] / result["expected_instrument_count"],
+        np.nan,
+    )
     return result
 
 
@@ -282,4 +352,3 @@ def select_category(issues: pd.DataFrame, categories: Iterable[str]) -> pd.DataF
     if issues.empty:
         return issues.copy()
     return issues[issues["category"].isin(categories)].copy()
-

@@ -12,6 +12,7 @@ It does not train models, run backtests, calculate Alpha158 IC, screen factors, 
 - Return anomalies: oversized daily return, close jump, suspected adjustment error
 - Coverage issues: per-instrument valid days, missing ratio, per-date coverage, long-missing instruments
 - Time range issues: instrument start/end date and long internal gaps
+- Dynamic membership coverage: if `instruments/<market>.txt` exists, expected instruments are calculated from each membership date range instead of treating the entire historical union as active every day.
 
 ## Run
 
@@ -26,6 +27,12 @@ Override scope from the command line:
 
 ```powershell
 python -m data_quality.checker --market csi300 --start-time 2019-01-01 --end-time 2020-08-01
+```
+
+Check another provider:
+
+```powershell
+python -m data_quality.checker --provider-uri E:/qlib_prj/qlib_data/cn_data_community_20260609 --market csi500 --start-time 2017-01-01 --end-time 2020-08-01 --output-dir outputs/data_quality_dynamic_community
 ```
 
 ## Outputs
@@ -51,7 +58,8 @@ CSV outputs:
 - `abnormal_dates.csv`
 - `long_gaps.csv`
 
+`overview.csv` includes `membership_rows`, `dynamic_membership_enabled`, and expected-instrument-count statistics when a market membership file is available.
+
 Markdown report:
 
 - `data_quality_report.md`
-

@@ -77,6 +77,23 @@ def init_qlib(config: dict[str, Any]) -> None:
     C.joblib_backend = "sequential"
 
 
+def load_membership(config: dict[str, Any]) -> pd.DataFrame | None:
+    qlib_conf = config["qlib"]
+    diagnosis = config["diagnosis"]
+    market = diagnosis["market"]
+    path = Path(qlib_conf["provider_uri"]) / "instruments" / f"{market}.txt"
+    if not path.exists():
+        return None
+    rows = []
+    with path.open("r", encoding="utf-8") as file:
+        for line in file:
+            parts = line.strip().split()
+            if len(parts) < 3:
+                continue
+            rows.append({"instrument": parts[0], "start_time": parts[1], "end_time": parts[2]})
+    return pd.DataFrame(rows)
+
+
 def load_qlib_features(config: dict[str, Any]) -> tuple[pd.DataFrame, pd.DatetimeIndex, int]:
     diagnosis = config["diagnosis"]
     freq = config.get("qlib", {}).get("freq", "day")
@@ -98,21 +115,28 @@ def build_overview(
     frame: pd.DataFrame,
     calendar: pd.DatetimeIndex,
     instrument_count: int,
+    membership: pd.DataFrame | None,
     issues: pd.DataFrame,
     availability: pd.DataFrame,
     coverage: pd.DataFrame,
 ) -> pd.DataFrame:
+    active_counts = coverage["expected_instrument_count"].dropna()
     metrics = [
         ("market", config["diagnosis"]["market"]),
         ("start_time", config["diagnosis"]["start_time"]),
         ("end_time", config["diagnosis"]["end_time"]),
         ("provider_uri", config["qlib"]["provider_uri"]),
         ("instrument_count", instrument_count),
+        ("membership_rows", 0 if membership is None else len(membership)),
+        ("dynamic_membership_enabled", membership is not None),
         ("calendar_trade_days", len(calendar)),
         ("raw_rows", len(frame)),
         ("total_issue_rows", len(issues)),
         ("avg_availability_score", availability["availability_score"].mean()),
         ("min_availability_score", availability["availability_score"].min()),
+        ("avg_expected_instruments_per_day", active_counts.mean() if not active_counts.empty else instrument_count),
+        ("min_expected_instruments_per_day", active_counts.min() if not active_counts.empty else instrument_count),
+        ("max_expected_instruments_per_day", active_counts.max() if not active_counts.empty else instrument_count),
         ("avg_coverage_rate", coverage["coverage_rate"].mean()),
         ("min_coverage_rate", coverage["coverage_rate"].min()),
         ("generated_at", datetime.now().isoformat(timespec="seconds")),
@@ -123,12 +147,13 @@ def build_overview(
 def run_diagnosis(config: dict[str, Any]) -> Path:
     thresholds = threshold_from_config(config)
     init_qlib(config)
+    membership = load_membership(config)
     frame, calendar, instrument_count = load_qlib_features(config)
 
     issues = row_issue_frame(frame, thresholds)
-    availability, gaps = instrument_availability(frame, calendar, thresholds)
-    coverage = date_coverage(frame, calendar, instrument_count)
-    overview = build_overview(config, frame, calendar, instrument_count, issues, availability, coverage)
+    availability, gaps = instrument_availability(frame, calendar, thresholds, membership)
+    coverage = date_coverage(frame, calendar, instrument_count, membership)
+    overview = build_overview(config, frame, calendar, instrument_count, membership, issues, availability, coverage)
     rule_counts = aggregate_rule_counts(issues)
 
     tables = {
@@ -179,4 +204,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

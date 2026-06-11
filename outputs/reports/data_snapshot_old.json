@@ -1,0 +1,317 @@
+{
+  "provider_uri": "E:\\qlib_prj\\qlib_data\\cn_data",
+  "exists": true,
+  "total_size_bytes": 481056822,
+  "total_size_mb": 458.77,
+  "calendar_files": {
+    "day.txt": {
+      "count": 4943,
+      "start": "1999-11-10",
+      "end": "2020-09-25"
+    }
+  },
+  "instrument_files": {
+    "all.txt": {
+      "count": 3875,
+      "sample": [
+        "SH000300\t2005-01-04\t2020-09-25",
+        "SH000903\t2006-05-29\t2020-09-25",
+        "SH600000\t1999-11-10\t2020-09-25"
+      ]
+    },
+    "csi100.txt": {
+      "count": 246,
+      "sample": [
+        "SH600000\t2007-05-29\t2020-10-20",
+        "SH600009\t2018-06-11\t2020-10-20",
+        "SH600015\t2007-05-29\t2020-10-20"
+      ]
+    },
+    "csi300.txt": {
+      "count": 820,
+      "sample": [
+        "SH600000\t2005-01-01\t2020-09-25",
+        "SH600004\t2018-12-17\t2020-09-25",
+        "SH600009\t2005-01-01\t2020-09-25"
+      ]
+    },
+    "csi500.txt": {
+      "count": 2017,
+      "sample": [
+        "SH600006\t2013-06-25\t2022-03-21",
+        "SH600008\t2018-12-11\t2022-03-21",
+        "SH600021\t2018-06-05\t2022-03-21"
+      ]
+    }
+  },
+  "feature_instrument_count": 3875,
+  "fields": [
+    "adjclose",
+    "change",
+    "close",
+    "factor",
+    "high",
+    "low",
+    "open",
+    "volume"
+  ],
+  "field_presence_in_sample": {
+    "adjclose": 1,
+    "change": 20,
+    "close": 20,
+    "factor": 19,
+    "high": 20,
+    "low": 20,
+    "open": 20,
+    "volume": 20
+  },
+  "sample_instruments": [
+    {
+      "instrument": "sh000300",
+      "fields": [
+        "change",
+        "close",
+        "factor",
+        "high",
+        "low",
+        "open",
+        "volume"
+      ]
+    },
+    {
+      "instrument": "sh000903",
+      "fields": [
+        "change",
+        "close",
+        "factor",
+        "high",
+        "low",
+        "open",
+        "volume"
+      ]
+    },
+    {
+      "instrument": "sh000905",
+      "fields": [
+        "adjclose",
+        "change",
+        "close",
+        "high",
+        "low",
+        "open",
+        "volume"
+      ]
+    },
+    {
+      "instrument": "sh600000",
+      "fields": [
+        "change",
+        "close",
+        "factor",
+        "high",
+        "low",
+        "open",
+        "volume"
+      ]
+    },
+    {
+      "instrument": "sh600004",
+      "fields": [
+        "change",
+        "close",
+        "factor",
+        "high",
+        "low",
+        "open",
+        "volume"
+      ]
+    },
+    {
+      "instrument": "sh600006",
+      "fields": [
+        "change",
+        "close",
+        "factor",
+        "high",
+        "low",
+        "open",
+        "volume"
+      ]
+    },
+    {
+      "instrument": "sh600007",
+      "fields": [
+        "change",
+        "close",
+        "factor",
+        "high",
+        "low",
+        "open",
+        "volume"
+      ]
+    },
+    {
+      "instrument": "sh600008",
+      "fields": [
+        "change",
+        "close",
+        "factor",
+        "high",
+        "low",
+        "open",
+        "volume"
+      ]
+    },
+    {
+      "instrument": "sh600009",
+      "fields": [
+        "change",
+        "close",
+        "factor",
+        "high",
+        "low",
+        "open",
+        "volume"
+      ]
+    },
+    {
+      "instrument": "sh600010",
+      "fields": [
+        "change",
+        "close",
+        "factor",
+        "high",
+        "low",
+        "open",
+        "volume"
+      ]
+    },
+    {
+      "instrument": "sh600011",
+      "fields": [
+        "change",
+        "close",
+        "factor",
+        "high",
+        "low",
+        "open",
+        "volume"
+      ]
+    },
+    {
+      "instrument": "sh600012",
+      "fields": [
+        "change",
+        "close",
+        "factor",
+        "high",
+        "low",
+        "open",
+        "volume"
+      ]
+    },
+    {
+      "instrument": "sh600015",
+      "fields": [
+        "change",
+        "close",
+        "factor",
+        "high",
+        "low",
+        "open",
+        "volume"
+      ]
+    },
+    {
+      "instrument": "sh600016",
+      "fields": [
+        "change",
+        "close",
+        "factor",
+        "high",
+        "low",
+        "open",
+        "volume"
+      ]
+    },
+    {
+      "instrument": "sh600017",
+      "fields": [
+        "change",
+        "close",
+        "factor",
+        "high",
+        "low",
+        "open",
+        "volume"
+      ]
+    },
+    {
+      "instrument": "sh600018",
+      "fields": [
+        "change",
+        "close",
+        "factor",
+        "high",
+        "low",
+        "open",
+        "volume"
+      ]
+    },
+    {
+      "instrument": "sh600019",
+      "fields": [
+        "change",
+        "close",
+        "factor",
+        "high",
+        "low",
+        "open",
+        "volume"
+      ]
+    },
+    {
+      "instrument": "sh600020",
+      "fields": [
+        "change",
+        "close",
+        "factor",
+        "high",
+        "low",
+        "open",
+        "volume"
+      ]
+    },
+    {
+      "instrument": "sh600021",
+      "fields": [
+        "change",
+        "close",
+        "factor",
+        "high",
+        "low",
+        "open",
+        "volume"
+      ]
+    },
+    {
+      "instrument": "sh600022",
+      "fields": [
+        "change",
+        "close",
+        "factor",
+        "high",
+        "low",
+        "open",
+        "volume"
+      ]
+    }
+  ],
+  "archives": [
+    {
+      "name": "20260222105635_qlib_data_cn_1d_latest.zip",
+      "size_bytes": 196549189,
+      "modified_time": "2026-02-22 11:11:57"
+    }
+  ]
+}
