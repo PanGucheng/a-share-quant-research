@@ -131,7 +131,7 @@ E:\anaconda_envs\qlib_env\python.exe scripts\validate_provider.py --provider-uri
 
 ### 任务 5：完整 qrun 验证
 
-状态：待专项运行。
+状态：已完成第一轮。
 
 完整 qrun 继续使用普通权限或提权执行：
 
@@ -232,3 +232,32 @@ outputs/data_quality_all_stock_shsz_preflight/all_stock_shsz_2020-01-02_2020-01-
 | OHLCVA missing rate | `0.5394%` |
 
 下一步可以执行完整宽股票池 qrun。该任务预计明显慢于 CSI500 基线，应使用提权或普通 PowerShell 运行，不在受限沙盒内运行。
+
+完整 qrun 结果：
+
+```text
+Experiment ID: 853240997789502366
+Run ID: 9a3ead374ca94ed78901e856d49c600f
+Log: logs/qrun_workflow_lightgbm_alpha158_all_stock_shsz_community_20260609_20260612_000922.log
+```
+
+结果摘要：
+
+| metric | value |
+| --- | ---: |
+| IC | `0.176501` |
+| ICIR | `1.629054` |
+| Rank IC | `0.072703` |
+| Rank ICIR | `0.819241` |
+| excess return with cost annualized return | `-0.060844` |
+| excess return with cost information ratio | `-0.379644` |
+| excess return with cost max drawdown | `-0.351861` |
+| excess return without cost annualized return | `-0.040364` |
+| excess return without cost information ratio | `-0.251926` |
+| excess return without cost max drawdown | `-0.295531` |
+
+Interpretation:
+
+- The signal metrics are much stronger than the CSI500 baseline, especially IC.
+- The current `TopkDropoutStrategy` setting performs poorly on the broad universe, producing negative excess return and much deeper drawdown.
+- This suggests the next work should focus on portfolio construction constraints for broad universes: liquidity filters, benchmark choice, tradability handling, and TopK/dropout sizing.
