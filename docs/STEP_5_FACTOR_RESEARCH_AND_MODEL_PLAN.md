@@ -942,3 +942,51 @@ outputs/factor_research_v3/liquid2000_core/factor_research_v3_report.md
 - 这不代表它不能用于组合，但后续不能把它简单当成模型特征的独立 alpha；需要作为风险/风格约束对象继续研究。
 - `std_20` 继续维持冗余因子判断。
 - 下一步仍不应训练新模型，应先扩展风险/流动性分层解释，并研究更稳健的低波动定义。
+
+## 26. 因子研究 V3.1 工具链修正
+
+状态：已完成。
+
+新增计划文档：
+
+```text
+docs/FACTOR_RESEARCH_V3_1_PLAN.md
+docs/PROJECT_CONTEXT_SUMMARY.md
+```
+
+V3.1 继续遵循“先参考开源、再最小实现”的原则：
+
+- `alphalens-reloaded`：继续对齐 IC、Rank IC、ICIR、分组收益的评价口径。
+- `jqfactor_analyzer`：参考 A 股单因子分析中“预处理 -> 中性化 -> 指标汇总 -> tear sheet”的组织方式。
+- `FactorTest`：参考暴露相关性、分层检验与中性化前后对照。
+- `microsoft/qlib`：保持数据读取、股票池、Qlib baseline 主线不被替换。
+
+本轮修正目标：
+
+1. 新增 `directional_rank_icir`，避免负向因子的原始 `rank_icir` 被误读。
+2. 将 `market_state` 从未来 label 均值切片改为过去 20 日可观测市场状态切片，减少前视风险。
+3. 增加 `--write-detail`，默认不写大体积分组收益明细 CSV，只写 summary/report/changelog/correlation/exposure。
+4. 新增 `factor_exposure_report.md`，用暴露相关性和中性化变化解释因子是否更像风险/流动性暴露。
+
+默认运行仍为：
+
+```powershell
+cd E:\qlib_prj\qlib_baseline
+E:\anaconda_envs\qlib_env\python.exe scripts\run_factor_research_v3.py --output-dir outputs\factor_research_v3\liquid2000_core
+```
+
+如需写出大明细文件，显式加：
+
+```powershell
+E:\anaconda_envs\qlib_env\python.exe scripts\run_factor_research_v3.py --write-detail
+```
+
+V3.1 默认输出将包含：
+
+```text
+outputs/factor_research_v3/liquid2000_core/factor_exposure_report.md
+outputs/factor_research_v3/liquid2000_core/factor_neutralized_summary.csv
+outputs/factor_research_v3/liquid2000_core/factor_neutralized_group_return_summary.csv
+outputs/factor_research_v3/liquid2000_core/factor_slice_ic.csv
+outputs/factor_research_v3/liquid2000_core/factor_slice_group_return_summary.csv
+```

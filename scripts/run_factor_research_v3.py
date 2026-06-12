@@ -253,6 +253,143 @@ def candidate_changelog(summary: pd.DataFrame, mapping: pd.DataFrame) -> pd.Data
     ].rename(columns={"neutralized_factor_name": "neutralized_factor"})
 
 
+def exposure_interpretation(summary: pd.DataFrame, exposure_corr: pd.DataFrame, changelog: pd.DataFrame, label: str) -> pd.DataFrame:
+    if summary.empty or changelog.empty:
+        return pd.DataFrame()
+    main_summary = summary[
+        (summary["window"] == "main_research_2021_2023")
+        & (summary["label"] == label)
+        & summary["factor"].str.endswith("__raw")
+    ].copy()
+    if main_summary.empty:
+        return pd.DataFrame()
+    main_summary["base_factor"] = main_summary["factor"].str.replace("__raw", "", regex=False)
+
+    joint = changelog[
+        (changelog["window"] == "main_research_2021_2023")
+        & (changelog["label"] == label)
+        & (changelog["neutralization"] == "liquidity_volatility_residual")
+    ][["base_factor", "directional_mean_rank_ic", "delta_directional_rank_ic"]].rename(
+        columns={
+            "directional_mean_rank_ic": "joint_residual_directional_rank_ic",
+            "delta_directional_rank_ic": "joint_residual_delta",
+        }
+    )
+    exposure = (
+        exposure_corr[exposure_corr["window"] == "main_research_2021_2023"]
+        .sort_values("abs_mean_spearman_corr", ascending=False)
+        .drop_duplicates("factor")
+        [["factor", "exposure", "mean_spearman_corr", "abs_mean_spearman_corr"]]
+        .rename(
+            columns={
+                "factor": "base_factor",
+                "exposure": "dominant_exposure",
+                "mean_spearman_corr": "dominant_exposure_corr",
+                "abs_mean_spearman_corr": "dominant_abs_exposure_corr",
+            }
+        )
+        if not exposure_corr.empty
+        else pd.DataFrame()
+    )
+    result = main_summary[
+        ["base_factor", "expected_direction", "directional_mean_rank_ic", "directional_rank_icir", "ic_win_rate"]
+    ].rename(columns={"directional_mean_rank_ic": "raw_directional_rank_ic"})
+    result = result.merge(joint, on="base_factor", how="left")
+    if not exposure.empty:
+        result = result.merge(exposure, on="base_factor", how="left")
+    else:
+        result["dominant_exposure"] = pd.NA
+        result["dominant_exposure_corr"] = np.nan
+        result["dominant_abs_exposure_corr"] = np.nan
+
+    result["interpretation"] = np.select(
+        [
+            result["joint_residual_directional_rank_ic"].ge(0.03),
+            result["dominant_abs_exposure_corr"].ge(0.8)
+            & (
+                result["joint_residual_directional_rank_ic"].le(0.01)
+                | result["joint_residual_delta"].le(-0.05)
+            ),
+            result["raw_directional_rank_ic"].ge(0.02),
+        ],
+        ["residual_alpha_candidate", "exposure_dominated", "watch_after_controls"],
+        default="watch",
+    )
+    return result.sort_values("raw_directional_rank_ic", ascending=False)
+
+
+def write_exposure_report(
+    args: argparse.Namespace,
+    summary: pd.DataFrame,
+    exposure_corr: pd.DataFrame,
+    changelog: pd.DataFrame,
+    output: Path,
+) -> None:
+    exposure = (
+        exposure_corr.sort_values("abs_mean_spearman_corr", ascending=False).head(40)
+        if not exposure_corr.empty
+        else pd.DataFrame()
+    )
+    changes = (
+        changelog[
+            (changelog["window"] == "main_research_2021_2023")
+            & (changelog["label"] == args.labels[0])
+            & (changelog["neutralization"] != "raw")
+        ]
+        .sort_values(["base_factor", "delta_directional_rank_ic"], ascending=[True, False])
+        if not changelog.empty
+        else pd.DataFrame()
+    )
+    interpretation = exposure_interpretation(summary, exposure_corr, changelog, args.labels[0])
+    lines = [
+        "# Factor Exposure Report",
+        "",
+        "This report explains whether a factor's apparent signal is mostly standalone residual signal or exposure to liquidity, volatility, and amount proxies.",
+        "",
+        "## Interpretation",
+        "",
+        markdown_table(
+            interpretation[
+                [
+                    "base_factor",
+                    "expected_direction",
+                    "raw_directional_rank_ic",
+                    "directional_rank_icir",
+                    "joint_residual_directional_rank_ic",
+                    "joint_residual_delta",
+                    "dominant_exposure",
+                    "dominant_exposure_corr",
+                    "interpretation",
+                ]
+            ]
+            if not interpretation.empty
+            else pd.DataFrame()
+        ),
+        "",
+        "## Strongest Exposure Correlations",
+        "",
+        markdown_table(exposure),
+        "",
+        "## Neutralization Change Log",
+        "",
+        markdown_table(
+            changes[
+                [
+                    "base_factor",
+                    "neutralization",
+                    "raw_directional_rank_ic",
+                    "directional_mean_rank_ic",
+                    "delta_directional_rank_ic",
+                    "effect",
+                ]
+            ].head(80)
+            if not changes.empty
+            else pd.DataFrame()
+        ),
+    ]
+    output.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
 def write_report(
     args: argparse.Namespace,
     summary: pd.DataFrame,
@@ -321,7 +458,7 @@ def write_report(
                     "expected_direction",
                     "coverage",
                     "directional_mean_rank_ic",
-                    "rank_icir",
+                    "directional_rank_icir",
                     "ic_win_rate",
                     "ic_dates",
                 ]
@@ -361,7 +498,7 @@ def write_report(
                     "slice_value",
                     "coverage",
                     "directional_mean_rank_ic",
-                    "rank_icir",
+                    "directional_rank_icir",
                     "ic_win_rate",
                     "ic_dates",
                 ]
@@ -374,15 +511,23 @@ def write_report(
         "",
         "- `factor_preprocess_summary.csv`",
         "- `factor_neutralized_summary.csv`",
-        "- `factor_neutralized_group_return.csv`",
         "- `factor_neutralized_group_return_summary.csv`",
         "- `factor_neutralized_correlation.csv`",
         "- `factor_slice_ic.csv`",
-        "- `factor_slice_group_return.csv`",
         "- `factor_slice_group_return_summary.csv`",
         "- `factor_exposure_correlation.csv`",
+        "- `factor_exposure_report.md`",
         "- `factor_candidate_changelog.csv`",
     ]
+    if args.write_detail:
+        lines.extend(
+            [
+                "- `factor_neutralized_group_return.csv`",
+                "- `factor_slice_group_return.csv`",
+            ]
+        )
+    else:
+        lines.append("- Detail group-return CSVs are skipped by default. Use `--write-detail` to write them.")
     output.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
@@ -454,15 +599,26 @@ def run(args: argparse.Namespace) -> Path:
 
     preprocess.to_csv(output_dir / "factor_preprocess_summary.csv", index=False, encoding="utf-8-sig")
     summary.to_csv(output_dir / "factor_neutralized_summary.csv", index=False, encoding="utf-8-sig")
-    groups.to_csv(output_dir / "factor_neutralized_group_return.csv", index=False, encoding="utf-8-sig")
+    if args.write_detail:
+        groups.to_csv(output_dir / "factor_neutralized_group_return.csv", index=False, encoding="utf-8-sig")
+    else:
+        stale_path = output_dir / "factor_neutralized_group_return.csv"
+        if stale_path.exists():
+            stale_path.unlink()
     group_summary.to_csv(output_dir / "factor_neutralized_group_return_summary.csv", index=False, encoding="utf-8-sig")
     correlation.to_csv(output_dir / "factor_neutralized_correlation.csv", index=False, encoding="utf-8-sig")
     slice_summary.to_csv(output_dir / "factor_slice_ic.csv", index=False, encoding="utf-8-sig")
-    slice_groups.to_csv(output_dir / "factor_slice_group_return.csv", index=False, encoding="utf-8-sig")
+    if args.write_detail:
+        slice_groups.to_csv(output_dir / "factor_slice_group_return.csv", index=False, encoding="utf-8-sig")
+    else:
+        stale_path = output_dir / "factor_slice_group_return.csv"
+        if stale_path.exists():
+            stale_path.unlink()
     slice_group_summary.to_csv(output_dir / "factor_slice_group_return_summary.csv", index=False, encoding="utf-8-sig")
     exposure_corr.to_csv(output_dir / "factor_exposure_correlation.csv", index=False, encoding="utf-8-sig")
     changelog.to_csv(output_dir / "factor_candidate_changelog.csv", index=False, encoding="utf-8-sig")
     write_report(args, summary, slice_summary, exposure_corr, changelog, output_dir / "factor_research_v3_report.md")
+    write_exposure_report(args, summary, exposure_corr, changelog, output_dir / "factor_exposure_report.md")
     print(f"Factor research V3 outputs written to {output_dir}", flush=True)
     return output_dir
 
@@ -478,6 +634,11 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--min-count", type=int, default=50)
     parser.add_argument("--min-liquidity-bucket", type=int, default=3)
     parser.add_argument("--min-tradability-score", type=float, default=75.0)
+    parser.add_argument(
+        "--write-detail",
+        action="store_true",
+        help="Write large per-date/per-quantile group-return detail CSVs. Summary CSVs are always written.",
+    )
     parser.add_argument(
         "--window",
         type=parse_window,

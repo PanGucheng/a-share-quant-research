@@ -25,20 +25,36 @@ def add_volatility_bucket(frame: pd.DataFrame, source: str = "amplitude_20", qua
 
 def add_market_state(
     frame: pd.DataFrame,
-    label: str,
-    up_threshold: float = 0.01,
-    down_threshold: float = -0.01,
+    label: str | None = None,
+    up_threshold: float = 0.03,
+    down_threshold: float = -0.03,
+    lookback: int = 20,
+    min_periods: int = 10,
 ) -> pd.DataFrame:
     result = frame.copy()
-    if label not in result.columns:
+    if "$close" not in result.columns:
         result["market_state"] = "unknown"
         return result
-    market_return = pd.to_numeric(result[label], errors="coerce").groupby(result["datetime"]).transform("mean")
+
+    ordered = result[["datetime", "instrument", "$close"]].copy()
+    ordered["$close"] = pd.to_numeric(ordered["$close"], errors="coerce")
+    ordered = ordered.sort_values(["instrument", "datetime"])
+    ordered["daily_return"] = ordered.groupby("instrument", sort=False)["$close"].pct_change()
+    market_daily = ordered.groupby("datetime", sort=True)["daily_return"].mean().dropna()
+    market_past_return = (1 + market_daily).rolling(lookback, min_periods=min_periods).apply(np.prod, raw=True) - 1
+    market_past_vol = market_daily.rolling(lookback, min_periods=min_periods).std()
+
+    result["market_past_20d_return"] = result["datetime"].map(market_past_return)
+    result["market_past_20d_vol"] = result["datetime"].map(market_past_vol)
     result["market_state"] = np.select(
-        [market_return >= up_threshold, market_return <= down_threshold],
+        [
+            result["market_past_20d_return"] >= up_threshold,
+            result["market_past_20d_return"] <= down_threshold,
+        ],
         ["up", "down"],
         default="sideways",
     )
+    result.loc[result["market_past_20d_return"].isna(), "market_state"] = "unknown"
     return result
 
 

@@ -112,6 +112,7 @@ def summarize_factors(
         mean_rank_ic = rank_ic.mean() if not rank_ic.empty else np.nan
         sign = spec.direction_sign
         directional_rank_ic = rank_ic * sign if sign is not None else pd.Series(dtype=float)
+        directional_rank_ic_std = directional_rank_ic.std() if len(directional_rank_ic) > 1 else np.nan
         rows.append(
             {
                 "window": window_name,
@@ -127,6 +128,11 @@ def summarize_factors(
                 "mean_rank_ic": mean_rank_ic,
                 "directional_mean_rank_ic": direction_adjust(mean_rank_ic, spec),
                 "rank_icir": rank_ic.mean() / rank_ic.std() if len(rank_ic) > 1 and rank_ic.std() else np.nan,
+                "directional_rank_icir": (
+                    directional_rank_ic.mean() / directional_rank_ic_std
+                    if len(directional_rank_ic) > 1 and directional_rank_ic_std
+                    else np.nan
+                ),
                 "ic_win_rate": (directional_rank_ic > 0).mean() if not directional_rank_ic.empty else np.nan,
                 "ic_dates": int(len(rank_ic)),
                 "valid_rows": int(len(valid)),
