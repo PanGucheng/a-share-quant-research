@@ -28,6 +28,7 @@ outputs/data_quality_lifecycle_old/
 outputs/data_quality_lifecycle_community/
 outputs/data_quality_spans_community/
 outputs/data_quality_all_stock_shsz_preflight/
+outputs/data_quality_tradability/
 outputs/data_quality_test/
 
 # Large model diagnostic artifacts.
@@ -37,6 +38,8 @@ outputs/liquidity_bucket_portfolio/*/holdings.csv
 outputs/factor_time_slices/*/group_return.csv
 outputs/factor_time_slices/*/ic_series.csv
 outputs/factor_time_slices/*/turnover.csv
+outputs/tradability/*/tradability_labels.csv
+outputs/tradability/*/run.log
 
 # Local Python/cache noise
 __pycache__/

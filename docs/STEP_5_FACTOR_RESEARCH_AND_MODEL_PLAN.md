@@ -533,3 +533,35 @@ outputs/reports/factor_horizon_comparison_liquid2000.md
 - `rev_5` 仍然方向稳定，但更适合作为辅助项，不适合作为高换手主驱动。
 - 个人投资者路线应优先使用 `label_20d_t1`，以月度持有/调仓为主要研究方向；`label_10d_t1` 可作为更快反应的对照。
 - 下一步组合实验应从 `label_20d_t1` 开始，增加周度/月度调仓约束和换手报告。
+
+## 19. 统一可交易性标签层
+
+状态：第一版建设中。
+
+新增模块：
+
+```text
+tradability/
+scripts/run_tradability_labels.ps1
+scripts/validate_tradability_outputs.py
+docs/TRADABILITY_LABEL_LAYER.md
+```
+
+定位：
+
+- `tradability` 是后续因子研究、组合约束、回测约束的统一入口。
+- 后续模块不得重复实现停牌、涨跌停、流动性、新股、异常数据过滤逻辑。
+- 本模块只读取 Qlib provider 和数据质量诊断输出，不修改 Qlib 源码、不修改原始数据、不训练模型、不回测。
+
+默认产物：
+
+```text
+outputs/tradability/all_stock_shsz_liquid2000_2021-01-01_2023-12-29/tradability_labels.csv
+```
+
+首版目标：
+
+- 生成 `date x instrument` 可交易性标签表。
+- 输出 `can_buy`、`can_sell`、`tradability_score` 和 `disabled_reason`。
+- 对 `amount` 缺失做优雅降级，优先使用 `amount`，否则使用 `close * volume`。
+- 对无法精确判断的涨跌停、流动性、质量问题标记 `unknown` 或 `unavailable`，不强行判断。
