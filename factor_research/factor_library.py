@@ -38,12 +38,16 @@ def add_basic_factors(frame: pd.DataFrame) -> pd.DataFrame:
         inst_volume = volume.loc[index]
         frame.loc[index, "corr_ret_volume_20"] = inst_return.rolling(20).corr(inst_volume).to_numpy()
 
-    # A-share T+1 style label: buy on next close and sell on the following close.
+    # A-share T+1 style labels: buy on next close, then hold for N trading days.
     next_close = group["$close"].shift(-1)
     next_next_close = group["$close"].shift(-2)
     next_6_close = group["$close"].shift(-6)
+    next_11_close = group["$close"].shift(-11)
+    next_21_close = group["$close"].shift(-21)
     frame["label_1d_t1"] = next_next_close / next_close - 1
     frame["label_5d_t1"] = next_6_close / next_close - 1
+    frame["label_10d_t1"] = next_11_close / next_close - 1
+    frame["label_20d_t1"] = next_21_close / next_close - 1
     return frame
 
 
@@ -73,4 +77,4 @@ FACTOR_METADATA = {
     "corr_ret_volume_20": {"category": "price_volume", "expected_direction": "watch"},
 }
 
-LABEL_COLUMNS = ["label_1d_t1", "label_5d_t1"]
+LABEL_COLUMNS = ["label_1d_t1", "label_5d_t1", "label_10d_t1", "label_20d_t1"]
