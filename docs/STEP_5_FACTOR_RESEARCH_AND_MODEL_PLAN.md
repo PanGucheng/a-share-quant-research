@@ -496,3 +496,40 @@ label_20d_t1  # 约一月持有，个人投资者优先研究
 3. 组合回测改为周度或月度调仓，不再默认每日调仓。
 4. 把平均换手、单次换手、持仓天数和成本敏感性放进核心报告。
 5. 只有在 2021-2023 有效，并且 2024-2026 仍然稳定的低频组合，才进入模型对照阶段。
+
+## 18. 低频标签时间切片结果
+
+状态：已完成 `label_10d_t1` 和 `label_20d_t1` 第一轮。
+
+新增报告：
+
+```text
+outputs/reports/factor_time_slice_stability_liquid2000_label10d.md
+outputs/reports/factor_time_slice_stability_liquid2000_label10d.csv
+outputs/reports/factor_time_slice_summary_liquid2000_label10d.csv
+outputs/reports/factor_time_slice_stability_liquid2000_label20d.md
+outputs/reports/factor_time_slice_stability_liquid2000_label20d.csv
+outputs/reports/factor_time_slice_summary_liquid2000_label20d.csv
+outputs/reports/factor_horizon_comparison_liquid2000.md
+```
+
+跨持有周期对比：
+
+| label | factor | positive directional slices | mean directional Rank IC | recent directional Rank IC |
+| --- | --- | ---: | ---: | ---: |
+| `label_1d_t1` | `amplitude_20` | `4/4` | `0.039469` | `0.038382` |
+| `label_1d_t1` | `std_20` | `4/4` | `0.037023` | `0.039549` |
+| `label_1d_t1` | `rev_5` | `4/4` | `0.036709` | `0.025411` |
+| `label_10d_t1` | `amplitude_20` | `4/4` | `0.065014` | `0.045089` |
+| `label_10d_t1` | `std_20` | `4/4` | `0.062395` | `0.047369` |
+| `label_10d_t1` | `rev_5` | `4/4` | `0.028299` | `0.034178` |
+| `label_20d_t1` | `amplitude_20` | `4/4` | `0.075864` | `0.051124` |
+| `label_20d_t1` | `std_20` | `4/4` | `0.071619` | `0.053787` |
+| `label_20d_t1` | `rev_5` | `4/4` | `0.030789` | `0.040805` |
+
+结论：
+
+- 低波动、低振幅因子在 10 日和 20 日标签下更强，尤其 `label_20d_t1`。
+- `rev_5` 仍然方向稳定，但更适合作为辅助项，不适合作为高换手主驱动。
+- 个人投资者路线应优先使用 `label_20d_t1`，以月度持有/调仓为主要研究方向；`label_10d_t1` 可作为更快反应的对照。
+- 下一步组合实验应从 `label_20d_t1` 开始，增加周度/月度调仓约束和换手报告。
