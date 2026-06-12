@@ -843,3 +843,38 @@ outputs/factor_research_v2/liquid2000_default/factor_group_return_summary.csv
 outputs/factor_research_v2/liquid2000_default/factor_turnover.csv
 outputs/factor_research_v2/liquid2000_default/factor_research_v2_report.md
 ```
+
+## 24. 因子研究 V3 开源参考调研
+
+状态：已完成第一轮。
+
+新增调研文档：
+
+```text
+docs/FACTOR_RESEARCH_V3_REFERENCE_SURVEY.md
+```
+
+本轮额外拉取到 `tmp/reference_repos/` 的参考仓库：
+
+```text
+JoinQuant/jqfactor_analyzer
+jltxzxy/FactorTest
+Jensenberg/multi-factor
+jerryxyx/AlphaTrading
+```
+
+结论：
+
+- 优先借鉴 `jqfactor_analyzer` 的预处理、中性化接口和 tear-sheet 指标组织。
+- 借鉴 `FactorTest` 的 Barra/暴露相关性、双重排序、分组 IC 思路，但不引入其数据体系。
+- 借鉴 `multi-factor` 的 MAD 去极值、z-score、行业/市值残差中性化顺序，但不复制代码。
+- 借鉴 Qlib 原生 `CSZScoreNorm`、`CSRankNorm` 和 group return 口径，保持与现有 baseline 主线解耦。
+- `AlphaTrading` 适合作为研究流程参考，暂不采用其中模型组合和 notebook 代码。
+
+V3 最小实现方向：
+
+1. 新增本地 DataFrame 版 `preprocess.py`。
+2. 新增年份、流动性桶、波动率桶、市场状态切片。
+3. 新增轻量中性化：流动性桶内标准化、波动率桶内标准化、成交额代理残差中性化。
+4. 输出中性化前后 IC、Rank IC、分组收益、相关性对照。
+5. 在候选池稳定前继续暂停新模型和策略参数调优。
