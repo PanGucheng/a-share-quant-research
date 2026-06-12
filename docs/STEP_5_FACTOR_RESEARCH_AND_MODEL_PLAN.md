@@ -380,3 +380,46 @@ outputs/reports/factor_long_short_exposure_comparison.csv
 - 多头腿通常比空头腿流动性更低，因此 long-only 组合不能只按分数选 TopK，需要加流动性分桶或最低流动性约束。
 - `csi500` 中类似风险排序没有正收益，说明该信号更适合在更宽的 `liquid2000` 横截面中使用。
 - 下一步应做“流动性分桶内低波动/低振幅选股”，并比较其 long-only 表现是否优于上一轮朴素 TopK。
+
+## 15. 流动性约束 long-only 组合
+
+状态：已完成第一轮。
+
+新增脚本：
+
+```text
+scripts/run_liquidity_bucket_portfolio.py
+scripts/summarize_liquidity_bucket_portfolios.py
+```
+
+报告：
+
+```text
+outputs/reports/liquidity_bucket_portfolio_comparison.md
+outputs/reports/liquidity_bucket_portfolio_comparison.csv
+```
+
+回测口径：
+
+```text
+market: all_stock_shsz_liquid2000
+label: label_1d_t1
+topk: 200
+cost: 5 bps per one-way turnover
+score: rev_5:1,std_20:-1,amplitude_20:-1
+```
+
+结果摘要：
+
+| selection | average liquidity bucket | net annualized excess | net excess IR | average turnover |
+| --- | ---: | ---: | ---: | ---: |
+| `min_liquidity_bucket3` | `3.837250` | `-0.039804` | `-0.452260` | `0.159046` |
+| `bucket_balanced` | `3.000000` | `-0.063406` | `-0.704341` | `0.189105` |
+| `plain_topk` | `2.509882` | `-0.067818` | `-0.784255` | `0.187962` |
+
+结论：
+
+- 流动性约束改善了朴素 long-only 组合，但还没有把组合变成可用策略。
+- 排除最低两个流动性桶，比在全部流动性桶中强制均衡选股更好。
+- 这确认了流动性暴露是问题的一部分，但不是全部问题。
+- 下一步应加入风险/基准约束，例如限制组合平均波动、振幅、动量暴露，或者做 benchmark-relative 的分组内选股。
