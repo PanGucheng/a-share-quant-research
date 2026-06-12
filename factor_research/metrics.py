@@ -70,6 +70,7 @@ def top_quantile_turnover(
                 continue
             top = set(values.loc[values["quantile"] == values["quantile"].max(), "instrument"])
             if previous_top:
+                new_names = top - previous_top
                 rows.append(
                     {
                         "window": window_name,
@@ -79,11 +80,74 @@ def top_quantile_turnover(
                         "expected_direction": spec.expected_direction,
                         "datetime": dt,
                         "top_count": int(len(top)),
-                        "top_quantile_turnover": 1 - len(top & previous_top) / len(previous_top),
+                        "previous_top_count": int(len(previous_top)),
+                        "new_top_count": int(len(new_names)),
+                        "top_quantile_turnover": len(new_names) / len(top) if top else np.nan,
                     }
                 )
             previous_top = top
     return pd.DataFrame(rows)
+
+
+def group_returns(
+    frame: pd.DataFrame,
+    specs: list[FactorSpec],
+    labels: list[str],
+    window_name: str,
+    sample_name: str,
+    quantiles: int,
+    min_count: int,
+) -> pd.DataFrame:
+    rows = []
+    for spec in specs:
+        if spec.name not in frame.columns:
+            continue
+        for label in labels:
+            if label not in frame.columns:
+                continue
+            for dt, group in frame.groupby("datetime", sort=True):
+                values = finite_numeric_rows(group, [spec.name, label])
+                if len(values) < max(min_count, quantiles):
+                    continue
+                buckets = assign_daily_bucket(values[spec.name], quantiles)
+                values = values.assign(quantile=buckets).dropna(subset=["quantile"])
+                if values.empty:
+                    continue
+                for quantile, quantile_frame in values.groupby("quantile", sort=True):
+                    rows.append(
+                        {
+                            "window": window_name,
+                            "sample": sample_name,
+                            "label": label,
+                            "factor": spec.name,
+                            "category": spec.category,
+                            "expected_direction": spec.expected_direction,
+                            "datetime": dt,
+                            "quantile": int(quantile),
+                            "mean_label": float(quantile_frame[label].mean()),
+                            "count": int(len(quantile_frame)),
+                        }
+                    )
+    return pd.DataFrame(rows)
+
+
+def summarize_group_returns(group_return: pd.DataFrame) -> pd.DataFrame:
+    if group_return.empty:
+        return pd.DataFrame()
+    return (
+        group_return.groupby(["window", "sample", "label", "factor", "category", "expected_direction", "quantile"])[
+            "mean_label"
+        ]
+        .agg(["mean", "std", "count"])
+        .reset_index()
+        .rename(
+            columns={
+                "mean": "mean_group_return",
+                "std": "std_group_return",
+                "count": "group_return_dates",
+            }
+        )
+    )
 
 
 def summarize_turnover(turnover: pd.DataFrame) -> pd.DataFrame:

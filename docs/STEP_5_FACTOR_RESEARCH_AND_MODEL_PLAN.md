@@ -776,6 +776,8 @@ Qlib provider
 factor_data_schema.md
 factor_data_sample.csv
 factor_missing_coverage.csv
+factor_group_return.csv
+factor_group_return_summary.csv
 factor_turnover.csv
 factor_turnover_summary.csv
 ```
@@ -807,3 +809,37 @@ correlation < 0.80
 2. 增加行业、市值、流动性、波动率中性化。
 3. 增加市场状态切片。
 4. 扩展因子注册表，而不是直接进入模型训练。
+
+## 23. 参考实现算法审计
+
+状态：已完成第一轮。
+
+参考仓库：
+
+```text
+tmp/reference_repos/qlib_factor_platform
+tmp/reference_repos/alphalens-reloaded
+```
+
+审计文档：
+
+```text
+docs/FACTOR_RESEARCH_ALGORITHM_AUDIT.md
+```
+
+本轮校准结果：
+
+- IC / Rank IC 口径与 Alphalens 的按日横截面 Spearman IC 体系一致。
+- 分组收益补齐为显式输出，不再只依赖单调性摘要。
+- 换手率修正为 Alphalens 风格：本期 top quantile 中新进入标的数除以本期 top quantile 标的数。
+- 相关性保留 Spearman 排序相关，用于候选池冗余过滤。
+- 继续保留 `tradable_only` 前置过滤，确保因子研究不会绕过已有 `data_quality` 和 `tradability` 约束。
+
+新增/更新输出：
+
+```text
+outputs/factor_research_v2/liquid2000_default/factor_group_return.csv
+outputs/factor_research_v2/liquid2000_default/factor_group_return_summary.csv
+outputs/factor_research_v2/liquid2000_default/factor_turnover.csv
+outputs/factor_research_v2/liquid2000_default/factor_research_v2_report.md
+```

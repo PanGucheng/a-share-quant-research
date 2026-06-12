@@ -29,7 +29,13 @@ from factor_research.diagnostics import (
 )
 from factor_research.evaluator import FactorResearchConfig, load_feature_frame
 from factor_research.factor_library import LABEL_COLUMNS, add_basic_factors
-from factor_research.metrics import coverage_missing, summarize_turnover, top_quantile_turnover
+from factor_research.metrics import (
+    coverage_missing,
+    group_returns,
+    summarize_group_returns,
+    summarize_turnover,
+    top_quantile_turnover,
+)
 from factor_research.registry import enabled_specs, registry_frame
 from factor_research.report import markdown_table
 from factor_research.selector import select_factor_candidates
@@ -202,6 +208,7 @@ def write_report(
     summary: pd.DataFrame,
     monotonicity: pd.DataFrame,
     bucket_result: pd.DataFrame,
+    group_return_summary: pd.DataFrame,
     correlation: pd.DataFrame,
     coverage: pd.DataFrame,
     turnover_summary: pd.DataFrame,
@@ -233,6 +240,17 @@ def write_report(
         .sort_values("directional_spread", ascending=False)
         .head(20)
         if not monotonicity.empty
+        else pd.DataFrame()
+    )
+    group_return_view = (
+        group_return_summary[
+            (group_return_summary["window"] == "main_research_2021_2023")
+            & (group_return_summary["sample"] == "tradable_only")
+            & (group_return_summary["label"] == "label_20d_t1")
+        ]
+        .sort_values(["factor", "quantile"])
+        .head(80)
+        if not group_return_summary.empty
         else pd.DataFrame()
     )
 
@@ -353,6 +371,23 @@ def write_report(
             else pd.DataFrame()
         ),
         "",
+        "## Main Research Group Returns",
+        "",
+        markdown_table(
+            group_return_view[
+                [
+                    "factor",
+                    "expected_direction",
+                    "quantile",
+                    "mean_group_return",
+                    "std_group_return",
+                    "group_return_dates",
+                ]
+            ]
+            if not group_return_view.empty
+            else pd.DataFrame()
+        ),
+        "",
         "## Main Research Turnover",
         "",
         markdown_table(
@@ -379,6 +414,8 @@ def write_report(
         "- `factor_summary.csv`",
         "- `factor_time_slice.csv`",
         "- `factor_bucket_ic.csv`",
+        "- `factor_group_return.csv`",
+        "- `factor_group_return_summary.csv`",
         "- `factor_group_monotonicity.csv`",
         "- `factor_correlation.csv`",
         "- `factor_candidate_decision.csv`",
@@ -394,7 +431,8 @@ def write_report(
         "- `watch` means the factor needs a clearer direction, richer neutralization, or more out-of-sample evidence.",
         "- `reject` means the current evidence is weak or redundant under these rules.",
         f"- Diagnostic rows: summary `{len(summary)}`, monotonicity `{len(monotonicity)}`, "
-        f"bucket IC `{len(bucket_result)}`, correlation `{len(correlation)}`, coverage `{len(coverage)}`.",
+        f"bucket IC `{len(bucket_result)}`, group returns `{len(group_return_summary)}`, "
+        f"correlation `{len(correlation)}`, coverage `{len(coverage)}`.",
     ]
     output.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
@@ -412,6 +450,7 @@ def run(args: argparse.Namespace) -> Path:
     time_slices: list[pd.DataFrame] = [legacy_summary] if not legacy_summary.empty else []
     monotonicity_frames: list[pd.DataFrame] = []
     bucket_frames: list[pd.DataFrame] = []
+    group_return_frames: list[pd.DataFrame] = []
     correlation_frames: list[pd.DataFrame] = []
     coverage_frames: list[pd.DataFrame] = []
     turnover_frames: list[pd.DataFrame] = []
@@ -441,6 +480,9 @@ def run(args: argparse.Namespace) -> Path:
             coverage_frames.append(coverage_missing(sample_frame, specs, sample_labels, window.name, sample_name))
             turnover_frames.append(
                 top_quantile_turnover(sample_frame, specs, window.name, sample_name, args.quantiles, args.min_count)
+            )
+            group_return_frames.append(
+                group_returns(sample_frame, specs, sample_labels, window.name, sample_name, args.quantiles, args.min_count)
             )
             if sample_name == "tradable_only":
                 factor_data_samples.append(to_factor_data(sample_frame.head(args.factor_data_sample_rows), specs, sample_labels, args.quantiles))
@@ -484,6 +526,8 @@ def run(args: argparse.Namespace) -> Path:
     time_slice = concat_or_empty(time_slices)
     monotonicity = concat_or_empty(monotonicity_frames)
     bucket_result = concat_or_empty(bucket_frames)
+    group_return = concat_or_empty(group_return_frames)
+    group_return_summary = summarize_group_returns(group_return)
     correlation = concat_or_empty(correlation_frames)
     coverage = concat_or_empty(coverage_frames)
     turnover = concat_or_empty(turnover_frames)
@@ -507,6 +551,8 @@ def run(args: argparse.Namespace) -> Path:
     summary.to_csv(output_dir / "factor_summary.csv", index=False, encoding="utf-8-sig")
     time_slice.to_csv(output_dir / "factor_time_slice.csv", index=False, encoding="utf-8-sig")
     bucket_result.to_csv(output_dir / "factor_bucket_ic.csv", index=False, encoding="utf-8-sig")
+    group_return.to_csv(output_dir / "factor_group_return.csv", index=False, encoding="utf-8-sig")
+    group_return_summary.to_csv(output_dir / "factor_group_return_summary.csv", index=False, encoding="utf-8-sig")
     monotonicity.to_csv(output_dir / "factor_group_monotonicity.csv", index=False, encoding="utf-8-sig")
     correlation.to_csv(output_dir / "factor_correlation.csv", index=False, encoding="utf-8-sig")
     decisions.to_csv(output_dir / "factor_candidate_decision.csv", index=False, encoding="utf-8-sig")
@@ -521,6 +567,7 @@ def run(args: argparse.Namespace) -> Path:
         summary,
         monotonicity,
         bucket_result,
+        group_return_summary,
         correlation,
         coverage,
         turnover_summary,
