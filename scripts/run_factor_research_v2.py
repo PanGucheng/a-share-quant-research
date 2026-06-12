@@ -12,21 +12,27 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-from factor_research.candidate import decide_candidates
+from factor_research.candidate import CandidateSelectionRules
+from factor_research.dataset import (
+    TradableFilterConfig,
+    apply_tradable_filter,
+    factor_data_schema_markdown,
+    prepare_research_frame,
+    to_factor_data,
+)
 from factor_research.diagnostics import (
-    attach_tradability,
     bucket_ic,
     factor_correlation,
     group_monotonicity,
     information_coefficient,
-    load_tradability_labels,
     summarize_factors,
-    tradable_only,
 )
 from factor_research.evaluator import FactorResearchConfig, load_feature_frame
 from factor_research.factor_library import LABEL_COLUMNS, add_basic_factors
+from factor_research.metrics import coverage_missing, summarize_turnover, top_quantile_turnover
 from factor_research.registry import enabled_specs, registry_frame
 from factor_research.report import markdown_table
+from factor_research.selector import select_factor_candidates
 
 
 DEFAULT_PROVIDER_URI = "E:/qlib_prj/qlib_data/cn_data_community_20260609_derived"
@@ -42,6 +48,7 @@ class ResearchWindow:
     start: str
     end: str
     tradability_dir: Path | None = None
+    data_quality_dir: Path | None = None
 
 
 DEFAULT_WINDOWS = [
@@ -52,12 +59,14 @@ DEFAULT_WINDOWS = [
         "2021-01-01",
         "2023-12-29",
         Path("outputs/tradability/all_stock_shsz_liquid2000_2021-01-01_2023-12-29"),
+        Path("outputs/data_quality_tradability/all_stock_shsz_liquid2000_2021-01-01_2023-12-29"),
     ),
     ResearchWindow(
         "recent_oos_2024_2026",
         "2024-01-01",
         "2026-06-09",
         Path("outputs/tradability/all_stock_shsz_liquid2000_2024-01-01_2026-06-09"),
+        Path("outputs/data_quality_tradability/all_stock_shsz_liquid2000_2024-01-01_2026-06-09"),
     ),
 ]
 
@@ -79,11 +88,12 @@ def parse_optional_labels(value: str) -> list[str]:
 
 
 def parse_window(value: str) -> ResearchWindow:
-    parts = [part.strip() for part in value.split(",", 3)]
+    parts = [part.strip() for part in value.split(",", 4)]
     if len(parts) < 3:
-        raise argparse.ArgumentTypeError("--window must be name,start,end[,tradability_dir]")
-    tradability_dir = Path(parts[3]) if len(parts) == 4 and parts[3] else None
-    return ResearchWindow(parts[0], parts[1], parts[2], tradability_dir)
+        raise argparse.ArgumentTypeError("--window must be name,start,end[,tradability_dir[,data_quality_dir]]")
+    tradability_dir = Path(parts[3]) if len(parts) >= 4 and parts[3] else None
+    data_quality_dir = Path(parts[4]) if len(parts) == 5 and parts[4] else None
+    return ResearchWindow(parts[0], parts[1], parts[2], tradability_dir, data_quality_dir)
 
 
 def resolve_path(path: Path) -> Path:
@@ -136,9 +146,19 @@ def build_window_samples(
     if window.tradability_dir is None:
         return frame, frame.iloc[0:0].copy()
 
-    labels = load_tradability_labels(resolve_path(window.tradability_dir))
-    with_labels = attach_tradability(frame, labels)
-    return frame, tradable_only(with_labels, min_liquidity_bucket, min_tradability_score)
+    with_context = prepare_research_frame(
+        frame,
+        resolve_path(window.tradability_dir),
+        resolve_path(window.data_quality_dir) if window.data_quality_dir else None,
+    )
+    tradable = apply_tradable_filter(
+        with_context,
+        TradableFilterConfig(
+            min_liquidity_bucket=min_liquidity_bucket,
+            min_tradability_score=min_tradability_score,
+        ),
+    )
+    return frame, tradable
 
 
 def legacy_time_slice_dir(root: Path, market: str, label: str, window: ResearchWindow) -> Path:
@@ -183,6 +203,8 @@ def write_report(
     monotonicity: pd.DataFrame,
     bucket_result: pd.DataFrame,
     correlation: pd.DataFrame,
+    coverage: pd.DataFrame,
+    turnover_summary: pd.DataFrame,
     decisions: pd.DataFrame,
     output: Path,
 ) -> None:
@@ -229,6 +251,7 @@ def write_report(
         f"- Min count per daily IC bucket: `{args.min_count}`",
         f"- Tradable filter: `can_buy == true`, `liquidity_bucket >= {args.min_liquidity_bucket}`, "
         f"`tradability_score >= {args.min_tradability_score}`",
+        "- Data quality filter: exclude `severe` rows and `has_core_missing == true` when fields are available.",
         "",
         "## Windows",
         "",
@@ -246,7 +269,9 @@ def write_report(
                     "decision",
                     "reason",
                     "main_directional_rank_ic",
+                    "main_ic_win_rate",
                     "oos_directional_rank_ic",
+                    "mean_top_quantile_turnover",
                     "stability_score",
                     "monotonicity_score",
                     "directional_spread",
@@ -270,7 +295,9 @@ def write_report(
                     "factor",
                     "category",
                     "main_directional_rank_ic",
+                    "main_ic_win_rate",
                     "oos_directional_rank_ic",
+                    "mean_top_quantile_turnover",
                     "stability_score",
                     "monotonicity_score",
                     "directional_spread",
@@ -297,9 +324,11 @@ def write_report(
                     "category",
                     "expected_direction",
                     "coverage",
+                    "missing_rate",
                     "mean_rank_ic",
                     "directional_mean_rank_ic",
                     "rank_icir",
+                    "ic_win_rate",
                     "ic_dates",
                 ]
             ]
@@ -324,6 +353,26 @@ def write_report(
             else pd.DataFrame()
         ),
         "",
+        "## Main Research Turnover",
+        "",
+        markdown_table(
+            turnover_summary[
+                (turnover_summary["window"] == "main_research_2021_2023")
+                & (turnover_summary["sample"] == "tradable_only")
+            ][
+                [
+                    "factor",
+                    "category",
+                    "expected_direction",
+                    "mean_top_quantile_turnover",
+                    "median_top_quantile_turnover",
+                    "turnover_dates",
+                ]
+            ]
+            if not turnover_summary.empty
+            else pd.DataFrame()
+        ),
+        "",
         "## Output Files",
         "",
         "- `factor_registry.csv`",
@@ -333,6 +382,10 @@ def write_report(
         "- `factor_group_monotonicity.csv`",
         "- `factor_correlation.csv`",
         "- `factor_candidate_decision.csv`",
+        "- `factor_missing_coverage.csv`",
+        "- `factor_turnover.csv`",
+        "- `factor_turnover_summary.csv`",
+        "- `factor_data_schema.md`",
         "- `factor_research_v2_report.md`",
         "",
         "## Notes",
@@ -341,7 +394,7 @@ def write_report(
         "- `watch` means the factor needs a clearer direction, richer neutralization, or more out-of-sample evidence.",
         "- `reject` means the current evidence is weak or redundant under these rules.",
         f"- Diagnostic rows: summary `{len(summary)}`, monotonicity `{len(monotonicity)}`, "
-        f"bucket IC `{len(bucket_result)}`, correlation `{len(correlation)}`.",
+        f"bucket IC `{len(bucket_result)}`, correlation `{len(correlation)}`, coverage `{len(coverage)}`.",
     ]
     output.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
@@ -360,6 +413,9 @@ def run(args: argparse.Namespace) -> Path:
     monotonicity_frames: list[pd.DataFrame] = []
     bucket_frames: list[pd.DataFrame] = []
     correlation_frames: list[pd.DataFrame] = []
+    coverage_frames: list[pd.DataFrame] = []
+    turnover_frames: list[pd.DataFrame] = []
+    factor_data_samples: list[pd.DataFrame] = []
 
     for window in windows:
         missing_raw_labels = [label for label in args.labels if not has_legacy_raw(legacy_summary, window, label)]
@@ -382,6 +438,12 @@ def run(args: argparse.Namespace) -> Path:
             samples.append(("tradable_only", tradable_frame, args.labels))
         for sample_name, sample_frame, sample_labels in samples:
             print(f"  Sample {sample_name}: {len(sample_frame):,} rows", flush=True)
+            coverage_frames.append(coverage_missing(sample_frame, specs, sample_labels, window.name, sample_name))
+            turnover_frames.append(
+                top_quantile_turnover(sample_frame, specs, window.name, sample_name, args.quantiles, args.min_count)
+            )
+            if sample_name == "tradable_only":
+                factor_data_samples.append(to_factor_data(sample_frame.head(args.factor_data_sample_rows), specs, sample_labels, args.quantiles))
             for label in sample_labels:
                 print(f"    Label {label}: IC/summary", flush=True)
                 ic = information_coefficient(sample_frame, specs, label, args.min_count)
@@ -423,7 +485,23 @@ def run(args: argparse.Namespace) -> Path:
     monotonicity = concat_or_empty(monotonicity_frames)
     bucket_result = concat_or_empty(bucket_frames)
     correlation = concat_or_empty(correlation_frames)
-    decisions = decide_candidates(summary, monotonicity, correlation, specs)
+    coverage = concat_or_empty(coverage_frames)
+    turnover = concat_or_empty(turnover_frames)
+    turnover_summary = summarize_turnover(turnover)
+    factor_data_sample = concat_or_empty(factor_data_samples)
+    rules = CandidateSelectionRules(
+        min_coverage=args.min_coverage,
+        max_missing_rate=args.max_missing_rate,
+        min_main_directional_rank_ic=args.min_main_directional_rank_ic,
+        min_oos_directional_rank_ic=args.min_oos_directional_rank_ic,
+        min_rank_ic_win_rate=args.min_rank_ic_win_rate,
+        min_positive_slices=args.min_positive_slices,
+        min_directional_spread=args.min_directional_spread,
+        min_monotonicity_score=args.min_monotonicity_score,
+        max_correlation=args.max_correlation,
+        max_top_quantile_turnover=args.max_top_quantile_turnover,
+    )
+    decisions = select_factor_candidates(summary, monotonicity, correlation, specs, turnover_summary, rules)
 
     registry.to_csv(output_dir / "factor_registry.csv", index=False, encoding="utf-8-sig")
     summary.to_csv(output_dir / "factor_summary.csv", index=False, encoding="utf-8-sig")
@@ -432,6 +510,11 @@ def run(args: argparse.Namespace) -> Path:
     monotonicity.to_csv(output_dir / "factor_group_monotonicity.csv", index=False, encoding="utf-8-sig")
     correlation.to_csv(output_dir / "factor_correlation.csv", index=False, encoding="utf-8-sig")
     decisions.to_csv(output_dir / "factor_candidate_decision.csv", index=False, encoding="utf-8-sig")
+    coverage.to_csv(output_dir / "factor_missing_coverage.csv", index=False, encoding="utf-8-sig")
+    turnover.to_csv(output_dir / "factor_turnover.csv", index=False, encoding="utf-8-sig")
+    turnover_summary.to_csv(output_dir / "factor_turnover_summary.csv", index=False, encoding="utf-8-sig")
+    factor_data_sample.to_csv(output_dir / "factor_data_sample.csv", index=False, encoding="utf-8-sig")
+    (output_dir / "factor_data_schema.md").write_text(factor_data_schema_markdown(), encoding="utf-8")
     write_report(
         args,
         windows,
@@ -439,6 +522,8 @@ def run(args: argparse.Namespace) -> Path:
         monotonicity,
         bucket_result,
         correlation,
+        coverage,
+        turnover_summary,
         decisions,
         output_dir / "factor_research_v2_report.md",
     )
@@ -461,11 +546,22 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--min-count", type=int, default=50)
     parser.add_argument("--min-liquidity-bucket", type=int, default=3)
     parser.add_argument("--min-tradability-score", type=float, default=75.0)
+    parser.add_argument("--min-coverage", type=float, default=0.90)
+    parser.add_argument("--max-missing-rate", type=float, default=0.10)
+    parser.add_argument("--min-main-directional-rank-ic", type=float, default=0.03)
+    parser.add_argument("--min-oos-directional-rank-ic", type=float, default=0.0)
+    parser.add_argument("--min-rank-ic-win-rate", type=float, default=0.52)
+    parser.add_argument("--min-positive-slices", type=int, default=3)
+    parser.add_argument("--min-directional-spread", type=float, default=0.0)
+    parser.add_argument("--min-monotonicity-score", type=float, default=0.0)
+    parser.add_argument("--max-correlation", type=float, default=0.80)
+    parser.add_argument("--max-top-quantile-turnover", type=float, default=1.0)
+    parser.add_argument("--factor-data-sample-rows", type=int, default=200)
     parser.add_argument(
         "--window",
         type=parse_window,
         action="append",
-        help="Optional research window: name,start,end[,tradability_dir]. Can be repeated.",
+        help="Optional research window: name,start,end[,tradability_dir[,data_quality_dir]]. Can be repeated.",
     )
     return parser
 

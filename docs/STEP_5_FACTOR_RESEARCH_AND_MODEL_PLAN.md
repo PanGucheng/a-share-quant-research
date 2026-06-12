@@ -735,3 +735,75 @@ monotonicity_score > 0
 3. 增加分层诊断视图：按年份、市场状态、行业、流动性桶、波动率桶输出 IC 和分组收益。
 4. 建立候选因子版本记录：每次新增因子都输出 candidate pool 差异，避免凭单次结果拍脑袋。
 5. 在候选池稳定前，不新增复杂模型，不把 `promote` 因子直接等同于可实盘策略。
+
+## 22. 参考 qlib_factor_platform 与 Alphalens 后的最小实现
+
+状态：已落地第一版接口增强。
+
+本阶段只增强因子研究与因子筛选模块，不替换 Qlib baseline，不新增模型训练，不做实盘，不引入复杂 UI。
+
+新增文件：
+
+```text
+factor_research/dataset.py
+factor_research/metrics.py
+factor_research/selector.py
+docs/FACTOR_RESEARCH_MODULE_PLAN.md
+```
+
+借鉴边界：
+
+- 借鉴 `qlib_factor_platform` 的因子注册、因子计算、分析指标、运行工作流分层方式。
+- 借鉴 Alphalens / alphalens-reloaded 的 `factor_data` 思路和 IC、Rank IC、ICIR、分组收益、换手率、相关性等指标体系。
+- 不借鉴 Streamlit UI，不把本项目改造成独立平台，不绕开现有 Qlib 主线。
+
+当前 `factor_research` 数据流：
+
+```text
+Qlib provider
+  -> factor_library 基础因子
+  -> dataset 合并 tradability_labels.csv
+  -> dataset 合并 data_quality row_issues.csv
+  -> tradable_only 前置过滤
+  -> diagnostics / metrics 指标
+  -> selector 候选筛选
+  -> CSV / Markdown 输出
+```
+
+新增输出：
+
+```text
+factor_data_schema.md
+factor_data_sample.csv
+factor_missing_coverage.csv
+factor_turnover.csv
+factor_turnover_summary.csv
+```
+
+新增指标：
+
+- `missing_rate`
+- `ic_win_rate`
+- `mean_top_quantile_turnover`
+- `median_top_quantile_turnover`
+- `max_top_quantile_turnover`
+- `has_data_quality_issue`
+
+筛选规则已从硬编码扩展为参数化规则，默认包括：
+
+```text
+coverage >= 0.90
+missing_rate <= 0.10
+main directional Rank IC > 0.03
+recent OOS directional Rank IC > 0
+IC win rate >= 0.52
+top quantile turnover <= 1.0
+correlation < 0.80
+```
+
+后续继续完善：
+
+1. 将 `factor_research/config.yaml` 直接接入 runner，减少命令行参数长度。
+2. 增加行业、市值、流动性、波动率中性化。
+3. 增加市场状态切片。
+4. 扩展因子注册表，而不是直接进入模型训练。

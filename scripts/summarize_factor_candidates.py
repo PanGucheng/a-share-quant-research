@@ -37,6 +37,10 @@ def markdown_table(frame: pd.DataFrame) -> str:
     return "\n".join(lines)
 
 
+def existing_columns(frame: pd.DataFrame, columns: list[str]) -> list[str]:
+    return [column for column in columns if column in frame.columns]
+
+
 def write_markdown(pool: pd.DataFrame, output: Path) -> None:
     counts = pool.groupby(["run_name", "label", "decision"]).size().reset_index(name="count")
     promoted = pool[pool["decision"] == "promote"].sort_values(
@@ -61,7 +65,8 @@ def write_markdown(pool: pd.DataFrame, output: Path) -> None:
         "## Promote",
         "",
         markdown_table(
-            promoted[
+            promoted[existing_columns(
+                promoted,
                 [
                     "run_name",
                     "label",
@@ -69,13 +74,15 @@ def write_markdown(pool: pd.DataFrame, output: Path) -> None:
                     "category",
                     "expected_direction",
                     "main_directional_rank_ic",
+                    "main_ic_win_rate",
                     "oos_directional_rank_ic",
+                    "mean_top_quantile_turnover",
                     "stability_score",
                     "monotonicity_score",
                     "directional_spread",
                     "reason",
-                ]
-            ]
+                ],
+            )]
             if not promoted.empty
             else pd.DataFrame()
         ),
@@ -83,7 +90,8 @@ def write_markdown(pool: pd.DataFrame, output: Path) -> None:
         "## Watch",
         "",
         markdown_table(
-            watch[
+            watch[existing_columns(
+                watch,
                 [
                     "run_name",
                     "label",
@@ -91,10 +99,12 @@ def write_markdown(pool: pd.DataFrame, output: Path) -> None:
                     "category",
                     "expected_direction",
                     "main_directional_rank_ic",
+                    "main_ic_win_rate",
                     "oos_directional_rank_ic",
+                    "mean_top_quantile_turnover",
                     "reason",
-                ]
-            ].head(40)
+                ],
+            )].head(40)
             if not watch.empty
             else pd.DataFrame()
         ),
@@ -102,7 +112,8 @@ def write_markdown(pool: pd.DataFrame, output: Path) -> None:
         "## Reject",
         "",
         markdown_table(
-            rejected[
+            rejected[existing_columns(
+                rejected,
                 [
                     "run_name",
                     "label",
@@ -110,11 +121,13 @@ def write_markdown(pool: pd.DataFrame, output: Path) -> None:
                     "category",
                     "expected_direction",
                     "main_directional_rank_ic",
+                    "main_ic_win_rate",
                     "oos_directional_rank_ic",
+                    "mean_top_quantile_turnover",
                     "reason",
                     "redundancy_group",
-                ]
-            ].head(40)
+                ],
+            )].head(40)
             if not rejected.empty
             else pd.DataFrame()
         ),

@@ -26,12 +26,18 @@ def load_tradability_labels(path: Path) -> pd.DataFrame:
     if not labels_path.exists():
         raise FileNotFoundError(f"Missing tradability labels: {labels_path}")
     labels = pd.read_csv(labels_path, parse_dates=["datetime"])
-    columns = ["datetime", "instrument", "can_buy", "liquidity_bucket", "tradability_score"]
-    missing = [column for column in columns if column not in labels.columns]
+    required_columns = ["datetime", "instrument", "can_buy", "liquidity_bucket", "tradability_score"]
+    optional_columns = ["can_sell", "data_quality_status", "has_core_missing", "disabled_reason"]
+    columns = required_columns + [column for column in optional_columns if column in labels.columns]
+    missing = [column for column in required_columns if column not in labels.columns]
     if missing:
         raise ValueError(f"tradability_labels.csv missing required columns: {missing}")
     labels["instrument"] = labels["instrument"].astype(str).str.upper()
     labels["can_buy"] = labels["can_buy"].astype(bool)
+    if "can_sell" in labels.columns:
+        labels["can_sell"] = labels["can_sell"].astype(bool)
+    if "has_core_missing" in labels.columns:
+        labels["has_core_missing"] = labels["has_core_missing"].astype(bool)
     labels["liquidity_bucket"] = pd.to_numeric(labels["liquidity_bucket"], errors="coerce")
     labels["tradability_score"] = pd.to_numeric(labels["tradability_score"], errors="coerce")
     return labels[columns]
@@ -42,6 +48,14 @@ def attach_tradability(frame: pd.DataFrame, labels: pd.DataFrame) -> pd.DataFram
     result["instrument"] = result["instrument"].astype(str).str.upper()
     result = result.merge(labels, on=["datetime", "instrument"], how="left")
     result["can_buy"] = result["can_buy"].fillna(False).astype(bool)
+    if "can_sell" in result.columns:
+        result["can_sell"] = result["can_sell"].fillna(False).astype(bool)
+    if "has_core_missing" in result.columns:
+        result["has_core_missing"] = result["has_core_missing"].fillna(True).astype(bool)
+    if "data_quality_status" in result.columns:
+        result["data_quality_status"] = result["data_quality_status"].fillna("missing_tradability")
+    if "disabled_reason" in result.columns:
+        result["disabled_reason"] = result["disabled_reason"].fillna("missing_tradability")
     result["liquidity_bucket"] = pd.to_numeric(result["liquidity_bucket"], errors="coerce")
     result["tradability_score"] = pd.to_numeric(result["tradability_score"], errors="coerce")
     return result
@@ -96,6 +110,8 @@ def summarize_factors(
         ic = factor_ic["ic"].dropna() if not factor_ic.empty else pd.Series(dtype=float)
         rank_ic = factor_ic["rank_ic"].dropna() if not factor_ic.empty else pd.Series(dtype=float)
         mean_rank_ic = rank_ic.mean() if not rank_ic.empty else np.nan
+        sign = spec.direction_sign
+        directional_rank_ic = rank_ic * sign if sign is not None else pd.Series(dtype=float)
         rows.append(
             {
                 "window": window_name,
@@ -105,11 +121,13 @@ def summarize_factors(
                 "category": spec.category,
                 "expected_direction": spec.expected_direction,
                 "coverage": len(valid) / total_rows if total_rows else np.nan,
+                "missing_rate": 1 - len(valid) / total_rows if total_rows else np.nan,
                 "mean_ic": ic.mean() if not ic.empty else np.nan,
                 "icir": ic.mean() / ic.std() if len(ic) > 1 and ic.std() else np.nan,
                 "mean_rank_ic": mean_rank_ic,
                 "directional_mean_rank_ic": direction_adjust(mean_rank_ic, spec),
                 "rank_icir": rank_ic.mean() / rank_ic.std() if len(rank_ic) > 1 and rank_ic.std() else np.nan,
+                "ic_win_rate": (directional_rank_ic > 0).mean() if not directional_rank_ic.empty else np.nan,
                 "ic_dates": int(len(rank_ic)),
                 "valid_rows": int(len(valid)),
             }

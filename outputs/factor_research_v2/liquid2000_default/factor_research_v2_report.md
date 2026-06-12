@@ -6,6 +6,7 @@
 - Quantiles: `5`
 - Min count per daily IC bucket: `50`
 - Tradable filter: `can_buy == true`, `liquidity_bucket >= 3`, `tradability_score >= 75.0`
+- Data quality filter: exclude `severe` rows and `has_core_missing == true` when fields are available.
 
 ## Windows
 
@@ -16,28 +17,28 @@
 
 ## Candidate Decisions
 
-| label | factor | category | expected_direction | decision | reason | main_directional_rank_ic | oos_directional_rank_ic | stability_score | monotonicity_score | directional_spread | redundancy_group |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| label_10d_t1 | amplitude_20 | risk | negative | promote | passes_rules | 0.087936 | 0.068054 | 1.000000 | 0.800000 | 0.006657 |  |
-| label_10d_t1 | std_20 | risk | negative | reject | passes_rules|redundant_weak | 0.078755 | 0.063243 | 1.000000 | 0.400000 | 0.005526 | amplitude_20 |
-| label_10d_t1 | rev_5 | reversal | positive | watch | insufficient_evidence | 0.025876 | 0.034651 | 1.000000 | 0.400000 | 0.004162 |  |
-| label_10d_t1 | ret_5 | momentum | watch | watch | watch_direction |  |  | 0.000000 |  |  |  |
-| label_10d_t1 | ret_10 | momentum | watch | watch | watch_direction |  |  | 0.000000 |  |  |  |
-| label_10d_t1 | ret_20 | momentum | watch | watch | watch_direction |  |  | 0.000000 |  |  |  |
-| label_10d_t1 | amount_mean_20 | liquidity | watch | watch | watch_direction |  |  | 0.000000 |  |  |  |
-| label_10d_t1 | amount_std_20 | liquidity | watch | watch | watch_direction |  |  | 0.000000 |  |  |  |
-| label_10d_t1 | volume_ratio_5_20 | liquidity | watch | watch | watch_direction |  |  | 0.000000 |  |  |  |
-| label_10d_t1 | corr_ret_volume_20 | price_volume | watch | watch | watch_direction |  |  | 0.000000 |  |  |  |
-| label_20d_t1 | amplitude_20 | risk | negative | promote | passes_rules | 0.109863 | 0.075408 | 1.000000 | 1.000000 | 0.013217 |  |
-| label_20d_t1 | std_20 | risk | negative | reject | passes_rules|redundant_weak | 0.094345 | 0.068258 | 1.000000 | 1.000000 | 0.010865 | amplitude_20 |
-| label_20d_t1 | rev_5 | reversal | positive | watch | insufficient_evidence | 0.019598 | 0.035178 | 1.000000 | 0.400000 | 0.004507 |  |
-| label_20d_t1 | ret_5 | momentum | watch | watch | watch_direction |  |  | 0.000000 |  |  |  |
-| label_20d_t1 | ret_10 | momentum | watch | watch | watch_direction |  |  | 0.000000 |  |  |  |
-| label_20d_t1 | ret_20 | momentum | watch | watch | watch_direction |  |  | 0.000000 |  |  |  |
-| label_20d_t1 | amount_mean_20 | liquidity | watch | watch | watch_direction |  |  | 0.000000 |  |  |  |
-| label_20d_t1 | amount_std_20 | liquidity | watch | watch | watch_direction |  |  | 0.000000 |  |  |  |
-| label_20d_t1 | volume_ratio_5_20 | liquidity | watch | watch | watch_direction |  |  | 0.000000 |  |  |  |
-| label_20d_t1 | corr_ret_volume_20 | price_volume | watch | watch | watch_direction |  |  | 0.000000 |  |  |  |
+| label | factor | category | expected_direction | decision | reason | main_directional_rank_ic | main_ic_win_rate | oos_directional_rank_ic | mean_top_quantile_turnover | stability_score | monotonicity_score | directional_spread | redundancy_group |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| label_10d_t1 | amplitude_20 | risk | negative | promote | passes_rules | 0.087936 | 0.668044 | 0.068054 | 0.111795 | 1.000000 | 0.800000 | 0.006657 |  |
+| label_10d_t1 | std_20 | risk | negative | reject | passes_rules|redundant_weak | 0.078755 | 0.684573 | 0.063243 | 0.131880 | 1.000000 | 0.400000 | 0.005526 | amplitude_20 |
+| label_10d_t1 | rev_5 | reversal | positive | watch | insufficient_evidence | 0.025876 | 0.546832 | 0.034651 | 0.391654 | 1.000000 | 0.400000 | 0.004162 |  |
+| label_10d_t1 | ret_5 | momentum | watch | watch | watch_direction |  |  |  | 0.398787 | 0.000000 |  |  |  |
+| label_10d_t1 | ret_10 | momentum | watch | watch | watch_direction |  |  |  | 0.302616 | 0.000000 |  |  |  |
+| label_10d_t1 | ret_20 | momentum | watch | watch | watch_direction |  |  |  | 0.235884 | 0.000000 |  |  |  |
+| label_10d_t1 | amount_mean_20 | liquidity | watch | watch | watch_direction |  |  |  | 0.042955 | 0.000000 |  |  |  |
+| label_10d_t1 | amount_std_20 | liquidity | watch | watch | watch_direction |  |  |  | 0.065733 | 0.000000 |  |  |  |
+| label_10d_t1 | volume_ratio_5_20 | liquidity | watch | watch | watch_direction |  |  |  | 0.265482 | 0.000000 |  |  |  |
+| label_10d_t1 | corr_ret_volume_20 | price_volume | watch | watch | watch_direction |  |  |  | 0.237294 | 0.000000 |  |  |  |
+| label_20d_t1 | amplitude_20 | risk | negative | promote | passes_rules | 0.109863 | 0.680441 | 0.075408 | 0.111795 | 1.000000 | 1.000000 | 0.013217 |  |
+| label_20d_t1 | std_20 | risk | negative | reject | passes_rules|redundant_weak | 0.094345 | 0.687328 | 0.068258 | 0.131880 | 1.000000 | 1.000000 | 0.010865 | amplitude_20 |
+| label_20d_t1 | rev_5 | reversal | positive | watch | insufficient_evidence | 0.019598 | 0.550964 | 0.035178 | 0.391654 | 1.000000 | 0.400000 | 0.004507 |  |
+| label_20d_t1 | ret_5 | momentum | watch | watch | watch_direction |  |  |  | 0.398787 | 0.000000 |  |  |  |
+| label_20d_t1 | ret_10 | momentum | watch | watch | watch_direction |  |  |  | 0.302616 | 0.000000 |  |  |  |
+| label_20d_t1 | ret_20 | momentum | watch | watch | watch_direction |  |  |  | 0.235884 | 0.000000 |  |  |  |
+| label_20d_t1 | amount_mean_20 | liquidity | watch | watch | watch_direction |  |  |  | 0.042955 | 0.000000 |  |  |  |
+| label_20d_t1 | amount_std_20 | liquidity | watch | watch | watch_direction |  |  |  | 0.065733 | 0.000000 |  |  |  |
+| label_20d_t1 | volume_ratio_5_20 | liquidity | watch | watch | watch_direction |  |  |  | 0.265482 | 0.000000 |  |  |  |
+| label_20d_t1 | corr_ret_volume_20 | price_volume | watch | watch | watch_direction |  |  |  | 0.237294 | 0.000000 |  |  |  |
 
 ## Decision Counts
 
@@ -52,10 +53,10 @@
 
 ## Promoted Factors
 
-| label | factor | category | main_directional_rank_ic | oos_directional_rank_ic | stability_score | monotonicity_score | directional_spread |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| label_10d_t1 | amplitude_20 | risk | 0.087936 | 0.068054 | 1.000000 | 0.800000 | 0.006657 |
-| label_20d_t1 | amplitude_20 | risk | 0.109863 | 0.075408 | 1.000000 | 1.000000 | 0.013217 |
+| label | factor | category | main_directional_rank_ic | main_ic_win_rate | oos_directional_rank_ic | mean_top_quantile_turnover | stability_score | monotonicity_score | directional_spread |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| label_10d_t1 | amplitude_20 | risk | 0.087936 | 0.668044 | 0.068054 | 0.111795 | 1.000000 | 0.800000 | 0.006657 |
+| label_20d_t1 | amplitude_20 | risk | 0.109863 | 0.680441 | 0.075408 | 0.111795 | 1.000000 | 1.000000 | 0.013217 |
 
 ## Watch Factors
 
@@ -80,18 +81,18 @@
 
 ## Main Research Summary
 
-| factor | category | expected_direction | coverage | mean_rank_ic | directional_mean_rank_ic | rank_icir | ic_dates |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| amplitude_20 | risk | negative | 0.990451 | -0.109863 | 0.109863 | -0.594628 | 726 |
-| std_20 | risk | negative | 0.990084 | -0.094345 | 0.094345 | -0.563278 | 726 |
-| rev_5 | reversal | positive | 0.996846 | 0.019598 | 0.019598 | 0.147822 | 726 |
-| ret_5 | momentum | watch | 0.996846 | -0.019598 |  | -0.147822 | 726 |
-| ret_10 | momentum | watch | 0.996289 | -0.034321 |  | -0.257372 | 726 |
-| ret_20 | momentum | watch | 0.996261 | -0.058541 |  | -0.410103 | 726 |
-| amount_mean_20 | liquidity | watch | 0.990451 | -0.098629 |  | -0.788295 | 726 |
-| amount_std_20 | liquidity | watch | 0.990451 | -0.103426 |  | -0.910269 | 726 |
-| volume_ratio_5_20 | liquidity | watch | 0.990451 | -0.005344 |  | -0.056716 | 726 |
-| corr_ret_volume_20 | price_volume | watch | 0.990084 | -0.028685 |  | -0.328498 | 726 |
+| factor | category | expected_direction | coverage | missing_rate | mean_rank_ic | directional_mean_rank_ic | rank_icir | ic_win_rate | ic_dates |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| amplitude_20 | risk | negative | 0.990451 | 0.009549 | -0.109863 | 0.109863 | -0.594628 | 0.680441 | 726 |
+| std_20 | risk | negative | 0.990084 | 0.009916 | -0.094345 | 0.094345 | -0.563278 | 0.687328 | 726 |
+| rev_5 | reversal | positive | 0.996846 | 0.003154 | 0.019598 | 0.019598 | 0.147822 | 0.550964 | 726 |
+| ret_5 | momentum | watch | 0.996846 | 0.003154 | -0.019598 |  | -0.147822 |  | 726 |
+| ret_10 | momentum | watch | 0.996289 | 0.003711 | -0.034321 |  | -0.257372 |  | 726 |
+| ret_20 | momentum | watch | 0.996261 | 0.003739 | -0.058541 |  | -0.410103 |  | 726 |
+| amount_mean_20 | liquidity | watch | 0.990451 | 0.009549 | -0.098629 |  | -0.788295 |  | 726 |
+| amount_std_20 | liquidity | watch | 0.990451 | 0.009549 | -0.103426 |  | -0.910269 |  | 726 |
+| volume_ratio_5_20 | liquidity | watch | 0.990451 | 0.009549 | -0.005344 |  | -0.056716 |  | 726 |
+| corr_ret_volume_20 | price_volume | watch | 0.990084 | 0.009916 | -0.028685 |  | -0.328498 |  | 726 |
 
 ## Main Research Monotonicity
 
@@ -108,6 +109,21 @@
 | volume_ratio_5_20 | watch | -0.001319 | -0.000620 |  |  |
 | corr_ret_volume_20 | watch | 0.001517 | -0.003185 |  |  |
 
+## Main Research Turnover
+
+| factor | category | expected_direction | mean_top_quantile_turnover | median_top_quantile_turnover | turnover_dates |
+| --- | --- | --- | --- | --- | --- |
+| amount_mean_20 | liquidity | watch | 0.042955 | 0.039823 | 725 |
+| amount_std_20 | liquidity | watch | 0.065733 | 0.062222 | 725 |
+| amplitude_20 | risk | negative | 0.111795 | 0.110619 | 725 |
+| corr_ret_volume_20 | price_volume | watch | 0.237294 | 0.230435 | 725 |
+| ret_10 | momentum | watch | 0.302616 | 0.301724 | 725 |
+| ret_20 | momentum | watch | 0.235884 | 0.232456 | 725 |
+| ret_5 | momentum | watch | 0.398787 | 0.395652 | 725 |
+| rev_5 | reversal | positive | 0.391654 | 0.389381 | 725 |
+| std_20 | risk | negative | 0.131880 | 0.129464 | 725 |
+| volume_ratio_5_20 | liquidity | watch | 0.265482 | 0.264069 | 725 |
+
 ## Output Files
 
 - `factor_registry.csv`
@@ -117,6 +133,10 @@
 - `factor_group_monotonicity.csv`
 - `factor_correlation.csv`
 - `factor_candidate_decision.csv`
+- `factor_missing_coverage.csv`
+- `factor_turnover.csv`
+- `factor_turnover_summary.csv`
+- `factor_data_schema.md`
 - `factor_research_v2_report.md`
 
 ## Notes
@@ -124,4 +144,4 @@
 - `promote` means the factor is ready for model feature-pool experiments, not ready for live trading.
 - `watch` means the factor needs a clearer direction, richer neutralization, or more out-of-sample evidence.
 - `reject` means the current evidence is weak or redundant under these rules.
-- Diagnostic rows: summary `120`, monotonicity `40`, bucket IC `300`, correlation `180`.
+- Diagnostic rows: summary `120`, monotonicity `40`, bucket IC `300`, correlation `180`, coverage `40`.
