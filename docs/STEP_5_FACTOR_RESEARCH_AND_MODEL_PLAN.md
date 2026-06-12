@@ -565,3 +565,85 @@ outputs/tradability/all_stock_shsz_liquid2000_2021-01-01_2023-12-29/tradability_
 - 输出 `can_buy`、`can_sell`、`tradability_score` 和 `disabled_reason`。
 - 对 `amount` 缺失做优雅降级，优先使用 `amount`，否则使用 `close * volume`。
 - 对无法精确判断的涨跌停、流动性、质量问题标记 `unknown` 或 `unavailable`，不强行判断。
+
+## 20. 可交易性约束下的低频组合实验
+
+状态：已完成第一轮主窗口与近现实窗口扫描。
+
+新增脚本：
+
+```text
+scripts/run_low_frequency_tradability_portfolio.py
+scripts/run_low_frequency_tradability_scan.py
+scripts/summarize_low_frequency_portfolios.py
+scripts/summarize_tradability_windows.py
+```
+
+新增报告：
+
+```text
+outputs/reports/tradability_window_comparison.md
+outputs/reports/tradability_window_comparison.csv
+outputs/reports/low_frequency_tradability_portfolio_comparison.md
+outputs/reports/low_frequency_tradability_portfolio_comparison.csv
+```
+
+样本窗口：
+
+| window | role |
+| --- | --- |
+| `2021-01-01` to `2023-12-29` | 主研究窗口 |
+| `2024-01-01` to `2026-06-09` | 近现实样本外观察 |
+
+可交易性过滤：
+
+```text
+can_buy == true
+liquidity_bucket >= 3
+tradability_score >= 75
+eligible_count >= topk * 2
+```
+
+组合扫描：
+
+```text
+label_20d_t1 + rebalance_every=20 + topk=100/200/300
+label_10d_t1 + rebalance_every=10 + topk=100/200/300
+cost_bps=5/10/20
+weights:
+  low_risk = std_20:-1,amplitude_20:-1
+  low_risk_rev = std_20:-1,amplitude_20:-1,rev_5:0.25
+  low_risk_momentum_guard = std_20:-1,amplitude_20:-1,ret_20:-0.25
+```
+
+晋级门槛：
+
+```text
+cost_bps = 10
+2021-2023 net annualized excess > 0
+2021-2023 net excess IR >= 0.30
+2024-2026 net annualized excess >= 0
+2024-2026 net excess IR >= -0.20
+average turnover <= 0.35
+```
+
+关键结果：
+
+| window | best observed group | net annualized excess | net excess IR | average turnover |
+| --- | --- | ---: | ---: | ---: |
+| `2021-2023` | `label_20d_t1 top300 low_risk cost10` | `0.021351` | `0.298978` | `0.479905` |
+| `2024-2026` | `label_20d_t1 top200 low_risk cost10` | `-0.082280` | `-0.534014` | `0.447500` |
+
+结论：
+
+- 没有组合通过晋级门槛，不能进入 XGBoost/CatBoost 或更复杂模型对照。
+- 低波动/低振幅在 2021-2023 有弱正超额，但在 2024-2026 明显跑输可交易股票池。
+- 换手仍高于个人投资者目标，月度调仓下仍需进一步降低组合变动。
+- 当前问题不是模型不足，而是因子组合缺少基准相对约束、风格暴露控制和更稳健的市场状态过滤。
+
+下一步：
+
+1. 暂停模型扩展。
+2. 做 benchmark-relative 组合：在流动性桶/风险桶内部选低波动低振幅，而不是全市场直接 TopK。
+3. 引入持仓缓冲区，例如保留上期持仓中仍处于前 40% 的股票，只替换跌出阈值的股票。
+4. 增加市场状态切片，至少区分上涨/下跌/震荡区间，检查低波动因子是否只在特定市场环境有效。
