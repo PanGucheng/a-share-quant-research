@@ -1,0 +1,11 @@
+﻿name,category,expected_direction,dependencies,description,labels,enabled
+ret_5,momentum,watch,$close,5-day return; mainly used to diagnose short-term trend or reversal exposure.,"label_10d_t1,label_20d_t1",True
+ret_10,momentum,watch,$close,10-day return; medium short-term momentum diagnostic.,"label_10d_t1,label_20d_t1",True
+ret_20,momentum,watch,$close,20-day return; medium-term momentum and drawdown exposure diagnostic.,"label_10d_t1,label_20d_t1",True
+rev_5,reversal,positive,$close,Negative 5-day return; short-term reversal score.,"label_10d_t1,label_20d_t1",True
+std_20,risk,negative,$close,20-day return volatility; lower volatility is expected to be better.,"label_10d_t1,label_20d_t1",True
+amplitude_20,risk,negative,"$high,$low,$close",20-day average intraday range; lower range is expected to be better.,"label_10d_t1,label_20d_t1",True
+amount_mean_20,liquidity,watch,$amount,20-day average trading amount; primarily a tradability and exposure diagnostic.,"label_10d_t1,label_20d_t1",True
+amount_std_20,liquidity,watch,$amount,20-day trading amount volatility; liquidity stability diagnostic.,"label_10d_t1,label_20d_t1",True
+volume_ratio_5_20,liquidity,watch,$volume,5-day volume average divided by 20-day volume average.,"label_10d_t1,label_20d_t1",True
+corr_ret_volume_20,price_volume,watch,"$close,$volume",20-day rolling correlation between daily return and volume.,"label_10d_t1,label_20d_t1",True

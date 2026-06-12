@@ -32,11 +32,9 @@ def add_basic_factors(frame: pd.DataFrame) -> pd.DataFrame:
     volume_mean_20 = volume.groupby(frame["instrument"]).rolling(20).mean().reset_index(level=0, drop=True)
     frame["volume_ratio_5_20"] = volume_mean_5 / volume_mean_20
 
-    frame["corr_ret_volume_20"] = np.nan
-    for _, index in frame.groupby("instrument", sort=False).groups.items():
-        inst_return = daily_return.loc[index]
-        inst_volume = volume.loc[index]
-        frame.loc[index, "corr_ret_volume_20"] = inst_return.rolling(20).corr(inst_volume).to_numpy()
+    frame["corr_ret_volume_20"] = frame.groupby("instrument", group_keys=False)[["$close", "$volume"]].apply(
+        lambda inst: inst["$close"].pct_change(fill_method=None).rolling(20).corr(inst["$volume"])
+    )
 
     # A-share T+1 style labels: buy on next close, then hold for N trading days.
     next_close = group["$close"].shift(-1)

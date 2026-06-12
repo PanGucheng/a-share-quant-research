@@ -647,3 +647,91 @@ average turnover <= 0.35
 2. 做 benchmark-relative 组合：在流动性桶/风险桶内部选低波动低振幅，而不是全市场直接 TopK。
 3. 引入持仓缓冲区，例如保留上期持仓中仍处于前 40% 的股票，只替换跌出阈值的股票。
 4. 增加市场状态切片，至少区分上涨/下跌/震荡区间，检查低波动因子是否只在特定市场环境有效。
+
+## 21. 因子研究框架 V2
+
+状态：已完成第一版框架和默认运行结果。
+
+这一步先不继续调具体策略，也不进入 XGBoost/CatBoost。当前目标是把因子研究的基础工具补齐，让后续新增因子、筛选因子、解释因子失效原因时有统一入口。
+
+新增模块：
+
+```text
+factor_research/registry.py
+factor_research/diagnostics.py
+factor_research/candidate.py
+scripts/run_factor_research_v2.py
+scripts/summarize_factor_candidates.py
+```
+
+默认运行：
+
+```powershell
+cd E:\qlib_prj\qlib_baseline
+E:\anaconda_envs\qlib_env\python.exe scripts\run_factor_research_v2.py --output-dir outputs\factor_research_v2\liquid2000_default
+E:\anaconda_envs\qlib_env\python.exe scripts\summarize_factor_candidates.py --input-dir outputs\factor_research_v2\liquid2000_default --output-csv outputs\reports\factor_candidate_pool.csv --output-md outputs\reports\factor_candidate_pool.md
+```
+
+默认设计：
+
+- 复用旧版 raw 时间切片摘要，避免重复计算 2010-2026 全历史 raw 诊断。
+- 重新计算 `2021-2023` 和 `2024-2026` 的 `tradable_only` 诊断。
+- `tradable_only` 过滤条件为 `can_buy == true`、`liquidity_bucket >= 3`、`tradability_score >= 75`。
+- 候选判断覆盖 `label_10d_t1` 和 `label_20d_t1`。
+- 桶内 IC 默认只对 `label_20d_t1` 运行，用于解释因子在流动性/波动率分桶中的稳定性。
+
+输出：
+
+```text
+outputs/factor_research_v2/liquid2000_default/factor_registry.csv
+outputs/factor_research_v2/liquid2000_default/factor_summary.csv
+outputs/factor_research_v2/liquid2000_default/factor_time_slice.csv
+outputs/factor_research_v2/liquid2000_default/factor_bucket_ic.csv
+outputs/factor_research_v2/liquid2000_default/factor_group_monotonicity.csv
+outputs/factor_research_v2/liquid2000_default/factor_correlation.csv
+outputs/factor_research_v2/liquid2000_default/factor_candidate_decision.csv
+outputs/factor_research_v2/liquid2000_default/factor_research_v2_report.md
+outputs/reports/factor_candidate_pool.csv
+outputs/reports/factor_candidate_pool.md
+```
+
+候选晋级规则：
+
+```text
+main tradable_only coverage >= 90%
+main directional Rank IC > 0.03
+recent OOS directional Rank IC > 0
+raw time slices 至少 3/4 方向正确
+main tradable_only 分组收益方向正确
+monotonicity_score > 0
+与已晋级因子的 Spearman correlation < 0.80
+```
+
+当前候选池结果：
+
+| label | promote | reject | watch |
+| --- | ---: | ---: | ---: |
+| `label_10d_t1` | `1` | `1` | `8` |
+| `label_20d_t1` | `1` | `1` | `8` |
+
+晋级因子：
+
+| label | factor | main directional Rank IC | OOS directional Rank IC | stability | monotonicity |
+| --- | --- | ---: | ---: | ---: | ---: |
+| `label_10d_t1` | `amplitude_20` | `0.087936` | `0.068054` | `1.000000` | `0.800000` |
+| `label_20d_t1` | `amplitude_20` | `0.109863` | `0.075408` | `1.000000` | `1.000000` |
+
+解释：
+
+- `amplitude_20` 暂时是候选池里最值得继续研究的基础因子。
+- `std_20` 自身也通过基础规则，但与 `amplitude_20` 高相关，被标记为 `redundant_weak`，暂不作为独立主因子。
+- `rev_5` 在 10 日/20 日上有正向样本外表现，但主窗口强度没有达到晋级阈值，保留为 `watch`。
+- 动量、流动性、量价相关类因子目前仍是观察变量，下一步要先明确方向假设、分桶解释和中性化方式。
+
+下一步合理目标：
+
+1. 扩展因子注册表，加入更多开源常见因子：估值/质量/成长/换手/偏度/流动性冲击等。
+2. 增加因子中性化工具：至少支持行业、市值、流动性桶、波动率桶。
+3. 增加分层诊断视图：按年份、市场状态、行业、流动性桶、波动率桶输出 IC 和分组收益。
+4. 建立候选因子版本记录：每次新增因子都输出 candidate pool 差异，避免凭单次结果拍脑袋。
+5. 在候选池稳定前，不新增复杂模型，不把 `promote` 因子直接等同于可实盘策略。
