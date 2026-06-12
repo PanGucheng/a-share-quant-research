@@ -990,3 +990,60 @@ outputs/factor_research_v3/liquid2000_core/factor_neutralized_group_return_summa
 outputs/factor_research_v3/liquid2000_core/factor_slice_ic.csv
 outputs/factor_research_v3/liquid2000_core/factor_slice_group_return_summary.csv
 ```
+
+## 27. 因子研究 V3.2 性能优化
+
+状态：已完成第一轮。
+
+profile 结论：
+
+- smoke 运行约 `50s` 时，约 `43s` 花在 Qlib `D.features` 原始特征读取。
+- 后续 IC、分组收益、中性化和报告计算不是当前最大瓶颈。
+- 因此优先优化“重复读取 Qlib 特征面板”，而不是先重写指标算法。
+
+新增优化：
+
+1. `FactorResearchConfig` 支持 `feature_cache_dir` 和 `refresh_feature_cache`。
+2. `scripts/run_factor_research_v3.py` 默认使用：
+
+```text
+tmp/factor_feature_cache
+tmp/factor_frame_cache
+```
+
+3. 同一组 `provider_uri + market + start/end + BASE_FIELDS` 会缓存成本地 raw feature pickle。
+4. 同一组 `provider_uri + market + start/end + basic_factor_version` 会缓存已计算基础因子和 label 的 frame。
+5. 新增参数：
+
+```powershell
+--refresh-feature-cache
+--no-feature-cache
+--feature-cache-dir tmp\factor_feature_cache
+--refresh-factor-cache
+--no-factor-cache
+--factor-cache-dir tmp\factor_frame_cache
+```
+
+验证结果：
+
+```text
+smoke no cache / original profile: about 50.4s
+smoke refresh raw feature cache:   about 40.5s
+smoke raw feature cache hit:       about 11.5s-12.2s
+smoke basic factor cache hit:      about 9.9s
+```
+
+缓存刷新版与缓存命中版的 `factor_neutralized_summary.csv`、`factor_slice_ic.csv` 对比一致。
+
+使用建议：
+
+- 日常调试和重复跑同一窗口时使用默认缓存。
+- 更新 Qlib 数据、股票池或基础字段后，加 `--refresh-feature-cache --refresh-factor-cache`。
+- 只修改基础因子计算逻辑后，加 `--refresh-factor-cache`。
+- 需要完全排查数据读取问题时，加 `--no-feature-cache --no-factor-cache`。
+
+下一轮性能重点：
+
+- 对默认全量窗口建立缓存后，评估中性化和切片诊断的新热点。
+- 将 IC、group return、slice diagnostics 的中间结果做可选缓存。
+- 在不改变指标口径的前提下，再考虑更深的向量化或并行化。

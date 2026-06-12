@@ -99,20 +99,26 @@ def group_returns(
     min_count: int,
 ) -> pd.DataFrame:
     rows = []
-    for spec in specs:
-        if spec.name not in frame.columns:
-            continue
-        for label in labels:
-            if label not in frame.columns:
+    active_specs = [spec for spec in specs if spec.name in frame.columns]
+    active_labels = [label for label in labels if label in frame.columns]
+    if not active_specs or not active_labels:
+        return pd.DataFrame()
+    for dt, group in frame.groupby("datetime", sort=True):
+        label_values = {
+            label: pd.to_numeric(group[label], errors="coerce").replace([np.inf, -np.inf], np.nan)
+            for label in active_labels
+        }
+        for spec in active_specs:
+            factor_values = pd.to_numeric(group[spec.name], errors="coerce").replace([np.inf, -np.inf], np.nan)
+            factor_valid = factor_values.notna()
+            if int(factor_valid.sum()) < max(min_count, quantiles):
                 continue
-            for dt, group in frame.groupby("datetime", sort=True):
-                values = finite_numeric_rows(group, [spec.name, label])
-                if len(values) < max(min_count, quantiles):
+            buckets = assign_daily_bucket(factor_values, quantiles)
+            for label, y in label_values.items():
+                valid = factor_valid & y.notna() & buckets.notna()
+                if int(valid.sum()) < max(min_count, quantiles):
                     continue
-                buckets = assign_daily_bucket(values[spec.name], quantiles)
-                values = values.assign(quantile=buckets).dropna(subset=["quantile"])
-                if values.empty:
-                    continue
+                values = pd.DataFrame({"quantile": buckets.loc[valid], label: y.loc[valid]})
                 for quantile, quantile_frame in values.groupby("quantile", sort=True):
                     rows.append(
                         {

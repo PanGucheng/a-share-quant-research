@@ -1,4 +1,6 @@
 from dataclasses import dataclass
+import hashlib
+import json
 from pathlib import Path
 
 import numpy as np
@@ -18,9 +20,31 @@ class FactorResearchConfig:
     label: str = "label_1d_t1"
     quantiles: int = 5
     min_count: int = 50
+    feature_cache_dir: Path | None = None
+    refresh_feature_cache: bool = False
+
+
+def feature_cache_path(config: FactorResearchConfig) -> Path | None:
+    if config.feature_cache_dir is None:
+        return None
+    key = {
+        "provider_uri": str(config.provider_uri).replace("\\", "/"),
+        "market": config.market,
+        "start_time": config.start_time,
+        "end_time": config.end_time,
+        "fields": BASE_FIELDS,
+        "version": 1,
+    }
+    digest = hashlib.sha256(json.dumps(key, sort_keys=True).encode("utf-8")).hexdigest()[:16]
+    return Path(config.feature_cache_dir) / f"features_{digest}.pkl"
 
 
 def load_feature_frame(config: FactorResearchConfig) -> pd.DataFrame:
+    cache_path = feature_cache_path(config)
+    if cache_path is not None and cache_path.exists() and not config.refresh_feature_cache:
+        print(f"Loading cached features: {cache_path}", flush=True)
+        return pd.read_pickle(cache_path)
+
     import qlib
     from qlib.config import C, REG_CN
     from qlib.data import D
@@ -35,7 +59,12 @@ def load_feature_frame(config: FactorResearchConfig) -> pd.DataFrame:
         end_time=config.end_time,
         freq="day",
     )
-    return data.reset_index().sort_values(["instrument", "datetime"])
+    frame = data.reset_index().sort_values(["instrument", "datetime"])
+    if cache_path is not None:
+        cache_path.parent.mkdir(parents=True, exist_ok=True)
+        frame.to_pickle(cache_path)
+        print(f"Cached features: {cache_path}", flush=True)
+    return frame
 
 
 def finite_numeric_rows(frame: pd.DataFrame, columns: list[str]) -> pd.DataFrame:

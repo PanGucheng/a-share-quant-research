@@ -73,20 +73,26 @@ def tradable_only(frame: pd.DataFrame, min_liquidity_bucket: int, min_tradabilit
 
 def information_coefficient(frame: pd.DataFrame, specs: list[FactorSpec], label: str, min_count: int) -> pd.DataFrame:
     rows = []
-    for spec in specs:
-        if spec.name not in frame.columns:
-            continue
-        for dt, group in frame.groupby("datetime", sort=True):
-            values = finite_numeric_rows(group, [spec.name, label])
-            if len(values) < min_count:
+    active_specs = [spec for spec in specs if spec.name in frame.columns]
+    if label not in frame.columns or not active_specs:
+        return pd.DataFrame()
+    for dt, group in frame.groupby("datetime", sort=True):
+        label_values = pd.to_numeric(group[label], errors="coerce").replace([np.inf, -np.inf], np.nan)
+        label_valid = label_values.notna()
+        for spec in active_specs:
+            factor_values = pd.to_numeric(group[spec.name], errors="coerce").replace([np.inf, -np.inf], np.nan)
+            valid = label_valid & factor_values.notna()
+            if int(valid.sum()) < min_count:
                 continue
+            x = factor_values.loc[valid]
+            y = label_values.loc[valid]
             rows.append(
                 {
                     "datetime": dt,
                     "factor": spec.name,
-                    "count": int(len(values)),
-                    "ic": values[spec.name].corr(values[label], method="pearson"),
-                    "rank_ic": values[spec.name].corr(values[label], method="spearman"),
+                    "count": int(valid.sum()),
+                    "ic": x.corr(y, method="pearson"),
+                    "rank_ic": x.corr(y, method="spearman"),
                 }
             )
     return pd.DataFrame(rows)

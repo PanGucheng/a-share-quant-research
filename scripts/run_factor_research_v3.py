@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
+import json
 import sys
 from dataclasses import dataclass
 from multiprocessing import freeze_support
@@ -91,6 +93,24 @@ def padded_dates(window: ResearchWindow) -> tuple[str, str]:
     return start, end
 
 
+def cache_digest(payload: dict) -> str:
+    return hashlib.sha256(json.dumps(payload, sort_keys=True).encode("utf-8")).hexdigest()[:16]
+
+
+def basic_factor_cache_path(args: argparse.Namespace, window: ResearchWindow) -> Path | None:
+    if args.no_factor_cache:
+        return None
+    load_start, load_end = padded_dates(window)
+    payload = {
+        "provider_uri": str(args.provider_uri).replace("\\", "/"),
+        "market": args.market,
+        "start_time": load_start,
+        "end_time": load_end,
+        "basic_factor_version": 1,
+    }
+    return resolve_path(args.factor_cache_dir) / f"basic_factors_{cache_digest(payload)}.pkl"
+
+
 def slice_window(frame: pd.DataFrame, window: ResearchWindow) -> pd.DataFrame:
     start = pd.Timestamp(window.start)
     end = pd.Timestamp(window.end)
@@ -100,17 +120,29 @@ def slice_window(frame: pd.DataFrame, window: ResearchWindow) -> pd.DataFrame:
 def load_window_frame(args: argparse.Namespace, window: ResearchWindow, output_dir: Path) -> pd.DataFrame:
     load_start, load_end = padded_dates(window)
     print(f"Loading V3 features: {window.name} {load_start} to {load_end}", flush=True)
-    config = FactorResearchConfig(
-        provider_uri=args.provider_uri,
-        market=args.market,
-        start_time=load_start,
-        end_time=load_end,
-        output_dir=output_dir,
-        label=args.labels[0],
-        quantiles=args.quantiles,
-        min_count=args.min_count,
-    )
-    raw = slice_window(add_basic_factors(load_feature_frame(config)), window)
+    factor_cache = basic_factor_cache_path(args, window)
+    if factor_cache is not None and factor_cache.exists() and not args.refresh_factor_cache:
+        print(f"Loading cached basic factors: {factor_cache}", flush=True)
+        raw_with_factors = pd.read_pickle(factor_cache)
+    else:
+        config = FactorResearchConfig(
+            provider_uri=args.provider_uri,
+            market=args.market,
+            start_time=load_start,
+            end_time=load_end,
+            output_dir=output_dir,
+            label=args.labels[0],
+            quantiles=args.quantiles,
+            min_count=args.min_count,
+            feature_cache_dir=None if args.no_feature_cache else resolve_path(args.feature_cache_dir),
+            refresh_feature_cache=args.refresh_feature_cache,
+        )
+        raw_with_factors = add_basic_factors(load_feature_frame(config))
+        if factor_cache is not None:
+            factor_cache.parent.mkdir(parents=True, exist_ok=True)
+            raw_with_factors.to_pickle(factor_cache)
+            print(f"Cached basic factors: {factor_cache}", flush=True)
+    raw = slice_window(raw_with_factors, window)
     with_context = prepare_research_frame(raw, resolve_path(window.tradability_dir), resolve_path(window.data_quality_dir))
     tradable = apply_tradable_filter(
         with_context,
@@ -634,6 +666,38 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--min-count", type=int, default=50)
     parser.add_argument("--min-liquidity-bucket", type=int, default=3)
     parser.add_argument("--min-tradability-score", type=float, default=75.0)
+    parser.add_argument(
+        "--feature-cache-dir",
+        type=Path,
+        default=Path("tmp/factor_feature_cache"),
+        help="Local cache for raw Qlib feature frames.",
+    )
+    parser.add_argument(
+        "--no-feature-cache",
+        action="store_true",
+        help="Disable raw Qlib feature-frame cache.",
+    )
+    parser.add_argument(
+        "--refresh-feature-cache",
+        action="store_true",
+        help="Ignore existing cached feature frames and rewrite them from Qlib data.",
+    )
+    parser.add_argument(
+        "--factor-cache-dir",
+        type=Path,
+        default=Path("tmp/factor_frame_cache"),
+        help="Local cache for frames after basic factor and label calculation.",
+    )
+    parser.add_argument(
+        "--no-factor-cache",
+        action="store_true",
+        help="Disable cache for frames after basic factor and label calculation.",
+    )
+    parser.add_argument(
+        "--refresh-factor-cache",
+        action="store_true",
+        help="Ignore existing cached basic-factor frames and rewrite them.",
+    )
     parser.add_argument(
         "--write-detail",
         action="store_true",
