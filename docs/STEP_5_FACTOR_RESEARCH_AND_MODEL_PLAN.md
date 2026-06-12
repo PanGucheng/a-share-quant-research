@@ -347,3 +347,36 @@ cost: 5 bps per one-way turnover
 - `csi500` 上同类 long-short 诊断为负，进一步支持继续以 `liquid2000` 作为因子研究主股票池。
 - 低波动、低振幅是当前最稳定的横截面排序信号。
 - 下一步应检查 long leg / short leg 的流动性、波动、动量暴露，并尝试做分组内选股或风险约束后的 long-only 组合。
+
+## 14. 多空腿暴露检查
+
+状态：已完成第一轮。
+
+新增报告：
+
+```text
+outputs/reports/factor_long_short_exposure_comparison.md
+outputs/reports/factor_long_short_exposure_comparison.csv
+```
+
+暴露检查口径：
+
+- 正数表示多头腿平均值高于空头腿。
+- `spread_mean_label` 表示多头腿未来收益减空头腿未来收益。
+- 重点观察 `score`、`rev_5`、`std_20`、`amplitude_20`、`ret_20`、`amount_mean_20`。
+
+`liquid2000` 关键观察：
+
+| signal | spread label | spread std_20 | spread amplitude_20 | spread ret_20 | spread amount_mean_20 |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| `std_20` | `0.000605` | `-0.024905` | `-0.027473` | `-0.061912` | `-288662.777425` |
+| `amplitude_20` | `0.000611` | `-0.022265` | `-0.030678` | `-0.067902` | `-251199.878340` |
+| `score` | `0.000594` | `-0.022215` | `-0.027311` | `-0.105161` | `-273503.417232` |
+| `rev_5` | `0.000563` | `0.000103` | `0.000358` | `-0.114712` | `-44156.246853` |
+
+结论：
+
+- 当前有效排序主要来自“低风险 + 前期弱势/反转”组合。
+- 多头腿通常比空头腿流动性更低，因此 long-only 组合不能只按分数选 TopK，需要加流动性分桶或最低流动性约束。
+- `csi500` 中类似风险排序没有正收益，说明该信号更适合在更宽的 `liquid2000` 横截面中使用。
+- 下一步应做“流动性分桶内低波动/低振幅选股”，并比较其 long-only 表现是否优于上一轮朴素 TopK。

@@ -22,6 +22,19 @@ from scripts.run_factor_score_portfolio import (
 
 
 DEFAULT_SIGNALS = "rev_5:1,std_20:-1,amplitude_20:-1,score:1"
+EXPOSURE_COLUMNS = [
+    "ret_5",
+    "ret_10",
+    "ret_20",
+    "rev_5",
+    "std_20",
+    "amplitude_20",
+    "amount_mean_20",
+    "amount_std_20",
+    "volume_ratio_5_20",
+    "corr_ret_volume_20",
+    "score",
+]
 
 
 def parse_signals(raw: str) -> dict[str, float]:
@@ -69,6 +82,38 @@ def summarize_long_short(daily: pd.DataFrame) -> pd.DataFrame:
     return pd.DataFrame(rows).sort_values("net_ir", ascending=False)
 
 
+def leg_exposure_row(dt, signal: str, leg: str, data: pd.DataFrame, label: str) -> dict:
+    row = {
+        "datetime": dt,
+        "signal": signal,
+        "leg": leg,
+        "count": int(len(data)),
+        "mean_label": float(data[label].mean()),
+    }
+    for column in EXPOSURE_COLUMNS:
+        if column in data.columns:
+            row[f"mean_{column}"] = float(data[column].mean())
+    return row
+
+
+def summarize_leg_exposure(exposure: pd.DataFrame) -> pd.DataFrame:
+    if exposure.empty:
+        return exposure
+    mean_columns = [column for column in exposure.columns if column.startswith("mean_")]
+    pivot = exposure.pivot_table(index="signal", columns="leg", values=mean_columns, aggfunc="mean")
+    rows = []
+    for signal in pivot.index:
+        row = {"signal": signal}
+        for metric in mean_columns:
+            long_value = pivot.loc[signal].get((metric, "long"), np.nan)
+            short_value = pivot.loc[signal].get((metric, "short"), np.nan)
+            row[f"long_{metric}"] = long_value
+            row[f"short_{metric}"] = short_value
+            row[f"spread_{metric}"] = long_value - short_value
+        rows.append(row)
+    return pd.DataFrame(rows)
+
+
 def run_long_short(
     frame: pd.DataFrame,
     label: str,
@@ -76,8 +121,9 @@ def run_long_short(
     quantile: float,
     cost_bps: float,
     min_count: int,
-) -> tuple[pd.DataFrame, pd.DataFrame]:
+) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame]:
     daily_rows = []
+    exposure_rows = []
     cost_rate = cost_bps / 10000
 
     for signal, direction in signals.items():
@@ -87,7 +133,8 @@ def run_long_short(
         frame[signed_signal] = frame[signal] * direction
 
         for dt, group in frame.groupby("datetime", sort=True):
-            values = finite_numeric_rows(group, ["instrument", signed_signal, label])
+            valid = finite_numeric_rows(group, ["instrument", signed_signal, label])
+            values = group.loc[valid.index]
             if len(values) < min_count:
                 continue
             side_count = int(len(values) * quantile)
@@ -96,6 +143,8 @@ def run_long_short(
             ranked = values.sort_values(signed_signal)
             short_leg = ranked.head(side_count)
             long_leg = ranked.tail(side_count)
+            exposure_rows.append(leg_exposure_row(dt, signal, "long", long_leg, label))
+            exposure_rows.append(leg_exposure_row(dt, signal, "short", short_leg, label))
             current_long = set(long_leg["instrument"])
             current_short = set(short_leg["instrument"])
             long_turnover = 1.0 if previous_long is None else 1 - len(current_long & previous_long) / side_count
@@ -125,10 +174,19 @@ def run_long_short(
             previous_short = current_short
 
     daily = pd.DataFrame(daily_rows)
-    return daily, summarize_long_short(daily)
+    exposure = pd.DataFrame(exposure_rows)
+    return daily, summarize_long_short(daily), exposure, summarize_leg_exposure(exposure)
 
 
-def write_report(config, weights: dict[str, float], signals: dict[str, float], summary: pd.DataFrame, daily: pd.DataFrame, output: Path):
+def write_report(
+    config,
+    weights: dict[str, float],
+    signals: dict[str, float],
+    summary: pd.DataFrame,
+    exposure_summary: pd.DataFrame,
+    daily: pd.DataFrame,
+    output: Path,
+):
     output.parent.mkdir(parents=True, exist_ok=True)
     lines = [
         "# Factor Long-Short Report",
@@ -144,6 +202,10 @@ def write_report(config, weights: dict[str, float], signals: dict[str, float], s
         "",
         markdown_table(summary),
         "",
+        "## Exposure Summary",
+        "",
+        markdown_table(exposure_summary),
+        "",
         "## First Daily Rows",
         "",
         markdown_table(daily.head(10)),
@@ -152,6 +214,8 @@ def write_report(config, weights: dict[str, float], signals: dict[str, float], s
         "",
         "- `daily_long_short.csv`",
         "- `summary_by_signal.csv`",
+        "- `leg_exposure.csv`",
+        "- `leg_exposure_summary.csv`",
     ]
     output.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
@@ -184,13 +248,17 @@ def main():
     raw = load_feature_frame(config)
     factors = add_basic_factors(raw)
     scored = add_weighted_score(factors, weights)
-    daily, summary = run_long_short(scored, args.label, signals, args.quantile, args.cost_bps, args.min_count)
+    daily, summary, exposure, exposure_summary = run_long_short(
+        scored, args.label, signals, args.quantile, args.cost_bps, args.min_count
+    )
 
     output_dir = Path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
     daily.to_csv(output_dir / "daily_long_short.csv", index=False, encoding="utf-8-sig")
     summary.to_csv(output_dir / "summary_by_signal.csv", index=False, encoding="utf-8-sig")
-    write_report(config, weights, signals, summary, daily, output_dir / "factor_long_short_report.md")
+    exposure.to_csv(output_dir / "leg_exposure.csv", index=False, encoding="utf-8-sig")
+    exposure_summary.to_csv(output_dir / "leg_exposure_summary.csv", index=False, encoding="utf-8-sig")
+    write_report(config, weights, signals, summary, exposure_summary, daily, output_dir / "factor_long_short_report.md")
     print(f"Wrote factor long-short outputs to {output_dir}")
 
 
