@@ -878,3 +878,67 @@ V3 最小实现方向：
 3. 新增轻量中性化：流动性桶内标准化、波动率桶内标准化、成交额代理残差中性化。
 4. 输出中性化前后 IC、Rank IC、分组收益、相关性对照。
 5. 在候选池稳定前继续暂停新模型和策略参数调优。
+
+## 25. 因子研究 V3 最小实现
+
+状态：已完成第一版。
+
+新增模块：
+
+```text
+factor_research/preprocess.py
+factor_research/slices.py
+factor_research/neutralization.py
+scripts/run_factor_research_v3.py
+```
+
+默认运行：
+
+```powershell
+cd E:\qlib_prj\qlib_baseline
+E:\anaconda_envs\qlib_env\python.exe scripts\run_factor_research_v3.py --output-dir outputs\factor_research_v3\liquid2000_core
+```
+
+默认研究对象：
+
+```text
+market: all_stock_shsz_liquid2000
+label: label_20d_t1
+factors: amplitude_20,std_20,rev_5,ret_20,amount_mean_20
+windows:
+  main_research_2021_2023
+  recent_oos_2024_2026
+```
+
+新增输出：
+
+```text
+outputs/factor_research_v3/liquid2000_core/factor_preprocess_summary.csv
+outputs/factor_research_v3/liquid2000_core/factor_neutralized_summary.csv
+outputs/factor_research_v3/liquid2000_core/factor_neutralized_group_return.csv
+outputs/factor_research_v3/liquid2000_core/factor_neutralized_group_return_summary.csv
+outputs/factor_research_v3/liquid2000_core/factor_neutralized_correlation.csv
+outputs/factor_research_v3/liquid2000_core/factor_slice_ic.csv
+outputs/factor_research_v3/liquid2000_core/factor_slice_group_return.csv
+outputs/factor_research_v3/liquid2000_core/factor_slice_group_return_summary.csv
+outputs/factor_research_v3/liquid2000_core/factor_exposure_correlation.csv
+outputs/factor_research_v3/liquid2000_core/factor_candidate_changelog.csv
+outputs/factor_research_v3/liquid2000_core/factor_research_v3_report.md
+```
+
+首轮关键发现：
+
+- `amplitude_20` raw directional Rank IC 约 `0.1099`，仍是最强基础因子。
+- `amplitude_20` 在流动性桶内标准化后降至约 `0.0853`。
+- `amplitude_20` 在波动率桶内标准化后降至约 `0.0467`。
+- `amplitude_20` 在成交额代理残差中性化后降至约 `0.0761`。
+- `amplitude_20` 在流动性、波动率、成交额代理联合残差中性化后降至约 `0.0050`。
+- `amplitude_20` 与 `std_20` 的 Spearman 暴露相关性约 `0.90+`，两者高度冗余。
+- `rev_5` 在成交额代理残差中性化后有所增强，但仍未达到强 promote 级别。
+
+解释：
+
+- `amplitude_20` 更像“低波动 + 流动性/成交额暴露”的综合风险信号，而不是干净独立 alpha。
+- 这不代表它不能用于组合，但后续不能把它简单当成模型特征的独立 alpha；需要作为风险/风格约束对象继续研究。
+- `std_20` 继续维持冗余因子判断。
+- 下一步仍不应训练新模型，应先扩展风险/流动性分层解释，并研究更稳健的低波动定义。
