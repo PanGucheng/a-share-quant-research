@@ -423,3 +423,45 @@ score: rev_5:1,std_20:-1,amplitude_20:-1
 - 排除最低两个流动性桶，比在全部流动性桶中强制均衡选股更好。
 - 这确认了流动性暴露是问题的一部分，但不是全部问题。
 - 下一步应加入风险/基准约束，例如限制组合平均波动、振幅、动量暴露，或者做 benchmark-relative 的分组内选股。
+
+## 16. 时间切片稳定性评估
+
+状态：已完成 `all_stock_shsz_liquid2000 + label_1d_t1` 第一轮。
+
+新增脚本：
+
+```text
+scripts/run_factor_time_slices.py
+```
+
+报告：
+
+```text
+outputs/reports/factor_time_slice_stability_liquid2000_label1d.md
+outputs/reports/factor_time_slice_stability_liquid2000_label1d.csv
+outputs/reports/factor_time_slice_summary_liquid2000_label1d.csv
+```
+
+时间角色：
+
+| slice | date range | role |
+| --- | --- | --- |
+| `historical_reference_2010_2016` | `2010-01-01` to `2016-12-31` | 历史参考，不作为主训练目标 |
+| `baseline_alignment_2017_2020` | `2017-01-01` to `2020-08-01` | Qlib 风格 baseline 对齐 |
+| `main_research_2021_2023` | `2021-01-01` to `2023-12-29` | 后续主研究/训练窗口 |
+| `recent_oos_2024_2026` | `2024-01-01` to `2026-06-09` | 近现实样本外检验 |
+
+稳定性摘要：
+
+| factor | expected direction | positive directional slices | mean directional Rank IC | recent directional Rank IC |
+| --- | --- | ---: | ---: | ---: |
+| `amplitude_20` | negative | `4/4` | `0.039469` | `0.038382` |
+| `std_20` | negative | `4/4` | `0.037023` | `0.039549` |
+| `rev_5` | positive | `4/4` | `0.036709` | `0.025411` |
+
+结论：
+
+- `2010-2016` 仍有参考价值，但不应作为主训练期。
+- `2021-2023` 与 `2024-2026` 都支持低波动、低振幅、短期反转方向，说明这些不是只在旧 baseline 时段有效。
+- `rev_5` 在近期仍为正，但强度低于历史参考期；后续组合中应控制换手，避免被交易成本吃掉。
+- 下一步的策略研究应以 `2021-2023` 为主要调参窗口，并把 `2024-2026` 留作轻触碰的近现实检验。
