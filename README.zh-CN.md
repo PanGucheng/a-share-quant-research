@@ -15,6 +15,7 @@ A 股量化研究工程。它最初用于复现官方 LightGBM + Alpha158 baseli
 - **数据质量诊断**：检查缺失值、价格成交异常、生命周期问题和逐行数据问题。
 - **可交易性标签层**：把流动性、数据质量和交易约束转成统一标签。
 - **因子研究模块**：在数据质量和可交易性过滤之后，评价 IC、Rank IC、ICIR、分组收益、换手率、覆盖率、缺失率、相关性、单调性、切片稳定性和中性化效果。
+- **因子筛选模块**：把因子研究输出转成可解释的候选看板，再交给后续组合测试。
 - **后续组合回测模块**：规划中，未来会消费筛选后的因子候选，而不是直接绕过研究层做策略。
 
 当前优先级是继续完善因子研究与因子筛选工具链，暂时不急着训练新模型或调具体策略参数。
@@ -142,6 +143,32 @@ outputs/factor_research_v3/liquid2000_core/factor_research_v3_report.md
 
 ```powershell
 --write-detail
+```
+
+## 因子筛选 V3.3
+
+基于 V3 输出生成当前因子候选看板：
+
+```powershell
+cd E:\qlib_prj\qlib_baseline
+E:\anaconda_envs\qlib_env\python.exe scripts\run_factor_screening_v3.py
+```
+
+主要输出：
+
+```text
+outputs/factor_screening_v3/liquid2000_core/factor_candidate_board.csv
+outputs/factor_screening_v3/liquid2000_core/factor_screening_report.md
+```
+
+当前默认结果：
+
+```text
+rev_5          research_candidate
+amplitude_20   risk_exposure
+std_20         risk_exposure
+ret_20         watch
+amount_mean_20 watch
 ```
 
 ## 缓存与加速

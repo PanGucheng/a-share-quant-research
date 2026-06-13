@@ -1047,3 +1047,64 @@ smoke basic factor cache hit:      about 9.9s
 - 对默认全量窗口建立缓存后，评估中性化和切片诊断的新热点。
 - 将 IC、group return、slice diagnostics 的中间结果做可选缓存。
 - 在不改变指标口径的前提下，再考虑更深的向量化或并行化。
+
+## 28. 因子筛选 V3.3
+
+状态：已完成最小实现。
+
+新增计划文档：
+
+```text
+docs/FACTOR_SCREENING_V3_3_PLAN.md
+```
+
+本阶段目标：
+
+- 不重算 Qlib 数据和基础因子。
+- 直接消费 factor research V3 输出。
+- 将因子研究指标转成可解释的候选池状态。
+- 在后续组合回测前，先给出 `reject / watch / research_candidate / portfolio_test_candidate / risk_exposure / redundant` 判断。
+
+新增模块：
+
+```text
+factor_research/screening_v3.py
+scripts/run_factor_screening_v3.py
+```
+
+默认运行：
+
+```powershell
+cd E:\qlib_prj\qlib_baseline
+E:\anaconda_envs\qlib_env\python.exe scripts\run_factor_screening_v3.py
+```
+
+默认输入：
+
+```text
+outputs/factor_research_v3/liquid2000_core
+```
+
+默认输出：
+
+```text
+outputs/factor_screening_v3/liquid2000_core/factor_candidate_board.csv
+outputs/factor_screening_v3/liquid2000_core/factor_screening_report.md
+```
+
+当前筛选结果：
+
+```text
+rev_5          -> research_candidate
+amplitude_20   -> risk_exposure
+std_20         -> risk_exposure
+ret_20         -> watch
+amount_mean_20 -> watch
+```
+
+解释：
+
+- `rev_5` 主窗口 directional Rank IC 约 `0.0196`，OOS 约 `0.0352`，残差保留率较高，但强度仍不足以直接进入组合测试。
+- `amplitude_20` raw directional Rank IC 较强，但联合中性化后保留率约 `0.045`，被判定为风险/波动率暴露。
+- `std_20` 与 `amplitude_20` 高度相关，联合中性化后信号为负，继续作为风险暴露处理。
+- `ret_20` 和 `amount_mean_20` 当前方向未定义，保留观察。

@@ -24,6 +24,8 @@ research modules around it:
 - **Factor research**: evaluates factors after data-quality and tradability filters,
   using IC, Rank IC, ICIR, group returns, turnover, coverage, missing rate,
   correlation, monotonicity, slices, and neutralization diagnostics.
+- **Factor screening**: converts factor research outputs into an explainable
+  candidate board before portfolio testing.
 - **Future portfolio backtest layer**: planned downstream consumer of screened
   factor candidates.
 
@@ -145,6 +147,32 @@ outputs/factor_research_v3/liquid2000_core/factor_research_v3_report.md
 
 Large group-return detail files are skipped by default. Use `--write-detail` only
 when detailed per-date/per-quantile diagnostics are needed.
+
+## Factor Screening V3.3
+
+Build the current factor candidate board from V3 outputs:
+
+```powershell
+cd E:\qlib_prj\qlib_baseline
+E:\anaconda_envs\qlib_env\python.exe scripts\run_factor_screening_v3.py
+```
+
+Main outputs:
+
+```text
+outputs/factor_screening_v3/liquid2000_core/factor_candidate_board.csv
+outputs/factor_screening_v3/liquid2000_core/factor_screening_report.md
+```
+
+Current default result:
+
+```text
+rev_5          research_candidate
+amplitude_20   risk_exposure
+std_20         risk_exposure
+ret_20         watch
+amount_mean_20 watch
+```
 
 ## Caching For Faster Iteration
 
