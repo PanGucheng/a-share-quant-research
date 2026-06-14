@@ -1108,3 +1108,58 @@ amount_mean_20 -> watch
 - `amplitude_20` raw directional Rank IC 较强，但联合中性化后保留率约 `0.045`，被判定为风险/波动率暴露。
 - `std_20` 与 `amplitude_20` 高度相关，联合中性化后信号为负，继续作为风险暴露处理。
 - `ret_20` 和 `amount_mean_20` 当前方向未定义，保留观察。
+
+## 29. 因子候选池 V3.4
+
+状态：已完成最小实现。
+
+新增计划文档：
+
+```text
+docs/FACTOR_CANDIDATE_POOL_V3_4_PLAN.md
+```
+
+本阶段目标：
+
+- 不重算因子或指标。
+- 直接消费 V3.3 `factor_candidate_board.csv`。
+- 把筛选状态转成可被后续组合回测读取的候选池角色。
+- 输出 CSV、JSON 和 Markdown 报告。
+
+新增模块：
+
+```text
+factor_research/candidate_pool_v3.py
+scripts/run_factor_candidate_pool_v3.py
+```
+
+默认运行：
+
+```powershell
+cd E:\qlib_prj\qlib_baseline
+E:\anaconda_envs\qlib_env\python.exe scripts\run_factor_candidate_pool_v3.py
+```
+
+默认输出：
+
+```text
+outputs/factor_candidate_pool_v3/liquid2000_core/factor_candidate_pool.csv
+outputs/factor_candidate_pool_v3/liquid2000_core/factor_candidate_pool.json
+outputs/factor_candidate_pool_v3/liquid2000_core/factor_candidate_pool_report.md
+```
+
+当前候选池角色：
+
+```text
+rev_5          -> alpha_candidate
+amplitude_20   -> risk_control
+std_20         -> risk_control
+ret_20         -> monitor
+amount_mean_20 -> monitor
+```
+
+解释：
+
+- `rev_5` 是当前唯一 alpha 候选，但仍是 `research_candidate` 级别，不是直接上组合的强信号。
+- `amplitude_20` 和 `std_20` 不再作为干净 alpha 推进，而是进入风险控制/暴露解释角色。
+- 下一步可以围绕 `rev_5` 扩展一小批反转/量价参考因子，并继续走 research -> screening -> candidate pool 的闭环。

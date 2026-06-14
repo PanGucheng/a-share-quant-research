@@ -174,6 +174,33 @@ ret_20         watch
 amount_mean_20 watch
 ```
 
+## Factor Candidate Pool V3.4
+
+Freeze the screening result into a downstream-readable candidate pool:
+
+```powershell
+cd E:\qlib_prj\qlib_baseline
+E:\anaconda_envs\qlib_env\python.exe scripts\run_factor_candidate_pool_v3.py
+```
+
+Main outputs:
+
+```text
+outputs/factor_candidate_pool_v3/liquid2000_core/factor_candidate_pool.csv
+outputs/factor_candidate_pool_v3/liquid2000_core/factor_candidate_pool.json
+outputs/factor_candidate_pool_v3/liquid2000_core/factor_candidate_pool_report.md
+```
+
+Current roles:
+
+```text
+rev_5          alpha_candidate
+amplitude_20   risk_control
+std_20         risk_control
+ret_20         monitor
+amount_mean_20 monitor
+```
+
 ## Caching For Faster Iteration
 
 Factor research uses local ignored caches by default:

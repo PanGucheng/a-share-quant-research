@@ -171,6 +171,33 @@ ret_20         watch
 amount_mean_20 watch
 ```
 
+## 因子候选池 V3.4
+
+将筛选结果固化成后续组合回测可读取的候选池：
+
+```powershell
+cd E:\qlib_prj\qlib_baseline
+E:\anaconda_envs\qlib_env\python.exe scripts\run_factor_candidate_pool_v3.py
+```
+
+主要输出：
+
+```text
+outputs/factor_candidate_pool_v3/liquid2000_core/factor_candidate_pool.csv
+outputs/factor_candidate_pool_v3/liquid2000_core/factor_candidate_pool.json
+outputs/factor_candidate_pool_v3/liquid2000_core/factor_candidate_pool_report.md
+```
+
+当前角色：
+
+```text
+rev_5          alpha_candidate
+amplitude_20   risk_control
+std_20         risk_control
+ret_20         monitor
+amount_mean_20 monitor
+```
+
 ## 缓存与加速
 
 因子研究默认启用本地缓存，缓存目录被 `.gitignore` 忽略：
