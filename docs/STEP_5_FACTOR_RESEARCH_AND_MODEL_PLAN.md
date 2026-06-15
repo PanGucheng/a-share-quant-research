@@ -1163,3 +1163,45 @@ amount_mean_20 -> monitor
 - `rev_5` 是当前唯一 alpha 候选，但仍是 `research_candidate` 级别，不是直接上组合的强信号。
 - `amplitude_20` 和 `std_20` 不再作为干净 alpha 推进，而是进入风险控制/暴露解释角色。
 - 下一步可以围绕 `rev_5` 扩展一小批反转/量价参考因子，并继续走 research -> screening -> candidate pool 的闭环。
+
+## 30. 因子扩展 V3.5 开源参考调研
+
+状态：已完成第一轮参考仓库克隆和 license 调研。
+
+新增文档：
+
+```text
+docs/FACTOR_EXPANSION_V3_5_REFERENCE_SURVEY.md
+```
+
+新增克隆到本地忽略目录的参考仓库：
+
+```text
+tmp/reference_repos/ta
+tmp/reference_repos/KunQuant
+tmp/reference_repos/Ginkgo_Alpha101
+```
+
+调研结论：
+
+- `bukosabino/ta`：MIT license，适合作为轻量技术指标公式参考，尤其是 volatility、volume、momentum 类指标。
+- `microsoft/qlib`：继续作为最重要公式参考，Alpha158 中的 `Ref`、`Mean`、`Std`、`Max`、`Min`、`Corr` 等表达式与本项目数据主线最一致。
+- `Menooker/KunQuant`：Apache-2.0，适合作为未来表达式引擎和性能优化参考，但当前接入成本过高，暂不进入主线。
+- `Kaoruha/Ginkgo_Alpha101`：MIT license，但当前仓库几乎没有可复用因子实现，暂不采用。
+
+V3.5 下一步建议实现的小批量因子：
+
+```text
+downside_std_20
+max_drawdown_20
+rev_20_exclude_5
+amount_cv_20
+corr_ret_amount_20
+```
+
+实现策略：
+
+- 不 vendor 外部代码。
+- 不新增硬依赖。
+- 公式参考 Qlib/ta，代码先保持在本项目 `factor_research/factor_library.py` 和 `factor_research/registry.py` 内。
+- 输出使用 expanded 目录，避免覆盖 core 基线。

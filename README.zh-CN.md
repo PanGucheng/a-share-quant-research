@@ -248,6 +248,8 @@ basic factor cache 命中：约 9.9s
 - `alphalens-reloaded`：IC、Rank IC、ICIR、分组收益、换手率等评价口径。
 - `JoinQuant/jqfactor_analyzer`：A 股单因子研究流程组织。
 - `jltxzxy/FactorTest`：暴露相关性、中性化和分层诊断。
+- `bukosabino/ta`：MIT license 的轻量技术指标参考，适合波动率、动量、成交量类公式。
+- `Menooker/KunQuant`：Apache-2.0 表达式引擎参考，适合未来大批量因子性能优化研究。
 
 相关文档：
 
@@ -255,6 +257,7 @@ basic factor cache 命中：约 9.9s
 docs/FACTOR_RESEARCH_ALGORITHM_AUDIT.md
 docs/FACTOR_RESEARCH_V3_REFERENCE_SURVEY.md
 docs/FACTOR_RESEARCH_V3_1_PLAN.md
+docs/FACTOR_EXPANSION_V3_5_REFERENCE_SURVEY.md
 ```
 
 ## 开发约束

@@ -240,6 +240,10 @@ projects instead of reinventing every component:
 - `alphalens-reloaded`: IC, Rank IC, ICIR, group return, turnover evaluation style.
 - `JoinQuant/jqfactor_analyzer`: A-share single-factor workflow organization.
 - `jltxzxy/FactorTest`: exposure correlation, neutralization, and slice diagnostics.
+- `bukosabino/ta`: lightweight MIT-licensed technical indicator reference for
+  volatility, momentum, and volume formulas.
+- `Menooker/KunQuant`: Apache-2.0 expression engine reference for future large
+  factor-batch performance work.
 
 Reference notes are documented in:
 
@@ -247,6 +251,7 @@ Reference notes are documented in:
 docs/FACTOR_RESEARCH_ALGORITHM_AUDIT.md
 docs/FACTOR_RESEARCH_V3_REFERENCE_SURVEY.md
 docs/FACTOR_RESEARCH_V3_1_PLAN.md
+docs/FACTOR_EXPANSION_V3_5_REFERENCE_SURVEY.md
 ```
 
 ## Development Notes
