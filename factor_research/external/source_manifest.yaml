@@ -1,0 +1,178 @@
+version: 1
+updated: "2026-06-15"
+policy:
+  reuse_mode: "coexistence_first"
+  adapter_boundary: "Adapters convert data only; metric calculations stay in their source systems."
+  required_prefilter:
+    - data_quality
+    - tradability
+  notes:
+    - "Do not merge external metrics into a self-designed score until external outputs are reproducible."
+    - "Record source project, commit, license, files, functions, and local adaptation for every reused evaluator."
+
+sources:
+  - id: alphalens_reloaded
+    name: alphalens-reloaded
+    local_path: "tmp/reference_repos/alphalens-reloaded"
+    commit: "f0a07c22d554e4b4036983cc80320b432714fe7e"
+    license: "Apache-2.0"
+    planned_role: "Primary open-source factor evaluation reference."
+    reuse_policy: "Prefer direct calls or faithful vendoring of evaluation functions; do not change metric definitions."
+    source_files:
+      - path: "src/alphalens/performance.py"
+        functions:
+          - "factor_information_coefficient"
+          - "mean_information_coefficient"
+          - "factor_returns"
+          - "factor_alpha_beta"
+          - "mean_return_by_quantile"
+          - "quantile_turnover"
+          - "factor_rank_autocorrelation"
+      - path: "src/alphalens/tears.py"
+        functions:
+          - "create_returns_tear_sheet"
+          - "create_information_tear_sheet"
+          - "create_turnover_tear_sheet"
+    local_adapter: "factor_research/external/adapters.py::to_alphalens_factor_data"
+    output_namespace: "alphalens_reloaded"
+
+  - id: jqfactor_analyzer
+    name: jqfactor_analyzer
+    local_path: "tmp/reference_repos/jqfactor_analyzer"
+    commit: "69e677dc0dd9bed9fece02a70b9c81ce3d0afc53"
+    license: "MIT"
+    planned_role: "A-share style factor analysis reference with group, neutralization, and Chinese reporting conventions."
+    reuse_policy: "Prefer direct calls or faithful vendoring of performance/preprocess functions; project supplies Qlib-derived inputs."
+    source_files:
+      - path: "jqfactor_analyzer/performance.py"
+        functions:
+          - "factor_information_coefficient"
+          - "mean_information_coefficient"
+          - "factor_returns"
+          - "factor_alpha_beta"
+          - "mean_return_by_quantile"
+          - "quantile_turnover"
+      - path: "jqfactor_analyzer/analyze.py"
+        functions:
+          - "FactorAnalyzer"
+      - path: "jqfactor_analyzer/preprocess.py"
+        functions:
+          - "winsorize"
+          - "standardlize"
+          - "neutralize"
+    local_adapter: "factor_research/external/adapters.py::to_jqfactor_inputs"
+    output_namespace: "jqfactor_analyzer"
+
+  - id: qlib_evaluate
+    name: Qlib evaluate
+    local_path: "E:/qlib_prj/qlib_clone"
+    commit: "d5379c520f66a39953bad76234a7019a72796fd0"
+    license: "MIT"
+    planned_role: "Keep compatibility with the baseline framework and Qlib-native risk/evaluation tools."
+    reuse_policy: "Call Qlib APIs from the installed editable source; do not copy Qlib internals unless necessary."
+    source_files:
+      - path: "qlib/contrib/evaluate.py"
+        functions:
+          - "risk_analysis"
+          - "indicator_analysis"
+          - "long_short_backtest"
+    local_adapter: "factor_research/external/adapters.py::to_qlib_score_frame"
+    output_namespace: "qlib_eval"
+
+  - id: qlib_factor_platform
+    name: qlib_factor_platform
+    local_path: "tmp/reference_repos/qlib_factor_platform"
+    commit: "9611ac2d1392761af5988e8a571f2075c61c601e"
+    license: "MIT"
+    planned_role: "Reference for factor management, workflow organization, and configurable analysis pages."
+    reuse_policy: "Design reference only at this stage; do not import its UI."
+    source_files:
+      - path: "qlib_factor_platform/workflow/manager.py"
+        functions:
+          - "_calculate_ic_analysis"
+          - "_calculate_layer_analysis"
+      - path: "qlib_factor_platform/utils/helpers.py"
+        functions:
+          - "neutralize_factor"
+          - "calculate_turnover"
+    local_adapter: "none"
+    output_namespace: "design_reference"
+
+  - id: ta
+    name: ta
+    local_path: "tmp/reference_repos/ta"
+    commit: "a890410710a6e483c9ba08da7f3dd5089e4b9dff"
+    license: "MIT"
+    planned_role: "Technical indicator factor source for later batch factor pool expansion."
+    reuse_policy: "Use as factor source, not as evaluator."
+    source_files:
+      - path: "ta/wrapper.py"
+        functions:
+          - "add_all_ta_features"
+          - "add_volume_ta"
+          - "add_volatility_ta"
+          - "add_trend_ta"
+          - "add_momentum_ta"
+    local_adapter: "future factor catalog entries"
+    output_namespace: "factor_source"
+
+  - id: kunquant
+    name: KunQuant
+    local_path: "tmp/reference_repos/KunQuant"
+    commit: "d4b9e61f729df347730aa921b539b9df3c3fe36d"
+    license: "Apache-2.0"
+    planned_role: "Alpha101/Alpha158 formula and high-performance factor calculation reference."
+    reuse_policy: "Use as factor formula/source reference first; no compiler/runtime integration in V3.6."
+    source_files:
+      - path: "tests/KunTestUtil/ref_alpha101.py"
+        functions:
+          - "get_alpha"
+      - path: "tests/gen_alpha158.py"
+        functions:
+          - "main"
+    local_adapter: "future factor catalog entries"
+    output_namespace: "factor_source"
+
+  - id: ginkgo_alpha101
+    name: Ginkgo_Alpha101
+    local_path: "tmp/reference_repos/Ginkgo_Alpha101"
+    commit: "57cec7002698d89c130e027c7661bf53d307dcac"
+    license: "MIT"
+    planned_role: "Alpha101 formula reference for later factor expansion."
+    reuse_policy: "Use as factor formula/source reference first."
+    source_files:
+      - path: "README.md"
+        functions: []
+    local_adapter: "future factor catalog entries"
+    output_namespace: "factor_source"
+
+  - id: factortest
+    name: FactorTest
+    local_path: "tmp/reference_repos/FactorTest"
+    commit: "98cb0e0310a50adc1ca1a34fdd89e18caa03381f"
+    license: "MIT"
+    planned_role: "A-share data layer, factor test, industry/style exposure reference."
+    reuse_policy: "Reference data and exposure organization; do not import directly in V3.6."
+    source_files:
+      - path: "FactorTestPerformance.py"
+        functions: []
+      - path: "FactorTestBox.py"
+        functions: []
+    local_adapter: "future data inventory and exposure adapters"
+    output_namespace: "data_and_style_reference"
+
+  - id: multi_factor
+    name: multi-factor
+    local_path: "tmp/reference_repos/multi-factor"
+    commit: "d86618d8d62ca4d70a283957be6c64003c7bf2c6"
+    license: "unknown"
+    planned_role: "A-share fundamental factor and single-factor test reference."
+    reuse_policy: "Reference only until license and data assumptions are reviewed."
+    source_files:
+      - path: "factor_code"
+        functions: []
+      - path: "self_libs/factor_test.py"
+        functions: []
+    local_adapter: "future factor catalog entries after license review"
+    output_namespace: "factor_source_pending_license"
+

@@ -1314,3 +1314,30 @@ V3.6 目标：
 - 增加 provider 字段探测，确认行业、市值、指数成分、ST、停牌、涨跌停等数据可用性。
 - 建立 `factor_catalog.yaml`，为后续批量扩张因子池记录来源、公式、依赖字段和 license。
 - 等开源评价体系跑通后，再新增本项目自己的 judgement layer。
+
+## 33. V3.6 第一段：来源清单与适配层骨架
+
+状态：已完成。
+
+新增文件：
+
+```text
+factor_research/external/__init__.py
+factor_research/external/source_manifest.yaml
+factor_research/external/adapters.py
+docs/FACTOR_EVALUATION_SOURCE_MANIFEST.md
+```
+
+完成内容：
+
+- 记录 Alphalens、jqfactor、Qlib evaluate、qlib_factor_platform、ta、KunQuant、Ginkgo_Alpha101、FactorTest、multi-factor 的来源、commit、license、计划用途和复用边界。
+- 新增外部评价适配层，当前只做数据转换，不计算任何评价指标。
+- 支持导出 Alphalens 风格 `(date, asset)` MultiIndex factor data。
+- 支持导出 jqfactor 风格 factor、forward returns、groupby、weights 对齐对象。
+- 支持导出 Qlib 风格 score/label frame。
+- 小样本验证通过，确认 adapter 输出形状符合预期。
+
+下一段：
+
+- 增加 `scripts/run_factor_evaluation_v4.py`，用少量已存在因子导出多体系输入样本、adapter report 和 failure reasons。
+- 然后再调用外部评价函数生成并列结果。
