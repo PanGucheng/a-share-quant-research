@@ -198,6 +198,21 @@ ret_20         monitor
 amount_mean_20 monitor
 ```
 
+V3.5 已小批量扩展参考因子，并将结果写入独立 expanded 目录：
+
+```text
+outputs/factor_research_v3/liquid2000_expanded
+outputs/factor_screening_v3/liquid2000_expanded
+outputs/factor_candidate_pool_v3/liquid2000_expanded
+```
+
+当前 expanded alpha 候选：
+
+```text
+rev_20_exclude_5
+rev_5
+```
+
 ## 缓存与加速
 
 因子研究默认启用本地缓存，缓存目录被 `.gitignore` 忽略：

@@ -1,0 +1,141 @@
+﻿window,factor,neutralization,neutralized_factor,description,required_columns,non_null_rows
+main_research_2021_2023,ret_20,raw,ret_20__raw,Original factor value after tradability/data-quality filtering.,,822913
+main_research_2021_2023,ret_20,cs_rank,ret_20__cs_rank,"Daily cross-sectional rank normalization, Qlib CSRankNorm style.",,822913
+main_research_2021_2023,ret_20,cs_zscore,ret_20__cs_zscore,Daily robust z-score after MAD winsorization.,,822913
+main_research_2021_2023,ret_20,liquidity_bucket_zscore,ret_20__liquidity_bucket_zscore,Daily robust z-score inside each tradability liquidity bucket.,liquidity_bucket,822913
+main_research_2021_2023,ret_20,volatility_bucket_zscore,ret_20__volatility_bucket_zscore,Daily robust z-score inside each amplitude_20 volatility bucket.,volatility_bucket,817730
+main_research_2021_2023,ret_20,amount_proxy_residual,ret_20__amount_proxy_residual,Daily residual after controlling log(amount_mean_20).,log_amount_mean_20,817730
+main_research_2021_2023,ret_20,liquidity_volatility_residual,ret_20__liquidity_volatility_residual,"Daily residual after controlling liquidity bucket, volatility bucket, and log amount proxy.","liquidity_bucket,volatility_bucket,log_amount_mean_20",817730
+main_research_2021_2023,rev_5,raw,rev_5__raw,Original factor value after tradability/data-quality filtering.,,823397
+main_research_2021_2023,rev_5,cs_rank,rev_5__cs_rank,"Daily cross-sectional rank normalization, Qlib CSRankNorm style.",,823397
+main_research_2021_2023,rev_5,cs_zscore,rev_5__cs_zscore,Daily robust z-score after MAD winsorization.,,823397
+main_research_2021_2023,rev_5,liquidity_bucket_zscore,rev_5__liquidity_bucket_zscore,Daily robust z-score inside each tradability liquidity bucket.,liquidity_bucket,823397
+main_research_2021_2023,rev_5,volatility_bucket_zscore,rev_5__volatility_bucket_zscore,Daily robust z-score inside each amplitude_20 volatility bucket.,volatility_bucket,818035
+main_research_2021_2023,rev_5,amount_proxy_residual,rev_5__amount_proxy_residual,Daily residual after controlling log(amount_mean_20).,log_amount_mean_20,818035
+main_research_2021_2023,rev_5,liquidity_volatility_residual,rev_5__liquidity_volatility_residual,"Daily residual after controlling liquidity bucket, volatility bucket, and log amount proxy.","liquidity_bucket,volatility_bucket,log_amount_mean_20",818035
+main_research_2021_2023,rev_20_exclude_5,raw,rev_20_exclude_5__raw,Original factor value after tradability/data-quality filtering.,,822046
+main_research_2021_2023,rev_20_exclude_5,cs_rank,rev_20_exclude_5__cs_rank,"Daily cross-sectional rank normalization, Qlib CSRankNorm style.",,822046
+main_research_2021_2023,rev_20_exclude_5,cs_zscore,rev_20_exclude_5__cs_zscore,Daily robust z-score after MAD winsorization.,,822046
+main_research_2021_2023,rev_20_exclude_5,liquidity_bucket_zscore,rev_20_exclude_5__liquidity_bucket_zscore,Daily robust z-score inside each tradability liquidity bucket.,liquidity_bucket,822046
+main_research_2021_2023,rev_20_exclude_5,volatility_bucket_zscore,rev_20_exclude_5__volatility_bucket_zscore,Daily robust z-score inside each amplitude_20 volatility bucket.,volatility_bucket,817730
+main_research_2021_2023,rev_20_exclude_5,amount_proxy_residual,rev_20_exclude_5__amount_proxy_residual,Daily residual after controlling log(amount_mean_20).,log_amount_mean_20,817730
+main_research_2021_2023,rev_20_exclude_5,liquidity_volatility_residual,rev_20_exclude_5__liquidity_volatility_residual,"Daily residual after controlling liquidity bucket, volatility bucket, and log amount proxy.","liquidity_bucket,volatility_bucket,log_amount_mean_20",817730
+main_research_2021_2023,std_20,raw,std_20__raw,Original factor value after tradability/data-quality filtering.,,817730
+main_research_2021_2023,std_20,cs_rank,std_20__cs_rank,"Daily cross-sectional rank normalization, Qlib CSRankNorm style.",,817730
+main_research_2021_2023,std_20,cs_zscore,std_20__cs_zscore,Daily robust z-score after MAD winsorization.,,817730
+main_research_2021_2023,std_20,liquidity_bucket_zscore,std_20__liquidity_bucket_zscore,Daily robust z-score inside each tradability liquidity bucket.,liquidity_bucket,817730
+main_research_2021_2023,std_20,volatility_bucket_zscore,std_20__volatility_bucket_zscore,Daily robust z-score inside each amplitude_20 volatility bucket.,volatility_bucket,817730
+main_research_2021_2023,std_20,amount_proxy_residual,std_20__amount_proxy_residual,Daily residual after controlling log(amount_mean_20).,log_amount_mean_20,817730
+main_research_2021_2023,std_20,liquidity_volatility_residual,std_20__liquidity_volatility_residual,"Daily residual after controlling liquidity bucket, volatility bucket, and log amount proxy.","liquidity_bucket,volatility_bucket,log_amount_mean_20",817730
+main_research_2021_2023,downside_std_20,raw,downside_std_20__raw,Original factor value after tradability/data-quality filtering.,,817730
+main_research_2021_2023,downside_std_20,cs_rank,downside_std_20__cs_rank,"Daily cross-sectional rank normalization, Qlib CSRankNorm style.",,817730
+main_research_2021_2023,downside_std_20,cs_zscore,downside_std_20__cs_zscore,Daily robust z-score after MAD winsorization.,,817730
+main_research_2021_2023,downside_std_20,liquidity_bucket_zscore,downside_std_20__liquidity_bucket_zscore,Daily robust z-score inside each tradability liquidity bucket.,liquidity_bucket,817730
+main_research_2021_2023,downside_std_20,volatility_bucket_zscore,downside_std_20__volatility_bucket_zscore,Daily robust z-score inside each amplitude_20 volatility bucket.,volatility_bucket,817730
+main_research_2021_2023,downside_std_20,amount_proxy_residual,downside_std_20__amount_proxy_residual,Daily residual after controlling log(amount_mean_20).,log_amount_mean_20,817730
+main_research_2021_2023,downside_std_20,liquidity_volatility_residual,downside_std_20__liquidity_volatility_residual,"Daily residual after controlling liquidity bucket, volatility bucket, and log amount proxy.","liquidity_bucket,volatility_bucket,log_amount_mean_20",817730
+main_research_2021_2023,max_drawdown_20,raw,max_drawdown_20__raw,Original factor value after tradability/data-quality filtering.,,818035
+main_research_2021_2023,max_drawdown_20,cs_rank,max_drawdown_20__cs_rank,"Daily cross-sectional rank normalization, Qlib CSRankNorm style.",,818035
+main_research_2021_2023,max_drawdown_20,cs_zscore,max_drawdown_20__cs_zscore,Daily robust z-score after MAD winsorization.,,818035
+main_research_2021_2023,max_drawdown_20,liquidity_bucket_zscore,max_drawdown_20__liquidity_bucket_zscore,Daily robust z-score inside each tradability liquidity bucket.,liquidity_bucket,818035
+main_research_2021_2023,max_drawdown_20,volatility_bucket_zscore,max_drawdown_20__volatility_bucket_zscore,Daily robust z-score inside each amplitude_20 volatility bucket.,volatility_bucket,818035
+main_research_2021_2023,max_drawdown_20,amount_proxy_residual,max_drawdown_20__amount_proxy_residual,Daily residual after controlling log(amount_mean_20).,log_amount_mean_20,818035
+main_research_2021_2023,max_drawdown_20,liquidity_volatility_residual,max_drawdown_20__liquidity_volatility_residual,"Daily residual after controlling liquidity bucket, volatility bucket, and log amount proxy.","liquidity_bucket,volatility_bucket,log_amount_mean_20",818035
+main_research_2021_2023,amplitude_20,raw,amplitude_20__raw,Original factor value after tradability/data-quality filtering.,,818035
+main_research_2021_2023,amplitude_20,cs_rank,amplitude_20__cs_rank,"Daily cross-sectional rank normalization, Qlib CSRankNorm style.",,818035
+main_research_2021_2023,amplitude_20,cs_zscore,amplitude_20__cs_zscore,Daily robust z-score after MAD winsorization.,,818035
+main_research_2021_2023,amplitude_20,liquidity_bucket_zscore,amplitude_20__liquidity_bucket_zscore,Daily robust z-score inside each tradability liquidity bucket.,liquidity_bucket,818035
+main_research_2021_2023,amplitude_20,volatility_bucket_zscore,amplitude_20__volatility_bucket_zscore,Daily robust z-score inside each amplitude_20 volatility bucket.,volatility_bucket,818035
+main_research_2021_2023,amplitude_20,amount_proxy_residual,amplitude_20__amount_proxy_residual,Daily residual after controlling log(amount_mean_20).,log_amount_mean_20,818035
+main_research_2021_2023,amplitude_20,liquidity_volatility_residual,amplitude_20__liquidity_volatility_residual,"Daily residual after controlling liquidity bucket, volatility bucket, and log amount proxy.","liquidity_bucket,volatility_bucket,log_amount_mean_20",818035
+main_research_2021_2023,amount_mean_20,raw,amount_mean_20__raw,Original factor value after tradability/data-quality filtering.,,818035
+main_research_2021_2023,amount_mean_20,cs_rank,amount_mean_20__cs_rank,"Daily cross-sectional rank normalization, Qlib CSRankNorm style.",,818035
+main_research_2021_2023,amount_mean_20,cs_zscore,amount_mean_20__cs_zscore,Daily robust z-score after MAD winsorization.,,818035
+main_research_2021_2023,amount_mean_20,liquidity_bucket_zscore,amount_mean_20__liquidity_bucket_zscore,Daily robust z-score inside each tradability liquidity bucket.,liquidity_bucket,818035
+main_research_2021_2023,amount_mean_20,volatility_bucket_zscore,amount_mean_20__volatility_bucket_zscore,Daily robust z-score inside each amplitude_20 volatility bucket.,volatility_bucket,818035
+main_research_2021_2023,amount_mean_20,amount_proxy_residual,amount_mean_20__amount_proxy_residual,Daily residual after controlling log(amount_mean_20).,log_amount_mean_20,818035
+main_research_2021_2023,amount_mean_20,liquidity_volatility_residual,amount_mean_20__liquidity_volatility_residual,"Daily residual after controlling liquidity bucket, volatility bucket, and log amount proxy.","liquidity_bucket,volatility_bucket,log_amount_mean_20",818035
+main_research_2021_2023,amount_cv_20,raw,amount_cv_20__raw,Original factor value after tradability/data-quality filtering.,,818035
+main_research_2021_2023,amount_cv_20,cs_rank,amount_cv_20__cs_rank,"Daily cross-sectional rank normalization, Qlib CSRankNorm style.",,818035
+main_research_2021_2023,amount_cv_20,cs_zscore,amount_cv_20__cs_zscore,Daily robust z-score after MAD winsorization.,,818035
+main_research_2021_2023,amount_cv_20,liquidity_bucket_zscore,amount_cv_20__liquidity_bucket_zscore,Daily robust z-score inside each tradability liquidity bucket.,liquidity_bucket,818035
+main_research_2021_2023,amount_cv_20,volatility_bucket_zscore,amount_cv_20__volatility_bucket_zscore,Daily robust z-score inside each amplitude_20 volatility bucket.,volatility_bucket,818035
+main_research_2021_2023,amount_cv_20,amount_proxy_residual,amount_cv_20__amount_proxy_residual,Daily residual after controlling log(amount_mean_20).,log_amount_mean_20,818035
+main_research_2021_2023,amount_cv_20,liquidity_volatility_residual,amount_cv_20__liquidity_volatility_residual,"Daily residual after controlling liquidity bucket, volatility bucket, and log amount proxy.","liquidity_bucket,volatility_bucket,log_amount_mean_20",818035
+main_research_2021_2023,corr_ret_amount_20,raw,corr_ret_amount_20__raw,Original factor value after tradability/data-quality filtering.,,817730
+main_research_2021_2023,corr_ret_amount_20,cs_rank,corr_ret_amount_20__cs_rank,"Daily cross-sectional rank normalization, Qlib CSRankNorm style.",,817730
+main_research_2021_2023,corr_ret_amount_20,cs_zscore,corr_ret_amount_20__cs_zscore,Daily robust z-score after MAD winsorization.,,817730
+main_research_2021_2023,corr_ret_amount_20,liquidity_bucket_zscore,corr_ret_amount_20__liquidity_bucket_zscore,Daily robust z-score inside each tradability liquidity bucket.,liquidity_bucket,817730
+main_research_2021_2023,corr_ret_amount_20,volatility_bucket_zscore,corr_ret_amount_20__volatility_bucket_zscore,Daily robust z-score inside each amplitude_20 volatility bucket.,volatility_bucket,817730
+main_research_2021_2023,corr_ret_amount_20,amount_proxy_residual,corr_ret_amount_20__amount_proxy_residual,Daily residual after controlling log(amount_mean_20).,log_amount_mean_20,817730
+main_research_2021_2023,corr_ret_amount_20,liquidity_volatility_residual,corr_ret_amount_20__liquidity_volatility_residual,"Daily residual after controlling liquidity bucket, volatility bucket, and log amount proxy.","liquidity_bucket,volatility_bucket,log_amount_mean_20",817730
+recent_oos_2024_2026,ret_20,raw,ret_20__raw,Original factor value after tradability/data-quality filtering.,,634405
+recent_oos_2024_2026,ret_20,cs_rank,ret_20__cs_rank,"Daily cross-sectional rank normalization, Qlib CSRankNorm style.",,634405
+recent_oos_2024_2026,ret_20,cs_zscore,ret_20__cs_zscore,Daily robust z-score after MAD winsorization.,,634405
+recent_oos_2024_2026,ret_20,liquidity_bucket_zscore,ret_20__liquidity_bucket_zscore,Daily robust z-score inside each tradability liquidity bucket.,liquidity_bucket,634405
+recent_oos_2024_2026,ret_20,volatility_bucket_zscore,ret_20__volatility_bucket_zscore,Daily robust z-score inside each amplitude_20 volatility bucket.,volatility_bucket,631103
+recent_oos_2024_2026,ret_20,amount_proxy_residual,ret_20__amount_proxy_residual,Daily residual after controlling log(amount_mean_20).,log_amount_mean_20,631103
+recent_oos_2024_2026,ret_20,liquidity_volatility_residual,ret_20__liquidity_volatility_residual,"Daily residual after controlling liquidity bucket, volatility bucket, and log amount proxy.","liquidity_bucket,volatility_bucket,log_amount_mean_20",631103
+recent_oos_2024_2026,rev_5,raw,rev_5__raw,Original factor value after tradability/data-quality filtering.,,634818
+recent_oos_2024_2026,rev_5,cs_rank,rev_5__cs_rank,"Daily cross-sectional rank normalization, Qlib CSRankNorm style.",,634818
+recent_oos_2024_2026,rev_5,cs_zscore,rev_5__cs_zscore,Daily robust z-score after MAD winsorization.,,634818
+recent_oos_2024_2026,rev_5,liquidity_bucket_zscore,rev_5__liquidity_bucket_zscore,Daily robust z-score inside each tradability liquidity bucket.,liquidity_bucket,634818
+recent_oos_2024_2026,rev_5,volatility_bucket_zscore,rev_5__volatility_bucket_zscore,Daily robust z-score inside each amplitude_20 volatility bucket.,volatility_bucket,631327
+recent_oos_2024_2026,rev_5,amount_proxy_residual,rev_5__amount_proxy_residual,Daily residual after controlling log(amount_mean_20).,log_amount_mean_20,631327
+recent_oos_2024_2026,rev_5,liquidity_volatility_residual,rev_5__liquidity_volatility_residual,"Daily residual after controlling liquidity bucket, volatility bucket, and log amount proxy.","liquidity_bucket,volatility_bucket,log_amount_mean_20",631327
+recent_oos_2024_2026,rev_20_exclude_5,raw,rev_20_exclude_5__raw,Original factor value after tradability/data-quality filtering.,,633828
+recent_oos_2024_2026,rev_20_exclude_5,cs_rank,rev_20_exclude_5__cs_rank,"Daily cross-sectional rank normalization, Qlib CSRankNorm style.",,633828
+recent_oos_2024_2026,rev_20_exclude_5,cs_zscore,rev_20_exclude_5__cs_zscore,Daily robust z-score after MAD winsorization.,,633828
+recent_oos_2024_2026,rev_20_exclude_5,liquidity_bucket_zscore,rev_20_exclude_5__liquidity_bucket_zscore,Daily robust z-score inside each tradability liquidity bucket.,liquidity_bucket,633828
+recent_oos_2024_2026,rev_20_exclude_5,volatility_bucket_zscore,rev_20_exclude_5__volatility_bucket_zscore,Daily robust z-score inside each amplitude_20 volatility bucket.,volatility_bucket,631103
+recent_oos_2024_2026,rev_20_exclude_5,amount_proxy_residual,rev_20_exclude_5__amount_proxy_residual,Daily residual after controlling log(amount_mean_20).,log_amount_mean_20,631103
+recent_oos_2024_2026,rev_20_exclude_5,liquidity_volatility_residual,rev_20_exclude_5__liquidity_volatility_residual,"Daily residual after controlling liquidity bucket, volatility bucket, and log amount proxy.","liquidity_bucket,volatility_bucket,log_amount_mean_20",631103
+recent_oos_2024_2026,std_20,raw,std_20__raw,Original factor value after tradability/data-quality filtering.,,631103
+recent_oos_2024_2026,std_20,cs_rank,std_20__cs_rank,"Daily cross-sectional rank normalization, Qlib CSRankNorm style.",,631103
+recent_oos_2024_2026,std_20,cs_zscore,std_20__cs_zscore,Daily robust z-score after MAD winsorization.,,631103
+recent_oos_2024_2026,std_20,liquidity_bucket_zscore,std_20__liquidity_bucket_zscore,Daily robust z-score inside each tradability liquidity bucket.,liquidity_bucket,631103
+recent_oos_2024_2026,std_20,volatility_bucket_zscore,std_20__volatility_bucket_zscore,Daily robust z-score inside each amplitude_20 volatility bucket.,volatility_bucket,631103
+recent_oos_2024_2026,std_20,amount_proxy_residual,std_20__amount_proxy_residual,Daily residual after controlling log(amount_mean_20).,log_amount_mean_20,631103
+recent_oos_2024_2026,std_20,liquidity_volatility_residual,std_20__liquidity_volatility_residual,"Daily residual after controlling liquidity bucket, volatility bucket, and log amount proxy.","liquidity_bucket,volatility_bucket,log_amount_mean_20",631103
+recent_oos_2024_2026,downside_std_20,raw,downside_std_20__raw,Original factor value after tradability/data-quality filtering.,,631103
+recent_oos_2024_2026,downside_std_20,cs_rank,downside_std_20__cs_rank,"Daily cross-sectional rank normalization, Qlib CSRankNorm style.",,631103
+recent_oos_2024_2026,downside_std_20,cs_zscore,downside_std_20__cs_zscore,Daily robust z-score after MAD winsorization.,,631103
+recent_oos_2024_2026,downside_std_20,liquidity_bucket_zscore,downside_std_20__liquidity_bucket_zscore,Daily robust z-score inside each tradability liquidity bucket.,liquidity_bucket,631103
+recent_oos_2024_2026,downside_std_20,volatility_bucket_zscore,downside_std_20__volatility_bucket_zscore,Daily robust z-score inside each amplitude_20 volatility bucket.,volatility_bucket,631103
+recent_oos_2024_2026,downside_std_20,amount_proxy_residual,downside_std_20__amount_proxy_residual,Daily residual after controlling log(amount_mean_20).,log_amount_mean_20,631103
+recent_oos_2024_2026,downside_std_20,liquidity_volatility_residual,downside_std_20__liquidity_volatility_residual,"Daily residual after controlling liquidity bucket, volatility bucket, and log amount proxy.","liquidity_bucket,volatility_bucket,log_amount_mean_20",631103
+recent_oos_2024_2026,max_drawdown_20,raw,max_drawdown_20__raw,Original factor value after tradability/data-quality filtering.,,631327
+recent_oos_2024_2026,max_drawdown_20,cs_rank,max_drawdown_20__cs_rank,"Daily cross-sectional rank normalization, Qlib CSRankNorm style.",,631327
+recent_oos_2024_2026,max_drawdown_20,cs_zscore,max_drawdown_20__cs_zscore,Daily robust z-score after MAD winsorization.,,631327
+recent_oos_2024_2026,max_drawdown_20,liquidity_bucket_zscore,max_drawdown_20__liquidity_bucket_zscore,Daily robust z-score inside each tradability liquidity bucket.,liquidity_bucket,631327
+recent_oos_2024_2026,max_drawdown_20,volatility_bucket_zscore,max_drawdown_20__volatility_bucket_zscore,Daily robust z-score inside each amplitude_20 volatility bucket.,volatility_bucket,631327
+recent_oos_2024_2026,max_drawdown_20,amount_proxy_residual,max_drawdown_20__amount_proxy_residual,Daily residual after controlling log(amount_mean_20).,log_amount_mean_20,631327
+recent_oos_2024_2026,max_drawdown_20,liquidity_volatility_residual,max_drawdown_20__liquidity_volatility_residual,"Daily residual after controlling liquidity bucket, volatility bucket, and log amount proxy.","liquidity_bucket,volatility_bucket,log_amount_mean_20",631327
+recent_oos_2024_2026,amplitude_20,raw,amplitude_20__raw,Original factor value after tradability/data-quality filtering.,,631327
+recent_oos_2024_2026,amplitude_20,cs_rank,amplitude_20__cs_rank,"Daily cross-sectional rank normalization, Qlib CSRankNorm style.",,631327
+recent_oos_2024_2026,amplitude_20,cs_zscore,amplitude_20__cs_zscore,Daily robust z-score after MAD winsorization.,,631327
+recent_oos_2024_2026,amplitude_20,liquidity_bucket_zscore,amplitude_20__liquidity_bucket_zscore,Daily robust z-score inside each tradability liquidity bucket.,liquidity_bucket,631327
+recent_oos_2024_2026,amplitude_20,volatility_bucket_zscore,amplitude_20__volatility_bucket_zscore,Daily robust z-score inside each amplitude_20 volatility bucket.,volatility_bucket,631327
+recent_oos_2024_2026,amplitude_20,amount_proxy_residual,amplitude_20__amount_proxy_residual,Daily residual after controlling log(amount_mean_20).,log_amount_mean_20,631327
+recent_oos_2024_2026,amplitude_20,liquidity_volatility_residual,amplitude_20__liquidity_volatility_residual,"Daily residual after controlling liquidity bucket, volatility bucket, and log amount proxy.","liquidity_bucket,volatility_bucket,log_amount_mean_20",631327
+recent_oos_2024_2026,amount_mean_20,raw,amount_mean_20__raw,Original factor value after tradability/data-quality filtering.,,631327
+recent_oos_2024_2026,amount_mean_20,cs_rank,amount_mean_20__cs_rank,"Daily cross-sectional rank normalization, Qlib CSRankNorm style.",,631327
+recent_oos_2024_2026,amount_mean_20,cs_zscore,amount_mean_20__cs_zscore,Daily robust z-score after MAD winsorization.,,631327
+recent_oos_2024_2026,amount_mean_20,liquidity_bucket_zscore,amount_mean_20__liquidity_bucket_zscore,Daily robust z-score inside each tradability liquidity bucket.,liquidity_bucket,631327
+recent_oos_2024_2026,amount_mean_20,volatility_bucket_zscore,amount_mean_20__volatility_bucket_zscore,Daily robust z-score inside each amplitude_20 volatility bucket.,volatility_bucket,631327
+recent_oos_2024_2026,amount_mean_20,amount_proxy_residual,amount_mean_20__amount_proxy_residual,Daily residual after controlling log(amount_mean_20).,log_amount_mean_20,631327
+recent_oos_2024_2026,amount_mean_20,liquidity_volatility_residual,amount_mean_20__liquidity_volatility_residual,"Daily residual after controlling liquidity bucket, volatility bucket, and log amount proxy.","liquidity_bucket,volatility_bucket,log_amount_mean_20",631327
+recent_oos_2024_2026,amount_cv_20,raw,amount_cv_20__raw,Original factor value after tradability/data-quality filtering.,,631327
+recent_oos_2024_2026,amount_cv_20,cs_rank,amount_cv_20__cs_rank,"Daily cross-sectional rank normalization, Qlib CSRankNorm style.",,631327
+recent_oos_2024_2026,amount_cv_20,cs_zscore,amount_cv_20__cs_zscore,Daily robust z-score after MAD winsorization.,,631327
+recent_oos_2024_2026,amount_cv_20,liquidity_bucket_zscore,amount_cv_20__liquidity_bucket_zscore,Daily robust z-score inside each tradability liquidity bucket.,liquidity_bucket,631327
+recent_oos_2024_2026,amount_cv_20,volatility_bucket_zscore,amount_cv_20__volatility_bucket_zscore,Daily robust z-score inside each amplitude_20 volatility bucket.,volatility_bucket,631327
+recent_oos_2024_2026,amount_cv_20,amount_proxy_residual,amount_cv_20__amount_proxy_residual,Daily residual after controlling log(amount_mean_20).,log_amount_mean_20,631327
+recent_oos_2024_2026,amount_cv_20,liquidity_volatility_residual,amount_cv_20__liquidity_volatility_residual,"Daily residual after controlling liquidity bucket, volatility bucket, and log amount proxy.","liquidity_bucket,volatility_bucket,log_amount_mean_20",631327
+recent_oos_2024_2026,corr_ret_amount_20,raw,corr_ret_amount_20__raw,Original factor value after tradability/data-quality filtering.,,631103
+recent_oos_2024_2026,corr_ret_amount_20,cs_rank,corr_ret_amount_20__cs_rank,"Daily cross-sectional rank normalization, Qlib CSRankNorm style.",,631103
+recent_oos_2024_2026,corr_ret_amount_20,cs_zscore,corr_ret_amount_20__cs_zscore,Daily robust z-score after MAD winsorization.,,631103
+recent_oos_2024_2026,corr_ret_amount_20,liquidity_bucket_zscore,corr_ret_amount_20__liquidity_bucket_zscore,Daily robust z-score inside each tradability liquidity bucket.,liquidity_bucket,631103
+recent_oos_2024_2026,corr_ret_amount_20,volatility_bucket_zscore,corr_ret_amount_20__volatility_bucket_zscore,Daily robust z-score inside each amplitude_20 volatility bucket.,volatility_bucket,631103
+recent_oos_2024_2026,corr_ret_amount_20,amount_proxy_residual,corr_ret_amount_20__amount_proxy_residual,Daily residual after controlling log(amount_mean_20).,log_amount_mean_20,631103
+recent_oos_2024_2026,corr_ret_amount_20,liquidity_volatility_residual,corr_ret_amount_20__liquidity_volatility_residual,"Daily residual after controlling liquidity bucket, volatility bucket, and log amount proxy.","liquidity_bucket,volatility_bucket,log_amount_mean_20",631103

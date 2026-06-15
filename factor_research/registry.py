@@ -50,11 +50,32 @@ FACTOR_SPECS = [
         description="Negative 5-day return; short-term reversal score.",
     ),
     FactorSpec(
+        name="rev_20_exclude_5",
+        category="reversal",
+        expected_direction="positive",
+        dependencies=("$close",),
+        description="Negative 20-to-5-day return; medium reversal excluding the most recent 5 trading days.",
+    ),
+    FactorSpec(
         name="std_20",
         category="risk",
         expected_direction="negative",
         dependencies=("$close",),
         description="20-day return volatility; lower volatility is expected to be better.",
+    ),
+    FactorSpec(
+        name="downside_std_20",
+        category="risk",
+        expected_direction="negative",
+        dependencies=("$close",),
+        description="20-day downside return volatility; lower downside volatility is expected to be better.",
+    ),
+    FactorSpec(
+        name="max_drawdown_20",
+        category="risk",
+        expected_direction="negative",
+        dependencies=("$close",),
+        description="20-day rolling maximum peak-to-trough drawdown; lower drawdown is expected to be better.",
     ),
     FactorSpec(
         name="amplitude_20",
@@ -78,6 +99,13 @@ FACTOR_SPECS = [
         description="20-day trading amount volatility; liquidity stability diagnostic.",
     ),
     FactorSpec(
+        name="amount_cv_20",
+        category="liquidity",
+        expected_direction="negative",
+        dependencies=("$amount",),
+        description="20-day coefficient of variation of trading amount; lower instability is expected to be better.",
+    ),
+    FactorSpec(
         name="volume_ratio_5_20",
         category="liquidity",
         expected_direction="watch",
@@ -90,6 +118,13 @@ FACTOR_SPECS = [
         expected_direction="watch",
         dependencies=("$close", "$volume"),
         description="20-day rolling correlation between daily return and volume.",
+    ),
+    FactorSpec(
+        name="corr_ret_amount_20",
+        category="price_volume",
+        expected_direction="watch",
+        dependencies=("$close", "$amount"),
+        description="20-day rolling correlation between daily return and trading amount.",
     ),
 ]
 

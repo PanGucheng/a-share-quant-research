@@ -181,6 +181,8 @@ def decide_status(row: dict, spec: FactorSpec, rules: ScreeningRules) -> tuple[s
     )
     if exposure_dominated:
         return "risk_exposure", "strong_raw_signal_but_exposure_dominated"
+    if pd.notna(row["joint_residual_directional_rank_ic"]) and row["joint_residual_directional_rank_ic"] < 0:
+        return "watch", "signal_flips_after_controls"
 
     portfolio_ready = (
         row["main_directional_rank_ic"] >= rules.portfolio_min_rank_ic
@@ -198,6 +200,7 @@ def decide_status(row: dict, spec: FactorSpec, rules: ScreeningRules) -> tuple[s
         row["main_directional_rank_ic"] >= rules.research_min_rank_ic
         and (pd.isna(row["oos_directional_rank_ic"]) or row["oos_directional_rank_ic"] >= 0)
         and (pd.isna(row["directional_group_spread"]) or row["directional_group_spread"] > rules.min_directional_spread)
+        and (pd.isna(row["residual_retention"]) or row["residual_retention"] >= 0)
     )
     if research_ready:
         return "research_candidate", "partial_signal_needs_more_validation"

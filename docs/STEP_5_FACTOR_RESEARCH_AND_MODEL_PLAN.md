@@ -1205,3 +1205,68 @@ corr_ret_amount_20
 - 不新增硬依赖。
 - 公式参考 Qlib/ta，代码先保持在本项目 `factor_research/factor_library.py` 和 `factor_research/registry.py` 内。
 - 输出使用 expanded 目录，避免覆盖 core 基线。
+
+## 31. 因子扩展 V3.5 最小实现
+
+状态：已完成。
+
+新增实施文档：
+
+```text
+docs/FACTOR_EXPANSION_V3_5_IMPLEMENTATION.md
+```
+
+新增因子：
+
+```text
+downside_std_20
+max_drawdown_20
+rev_20_exclude_5
+amount_cv_20
+corr_ret_amount_20
+```
+
+新增/更新模块：
+
+```text
+factor_research/factor_library.py
+factor_research/registry.py
+scripts/run_factor_research_v3.py
+factor_research/screening_v3.py
+factor_research/candidate_pool_v3.py
+```
+
+Expanded 输出：
+
+```text
+outputs/factor_research_v3/liquid2000_expanded
+outputs/factor_screening_v3/liquid2000_expanded
+outputs/factor_candidate_pool_v3/liquid2000_expanded
+```
+
+当前 expanded 候选池：
+
+```text
+rev_20_exclude_5    -> alpha_candidate
+rev_5               -> alpha_candidate
+amplitude_20        -> risk_control
+std_20              -> risk_control
+downside_std_20     -> risk_control
+max_drawdown_20     -> monitor
+amount_cv_20        -> monitor
+ret_20              -> monitor
+amount_mean_20      -> monitor
+corr_ret_amount_20  -> monitor
+```
+
+关键发现：
+
+- `rev_20_exclude_5` 成为当前最强新增 alpha 候选，主窗口 directional Rank IC 约 `0.0538`，OOS 约 `0.0590`。
+- `rev_5` 继续保留为 alpha 候选。
+- `downside_std_20` raw 表现较强，但主要是波动率/风险暴露，进入 `risk_control`。
+- `max_drawdown_20` raw/OOS 有一定信号，但联合中性化后翻负，进入 `monitor`。
+- `amount_cv_20` OOS 表现较好，但当前证据不足，继续观察。
+
+筛选规则修正：
+
+- 新增规则：`joint_residual_directional_rank_ic < 0` 时，不允许进入 alpha 候选，状态设为 `watch`，原因 `signal_flips_after_controls`。

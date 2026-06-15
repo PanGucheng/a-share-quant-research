@@ -30,6 +30,7 @@ DEFAULT_PROVIDER_URI = "E:/qlib_prj/qlib_data/cn_data_community_20260609_derived
 DEFAULT_MARKET = "all_stock_shsz_liquid2000"
 DEFAULT_LABELS = "label_20d_t1"
 DEFAULT_FACTORS = "amplitude_20,std_20,rev_5,ret_20,amount_mean_20"
+BASIC_FACTOR_VERSION = 2
 
 
 @dataclass(frozen=True)
@@ -106,7 +107,7 @@ def basic_factor_cache_path(args: argparse.Namespace, window: ResearchWindow) ->
         "market": args.market,
         "start_time": load_start,
         "end_time": load_end,
-        "basic_factor_version": 1,
+        "basic_factor_version": BASIC_FACTOR_VERSION,
     }
     return resolve_path(args.factor_cache_dir) / f"basic_factors_{cache_digest(payload)}.pkl"
 

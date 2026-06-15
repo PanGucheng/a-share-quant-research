@@ -201,6 +201,22 @@ ret_20         monitor
 amount_mean_20 monitor
 ```
 
+Expanded V3.5 adds a small batch of reference-driven factors and writes separate
+outputs under:
+
+```text
+outputs/factor_research_v3/liquid2000_expanded
+outputs/factor_screening_v3/liquid2000_expanded
+outputs/factor_candidate_pool_v3/liquid2000_expanded
+```
+
+Current expanded alpha candidates:
+
+```text
+rev_20_exclude_5
+rev_5
+```
+
 ## Caching For Faster Iteration
 
 Factor research uses local ignored caches by default:

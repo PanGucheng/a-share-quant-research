@@ -117,7 +117,7 @@ def write_pool_report(pool: pd.DataFrame, metadata: CandidatePoolMetadata, outpu
         "dominant_exposure_corr",
     ]
     lines = [
-        "# Factor Candidate Pool V3.4 Report",
+        "# Factor Candidate Pool V3 Report",
         "",
         f"- Pool name: `{metadata.pool_name}`",
         f"- Label: `{metadata.label}`",
