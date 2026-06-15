@@ -1270,3 +1270,47 @@ corr_ret_amount_20  -> monitor
 筛选规则修正：
 
 - 新增规则：`joint_residual_directional_rank_ic < 0` 时，不允许进入 alpha 候选，状态设为 `watch`，原因 `signal_flips_after_controls`。
+
+## 32. V3.6 路线修正：开源评价体系并行复现
+
+状态：已规划，暂未实施。
+
+详细计划：
+
+```text
+docs/FACTOR_EVALUATION_OPEN_SOURCE_COEXISTENCE_PLAN.md
+```
+
+路线修正：
+
+- 暂停继续围绕少量常见因子做策略层验证。
+- 先补齐因子评价和筛选工具体系，再进入大规模因子池扩张。
+- 不急于自研统一评价分数，先让多个成熟开源评价体系并行输出。
+- 评价逻辑优先照搬或直接调用开源项目，并标明来源、commit、license、函数位置。
+- 本项目只负责 Qlib 数据适配、`data_quality`/`tradability` 前置过滤、输出汇总和后续主观判断层。
+
+优先复现的评价来源：
+
+```text
+alphalens-reloaded
+jqfactor_analyzer
+Qlib evaluate/risk_analysis
+current project factor_research
+```
+
+后续因子池来源：
+
+```text
+Qlib Alpha158 / Alpha360
+ta
+KunQuant / Ginkgo_Alpha101
+FactorTest / multi-factor
+```
+
+V3.6 目标：
+
+- 多个开源评价体系结果先共存，不强行合并。
+- 输出 Alphalens 风格、jqfactor 风格、Qlib 风格和本项目当前风格的并列结果。
+- 增加 provider 字段探测，确认行业、市值、指数成分、ST、停牌、涨跌停等数据可用性。
+- 建立 `factor_catalog.yaml`，为后续批量扩张因子池记录来源、公式、依赖字段和 license。
+- 等开源评价体系跑通后，再新增本项目自己的 judgement layer。
