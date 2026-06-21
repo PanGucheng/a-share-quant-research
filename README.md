@@ -247,6 +247,17 @@ Raw feature cache hit:     about 11.5s-12.2s
 Basic factor cache hit:    about 9.9s
 ```
 
+## Point-In-Time Factor Context
+
+Build and validate benchmark returns, historical universe membership, and listing-age context:
+
+```powershell
+E:\anaconda_envs\qlib_env\python.exe scripts\build_factor_context_v1.py
+E:\anaconda_envs\qlib_env\python.exe scripts\validate_factor_context_v1.py
+```
+
+The module reads existing Qlib provider intervals and benchmark features. It is an input to factor evaluation and does not bypass the required data-quality and tradability filters. See `docs/FACTOR_CONTEXT_V1.md` for time semantics and known listing-date limitations.
+
 ## Open-Source References
 
 The factor research design intentionally borrows stable ideas from open-source
@@ -285,6 +296,8 @@ docs/DEVELOPMENT_PLAN.md
 docs/ENVIRONMENT.md
 docs/BASELINE_REPRODUCIBILITY.md
 docs/TRADABILITY_LABEL_LAYER.md
+docs/PROVIDER_DATA_CAPABILITY_V3_6.md
+docs/FACTOR_CONTEXT_V1.md
 docs/STEP_5_FACTOR_RESEARCH_AND_MODEL_PLAN.md
 docs/PROJECT_CONTEXT_SUMMARY.md
 ```

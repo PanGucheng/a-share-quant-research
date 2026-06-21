@@ -1,0 +1,19 @@
+{
+  "provider_uri": "E:/qlib_prj/qlib_data/cn_data_community_20260609_derived",
+  "start": "2021-01-01",
+  "end": "2023-12-29",
+  "output_dir": "outputs/factor_context_v1/main_research_2021_2023",
+  "benchmarks": {
+    "CSI300": "SH000300",
+    "CSI500": "SH000905",
+    "CSI1000": "SH000852"
+  },
+  "universes": [
+    "csi300",
+    "csi500",
+    "csi1000",
+    "all_stock_shsz_liquid2000"
+  ],
+  "listing_source": "all_stock_shsz",
+  "listing_age_as_of": "2023-12-29"
+}

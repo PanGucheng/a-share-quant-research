@@ -246,6 +246,17 @@ raw feature cache 命中： 约 11.5s-12.2s
 basic factor cache 命中：约 9.9s
 ```
 
+## 时点正确的因子研究上下文
+
+构建并验证基准收益、历史股票池成员资格和上市年龄上下文：
+
+```powershell
+E:\anaconda_envs\qlib_env\python.exe scripts\build_factor_context_v1.py
+E:\anaconda_envs\qlib_env\python.exe scripts\validate_factor_context_v1.py
+```
+
+该模块直接读取现有 Qlib provider 的成分区间和基准特征，只为因子评价补充上下文，不绕过既有数据质量检查与可交易性前置过滤。时点规则和上市日期代理限制见 `docs/FACTOR_CONTEXT_V1.md`。
+
 ## 当前因子研究结论
 
 截至 V3.1/V3.2：
@@ -291,6 +302,8 @@ docs/DEVELOPMENT_PLAN.md
 docs/ENVIRONMENT.md
 docs/BASELINE_REPRODUCIBILITY.md
 docs/TRADABILITY_LABEL_LAYER.md
+docs/PROVIDER_DATA_CAPABILITY_V3_6.md
+docs/FACTOR_CONTEXT_V1.md
 docs/STEP_5_FACTOR_RESEARCH_AND_MODEL_PLAN.md
 docs/PROJECT_CONTEXT_SUMMARY.md
 ```

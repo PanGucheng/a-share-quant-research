@@ -1472,3 +1472,51 @@ outputs/data_inventory/provider_v3_6/
 - 先增加 benchmark、universe membership 和 listing age 三个现有数据 adapter。
 - 同时调研 point-in-time 行业和市值开源数据源。
 - adapter 完成后，开始首批大规模价量/技术因子注册与批量筛选。
+
+## 37. V3.7 第一段：时点正确的因子研究上下文
+
+状态：已完成。
+
+新增文件：
+
+```text
+configs/factor_context_v1.yaml
+factor_research/context/__init__.py
+factor_research/context/benchmark.py
+factor_research/context/listing.py
+factor_research/context/universe.py
+scripts/build_factor_context_v1.py
+scripts/validate_factor_context_v1.py
+docs/FACTOR_CONTEXT_V1.md
+```
+
+输出目录：
+
+```text
+outputs/factor_context_v1/main_research_2021_2023/
+```
+
+完成能力：
+
+- 基于 Qlib instrument start/end 区间生成 point-in-time CSI300、CSI500、CSI1000 和 liquid2000 成员统计与末日快照。
+- 基于 provider 最早可用区间生成上市年龄代理和年龄分组，并明确记录历史左截断限制。
+- 基于 Qlib 指数特征生成 CSI300、CSI500、CSI1000 日收益及 T+1 口径 10/20 日前瞻收益。
+- 新增独立验证器，检查区间端点、收益公式、重复键、末日成员数和上市年龄一致性。
+- 保持 `data_quality -> tradability -> factor evaluation` 前置约束不变，不把上下文模块发展成另一条数据主线。
+
+本轮结果：
+
+```text
+benchmark trading days: 727 each
+csi300 members: 300 each day
+csi500 members: 500 each day
+csi1000 members: 1000 each day
+liquid2000 members: 1904 to 1977
+listing-age snapshot instruments: 5096
+```
+
+下一段：
+
+- 将 context V1 接入 V4 evaluator，使股票池切片、上市年龄切片和基准相对评价进入同一次可复现运行。
+- 保持 Alphalens、jqfactor、Qlib evaluate 和当前项目评价结果并列，不引入自研综合评分。
+- 并行调研 point-in-time 行业和市值数据源，但在 license 与时点语义确认前不写中性化实现。
