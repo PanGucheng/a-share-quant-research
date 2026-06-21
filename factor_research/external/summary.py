@@ -97,6 +97,89 @@ def build_open_source_metric_index(output_dir: Path, factors: list[str]) -> pd.D
     return result.sort_values(["system", "factor", "metric", "horizon"]).reset_index(drop=True)
 
 
+def build_context_metric_index(
+    output_dir: Path,
+    factors: list[str],
+    systems: list[str],
+) -> pd.DataFrame:
+    """Index grouped source metrics without combining or ranking them."""
+
+    rows: list[dict] = []
+    context_root = output_dir / "context"
+    for system in systems:
+        if system not in {"alphalens_reloaded", "jqfactor_analyzer"}:
+            continue
+        for factor in factors:
+            factor_root = context_root / system / factor
+            if not factor_root.exists():
+                continue
+            for path in factor_root.rglob("mean_information_coefficient_by_group.csv"):
+                relative = path.relative_to(factor_root)
+                return_mode, group_dimension = relative.parts[:2]
+                frame = pd.read_csv(path)
+                for _, row in frame.iterrows():
+                    group = row["group"]
+                    for horizon, value in row.drop(labels=["group"]).items():
+                        numeric = pd.to_numeric(value, errors="coerce")
+                        if pd.isna(numeric):
+                            continue
+                        rows.append(
+                            {
+                                "system": system,
+                                "factor": factor,
+                                "return_mode": return_mode,
+                                "group_dimension": group_dimension,
+                                "metric": "mean_information_coefficient_by_group",
+                                "group": str(group),
+                                "quantile": pd.NA,
+                                "horizon": str(horizon),
+                                "value": float(numeric),
+                                "source_file": path.as_posix(),
+                            }
+                        )
+            for path in factor_root.rglob("mean_return_by_quantile_by_group.csv"):
+                relative = path.relative_to(factor_root)
+                return_mode, group_dimension = relative.parts[:2]
+                frame = pd.read_csv(path)
+                for _, row in frame.iterrows():
+                    quantile = row["factor_quantile"]
+                    group = row["group"]
+                    for horizon, value in row.drop(labels=["factor_quantile", "group"]).items():
+                        numeric = pd.to_numeric(value, errors="coerce")
+                        if pd.isna(numeric):
+                            continue
+                        rows.append(
+                            {
+                                "system": system,
+                                "factor": factor,
+                                "return_mode": return_mode,
+                                "group_dimension": group_dimension,
+                                "metric": "mean_return_by_quantile_by_group",
+                                "group": str(group),
+                                "quantile": int(quantile),
+                                "horizon": str(horizon),
+                                "value": float(numeric),
+                                "source_file": path.as_posix(),
+                            }
+                        )
+    columns = [
+        "system",
+        "factor",
+        "return_mode",
+        "group_dimension",
+        "metric",
+        "group",
+        "quantile",
+        "horizon",
+        "value",
+        "source_file",
+    ]
+    result = pd.DataFrame(rows, columns=columns)
+    if result.empty:
+        return result
+    return result.sort_values(columns[:-2]).reset_index(drop=True)
+
+
 def build_evaluator_status(
     output_dir: Path,
     factors: list[str],

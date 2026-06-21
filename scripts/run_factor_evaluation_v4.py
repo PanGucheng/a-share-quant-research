@@ -6,6 +6,7 @@ import importlib.metadata
 import sys
 import traceback
 import types
+import shutil
 from multiprocessing import freeze_support
 from pathlib import Path
 from typing import Callable
@@ -18,13 +19,24 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 from factor_research.dataset import to_factor_data
+from factor_research.context.evaluation import (
+    attach_benchmark_relative_returns,
+    attach_context,
+    build_context_keys,
+    context_coverage,
+    load_benchmark_context,
+)
 from factor_research.external.adapters import (
     to_alphalens_factor_data,
     to_jqfactor_inputs,
     to_qlib_score_frame,
     write_adapter_report,
 )
-from factor_research.external.summary import build_evaluator_status, build_open_source_metric_index
+from factor_research.external.summary import (
+    build_context_metric_index,
+    build_evaluator_status,
+    build_open_source_metric_index,
+)
 from factor_research.report import markdown_table
 from factor_research.registry import enabled_specs
 from scripts.run_factor_research_v3 import (
@@ -175,6 +187,7 @@ def apply_yaml_config(args: argparse.Namespace) -> argparse.Namespace:
     tradable_filter = data.get("tradable_filter", {})
     cache = data.get("cache", {})
     current_project = data.get("current_project", {})
+    context = data.get("context", {})
 
     args.provider_uri = qlib_config.get("provider_uri", args.provider_uri)
     args.market = qlib_config.get("market", args.market)
@@ -192,6 +205,7 @@ def apply_yaml_config(args: argparse.Namespace) -> argparse.Namespace:
     args.refresh_feature_cache = bool(cache.get("refresh_feature_cache", args.refresh_feature_cache))
     args.refresh_factor_cache = bool(cache.get("refresh_factor_cache", args.refresh_factor_cache))
     args.current_project_input_dir = Path(current_project.get("input_dir", args.current_project_input_dir))
+    args.context_config = context
     if window:
         args.window = ResearchWindow(
             window["name"],
@@ -247,6 +261,22 @@ def run_alphalens(
     for step, func in steps:
         try:
             value = func()
+            primary = value[0] if isinstance(value, tuple) else value
+            if isinstance(primary, (pd.DataFrame, pd.Series)):
+                numeric = (
+                    primary.apply(pd.to_numeric, errors="coerce")
+                    if isinstance(primary, pd.DataFrame)
+                    else pd.to_numeric(primary, errors="coerce")
+                )
+                numeric_count = (
+                    int(numeric.notna().sum().sum())
+                    if isinstance(numeric, pd.DataFrame)
+                    else int(numeric.notna().sum())
+                )
+                if numeric_count == 0:
+                    raise ValueError(f"{step} produced no numeric values")
+                if step == "mean_return_by_quantile" and isinstance(numeric, pd.DataFrame) and numeric.isna().any().any():
+                    raise ValueError(f"{step} produced incomplete numeric output")
             if isinstance(value, tuple):
                 write_csv(value[0], target / f"{step}.csv")
                 write_csv(value[1], target / f"{step}_std_error.csv")
@@ -292,6 +322,22 @@ def run_jqfactor(
     for step, func in steps:
         try:
             value = func()
+            primary = value[0] if isinstance(value, tuple) else value
+            if isinstance(primary, (pd.DataFrame, pd.Series)):
+                numeric = (
+                    primary.apply(pd.to_numeric, errors="coerce")
+                    if isinstance(primary, pd.DataFrame)
+                    else pd.to_numeric(primary, errors="coerce")
+                )
+                numeric_count = (
+                    int(numeric.notna().sum().sum())
+                    if isinstance(numeric, pd.DataFrame)
+                    else int(numeric.notna().sum())
+                )
+                if numeric_count == 0:
+                    raise ValueError(f"{step} produced no numeric values")
+                if step == "mean_return_by_quantile" and isinstance(numeric, pd.DataFrame) and numeric.isna().any().any():
+                    raise ValueError(f"{step} produced incomplete numeric output")
             if isinstance(value, tuple):
                 write_csv(value[0], target / f"{step}.csv")
                 write_csv(value[1], target / f"{step}_std_error.csv")
@@ -301,6 +347,118 @@ def run_jqfactor(
                 pd.DataFrame({"value": [str(value)]}).to_csv(target / f"{step}.csv", index=False, encoding="utf-8-sig")
         except BaseException as exc:
             record_failure(failures, "jqfactor_analyzer", factor, step, exc)
+
+
+def run_grouped_context_evaluator(
+    system: str,
+    perf,
+    factor_data: pd.DataFrame,
+    factor: str,
+    group_column: str,
+    return_mode: str,
+    output_dir: Path,
+    failures: list[dict],
+    status_rows: list[dict],
+) -> None:
+    target = output_dir / "context" / system / factor / return_mode / group_column
+    target.mkdir(parents=True, exist_ok=True)
+    try:
+        if system == "alphalens_reloaded":
+            grouped, report = to_alphalens_factor_data(factor_data, factor, group_column=group_column)
+        elif system == "jqfactor_analyzer":
+            inputs, report = to_jqfactor_inputs(
+                factor_data,
+                factor,
+                label_period_map=jqfactor_label_period_map(sorted(factor_data["label"].dropna().unique())),
+                group_column=group_column,
+            )
+            grouped = inputs["factor_data"]
+        else:
+            raise ValueError(f"Unsupported grouped context evaluator: {system}")
+        write_adapter_report(report, target / "adapter_report.md")
+    except BaseException as exc:
+        step = f"context/{return_mode}/{group_column}/adapter"
+        record_failure(failures, system, factor, step, exc)
+        status_rows.append(
+            {
+                "system": system,
+                "factor": factor,
+                "return_mode": return_mode,
+                "group_dimension": group_column,
+                "step": "adapter",
+                "status": "failed",
+                "detail": str(exc),
+            }
+        )
+        return
+
+    if not isinstance(grouped, pd.DataFrame) or grouped.empty:
+        status_rows.append(
+            {
+                "system": system,
+                "factor": factor,
+                "return_mode": return_mode,
+                "group_dimension": group_column,
+                "step": "adapter",
+                "status": "empty",
+                "detail": "adapter produced no rows",
+            }
+        )
+        return
+
+    steps: list[tuple[str, Callable[[], object]]] = [
+        ("information_coefficient_by_group", lambda: perf.factor_information_coefficient(grouped, by_group=True)),
+        ("mean_information_coefficient_by_group", lambda: perf.mean_information_coefficient(grouped, by_group=True)),
+        (
+            "mean_return_by_quantile_by_group",
+            lambda: perf.mean_return_by_quantile(grouped, by_group=True, demeaned=False),
+        ),
+    ]
+    for step, func in steps:
+        try:
+            value = func()
+            primary = value[0] if isinstance(value, tuple) else value
+            if isinstance(primary, (pd.DataFrame, pd.Series)):
+                numeric = (
+                    primary.apply(pd.to_numeric, errors="coerce")
+                    if isinstance(primary, pd.DataFrame)
+                    else pd.to_numeric(primary, errors="coerce")
+                )
+                numeric_count = (
+                    int(numeric.notna().sum().sum())
+                    if isinstance(numeric, pd.DataFrame)
+                    else int(numeric.notna().sum())
+                )
+                if numeric_count == 0:
+                    raise ValueError(f"{step} produced no numeric values")
+                if (
+                    step == "mean_return_by_quantile_by_group"
+                    and isinstance(numeric, pd.DataFrame)
+                    and numeric.isna().any().any()
+                ):
+                    raise ValueError(f"{step} produced incomplete numeric output")
+            if isinstance(value, tuple):
+                write_csv(value[0], target / f"{step}.csv")
+                write_csv(value[1], target / f"{step}_std_error.csv")
+            else:
+                write_csv(value, target / f"{step}.csv")
+            status = "pass"
+            detail = ""
+        except BaseException as exc:
+            record_failure(failures, system, factor, f"context/{return_mode}/{group_column}/{step}", exc)
+            status = "failed"
+            detail = str(exc)
+        status_rows.append(
+            {
+                "system": system,
+                "factor": factor,
+                "return_mode": return_mode,
+                "group_dimension": group_column,
+                "step": step,
+                "status": status,
+                "detail": detail,
+            }
+        )
 
 
 def run_qlib_eval(score_frame: pd.DataFrame, factor: str, label: str, output_dir: Path, failures: list[dict]) -> None:
@@ -353,6 +511,7 @@ def write_report(
     factors: list[str],
     evaluator_status: pd.DataFrame,
     dependencies: pd.DataFrame,
+    context_status: pd.DataFrame,
 ) -> None:
     lines = [
         "# Factor Evaluation V4 Smoke Test Report",
@@ -371,9 +530,21 @@ def write_report(
         "",
         markdown_table(dependencies),
         "",
-        "## Failures",
+        "## Point-In-Time Context",
         "",
     ]
+    if context_status.empty:
+        lines.append("Context evaluation was not enabled.")
+    else:
+        context_summary = context_status.groupby(["system", "return_mode", "group_dimension", "status"]).size().reset_index(name="step_count")
+        lines.append(markdown_table(context_summary))
+    lines.extend(
+        [
+        "",
+        "## Failures",
+        "",
+        ]
+    )
     if failures.empty:
         lines.append("No failures were recorded.")
     else:
@@ -394,6 +565,10 @@ def write_report(
             "- `jqfactor_analyzer/<factor>/`",
             "- `qlib_eval/<factor>/`",
             "- `project_current/`",
+            "- `context/context_coverage.csv`",
+            "- `context/context_evaluator_status.csv`",
+            "- `context/context_metric_index.csv`",
+            "- `context/<system>/<factor>/<return_mode>/<group_dimension>/`",
         ]
     )
     (output_dir / "factor_evaluation_v4_report.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
@@ -420,6 +595,37 @@ def run(args: argparse.Namespace) -> Path:
         index=False,
         encoding="utf-8-sig",
     )
+
+    context_config = args.context_config or {}
+    context_enabled = bool(context_config.get("enabled", False))
+    context_keys = pd.DataFrame()
+    benchmark_context = pd.DataFrame()
+    membership_columns: dict[str, str] = {}
+    if context_enabled:
+        context_dir = output_dir / "context"
+        quantile_scope = str(context_config.get("quantile_scope", "global_market"))
+        if quantile_scope != "global_market":
+            raise ValueError(f"Unsupported context quantile_scope: {quantile_scope}")
+        if context_dir.exists():
+            shutil.rmtree(context_dir)
+        context_dir.mkdir(parents=True, exist_ok=True)
+        provider_uri = context_config.get("provider_uri", args.provider_uri)
+        context_keys, membership_columns = build_context_keys(
+            frame,
+            provider_uri,
+            {str(name): str(source) for name, source in context_config["universes"].items()},
+            str(context_config["listing_source"]),
+            [str(value) for value in context_config["segment_priority"]],
+        )
+        coverage = context_coverage(context_keys, membership_columns)
+        coverage.to_csv(context_dir / "context_coverage.csv", index=False, encoding="utf-8-sig")
+        context_keys.head(args.sample_rows).to_csv(
+            context_dir / "context_keys_sample.csv", index=False, encoding="utf-8-sig"
+        )
+        benchmark_context = load_benchmark_context(resolve_path(Path(context_config["benchmark_returns_path"])))
+        (context_dir / "context_config.yaml").write_text(
+            yaml.safe_dump(context_config, sort_keys=False, allow_unicode=False), encoding="utf-8"
+        )
 
     failures: list[dict] = []
     alphalens_perf, alphalens_error = None, None
@@ -451,10 +657,14 @@ def run(args: argparse.Namespace) -> Path:
     if jq_error is not None:
         record_failure(failures, "jqfactor_analyzer", "*", "import", jq_error)
 
+    context_status_rows: list[dict] = []
     for factor in factors:
         print(f"Evaluating external systems for {factor}", flush=True)
+        factor_input = factor_data[factor_data["factor"].eq(factor)].copy()
+        if context_enabled:
+            factor_input = attach_context(factor_input, context_keys)
         if "alphalens_reloaded" in args.systems:
-            alpha_data, alpha_report = to_alphalens_factor_data(factor_data, factor)
+            alpha_data, alpha_report = to_alphalens_factor_data(factor_input, factor)
             write_adapter_report(alpha_report, output_dir / "adapter_reports" / f"{factor}_alphalens.md")
             if not alpha_data.empty:
                 write_csv(alpha_data.head(args.sample_rows), output_dir / "input_samples" / f"{factor}_alphalens_sample.csv")
@@ -463,7 +673,7 @@ def run(args: argparse.Namespace) -> Path:
 
         if "jqfactor_analyzer" in args.systems:
             jq_map = jqfactor_label_period_map(labels)
-            jq_inputs, jq_report = to_jqfactor_inputs(factor_data, factor, label_period_map=jq_map)
+            jq_inputs, jq_report = to_jqfactor_inputs(factor_input, factor, label_period_map=jq_map)
             write_adapter_report(jq_report, output_dir / "adapter_reports" / f"{factor}_jqfactor.md")
             jq_factor_data = jq_inputs["factor_data"]
             if isinstance(jq_factor_data, pd.DataFrame) and not jq_factor_data.empty:
@@ -473,11 +683,85 @@ def run(args: argparse.Namespace) -> Path:
 
         if "qlib_eval" in args.systems:
             for label in labels:
-                qlib_frame, qlib_report = to_qlib_score_frame(factor_data, factor, label)
+                qlib_frame, qlib_report = to_qlib_score_frame(factor_input, factor, label)
                 write_adapter_report(qlib_report, output_dir / "adapter_reports" / f"{factor}_{label}_qlib.md")
                 if not qlib_frame.empty:
                     write_csv(qlib_frame.head(args.sample_rows), output_dir / "input_samples" / f"{factor}_{label}_qlib_sample.csv")
                     run_qlib_eval(qlib_frame, factor, label, output_dir, failures)
+
+        if context_enabled:
+            group_dimensions = [str(value) for value in context_config.get("group_dimensions", [])]
+            for system, perf in [
+                ("alphalens_reloaded", alphalens_perf),
+                ("jqfactor_analyzer", jq_perf),
+            ]:
+                if system not in args.systems or perf is None:
+                    continue
+                for group_column in group_dimensions:
+                    if factor_input[group_column].nunique(dropna=True) < 2:
+                        context_status_rows.append(
+                            {
+                                "system": system,
+                                "factor": factor,
+                                "return_mode": "raw_return",
+                                "group_dimension": group_column,
+                                "step": "dimension_check",
+                                "status": "skipped_non_informative",
+                                "detail": "fewer than two populated groups",
+                            }
+                        )
+                        continue
+                    run_grouped_context_evaluator(
+                        system,
+                        perf,
+                        factor_input,
+                        factor,
+                        group_column,
+                        "raw_return",
+                        output_dir,
+                        failures,
+                        context_status_rows,
+                    )
+
+            relative = attach_benchmark_relative_returns(
+                factor_input,
+                benchmark_context,
+                {str(name): str(benchmark) for name, benchmark in context_config["benchmark_by_segment"].items()},
+                {str(label): str(column) for label, column in context_config["label_return_columns"].items()},
+            )
+            relative = relative[relative["excess_forward_return"].notna()].copy()
+            relative["forward_return"] = relative["excess_forward_return"]
+            for system, perf in [
+                ("alphalens_reloaded", alphalens_perf),
+                ("jqfactor_analyzer", jq_perf),
+            ]:
+                if system not in args.systems or perf is None:
+                    continue
+                for group_column in group_dimensions:
+                    if relative[group_column].nunique(dropna=True) < 2:
+                        context_status_rows.append(
+                            {
+                                "system": system,
+                                "factor": factor,
+                                "return_mode": "benchmark_excess_return",
+                                "group_dimension": group_column,
+                                "step": "dimension_check",
+                                "status": "skipped_non_informative",
+                                "detail": "fewer than two populated groups",
+                            }
+                        )
+                        continue
+                    run_grouped_context_evaluator(
+                        system,
+                        perf,
+                        relative,
+                        factor,
+                        group_column,
+                        "benchmark_excess_return",
+                        output_dir,
+                        failures,
+                        context_status_rows,
+                    )
 
     if "project_current" in args.systems:
         write_current_project_summary(resolve_path(args.current_project_input_dir), factors, output_dir)
@@ -487,7 +771,16 @@ def run(args: argparse.Namespace) -> Path:
     status.to_csv(output_dir / "evaluator_status.csv", index=False, encoding="utf-8-sig")
     metric_index = build_open_source_metric_index(output_dir, factors)
     metric_index.to_csv(output_dir / "open_source_metric_index.csv", index=False, encoding="utf-8-sig")
-    write_report(output_dir, failure_frame, factors, status, dependencies)
+    context_status = pd.DataFrame(context_status_rows)
+    if context_enabled:
+        context_status.to_csv(
+            output_dir / "context" / "context_evaluator_status.csv", index=False, encoding="utf-8-sig"
+        )
+        context_metric_index = build_context_metric_index(output_dir, factors, args.systems)
+        context_metric_index.to_csv(
+            output_dir / "context" / "context_metric_index.csv", index=False, encoding="utf-8-sig"
+        )
+    write_report(output_dir, failure_frame, factors, status, dependencies, context_status)
     print(f"Factor evaluation V4 outputs written to {output_dir}", flush=True)
     return output_dir
 
@@ -513,6 +806,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--no-factor-cache", action="store_true")
     parser.add_argument("--refresh-factor-cache", action="store_true")
     parser.add_argument("--current-project-input-dir", type=Path, default=Path("outputs/factor_research_v3/liquid2000_expanded"))
+    parser.set_defaults(context_config={})
     parser.add_argument("--write-detail", action="store_true", help=argparse.SUPPRESS)
     parser.set_defaults(window=DEFAULT_WINDOWS[0])
     return parser

@@ -98,7 +98,24 @@ Qlib provider
 
 ## 5. 下一步
 
-1. 把三个上下文 adapter 接入 V4 evaluator 的配置和输入快照。
-2. 增加按股票池、上市年龄和相对基准收益的并列评价结果，不合并为自研综合分。
-3. 调研有明确许可和时点语义的行业、市值数据源；在来源确认前不启用行业/市值中性化。
-4. 上下文切片验证完成后，再批量注册价量、技术和 Alpha158/Alpha101 因子。
+V4 evaluator 已接入 context V1。它直接调用 Alphalens Reloaded 和 jqfactor_analyzer 的 `by_group=True` 原始函数，并列输出：
+
+- `index_segment` 和 `listing_age_bucket` 分组；
+- 原始前瞻收益和基准超额前瞻收益；
+- 分组 Rank IC、平均 Rank IC 和分位数组收益。
+- `context_metric_index.csv` 可追溯长表索引，不包含综合分或自动排名。
+
+快速验证：
+
+```powershell
+E:\anaconda_envs\qlib_env\python.exe scripts\run_factor_evaluation_v4.py --config configs\factor_evaluation_v4_context_smoke.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\validate_factor_evaluation_context.py
+```
+
+当前 liquid2000 的可交易样本全部属于 `501_plus` 上市年龄组，因此该维度会标记为 `skipped_non_informative`，不会伪装成有效切片。换用包含新股且通过可交易性过滤的股票池后，同一接口会自动启用该维度。
+
+下一步：
+
+1. 调研有明确许可和时点语义的行业、市值数据源；在来源确认前不启用行业/市值中性化。
+2. 将 context 输出纳入后续批量因子任务的统一结果索引。
+3. 上下文切片验证完成后，再批量注册价量、技术和 Alpha158/Alpha101 因子。

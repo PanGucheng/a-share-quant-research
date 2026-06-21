@@ -43,6 +43,19 @@ This run validates whether open-source evaluation systems can consume the same t
 | source_file | jqfactor_analyzer | jqfactor_analyzer | available | E:/qlib_prj/qlib_baseline/tmp/reference_repos/jqfactor_analyzer/jqfactor_analyzer/performance.py |  |
 | source_file | qlib_evaluate | qlib_evaluate | available | E:/qlib_prj/qlib_clone/qlib/contrib/evaluate.py |  |
 
+## Point-In-Time Context
+
+| system | return_mode | group_dimension | status | step_count |
+| --- | --- | --- | --- | --- |
+| alphalens_reloaded | benchmark_excess_return | index_segment | pass | 15 |
+| alphalens_reloaded | benchmark_excess_return | listing_age_bucket | skipped_non_informative | 5 |
+| alphalens_reloaded | raw_return | index_segment | pass | 15 |
+| alphalens_reloaded | raw_return | listing_age_bucket | skipped_non_informative | 5 |
+| jqfactor_analyzer | benchmark_excess_return | index_segment | pass | 15 |
+| jqfactor_analyzer | benchmark_excess_return | listing_age_bucket | skipped_non_informative | 5 |
+| jqfactor_analyzer | raw_return | index_segment | pass | 15 |
+| jqfactor_analyzer | raw_return | listing_age_bucket | skipped_non_informative | 5 |
+
 ## Failures
 
 | system | step | failure_count |
@@ -62,3 +75,7 @@ This run validates whether open-source evaluation systems can consume the same t
 - `jqfactor_analyzer/<factor>/`
 - `qlib_eval/<factor>/`
 - `project_current/`
+- `context/context_coverage.csv`
+- `context/context_evaluator_status.csv`
+- `context/context_metric_index.csv`
+- `context/<system>/<factor>/<return_mode>/<group_dimension>/`

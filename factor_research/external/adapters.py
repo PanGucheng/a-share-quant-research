@@ -115,7 +115,7 @@ def to_alphalens_factor_data(
     if group_column and group_column in result.columns:
         result = result.rename(columns={group_column: "group"})
     result.index = result.index.set_names(["date", "asset"])
-    result = result.sort_index()
+    result = result.replace([float("inf"), float("-inf")], pd.NA).dropna().sort_index()
     report = _base_report(
         "alphalens_reloaded",
         source,
@@ -197,6 +197,16 @@ def to_jqfactor_inputs(
         output["weights"] = weights
     else:
         output["weights"] = 1.0
+    output = output.replace([float("inf"), float("-inf")], pd.NA).dropna().sort_index()
+    output["factor_quantile"] = output["factor_quantile"].astype(int)
+    output["weights"] = output.groupby(
+        [output.index.get_level_values("date"), "factor_quantile"], observed=True
+    )["weights"].transform(lambda values: values / values.sum())
+
+    factor = output["factor"]
+    forward_returns = output[[column for column in output.columns if str(column).startswith("period_")]]
+    groupby = output["group"] if "group" in output.columns else None
+    weights = output["weights"]
     report = _base_report(
         "jqfactor_analyzer",
         source,

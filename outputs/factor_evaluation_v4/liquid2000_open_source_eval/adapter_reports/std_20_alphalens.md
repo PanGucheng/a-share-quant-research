@@ -3,7 +3,7 @@
 | metric | value |
 | --- | --- |
 | input rows | 1648582 |
-| output rows | 824291 |
+| output rows | 815035 |
 | factor count | 1 |
 | label count | 2 |
 | first date | 2021-01-05 |

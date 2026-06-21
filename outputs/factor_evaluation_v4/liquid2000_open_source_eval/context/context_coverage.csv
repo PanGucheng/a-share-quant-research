@@ -1,0 +1,12 @@
+﻿dimension,value,row_count,row_fraction,date_count,instrument_count
+universe_membership,csi300,143107,0.1736122316026743,726,259
+universe_membership,csi500,194675,0.23617266232434905,726,456
+universe_membership,csi1000,234300,0.28424427780965705,726,720
+universe_membership,liquid2000,824291,1.0,726,1969
+index_segment,csi1000,234300,0.28424427780965705,726,720
+index_segment,csi300,143107,0.1736122316026743,726,259
+index_segment,csi500,194675,0.23617266232434905,726,456
+index_segment,outside_major_indices,252209,0.3059708282633196,726,1167
+listing_age_bucket,501_plus,824291,1.0,726,1969
+integrity,major_index_overlap,0,0.0,0,0
+integrity,missing_listing_age,0,0.0,0,0

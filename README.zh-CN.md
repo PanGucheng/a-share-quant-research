@@ -253,6 +253,8 @@ basic factor cache 命中：约 9.9s
 ```powershell
 E:\anaconda_envs\qlib_env\python.exe scripts\build_factor_context_v1.py
 E:\anaconda_envs\qlib_env\python.exe scripts\validate_factor_context_v1.py
+E:\anaconda_envs\qlib_env\python.exe scripts\run_factor_evaluation_v4.py --config configs\factor_evaluation_v4_context_smoke.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\validate_factor_evaluation_context.py
 ```
 
 该模块直接读取现有 Qlib provider 的成分区间和基准特征，只为因子评价补充上下文，不绕过既有数据质量检查与可交易性前置过滤。时点规则和上市日期代理限制见 `docs/FACTOR_CONTEXT_V1.md`。

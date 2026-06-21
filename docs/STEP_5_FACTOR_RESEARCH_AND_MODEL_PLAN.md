@@ -1520,3 +1520,68 @@ listing-age snapshot instruments: 5096
 - 将 context V1 接入 V4 evaluator，使股票池切片、上市年龄切片和基准相对评价进入同一次可复现运行。
 - 保持 Alphalens、jqfactor、Qlib evaluate 和当前项目评价结果并列，不引入自研综合评分。
 - 并行调研 point-in-time 行业和市值数据源，但在 license 与时点语义确认前不写中性化实现。
+
+## 38. V3.7 第二段：上下文接入开源评价体系
+
+状态：已完成实现、单因子 smoke 和五因子全量回归。
+
+新增文件：
+
+```text
+configs/factor_evaluation_v4_context_smoke.yaml
+factor_research/context/evaluation.py
+scripts/validate_factor_evaluation_context.py
+```
+
+更新文件：
+
+```text
+configs/factor_evaluation_v4.yaml
+factor_research/external/adapters.py
+scripts/run_factor_evaluation_v4.py
+docs/FACTOR_CONTEXT_V1.md
+```
+
+实现原则：
+
+- 上下文层只负责 point-in-time 数据对齐，不重写评价指标。
+- 分组 IC、平均 IC 和分组收益直接调用 Alphalens Reloaded 与 jqfactor_analyzer 的 `by_group=True` 实现。
+- 原始收益与基准超额收益分目录共存，不合成项目自定义评分。
+- jqfactor 输入按其 `prepare.get_clean_factor` 原始语义先清理缺失值，再按日期和分位数组归一化权重。
+- 少于两个有效取值的分组维度标记为 `skipped_non_informative`，不生成误导性结果。
+
+单因子 smoke 结果：
+
+```text
+factor: rev_5
+tradable rows: 824291
+index segments: csi300, csi500, csi1000, outside_major_indices
+Alphalens grouped context steps: 6 pass
+jqfactor grouped context steps: 6 pass
+listing_age_bucket: skipped_non_informative
+context failures: 0
+```
+
+五因子全量回归：
+
+```text
+runtime: 398 seconds
+complete date/instrument rows per factor: 820580
+grouped context steps passed: 60
+listing-age checks skipped_non_informative: 20
+context failures: 0
+context_metric_index rows: 960
+```
+
+自动验证包括：
+
+- 成分重叠和上市年龄缺失必须为 0；
+- 分组收益不得为空或部分缺失；
+- Alphalens 与 jqfactor 的逐日分组 Rank IC 必须一致；
+- 同一分组内减去相同基准收益后，Rank IC 必须保持不变。
+
+下一段：
+
+- 为批量扩张增加按因子复用清洗输入、可恢复任务和运行清单，避免把 398 秒线性放大到上百因子。
+- 调研并冻结第一批 Alpha158、Alpha101 和 `ta` 因子来源清单、license、字段依赖与公式校验样本。
+- 工具链具备批处理与失败恢复后，开始首批大规模价量/技术因子注册和批量筛选。

@@ -42,6 +42,9 @@ outputs/factor_time_slices/*/turnover.csv
 outputs/tradability/*/tradability_labels.csv
 outputs/tradability/*/run.log
 
+# Reproducible one-factor smoke output; full V4 audit output is tracked.
+outputs/factor_evaluation_v4/context_smoke_rev5/
+
 # Local Python/cache noise
 __pycache__/
 *.py[cod]

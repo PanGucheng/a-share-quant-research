@@ -254,6 +254,8 @@ Build and validate benchmark returns, historical universe membership, and listin
 ```powershell
 E:\anaconda_envs\qlib_env\python.exe scripts\build_factor_context_v1.py
 E:\anaconda_envs\qlib_env\python.exe scripts\validate_factor_context_v1.py
+E:\anaconda_envs\qlib_env\python.exe scripts\run_factor_evaluation_v4.py --config configs\factor_evaluation_v4_context_smoke.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\validate_factor_evaluation_context.py
 ```
 
 The module reads existing Qlib provider intervals and benchmark features. It is an input to factor evaluation and does not bypass the required data-quality and tradability filters. See `docs/FACTOR_CONTEXT_V1.md` for time semantics and known listing-date limitations.

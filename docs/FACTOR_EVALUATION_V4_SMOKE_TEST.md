@@ -66,7 +66,8 @@ factor_failure_reasons.csv
 factor_evaluation_v4_report.md
 ```
 
-The output directory currently contains 132 files and is about 1.5 MB.
+After the V3.7 context integration, the output directory contains 240 files and
+is about 6.0 MB.
 
 ## Result Summary
 
@@ -183,3 +184,56 @@ Latest status:
 It is an index of source results only and intentionally contains no combined
 score, subjective weight, or automatic factor ranking.
 
+## V3.7 Point-In-Time Context Update
+
+The evaluator now attaches Qlib point-in-time index membership, listing-age
+context, and benchmark forward returns after the mandatory data-quality and
+tradability filters.
+
+Quick smoke command:
+
+```powershell
+E:\anaconda_envs\qlib_env\python.exe scripts\run_factor_evaluation_v4.py `
+  --config configs\factor_evaluation_v4_context_smoke.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\validate_factor_evaluation_context.py
+```
+
+The grouped metrics call the original `by_group=True` functions from Alphalens
+Reloaded and jqfactor_analyzer. Raw forward returns and benchmark-excess forward
+returns are stored separately under:
+
+```text
+context/<system>/<factor>/<return_mode>/<group_dimension>/
+```
+
+Important adapter correction:
+
+- both adapters now remove rows missing any requested forward-return horizon,
+  matching the source projects' clean-factor preparation;
+- jqfactor weights are normalized by date and factor quantile, matching
+  `jqfactor_analyzer.prepare.get_clean_factor`;
+- source evaluation functions remain unchanged.
+
+The five-factor full audit used 824,291 tradable rows and 820,580 complete
+date/instrument rows per factor after 10D/20D alignment. It completed in 398
+seconds.
+
+| context result | count |
+| --- | ---: |
+| populated index segments | 4 |
+| grouped evaluator steps passed | 60 |
+| failed context steps | 0 |
+| listing-age checks skipped as non-informative | 20 |
+| `context_metric_index.csv` rows | 960 |
+
+All current liquid2000 tradable samples are in the `501_plus` listing-age
+bucket, so listing-age grouped metrics are explicitly skipped. This is a sample
+property, not a silent evaluator success.
+
+The validator also confirms that:
+
+- Alphalens and jqfactor daily grouped Rank IC values are identical;
+- subtracting one benchmark return within each date/index segment leaves Rank IC unchanged;
+- grouped return outputs contain complete numeric 10D and 20D values;
+- the metric index preserves source system, return mode, group, quantile,
+  horizon, and source file without producing a combined score.
