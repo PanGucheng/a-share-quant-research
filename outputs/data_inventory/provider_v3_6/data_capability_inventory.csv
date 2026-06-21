@@ -1,0 +1,11 @@
+﻿capability,status,available_items,use,next_action
+price_ohlc,available,"close,high,low,open","price, momentum, reversal, volatility, drawdown factors",ready
+volume_liquidity,available,"amount,volume,vwap","liquidity, price-volume, turnover proxies",ready
+adjustment,available,"adjclose,factor",corporate-action-aware price research,validate semantics before custom adjusted factors
+index_membership,available,"csi1000,csi300,csi500,csi800,csiall",universe stability and cross-universe factor evaluation,ready
+benchmark_returns,available,"CSI300,CSI500,CSI1000",benchmark-relative factor and portfolio diagnostics,add benchmark adapter
+listing_lifecycle,available,instrument start/end intervals,listing age and point-in-time universe eligibility,derive listing_age_days
+industry_classification,needs_external_source,,"industry IC, industry-neutral returns, group analysis",select point-in-time industry data source
+market_cap,needs_external_source,,"size exposure, cap weighting, size-neutral evaluation",select total/float market-cap data source
+fundamentals,needs_external_source,,"value, quality, profitability, growth factors",defer until source/licensing decision
+tradability_constraints,available_external_layer,"can_buy,can_sell,liquidity_bucket,tradability_score,data_quality_status",mandatory prefilter before all factor evaluation,continue reusing outputs/tradability and outputs/data_quality_tradability

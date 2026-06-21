@@ -1432,3 +1432,43 @@ open_source_metric_index: 90 rows
 - 为 jqfactor 的 pandas 2.x 兼容问题做隔离实验，不直接改原始函数。
 - 增加 provider 字段探测，确认行业、市值、指数成分等数据是否足以启动分组/中性化评价。
 - 完成数据能力清单后，再开始大规模扩张因子池。
+
+## 36. V3.6 第四段：Provider 数据能力清单
+
+状态：已完成。
+
+新增文件：
+
+```text
+scripts/inspect_provider_fields.py
+docs/PROVIDER_DATA_CAPABILITY_V3_6.md
+```
+
+输出目录：
+
+```text
+outputs/data_inventory/provider_v3_6/
+```
+
+自动检查结果：
+
+- provider 有 `6,106` 个 feature instrument。
+- `open/high/low/close/volume/amount/vwap/change/factor/adjclose` 在 6,106 个 instrument 目录中均存在。
+- 三只样本股在 2021-2023 的实际读取结果中，上述测试字段覆盖率均为 100%。
+- CSI300、CSI500、CSI800、CSI1000、csiall 等 point-in-time 成分文件可用。
+- CSI300、CSI500、CSI1000 基准指数特征目录可用。
+- instrument start/end interval 可用，可派生上市天数和 point-in-time eligibility。
+- 行业分类、市值/流通市值、基本面和分析师数据当前不可用，需要外部数据源。
+
+路线影响：
+
+- 价量、技术、波动率、流动性、Alpha158/Alpha360/Alpha101 因子可以开始批量扩张。
+- 多股票池一致性、基准相对评价和上市年龄切片可以直接建设。
+- 行业 IC、行业中性、市值中性和市值加权分组暂不能启用。
+- 基本面因子池继续等待独立数据源与 license 决策。
+
+下一段建议：
+
+- 先增加 benchmark、universe membership 和 listing age 三个现有数据 adapter。
+- 同时调研 point-in-time 行业和市值开源数据源。
+- adapter 完成后，开始首批大规模价量/技术因子注册与批量筛选。

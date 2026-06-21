@@ -1,0 +1,21 @@
+{
+  "provider_uri": "E:/qlib_prj/qlib_data/cn_data_community_20260609_derived",
+  "sample_instruments": [
+    "SH600000",
+    "SZ000001",
+    "SH600519"
+  ],
+  "sample_start": "2021-01-01",
+  "sample_end": "2023-12-29",
+  "sample_fields": [
+    "open",
+    "high",
+    "low",
+    "close",
+    "volume",
+    "amount",
+    "vwap",
+    "factor",
+    "adjclose"
+  ]
+}

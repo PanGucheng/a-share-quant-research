@@ -1,0 +1,9 @@
+﻿instrument_list,row_count,has_lifecycle_intervals,path
+all,6106,True,E:/qlib_prj/qlib_data/cn_data_community_20260609_derived/instruments/all.txt
+all_stock_shsz,5532,True,E:/qlib_prj/qlib_data/cn_data_community_20260609_derived/instruments/all_stock_shsz.txt
+all_stock_shsz_liquid2000,2000,True,E:/qlib_prj/qlib_data/cn_data_community_20260609_derived/instruments/all_stock_shsz_liquid2000.txt
+csi1000,32005,True,E:/qlib_prj/qlib_data/cn_data_community_20260609_derived/instruments/csi1000.txt
+csi300,15898,True,E:/qlib_prj/qlib_data/cn_data_community_20260609_derived/instruments/csi300.txt
+csi500,22000,True,E:/qlib_prj/qlib_data/cn_data_community_20260609_derived/instruments/csi500.txt
+csi800,58404,True,E:/qlib_prj/qlib_data/cn_data_community_20260609_derived/instruments/csi800.txt
+csiall,119178,True,E:/qlib_prj/qlib_data/cn_data_community_20260609_derived/instruments/csiall.txt
