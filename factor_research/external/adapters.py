@@ -182,6 +182,21 @@ def to_jqfactor_inputs(
         weights.index = weights.index.set_names(["date", "asset"])
 
     output = pd.DataFrame({"factor": factor}).join(forward_returns, how="left")
+    if "factor_quantile" in source.columns:
+        quantile = (
+            source[index_cols + ["factor_quantile"]]
+            .drop_duplicates(index_cols)
+            .set_index(index_cols)["factor_quantile"]
+            .sort_index()
+        )
+        quantile.index = quantile.index.set_names(["date", "asset"])
+        output["factor_quantile"] = quantile
+    if groupby is not None:
+        output["group"] = groupby
+    if weights is not None:
+        output["weights"] = weights
+    else:
+        output["weights"] = 1.0
     report = _base_report(
         "jqfactor_analyzer",
         source,
@@ -191,7 +206,13 @@ def to_jqfactor_inputs(
             "jqfactor_analyzer metrics should be called from its own performance/analyze modules",
         ),
     )
-    return {"factor": factor, "forward_returns": forward_returns, "groupby": groupby, "weights": weights}, report
+    return {
+        "factor": factor,
+        "forward_returns": forward_returns,
+        "groupby": groupby,
+        "weights": weights,
+        "factor_data": output,
+    }, report
 
 
 def to_qlib_score_frame(
@@ -223,4 +244,3 @@ def to_qlib_score_frame(
 def write_adapter_report(report: AdapterReport, path: Path) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(report.to_markdown(), encoding="utf-8")
-

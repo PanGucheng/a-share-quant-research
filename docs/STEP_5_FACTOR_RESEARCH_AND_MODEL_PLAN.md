@@ -1341,3 +1341,52 @@ docs/FACTOR_EVALUATION_SOURCE_MANIFEST.md
 
 - 增加 `scripts/run_factor_evaluation_v4.py`，用少量已存在因子导出多体系输入样本、adapter report 和 failure reasons。
 - 然后再调用外部评价函数生成并列结果。
+
+## 34. V3.6 第二段：开源评价体系 Smoke Test
+
+状态：已完成第一轮。
+
+新增文件：
+
+```text
+scripts/run_factor_evaluation_v4.py
+docs/FACTOR_EVALUATION_V4_SMOKE_TEST.md
+requirements-factor-evaluation.txt
+```
+
+输出目录：
+
+```text
+outputs/factor_evaluation_v4/liquid2000_open_source_eval/
+```
+
+测试范围：
+
+```text
+window: main_research_2021_2023
+raw rows: 1,414,832
+tradable rows: 824,291
+labels: label_10d_t1,label_20d_t1
+factors: rev_5,rev_20_exclude_5,std_20,amount_mean_20,downside_std_20
+```
+
+结论：
+
+- Alphalens Reloaded 核心 `performance.py` 评价函数已跑通，能输出 IC、mean IC、分组收益、factor returns、alpha/beta、换手率和 rank autocorrelation。
+- jqfactor_analyzer 部分跑通，能输出 IC、mean IC、分组收益和换手率。
+- jqfactor_analyzer 的 `factor_returns` 和 `factor_alpha_beta` 在当前 pandas 2.x 环境下触发 MultiIndex 兼容问题：`The name date occurs multiple times, use a level number`。
+- Qlib evaluate 路径跑通，已输出每日 Rank IC 与 Qlib `risk_analysis`。
+- 当前项目 V3 输出已复制到 V4 coexistence 目录，便于并列比较。
+
+重要实现细节：
+
+- 不执行 `alphalens.__init__` 和 `jqfactor_analyzer.__init__`，避免引入 plotting、UI、数据 API 等非评价依赖。
+- 直接加载参考项目的 `performance.py` 及必要相对依赖，保持评价函数源码不被改写。
+- Alphalens 使用 `10D`/`20D` 周期列；jqfactor 使用 `period_10`/`period_20` 周期列。
+
+下一段：
+
+- 增加 evaluator config，避免参数硬编码在 runner 中。
+- 增加运行前依赖检查。
+- 决定 jqfactor 兼容策略：要么使用兼容 pandas 环境复现，要么 vendor 并显式标注兼容补丁。
+- 在不自研综合分数的前提下，生成一个 open-source output leaderboard，仅做结果索引和成功/失败摘要。

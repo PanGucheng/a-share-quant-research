@@ -1,0 +1,11 @@
+﻿system,factor,step,error_type,error,traceback_tail
+jqfactor_analyzer,rev_5,factor_returns,ValueError,"The name date occurs multiple times, use a level number","ValueError: The name date occurs multiple times, use a level number"
+jqfactor_analyzer,rev_5,factor_alpha_beta,ValueError,"The name date occurs multiple times, use a level number","ValueError: The name date occurs multiple times, use a level number"
+jqfactor_analyzer,rev_20_exclude_5,factor_returns,ValueError,"The name date occurs multiple times, use a level number","ValueError: The name date occurs multiple times, use a level number"
+jqfactor_analyzer,rev_20_exclude_5,factor_alpha_beta,ValueError,"The name date occurs multiple times, use a level number","ValueError: The name date occurs multiple times, use a level number"
+jqfactor_analyzer,std_20,factor_returns,ValueError,"The name date occurs multiple times, use a level number","ValueError: The name date occurs multiple times, use a level number"
+jqfactor_analyzer,std_20,factor_alpha_beta,ValueError,"The name date occurs multiple times, use a level number","ValueError: The name date occurs multiple times, use a level number"
+jqfactor_analyzer,amount_mean_20,factor_returns,ValueError,"The name date occurs multiple times, use a level number","ValueError: The name date occurs multiple times, use a level number"
+jqfactor_analyzer,amount_mean_20,factor_alpha_beta,ValueError,"The name date occurs multiple times, use a level number","ValueError: The name date occurs multiple times, use a level number"
+jqfactor_analyzer,downside_std_20,factor_returns,ValueError,"The name date occurs multiple times, use a level number","ValueError: The name date occurs multiple times, use a level number"
+jqfactor_analyzer,downside_std_20,factor_alpha_beta,ValueError,"The name date occurs multiple times, use a level number","ValueError: The name date occurs multiple times, use a level number"

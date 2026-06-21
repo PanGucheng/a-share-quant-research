@@ -37,6 +37,27 @@ The `qlib_clone` directory is treated as an upstream source dependency and refer
 | mlflow | `3.10.0` | Experiment record storage |
 | PyYAML | `6.0.3` | YAML config parsing |
 
+## Optional Factor Evaluation Packages
+
+These packages are only required for V3.6 open-source factor evaluation smoke
+tests. They are not required for the Qlib baseline workflow.
+
+| package | version | note |
+| --- | --- | --- |
+| empyrical | `0.5.5` | Required by Alphalens Reloaded `performance.py` |
+| fastcache | `1.1.0` | Required by jqfactor_analyzer package components |
+| statsmodels | `0.14.6` | Required by Alphalens/jqfactor alpha-beta calculations |
+| cached_property | `2.0.1` | Required by jqfactor_analyzer package components |
+| pandas-datareader | `0.10.0` | Installed as empyrical dependency |
+| lxml | `6.1.1` | Installed as pandas-datareader dependency |
+| patsy | `1.0.2` | Installed as statsmodels dependency |
+
+The install record is mirrored in:
+
+```text
+requirements-factor-evaluation.txt
+```
+
 ## Baseline Data Snapshot
 
 - Provider URI: `E:/qlib_prj/qlib_data/cn_data`

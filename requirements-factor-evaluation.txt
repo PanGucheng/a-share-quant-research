@@ -1,0 +1,10 @@
+# Optional dependencies for V3.6 open-source factor evaluation smoke tests.
+# These are not required for the Qlib baseline itself.
+empyrical==0.5.5
+fastcache==1.1.0
+statsmodels==0.14.6
+cached_property==2.0.1
+pandas-datareader==0.10.0
+lxml==6.1.1
+patsy==1.0.2
+
