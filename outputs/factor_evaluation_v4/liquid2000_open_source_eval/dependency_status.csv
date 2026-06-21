@@ -1,0 +1,8 @@
+﻿kind,name,required_by,status,version_or_path,detail
+python_package,empyrical,alphalens_reloaded,available,0.5.5,
+python_package,fastcache,jqfactor_analyzer,available,1.1.0,
+python_package,statsmodels,"alphalens_reloaded,jqfactor_analyzer",available,0.14.6,
+python_package,cached_property,jqfactor_analyzer,available,2.0.1,
+source_file,alphalens_reloaded,alphalens_reloaded,available,E:/qlib_prj/qlib_baseline/tmp/reference_repos/alphalens-reloaded/src/alphalens/performance.py,
+source_file,jqfactor_analyzer,jqfactor_analyzer,available,E:/qlib_prj/qlib_baseline/tmp/reference_repos/jqfactor_analyzer/jqfactor_analyzer/performance.py,
+source_file,qlib_evaluate,qlib_evaluate,available,E:/qlib_prj/qlib_clone/qlib/contrib/evaluate.py,

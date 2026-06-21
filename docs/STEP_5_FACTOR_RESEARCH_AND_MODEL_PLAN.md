@@ -1390,3 +1390,45 @@ factors: rev_5,rev_20_exclude_5,std_20,amount_mean_20,downside_std_20
 - 增加运行前依赖检查。
 - 决定 jqfactor 兼容策略：要么使用兼容 pandas 环境复现，要么 vendor 并显式标注兼容补丁。
 - 在不自研综合分数的前提下，生成一个 open-source output leaderboard，仅做结果索引和成功/失败摘要。
+
+## 35. V3.6 第三段：配置化、依赖检查与结果索引
+
+状态：已完成。
+
+新增文件：
+
+```text
+configs/factor_evaluation_v4.yaml
+factor_research/external/summary.py
+```
+
+更新文件：
+
+```text
+scripts/run_factor_evaluation_v4.py
+docs/FACTOR_EVALUATION_V4_SMOKE_TEST.md
+```
+
+新增能力：
+
+- runner 支持 `--config configs/factor_evaluation_v4.yaml`，统一配置 provider、市场、窗口、因子、标签、评价体系、可交易性过滤和缓存。
+- 运行前输出 `dependency_status.csv`，检查 Python 依赖和外部评价源码文件。
+- 输出 `evaluator_status.csv`，逐体系、逐因子记录 `pass`、`partial_pass`、`failed` 或 `not_run`。
+- 输出 `open_source_metric_index.csv`，把各开源体系的主要结果整理成长表索引。
+- 指标索引不包含综合分、主观权重或自动排序，不改变“多体系先共存”的原则。
+
+本轮完整运行结果：
+
+```text
+Alphalens Reloaded: 5 pass
+jqfactor_analyzer: 5 partial_pass
+Qlib evaluate: 5 pass
+current project: 5 pass
+open_source_metric_index: 90 rows
+```
+
+下一段建议：
+
+- 为 jqfactor 的 pandas 2.x 兼容问题做隔离实验，不直接改原始函数。
+- 增加 provider 字段探测，确认行业、市值、指数成分等数据是否足以启动分组/中性化评价。
+- 完成数据能力清单后，再开始大规模扩张因子池。

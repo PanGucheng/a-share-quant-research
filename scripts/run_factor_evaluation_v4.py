@@ -1,8 +1,8 @@
 from __future__ import annotations
 
 import argparse
-import importlib
 import importlib.util
+import importlib.metadata
 import sys
 import traceback
 import types
@@ -11,6 +11,7 @@ from pathlib import Path
 from typing import Callable
 
 import pandas as pd
+import yaml
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 if str(PROJECT_ROOT) not in sys.path:
@@ -23,12 +24,14 @@ from factor_research.external.adapters import (
     to_qlib_score_frame,
     write_adapter_report,
 )
+from factor_research.external.summary import build_evaluator_status, build_open_source_metric_index
 from factor_research.report import markdown_table
 from factor_research.registry import enabled_specs
 from scripts.run_factor_research_v3 import (
     DEFAULT_MARKET,
     DEFAULT_PROVIDER_URI,
     DEFAULT_WINDOWS,
+    ResearchWindow,
     load_window_frame,
     parse_csv,
     parse_labels,
@@ -39,6 +42,7 @@ from scripts.run_factor_research_v3 import (
 DEFAULT_FACTORS = "rev_5,rev_20_exclude_5,std_20,amount_mean_20,downside_std_20"
 DEFAULT_LABELS = "label_10d_t1,label_20d_t1"
 DEFAULT_OUTPUT_DIR = Path("outputs/factor_evaluation_v4/liquid2000_open_source_eval")
+DEFAULT_SYSTEMS = ["alphalens_reloaded", "jqfactor_analyzer", "qlib_eval", "project_current"]
 
 
 def write_csv(frame: pd.DataFrame | pd.Series, path: Path) -> None:
@@ -60,15 +64,6 @@ def record_failure(rows: list[dict], system: str, factor: str, step: str, error:
             "traceback_tail": "\n".join(traceback.format_exception_only(type(error), error)).strip(),
         }
     )
-
-
-def try_import(module_name: str, path: Path | None = None):
-    if path is not None:
-        sys.path.insert(0, str(path))
-    try:
-        return importlib.import_module(module_name), None
-    except BaseException as exc:
-        return None, exc
 
 
 def load_package_module_without_init(
@@ -110,17 +105,6 @@ def load_package_module_without_init(
     return load_submodule(module_name), None
 
 
-def summarize_series_frame(frame: pd.DataFrame | pd.Series) -> pd.DataFrame:
-    if isinstance(frame, pd.Series):
-        return frame.to_frame("value").T
-    if frame.empty:
-        return pd.DataFrame()
-    numeric = frame.select_dtypes(include="number")
-    if numeric.empty:
-        return pd.DataFrame()
-    return numeric.agg(["mean", "std", "min", "max", "count"])
-
-
 def jqfactor_label_period_map(labels: list[str]) -> dict[str, str]:
     mapping = {}
     for label in labels:
@@ -131,6 +115,92 @@ def jqfactor_label_period_map(labels: list[str]) -> dict[str, str]:
                 continue
         mapping[label] = label
     return mapping
+
+
+def dependency_status() -> pd.DataFrame:
+    rows = []
+    packages = {
+        "empyrical": "alphalens_reloaded",
+        "fastcache": "jqfactor_analyzer",
+        "statsmodels": "alphalens_reloaded,jqfactor_analyzer",
+        "cached_property": "jqfactor_analyzer",
+    }
+    for package, required_by in packages.items():
+        try:
+            version = importlib.metadata.version(package)
+            status = "available"
+            detail = ""
+        except importlib.metadata.PackageNotFoundError as exc:
+            version = ""
+            status = "missing"
+            detail = str(exc)
+        rows.append(
+            {
+                "kind": "python_package",
+                "name": package,
+                "required_by": required_by,
+                "status": status,
+                "version_or_path": version,
+                "detail": detail,
+            }
+        )
+
+    sources = {
+        "alphalens_reloaded": PROJECT_ROOT / "tmp" / "reference_repos" / "alphalens-reloaded" / "src" / "alphalens" / "performance.py",
+        "jqfactor_analyzer": PROJECT_ROOT / "tmp" / "reference_repos" / "jqfactor_analyzer" / "jqfactor_analyzer" / "performance.py",
+        "qlib_evaluate": Path("E:/qlib_prj/qlib_clone/qlib/contrib/evaluate.py"),
+    }
+    for name, path in sources.items():
+        rows.append(
+            {
+                "kind": "source_file",
+                "name": name,
+                "required_by": name,
+                "status": "available" if path.exists() else "missing",
+                "version_or_path": path.as_posix(),
+                "detail": "",
+            }
+        )
+    return pd.DataFrame(rows)
+
+
+def apply_yaml_config(args: argparse.Namespace) -> argparse.Namespace:
+    if args.config is None:
+        return args
+    config_path = resolve_path(args.config)
+    data = yaml.safe_load(config_path.read_text(encoding="utf-8")) or {}
+    qlib_config = data.get("qlib", {})
+    evaluation = data.get("evaluation", {})
+    window = data.get("window", {})
+    tradable_filter = data.get("tradable_filter", {})
+    cache = data.get("cache", {})
+    current_project = data.get("current_project", {})
+
+    args.provider_uri = qlib_config.get("provider_uri", args.provider_uri)
+    args.market = qlib_config.get("market", args.market)
+    args.output_dir = Path(evaluation.get("output_dir", args.output_dir))
+    args.labels = parse_labels(",".join(evaluation.get("labels", args.labels)))
+    args.factors = list(evaluation.get("factors", args.factors))
+    args.systems = list(evaluation.get("systems", args.systems))
+    args.quantiles = int(evaluation.get("quantiles", args.quantiles))
+    args.min_count = int(evaluation.get("min_count", args.min_count))
+    args.sample_rows = int(evaluation.get("sample_rows", args.sample_rows))
+    args.min_liquidity_bucket = int(tradable_filter.get("min_liquidity_bucket", args.min_liquidity_bucket))
+    args.min_tradability_score = float(tradable_filter.get("min_tradability_score", args.min_tradability_score))
+    args.feature_cache_dir = Path(cache.get("feature_cache_dir", args.feature_cache_dir))
+    args.factor_cache_dir = Path(cache.get("factor_cache_dir", args.factor_cache_dir))
+    args.refresh_feature_cache = bool(cache.get("refresh_feature_cache", args.refresh_feature_cache))
+    args.refresh_factor_cache = bool(cache.get("refresh_factor_cache", args.refresh_factor_cache))
+    args.current_project_input_dir = Path(current_project.get("input_dir", args.current_project_input_dir))
+    if window:
+        args.window = ResearchWindow(
+            window["name"],
+            str(window["start"]),
+            str(window["end"]),
+            Path(window["tradability_dir"]),
+            Path(window["data_quality_dir"]),
+        )
+    return args
 
 
 def run_alphalens(
@@ -277,7 +347,13 @@ def write_current_project_summary(input_dir: Path, factors: list[str], output_di
         exposure[exposure["factor"].isin(factors)].to_csv(target / "factor_exposure_correlation.csv", index=False, encoding="utf-8-sig")
 
 
-def write_report(output_dir: Path, failures: pd.DataFrame, factors: list[str]) -> None:
+def write_report(
+    output_dir: Path,
+    failures: pd.DataFrame,
+    factors: list[str],
+    evaluator_status: pd.DataFrame,
+    dependencies: pd.DataFrame,
+) -> None:
     lines = [
         "# Factor Evaluation V4 Smoke Test Report",
         "",
@@ -288,6 +364,14 @@ def write_report(output_dir: Path, failures: pd.DataFrame, factors: list[str]) -
         "- Failures are expected during dependency discovery and are recorded instead of stopping the batch.",
         "",
         "## Status",
+        "",
+        markdown_table(evaluator_status),
+        "",
+        "## Dependency Status",
+        "",
+        markdown_table(dependencies),
+        "",
+        "## Failures",
         "",
     ]
     if failures.empty:
@@ -301,6 +385,9 @@ def write_report(output_dir: Path, failures: pd.DataFrame, factors: list[str]) -
             "## Output Layout",
             "",
             "- `factor_failure_reasons.csv`",
+            "- `dependency_status.csv`",
+            "- `evaluator_status.csv`",
+            "- `open_source_metric_index.csv`",
             "- `adapter_reports/`",
             "- `input_samples/`",
             "- `alphalens_reloaded/<factor>/`",
@@ -315,6 +402,8 @@ def write_report(output_dir: Path, failures: pd.DataFrame, factors: list[str]) -
 def run(args: argparse.Namespace) -> Path:
     output_dir = resolve_path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
+    dependencies = dependency_status()
+    dependencies.to_csv(output_dir / "dependency_status.csv", index=False, encoding="utf-8-sig")
     factors = args.factors
     labels = args.labels
     specs = [spec for spec in enabled_specs(labels) if spec.name in set(factors)]
@@ -333,25 +422,29 @@ def run(args: argparse.Namespace) -> Path:
     )
 
     failures: list[dict] = []
-    try:
-        alphalens_perf, alphalens_error = load_package_module_without_init(
-            "alphalens",
-            PROJECT_ROOT / "tmp" / "reference_repos" / "alphalens-reloaded" / "src" / "alphalens",
-            "performance",
-            ["utils"],
-        )
-    except BaseException as exc:
-        alphalens_perf, alphalens_error = None, exc
+    alphalens_perf, alphalens_error = None, None
+    if "alphalens_reloaded" in args.systems:
+        try:
+            alphalens_perf, alphalens_error = load_package_module_without_init(
+                "alphalens",
+                PROJECT_ROOT / "tmp" / "reference_repos" / "alphalens-reloaded" / "src" / "alphalens",
+                "performance",
+                ["utils"],
+            )
+        except BaseException as exc:
+            alphalens_perf, alphalens_error = None, exc
 
-    try:
-        jq_perf, jq_error = load_package_module_without_init(
-            "jqfactor_analyzer",
-            PROJECT_ROOT / "tmp" / "reference_repos" / "jqfactor_analyzer" / "jqfactor_analyzer",
-            "performance",
-            ["compat", "utils", "prepare"],
-        )
-    except BaseException as exc:
-        jq_perf, jq_error = None, exc
+    jq_perf, jq_error = None, None
+    if "jqfactor_analyzer" in args.systems:
+        try:
+            jq_perf, jq_error = load_package_module_without_init(
+                "jqfactor_analyzer",
+                PROJECT_ROOT / "tmp" / "reference_repos" / "jqfactor_analyzer" / "jqfactor_analyzer",
+                "performance",
+                ["compat", "utils", "prepare"],
+            )
+        except BaseException as exc:
+            jq_perf, jq_error = None, exc
 
     if alphalens_error is not None:
         record_failure(failures, "alphalens_reloaded", "*", "import", alphalens_error)
@@ -360,43 +453,53 @@ def run(args: argparse.Namespace) -> Path:
 
     for factor in factors:
         print(f"Evaluating external systems for {factor}", flush=True)
-        alpha_data, alpha_report = to_alphalens_factor_data(factor_data, factor)
-        write_adapter_report(alpha_report, output_dir / "adapter_reports" / f"{factor}_alphalens.md")
-        if not alpha_data.empty:
-            write_csv(alpha_data.head(args.sample_rows), output_dir / "input_samples" / f"{factor}_alphalens_sample.csv")
-        if alphalens_perf is not None and not alpha_data.empty:
-            run_alphalens(alphalens_perf, alpha_data, factor, output_dir, failures)
+        if "alphalens_reloaded" in args.systems:
+            alpha_data, alpha_report = to_alphalens_factor_data(factor_data, factor)
+            write_adapter_report(alpha_report, output_dir / "adapter_reports" / f"{factor}_alphalens.md")
+            if not alpha_data.empty:
+                write_csv(alpha_data.head(args.sample_rows), output_dir / "input_samples" / f"{factor}_alphalens_sample.csv")
+            if alphalens_perf is not None and not alpha_data.empty:
+                run_alphalens(alphalens_perf, alpha_data, factor, output_dir, failures)
 
-        jq_map = jqfactor_label_period_map(labels)
-        jq_inputs, jq_report = to_jqfactor_inputs(factor_data, factor, label_period_map=jq_map)
-        write_adapter_report(jq_report, output_dir / "adapter_reports" / f"{factor}_jqfactor.md")
-        jq_factor_data = jq_inputs["factor_data"]
-        if isinstance(jq_factor_data, pd.DataFrame) and not jq_factor_data.empty:
-            write_csv(jq_factor_data.head(args.sample_rows), output_dir / "input_samples" / f"{factor}_jqfactor_sample.csv")
-        if jq_perf is not None and isinstance(jq_factor_data, pd.DataFrame) and not jq_factor_data.empty:
-            run_jqfactor(jq_perf, jq_factor_data, factor, output_dir, failures)
+        if "jqfactor_analyzer" in args.systems:
+            jq_map = jqfactor_label_period_map(labels)
+            jq_inputs, jq_report = to_jqfactor_inputs(factor_data, factor, label_period_map=jq_map)
+            write_adapter_report(jq_report, output_dir / "adapter_reports" / f"{factor}_jqfactor.md")
+            jq_factor_data = jq_inputs["factor_data"]
+            if isinstance(jq_factor_data, pd.DataFrame) and not jq_factor_data.empty:
+                write_csv(jq_factor_data.head(args.sample_rows), output_dir / "input_samples" / f"{factor}_jqfactor_sample.csv")
+            if jq_perf is not None and isinstance(jq_factor_data, pd.DataFrame) and not jq_factor_data.empty:
+                run_jqfactor(jq_perf, jq_factor_data, factor, output_dir, failures)
 
-        for label in labels:
-            qlib_frame, qlib_report = to_qlib_score_frame(factor_data, factor, label)
-            write_adapter_report(qlib_report, output_dir / "adapter_reports" / f"{factor}_{label}_qlib.md")
-            if not qlib_frame.empty:
-                write_csv(qlib_frame.head(args.sample_rows), output_dir / "input_samples" / f"{factor}_{label}_qlib_sample.csv")
-                run_qlib_eval(qlib_frame, factor, label, output_dir, failures)
+        if "qlib_eval" in args.systems:
+            for label in labels:
+                qlib_frame, qlib_report = to_qlib_score_frame(factor_data, factor, label)
+                write_adapter_report(qlib_report, output_dir / "adapter_reports" / f"{factor}_{label}_qlib.md")
+                if not qlib_frame.empty:
+                    write_csv(qlib_frame.head(args.sample_rows), output_dir / "input_samples" / f"{factor}_{label}_qlib_sample.csv")
+                    run_qlib_eval(qlib_frame, factor, label, output_dir, failures)
 
-    write_current_project_summary(resolve_path(args.current_project_input_dir), factors, output_dir)
+    if "project_current" in args.systems:
+        write_current_project_summary(resolve_path(args.current_project_input_dir), factors, output_dir)
     failure_frame = pd.DataFrame(failures)
     failure_frame.to_csv(output_dir / "factor_failure_reasons.csv", index=False, encoding="utf-8-sig")
-    write_report(output_dir, failure_frame, factors)
+    status = build_evaluator_status(output_dir, factors, args.systems, failure_frame)
+    status.to_csv(output_dir / "evaluator_status.csv", index=False, encoding="utf-8-sig")
+    metric_index = build_open_source_metric_index(output_dir, factors)
+    metric_index.to_csv(output_dir / "open_source_metric_index.csv", index=False, encoding="utf-8-sig")
+    write_report(output_dir, failure_frame, factors, status, dependencies)
     print(f"Factor evaluation V4 outputs written to {output_dir}", flush=True)
     return output_dir
 
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Run V4 open-source factor evaluation smoke tests.")
+    parser.add_argument("--config", type=Path, help="Optional YAML config. Values in the file override CLI defaults.")
     parser.add_argument("--provider-uri", default=DEFAULT_PROVIDER_URI)
     parser.add_argument("--market", default=DEFAULT_MARKET)
     parser.add_argument("--labels", type=parse_labels, default=parse_labels(DEFAULT_LABELS))
     parser.add_argument("--factors", type=parse_csv, default=parse_csv(DEFAULT_FACTORS))
+    parser.add_argument("--systems", type=parse_csv, default=DEFAULT_SYSTEMS)
     parser.add_argument("--output-dir", type=Path, default=DEFAULT_OUTPUT_DIR)
     parser.add_argument("--quantiles", type=int, default=5)
     parser.add_argument("--min-count", type=int, default=50)
@@ -417,7 +520,7 @@ def build_parser() -> argparse.ArgumentParser:
 
 def main() -> None:
     freeze_support()
-    args = build_parser().parse_args()
+    args = apply_yaml_config(build_parser().parse_args())
     run(args)
 
 

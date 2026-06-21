@@ -145,3 +145,41 @@ the V4 evaluator runner reproducible and configurable:
 - add a compact leaderboard that only summarizes open-source outputs, without
   defining a final project score.
 
+## Configured Runner Update
+
+The next V3.6 increment has now been implemented.
+
+Configuration:
+
+```text
+configs/factor_evaluation_v4.yaml
+```
+
+Run command:
+
+```powershell
+E:\anaconda_envs\qlib_env\python.exe scripts\run_factor_evaluation_v4.py `
+  --config configs\factor_evaluation_v4.yaml
+```
+
+New outputs:
+
+```text
+dependency_status.csv
+evaluator_status.csv
+open_source_metric_index.csv
+```
+
+Latest status:
+
+| system | pass | partial pass |
+| --- | ---: | ---: |
+| Alphalens Reloaded | 5 | 0 |
+| jqfactor_analyzer | 0 | 5 |
+| Qlib evaluate | 5 | 0 |
+| current project | 5 | 0 |
+
+`open_source_metric_index.csv` currently contains 90 long-format metric rows.
+It is an index of source results only and intentionally contains no combined
+score, subjective weight, or automatic factor ranking.
+
