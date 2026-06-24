@@ -110,6 +110,27 @@ def selected_factor_names(config: dict, catalog_path: Path, output_root: Path) -
     return [entry.registry_name for entry in selected]
 
 
+def assert_runnable_selection_for_execution(config: dict, catalog_path: Path) -> None:
+    selection = config.get("selection", {})
+    entries = load_factor_catalog(catalog_path)
+    selected = select_entries(
+        entries,
+        enabled_only=bool(selection.get("enabled_only", True)),
+        runnable_only=bool(selection.get("runnable_only", True)),
+        stages=selection.get("stages") or None,
+        categories=selection.get("categories") or None,
+        sources=selection.get("sources") or None,
+        names=selection.get("names") or None,
+        max_factors=selection.get("max_factors"),
+    )
+    blocked = [entry.name for entry in selected if not entry.runnable]
+    if blocked:
+        raise ValueError(
+            "Non-runnable catalog entries can only be planned with --dry-run. "
+            f"Blocked entries: {blocked[:10]}"
+        )
+
+
 def make_batch_config(base_config: dict, batch_factors: list[str], batch_output_dir: Path) -> dict:
     config = dict(base_config)
     evaluation = dict(config.get("evaluation", {}))
@@ -214,6 +235,8 @@ def run(args: argparse.Namespace) -> Path:
     base_config_path = resolve_path(config["base_config"])
     catalog_path = resolve_path(config.get("catalog", "factor_research/factor_catalog.yaml"))
     base_config = load_yaml(base_config_path)
+    if not args.dry_run:
+        assert_runnable_selection_for_execution(config, catalog_path)
     factors = selected_factor_names(config, catalog_path, output_root)
     batching = config.get("batching", {})
     batch_size = int(batching.get("batch_size", 2))

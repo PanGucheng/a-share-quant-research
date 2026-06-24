@@ -280,6 +280,26 @@ docs/FACTOR_BATCH_EVALUATION_V1.md
 
 该模块只负责选择因子、生成 V4 配置、记录 manifest 和失败批次。具体 IC、分组收益、换手率和上下文评价仍由 V4 调用 Alphalens Reloaded、jqfactor_analyzer、Qlib eval 和本项目已有输出完成。
 
+## Qlib Alpha158 因子来源审计
+
+抽取本地 Qlib 源码中的 Alpha158 公式，并检查当前 provider 是否具备所需字段：
+
+```powershell
+cd E:\qlib_prj\qlib_baseline
+E:\anaconda_envs\qlib_env\python.exe scripts\audit_alpha158_catalog_v1.py
+E:\anaconda_envs\qlib_env\python.exe scripts\run_factor_evaluation_batch_v1.py --config configs\factor_evaluation_batch_v1_alpha158_metadata_smoke.yaml --dry-run
+```
+
+当前审计结果：
+
+```text
+Alpha158 formulas: 158
+field_status=available: 158
+first batch metadata entries: 20
+```
+
+注意：Alpha158 条目当前仍是 `runnable: false`，只作为已审计 metadata 来源。后续需要先完成 Qlib expression adapter，再进入正式 V4 因子评价。
+
 ## 当前因子研究结论
 
 截至 V3.1/V3.2：
@@ -328,6 +348,7 @@ docs/TRADABILITY_LABEL_LAYER.md
 docs/PROVIDER_DATA_CAPABILITY_V3_6.md
 docs/FACTOR_CONTEXT_V1.md
 docs/FACTOR_BATCH_EVALUATION_V1.md
+docs/ALPHA158_CATALOG_AUDIT_V1.md
 docs/STEP_5_FACTOR_RESEARCH_AND_MODEL_PLAN.md
 docs/PROJECT_CONTEXT_SUMMARY.md
 ```

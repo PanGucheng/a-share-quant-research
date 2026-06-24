@@ -18,7 +18,7 @@ planned_sources:
     source_function: "Alpha158DL.get_feature_config"
     license: "MIT"
     planned_role: "Primary open-source Qlib factor family for later batch expansion."
-    status: "metadata_registered_adapter_pending"
+    status: "formula_inventory_passed_expression_adapter_pending"
   - source_project: "qlib_factor_platform_presets"
     local_path: "tmp/reference_repos/qlib_factor_platform"
     source_commit: "9611ac2d1392761af5988e8a571f2075c61c601e"

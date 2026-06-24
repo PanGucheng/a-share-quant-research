@@ -1,0 +1,3125 @@
+version: 1
+updated: '2026-06-24'
+policy:
+  purpose: Generated Qlib Alpha158 catalog supplement.
+  principle:
+  - Expressions are copied from the local Qlib source via Alpha158DL.get_feature_config.
+  - Entries are not runnable until the Qlib expression adapter is audited.
+factors:
+- name: alpha158_KMID
+  registry_name: alpha158_KMID
+  category: alpha158_kbar
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  - $open
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: ($close-$open)/$open'
+- name: alpha158_KLEN
+  registry_name: alpha158_KLEN
+  category: alpha158_kbar
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $high
+  - $low
+  - $open
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: ($high-$low)/$open'
+- name: alpha158_KMID2
+  registry_name: alpha158_KMID2
+  category: alpha158_kbar
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  - $high
+  - $low
+  - $open
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: ($close-$open)/($high-$low+1e-12)'
+- name: alpha158_KUP
+  registry_name: alpha158_KUP
+  category: alpha158_kbar
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  - $high
+  - $open
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: ($high-Greater($open, $close))/$open'
+- name: alpha158_KUP2
+  registry_name: alpha158_KUP2
+  category: alpha158_kbar
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  - $high
+  - $low
+  - $open
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: ($high-Greater($open, $close))/($high-$low+1e-12)'
+- name: alpha158_KLOW
+  registry_name: alpha158_KLOW
+  category: alpha158_kbar
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  - $low
+  - $open
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: (Less($open, $close)-$low)/$open'
+- name: alpha158_KLOW2
+  registry_name: alpha158_KLOW2
+  category: alpha158_kbar
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  - $high
+  - $low
+  - $open
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: (Less($open, $close)-$low)/($high-$low+1e-12)'
+- name: alpha158_KSFT
+  registry_name: alpha158_KSFT
+  category: alpha158_kbar
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  - $high
+  - $low
+  - $open
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: (2*$close-$high-$low)/$open'
+- name: alpha158_KSFT2
+  registry_name: alpha158_KSFT2
+  category: alpha158_kbar
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  - $high
+  - $low
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: (2*$close-$high-$low)/($high-$low+1e-12)'
+- name: alpha158_OPEN0
+  registry_name: alpha158_OPEN0
+  category: alpha158_price_volume_lag
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  - $open
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: $open/$close'
+- name: alpha158_HIGH0
+  registry_name: alpha158_HIGH0
+  category: alpha158_price_volume_lag
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  - $high
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: $high/$close'
+- name: alpha158_LOW0
+  registry_name: alpha158_LOW0
+  category: alpha158_price_volume_lag
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  - $low
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: $low/$close'
+- name: alpha158_VWAP0
+  registry_name: alpha158_VWAP0
+  category: alpha158_price_volume_lag
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  - $vwap
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: $vwap/$close'
+- name: alpha158_ROC5
+  registry_name: alpha158_ROC5
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Ref($close, 5)/$close'
+- name: alpha158_ROC10
+  registry_name: alpha158_ROC10
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Ref($close, 10)/$close'
+- name: alpha158_ROC20
+  registry_name: alpha158_ROC20
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Ref($close, 20)/$close'
+- name: alpha158_ROC30
+  registry_name: alpha158_ROC30
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Ref($close, 30)/$close'
+- name: alpha158_ROC60
+  registry_name: alpha158_ROC60
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Ref($close, 60)/$close'
+- name: alpha158_MA5
+  registry_name: alpha158_MA5
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Mean($close, 5)/$close'
+- name: alpha158_MA10
+  registry_name: alpha158_MA10
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Mean($close, 10)/$close'
+- name: alpha158_MA20
+  registry_name: alpha158_MA20
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Mean($close, 20)/$close'
+- name: alpha158_MA30
+  registry_name: alpha158_MA30
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Mean($close, 30)/$close'
+- name: alpha158_MA60
+  registry_name: alpha158_MA60
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Mean($close, 60)/$close'
+- name: alpha158_STD5
+  registry_name: alpha158_STD5
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Std($close, 5)/$close'
+- name: alpha158_STD10
+  registry_name: alpha158_STD10
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Std($close, 10)/$close'
+- name: alpha158_STD20
+  registry_name: alpha158_STD20
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Std($close, 20)/$close'
+- name: alpha158_STD30
+  registry_name: alpha158_STD30
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Std($close, 30)/$close'
+- name: alpha158_STD60
+  registry_name: alpha158_STD60
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Std($close, 60)/$close'
+- name: alpha158_BETA5
+  registry_name: alpha158_BETA5
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Slope($close, 5)/$close'
+- name: alpha158_BETA10
+  registry_name: alpha158_BETA10
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Slope($close, 10)/$close'
+- name: alpha158_BETA20
+  registry_name: alpha158_BETA20
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Slope($close, 20)/$close'
+- name: alpha158_BETA30
+  registry_name: alpha158_BETA30
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Slope($close, 30)/$close'
+- name: alpha158_BETA60
+  registry_name: alpha158_BETA60
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Slope($close, 60)/$close'
+- name: alpha158_RSQR5
+  registry_name: alpha158_RSQR5
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Rsquare($close, 5)'
+- name: alpha158_RSQR10
+  registry_name: alpha158_RSQR10
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Rsquare($close, 10)'
+- name: alpha158_RSQR20
+  registry_name: alpha158_RSQR20
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Rsquare($close, 20)'
+- name: alpha158_RSQR30
+  registry_name: alpha158_RSQR30
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Rsquare($close, 30)'
+- name: alpha158_RSQR60
+  registry_name: alpha158_RSQR60
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Rsquare($close, 60)'
+- name: alpha158_RESI5
+  registry_name: alpha158_RESI5
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Resi($close, 5)/$close'
+- name: alpha158_RESI10
+  registry_name: alpha158_RESI10
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Resi($close, 10)/$close'
+- name: alpha158_RESI20
+  registry_name: alpha158_RESI20
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Resi($close, 20)/$close'
+- name: alpha158_RESI30
+  registry_name: alpha158_RESI30
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Resi($close, 30)/$close'
+- name: alpha158_RESI60
+  registry_name: alpha158_RESI60
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Resi($close, 60)/$close'
+- name: alpha158_MAX5
+  registry_name: alpha158_MAX5
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  - $high
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Max($high, 5)/$close'
+- name: alpha158_MAX10
+  registry_name: alpha158_MAX10
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  - $high
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Max($high, 10)/$close'
+- name: alpha158_MAX20
+  registry_name: alpha158_MAX20
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  - $high
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Max($high, 20)/$close'
+- name: alpha158_MAX30
+  registry_name: alpha158_MAX30
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  - $high
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Max($high, 30)/$close'
+- name: alpha158_MAX60
+  registry_name: alpha158_MAX60
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  - $high
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Max($high, 60)/$close'
+- name: alpha158_MIN5
+  registry_name: alpha158_MIN5
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  - $low
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Min($low, 5)/$close'
+- name: alpha158_MIN10
+  registry_name: alpha158_MIN10
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  - $low
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Min($low, 10)/$close'
+- name: alpha158_MIN20
+  registry_name: alpha158_MIN20
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  - $low
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Min($low, 20)/$close'
+- name: alpha158_MIN30
+  registry_name: alpha158_MIN30
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  - $low
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Min($low, 30)/$close'
+- name: alpha158_MIN60
+  registry_name: alpha158_MIN60
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  - $low
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Min($low, 60)/$close'
+- name: alpha158_QTLU5
+  registry_name: alpha158_QTLU5
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Quantile($close, 5, 0.8)/$close'
+- name: alpha158_QTLU10
+  registry_name: alpha158_QTLU10
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Quantile($close, 10, 0.8)/$close'
+- name: alpha158_QTLU20
+  registry_name: alpha158_QTLU20
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Quantile($close, 20, 0.8)/$close'
+- name: alpha158_QTLU30
+  registry_name: alpha158_QTLU30
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Quantile($close, 30, 0.8)/$close'
+- name: alpha158_QTLU60
+  registry_name: alpha158_QTLU60
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Quantile($close, 60, 0.8)/$close'
+- name: alpha158_QTLD5
+  registry_name: alpha158_QTLD5
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Quantile($close, 5, 0.2)/$close'
+- name: alpha158_QTLD10
+  registry_name: alpha158_QTLD10
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Quantile($close, 10, 0.2)/$close'
+- name: alpha158_QTLD20
+  registry_name: alpha158_QTLD20
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Quantile($close, 20, 0.2)/$close'
+- name: alpha158_QTLD30
+  registry_name: alpha158_QTLD30
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Quantile($close, 30, 0.2)/$close'
+- name: alpha158_QTLD60
+  registry_name: alpha158_QTLD60
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Quantile($close, 60, 0.2)/$close'
+- name: alpha158_RANK5
+  registry_name: alpha158_RANK5
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Rank($close, 5)'
+- name: alpha158_RANK10
+  registry_name: alpha158_RANK10
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Rank($close, 10)'
+- name: alpha158_RANK20
+  registry_name: alpha158_RANK20
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Rank($close, 20)'
+- name: alpha158_RANK30
+  registry_name: alpha158_RANK30
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Rank($close, 30)'
+- name: alpha158_RANK60
+  registry_name: alpha158_RANK60
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Rank($close, 60)'
+- name: alpha158_RSV5
+  registry_name: alpha158_RSV5
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  - $high
+  - $low
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: ($close-Min($low, 5))/(Max($high, 5)-Min($low,
+    5)+1e-12)'
+- name: alpha158_RSV10
+  registry_name: alpha158_RSV10
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  - $high
+  - $low
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: ($close-Min($low, 10))/(Max($high, 10)-Min($low,
+    10)+1e-12)'
+- name: alpha158_RSV20
+  registry_name: alpha158_RSV20
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  - $high
+  - $low
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: ($close-Min($low, 20))/(Max($high, 20)-Min($low,
+    20)+1e-12)'
+- name: alpha158_RSV30
+  registry_name: alpha158_RSV30
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  - $high
+  - $low
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: ($close-Min($low, 30))/(Max($high, 30)-Min($low,
+    30)+1e-12)'
+- name: alpha158_RSV60
+  registry_name: alpha158_RSV60
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  - $high
+  - $low
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: ($close-Min($low, 60))/(Max($high, 60)-Min($low,
+    60)+1e-12)'
+- name: alpha158_IMAX5
+  registry_name: alpha158_IMAX5
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $high
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: IdxMax($high, 5)/5'
+- name: alpha158_IMAX10
+  registry_name: alpha158_IMAX10
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $high
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: IdxMax($high, 10)/10'
+- name: alpha158_IMAX20
+  registry_name: alpha158_IMAX20
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $high
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: IdxMax($high, 20)/20'
+- name: alpha158_IMAX30
+  registry_name: alpha158_IMAX30
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $high
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: IdxMax($high, 30)/30'
+- name: alpha158_IMAX60
+  registry_name: alpha158_IMAX60
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $high
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: IdxMax($high, 60)/60'
+- name: alpha158_IMIN5
+  registry_name: alpha158_IMIN5
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $low
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: IdxMin($low, 5)/5'
+- name: alpha158_IMIN10
+  registry_name: alpha158_IMIN10
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $low
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: IdxMin($low, 10)/10'
+- name: alpha158_IMIN20
+  registry_name: alpha158_IMIN20
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $low
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: IdxMin($low, 20)/20'
+- name: alpha158_IMIN30
+  registry_name: alpha158_IMIN30
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $low
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: IdxMin($low, 30)/30'
+- name: alpha158_IMIN60
+  registry_name: alpha158_IMIN60
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $low
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: IdxMin($low, 60)/60'
+- name: alpha158_IMXD5
+  registry_name: alpha158_IMXD5
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $high
+  - $low
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: (IdxMax($high, 5)-IdxMin($low, 5))/5'
+- name: alpha158_IMXD10
+  registry_name: alpha158_IMXD10
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $high
+  - $low
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: (IdxMax($high, 10)-IdxMin($low, 10))/10'
+- name: alpha158_IMXD20
+  registry_name: alpha158_IMXD20
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $high
+  - $low
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: (IdxMax($high, 20)-IdxMin($low, 20))/20'
+- name: alpha158_IMXD30
+  registry_name: alpha158_IMXD30
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $high
+  - $low
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: (IdxMax($high, 30)-IdxMin($low, 30))/30'
+- name: alpha158_IMXD60
+  registry_name: alpha158_IMXD60
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $high
+  - $low
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: (IdxMax($high, 60)-IdxMin($low, 60))/60'
+- name: alpha158_CORR5
+  registry_name: alpha158_CORR5
+  category: alpha158_price_volume_correlation
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  - $volume
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Corr($close, Log($volume+1), 5)'
+- name: alpha158_CORR10
+  registry_name: alpha158_CORR10
+  category: alpha158_price_volume_correlation
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  - $volume
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Corr($close, Log($volume+1), 10)'
+- name: alpha158_CORR20
+  registry_name: alpha158_CORR20
+  category: alpha158_price_volume_correlation
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  - $volume
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Corr($close, Log($volume+1), 20)'
+- name: alpha158_CORR30
+  registry_name: alpha158_CORR30
+  category: alpha158_price_volume_correlation
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  - $volume
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Corr($close, Log($volume+1), 30)'
+- name: alpha158_CORR60
+  registry_name: alpha158_CORR60
+  category: alpha158_price_volume_correlation
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  - $volume
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Corr($close, Log($volume+1), 60)'
+- name: alpha158_CORD5
+  registry_name: alpha158_CORD5
+  category: alpha158_price_volume_correlation
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  - $volume
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Corr($close/Ref($close,1), Log($volume/Ref($volume,
+    1)+1), 5)'
+- name: alpha158_CORD10
+  registry_name: alpha158_CORD10
+  category: alpha158_price_volume_correlation
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  - $volume
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Corr($close/Ref($close,1), Log($volume/Ref($volume,
+    1)+1), 10)'
+- name: alpha158_CORD20
+  registry_name: alpha158_CORD20
+  category: alpha158_price_volume_correlation
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  - $volume
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Corr($close/Ref($close,1), Log($volume/Ref($volume,
+    1)+1), 20)'
+- name: alpha158_CORD30
+  registry_name: alpha158_CORD30
+  category: alpha158_price_volume_correlation
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  - $volume
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Corr($close/Ref($close,1), Log($volume/Ref($volume,
+    1)+1), 30)'
+- name: alpha158_CORD60
+  registry_name: alpha158_CORD60
+  category: alpha158_price_volume_correlation
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  - $volume
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Corr($close/Ref($close,1), Log($volume/Ref($volume,
+    1)+1), 60)'
+- name: alpha158_CNTP5
+  registry_name: alpha158_CNTP5
+  category: alpha158_price_momentum_balance
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Mean($close>Ref($close, 1), 5)'
+- name: alpha158_CNTP10
+  registry_name: alpha158_CNTP10
+  category: alpha158_price_momentum_balance
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Mean($close>Ref($close, 1), 10)'
+- name: alpha158_CNTP20
+  registry_name: alpha158_CNTP20
+  category: alpha158_price_momentum_balance
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Mean($close>Ref($close, 1), 20)'
+- name: alpha158_CNTP30
+  registry_name: alpha158_CNTP30
+  category: alpha158_price_momentum_balance
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Mean($close>Ref($close, 1), 30)'
+- name: alpha158_CNTP60
+  registry_name: alpha158_CNTP60
+  category: alpha158_price_momentum_balance
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Mean($close>Ref($close, 1), 60)'
+- name: alpha158_CNTN5
+  registry_name: alpha158_CNTN5
+  category: alpha158_price_momentum_balance
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Mean($close<Ref($close, 1), 5)'
+- name: alpha158_CNTN10
+  registry_name: alpha158_CNTN10
+  category: alpha158_price_momentum_balance
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Mean($close<Ref($close, 1), 10)'
+- name: alpha158_CNTN20
+  registry_name: alpha158_CNTN20
+  category: alpha158_price_momentum_balance
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Mean($close<Ref($close, 1), 20)'
+- name: alpha158_CNTN30
+  registry_name: alpha158_CNTN30
+  category: alpha158_price_momentum_balance
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Mean($close<Ref($close, 1), 30)'
+- name: alpha158_CNTN60
+  registry_name: alpha158_CNTN60
+  category: alpha158_price_momentum_balance
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Mean($close<Ref($close, 1), 60)'
+- name: alpha158_CNTD5
+  registry_name: alpha158_CNTD5
+  category: alpha158_price_momentum_balance
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Mean($close>Ref($close, 1), 5)-Mean($close<Ref($close,
+    1), 5)'
+- name: alpha158_CNTD10
+  registry_name: alpha158_CNTD10
+  category: alpha158_price_momentum_balance
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Mean($close>Ref($close, 1), 10)-Mean($close<Ref($close,
+    1), 10)'
+- name: alpha158_CNTD20
+  registry_name: alpha158_CNTD20
+  category: alpha158_price_momentum_balance
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Mean($close>Ref($close, 1), 20)-Mean($close<Ref($close,
+    1), 20)'
+- name: alpha158_CNTD30
+  registry_name: alpha158_CNTD30
+  category: alpha158_price_momentum_balance
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Mean($close>Ref($close, 1), 30)-Mean($close<Ref($close,
+    1), 30)'
+- name: alpha158_CNTD60
+  registry_name: alpha158_CNTD60
+  category: alpha158_price_momentum_balance
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Mean($close>Ref($close, 1), 60)-Mean($close<Ref($close,
+    1), 60)'
+- name: alpha158_SUMP5
+  registry_name: alpha158_SUMP5
+  category: alpha158_price_momentum_balance
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Sum(Greater($close-Ref($close, 1), 0), 5)/(Sum(Abs($close-Ref($close,
+    1)), 5)+1e-12)'
+- name: alpha158_SUMP10
+  registry_name: alpha158_SUMP10
+  category: alpha158_price_momentum_balance
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Sum(Greater($close-Ref($close, 1), 0), 10)/(Sum(Abs($close-Ref($close,
+    1)), 10)+1e-12)'
+- name: alpha158_SUMP20
+  registry_name: alpha158_SUMP20
+  category: alpha158_price_momentum_balance
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Sum(Greater($close-Ref($close, 1), 0), 20)/(Sum(Abs($close-Ref($close,
+    1)), 20)+1e-12)'
+- name: alpha158_SUMP30
+  registry_name: alpha158_SUMP30
+  category: alpha158_price_momentum_balance
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Sum(Greater($close-Ref($close, 1), 0), 30)/(Sum(Abs($close-Ref($close,
+    1)), 30)+1e-12)'
+- name: alpha158_SUMP60
+  registry_name: alpha158_SUMP60
+  category: alpha158_price_momentum_balance
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Sum(Greater($close-Ref($close, 1), 0), 60)/(Sum(Abs($close-Ref($close,
+    1)), 60)+1e-12)'
+- name: alpha158_SUMN5
+  registry_name: alpha158_SUMN5
+  category: alpha158_price_momentum_balance
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Sum(Greater(Ref($close, 1)-$close, 0), 5)/(Sum(Abs($close-Ref($close,
+    1)), 5)+1e-12)'
+- name: alpha158_SUMN10
+  registry_name: alpha158_SUMN10
+  category: alpha158_price_momentum_balance
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Sum(Greater(Ref($close, 1)-$close, 0), 10)/(Sum(Abs($close-Ref($close,
+    1)), 10)+1e-12)'
+- name: alpha158_SUMN20
+  registry_name: alpha158_SUMN20
+  category: alpha158_price_momentum_balance
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Sum(Greater(Ref($close, 1)-$close, 0), 20)/(Sum(Abs($close-Ref($close,
+    1)), 20)+1e-12)'
+- name: alpha158_SUMN30
+  registry_name: alpha158_SUMN30
+  category: alpha158_price_momentum_balance
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Sum(Greater(Ref($close, 1)-$close, 0), 30)/(Sum(Abs($close-Ref($close,
+    1)), 30)+1e-12)'
+- name: alpha158_SUMN60
+  registry_name: alpha158_SUMN60
+  category: alpha158_price_momentum_balance
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Sum(Greater(Ref($close, 1)-$close, 0), 60)/(Sum(Abs($close-Ref($close,
+    1)), 60)+1e-12)'
+- name: alpha158_SUMD5
+  registry_name: alpha158_SUMD5
+  category: alpha158_price_momentum_balance
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: (Sum(Greater($close-Ref($close, 1), 0), 5)-Sum(Greater(Ref($close,
+    1)-$close, 0), 5))/(Sum(Abs($close-Ref($close, 1)), 5)+1e-12)'
+- name: alpha158_SUMD10
+  registry_name: alpha158_SUMD10
+  category: alpha158_price_momentum_balance
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: (Sum(Greater($close-Ref($close, 1), 0), 10)-Sum(Greater(Ref($close,
+    1)-$close, 0), 10))/(Sum(Abs($close-Ref($close, 1)), 10)+1e-12)'
+- name: alpha158_SUMD20
+  registry_name: alpha158_SUMD20
+  category: alpha158_price_momentum_balance
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: (Sum(Greater($close-Ref($close, 1), 0), 20)-Sum(Greater(Ref($close,
+    1)-$close, 0), 20))/(Sum(Abs($close-Ref($close, 1)), 20)+1e-12)'
+- name: alpha158_SUMD30
+  registry_name: alpha158_SUMD30
+  category: alpha158_price_momentum_balance
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: (Sum(Greater($close-Ref($close, 1), 0), 30)-Sum(Greater(Ref($close,
+    1)-$close, 0), 30))/(Sum(Abs($close-Ref($close, 1)), 30)+1e-12)'
+- name: alpha158_SUMD60
+  registry_name: alpha158_SUMD60
+  category: alpha158_price_momentum_balance
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: (Sum(Greater($close-Ref($close, 1), 0), 60)-Sum(Greater(Ref($close,
+    1)-$close, 0), 60))/(Sum(Abs($close-Ref($close, 1)), 60)+1e-12)'
+- name: alpha158_VMA5
+  registry_name: alpha158_VMA5
+  category: alpha158_volume_liquidity
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $volume
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Mean($volume, 5)/($volume+1e-12)'
+- name: alpha158_VMA10
+  registry_name: alpha158_VMA10
+  category: alpha158_volume_liquidity
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $volume
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Mean($volume, 10)/($volume+1e-12)'
+- name: alpha158_VMA20
+  registry_name: alpha158_VMA20
+  category: alpha158_volume_liquidity
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $volume
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Mean($volume, 20)/($volume+1e-12)'
+- name: alpha158_VMA30
+  registry_name: alpha158_VMA30
+  category: alpha158_volume_liquidity
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $volume
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Mean($volume, 30)/($volume+1e-12)'
+- name: alpha158_VMA60
+  registry_name: alpha158_VMA60
+  category: alpha158_volume_liquidity
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $volume
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Mean($volume, 60)/($volume+1e-12)'
+- name: alpha158_VSTD5
+  registry_name: alpha158_VSTD5
+  category: alpha158_volume_liquidity
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $volume
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Std($volume, 5)/($volume+1e-12)'
+- name: alpha158_VSTD10
+  registry_name: alpha158_VSTD10
+  category: alpha158_volume_liquidity
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $volume
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Std($volume, 10)/($volume+1e-12)'
+- name: alpha158_VSTD20
+  registry_name: alpha158_VSTD20
+  category: alpha158_volume_liquidity
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $volume
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Std($volume, 20)/($volume+1e-12)'
+- name: alpha158_VSTD30
+  registry_name: alpha158_VSTD30
+  category: alpha158_volume_liquidity
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $volume
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Std($volume, 30)/($volume+1e-12)'
+- name: alpha158_VSTD60
+  registry_name: alpha158_VSTD60
+  category: alpha158_volume_liquidity
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $volume
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Std($volume, 60)/($volume+1e-12)'
+- name: alpha158_WVMA5
+  registry_name: alpha158_WVMA5
+  category: alpha158_volume_liquidity
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  - $volume
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Std(Abs($close/Ref($close, 1)-1)*$volume, 5)/(Mean(Abs($close/Ref($close,
+    1)-1)*$volume, 5)+1e-12)'
+- name: alpha158_WVMA10
+  registry_name: alpha158_WVMA10
+  category: alpha158_volume_liquidity
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  - $volume
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Std(Abs($close/Ref($close, 1)-1)*$volume, 10)/(Mean(Abs($close/Ref($close,
+    1)-1)*$volume, 10)+1e-12)'
+- name: alpha158_WVMA20
+  registry_name: alpha158_WVMA20
+  category: alpha158_volume_liquidity
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  - $volume
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Std(Abs($close/Ref($close, 1)-1)*$volume, 20)/(Mean(Abs($close/Ref($close,
+    1)-1)*$volume, 20)+1e-12)'
+- name: alpha158_WVMA30
+  registry_name: alpha158_WVMA30
+  category: alpha158_volume_liquidity
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  - $volume
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Std(Abs($close/Ref($close, 1)-1)*$volume, 30)/(Mean(Abs($close/Ref($close,
+    1)-1)*$volume, 30)+1e-12)'
+- name: alpha158_WVMA60
+  registry_name: alpha158_WVMA60
+  category: alpha158_volume_liquidity
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  - $volume
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Std(Abs($close/Ref($close, 1)-1)*$volume, 60)/(Mean(Abs($close/Ref($close,
+    1)-1)*$volume, 60)+1e-12)'
+- name: alpha158_VSUMP5
+  registry_name: alpha158_VSUMP5
+  category: alpha158_volume_liquidity
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $volume
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Sum(Greater($volume-Ref($volume, 1), 0), 5)/(Sum(Abs($volume-Ref($volume,
+    1)), 5)+1e-12)'
+- name: alpha158_VSUMP10
+  registry_name: alpha158_VSUMP10
+  category: alpha158_volume_liquidity
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $volume
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Sum(Greater($volume-Ref($volume, 1), 0), 10)/(Sum(Abs($volume-Ref($volume,
+    1)), 10)+1e-12)'
+- name: alpha158_VSUMP20
+  registry_name: alpha158_VSUMP20
+  category: alpha158_volume_liquidity
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $volume
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Sum(Greater($volume-Ref($volume, 1), 0), 20)/(Sum(Abs($volume-Ref($volume,
+    1)), 20)+1e-12)'
+- name: alpha158_VSUMP30
+  registry_name: alpha158_VSUMP30
+  category: alpha158_volume_liquidity
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $volume
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Sum(Greater($volume-Ref($volume, 1), 0), 30)/(Sum(Abs($volume-Ref($volume,
+    1)), 30)+1e-12)'
+- name: alpha158_VSUMP60
+  registry_name: alpha158_VSUMP60
+  category: alpha158_volume_liquidity
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $volume
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Sum(Greater($volume-Ref($volume, 1), 0), 60)/(Sum(Abs($volume-Ref($volume,
+    1)), 60)+1e-12)'
+- name: alpha158_VSUMN5
+  registry_name: alpha158_VSUMN5
+  category: alpha158_volume_liquidity
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $volume
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Sum(Greater(Ref($volume, 1)-$volume, 0), 5)/(Sum(Abs($volume-Ref($volume,
+    1)), 5)+1e-12)'
+- name: alpha158_VSUMN10
+  registry_name: alpha158_VSUMN10
+  category: alpha158_volume_liquidity
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $volume
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Sum(Greater(Ref($volume, 1)-$volume, 0), 10)/(Sum(Abs($volume-Ref($volume,
+    1)), 10)+1e-12)'
+- name: alpha158_VSUMN20
+  registry_name: alpha158_VSUMN20
+  category: alpha158_volume_liquidity
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $volume
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Sum(Greater(Ref($volume, 1)-$volume, 0), 20)/(Sum(Abs($volume-Ref($volume,
+    1)), 20)+1e-12)'
+- name: alpha158_VSUMN30
+  registry_name: alpha158_VSUMN30
+  category: alpha158_volume_liquidity
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $volume
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Sum(Greater(Ref($volume, 1)-$volume, 0), 30)/(Sum(Abs($volume-Ref($volume,
+    1)), 30)+1e-12)'
+- name: alpha158_VSUMN60
+  registry_name: alpha158_VSUMN60
+  category: alpha158_volume_liquidity
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $volume
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: Sum(Greater(Ref($volume, 1)-$volume, 0), 60)/(Sum(Abs($volume-Ref($volume,
+    1)), 60)+1e-12)'
+- name: alpha158_VSUMD5
+  registry_name: alpha158_VSUMD5
+  category: alpha158_volume_liquidity
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $volume
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: (Sum(Greater($volume-Ref($volume, 1), 0), 5)-Sum(Greater(Ref($volume,
+    1)-$volume, 0), 5))/(Sum(Abs($volume-Ref($volume, 1)), 5)+1e-12)'
+- name: alpha158_VSUMD10
+  registry_name: alpha158_VSUMD10
+  category: alpha158_volume_liquidity
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $volume
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: (Sum(Greater($volume-Ref($volume, 1), 0), 10)-Sum(Greater(Ref($volume,
+    1)-$volume, 0), 10))/(Sum(Abs($volume-Ref($volume, 1)), 10)+1e-12)'
+- name: alpha158_VSUMD20
+  registry_name: alpha158_VSUMD20
+  category: alpha158_volume_liquidity
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $volume
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: (Sum(Greater($volume-Ref($volume, 1), 0), 20)-Sum(Greater(Ref($volume,
+    1)-$volume, 0), 20))/(Sum(Abs($volume-Ref($volume, 1)), 20)+1e-12)'
+- name: alpha158_VSUMD30
+  registry_name: alpha158_VSUMD30
+  category: alpha158_volume_liquidity
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $volume
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: (Sum(Greater($volume-Ref($volume, 1), 0), 30)-Sum(Greater(Ref($volume,
+    1)-$volume, 0), 30))/(Sum(Abs($volume-Ref($volume, 1)), 30)+1e-12)'
+- name: alpha158_VSUMD60
+  registry_name: alpha158_VSUMD60
+  category: alpha158_volume_liquidity
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $volume
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha158 expression: (Sum(Greater($volume-Ref($volume, 1), 0), 60)-Sum(Greater(Ref($volume,
+    1)-$volume, 0), 60))/(Sum(Abs($volume-Ref($volume, 1)), 60)+1e-12)'

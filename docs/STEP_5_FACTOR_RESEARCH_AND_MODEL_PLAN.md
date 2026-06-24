@@ -1634,3 +1634,68 @@ outputs/factor_evaluation_batch_v1/smoke_dry_run/
 - 为 Qlib Alpha158 增加表达式读取与字段审计，把首批 Alpha158 因子转成 catalog entries。
 - 对每个新增来源先做 `--dry-run` 和小 batch smoke，再进入完整批量评价。
 - 如果批量运行时间成为瓶颈，再考虑复用 V4 清洗后的中间输入，而不是先做并发优化。
+
+## 40. V3.8 第二段：Qlib Alpha158 来源审计
+
+状态：已完成公式抽取、字段审计和首批 metadata catalog。
+
+新增文件：
+
+```text
+configs/factor_evaluation_batch_v1_alpha158_metadata_smoke.yaml
+factor_research/qlib_alpha158.py
+scripts/audit_alpha158_catalog_v1.py
+docs/ALPHA158_CATALOG_AUDIT_V1.md
+```
+
+输出目录：
+
+```text
+outputs/factor_catalog_alpha158_v1/
+```
+
+完成能力：
+
+- 直接从本地 Qlib 源码 `Alpha158DL.get_feature_config()` 抽取 158 个 Alpha158 表达式，避免手写公式。
+- 记录 Qlib source commit、source file、source function 和 license。
+- 扫描当前 derived provider 的真实 feature 文件，检查 Alpha158 所需字段是否可用。
+- 生成 `alpha158_formula_inventory.csv`、`alpha158_field_usage.csv`、`alpha158_catalog_all.yaml` 和 `alpha158_catalog_first_batch.yaml`。
+- 为 batch runner 增加防护：`runnable: false` 的 metadata 条目只能 `--dry-run`，不能误触发真实 V4 评价。
+
+本轮结果：
+
+```text
+Alpha158 formulas: 158
+field_status=available: 158
+field_status=missing: 0
+first batch metadata entries: 20
+```
+
+字段使用：
+
+```text
+close: 117 formulas
+high: 28 formulas
+low: 28 formulas
+open: 9 formulas
+volume: 40 formulas
+vwap: 1 formula
+```
+
+首批 metadata dry-run：
+
+```powershell
+E:\anaconda_envs\qlib_env\python.exe scripts\run_factor_evaluation_batch_v1.py --config configs\factor_evaluation_batch_v1_alpha158_metadata_smoke.yaml --dry-run
+```
+
+重要边界：
+
+- Alpha158 条目当前仍是 `enabled: false`、`runnable: false`。
+- 字段审计通过不等于因子评价通过。
+- 在 Qlib expression adapter 完成前，不把 Alpha158 放入正式筛选。
+
+下一段：
+
+- 实现 Qlib expression adapter，从 catalog/inventory 读取表达式并用 `D.features` 计算首批 Alpha158 因子。
+- 将表达式结果与现有 T+1 labels、data_quality、tradability 过滤对齐。
+- 对首批 20 个 Alpha158 因子跑 V4 smoke，并通过 context validator 后再改为 runnable。

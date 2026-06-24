@@ -284,6 +284,28 @@ This layer only selects factors, generates V4 configs, and records manifests and
 failed batches. IC, grouped returns, turnover, and context metrics still come
 from V4 and the existing open-source evaluator adapters.
 
+## Qlib Alpha158 Source Audit
+
+Extract Alpha158 formulas from the local Qlib source and check whether the current
+provider has all required raw fields:
+
+```powershell
+cd E:\qlib_prj\qlib_baseline
+E:\anaconda_envs\qlib_env\python.exe scripts\audit_alpha158_catalog_v1.py
+E:\anaconda_envs\qlib_env\python.exe scripts\run_factor_evaluation_batch_v1.py --config configs\factor_evaluation_batch_v1_alpha158_metadata_smoke.yaml --dry-run
+```
+
+Current audit result:
+
+```text
+Alpha158 formulas: 158
+field_status=available: 158
+first batch metadata entries: 20
+```
+
+Alpha158 entries are still `runnable: false`. They are audited metadata sources
+until the Qlib expression adapter is implemented and smoke-tested.
+
 ## Open-Source References
 
 The factor research design intentionally borrows stable ideas from open-source
@@ -325,6 +347,7 @@ docs/TRADABILITY_LABEL_LAYER.md
 docs/PROVIDER_DATA_CAPABILITY_V3_6.md
 docs/FACTOR_CONTEXT_V1.md
 docs/FACTOR_BATCH_EVALUATION_V1.md
+docs/ALPHA158_CATALOG_AUDIT_V1.md
 docs/STEP_5_FACTOR_RESEARCH_AND_MODEL_PLAN.md
 docs/PROJECT_CONTEXT_SUMMARY.md
 ```
