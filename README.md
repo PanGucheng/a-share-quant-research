@@ -260,6 +260,30 @@ E:\anaconda_envs\qlib_env\python.exe scripts\validate_factor_evaluation_context.
 
 The module reads existing Qlib provider intervals and benchmark features. It is an input to factor evaluation and does not bypass the required data-quality and tradability filters. See `docs/FACTOR_CONTEXT_V1.md` for time semantics and known listing-date limitations.
 
+## Batch Factor Evaluation V1
+
+Before expanding the factor pool, use the catalog and batch runner to manage
+source metadata, batch configs, and resumable execution:
+
+```powershell
+cd E:\qlib_prj\qlib_baseline
+E:\anaconda_envs\qlib_env\python.exe scripts\run_factor_evaluation_batch_v1.py --config configs\factor_evaluation_batch_v1_smoke.yaml --dry-run
+E:\anaconda_envs\qlib_env\python.exe scripts\run_factor_evaluation_batch_v1.py --config configs\factor_evaluation_batch_v1.yaml
+```
+
+Key files:
+
+```text
+factor_research/factor_catalog.yaml
+factor_research/catalog.py
+scripts/run_factor_evaluation_batch_v1.py
+docs/FACTOR_BATCH_EVALUATION_V1.md
+```
+
+This layer only selects factors, generates V4 configs, and records manifests and
+failed batches. IC, grouped returns, turnover, and context metrics still come
+from V4 and the existing open-source evaluator adapters.
+
 ## Open-Source References
 
 The factor research design intentionally borrows stable ideas from open-source
@@ -300,6 +324,7 @@ docs/BASELINE_REPRODUCIBILITY.md
 docs/TRADABILITY_LABEL_LAYER.md
 docs/PROVIDER_DATA_CAPABILITY_V3_6.md
 docs/FACTOR_CONTEXT_V1.md
+docs/FACTOR_BATCH_EVALUATION_V1.md
 docs/STEP_5_FACTOR_RESEARCH_AND_MODEL_PLAN.md
 docs/PROJECT_CONTEXT_SUMMARY.md
 ```

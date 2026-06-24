@@ -1,0 +1,20 @@
+base_config: "configs/factor_evaluation_v4.yaml"
+catalog: "factor_research/factor_catalog.yaml"
+python: "E:/anaconda_envs/qlib_env/python.exe"
+output_root: "outputs/factor_evaluation_batch_v1/smoke_dry_run"
+
+selection:
+  enabled_only: true
+  runnable_only: true
+  names:
+    - "rev_5"
+    - "std_20"
+  stages: []
+  categories: []
+  sources: []
+  max_factors:
+
+batching:
+  batch_size: 1
+  resume: true
+  max_batches:

@@ -1,0 +1,309 @@
+version: 1
+updated: "2026-06-24"
+policy:
+  purpose: "Batch factor evaluation catalog for reproducible A-share factor screening."
+  principle:
+    - "Open-source sources are recorded before large-scale expansion."
+    - "Only runnable entries may enter automated evaluation."
+    - "Disabled or non-runnable sources are metadata placeholders until their calculation adapters are audited."
+  required_prefilter:
+    - data_quality
+    - tradability
+
+planned_sources:
+  - source_project: "qlib_alpha158"
+    local_path: "E:/qlib_prj/qlib_clone"
+    source_commit: "d5379c520f66a39953bad76234a7019a72796fd0"
+    source_file: "qlib/contrib/data/loader.py"
+    source_function: "Alpha158DL.get_feature_config"
+    license: "MIT"
+    planned_role: "Primary open-source Qlib factor family for later batch expansion."
+    status: "metadata_registered_adapter_pending"
+  - source_project: "qlib_factor_platform_presets"
+    local_path: "tmp/reference_repos/qlib_factor_platform"
+    source_commit: "9611ac2d1392761af5988e8a571f2075c61c601e"
+    source_file: "qlib_factor_platform/factors/presets.py"
+    source_function: "FactorPresets._get_alpha158_factors"
+    license: "MIT"
+    planned_role: "Factor organization and preset naming reference."
+    status: "design_reference"
+  - source_project: "ta"
+    local_path: "tmp/reference_repos/ta"
+    source_commit: "a890410710a6e483c9ba08da7f3dd5089e4b9dff"
+    source_file: "ta/wrapper.py"
+    source_function: "add_all_ta_features"
+    license: "MIT"
+    planned_role: "Technical-analysis factor expansion source."
+    status: "metadata_registered_adapter_pending"
+  - source_project: "kunquant_alpha101"
+    local_path: "tmp/reference_repos/KunQuant"
+    source_commit: "d4b9e61f729df347730aa921b539b9df3c3fe36d"
+    source_file: "tests/KunTestUtil/ref_alpha101.py"
+    source_function: "get_alpha"
+    license: "Apache-2.0"
+    planned_role: "WorldQuant Alpha101 formula reference."
+    status: "metadata_registered_adapter_pending"
+  - source_project: "ginkgo_alpha101"
+    local_path: "tmp/reference_repos/Ginkgo_Alpha101"
+    source_commit: "57cec7002698d89c130e027c7661bf53d307dcac"
+    source_file: "README.md"
+    source_function: "formula_reference"
+    license: "MIT"
+    planned_role: "Alternative Alpha101 formula reference."
+    status: "metadata_registered_adapter_pending"
+
+factors:
+  - name: "ret_5"
+    registry_name: "ret_5"
+    category: "momentum"
+    source_project: "qlib_baseline_basic"
+    source_file: "factor_research/factor_library.py"
+    source_function: "add_basic_factors"
+    source_commit: "local"
+    license: "project"
+    expected_direction: "watch"
+    required_fields: ["$close"]
+    labels: ["label_10d_t1", "label_20d_t1"]
+    stage: "project_basic_available"
+    enabled: true
+    runnable: true
+    compute_adapter: "factor_research.factor_library.add_basic_factors"
+    notes: "5-day return diagnostic."
+
+  - name: "ret_10"
+    registry_name: "ret_10"
+    category: "momentum"
+    source_project: "qlib_baseline_basic"
+    source_file: "factor_research/factor_library.py"
+    source_function: "add_basic_factors"
+    source_commit: "local"
+    license: "project"
+    expected_direction: "watch"
+    required_fields: ["$close"]
+    labels: ["label_10d_t1", "label_20d_t1"]
+    stage: "project_basic_available"
+    enabled: true
+    runnable: true
+    compute_adapter: "factor_research.factor_library.add_basic_factors"
+    notes: "10-day return diagnostic."
+
+  - name: "ret_20"
+    registry_name: "ret_20"
+    category: "momentum"
+    source_project: "qlib_baseline_basic"
+    source_file: "factor_research/factor_library.py"
+    source_function: "add_basic_factors"
+    source_commit: "local"
+    license: "project"
+    expected_direction: "watch"
+    required_fields: ["$close"]
+    labels: ["label_10d_t1", "label_20d_t1"]
+    stage: "project_basic_available"
+    enabled: true
+    runnable: true
+    compute_adapter: "factor_research.factor_library.add_basic_factors"
+    notes: "20-day return diagnostic."
+
+  - name: "rev_5"
+    registry_name: "rev_5"
+    category: "reversal"
+    source_project: "qlib_baseline_basic"
+    source_file: "factor_research/factor_library.py"
+    source_function: "add_basic_factors"
+    source_commit: "local"
+    license: "project"
+    expected_direction: "positive"
+    required_fields: ["$close"]
+    labels: ["label_10d_t1", "label_20d_t1"]
+    stage: "current_v4_seed"
+    enabled: true
+    runnable: true
+    compute_adapter: "factor_research.factor_library.add_basic_factors"
+    notes: "Existing V4 seed factor; short-term reversal."
+
+  - name: "rev_20_exclude_5"
+    registry_name: "rev_20_exclude_5"
+    category: "reversal"
+    source_project: "qlib_baseline_basic"
+    source_file: "factor_research/factor_library.py"
+    source_function: "add_basic_factors"
+    source_commit: "local"
+    license: "project"
+    expected_direction: "positive"
+    required_fields: ["$close"]
+    labels: ["label_10d_t1", "label_20d_t1"]
+    stage: "current_v4_seed"
+    enabled: true
+    runnable: true
+    compute_adapter: "factor_research.factor_library.add_basic_factors"
+    notes: "Existing V4 seed factor; medium reversal excluding latest 5 days."
+
+  - name: "std_20"
+    registry_name: "std_20"
+    category: "risk"
+    source_project: "qlib_baseline_basic"
+    source_file: "factor_research/factor_library.py"
+    source_function: "add_basic_factors"
+    source_commit: "local"
+    license: "project"
+    expected_direction: "negative"
+    required_fields: ["$close"]
+    labels: ["label_10d_t1", "label_20d_t1"]
+    stage: "current_v4_seed"
+    enabled: true
+    runnable: true
+    compute_adapter: "factor_research.factor_library.add_basic_factors"
+    notes: "Existing V4 seed factor; 20-day return volatility."
+
+  - name: "downside_std_20"
+    registry_name: "downside_std_20"
+    category: "risk"
+    source_project: "qlib_baseline_basic"
+    source_file: "factor_research/factor_library.py"
+    source_function: "add_basic_factors"
+    source_commit: "local"
+    license: "project"
+    expected_direction: "negative"
+    required_fields: ["$close"]
+    labels: ["label_10d_t1", "label_20d_t1"]
+    stage: "current_v4_seed"
+    enabled: true
+    runnable: true
+    compute_adapter: "factor_research.factor_library.add_basic_factors"
+    notes: "Existing V4 seed factor; downside volatility."
+
+  - name: "max_drawdown_20"
+    registry_name: "max_drawdown_20"
+    category: "risk"
+    source_project: "qlib_baseline_basic"
+    source_file: "factor_research/factor_library.py"
+    source_function: "add_basic_factors"
+    source_commit: "local"
+    license: "project"
+    expected_direction: "negative"
+    required_fields: ["$close"]
+    labels: ["label_10d_t1", "label_20d_t1"]
+    stage: "project_basic_available"
+    enabled: true
+    runnable: true
+    compute_adapter: "factor_research.factor_library.add_basic_factors"
+    notes: "20-day rolling maximum drawdown."
+
+  - name: "amplitude_20"
+    registry_name: "amplitude_20"
+    category: "risk"
+    source_project: "qlib_baseline_basic"
+    source_file: "factor_research/factor_library.py"
+    source_function: "add_basic_factors"
+    source_commit: "local"
+    license: "project"
+    expected_direction: "negative"
+    required_fields: ["$high", "$low", "$close"]
+    labels: ["label_10d_t1", "label_20d_t1"]
+    stage: "project_basic_available"
+    enabled: true
+    runnable: true
+    compute_adapter: "factor_research.factor_library.add_basic_factors"
+    notes: "20-day average intraday range."
+
+  - name: "amount_mean_20"
+    registry_name: "amount_mean_20"
+    category: "liquidity"
+    source_project: "qlib_baseline_basic"
+    source_file: "factor_research/factor_library.py"
+    source_function: "add_basic_factors"
+    source_commit: "local"
+    license: "project"
+    expected_direction: "watch"
+    required_fields: ["$amount"]
+    labels: ["label_10d_t1", "label_20d_t1"]
+    stage: "current_v4_seed"
+    enabled: true
+    runnable: true
+    compute_adapter: "factor_research.factor_library.add_basic_factors"
+    notes: "Existing V4 seed factor; liquidity exposure diagnostic."
+
+  - name: "amount_std_20"
+    registry_name: "amount_std_20"
+    category: "liquidity"
+    source_project: "qlib_baseline_basic"
+    source_file: "factor_research/factor_library.py"
+    source_function: "add_basic_factors"
+    source_commit: "local"
+    license: "project"
+    expected_direction: "watch"
+    required_fields: ["$amount"]
+    labels: ["label_10d_t1", "label_20d_t1"]
+    stage: "project_basic_available"
+    enabled: true
+    runnable: true
+    compute_adapter: "factor_research.factor_library.add_basic_factors"
+    notes: "20-day trading amount volatility."
+
+  - name: "amount_cv_20"
+    registry_name: "amount_cv_20"
+    category: "liquidity"
+    source_project: "qlib_baseline_basic"
+    source_file: "factor_research/factor_library.py"
+    source_function: "add_basic_factors"
+    source_commit: "local"
+    license: "project"
+    expected_direction: "negative"
+    required_fields: ["$amount"]
+    labels: ["label_10d_t1", "label_20d_t1"]
+    stage: "project_basic_available"
+    enabled: true
+    runnable: true
+    compute_adapter: "factor_research.factor_library.add_basic_factors"
+    notes: "20-day coefficient of variation of trading amount."
+
+  - name: "volume_ratio_5_20"
+    registry_name: "volume_ratio_5_20"
+    category: "liquidity"
+    source_project: "qlib_baseline_basic"
+    source_file: "factor_research/factor_library.py"
+    source_function: "add_basic_factors"
+    source_commit: "local"
+    license: "project"
+    expected_direction: "watch"
+    required_fields: ["$volume"]
+    labels: ["label_10d_t1", "label_20d_t1"]
+    stage: "project_basic_available"
+    enabled: true
+    runnable: true
+    compute_adapter: "factor_research.factor_library.add_basic_factors"
+    notes: "5-day volume average divided by 20-day average."
+
+  - name: "corr_ret_volume_20"
+    registry_name: "corr_ret_volume_20"
+    category: "price_volume"
+    source_project: "qlib_baseline_basic"
+    source_file: "factor_research/factor_library.py"
+    source_function: "add_basic_factors"
+    source_commit: "local"
+    license: "project"
+    expected_direction: "watch"
+    required_fields: ["$close", "$volume"]
+    labels: ["label_10d_t1", "label_20d_t1"]
+    stage: "project_basic_available"
+    enabled: true
+    runnable: true
+    compute_adapter: "factor_research.factor_library.add_basic_factors"
+    notes: "20-day rolling correlation between return and volume."
+
+  - name: "corr_ret_amount_20"
+    registry_name: "corr_ret_amount_20"
+    category: "price_volume"
+    source_project: "qlib_baseline_basic"
+    source_file: "factor_research/factor_library.py"
+    source_function: "add_basic_factors"
+    source_commit: "local"
+    license: "project"
+    expected_direction: "watch"
+    required_fields: ["$close", "$amount"]
+    labels: ["label_10d_t1", "label_20d_t1"]
+    stage: "project_basic_available"
+    enabled: true
+    runnable: true
+    compute_adapter: "factor_research.factor_library.add_basic_factors"
+    notes: "20-day rolling correlation between return and trading amount."

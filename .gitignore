@@ -45,6 +45,12 @@ outputs/tradability/*/run.log
 # Reproducible one-factor smoke output; full V4 audit output is tracked.
 outputs/factor_evaluation_v4/context_smoke_rev5/
 
+# Batch factor evaluation runtime outputs can become large. Keep the tiny dry-run
+# smoke manifest as a reproducibility fixture.
+outputs/factor_evaluation_batch_v1/*
+!outputs/factor_evaluation_batch_v1/smoke_dry_run/
+!outputs/factor_evaluation_batch_v1/smoke_dry_run/**
+
 # Local Python/cache noise
 __pycache__/
 *.py[cod]

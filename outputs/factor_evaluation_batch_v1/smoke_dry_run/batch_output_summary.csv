@@ -1,0 +1,3 @@
+﻿batch_id,status,factor_count,factors,evaluator_status_rows,failure_rows,metric_rows,context_metric_rows,output_dir
+batch_001,planned,1,rev_5,0,0,0,0,E:\qlib_prj\qlib_baseline\outputs\factor_evaluation_batch_v1\smoke_dry_run\runs\batch_001
+batch_002,planned,1,std_20,0,0,0,0,E:\qlib_prj\qlib_baseline\outputs\factor_evaluation_batch_v1\smoke_dry_run\runs\batch_002

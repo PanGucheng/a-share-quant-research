@@ -1585,3 +1585,52 @@ context_metric_index rows: 960
 - 为批量扩张增加按因子复用清洗输入、可恢复任务和运行清单，避免把 398 秒线性放大到上百因子。
 - 调研并冻结第一批 Alpha158、Alpha101 和 `ta` 因子来源清单、license、字段依赖与公式校验样本。
 - 工具链具备批处理与失败恢复后，开始首批大规模价量/技术因子注册和批量筛选。
+
+## 39. V3.8 第一段：因子目录与批量评估编排
+
+状态：已完成最小实现。
+
+新增文件：
+
+```text
+configs/factor_evaluation_batch_v1.yaml
+configs/factor_evaluation_batch_v1_smoke.yaml
+factor_research/catalog.py
+factor_research/factor_catalog.yaml
+scripts/run_factor_evaluation_batch_v1.py
+docs/FACTOR_BATCH_EVALUATION_V1.md
+```
+
+实现目标：
+
+- 建立 `factor_catalog.yaml`，统一记录因子名称、类别、来源项目、来源文件、函数、commit/license、字段依赖、方向假设、标签周期、是否可运行和计算 adapter。
+- 将当前已经接入 registry 的 15 个基础价量因子登记为可运行因子。
+- 将 Qlib Alpha158、qlib_factor_platform presets、`ta`、KunQuant Alpha101、Ginkgo Alpha101 登记为后续扩张来源，但在 adapter 和公式审计完成前不自动运行。
+- 新增批量 runner，从 catalog 选择因子，生成每个 batch 的 V4 配置，并记录 manifest、日志、catalog snapshot、registry 对齐检查和输出摘要。
+- 支持 `--dry-run`，用于在不执行耗时 V4 评价的情况下验证批量编排。
+- 支持简单断点续跑：当 batch 已存在 `evaluator_status.csv`、`open_source_metric_index.csv` 和 `factor_evaluation_v4_report.md` 时跳过。
+
+最小验证命令：
+
+```powershell
+E:\anaconda_envs\qlib_env\python.exe scripts\run_factor_evaluation_batch_v1.py --config configs\factor_evaluation_batch_v1_smoke.yaml --dry-run
+```
+
+验证输出：
+
+```text
+outputs/factor_evaluation_batch_v1/smoke_dry_run/
+```
+
+本段边界：
+
+- 不新增评价指标，不改 Alphalens Reloaded 或 jqfactor_analyzer 指标口径。
+- 不训练新模型。
+- 不直接运行未审计的 Alpha158/TA/Alpha101 因子。
+- 不绕过 `data_quality -> tradability -> factor evaluation` 前置约束。
+
+下一段：
+
+- 为 Qlib Alpha158 增加表达式读取与字段审计，把首批 Alpha158 因子转成 catalog entries。
+- 对每个新增来源先做 `--dry-run` 和小 batch smoke，再进入完整批量评价。
+- 如果批量运行时间成为瓶颈，再考虑复用 V4 清洗后的中间输入，而不是先做并发优化。

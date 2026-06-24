@@ -259,6 +259,27 @@ E:\anaconda_envs\qlib_env\python.exe scripts\validate_factor_evaluation_context.
 
 该模块直接读取现有 Qlib provider 的成分区间和基准特征，只为因子评价补充上下文，不绕过既有数据质量检查与可交易性前置过滤。时点规则和上市日期代理限制见 `docs/FACTOR_CONTEXT_V1.md`。
 
+## 批量因子评估 V1
+
+后续扩张因子池前，先使用因子目录和批量 runner 管理来源、分批运行和断点续跑：
+
+```powershell
+cd E:\qlib_prj\qlib_baseline
+E:\anaconda_envs\qlib_env\python.exe scripts\run_factor_evaluation_batch_v1.py --config configs\factor_evaluation_batch_v1_smoke.yaml --dry-run
+E:\anaconda_envs\qlib_env\python.exe scripts\run_factor_evaluation_batch_v1.py --config configs\factor_evaluation_batch_v1.yaml
+```
+
+核心文件：
+
+```text
+factor_research/factor_catalog.yaml
+factor_research/catalog.py
+scripts/run_factor_evaluation_batch_v1.py
+docs/FACTOR_BATCH_EVALUATION_V1.md
+```
+
+该模块只负责选择因子、生成 V4 配置、记录 manifest 和失败批次。具体 IC、分组收益、换手率和上下文评价仍由 V4 调用 Alphalens Reloaded、jqfactor_analyzer、Qlib eval 和本项目已有输出完成。
+
 ## 当前因子研究结论
 
 截至 V3.1/V3.2：
@@ -306,6 +327,7 @@ docs/BASELINE_REPRODUCIBILITY.md
 docs/TRADABILITY_LABEL_LAYER.md
 docs/PROVIDER_DATA_CAPABILITY_V3_6.md
 docs/FACTOR_CONTEXT_V1.md
+docs/FACTOR_BATCH_EVALUATION_V1.md
 docs/STEP_5_FACTOR_RESEARCH_AND_MODEL_PLAN.md
 docs/PROJECT_CONTEXT_SUMMARY.md
 ```

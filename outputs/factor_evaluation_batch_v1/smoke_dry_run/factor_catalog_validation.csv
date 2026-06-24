@@ -1,0 +1,16 @@
+﻿name,registry_name,enabled,runnable,registered,status,source_project,stage
+ret_5,ret_5,True,True,True,ok,qlib_baseline_basic,project_basic_available
+ret_10,ret_10,True,True,True,ok,qlib_baseline_basic,project_basic_available
+ret_20,ret_20,True,True,True,ok,qlib_baseline_basic,project_basic_available
+rev_5,rev_5,True,True,True,ok,qlib_baseline_basic,current_v4_seed
+rev_20_exclude_5,rev_20_exclude_5,True,True,True,ok,qlib_baseline_basic,current_v4_seed
+std_20,std_20,True,True,True,ok,qlib_baseline_basic,current_v4_seed
+downside_std_20,downside_std_20,True,True,True,ok,qlib_baseline_basic,current_v4_seed
+max_drawdown_20,max_drawdown_20,True,True,True,ok,qlib_baseline_basic,project_basic_available
+amplitude_20,amplitude_20,True,True,True,ok,qlib_baseline_basic,project_basic_available
+amount_mean_20,amount_mean_20,True,True,True,ok,qlib_baseline_basic,current_v4_seed
+amount_std_20,amount_std_20,True,True,True,ok,qlib_baseline_basic,project_basic_available
+amount_cv_20,amount_cv_20,True,True,True,ok,qlib_baseline_basic,project_basic_available
+volume_ratio_5_20,volume_ratio_5_20,True,True,True,ok,qlib_baseline_basic,project_basic_available
+corr_ret_volume_20,corr_ret_volume_20,True,True,True,ok,qlib_baseline_basic,project_basic_available
+corr_ret_amount_20,corr_ret_amount_20,True,True,True,ok,qlib_baseline_basic,project_basic_available

@@ -1,0 +1,3 @@
+﻿name,registry_name,category,stage,enabled,runnable,expected_direction,source_project,source_file,source_function,source_commit,license,compute_adapter,required_fields,labels,notes
+rev_5,rev_5,reversal,current_v4_seed,True,True,positive,qlib_baseline_basic,factor_research/factor_library.py,add_basic_factors,local,project,factor_research.factor_library.add_basic_factors,$close,"label_10d_t1,label_20d_t1",Existing V4 seed factor; short-term reversal.
+std_20,std_20,risk,current_v4_seed,True,True,negative,qlib_baseline_basic,factor_research/factor_library.py,add_basic_factors,local,project,factor_research.factor_library.add_basic_factors,$close,"label_10d_t1,label_20d_t1",Existing V4 seed factor; 20-day return volatility.

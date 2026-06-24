@@ -1,0 +1,19 @@
+base_config: "configs/factor_evaluation_v4.yaml"
+catalog: "factor_research/factor_catalog.yaml"
+python: "E:/anaconda_envs/qlib_env/python.exe"
+output_root: "outputs/factor_evaluation_batch_v1/liquid2000_current_v4_seed"
+
+selection:
+  enabled_only: true
+  runnable_only: true
+  stages:
+    - "current_v4_seed"
+  categories: []
+  sources: []
+  names: []
+  max_factors:
+
+batching:
+  batch_size: 2
+  resume: true
+  max_batches:
