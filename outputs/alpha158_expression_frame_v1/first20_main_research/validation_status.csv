@@ -1,0 +1,5 @@
+﻿check,status,detail,matched_rows,max_abs_error
+duplicate_datetime_instrument,pass,0,,
+alpha158_KMID_manual_formula,pass,,1598099.0,0.0
+alpha158_KLEN_manual_formula,pass,,1598099.0,0.0
+all_selected_factors_have_values,pass,0,,

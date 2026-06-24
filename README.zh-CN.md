@@ -298,7 +298,56 @@ field_status=available: 158
 first batch metadata entries: 20
 ```
 
-注意：Alpha158 条目当前仍是 `runnable: false`，只作为已审计 metadata 来源。后续需要先完成 Qlib expression adapter，再进入正式 V4 因子评价。
+首批 20 个 Alpha158 条目已经在 expression adapter、V4 smoke 和 context validation 通过后，单独生成了 runnable catalog。Alpha158 全量 158 个因子的扩张仍然是下一阶段任务。
+
+## Qlib Alpha158 首批 20 个因子评价
+
+构建并验证首批 Alpha158 expression frame：
+
+```powershell
+cd E:\qlib_prj\qlib_baseline
+E:\anaconda_envs\qlib_env\python.exe scripts\build_alpha158_expression_frame_v1.py --config configs\alpha158_expression_adapter_v1.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\validate_alpha158_expression_frame_v1.py --config configs\alpha158_expression_adapter_v1.yaml
+```
+
+运行首批 20 个因子的 V4 评价与 context 验证：
+
+```powershell
+E:\anaconda_envs\qlib_env\python.exe scripts\run_factor_evaluation_v4.py --config configs\factor_evaluation_v4_alpha158_first20.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\validate_factor_evaluation_context.py --output-dir outputs\factor_evaluation_v4\alpha158_first20_smoke
+E:\anaconda_envs\qlib_env\python.exe scripts\summarize_alpha158_first20.py
+```
+
+运行可断点续跑的 batch 版本：
+
+```powershell
+E:\anaconda_envs\qlib_env\python.exe scripts\run_factor_evaluation_batch_v1.py --config configs\factor_evaluation_batch_v1_alpha158_first20.yaml --dry-run
+E:\anaconda_envs\qlib_env\python.exe scripts\run_factor_evaluation_batch_v1.py --config configs\factor_evaluation_batch_v1_alpha158_first20.yaml
+```
+
+当前结果：
+
+```text
+expression frame rows: 1,603,860
+factor count: 20
+adapter validation: pass
+Alphalens Reloaded: pass 20
+jqfactor_analyzer: partial_pass 20
+Qlib eval: pass 20
+context: pass 240, skipped_non_informative 80
+combined metric index rows: 4,200
+```
+
+关键输出：
+
+```text
+outputs/alpha158_expression_frame_v1/first20_main_research/
+outputs/factor_evaluation_v4/alpha158_first20_smoke/
+outputs/factor_evaluation_batch_v1/alpha158_first20/
+outputs/factor_catalog_alpha158_v1/alpha158_catalog_first20_runnable.yaml
+```
+
+大体积的 `factor_frame.pkl` 和逐 batch 明细运行目录已被 `.gitignore` 排除，Git 只保留 compact manifest、summary、validation report 和 metric index。
 
 ## 当前因子研究结论
 
@@ -350,6 +399,7 @@ docs/FACTOR_CONTEXT_V1.md
 docs/FACTOR_BATCH_EVALUATION_V1.md
 docs/ALPHA158_CATALOG_AUDIT_V1.md
 docs/ALPHA158_EXPRESSION_EVALUATION_STAGE_PLAN.md
+docs/ALPHA158_EXPRESSION_ADAPTER_V1.md
 docs/STEP_5_FACTOR_RESEARCH_AND_MODEL_PLAN.md
 docs/PROJECT_CONTEXT_SUMMARY.md
 ```

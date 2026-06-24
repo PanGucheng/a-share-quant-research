@@ -1700,25 +1700,79 @@ E:\anaconda_envs\qlib_env\python.exe scripts\run_factor_evaluation_batch_v1.py -
 - 将表达式结果与现有 T+1 labels、data_quality、tradability 过滤对齐。
 - 对首批 20 个 Alpha158 因子跑 V4 smoke，并通过 context validator 后再改为 runnable。
 
-## 41. V3.9 阶段计划：Alpha158 表达式接入与首批真实评价
+## 41. V3.9：Alpha158 表达式接入与首批真实评价
 
-状态：已完成阶段设计，尚未开始执行。
+状态：已完成。
 
 阶段计划文档：
 
 ```text
 docs/ALPHA158_EXPRESSION_EVALUATION_STAGE_PLAN.md
+docs/ALPHA158_EXPRESSION_ADAPTER_V1.md
 ```
 
-本阶段目标：
+本阶段完成内容：
 
-- 实现 Qlib expression adapter，直接使用 Qlib Alpha158 表达式计算首批因子。
+- 实现 Qlib expression adapter，直接使用 Qlib Alpha158 原始表达式计算首批因子。
 - 将 expression frame 与现有基础 frame、T+1 labels、data_quality 和 tradability 输出对齐。
-- 扩展 V4 evaluator 支持外部预计算因子 frame。
-- 对首批 20 个 Alpha158 因子跑真实 V4 smoke 和 context validator。
-- smoke 通过后，将对应 Alpha158 catalog 条目晋升为 `enabled: true`、`runnable: true`。
+- 扩展 V4 evaluator 支持外部预计算 factor frame 和 catalog-derived FactorSpec。
+- 对 5 个 Alpha158 因子跑极小 smoke，对首批 20 个因子跑完整 V4 first20 smoke。
+- 用 batch runner 完成首批 20 个因子的 4 批断点续跑验证。
+- smoke 与 validation 通过后，将对应 Alpha158 catalog 条目单独晋升为 `enabled: true`、`runnable: true`。
 
-本阶段边界：
+新增文件：
+
+```text
+configs/alpha158_expression_adapter_v1.yaml
+configs/factor_evaluation_v4_alpha158_smoke5.yaml
+configs/factor_evaluation_v4_alpha158_first20.yaml
+configs/factor_evaluation_v4_alpha158_batch_base.yaml
+configs/factor_evaluation_batch_v1_alpha158_first20.yaml
+factor_research/expression_adapter.py
+factor_research/alpha158_registry.py
+scripts/build_alpha158_expression_frame_v1.py
+scripts/validate_alpha158_expression_frame_v1.py
+scripts/promote_alpha158_catalog_entries_v1.py
+scripts/summarize_alpha158_first20.py
+```
+
+关键输出：
+
+```text
+outputs/alpha158_expression_frame_v1/first20_main_research/
+outputs/factor_evaluation_v4/alpha158_first20_smoke/
+outputs/factor_evaluation_batch_v1/alpha158_first20/
+outputs/factor_catalog_alpha158_v1/alpha158_catalog_first20_runnable.yaml
+```
+
+本轮验证结果：
+
+```text
+expression frame rows: 1,603,860
+factor count: 20
+adapter validation: pass
+KMID manual max_abs_error: 0.0
+KLEN manual max_abs_error: 0.0
+Alphalens Reloaded: pass 20
+jqfactor_analyzer: partial_pass 20
+Qlib eval: pass 20
+context: pass 240, skipped_non_informative 80
+combined metric index rows: 4,200
+batch count: 4
+```
+
+断点续跑验证：
+
+```text
+batch_001: skipped_existing
+batch_002: skipped_existing
+batch_003: skipped_existing
+batch_004: pass
+```
+
+说明：电脑断电后重新运行 batch runner，前三批已完整产出的 batch 被识别并跳过，只补跑第四批，符合本阶段“可恢复批量运行”的目标。
+
+本阶段保留边界：
 
 - 不重写 Alpha158 公式。
 - 不新增自研综合评分。
@@ -1726,13 +1780,9 @@ docs/ALPHA158_EXPRESSION_EVALUATION_STAGE_PLAN.md
 - 不直接扩到 Alpha158 全量 158 个因子。
 - 不绕过已有数据诊断和可交易性约束。
 
-推荐执行顺序：
+下一段建议：
 
-1. 实现 expression adapter 和 expression frame builder。
-2. 生成首批 20 个 Alpha158 expression frame。
-3. 验证表达式 frame 的数值、覆盖率和索引对齐。
-4. 扩展 V4 runner 支持 external factor frame。
-5. 跑 3 到 5 个因子的极小 smoke。
-6. 跑首批 20 个因子的 V4 smoke。
-7. 用 batch runner 跑首批 20 个 batch 版本。
-8. 晋升通过验证的 catalog entries。
+- 将同样的 adapter、validation、V4 和 batch promotion 流程扩展到 Alpha158 全量 158 个因子。
+- 扩容时继续保留小批量 smoke、断点续跑和 compact summary，避免一次性生成不可维护的大量明细。
+- Alpha158 全量跑通后，再考虑 `ta` 技术指标和 Alpha101 来源审计。
+- 等因子池有足够候选后，再进入筛选 judgement layer 和组合回测接口。

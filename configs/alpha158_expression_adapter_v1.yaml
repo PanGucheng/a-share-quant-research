@@ -1,0 +1,18 @@
+provider_uri: "E:/qlib_prj/qlib_data/cn_data_community_20260609_derived"
+market: "all_stock_shsz_liquid2000"
+start: "2020-10-01"
+end: "2024-02-29"
+catalog_path: "outputs/factor_catalog_alpha158_v1/alpha158_catalog_first_batch.yaml"
+inventory_path: "outputs/factor_catalog_alpha158_v1/alpha158_formula_inventory.csv"
+output_dir: "outputs/alpha158_expression_frame_v1/first20_main_research"
+
+selection:
+  enabled_only: false
+  runnable_only: false
+  stages:
+    - "alpha158_first_batch_adapter_pending"
+  names: []
+  max_factors:
+
+cache:
+  refresh: false

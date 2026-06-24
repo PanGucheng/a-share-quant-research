@@ -83,6 +83,7 @@ def apply_cli_overrides(config: dict, args: argparse.Namespace) -> dict:
 def selected_factor_names(config: dict, catalog_path: Path, output_root: Path) -> list[str]:
     entries = load_factor_catalog(catalog_path)
     selection = config.get("selection", {})
+    allow_external_specs = bool(selection.get("allow_external_specs", False))
     selected = select_entries(
         entries,
         enabled_only=bool(selection.get("enabled_only", True)),
@@ -104,7 +105,10 @@ def selected_factor_names(config: dict, catalog_path: Path, output_root: Path) -
     invalid_selected = validation[
         validation["name"].isin([entry.name for entry in selected])
         & validation["status"].ne("ok")
-    ]
+    ].copy()
+    if allow_external_specs and not invalid_selected.empty:
+        allowed_names = {entry.name for entry in selected if entry.compute_adapter != "factor_research.factor_library.add_basic_factors"}
+        invalid_selected = invalid_selected[~invalid_selected["name"].isin(allowed_names)]
     if not invalid_selected.empty:
         raise ValueError(f"Selected runnable factors missing registry entries: {invalid_selected['name'].tolist()}")
     return [entry.registry_name for entry in selected]

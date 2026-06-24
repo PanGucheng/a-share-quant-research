@@ -303,8 +303,59 @@ field_status=available: 158
 first batch metadata entries: 20
 ```
 
-Alpha158 entries are still `runnable: false`. They are audited metadata sources
-until the Qlib expression adapter is implemented and smoke-tested.
+The first 20 Alpha158 entries now have a separate runnable catalog after the
+expression adapter and V4 smoke checks passed. The full 158-factor expansion is
+still pending.
+
+## Qlib Alpha158 First20 Evaluation
+
+Build and validate the first Alpha158 expression frame:
+
+```powershell
+cd E:\qlib_prj\qlib_baseline
+E:\anaconda_envs\qlib_env\python.exe scripts\build_alpha158_expression_frame_v1.py --config configs\alpha158_expression_adapter_v1.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\validate_alpha158_expression_frame_v1.py --config configs\alpha158_expression_adapter_v1.yaml
+```
+
+Run the first20 V4 evaluation and context validation:
+
+```powershell
+E:\anaconda_envs\qlib_env\python.exe scripts\run_factor_evaluation_v4.py --config configs\factor_evaluation_v4_alpha158_first20.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\validate_factor_evaluation_context.py --output-dir outputs\factor_evaluation_v4\alpha158_first20_smoke
+E:\anaconda_envs\qlib_env\python.exe scripts\summarize_alpha158_first20.py
+```
+
+Run the resumable batch version:
+
+```powershell
+E:\anaconda_envs\qlib_env\python.exe scripts\run_factor_evaluation_batch_v1.py --config configs\factor_evaluation_batch_v1_alpha158_first20.yaml --dry-run
+E:\anaconda_envs\qlib_env\python.exe scripts\run_factor_evaluation_batch_v1.py --config configs\factor_evaluation_batch_v1_alpha158_first20.yaml
+```
+
+Current result:
+
+```text
+expression frame rows: 1,603,860
+factor count: 20
+adapter validation: pass
+Alphalens Reloaded: pass 20
+jqfactor_analyzer: partial_pass 20
+Qlib eval: pass 20
+context: pass 240, skipped_non_informative 80
+combined metric index rows: 4,200
+```
+
+Key outputs:
+
+```text
+outputs/alpha158_expression_frame_v1/first20_main_research/
+outputs/factor_evaluation_v4/alpha158_first20_smoke/
+outputs/factor_evaluation_batch_v1/alpha158_first20/
+outputs/factor_catalog_alpha158_v1/alpha158_catalog_first20_runnable.yaml
+```
+
+The large `factor_frame.pkl` and per-batch detailed runtime outputs are ignored;
+Git keeps compact manifests, summaries, validation reports, and metric indexes.
 
 ## Open-Source References
 
@@ -349,6 +400,7 @@ docs/FACTOR_CONTEXT_V1.md
 docs/FACTOR_BATCH_EVALUATION_V1.md
 docs/ALPHA158_CATALOG_AUDIT_V1.md
 docs/ALPHA158_EXPRESSION_EVALUATION_STAGE_PLAN.md
+docs/ALPHA158_EXPRESSION_ADAPTER_V1.md
 docs/STEP_5_FACTOR_RESEARCH_AND_MODEL_PLAN.md
 docs/PROJECT_CONTEXT_SUMMARY.md
 ```

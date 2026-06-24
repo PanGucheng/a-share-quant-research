@@ -1,0 +1,73 @@
+qlib:
+  provider_uri: "E:/qlib_prj/qlib_data/cn_data_community_20260609_derived"
+  market: "all_stock_shsz_liquid2000"
+
+evaluation:
+  output_dir: "outputs/factor_evaluation_v4/alpha158_smoke5"
+  labels:
+    - "label_10d_t1"
+    - "label_20d_t1"
+  factors:
+    - "alpha158_KMID"
+    - "alpha158_KLEN"
+    - "alpha158_VWAP0"
+    - "alpha158_ROC5"
+    - "alpha158_MA5"
+  systems:
+    - "alphalens_reloaded"
+    - "jqfactor_analyzer"
+    - "qlib_eval"
+  quantiles: 5
+  min_count: 50
+  sample_rows: 200
+
+window:
+  name: "main_research_2021_2023"
+  start: "2021-01-01"
+  end: "2023-12-29"
+  tradability_dir: "outputs/tradability/all_stock_shsz_liquid2000_2021-01-01_2023-12-29"
+  data_quality_dir: "outputs/data_quality_tradability/all_stock_shsz_liquid2000_2021-01-01_2023-12-29"
+
+tradable_filter:
+  min_liquidity_bucket: 3
+  min_tradability_score: 75.0
+
+cache:
+  feature_cache_dir: "tmp/factor_feature_cache"
+  factor_cache_dir: "tmp/factor_frame_cache"
+  refresh_feature_cache: false
+  refresh_factor_cache: false
+
+external_factor_frame:
+  enabled: true
+  path: "outputs/alpha158_expression_frame_v1/first20_main_research/factor_frame.pkl"
+  catalog_path: "outputs/factor_catalog_alpha158_v1/alpha158_catalog_first_batch.yaml"
+  require_enabled: false
+  require_runnable: false
+
+context:
+  enabled: true
+  provider_uri: "E:/qlib_prj/qlib_data/cn_data_community_20260609_derived"
+  benchmark_returns_path: "outputs/factor_context_v1/main_research_2021_2023/benchmark_returns.csv"
+  listing_source: "all_stock_shsz"
+  universes:
+    csi300: "csi300"
+    csi500: "csi500"
+    csi1000: "csi1000"
+    liquid2000: "all_stock_shsz_liquid2000"
+  segment_priority:
+    - "csi300"
+    - "csi500"
+    - "csi1000"
+  group_dimensions:
+    - "index_segment"
+    - "listing_age_bucket"
+  benchmark_by_segment:
+    csi300: "CSI300"
+    csi500: "CSI500"
+    csi1000: "CSI1000"
+    outside_major_indices: "CSI1000"
+  label_return_columns:
+    label_10d_t1: "forward_10d_t1"
+    label_20d_t1: "forward_20d_t1"
+  quantile_scope: "global_market"

@@ -440,15 +440,15 @@ outputs/factor_evaluation_batch_v1/alpha158_first20/runs/
 
 本阶段全部完成需要满足：
 
-- [ ] Alpha158 expression frame builder 可运行。
-- [ ] 首批 20 个因子的 expression frame 生成成功。
-- [ ] adapter validation 通过。
-- [ ] V4 first20 smoke 完成。
-- [ ] context validator 通过。
-- [ ] batch runner 能 dry-run 和真实运行首批 20 个因子。
-- [ ] 通过 smoke 的 Alpha158 catalog entries 被单独晋升为 runnable catalog。
-- [ ] 输出 first-batch summary，但不生成综合分。
-- [ ] 文档说明 Alpha158 与 Qlib baseline、data_quality、tradability、V4 evaluation 和后续 screening 的关系。
+- [x] Alpha158 expression frame builder 可运行。
+- [x] 首批 20 个因子的 expression frame 生成成功。
+- [x] adapter validation 通过。
+- [x] V4 first20 smoke 完成。
+- [x] context validator 通过。
+- [x] batch runner 能 dry-run 和真实运行首批 20 个因子。
+- [x] 通过 smoke 的 Alpha158 catalog entries 被单独晋升为 runnable catalog。
+- [x] 输出 first-batch summary，但不生成综合分。
+- [x] 文档说明 Alpha158 与 Qlib baseline、data_quality、tradability、V4 evaluation 和后续 screening 的关系。
 
 ## 11. 推荐执行顺序
 
@@ -463,7 +463,51 @@ outputs/factor_evaluation_batch_v1/alpha158_first20/runs/
 9. 生成首批 summary。
 10. 决定是否进入 Alpha158 全量 158 因子批量评价。
 
-## 12. 阶段之后的方向
+## 12. 阶段执行结果
+
+状态：已完成。
+
+主要结果：
+
+```text
+expression frame rows: 1,603,860
+Alpha158 first batch factors: 20
+adapter validation: pass
+V4 first20 evaluator status:
+  alphalens_reloaded: pass 20
+  jqfactor_analyzer: partial_pass 20
+  qlib_eval: pass 20
+context status:
+  pass: 240
+  skipped_non_informative: 80
+combined metric index rows: 4,200
+batch count: 4
+batch resume: batch_001-003 skipped_existing, batch_004 pass after interruption
+```
+
+新增实施文档：
+
+```text
+docs/ALPHA158_EXPRESSION_ADAPTER_V1.md
+```
+
+关键产物：
+
+```text
+outputs/alpha158_expression_frame_v1/first20_main_research/
+outputs/factor_evaluation_v4/alpha158_first20_smoke/
+outputs/factor_evaluation_batch_v1/alpha158_first20/
+outputs/factor_catalog_alpha158_v1/alpha158_catalog_first20_runnable.yaml
+```
+
+保留边界：
+
+- 不生成综合评分。
+- 不因为首批 smoke 通过就进入实盘或模型训练。
+- 不修改 Alphalens Reloaded、jqfactor_analyzer 或 Qlib eval 的原始指标口径。
+- `factor_frame.pkl` 和 batch 逐因子大明细不进入 Git，只保留紧凑 summary 与 validation 结果。
+
+## 13. 阶段之后的方向
 
 如果本阶段顺利完成，下一阶段才考虑：
 

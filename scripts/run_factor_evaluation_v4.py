@@ -19,6 +19,7 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 from factor_research.dataset import to_factor_data
+from factor_research.alpha158_registry import load_external_factor_specs
 from factor_research.context.evaluation import (
     attach_benchmark_relative_returns,
     attach_context,
@@ -188,6 +189,7 @@ def apply_yaml_config(args: argparse.Namespace) -> argparse.Namespace:
     cache = data.get("cache", {})
     current_project = data.get("current_project", {})
     context = data.get("context", {})
+    external_factor_frame = data.get("external_factor_frame", {})
 
     args.provider_uri = qlib_config.get("provider_uri", args.provider_uri)
     args.market = qlib_config.get("market", args.market)
@@ -206,6 +208,7 @@ def apply_yaml_config(args: argparse.Namespace) -> argparse.Namespace:
     args.refresh_factor_cache = bool(cache.get("refresh_factor_cache", args.refresh_factor_cache))
     args.current_project_input_dir = Path(current_project.get("input_dir", args.current_project_input_dir))
     args.context_config = context
+    args.external_factor_frame_config = external_factor_frame
     if window:
         args.window = ResearchWindow(
             window["name"],
@@ -215,6 +218,103 @@ def apply_yaml_config(args: argparse.Namespace) -> argparse.Namespace:
             Path(window["data_quality_dir"]),
         )
     return args
+
+
+def load_external_factor_frame(path: Path) -> pd.DataFrame:
+    if not path.exists():
+        raise FileNotFoundError(f"Missing external factor frame: {path}")
+    if path.suffix.lower() in {".pkl", ".pickle"}:
+        frame = pd.read_pickle(path)
+    else:
+        frame = pd.read_csv(path, parse_dates=["datetime"])
+    required = {"datetime", "instrument"}
+    missing = required - set(frame.columns)
+    if missing:
+        raise ValueError(f"External factor frame missing required columns: {sorted(missing)}")
+    frame = frame.copy()
+    frame["datetime"] = pd.to_datetime(frame["datetime"])
+    frame["instrument"] = frame["instrument"].astype(str).str.upper()
+    duplicated = frame.duplicated(["datetime", "instrument"], keep=False)
+    if duplicated.any():
+        raise ValueError(f"External factor frame contains duplicate keys: {int(duplicated.sum())}")
+    return frame
+
+
+def attach_external_factor_frame(
+    frame: pd.DataFrame,
+    config: dict,
+    requested_factors: list[str],
+    output_dir: Path,
+) -> pd.DataFrame:
+    if not bool(config.get("enabled", False)):
+        return frame
+    path = resolve_path(Path(config["path"]))
+    external = load_external_factor_frame(path)
+    factor_columns = [column for column in external.columns if column not in {"datetime", "instrument"}]
+    configured_columns = config.get("factor_columns") or factor_columns
+    configured = set(configured_columns)
+    requested_external = [factor for factor in requested_factors if factor in configured and factor in factor_columns]
+    if not requested_external:
+        return frame
+    missing = sorted(set(requested_external) - set(external.columns))
+    if missing:
+        raise ValueError(f"External factor frame missing requested columns: {missing}")
+    base = frame.copy()
+    base["instrument"] = base["instrument"].astype(str).str.upper()
+    before_rows = len(base)
+    result = base.merge(external[["datetime", "instrument", *requested_external]], on=["datetime", "instrument"], how="left")
+    rows = []
+    for factor in requested_external:
+        valid = pd.to_numeric(result[factor], errors="coerce").notna()
+        rows.append(
+            {
+                "factor": factor,
+                "valid_rows": int(valid.sum()),
+                "total_rows": int(len(result)),
+                "coverage": float(valid.sum() / len(result)) if len(result) else 0.0,
+            }
+        )
+    summary = pd.DataFrame(rows)
+    target = output_dir / "external_factor_frame"
+    target.mkdir(parents=True, exist_ok=True)
+    summary.to_csv(target / "external_factor_frame_summary.csv", index=False, encoding="utf-8-sig")
+    external.head(200).to_csv(target / "external_factor_frame_sample.csv", index=False, encoding="utf-8-sig")
+    pd.DataFrame(
+        [
+            {
+                "path": path.as_posix(),
+                "base_rows": int(before_rows),
+                "merged_rows": int(len(result)),
+                "external_rows": int(len(external)),
+                "factor_count": int(len(requested_external)),
+            }
+        ]
+    ).to_csv(target / "external_factor_frame_manifest.csv", index=False, encoding="utf-8-sig")
+    if summary["valid_rows"].eq(0).any():
+        empty = summary.loc[summary["valid_rows"].eq(0), "factor"].tolist()
+        raise ValueError(f"External factor frame produced empty factors after merge: {empty}")
+    return result
+
+
+def load_requested_specs(args: argparse.Namespace, factors: list[str], labels: list[str]) -> list:
+    specs = [spec for spec in enabled_specs(labels) if spec.name in set(factors)]
+    external_config = args.external_factor_frame_config or {}
+    if bool(external_config.get("enabled", False)):
+        known = {spec.name for spec in specs}
+        configured_columns = external_config.get("factor_columns")
+        if configured_columns:
+            external_requested = [factor for factor in factors if factor in set(configured_columns)]
+        else:
+            external_requested = [factor for factor in factors if factor not in known]
+        external_specs = load_external_factor_specs(
+            resolve_path(Path(external_config["catalog_path"])),
+            external_requested,
+            labels,
+            require_runnable=bool(external_config.get("require_runnable", True)),
+            require_enabled=bool(external_config.get("require_enabled", True)),
+        ) if external_requested else []
+        specs.extend(spec for spec in external_specs if spec.name not in known)
+    return specs
 
 
 def run_alphalens(
@@ -581,12 +681,13 @@ def run(args: argparse.Namespace) -> Path:
     dependencies.to_csv(output_dir / "dependency_status.csv", index=False, encoding="utf-8-sig")
     factors = args.factors
     labels = args.labels
-    specs = [spec for spec in enabled_specs(labels) if spec.name in set(factors)]
+    specs = load_requested_specs(args, factors, labels)
     if not specs:
         raise ValueError(f"No enabled specs match requested factors: {factors}")
 
     window = args.window
     frame = load_window_frame(args, window, output_dir)
+    frame = attach_external_factor_frame(frame, args.external_factor_frame_config or {}, factors, output_dir)
     factor_data = to_factor_data(frame, specs, labels, args.quantiles)
     input_sample_dir = output_dir / "input_samples"
     input_sample_dir.mkdir(parents=True, exist_ok=True)
@@ -807,6 +908,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--refresh-factor-cache", action="store_true")
     parser.add_argument("--current-project-input-dir", type=Path, default=Path("outputs/factor_research_v3/liquid2000_expanded"))
     parser.set_defaults(context_config={})
+    parser.set_defaults(external_factor_frame_config={})
     parser.add_argument("--write-detail", action="store_true", help=argparse.SUPPRESS)
     parser.set_defaults(window=DEFAULT_WINDOWS[0])
     return parser

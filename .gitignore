@@ -44,12 +44,46 @@ outputs/tradability/*/run.log
 
 # Reproducible one-factor smoke output; full V4 audit output is tracked.
 outputs/factor_evaluation_v4/context_smoke_rev5/
+outputs/factor_evaluation_v4/alpha158_smoke5/
+outputs/factor_evaluation_v4/alpha158_first20_smoke/*
+!outputs/factor_evaluation_v4/alpha158_first20_smoke/
+!outputs/factor_evaluation_v4/alpha158_first20_smoke/alpha158_first20_metric_index.csv
+!outputs/factor_evaluation_v4/alpha158_first20_smoke/alpha158_first20_summary.md
+!outputs/factor_evaluation_v4/alpha158_first20_smoke/dependency_status.csv
+!outputs/factor_evaluation_v4/alpha158_first20_smoke/evaluator_status.csv
+!outputs/factor_evaluation_v4/alpha158_first20_smoke/external_factor_frame/
+outputs/factor_evaluation_v4/alpha158_first20_smoke/external_factor_frame/*
+!outputs/factor_evaluation_v4/alpha158_first20_smoke/external_factor_frame/external_factor_frame_manifest.csv
+!outputs/factor_evaluation_v4/alpha158_first20_smoke/external_factor_frame/external_factor_frame_summary.csv
+!outputs/factor_evaluation_v4/alpha158_first20_smoke/factor_evaluation_v4_report.md
+!outputs/factor_evaluation_v4/alpha158_first20_smoke/factor_failure_reasons.csv
+!outputs/factor_evaluation_v4/alpha158_first20_smoke/open_source_metric_index.csv
+!outputs/factor_evaluation_v4/alpha158_first20_smoke/context/
+outputs/factor_evaluation_v4/alpha158_first20_smoke/context/*
+!outputs/factor_evaluation_v4/alpha158_first20_smoke/context/context_coverage.csv
+!outputs/factor_evaluation_v4/alpha158_first20_smoke/context/context_evaluator_status.csv
+!outputs/factor_evaluation_v4/alpha158_first20_smoke/context/context_metric_index.csv
+
+# Large precomputed factor frames. Keep manifests, summaries, and validation
+# reports under version control.
+outputs/alpha158_expression_frame_v1/*/factor_frame*.pkl
 
 # Batch factor evaluation runtime outputs can become large. Keep the tiny dry-run
 # smoke manifest as a reproducibility fixture.
 outputs/factor_evaluation_batch_v1/*
 !outputs/factor_evaluation_batch_v1/smoke_dry_run/
 !outputs/factor_evaluation_batch_v1/smoke_dry_run/**
+!outputs/factor_evaluation_batch_v1/alpha158_first20/
+!outputs/factor_evaluation_batch_v1/alpha158_first20/batch_manifest.csv
+!outputs/factor_evaluation_batch_v1/alpha158_first20/batch_output_summary.csv
+!outputs/factor_evaluation_batch_v1/alpha158_first20/factor_catalog_snapshot.csv
+!outputs/factor_evaluation_batch_v1/alpha158_first20/factor_catalog_validation.csv
+!outputs/factor_evaluation_batch_v1/alpha158_first20/factor_evaluation_batch_v1_report.md
+!outputs/factor_evaluation_batch_v1/alpha158_first20/selected_factor_catalog.csv
+!outputs/factor_evaluation_batch_v1/alpha158_first20/generated_configs/
+!outputs/factor_evaluation_batch_v1/alpha158_first20/generated_configs/*.yaml
+outputs/factor_evaluation_batch_v1/alpha158_first20/logs/
+outputs/factor_evaluation_batch_v1/alpha158_first20/runs/
 
 # Local Python/cache noise
 __pycache__/

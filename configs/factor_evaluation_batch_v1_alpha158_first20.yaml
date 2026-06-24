@@ -1,0 +1,20 @@
+base_config: "configs/factor_evaluation_v4_alpha158_batch_base.yaml"
+catalog: "outputs/factor_catalog_alpha158_v1/alpha158_catalog_first20_runnable.yaml"
+python: "E:/anaconda_envs/qlib_env/python.exe"
+output_root: "outputs/factor_evaluation_batch_v1/alpha158_first20"
+
+selection:
+  enabled_only: true
+  runnable_only: true
+  allow_external_specs: true
+  stages:
+    - "alpha158_first20_v4_smoke_passed"
+  categories: []
+  sources: []
+  names: []
+  max_factors:
+
+batching:
+  batch_size: 5
+  resume: true
+  max_batches:
