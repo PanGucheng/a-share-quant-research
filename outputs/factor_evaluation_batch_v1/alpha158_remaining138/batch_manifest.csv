@@ -1,0 +1,2 @@
+﻿batch_id,status,returncode,factor_count,factors,config_path,output_dir,started_at,ended_at,elapsed_seconds
+batch_001,pass,0,10,"alpha158_MA20,alpha158_MA30,alpha158_MA60,alpha158_STD5,alpha158_STD10,alpha158_STD20,alpha158_STD30,alpha158_STD60,alpha158_BETA5,alpha158_BETA10",E:\qlib_prj\qlib_baseline\outputs\factor_evaluation_batch_v1\alpha158_remaining138\generated_configs\batch_001.yaml,E:\qlib_prj\qlib_baseline\outputs\factor_evaluation_batch_v1\alpha158_remaining138\runs\batch_001,2026-06-24T16:20:59,2026-06-24T16:36:11,912.061

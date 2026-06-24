@@ -349,6 +349,25 @@ outputs/factor_catalog_alpha158_v1/alpha158_catalog_first20_runnable.yaml
 
 大体积的 `factor_frame.pkl` 和逐 batch 明细运行目录已被 `.gitignore` 排除，Git 只保留 compact manifest、summary、validation report 和 metric index。
 
+## Qlib Alpha158 全量扩张
+
+Alpha158 全量扩张阶段已经启动。当前不重复评价已完成的 first20，而是复用 first20 结果，只补跑 remaining138。
+
+```powershell
+E:\anaconda_envs\qlib_env\python.exe scripts\prepare_alpha158_full_stage_catalogs_v1.py
+E:\anaconda_envs\qlib_env\python.exe scripts\build_alpha158_expression_frame_v1.py --config configs\alpha158_expression_adapter_full_v1.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\validate_alpha158_expression_frame_v1.py --config configs\alpha158_expression_adapter_full_v1.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\run_factor_evaluation_batch_v1.py --config configs\factor_evaluation_batch_v1_alpha158_remaining138.yaml --max-batches 1
+```
+
+当前进展：
+
+```text
+full158 expression frame：通过，1,603,860 行，158 个因子
+remaining138 dry-run：14 个计划 batch
+remaining138 batch_001：通过
+```
+
 ## 当前因子研究结论
 
 截至 V3.1/V3.2：
@@ -400,6 +419,7 @@ docs/FACTOR_BATCH_EVALUATION_V1.md
 docs/ALPHA158_CATALOG_AUDIT_V1.md
 docs/ALPHA158_EXPRESSION_EVALUATION_STAGE_PLAN.md
 docs/ALPHA158_EXPRESSION_ADAPTER_V1.md
+docs/ALPHA158_FULL_EVALUATION_STAGE_PLAN.md
 docs/STEP_5_FACTOR_RESEARCH_AND_MODEL_PLAN.md
 docs/PROJECT_CONTEXT_SUMMARY.md
 ```

@@ -41,6 +41,7 @@ def load_config(path: Path) -> ExpressionFrameConfig:
         stages=tuple(str(item) for item in selection.get("stages", [])),
         names=tuple(str(item) for item in selection.get("names", [])),
         max_factors=selection.get("max_factors"),
+        batch_size=(data.get("expression", {}) or {}).get("batch_size"),
         refresh=bool(cache.get("refresh", False)),
     )
 

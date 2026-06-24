@@ -1786,3 +1786,68 @@ batch_004: pass
 - 扩容时继续保留小批量 smoke、断点续跑和 compact summary，避免一次性生成不可维护的大量明细。
 - Alpha158 全量跑通后，再考虑 `ta` 技术指标和 Alpha101 来源审计。
 - 等因子池有足够候选后，再进入筛选 judgement layer 和组合回测接口。
+
+## 42. V3.10：Alpha158 全量扩张启动
+
+状态：已完成 full158 expression frame、remaining138 dry-run 和 remaining138 batch_001 真实 smoke。
+
+阶段文档：
+
+```text
+docs/ALPHA158_FULL_EVALUATION_STAGE_PLAN.md
+```
+
+新增文件：
+
+```text
+configs/alpha158_expression_adapter_full_v1.yaml
+configs/factor_evaluation_v4_alpha158_remaining_batch_base.yaml
+configs/factor_evaluation_batch_v1_alpha158_remaining138.yaml
+scripts/prepare_alpha158_full_stage_catalogs_v1.py
+```
+
+关键输出：
+
+```text
+outputs/alpha158_expression_frame_v1/full158_main_research/
+outputs/factor_catalog_alpha158_v1/alpha158_catalog_remaining138_pending.yaml
+outputs/factor_catalog_alpha158_v1/alpha158_catalog_full158_mixed.yaml
+outputs/factor_evaluation_batch_v1/alpha158_remaining138/
+```
+
+完成结果：
+
+```text
+remaining138 pending catalog: 138 factors
+full158 mixed catalog: 158 factors
+full158 expression frame rows: 1,603,860
+full158 expression factors: 158
+full158 expression validation: pass
+coverage min: 0.994231
+coverage median: 0.996867
+remaining138 dry-run batches: 14
+remaining138 batch_001: pass
+batch_001 elapsed: 912.061 seconds
+```
+
+batch_001 评价状态：
+
+```text
+alphalens_reloaded: pass 10
+jqfactor_analyzer: partial_pass 10
+qlib_eval: pass 10
+context: pass 120, skipped_non_informative 40
+context validation: pass
+```
+
+工程改进：
+
+- expression adapter 支持 `expression.batch_size` 和 chunk 进度输出。
+- batch runner 支持 `--max-batches`，便于先跑少量真实 smoke。
+- batch runner 支持显式 `execution.allow_non_runnable_external: true`，只用于外部 adapter 因子的预晋升评价。
+
+下一步：
+
+- 运行 remaining138 全量 batch，不带 `--max-batches`，让 runner 跳过已完成的 `batch_001` 并继续 `batch_002` 到 `batch_014`。
+- 每批完成后运行 context validator。
+- 全部通过后再生成 remaining138 runnable catalog，并合并 first20 + remaining138 的 full158 summary。

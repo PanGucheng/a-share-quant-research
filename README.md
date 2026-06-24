@@ -357,6 +357,26 @@ outputs/factor_catalog_alpha158_v1/alpha158_catalog_first20_runnable.yaml
 The large `factor_frame.pkl` and per-batch detailed runtime outputs are ignored;
 Git keeps compact manifests, summaries, validation reports, and metric indexes.
 
+## Qlib Alpha158 Full Expansion
+
+The full Alpha158 expansion is now in progress. The project reuses the first20
+results and evaluates only the remaining 138 factors.
+
+```powershell
+E:\anaconda_envs\qlib_env\python.exe scripts\prepare_alpha158_full_stage_catalogs_v1.py
+E:\anaconda_envs\qlib_env\python.exe scripts\build_alpha158_expression_frame_v1.py --config configs\alpha158_expression_adapter_full_v1.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\validate_alpha158_expression_frame_v1.py --config configs\alpha158_expression_adapter_full_v1.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\run_factor_evaluation_batch_v1.py --config configs\factor_evaluation_batch_v1_alpha158_remaining138.yaml --max-batches 1
+```
+
+Current full-stage status:
+
+```text
+full158 expression frame: pass, 1,603,860 rows, 158 factors
+remaining138 dry-run: 14 planned batches
+remaining138 batch_001: pass
+```
+
 ## Open-Source References
 
 The factor research design intentionally borrows stable ideas from open-source
@@ -401,6 +421,7 @@ docs/FACTOR_BATCH_EVALUATION_V1.md
 docs/ALPHA158_CATALOG_AUDIT_V1.md
 docs/ALPHA158_EXPRESSION_EVALUATION_STAGE_PLAN.md
 docs/ALPHA158_EXPRESSION_ADAPTER_V1.md
+docs/ALPHA158_FULL_EVALUATION_STAGE_PLAN.md
 docs/STEP_5_FACTOR_RESEARCH_AND_MODEL_PLAN.md
 docs/PROJECT_CONTEXT_SUMMARY.md
 ```

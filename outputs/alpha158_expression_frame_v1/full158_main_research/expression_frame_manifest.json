@@ -1,0 +1,976 @@
+{
+  "config": {
+    "provider_uri": "E:/qlib_prj/qlib_data/cn_data_community_20260609_derived",
+    "market": "all_stock_shsz_liquid2000",
+    "start": "2020-10-01",
+    "end": "2024-02-29",
+    "catalog_path": "E:/qlib_prj/qlib_baseline/outputs/factor_catalog_alpha158_v1/alpha158_catalog_all.yaml",
+    "inventory_path": "E:/qlib_prj/qlib_baseline/outputs/factor_catalog_alpha158_v1/alpha158_formula_inventory.csv",
+    "output_dir": "E:/qlib_prj/qlib_baseline/outputs/alpha158_expression_frame_v1/full158_main_research",
+    "enabled_only": false,
+    "runnable_only": false,
+    "stages": [
+      "alpha158_adapter_pending"
+    ],
+    "names": [],
+    "max_factors": null,
+    "batch_size": 5,
+    "refresh": false
+  },
+  "factor_count": 158,
+  "row_count": 1603860,
+  "date_min": "2020-10-09 00:00:00",
+  "date_max": "2024-02-29 00:00:00",
+  "instrument_count": 1979,
+  "factor_frame_path": "E:/qlib_prj/qlib_baseline/outputs/alpha158_expression_frame_v1/full158_main_research/factor_frame.pkl",
+  "factors": [
+    {
+      "catalog_name": "alpha158_KMID",
+      "factor_name": "KMID",
+      "category": "kbar",
+      "expression": "($close-$open)/$open"
+    },
+    {
+      "catalog_name": "alpha158_KLEN",
+      "factor_name": "KLEN",
+      "category": "kbar",
+      "expression": "($high-$low)/$open"
+    },
+    {
+      "catalog_name": "alpha158_KMID2",
+      "factor_name": "KMID2",
+      "category": "kbar",
+      "expression": "($close-$open)/($high-$low+1e-12)"
+    },
+    {
+      "catalog_name": "alpha158_KUP",
+      "factor_name": "KUP",
+      "category": "kbar",
+      "expression": "($high-Greater($open, $close))/$open"
+    },
+    {
+      "catalog_name": "alpha158_KUP2",
+      "factor_name": "KUP2",
+      "category": "kbar",
+      "expression": "($high-Greater($open, $close))/($high-$low+1e-12)"
+    },
+    {
+      "catalog_name": "alpha158_KLOW",
+      "factor_name": "KLOW",
+      "category": "kbar",
+      "expression": "(Less($open, $close)-$low)/$open"
+    },
+    {
+      "catalog_name": "alpha158_KLOW2",
+      "factor_name": "KLOW2",
+      "category": "kbar",
+      "expression": "(Less($open, $close)-$low)/($high-$low+1e-12)"
+    },
+    {
+      "catalog_name": "alpha158_KSFT",
+      "factor_name": "KSFT",
+      "category": "kbar",
+      "expression": "(2*$close-$high-$low)/$open"
+    },
+    {
+      "catalog_name": "alpha158_KSFT2",
+      "factor_name": "KSFT2",
+      "category": "kbar",
+      "expression": "(2*$close-$high-$low)/($high-$low+1e-12)"
+    },
+    {
+      "catalog_name": "alpha158_OPEN0",
+      "factor_name": "OPEN0",
+      "category": "price_volume_lag",
+      "expression": "$open/$close"
+    },
+    {
+      "catalog_name": "alpha158_HIGH0",
+      "factor_name": "HIGH0",
+      "category": "price_volume_lag",
+      "expression": "$high/$close"
+    },
+    {
+      "catalog_name": "alpha158_LOW0",
+      "factor_name": "LOW0",
+      "category": "price_volume_lag",
+      "expression": "$low/$close"
+    },
+    {
+      "catalog_name": "alpha158_VWAP0",
+      "factor_name": "VWAP0",
+      "category": "price_volume_lag",
+      "expression": "$vwap/$close"
+    },
+    {
+      "catalog_name": "alpha158_ROC5",
+      "factor_name": "ROC5",
+      "category": "rolling_price",
+      "expression": "Ref($close, 5)/$close"
+    },
+    {
+      "catalog_name": "alpha158_ROC10",
+      "factor_name": "ROC10",
+      "category": "rolling_price",
+      "expression": "Ref($close, 10)/$close"
+    },
+    {
+      "catalog_name": "alpha158_ROC20",
+      "factor_name": "ROC20",
+      "category": "rolling_price",
+      "expression": "Ref($close, 20)/$close"
+    },
+    {
+      "catalog_name": "alpha158_ROC30",
+      "factor_name": "ROC30",
+      "category": "rolling_price",
+      "expression": "Ref($close, 30)/$close"
+    },
+    {
+      "catalog_name": "alpha158_ROC60",
+      "factor_name": "ROC60",
+      "category": "rolling_price",
+      "expression": "Ref($close, 60)/$close"
+    },
+    {
+      "catalog_name": "alpha158_MA5",
+      "factor_name": "MA5",
+      "category": "rolling_price",
+      "expression": "Mean($close, 5)/$close"
+    },
+    {
+      "catalog_name": "alpha158_MA10",
+      "factor_name": "MA10",
+      "category": "rolling_price",
+      "expression": "Mean($close, 10)/$close"
+    },
+    {
+      "catalog_name": "alpha158_MA20",
+      "factor_name": "MA20",
+      "category": "rolling_price",
+      "expression": "Mean($close, 20)/$close"
+    },
+    {
+      "catalog_name": "alpha158_MA30",
+      "factor_name": "MA30",
+      "category": "rolling_price",
+      "expression": "Mean($close, 30)/$close"
+    },
+    {
+      "catalog_name": "alpha158_MA60",
+      "factor_name": "MA60",
+      "category": "rolling_price",
+      "expression": "Mean($close, 60)/$close"
+    },
+    {
+      "catalog_name": "alpha158_STD5",
+      "factor_name": "STD5",
+      "category": "rolling_price",
+      "expression": "Std($close, 5)/$close"
+    },
+    {
+      "catalog_name": "alpha158_STD10",
+      "factor_name": "STD10",
+      "category": "rolling_price",
+      "expression": "Std($close, 10)/$close"
+    },
+    {
+      "catalog_name": "alpha158_STD20",
+      "factor_name": "STD20",
+      "category": "rolling_price",
+      "expression": "Std($close, 20)/$close"
+    },
+    {
+      "catalog_name": "alpha158_STD30",
+      "factor_name": "STD30",
+      "category": "rolling_price",
+      "expression": "Std($close, 30)/$close"
+    },
+    {
+      "catalog_name": "alpha158_STD60",
+      "factor_name": "STD60",
+      "category": "rolling_price",
+      "expression": "Std($close, 60)/$close"
+    },
+    {
+      "catalog_name": "alpha158_BETA5",
+      "factor_name": "BETA5",
+      "category": "rolling_price",
+      "expression": "Slope($close, 5)/$close"
+    },
+    {
+      "catalog_name": "alpha158_BETA10",
+      "factor_name": "BETA10",
+      "category": "rolling_price",
+      "expression": "Slope($close, 10)/$close"
+    },
+    {
+      "catalog_name": "alpha158_BETA20",
+      "factor_name": "BETA20",
+      "category": "rolling_price",
+      "expression": "Slope($close, 20)/$close"
+    },
+    {
+      "catalog_name": "alpha158_BETA30",
+      "factor_name": "BETA30",
+      "category": "rolling_price",
+      "expression": "Slope($close, 30)/$close"
+    },
+    {
+      "catalog_name": "alpha158_BETA60",
+      "factor_name": "BETA60",
+      "category": "rolling_price",
+      "expression": "Slope($close, 60)/$close"
+    },
+    {
+      "catalog_name": "alpha158_RSQR5",
+      "factor_name": "RSQR5",
+      "category": "rolling_price",
+      "expression": "Rsquare($close, 5)"
+    },
+    {
+      "catalog_name": "alpha158_RSQR10",
+      "factor_name": "RSQR10",
+      "category": "rolling_price",
+      "expression": "Rsquare($close, 10)"
+    },
+    {
+      "catalog_name": "alpha158_RSQR20",
+      "factor_name": "RSQR20",
+      "category": "rolling_price",
+      "expression": "Rsquare($close, 20)"
+    },
+    {
+      "catalog_name": "alpha158_RSQR30",
+      "factor_name": "RSQR30",
+      "category": "rolling_price",
+      "expression": "Rsquare($close, 30)"
+    },
+    {
+      "catalog_name": "alpha158_RSQR60",
+      "factor_name": "RSQR60",
+      "category": "rolling_price",
+      "expression": "Rsquare($close, 60)"
+    },
+    {
+      "catalog_name": "alpha158_RESI5",
+      "factor_name": "RESI5",
+      "category": "rolling_price",
+      "expression": "Resi($close, 5)/$close"
+    },
+    {
+      "catalog_name": "alpha158_RESI10",
+      "factor_name": "RESI10",
+      "category": "rolling_price",
+      "expression": "Resi($close, 10)/$close"
+    },
+    {
+      "catalog_name": "alpha158_RESI20",
+      "factor_name": "RESI20",
+      "category": "rolling_price",
+      "expression": "Resi($close, 20)/$close"
+    },
+    {
+      "catalog_name": "alpha158_RESI30",
+      "factor_name": "RESI30",
+      "category": "rolling_price",
+      "expression": "Resi($close, 30)/$close"
+    },
+    {
+      "catalog_name": "alpha158_RESI60",
+      "factor_name": "RESI60",
+      "category": "rolling_price",
+      "expression": "Resi($close, 60)/$close"
+    },
+    {
+      "catalog_name": "alpha158_MAX5",
+      "factor_name": "MAX5",
+      "category": "rolling_price",
+      "expression": "Max($high, 5)/$close"
+    },
+    {
+      "catalog_name": "alpha158_MAX10",
+      "factor_name": "MAX10",
+      "category": "rolling_price",
+      "expression": "Max($high, 10)/$close"
+    },
+    {
+      "catalog_name": "alpha158_MAX20",
+      "factor_name": "MAX20",
+      "category": "rolling_price",
+      "expression": "Max($high, 20)/$close"
+    },
+    {
+      "catalog_name": "alpha158_MAX30",
+      "factor_name": "MAX30",
+      "category": "rolling_price",
+      "expression": "Max($high, 30)/$close"
+    },
+    {
+      "catalog_name": "alpha158_MAX60",
+      "factor_name": "MAX60",
+      "category": "rolling_price",
+      "expression": "Max($high, 60)/$close"
+    },
+    {
+      "catalog_name": "alpha158_MIN5",
+      "factor_name": "MIN5",
+      "category": "rolling_price",
+      "expression": "Min($low, 5)/$close"
+    },
+    {
+      "catalog_name": "alpha158_MIN10",
+      "factor_name": "MIN10",
+      "category": "rolling_price",
+      "expression": "Min($low, 10)/$close"
+    },
+    {
+      "catalog_name": "alpha158_MIN20",
+      "factor_name": "MIN20",
+      "category": "rolling_price",
+      "expression": "Min($low, 20)/$close"
+    },
+    {
+      "catalog_name": "alpha158_MIN30",
+      "factor_name": "MIN30",
+      "category": "rolling_price",
+      "expression": "Min($low, 30)/$close"
+    },
+    {
+      "catalog_name": "alpha158_MIN60",
+      "factor_name": "MIN60",
+      "category": "rolling_price",
+      "expression": "Min($low, 60)/$close"
+    },
+    {
+      "catalog_name": "alpha158_QTLU5",
+      "factor_name": "QTLU5",
+      "category": "rolling_price",
+      "expression": "Quantile($close, 5, 0.8)/$close"
+    },
+    {
+      "catalog_name": "alpha158_QTLU10",
+      "factor_name": "QTLU10",
+      "category": "rolling_price",
+      "expression": "Quantile($close, 10, 0.8)/$close"
+    },
+    {
+      "catalog_name": "alpha158_QTLU20",
+      "factor_name": "QTLU20",
+      "category": "rolling_price",
+      "expression": "Quantile($close, 20, 0.8)/$close"
+    },
+    {
+      "catalog_name": "alpha158_QTLU30",
+      "factor_name": "QTLU30",
+      "category": "rolling_price",
+      "expression": "Quantile($close, 30, 0.8)/$close"
+    },
+    {
+      "catalog_name": "alpha158_QTLU60",
+      "factor_name": "QTLU60",
+      "category": "rolling_price",
+      "expression": "Quantile($close, 60, 0.8)/$close"
+    },
+    {
+      "catalog_name": "alpha158_QTLD5",
+      "factor_name": "QTLD5",
+      "category": "rolling_price",
+      "expression": "Quantile($close, 5, 0.2)/$close"
+    },
+    {
+      "catalog_name": "alpha158_QTLD10",
+      "factor_name": "QTLD10",
+      "category": "rolling_price",
+      "expression": "Quantile($close, 10, 0.2)/$close"
+    },
+    {
+      "catalog_name": "alpha158_QTLD20",
+      "factor_name": "QTLD20",
+      "category": "rolling_price",
+      "expression": "Quantile($close, 20, 0.2)/$close"
+    },
+    {
+      "catalog_name": "alpha158_QTLD30",
+      "factor_name": "QTLD30",
+      "category": "rolling_price",
+      "expression": "Quantile($close, 30, 0.2)/$close"
+    },
+    {
+      "catalog_name": "alpha158_QTLD60",
+      "factor_name": "QTLD60",
+      "category": "rolling_price",
+      "expression": "Quantile($close, 60, 0.2)/$close"
+    },
+    {
+      "catalog_name": "alpha158_RANK5",
+      "factor_name": "RANK5",
+      "category": "rolling_price",
+      "expression": "Rank($close, 5)"
+    },
+    {
+      "catalog_name": "alpha158_RANK10",
+      "factor_name": "RANK10",
+      "category": "rolling_price",
+      "expression": "Rank($close, 10)"
+    },
+    {
+      "catalog_name": "alpha158_RANK20",
+      "factor_name": "RANK20",
+      "category": "rolling_price",
+      "expression": "Rank($close, 20)"
+    },
+    {
+      "catalog_name": "alpha158_RANK30",
+      "factor_name": "RANK30",
+      "category": "rolling_price",
+      "expression": "Rank($close, 30)"
+    },
+    {
+      "catalog_name": "alpha158_RANK60",
+      "factor_name": "RANK60",
+      "category": "rolling_price",
+      "expression": "Rank($close, 60)"
+    },
+    {
+      "catalog_name": "alpha158_RSV5",
+      "factor_name": "RSV5",
+      "category": "rolling_price",
+      "expression": "($close-Min($low, 5))/(Max($high, 5)-Min($low, 5)+1e-12)"
+    },
+    {
+      "catalog_name": "alpha158_RSV10",
+      "factor_name": "RSV10",
+      "category": "rolling_price",
+      "expression": "($close-Min($low, 10))/(Max($high, 10)-Min($low, 10)+1e-12)"
+    },
+    {
+      "catalog_name": "alpha158_RSV20",
+      "factor_name": "RSV20",
+      "category": "rolling_price",
+      "expression": "($close-Min($low, 20))/(Max($high, 20)-Min($low, 20)+1e-12)"
+    },
+    {
+      "catalog_name": "alpha158_RSV30",
+      "factor_name": "RSV30",
+      "category": "rolling_price",
+      "expression": "($close-Min($low, 30))/(Max($high, 30)-Min($low, 30)+1e-12)"
+    },
+    {
+      "catalog_name": "alpha158_RSV60",
+      "factor_name": "RSV60",
+      "category": "rolling_price",
+      "expression": "($close-Min($low, 60))/(Max($high, 60)-Min($low, 60)+1e-12)"
+    },
+    {
+      "catalog_name": "alpha158_IMAX5",
+      "factor_name": "IMAX5",
+      "category": "rolling_price",
+      "expression": "IdxMax($high, 5)/5"
+    },
+    {
+      "catalog_name": "alpha158_IMAX10",
+      "factor_name": "IMAX10",
+      "category": "rolling_price",
+      "expression": "IdxMax($high, 10)/10"
+    },
+    {
+      "catalog_name": "alpha158_IMAX20",
+      "factor_name": "IMAX20",
+      "category": "rolling_price",
+      "expression": "IdxMax($high, 20)/20"
+    },
+    {
+      "catalog_name": "alpha158_IMAX30",
+      "factor_name": "IMAX30",
+      "category": "rolling_price",
+      "expression": "IdxMax($high, 30)/30"
+    },
+    {
+      "catalog_name": "alpha158_IMAX60",
+      "factor_name": "IMAX60",
+      "category": "rolling_price",
+      "expression": "IdxMax($high, 60)/60"
+    },
+    {
+      "catalog_name": "alpha158_IMIN5",
+      "factor_name": "IMIN5",
+      "category": "rolling_price",
+      "expression": "IdxMin($low, 5)/5"
+    },
+    {
+      "catalog_name": "alpha158_IMIN10",
+      "factor_name": "IMIN10",
+      "category": "rolling_price",
+      "expression": "IdxMin($low, 10)/10"
+    },
+    {
+      "catalog_name": "alpha158_IMIN20",
+      "factor_name": "IMIN20",
+      "category": "rolling_price",
+      "expression": "IdxMin($low, 20)/20"
+    },
+    {
+      "catalog_name": "alpha158_IMIN30",
+      "factor_name": "IMIN30",
+      "category": "rolling_price",
+      "expression": "IdxMin($low, 30)/30"
+    },
+    {
+      "catalog_name": "alpha158_IMIN60",
+      "factor_name": "IMIN60",
+      "category": "rolling_price",
+      "expression": "IdxMin($low, 60)/60"
+    },
+    {
+      "catalog_name": "alpha158_IMXD5",
+      "factor_name": "IMXD5",
+      "category": "rolling_price",
+      "expression": "(IdxMax($high, 5)-IdxMin($low, 5))/5"
+    },
+    {
+      "catalog_name": "alpha158_IMXD10",
+      "factor_name": "IMXD10",
+      "category": "rolling_price",
+      "expression": "(IdxMax($high, 10)-IdxMin($low, 10))/10"
+    },
+    {
+      "catalog_name": "alpha158_IMXD20",
+      "factor_name": "IMXD20",
+      "category": "rolling_price",
+      "expression": "(IdxMax($high, 20)-IdxMin($low, 20))/20"
+    },
+    {
+      "catalog_name": "alpha158_IMXD30",
+      "factor_name": "IMXD30",
+      "category": "rolling_price",
+      "expression": "(IdxMax($high, 30)-IdxMin($low, 30))/30"
+    },
+    {
+      "catalog_name": "alpha158_IMXD60",
+      "factor_name": "IMXD60",
+      "category": "rolling_price",
+      "expression": "(IdxMax($high, 60)-IdxMin($low, 60))/60"
+    },
+    {
+      "catalog_name": "alpha158_CORR5",
+      "factor_name": "CORR5",
+      "category": "price_volume_correlation",
+      "expression": "Corr($close, Log($volume+1), 5)"
+    },
+    {
+      "catalog_name": "alpha158_CORR10",
+      "factor_name": "CORR10",
+      "category": "price_volume_correlation",
+      "expression": "Corr($close, Log($volume+1), 10)"
+    },
+    {
+      "catalog_name": "alpha158_CORR20",
+      "factor_name": "CORR20",
+      "category": "price_volume_correlation",
+      "expression": "Corr($close, Log($volume+1), 20)"
+    },
+    {
+      "catalog_name": "alpha158_CORR30",
+      "factor_name": "CORR30",
+      "category": "price_volume_correlation",
+      "expression": "Corr($close, Log($volume+1), 30)"
+    },
+    {
+      "catalog_name": "alpha158_CORR60",
+      "factor_name": "CORR60",
+      "category": "price_volume_correlation",
+      "expression": "Corr($close, Log($volume+1), 60)"
+    },
+    {
+      "catalog_name": "alpha158_CORD5",
+      "factor_name": "CORD5",
+      "category": "price_volume_correlation",
+      "expression": "Corr($close/Ref($close,1), Log($volume/Ref($volume, 1)+1), 5)"
+    },
+    {
+      "catalog_name": "alpha158_CORD10",
+      "factor_name": "CORD10",
+      "category": "price_volume_correlation",
+      "expression": "Corr($close/Ref($close,1), Log($volume/Ref($volume, 1)+1), 10)"
+    },
+    {
+      "catalog_name": "alpha158_CORD20",
+      "factor_name": "CORD20",
+      "category": "price_volume_correlation",
+      "expression": "Corr($close/Ref($close,1), Log($volume/Ref($volume, 1)+1), 20)"
+    },
+    {
+      "catalog_name": "alpha158_CORD30",
+      "factor_name": "CORD30",
+      "category": "price_volume_correlation",
+      "expression": "Corr($close/Ref($close,1), Log($volume/Ref($volume, 1)+1), 30)"
+    },
+    {
+      "catalog_name": "alpha158_CORD60",
+      "factor_name": "CORD60",
+      "category": "price_volume_correlation",
+      "expression": "Corr($close/Ref($close,1), Log($volume/Ref($volume, 1)+1), 60)"
+    },
+    {
+      "catalog_name": "alpha158_CNTP5",
+      "factor_name": "CNTP5",
+      "category": "price_momentum_balance",
+      "expression": "Mean($close>Ref($close, 1), 5)"
+    },
+    {
+      "catalog_name": "alpha158_CNTP10",
+      "factor_name": "CNTP10",
+      "category": "price_momentum_balance",
+      "expression": "Mean($close>Ref($close, 1), 10)"
+    },
+    {
+      "catalog_name": "alpha158_CNTP20",
+      "factor_name": "CNTP20",
+      "category": "price_momentum_balance",
+      "expression": "Mean($close>Ref($close, 1), 20)"
+    },
+    {
+      "catalog_name": "alpha158_CNTP30",
+      "factor_name": "CNTP30",
+      "category": "price_momentum_balance",
+      "expression": "Mean($close>Ref($close, 1), 30)"
+    },
+    {
+      "catalog_name": "alpha158_CNTP60",
+      "factor_name": "CNTP60",
+      "category": "price_momentum_balance",
+      "expression": "Mean($close>Ref($close, 1), 60)"
+    },
+    {
+      "catalog_name": "alpha158_CNTN5",
+      "factor_name": "CNTN5",
+      "category": "price_momentum_balance",
+      "expression": "Mean($close<Ref($close, 1), 5)"
+    },
+    {
+      "catalog_name": "alpha158_CNTN10",
+      "factor_name": "CNTN10",
+      "category": "price_momentum_balance",
+      "expression": "Mean($close<Ref($close, 1), 10)"
+    },
+    {
+      "catalog_name": "alpha158_CNTN20",
+      "factor_name": "CNTN20",
+      "category": "price_momentum_balance",
+      "expression": "Mean($close<Ref($close, 1), 20)"
+    },
+    {
+      "catalog_name": "alpha158_CNTN30",
+      "factor_name": "CNTN30",
+      "category": "price_momentum_balance",
+      "expression": "Mean($close<Ref($close, 1), 30)"
+    },
+    {
+      "catalog_name": "alpha158_CNTN60",
+      "factor_name": "CNTN60",
+      "category": "price_momentum_balance",
+      "expression": "Mean($close<Ref($close, 1), 60)"
+    },
+    {
+      "catalog_name": "alpha158_CNTD5",
+      "factor_name": "CNTD5",
+      "category": "price_momentum_balance",
+      "expression": "Mean($close>Ref($close, 1), 5)-Mean($close<Ref($close, 1), 5)"
+    },
+    {
+      "catalog_name": "alpha158_CNTD10",
+      "factor_name": "CNTD10",
+      "category": "price_momentum_balance",
+      "expression": "Mean($close>Ref($close, 1), 10)-Mean($close<Ref($close, 1), 10)"
+    },
+    {
+      "catalog_name": "alpha158_CNTD20",
+      "factor_name": "CNTD20",
+      "category": "price_momentum_balance",
+      "expression": "Mean($close>Ref($close, 1), 20)-Mean($close<Ref($close, 1), 20)"
+    },
+    {
+      "catalog_name": "alpha158_CNTD30",
+      "factor_name": "CNTD30",
+      "category": "price_momentum_balance",
+      "expression": "Mean($close>Ref($close, 1), 30)-Mean($close<Ref($close, 1), 30)"
+    },
+    {
+      "catalog_name": "alpha158_CNTD60",
+      "factor_name": "CNTD60",
+      "category": "price_momentum_balance",
+      "expression": "Mean($close>Ref($close, 1), 60)-Mean($close<Ref($close, 1), 60)"
+    },
+    {
+      "catalog_name": "alpha158_SUMP5",
+      "factor_name": "SUMP5",
+      "category": "price_momentum_balance",
+      "expression": "Sum(Greater($close-Ref($close, 1), 0), 5)/(Sum(Abs($close-Ref($close, 1)), 5)+1e-12)"
+    },
+    {
+      "catalog_name": "alpha158_SUMP10",
+      "factor_name": "SUMP10",
+      "category": "price_momentum_balance",
+      "expression": "Sum(Greater($close-Ref($close, 1), 0), 10)/(Sum(Abs($close-Ref($close, 1)), 10)+1e-12)"
+    },
+    {
+      "catalog_name": "alpha158_SUMP20",
+      "factor_name": "SUMP20",
+      "category": "price_momentum_balance",
+      "expression": "Sum(Greater($close-Ref($close, 1), 0), 20)/(Sum(Abs($close-Ref($close, 1)), 20)+1e-12)"
+    },
+    {
+      "catalog_name": "alpha158_SUMP30",
+      "factor_name": "SUMP30",
+      "category": "price_momentum_balance",
+      "expression": "Sum(Greater($close-Ref($close, 1), 0), 30)/(Sum(Abs($close-Ref($close, 1)), 30)+1e-12)"
+    },
+    {
+      "catalog_name": "alpha158_SUMP60",
+      "factor_name": "SUMP60",
+      "category": "price_momentum_balance",
+      "expression": "Sum(Greater($close-Ref($close, 1), 0), 60)/(Sum(Abs($close-Ref($close, 1)), 60)+1e-12)"
+    },
+    {
+      "catalog_name": "alpha158_SUMN5",
+      "factor_name": "SUMN5",
+      "category": "price_momentum_balance",
+      "expression": "Sum(Greater(Ref($close, 1)-$close, 0), 5)/(Sum(Abs($close-Ref($close, 1)), 5)+1e-12)"
+    },
+    {
+      "catalog_name": "alpha158_SUMN10",
+      "factor_name": "SUMN10",
+      "category": "price_momentum_balance",
+      "expression": "Sum(Greater(Ref($close, 1)-$close, 0), 10)/(Sum(Abs($close-Ref($close, 1)), 10)+1e-12)"
+    },
+    {
+      "catalog_name": "alpha158_SUMN20",
+      "factor_name": "SUMN20",
+      "category": "price_momentum_balance",
+      "expression": "Sum(Greater(Ref($close, 1)-$close, 0), 20)/(Sum(Abs($close-Ref($close, 1)), 20)+1e-12)"
+    },
+    {
+      "catalog_name": "alpha158_SUMN30",
+      "factor_name": "SUMN30",
+      "category": "price_momentum_balance",
+      "expression": "Sum(Greater(Ref($close, 1)-$close, 0), 30)/(Sum(Abs($close-Ref($close, 1)), 30)+1e-12)"
+    },
+    {
+      "catalog_name": "alpha158_SUMN60",
+      "factor_name": "SUMN60",
+      "category": "price_momentum_balance",
+      "expression": "Sum(Greater(Ref($close, 1)-$close, 0), 60)/(Sum(Abs($close-Ref($close, 1)), 60)+1e-12)"
+    },
+    {
+      "catalog_name": "alpha158_SUMD5",
+      "factor_name": "SUMD5",
+      "category": "price_momentum_balance",
+      "expression": "(Sum(Greater($close-Ref($close, 1), 0), 5)-Sum(Greater(Ref($close, 1)-$close, 0), 5))/(Sum(Abs($close-Ref($close, 1)), 5)+1e-12)"
+    },
+    {
+      "catalog_name": "alpha158_SUMD10",
+      "factor_name": "SUMD10",
+      "category": "price_momentum_balance",
+      "expression": "(Sum(Greater($close-Ref($close, 1), 0), 10)-Sum(Greater(Ref($close, 1)-$close, 0), 10))/(Sum(Abs($close-Ref($close, 1)), 10)+1e-12)"
+    },
+    {
+      "catalog_name": "alpha158_SUMD20",
+      "factor_name": "SUMD20",
+      "category": "price_momentum_balance",
+      "expression": "(Sum(Greater($close-Ref($close, 1), 0), 20)-Sum(Greater(Ref($close, 1)-$close, 0), 20))/(Sum(Abs($close-Ref($close, 1)), 20)+1e-12)"
+    },
+    {
+      "catalog_name": "alpha158_SUMD30",
+      "factor_name": "SUMD30",
+      "category": "price_momentum_balance",
+      "expression": "(Sum(Greater($close-Ref($close, 1), 0), 30)-Sum(Greater(Ref($close, 1)-$close, 0), 30))/(Sum(Abs($close-Ref($close, 1)), 30)+1e-12)"
+    },
+    {
+      "catalog_name": "alpha158_SUMD60",
+      "factor_name": "SUMD60",
+      "category": "price_momentum_balance",
+      "expression": "(Sum(Greater($close-Ref($close, 1), 0), 60)-Sum(Greater(Ref($close, 1)-$close, 0), 60))/(Sum(Abs($close-Ref($close, 1)), 60)+1e-12)"
+    },
+    {
+      "catalog_name": "alpha158_VMA5",
+      "factor_name": "VMA5",
+      "category": "volume_liquidity",
+      "expression": "Mean($volume, 5)/($volume+1e-12)"
+    },
+    {
+      "catalog_name": "alpha158_VMA10",
+      "factor_name": "VMA10",
+      "category": "volume_liquidity",
+      "expression": "Mean($volume, 10)/($volume+1e-12)"
+    },
+    {
+      "catalog_name": "alpha158_VMA20",
+      "factor_name": "VMA20",
+      "category": "volume_liquidity",
+      "expression": "Mean($volume, 20)/($volume+1e-12)"
+    },
+    {
+      "catalog_name": "alpha158_VMA30",
+      "factor_name": "VMA30",
+      "category": "volume_liquidity",
+      "expression": "Mean($volume, 30)/($volume+1e-12)"
+    },
+    {
+      "catalog_name": "alpha158_VMA60",
+      "factor_name": "VMA60",
+      "category": "volume_liquidity",
+      "expression": "Mean($volume, 60)/($volume+1e-12)"
+    },
+    {
+      "catalog_name": "alpha158_VSTD5",
+      "factor_name": "VSTD5",
+      "category": "volume_liquidity",
+      "expression": "Std($volume, 5)/($volume+1e-12)"
+    },
+    {
+      "catalog_name": "alpha158_VSTD10",
+      "factor_name": "VSTD10",
+      "category": "volume_liquidity",
+      "expression": "Std($volume, 10)/($volume+1e-12)"
+    },
+    {
+      "catalog_name": "alpha158_VSTD20",
+      "factor_name": "VSTD20",
+      "category": "volume_liquidity",
+      "expression": "Std($volume, 20)/($volume+1e-12)"
+    },
+    {
+      "catalog_name": "alpha158_VSTD30",
+      "factor_name": "VSTD30",
+      "category": "volume_liquidity",
+      "expression": "Std($volume, 30)/($volume+1e-12)"
+    },
+    {
+      "catalog_name": "alpha158_VSTD60",
+      "factor_name": "VSTD60",
+      "category": "volume_liquidity",
+      "expression": "Std($volume, 60)/($volume+1e-12)"
+    },
+    {
+      "catalog_name": "alpha158_WVMA5",
+      "factor_name": "WVMA5",
+      "category": "volume_liquidity",
+      "expression": "Std(Abs($close/Ref($close, 1)-1)*$volume, 5)/(Mean(Abs($close/Ref($close, 1)-1)*$volume, 5)+1e-12)"
+    },
+    {
+      "catalog_name": "alpha158_WVMA10",
+      "factor_name": "WVMA10",
+      "category": "volume_liquidity",
+      "expression": "Std(Abs($close/Ref($close, 1)-1)*$volume, 10)/(Mean(Abs($close/Ref($close, 1)-1)*$volume, 10)+1e-12)"
+    },
+    {
+      "catalog_name": "alpha158_WVMA20",
+      "factor_name": "WVMA20",
+      "category": "volume_liquidity",
+      "expression": "Std(Abs($close/Ref($close, 1)-1)*$volume, 20)/(Mean(Abs($close/Ref($close, 1)-1)*$volume, 20)+1e-12)"
+    },
+    {
+      "catalog_name": "alpha158_WVMA30",
+      "factor_name": "WVMA30",
+      "category": "volume_liquidity",
+      "expression": "Std(Abs($close/Ref($close, 1)-1)*$volume, 30)/(Mean(Abs($close/Ref($close, 1)-1)*$volume, 30)+1e-12)"
+    },
+    {
+      "catalog_name": "alpha158_WVMA60",
+      "factor_name": "WVMA60",
+      "category": "volume_liquidity",
+      "expression": "Std(Abs($close/Ref($close, 1)-1)*$volume, 60)/(Mean(Abs($close/Ref($close, 1)-1)*$volume, 60)+1e-12)"
+    },
+    {
+      "catalog_name": "alpha158_VSUMP5",
+      "factor_name": "VSUMP5",
+      "category": "volume_liquidity",
+      "expression": "Sum(Greater($volume-Ref($volume, 1), 0), 5)/(Sum(Abs($volume-Ref($volume, 1)), 5)+1e-12)"
+    },
+    {
+      "catalog_name": "alpha158_VSUMP10",
+      "factor_name": "VSUMP10",
+      "category": "volume_liquidity",
+      "expression": "Sum(Greater($volume-Ref($volume, 1), 0), 10)/(Sum(Abs($volume-Ref($volume, 1)), 10)+1e-12)"
+    },
+    {
+      "catalog_name": "alpha158_VSUMP20",
+      "factor_name": "VSUMP20",
+      "category": "volume_liquidity",
+      "expression": "Sum(Greater($volume-Ref($volume, 1), 0), 20)/(Sum(Abs($volume-Ref($volume, 1)), 20)+1e-12)"
+    },
+    {
+      "catalog_name": "alpha158_VSUMP30",
+      "factor_name": "VSUMP30",
+      "category": "volume_liquidity",
+      "expression": "Sum(Greater($volume-Ref($volume, 1), 0), 30)/(Sum(Abs($volume-Ref($volume, 1)), 30)+1e-12)"
+    },
+    {
+      "catalog_name": "alpha158_VSUMP60",
+      "factor_name": "VSUMP60",
+      "category": "volume_liquidity",
+      "expression": "Sum(Greater($volume-Ref($volume, 1), 0), 60)/(Sum(Abs($volume-Ref($volume, 1)), 60)+1e-12)"
+    },
+    {
+      "catalog_name": "alpha158_VSUMN5",
+      "factor_name": "VSUMN5",
+      "category": "volume_liquidity",
+      "expression": "Sum(Greater(Ref($volume, 1)-$volume, 0), 5)/(Sum(Abs($volume-Ref($volume, 1)), 5)+1e-12)"
+    },
+    {
+      "catalog_name": "alpha158_VSUMN10",
+      "factor_name": "VSUMN10",
+      "category": "volume_liquidity",
+      "expression": "Sum(Greater(Ref($volume, 1)-$volume, 0), 10)/(Sum(Abs($volume-Ref($volume, 1)), 10)+1e-12)"
+    },
+    {
+      "catalog_name": "alpha158_VSUMN20",
+      "factor_name": "VSUMN20",
+      "category": "volume_liquidity",
+      "expression": "Sum(Greater(Ref($volume, 1)-$volume, 0), 20)/(Sum(Abs($volume-Ref($volume, 1)), 20)+1e-12)"
+    },
+    {
+      "catalog_name": "alpha158_VSUMN30",
+      "factor_name": "VSUMN30",
+      "category": "volume_liquidity",
+      "expression": "Sum(Greater(Ref($volume, 1)-$volume, 0), 30)/(Sum(Abs($volume-Ref($volume, 1)), 30)+1e-12)"
+    },
+    {
+      "catalog_name": "alpha158_VSUMN60",
+      "factor_name": "VSUMN60",
+      "category": "volume_liquidity",
+      "expression": "Sum(Greater(Ref($volume, 1)-$volume, 0), 60)/(Sum(Abs($volume-Ref($volume, 1)), 60)+1e-12)"
+    },
+    {
+      "catalog_name": "alpha158_VSUMD5",
+      "factor_name": "VSUMD5",
+      "category": "volume_liquidity",
+      "expression": "(Sum(Greater($volume-Ref($volume, 1), 0), 5)-Sum(Greater(Ref($volume, 1)-$volume, 0), 5))/(Sum(Abs($volume-Ref($volume, 1)), 5)+1e-12)"
+    },
+    {
+      "catalog_name": "alpha158_VSUMD10",
+      "factor_name": "VSUMD10",
+      "category": "volume_liquidity",
+      "expression": "(Sum(Greater($volume-Ref($volume, 1), 0), 10)-Sum(Greater(Ref($volume, 1)-$volume, 0), 10))/(Sum(Abs($volume-Ref($volume, 1)), 10)+1e-12)"
+    },
+    {
+      "catalog_name": "alpha158_VSUMD20",
+      "factor_name": "VSUMD20",
+      "category": "volume_liquidity",
+      "expression": "(Sum(Greater($volume-Ref($volume, 1), 0), 20)-Sum(Greater(Ref($volume, 1)-$volume, 0), 20))/(Sum(Abs($volume-Ref($volume, 1)), 20)+1e-12)"
+    },
+    {
+      "catalog_name": "alpha158_VSUMD30",
+      "factor_name": "VSUMD30",
+      "category": "volume_liquidity",
+      "expression": "(Sum(Greater($volume-Ref($volume, 1), 0), 30)-Sum(Greater(Ref($volume, 1)-$volume, 0), 30))/(Sum(Abs($volume-Ref($volume, 1)), 30)+1e-12)"
+    },
+    {
+      "catalog_name": "alpha158_VSUMD60",
+      "factor_name": "VSUMD60",
+      "category": "volume_liquidity",
+      "expression": "(Sum(Greater($volume-Ref($volume, 1), 0), 60)-Sum(Greater(Ref($volume, 1)-$volume, 0), 60))/(Sum(Abs($volume-Ref($volume, 1)), 60)+1e-12)"
+    }
+  ]
+}

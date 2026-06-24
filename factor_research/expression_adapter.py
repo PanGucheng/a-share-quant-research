@@ -24,6 +24,7 @@ class ExpressionFrameConfig:
     stages: tuple[str, ...] = ("alpha158_first_batch_adapter_pending",)
     names: tuple[str, ...] = ()
     max_factors: int | None = None
+    batch_size: int | None = None
     refresh: bool = False
 
 
@@ -84,6 +85,31 @@ def expression_frame_cache_path(config: ExpressionFrameConfig, expression_table:
     return config.output_dir / f"factor_frame_{cache_digest(payload)}.pkl"
 
 
+def expression_chunk_cache_path(config: ExpressionFrameConfig, expression_table: pd.DataFrame, chunk_index: int) -> Path:
+    payload = {
+        "provider_uri": str(config.provider_uri).replace("\\", "/"),
+        "market": config.market,
+        "start": config.start,
+        "end": config.end,
+        "catalog_path": config.catalog_path.as_posix(),
+        "inventory_path": config.inventory_path.as_posix(),
+        "catalog_names": expression_table["catalog_name"].tolist(),
+        "expressions": expression_table["expression"].tolist(),
+        "chunk_index": chunk_index,
+        "version": "chunk_v1",
+    }
+    return config.output_dir / f"factor_frame_chunk_{chunk_index:03d}_{cache_digest(payload)}.pkl"
+
+
+def normalize_qlib_expression_output(data: pd.DataFrame, expression_table: pd.DataFrame) -> pd.DataFrame:
+    expressions = expression_table["expression"].tolist()
+    names = expression_table["catalog_name"].tolist()
+    frame = data.rename(columns=dict(zip(expressions, names))).reset_index()
+    frame["instrument"] = frame["instrument"].astype(str).str.upper()
+    frame = frame.sort_values(["instrument", "datetime"]).reset_index(drop=True)
+    return frame[["datetime", "instrument", *names]]
+
+
 def compute_qlib_expression_frame(config: ExpressionFrameConfig, expression_table: pd.DataFrame) -> pd.DataFrame:
     import qlib
     from qlib.config import C, REG_CN
@@ -92,19 +118,37 @@ def compute_qlib_expression_frame(config: ExpressionFrameConfig, expression_tabl
     qlib.init(provider_uri=config.provider_uri, region=REG_CN)
     C.kernels = 1
     C.joblib_backend = "sequential"
-    expressions = expression_table["expression"].tolist()
+    instruments = D.instruments(config.market)
+    batch_size = config.batch_size or len(expression_table)
+    batch_size = max(1, int(batch_size))
+    total_chunks = (len(expression_table) + batch_size - 1) // batch_size
+    chunks: list[pd.DataFrame] = []
+    for chunk_index, start in enumerate(range(0, len(expression_table), batch_size), start=1):
+        chunk_table = expression_table.iloc[start : start + batch_size].reset_index(drop=True)
+        chunk_cache = expression_chunk_cache_path(config, chunk_table, chunk_index)
+        if chunk_cache.exists() and not config.refresh:
+            print(f"Loading expression chunk {chunk_index}/{total_chunks}: {chunk_cache.name}", flush=True)
+            chunk_frame = pd.read_pickle(chunk_cache)
+        else:
+            names = ", ".join(chunk_table["catalog_name"].tolist())
+            print(f"Computing expression chunk {chunk_index}/{total_chunks}: {names}", flush=True)
+            data = D.features(
+                instruments,
+                chunk_table["expression"].tolist(),
+                start_time=config.start,
+                end_time=config.end,
+                freq="day",
+            )
+            chunk_frame = normalize_qlib_expression_output(data, chunk_table)
+            chunk_frame.to_pickle(chunk_cache)
+            print(f"Wrote expression chunk {chunk_index}/{total_chunks}: rows={len(chunk_frame):,}", flush=True)
+        chunks.append(chunk_frame)
+    result = chunks[0]
+    for chunk in chunks[1:]:
+        result = result.merge(chunk, on=["datetime", "instrument"], how="outer", validate="one_to_one")
     names = expression_table["catalog_name"].tolist()
-    data = D.features(
-        D.instruments(config.market),
-        expressions,
-        start_time=config.start,
-        end_time=config.end,
-        freq="day",
-    )
-    frame = data.rename(columns=dict(zip(expressions, names))).reset_index()
-    frame["instrument"] = frame["instrument"].astype(str).str.upper()
-    frame = frame.sort_values(["instrument", "datetime"]).reset_index(drop=True)
-    return frame[["datetime", "instrument", *names]]
+    result = result.sort_values(["instrument", "datetime"]).reset_index(drop=True)
+    return result[["datetime", "instrument", *names]]
 
 
 def summarize_expression_frame(frame: pd.DataFrame, factor_columns: list[str]) -> pd.DataFrame:

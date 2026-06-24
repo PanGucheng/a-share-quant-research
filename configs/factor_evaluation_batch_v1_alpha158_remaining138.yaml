@@ -1,0 +1,23 @@
+base_config: "configs/factor_evaluation_v4_alpha158_remaining_batch_base.yaml"
+catalog: "outputs/factor_catalog_alpha158_v1/alpha158_catalog_remaining138_pending.yaml"
+python: "E:/anaconda_envs/qlib_env/python.exe"
+output_root: "outputs/factor_evaluation_batch_v1/alpha158_remaining138"
+
+selection:
+  enabled_only: false
+  runnable_only: false
+  allow_external_specs: true
+  stages:
+    - "alpha158_full_remaining_pending"
+  categories: []
+  sources: []
+  names: []
+  max_factors:
+
+execution:
+  allow_non_runnable_external: true
+
+batching:
+  batch_size: 10
+  resume: true
+  max_batches:

@@ -84,6 +84,17 @@ outputs/factor_evaluation_batch_v1/*
 !outputs/factor_evaluation_batch_v1/alpha158_first20/generated_configs/*.yaml
 outputs/factor_evaluation_batch_v1/alpha158_first20/logs/
 outputs/factor_evaluation_batch_v1/alpha158_first20/runs/
+!outputs/factor_evaluation_batch_v1/alpha158_remaining138/
+!outputs/factor_evaluation_batch_v1/alpha158_remaining138/batch_manifest.csv
+!outputs/factor_evaluation_batch_v1/alpha158_remaining138/batch_output_summary.csv
+!outputs/factor_evaluation_batch_v1/alpha158_remaining138/factor_catalog_snapshot.csv
+!outputs/factor_evaluation_batch_v1/alpha158_remaining138/factor_catalog_validation.csv
+!outputs/factor_evaluation_batch_v1/alpha158_remaining138/factor_evaluation_batch_v1_report.md
+!outputs/factor_evaluation_batch_v1/alpha158_remaining138/selected_factor_catalog.csv
+!outputs/factor_evaluation_batch_v1/alpha158_remaining138/generated_configs/
+!outputs/factor_evaluation_batch_v1/alpha158_remaining138/generated_configs/*.yaml
+outputs/factor_evaluation_batch_v1/alpha158_remaining138/logs/
+outputs/factor_evaluation_batch_v1/alpha158_remaining138/runs/
 
 # Local Python/cache noise
 __pycache__/

@@ -74,6 +74,8 @@ def apply_cli_overrides(config: dict, args: argparse.Namespace) -> dict:
     batching = dict(result.get("batching", {}))
     if args.batch_size is not None:
         batching["batch_size"] = args.batch_size
+    if args.max_batches is not None:
+        batching["max_batches"] = args.max_batches
     result["batching"] = batching
     if args.output_root is not None:
         result["output_root"] = str(args.output_root)
@@ -116,6 +118,9 @@ def selected_factor_names(config: dict, catalog_path: Path, output_root: Path) -
 
 def assert_runnable_selection_for_execution(config: dict, catalog_path: Path) -> None:
     selection = config.get("selection", {})
+    execution = config.get("execution", {})
+    allow_non_runnable_external = bool(execution.get("allow_non_runnable_external", False))
+    allow_external_specs = bool(selection.get("allow_external_specs", False))
     entries = load_factor_catalog(catalog_path)
     selected = select_entries(
         entries,
@@ -127,7 +132,17 @@ def assert_runnable_selection_for_execution(config: dict, catalog_path: Path) ->
         names=selection.get("names") or None,
         max_factors=selection.get("max_factors"),
     )
-    blocked = [entry.name for entry in selected if not entry.runnable]
+    blocked = []
+    for entry in selected:
+        if entry.runnable:
+            continue
+        if (
+            allow_non_runnable_external
+            and allow_external_specs
+            and entry.compute_adapter != "factor_research.factor_library.add_basic_factors"
+        ):
+            continue
+        blocked.append(entry.name)
     if blocked:
         raise ValueError(
             "Non-runnable catalog entries can only be planned with --dry-run. "
@@ -305,6 +320,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--stages", type=parse_csv, help="Comma-separated catalog stages overriding config selection.")
     parser.add_argument("--max-factors", type=int, help="Limit selected factors.")
     parser.add_argument("--batch-size", type=int, help="Override batch size.")
+    parser.add_argument("--max-batches", type=int, help="Limit generated/executed batches.")
     parser.add_argument("--output-root", type=Path, help="Override output root.")
     return parser
 
