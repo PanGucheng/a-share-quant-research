@@ -349,15 +349,16 @@ outputs/factor_catalog_alpha158_v1/alpha158_catalog_first20_runnable.yaml
 
 大体积的 `factor_frame.pkl` 和逐 batch 明细运行目录已被 `.gitignore` 排除，Git 只保留 compact manifest、summary、validation report 和 metric index。
 
-## Qlib Alpha158 全量扩张
+## Qlib Alpha158 全量扩张与筛选输入
 
-Alpha158 全量扩张阶段已经启动。当前不重复评价已完成的 first20，而是复用 first20 结果，只补跑 remaining138。
+Alpha158 全量评价阶段已经完成。当前不重复评价已完成的 first20，而是复用 first20 结果，并将 remaining138 的 batch 评价结果合并成 full Alpha158 筛选输入。
 
 ```powershell
 E:\anaconda_envs\qlib_env\python.exe scripts\prepare_alpha158_full_stage_catalogs_v1.py
 E:\anaconda_envs\qlib_env\python.exe scripts\build_alpha158_expression_frame_v1.py --config configs\alpha158_expression_adapter_full_v1.yaml
 E:\anaconda_envs\qlib_env\python.exe scripts\validate_alpha158_expression_frame_v1.py --config configs\alpha158_expression_adapter_full_v1.yaml
 E:\anaconda_envs\qlib_env\python.exe scripts\run_factor_evaluation_batch_v1.py --config configs\factor_evaluation_batch_v1_alpha158_remaining138.yaml --max-batches 1
+E:\anaconda_envs\qlib_env\python.exe scripts\run_alpha158_screening_input_v1.py --config configs\factor_screening_alpha158_full_v1.yaml
 ```
 
 当前进展：
@@ -368,6 +369,17 @@ remaining138 batch：13 个 pass，1 个 skipped_existing
 remaining138 strict runnable：135 个
 remaining138 holdout：3 个
 full strict runnable catalog：155 个因子
+full screening input：158 行
+strict_screening_input：155 个因子
+screening holdout：3 个因子
+```
+
+关键输出：
+
+```text
+outputs/factor_screening_alpha158_v1/full158/alpha158_factor_screening_input.csv
+outputs/factor_screening_alpha158_v1/full158/alpha158_full_screening_input_report.md
+outputs/factor_screening_alpha158_v1/full158/alpha158_factor_correlation_top_pairs.csv
 ```
 
 ## 当前因子研究结论
@@ -422,6 +434,7 @@ docs/ALPHA158_CATALOG_AUDIT_V1.md
 docs/ALPHA158_EXPRESSION_EVALUATION_STAGE_PLAN.md
 docs/ALPHA158_EXPRESSION_ADAPTER_V1.md
 docs/ALPHA158_FULL_EVALUATION_STAGE_PLAN.md
+docs/ALPHA158_FULL_SCREENING_INPUT_V1.md
 docs/STEP_5_FACTOR_RESEARCH_AND_MODEL_PLAN.md
 docs/PROJECT_CONTEXT_SUMMARY.md
 ```

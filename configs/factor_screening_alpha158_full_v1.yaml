@@ -1,0 +1,23 @@
+first20_output_dir: "outputs/factor_evaluation_v4/alpha158_first20_smoke"
+first20_metric_index: "outputs/factor_evaluation_v4/alpha158_first20_smoke/alpha158_first20_metric_index.csv"
+
+remaining138_batch_root: "outputs/factor_evaluation_batch_v1/alpha158_remaining138"
+remaining138_metric_index: "outputs/factor_evaluation_batch_v1/alpha158_remaining138/alpha158_remaining138_metric_index.csv"
+
+all_catalog: "outputs/factor_catalog_alpha158_v1/alpha158_catalog_all.yaml"
+runnable_catalog: "outputs/factor_catalog_alpha158_v1/alpha158_catalog_full158_runnable.yaml"
+holdout_catalog: "outputs/factor_catalog_alpha158_v1/alpha158_catalog_remaining138_holdout.yaml"
+promotion_audit: "outputs/factor_catalog_alpha158_v1/alpha158_remaining138_promotion_audit.csv"
+
+expression_summary: "outputs/alpha158_expression_frame_v1/full158_main_research/expression_frame_summary.csv"
+expression_validation_coverage: "outputs/alpha158_expression_frame_v1/full158_main_research/validation_factor_coverage.csv"
+factor_frame: "outputs/alpha158_expression_frame_v1/full158_main_research/factor_frame.pkl"
+
+output_dir: "outputs/factor_screening_alpha158_v1/full158"
+
+correlation:
+  enabled: true
+  method: "daily_cross_section_spearman_mean"
+  max_dates: 120
+  min_instruments: 100
+  top_pairs: 100

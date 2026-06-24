@@ -178,10 +178,33 @@ outputs/factor_catalog_alpha158_v1/alpha158_remaining138_promotion_audit.csv
 outputs/factor_catalog_alpha158_v1/alpha158_catalog_full158_runnable.yaml
 ```
 
-下一步：
+筛选输入层已完成：
 
 ```powershell
-E:\anaconda_envs\qlib_env\python.exe scripts\summarize_alpha158_remaining138.py
+E:\anaconda_envs\qlib_env\python.exe scripts\run_alpha158_screening_input_v1.py --config configs\factor_screening_alpha158_full_v1.yaml
 ```
 
-后续应进入 full Alpha158 的筛选层：合并 first20 与 remaining138 的 metric index，保留 holdout 标记，不生成主观综合分，先做相关性、覆盖率、缺失率、单调性和多评价体系共识看板。
+结果：
+
+```text
+full screening input rows: 158
+strict_screening_input: 155
+holdout: 3
+metric index rows: 33,148
+IC summary rows: 948
+quantile return summary rows: 632
+turnover summary rows: 624
+context IC summary rows: 1,264
+context return summary rows: 5,056
+correlation used dates: 120
+```
+
+输出：
+
+```text
+outputs/factor_screening_alpha158_v1/full158/alpha158_factor_screening_input.csv
+outputs/factor_screening_alpha158_v1/full158/alpha158_full_screening_input_report.md
+docs/ALPHA158_FULL_SCREENING_INPUT_V1.md
+```
+
+后续应进入 full Alpha158 的 judgement layer：继续保留开源评价原始结果，不生成主观综合分，先做候选分层、冗余簇、换手和稳定性标记，再决定哪些因子进入候选池冻结。

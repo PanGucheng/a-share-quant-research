@@ -1859,3 +1859,72 @@ holdout: alpha158_CNTN5, alpha158_IMAX5, alpha158_RANK5
 - 保留 holdout 标记，不把 Alphalens turnover 缺失的 3 个因子混入 strict runnable 池。
 - 建设筛选看板：覆盖率、缺失率、IC/Rank IC/ICIR、分组收益、换手率、相关性、单调性和多体系共识。
 - 在 full Alpha158 工具体系稳定后，再考虑 `ta` 和 Alpha101 来源扩展。
+
+## 43. V3.11：Alpha158 全量筛选输入层
+
+状态：已完成。
+
+阶段文档：
+
+```text
+docs/ALPHA158_FULL_SCREENING_INPUT_V1.md
+```
+
+新增文件：
+
+```text
+configs/factor_screening_alpha158_full_v1.yaml
+factor_research/alpha158_screening_input.py
+scripts/run_alpha158_screening_input_v1.py
+```
+
+运行命令：
+
+```powershell
+E:\anaconda_envs\qlib_env\python.exe scripts\run_alpha158_screening_input_v1.py --config configs\factor_screening_alpha158_full_v1.yaml
+```
+
+关键输出：
+
+```text
+outputs/factor_screening_alpha158_v1/full158/alpha158_factor_screening_input.csv
+outputs/factor_screening_alpha158_v1/full158/alpha158_full_screening_input_report.md
+outputs/factor_screening_alpha158_v1/full158/alpha158_factor_correlation_top_pairs.csv
+```
+
+完成结果：
+
+```text
+factor board rows: 158
+strict_screening_input: 155
+holdout: 3
+full metric index rows: 33,148
+IC summary rows: 948
+quantile return summary rows: 632
+turnover summary rows: 624
+rank autocorrelation summary rows: 474
+context IC summary rows: 1,264
+context return summary rows: 5,056
+correlation used dates: 120
+```
+
+本阶段新增能力：
+
+- 合并 first20 与 remaining138 的 metric index。
+- 保留 Alphalens Reloaded、jqfactor_analyzer、Qlib eval 三套评价体系状态。
+- 从开源输出中抽取 Rank IC、ICIR、分组收益、换手率和 rank autocorrelation。
+- 从既有 context/tradability-aware 输出中抽取分组 IC 与分组收益。
+- 从 full158 expression frame 计算每日横截面 Spearman 因子相关性，标记最强相关因子和 Top pairs。
+- 将 `alpha158_CNTN5`、`alpha158_IMAX5`、`alpha158_RANK5` 继续保留为 holdout。
+
+边界：
+
+- 不新增综合评分。
+- 不把 holdout 因子混入 strict screening input。
+- 不训练模型，不做实盘，不改 Qlib baseline。
+
+下一步：
+
+- 在 `alpha158_factor_screening_input.csv` 之上建设 judgement layer。
+- 先输出候选分层和冗余簇，而不是立刻扩张更多因子。
+- 等筛选层可解释且稳定后，再启动 `ta` 和 Alpha101 来源审计与批量接入。

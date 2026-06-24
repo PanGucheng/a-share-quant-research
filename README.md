@@ -357,16 +357,18 @@ outputs/factor_catalog_alpha158_v1/alpha158_catalog_first20_runnable.yaml
 The large `factor_frame.pkl` and per-batch detailed runtime outputs are ignored;
 Git keeps compact manifests, summaries, validation reports, and metric indexes.
 
-## Qlib Alpha158 Full Expansion
+## Qlib Alpha158 Full Expansion And Screening Input
 
-The full Alpha158 expansion is now in progress. The project reuses the first20
-results and evaluates only the remaining 138 factors.
+The full Alpha158 evaluation stage is complete. The project reuses the first20
+results, evaluates only the remaining 138 factors, and then builds a full
+Alpha158 screening input layer.
 
 ```powershell
 E:\anaconda_envs\qlib_env\python.exe scripts\prepare_alpha158_full_stage_catalogs_v1.py
 E:\anaconda_envs\qlib_env\python.exe scripts\build_alpha158_expression_frame_v1.py --config configs\alpha158_expression_adapter_full_v1.yaml
 E:\anaconda_envs\qlib_env\python.exe scripts\validate_alpha158_expression_frame_v1.py --config configs\alpha158_expression_adapter_full_v1.yaml
 E:\anaconda_envs\qlib_env\python.exe scripts\run_factor_evaluation_batch_v1.py --config configs\factor_evaluation_batch_v1_alpha158_remaining138.yaml --max-batches 1
+E:\anaconda_envs\qlib_env\python.exe scripts\run_alpha158_screening_input_v1.py --config configs\factor_screening_alpha158_full_v1.yaml
 ```
 
 Current full-stage status:
@@ -377,6 +379,17 @@ remaining138 batch status: 13 pass, 1 skipped_existing
 remaining138 strict runnable: 135
 remaining138 holdout: 3
 full strict runnable catalog: 155 factors
+full screening input: 158 rows
+strict_screening_input: 155 factors
+screening holdout: 3 factors
+```
+
+Key outputs:
+
+```text
+outputs/factor_screening_alpha158_v1/full158/alpha158_factor_screening_input.csv
+outputs/factor_screening_alpha158_v1/full158/alpha158_full_screening_input_report.md
+outputs/factor_screening_alpha158_v1/full158/alpha158_factor_correlation_top_pairs.csv
 ```
 
 ## Open-Source References
@@ -424,6 +437,7 @@ docs/ALPHA158_CATALOG_AUDIT_V1.md
 docs/ALPHA158_EXPRESSION_EVALUATION_STAGE_PLAN.md
 docs/ALPHA158_EXPRESSION_ADAPTER_V1.md
 docs/ALPHA158_FULL_EVALUATION_STAGE_PLAN.md
+docs/ALPHA158_FULL_SCREENING_INPUT_V1.md
 docs/STEP_5_FACTOR_RESEARCH_AND_MODEL_PLAN.md
 docs/PROJECT_CONTEXT_SUMMARY.md
 ```
