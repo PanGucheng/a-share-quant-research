@@ -364,8 +364,10 @@ E:\anaconda_envs\qlib_env\python.exe scripts\run_factor_evaluation_batch_v1.py -
 
 ```text
 full158 expression frame：通过，1,603,860 行，158 个因子
-remaining138 dry-run：14 个计划 batch
-remaining138 batch_001：通过
+remaining138 batch：13 个 pass，1 个 skipped_existing
+remaining138 strict runnable：135 个
+remaining138 holdout：3 个
+full strict runnable catalog：155 个因子
 ```
 
 ## 当前因子研究结论

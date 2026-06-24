@@ -1,0 +1,70 @@
+version: 1
+updated: '2026-06-24'
+policy:
+  purpose: Alpha158 remaining138 holdout catalog.
+  principle:
+  - Entries are promoted only after expression validation, V4 batch evaluation, and
+    context validation pass.
+  - Metric definitions remain in the external evaluator outputs.
+  - This catalog marks factors as runnable for research workflows, not approved for
+    trading or model training.
+  source_catalogs:
+  - E:/qlib_prj/qlib_baseline/outputs/factor_catalog_alpha158_v1/alpha158_catalog_remaining138_pending.yaml
+factors:
+- name: alpha158_RANK5
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_remaining138_v4_batch_holdout
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_frame_v1
+  registry_name: alpha158_RANK5
+  notes: 'Qlib Alpha158 expression: Rank($close, 5)'
+- name: alpha158_IMAX5
+  category: alpha158_rolling_price
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $high
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_remaining138_v4_batch_holdout
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_frame_v1
+  registry_name: alpha158_IMAX5
+  notes: 'Qlib Alpha158 expression: IdxMax($high, 5)/5'
+- name: alpha158_CNTN5
+  category: alpha158_price_momentum_balance
+  source_project: qlib_alpha158
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha158DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha158_remaining138_v4_batch_holdout
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_frame_v1
+  registry_name: alpha158_CNTN5
+  notes: 'Qlib Alpha158 expression: Mean($close<Ref($close, 1), 5)'

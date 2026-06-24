@@ -79,10 +79,10 @@ outputs/factor_evaluation_batch_v1/alpha158_remaining138/
 - [x] full158 expression validation 通过。
 - [x] remaining138 batch dry-run 生成 14 个 batch，每批最多 10 个因子。
 - [x] remaining138 batch_001 真实 smoke 通过。
-- [ ] remaining138 真实 batch 可断点续跑。
-- [ ] 每个完成 batch 的 context validator 无 failed。
-- [ ] 通过评价后再生成 remaining138 runnable catalog。
-- [ ] full158 汇总只合并原始评价结果，不生成综合分。
+- [x] remaining138 真实 batch 可断点续跑。
+- [x] 每个完成 batch 的 context validator 无 failed。
+- [x] 通过评价后再生成 remaining138 runnable catalog。
+- [x] full158 汇总只合并原始评价结果，不生成综合分。
 
 ## 7. 本阶段风险
 
@@ -112,6 +112,14 @@ batch_001 elapsed: 912.061 seconds
 batch_001 open-source metric rows: 180
 batch_001 context metric rows: 1,920
 batch_001 context validation: pass
+remaining138 full batch status: 13 pass, 1 skipped_existing
+remaining138 open-source metric rows: 2,484
+remaining138 context metric rows: 26,464
+remaining138 combined metric index rows: 28,948
+remaining138 context validation: pass for all 14 batches
+remaining138 strict runnable: 135
+remaining138 holdout: 3
+full strict runnable catalog: 155 factors
 ```
 
 工程调整：
@@ -143,10 +151,37 @@ known jqfactor partial steps:
   factor_returns: 10
 ```
 
+最终晋升结果：
+
+```text
+remaining138 promoted:
+  135 factors -> outputs/factor_catalog_alpha158_v1/alpha158_catalog_remaining138_runnable.yaml
+
+remaining138 holdout:
+  alpha158_CNTN5
+  alpha158_IMAX5
+  alpha158_RANK5
+
+holdout reason:
+  alphalens_reloaded partial_pass caused by quantile_turnover missing numeric values
+
+full strict runnable:
+  20 first20 factors + 135 remaining factors = 155 factors
+```
+
+最终紧凑汇总：
+
+```text
+outputs/factor_evaluation_batch_v1/alpha158_remaining138/alpha158_remaining138_metric_index.csv
+outputs/factor_evaluation_batch_v1/alpha158_remaining138/alpha158_remaining138_summary.md
+outputs/factor_catalog_alpha158_v1/alpha158_remaining138_promotion_audit.csv
+outputs/factor_catalog_alpha158_v1/alpha158_catalog_full158_runnable.yaml
+```
+
 下一步：
 
 ```powershell
-E:\anaconda_envs\qlib_env\python.exe scripts\run_factor_evaluation_batch_v1.py --config configs\factor_evaluation_batch_v1_alpha158_remaining138.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\summarize_alpha158_remaining138.py
 ```
 
-runner 会跳过已完成的 `batch_001`，继续执行 `batch_002` 到 `batch_014`。
+后续应进入 full Alpha158 的筛选层：合并 first20 与 remaining138 的 metric index，保留 holdout 标记，不生成主观综合分，先做相关性、覆盖率、缺失率、单调性和多评价体系共识看板。

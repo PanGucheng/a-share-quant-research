@@ -373,8 +373,10 @@ Current full-stage status:
 
 ```text
 full158 expression frame: pass, 1,603,860 rows, 158 factors
-remaining138 dry-run: 14 planned batches
-remaining138 batch_001: pass
+remaining138 batch status: 13 pass, 1 skipped_existing
+remaining138 strict runnable: 135
+remaining138 holdout: 3
+full strict runnable catalog: 155 factors
 ```
 
 ## Open-Source References

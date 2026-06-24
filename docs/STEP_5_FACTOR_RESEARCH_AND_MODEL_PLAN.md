@@ -1789,7 +1789,7 @@ batch_004: pass
 
 ## 42. V3.10：Alpha158 全量扩张启动
 
-状态：已完成 full158 expression frame、remaining138 dry-run 和 remaining138 batch_001 真实 smoke。
+状态：已完成 full158 expression frame、remaining138 全量 batch、context validation、strict promotion 和 compact summary。
 
 阶段文档：
 
@@ -1826,18 +1826,25 @@ full158 expression validation: pass
 coverage min: 0.994231
 coverage median: 0.996867
 remaining138 dry-run batches: 14
-remaining138 batch_001: pass
+remaining138 batch status: 13 pass, 1 skipped_existing
 batch_001 elapsed: 912.061 seconds
+remaining138 open-source metric rows: 2,484
+remaining138 context metric rows: 26,464
+remaining138 combined metric index rows: 28,948
+remaining138 strict runnable: 135
+remaining138 holdout: 3
+full strict runnable: 155
 ```
 
-batch_001 评价状态：
+remaining138 评价状态：
 
 ```text
-alphalens_reloaded: pass 10
-jqfactor_analyzer: partial_pass 10
-qlib_eval: pass 10
-context: pass 120, skipped_non_informative 40
-context validation: pass
+alphalens_reloaded: pass 135, partial_pass 3
+jqfactor_analyzer: partial_pass 138
+qlib_eval: pass 138
+context: pass 1656, skipped_non_informative 552
+context validation: pass for all 14 batches
+holdout: alpha158_CNTN5, alpha158_IMAX5, alpha158_RANK5
 ```
 
 工程改进：
@@ -1848,6 +1855,7 @@ context validation: pass
 
 下一步：
 
-- 运行 remaining138 全量 batch，不带 `--max-batches`，让 runner 跳过已完成的 `batch_001` 并继续 `batch_002` 到 `batch_014`。
-- 每批完成后运行 context validator。
-- 全部通过后再生成 remaining138 runnable catalog，并合并 first20 + remaining138 的 full158 summary。
+- 合并 first20 与 remaining138 的 metric index，形成 full Alpha158 筛选输入。
+- 保留 holdout 标记，不把 Alphalens turnover 缺失的 3 个因子混入 strict runnable 池。
+- 建设筛选看板：覆盖率、缺失率、IC/Rank IC/ICIR、分组收益、换手率、相关性、单调性和多体系共识。
+- 在 full Alpha158 工具体系稳定后，再考虑 `ta` 和 Alpha101 来源扩展。

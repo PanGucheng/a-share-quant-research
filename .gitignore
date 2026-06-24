@@ -85,6 +85,8 @@ outputs/factor_evaluation_batch_v1/*
 outputs/factor_evaluation_batch_v1/alpha158_first20/logs/
 outputs/factor_evaluation_batch_v1/alpha158_first20/runs/
 !outputs/factor_evaluation_batch_v1/alpha158_remaining138/
+!outputs/factor_evaluation_batch_v1/alpha158_remaining138/alpha158_remaining138_metric_index.csv
+!outputs/factor_evaluation_batch_v1/alpha158_remaining138/alpha158_remaining138_summary.md
 !outputs/factor_evaluation_batch_v1/alpha158_remaining138/batch_manifest.csv
 !outputs/factor_evaluation_batch_v1/alpha158_remaining138/batch_output_summary.csv
 !outputs/factor_evaluation_batch_v1/alpha158_remaining138/factor_catalog_snapshot.csv
