@@ -1,0 +1,4 @@
+﻿config_id,kind,path,status,detail
+current_seed_batch,batch,configs/factor_evaluation_batch_v1.yaml,pass,
+alpha158_remaining138_batch,batch,configs/factor_evaluation_batch_v1_alpha158_remaining138.yaml,pass,
+factor_evaluation_v4_main,evaluation,configs/factor_evaluation_v4.yaml,pass,"systems=alphalens_reloaded,jqfactor_analyzer,qlib_eval,project_current; tradability_dir=available; data_quality_dir=available"

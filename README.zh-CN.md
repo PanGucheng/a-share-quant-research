@@ -512,6 +512,35 @@ bucket_3 exposure share delta: +0.063357
 outputs/alpha158_stability_diagnostics_v1/main_vs_recent_oos/alpha158_stability_diagnostics_report.md
 ```
 
+## 因子研究工具链 readiness
+
+Alpha158 现在应作为“已验证研究流水线”的参照，而不是继续细抠的唯一研究对象。扩张几百个新因子前，先运行工具链 readiness 闸门：
+
+```powershell
+cd E:\qlib_prj\qlib_baseline
+E:\anaconda_envs\qlib_env\python.exe scripts\audit_factor_research_toolchain_v1.py --config configs\factor_research_toolchain_readiness_v1.yaml
+```
+
+当前 readiness 结果：
+
+```text
+prefilter_policy: pass
+open_source_evaluator_systems: pass
+batch_runner: pass
+required_output_contracts: pass
+runnable_factor_inventory: pass
+new_source_adapter_inventory: blocked
+generic_multi_source_screening: partial
+```
+
+这说明 Alpha158 研究链路已经可复现，但多来源大规模因子研究还不能直接开跑。下一步应优先把一个非 Alpha158 开源来源提升为 runnable adapter，首选 `ta`；随后再接 Alpha101 公式源，并统一多来源 screening / candidate pool 契约。
+
+关键输出：
+
+```text
+outputs/factor_research_toolchain_readiness_v1/current/toolchain_readiness_report.md
+```
+
 ## 当前因子研究结论
 
 截至 V3.1/V3.2：
@@ -519,7 +548,7 @@ outputs/alpha158_stability_diagnostics_v1/main_vs_recent_oos/alpha158_stability_
 - `amplitude_20` raw directional Rank IC 较强，但流动性、波动率和成交额代理联合中性化后大幅下降，更像风险/流动性暴露。
 - `std_20` 与 `amplitude_20` 高度冗余，应优先作为风险暴露处理。
 - `rev_5` 在成交额代理残差中性化后有所改善，但仍只是观察候选，不适合直接进入模型训练。
-- 当前更应该优化因子研究工具链，而不是马上引入大量新因子或训练新模型。
+- 当前不应继续围绕少量常见因子做策略细调；应先让工具链 readiness 通过，再按开源来源大规模扩张因子池。
 
 ## 开源参考
 
@@ -571,6 +600,7 @@ docs/ALPHA158_CANDIDATE_PORTFOLIO_SMOKE_V1.md
 docs/ALPHA158_PORTFOLIO_DIAGNOSTICS_V1.md
 docs/ALPHA158_RECENT_OOS_EXTENSION_V1.md
 docs/ALPHA158_STABILITY_DIAGNOSTICS_V1.md
+docs/FACTOR_RESEARCH_TOOLCHAIN_READINESS_V1.md
 docs/STEP_5_FACTOR_RESEARCH_AND_MODEL_PLAN.md
 docs/PROJECT_CONTEXT_SUMMARY.md
 ```

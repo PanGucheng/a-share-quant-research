@@ -2374,6 +2374,69 @@ bucket_3 exposure share delta: +0.063357
 
 下一步：
 
-- 进入 Alpha158 exposure diagnostics。
-- 优先诊断流动性、价格动量、波动率、成交量代理暴露。
-- 将候选池分成 `stable_positive`、`oos_improved`、`main_only`、`weak_oos` 等下游角色，再考虑低换手机制。
+- 不再把 Alpha158 细分研究作为下一阶段主线。
+- 先建立因子研究工具链 readiness 闸门。
+- readiness 通过后，开始接入非 Alpha158 开源因子源，并准备大规模筛选。
+
+## 50. V3.18：Factor Research Toolchain Readiness V1
+
+状态：已完成。
+
+阶段文档：
+
+```text
+docs/FACTOR_RESEARCH_TOOLCHAIN_READINESS_V1.md
+```
+
+新增文件：
+
+```text
+configs/factor_research_toolchain_readiness_v1.yaml
+scripts/audit_factor_research_toolchain_v1.py
+```
+
+运行命令：
+
+```powershell
+E:\anaconda_envs\qlib_env\python.exe scripts\audit_factor_research_toolchain_v1.py --config configs\factor_research_toolchain_readiness_v1.yaml
+```
+
+关键输出：
+
+```text
+outputs/factor_research_toolchain_readiness_v1/current/toolchain_readiness_checks.csv
+outputs/factor_research_toolchain_readiness_v1/current/source_readiness.csv
+outputs/factor_research_toolchain_readiness_v1/current/required_output_contracts.csv
+outputs/factor_research_toolchain_readiness_v1/current/toolchain_readiness_report.md
+```
+
+完成结果：
+
+```text
+prefilter_policy: pass
+open_source_evaluator_systems: pass
+batch_runner: pass
+required_output_contracts: pass
+runnable_factor_inventory: pass
+new_source_adapter_inventory: blocked
+generic_multi_source_screening: partial
+total_runnable: 170
+Alpha158 runnable catalog: 155
+Alpha158 holdout catalog: 3
+new_source_runnable: 0
+```
+
+结论：
+
+- Alpha158 研究链路已可复现，可作为后续多来源研究的参照。
+- data_quality 与 tradability 前置过滤约束已经在 catalog 和 source manifest 中声明。
+- Alphalens Reloaded、jqfactor_analyzer、Qlib eval、project_current 四套评价体系继续共存。
+- 大规模多来源因子研究还不能直接开跑，核心阻塞是非 Alpha158 开源因子源尚无 promoted runnable adapter。
+
+下一步：
+
+- 进入 V3.19：首个非 Alpha158 开源因子源 adapter。
+- 首选 `ta`，因为本地参考仓库已存在、license 为 MIT、入口函数清晰。
+- 先做源码审计、字段映射、look-ahead 检查、少量 smoke。
+- 通过后再登记 runnable catalog entries，并进入 batch V4。
+- 同步抽象 multi-source screening / candidate-pool contract，避免后续 TA、Alpha101 和 Alpha158 各走各的筛选路径。

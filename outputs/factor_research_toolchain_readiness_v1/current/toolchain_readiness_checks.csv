@@ -1,0 +1,8 @@
+﻿check_id,status,detail,recommendation
+prefilter_policy,pass,"catalog=data_quality,tradability; manifest=data_quality,tradability",Keep data_quality and tradability as mandatory prefilters for every new factor source.
+open_source_evaluator_systems,pass,"systems=alphalens_reloaded,jqfactor_analyzer,qlib_eval,project_current","Do not replace external evaluator definitions; keep Alphalens Reloaded, jqfactor_analyzer, Qlib eval, and project_current coexisting."
+batch_runner,pass,batch_configs=2,"Use the batch runner for large jobs, with dry-run, resume, manifests, and logs."
+required_output_contracts,pass,missing_or_failed=0,Repair missing contracts before launching full-scale screening.
+runnable_factor_inventory,pass,total_runnable=170,Alpha158 is enough to validate the machinery; more sources are needed for broad factor discovery.
+new_source_adapter_inventory,blocked,new_source_runnable=0,"Promote at least one non-Alpha158 open-source factor family, starting with an audited TA or Alpha101 adapter."
+generic_multi_source_screening,partial,Alpha158 has a mature specific screening/judgement/pool path; generic screening_v3 exists but is not yet the large-scale multi-source standard.,"Generalize the screening input and candidate-pool contracts before mixing TA, Alpha101, and future factors."

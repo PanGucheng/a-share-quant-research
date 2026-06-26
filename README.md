@@ -530,6 +530,40 @@ Key output:
 outputs/alpha158_stability_diagnostics_v1/main_vs_recent_oos/alpha158_stability_diagnostics_report.md
 ```
 
+## Factor Toolchain Readiness
+
+Alpha158 is now treated as the validated reference pipeline, not the next
+research bottleneck. Before adding hundreds of new factors, run the toolchain
+readiness gate:
+
+```powershell
+cd E:\qlib_prj\qlib_baseline
+E:\anaconda_envs\qlib_env\python.exe scripts\audit_factor_research_toolchain_v1.py --config configs\factor_research_toolchain_readiness_v1.yaml
+```
+
+Current readiness result:
+
+```text
+prefilter_policy: pass
+open_source_evaluator_systems: pass
+batch_runner: pass
+required_output_contracts: pass
+runnable_factor_inventory: pass
+new_source_adapter_inventory: blocked
+generic_multi_source_screening: partial
+```
+
+This means the Alpha158 research path is reproducible, but large-scale
+multi-source discovery should start by promoting a non-Alpha158 open-source
+factor adapter. The first practical target is `ta`, followed by Alpha101
+formula sources after their field and look-ahead assumptions are audited.
+
+Key output:
+
+```text
+outputs/factor_research_toolchain_readiness_v1/current/toolchain_readiness_report.md
+```
+
 ## Open-Source References
 
 The factor research design intentionally borrows stable ideas from open-source
@@ -582,6 +616,7 @@ docs/ALPHA158_CANDIDATE_PORTFOLIO_SMOKE_V1.md
 docs/ALPHA158_PORTFOLIO_DIAGNOSTICS_V1.md
 docs/ALPHA158_RECENT_OOS_EXTENSION_V1.md
 docs/ALPHA158_STABILITY_DIAGNOSTICS_V1.md
+docs/FACTOR_RESEARCH_TOOLCHAIN_READINESS_V1.md
 docs/STEP_5_FACTOR_RESEARCH_AND_MODEL_PLAN.md
 docs/PROJECT_CONTEXT_SUMMARY.md
 ```

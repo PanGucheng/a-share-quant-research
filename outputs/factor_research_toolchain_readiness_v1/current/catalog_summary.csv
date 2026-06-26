@@ -1,0 +1,3 @@
+﻿catalog_id,path,status,factor_count,enabled_count,runnable_count,role
+project_main_catalog,factor_research/factor_catalog.yaml,pass,15,15,15,Project planning catalog and currently registered seed factors.
+alpha158_full_runnable_catalog,outputs/factor_catalog_alpha158_v1/alpha158_catalog_full158_runnable.yaml,pass,155,155,155,Promoted Qlib Alpha158 catalog after expression validation and V4 batch evaluation.
