@@ -348,7 +348,9 @@ def build_readiness_checks(
         "pass" if new_source_runnable >= int(rules.get("min_new_source_runnable_factors", 0)) else "blocked",
         f"new_source_runnable={new_source_runnable}",
         (
-            "Expand the promoted non-Alpha158 catalog with resumable TA batch V4 before adding Alpha101."
+            "Keep the promoted non-Alpha158 catalog as a large-scale screening input and add later sources through the same adapter gate."
+            if new_source_runnable >= int(rules.get("min_new_source_runnable_factors", 0))
+            else "Expand the promoted non-Alpha158 catalog with resumable TA batch V4 before adding Alpha101."
             if new_source_runnable > 0
             else "Promote at least one non-Alpha158 open-source factor family, starting with an audited TA or Alpha101 adapter."
         ),
@@ -401,7 +403,10 @@ def write_report(
                 ]
             )
     elif overall == "partial":
-        lines.append("The toolchain can run validated Alpha158 research, but still needs one promoted non-Alpha158 source before broad discovery.")
+        lines.append(
+            "The Alpha158 reference path and the first promoted non-Alpha158 source are ready; "
+            "the remaining gap is a generic multi-source screening and candidate-pool contract for large-scale discovery."
+        )
     else:
         lines.append("The factor research toolchain is ready for large-scale multi-source screening.")
     lines.extend(
@@ -443,9 +448,9 @@ def write_report(
             "## Next Step",
             "",
             "1. Keep Alpha158 as the validated reference pipeline, not the next research bottleneck.",
-            "2. Promote the first non-Alpha158 open-source source adapter, preferably `ta` because the local source is present and license is MIT.",
-            "3. Run the new source through dry-run, smoke, partial batch, then full batch before adding it to the candidate pool.",
-            "4. Generalize screening and candidate-pool contracts so Alpha158, TA, Alpha101, and later sources can coexist without rewriting evaluator metrics.",
+            "2. Treat the promoted TA catalog as the first large-scale non-Alpha158 input.",
+            "3. Generalize screening and candidate-pool contracts so Alpha158, TA, Alpha101, and later sources can coexist without rewriting evaluator metrics.",
+            "4. After the generic contract passes, start broad factor discovery by adding more open-source factor families through the same adapter, V4 batch, promotion, and holdout gates.",
         ]
     )
     (output_dir / "toolchain_readiness_report.md").write_text("\n".join(lines) + "\n", encoding="utf-8")

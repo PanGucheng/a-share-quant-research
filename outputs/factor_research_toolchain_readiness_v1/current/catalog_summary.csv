@@ -1,4 +1,4 @@
 ﻿catalog_id,path,status,factor_count,enabled_count,runnable_count,role
 project_main_catalog,factor_research/factor_catalog.yaml,pass,15,15,15,Project planning catalog and currently registered seed factors.
 alpha158_full_runnable_catalog,outputs/factor_catalog_alpha158_v1/alpha158_catalog_full158_runnable.yaml,pass,155,155,155,Promoted Qlib Alpha158 catalog after expression validation and V4 batch evaluation.
-ta_smoke_passed_catalog,outputs/ta_factor_adapter_v1/smoke/ta_factor_catalog_smoke_passed.yaml,pass,5,5,5,Promoted smoke-level TA factors after adapter and V4 smoke validation.
+ta_promoted_catalog,outputs/ta_factor_adapter_v1/smoke/ta_factor_catalog_promoted77.yaml,pass,77,77,77,Promoted TA factors after adapter smoke and remaining batch V4 validation.

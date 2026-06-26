@@ -2568,3 +2568,70 @@ dry-run status: planned
 - 如果第 1 批通过，再逐步执行 2-3 个 batch。
 - 每轮执行后汇总 evaluator_status、failure_reasons 和 open_source_metric_index。
 - 只有通过 V4 的 TA 因子才进入 promoted runnable catalog。
+
+## 53. V3.21：TA Batch Promotion V1
+
+状态：已完成。
+
+阶段文档：
+
+```text
+docs/TA_BATCH_PROMOTION_V1.md
+```
+
+新增文件：
+
+```text
+configs/ta_factor_batch_promotion_v1.yaml
+scripts/promote_ta_batch_catalog_entries_v1.py
+```
+
+运行命令：
+
+```powershell
+E:\anaconda_envs\qlib_env\python.exe scripts\run_factor_evaluation_batch_v1.py --config configs\factor_evaluation_batch_v1_ta_remaining74.yaml --max-batches 15 --output-root outputs\factor_evaluation_batch_v1\ta_remaining74_batch1
+E:\anaconda_envs\qlib_env\python.exe scripts\promote_ta_batch_catalog_entries_v1.py --config configs\ta_factor_batch_promotion_v1.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\audit_factor_research_toolchain_v1.py --config configs\factor_research_toolchain_readiness_v1.yaml
+```
+
+关键输出：
+
+```text
+outputs/factor_evaluation_batch_v1/ta_remaining74_batch1/factor_evaluation_batch_v1_report.md
+outputs/factor_evaluation_batch_v1/ta_remaining74_batch1/ta_remaining74_metric_index.csv
+outputs/ta_factor_adapter_v1/smoke/ta_factor_catalog_batch_passed72.yaml
+outputs/ta_factor_adapter_v1/smoke/ta_factor_catalog_holdout2.yaml
+outputs/ta_factor_adapter_v1/smoke/ta_factor_catalog_promoted77.yaml
+outputs/ta_factor_adapter_v1/smoke/ta_factor_batch_promotion_audit.csv
+outputs/ta_factor_adapter_v1/smoke/ta_factor_batch_promotion_report.md
+```
+
+完成结果：
+
+```text
+TA remaining evaluated: 74
+batch promoted: 72
+batch holdout: 2
+combined TA promoted catalog: 77
+readiness total_runnable: 247
+readiness new_source_runnable: 77
+readiness large-scale status: partial
+```
+
+holdout 因子：
+
+```text
+ta_volatility_bbli
+ta_volatility_kchi
+```
+
+原因：两个因子在 Alphalens Reloaded 的 `quantile_turnover` 步骤没有产生数值。它们通过 Qlib eval，但暂不进入 promoted runnable catalog。
+
+下一步：
+
+- 不继续把 Alpha158 当作单一研究对象细挖。
+- 不急着训练新模型或调交易策略。
+- 进入 V3.22：通用多来源 screening / candidate-pool contract。
+- 将 Alpha158 full runnable catalog、TA promoted77 catalog、V4 metric index 和 holdout 表合并为统一筛选输入。
+- 先让 Alphalens Reloaded、jqfactor_analyzer、Qlib eval、本项目 current evaluator 结果共存，再做主观判断层。
+- contract 通过 readiness 后，再继续接 Alpha101、基本面、行业风格和更多开源来源。

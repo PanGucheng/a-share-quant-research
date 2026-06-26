@@ -120,6 +120,18 @@ outputs/factor_evaluation_batch_v1/alpha158_remaining138/runs/
 !outputs/factor_evaluation_batch_v1/ta_remaining74_smoke/generated_configs/*.yaml
 outputs/factor_evaluation_batch_v1/ta_remaining74_smoke/logs/
 outputs/factor_evaluation_batch_v1/ta_remaining74_smoke/runs/
+!outputs/factor_evaluation_batch_v1/ta_remaining74_batch1/
+!outputs/factor_evaluation_batch_v1/ta_remaining74_batch1/batch_manifest.csv
+!outputs/factor_evaluation_batch_v1/ta_remaining74_batch1/batch_output_summary.csv
+!outputs/factor_evaluation_batch_v1/ta_remaining74_batch1/factor_catalog_snapshot.csv
+!outputs/factor_evaluation_batch_v1/ta_remaining74_batch1/factor_catalog_validation.csv
+!outputs/factor_evaluation_batch_v1/ta_remaining74_batch1/factor_evaluation_batch_v1_report.md
+!outputs/factor_evaluation_batch_v1/ta_remaining74_batch1/selected_factor_catalog.csv
+!outputs/factor_evaluation_batch_v1/ta_remaining74_batch1/ta_remaining74_metric_index.csv
+!outputs/factor_evaluation_batch_v1/ta_remaining74_batch1/generated_configs/
+!outputs/factor_evaluation_batch_v1/ta_remaining74_batch1/generated_configs/*.yaml
+outputs/factor_evaluation_batch_v1/ta_remaining74_batch1/logs/
+outputs/factor_evaluation_batch_v1/ta_remaining74_batch1/runs/
 
 # Local Python/cache noise
 __pycache__/

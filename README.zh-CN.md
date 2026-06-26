@@ -529,11 +529,13 @@ open_source_evaluator_systems: pass
 batch_runner: pass
 required_output_contracts: pass
 runnable_factor_inventory: pass
-new_source_adapter_inventory: blocked
+new_source_adapter_inventory: pass
 generic_multi_source_screening: partial
+total_runnable: 247
+new_source_runnable: 77
 ```
 
-这说明 Alpha158 研究链路已经可复现，第一个非 Alpha158 adapter 也已进入 smoke 阶段；但多来源大规模因子研究还不能直接开跑。下一步应先提升更多 TA 因子，再接 Alpha101 公式源，并统一多来源 screening / candidate pool 契约。
+这说明 Alpha158 参照链路和第一个非 Alpha158 promoted 来源都已经准备好。当前剩余缺口不是继续细抠 Alpha158，而是统一多来源 screening / candidate pool 契约，让 Alpha158、TA、Alpha101 和后续来源可以共用同一套筛选入口。
 
 关键输出：
 
@@ -541,44 +543,33 @@ generic_multi_source_screening: partial
 outputs/factor_research_toolchain_readiness_v1/current/toolchain_readiness_report.md
 ```
 
-## TA 因子 adapter smoke
+## TA 因子 adapter 与 batch promotion
 
-第一个非 Alpha158 开源因子源已经以 smoke 级别接入：`bukosabino/ta`。
+第一个非 Alpha158 开源因子源已经通过 `bukosabino/ta` 接入，并完成 smoke 与剩余 batch 验证。
 
 ```powershell
 cd E:\qlib_prj\qlib_baseline
 E:\anaconda_envs\qlib_env\python.exe scripts\run_ta_factor_adapter_smoke_v1.py --config configs\ta_factor_adapter_smoke_v1.yaml
 E:\anaconda_envs\qlib_env\python.exe scripts\run_factor_evaluation_v4.py --config configs\ta_factor_evaluation_smoke_v1.yaml
 E:\anaconda_envs\qlib_env\python.exe scripts\promote_ta_smoke_catalog_entries_v1.py --config configs\ta_factor_smoke_promotion_v1.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\prepare_ta_batch_catalogs_v1.py --config configs\ta_factor_batch_catalogs_v1.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\run_factor_evaluation_batch_v1.py --config configs\factor_evaluation_batch_v1_ta_remaining74.yaml --max-batches 15 --output-root outputs\factor_evaluation_batch_v1\ta_remaining74_batch1
+E:\anaconda_envs\qlib_env\python.exe scripts\promote_ta_batch_catalog_entries_v1.py --config configs\ta_factor_batch_promotion_v1.yaml
 ```
 
-当前 TA smoke 结果：
+当前 TA 结果：
 
 ```text
 eligible TA factors: 79
 excluded TA columns: 7
-V4 smoke factors: 5
-promoted smoke factors: 5
-readiness new_source_runnable: 5
+smoke promoted: 5
+remaining batch evaluated: 74
+batch promoted: 72
+batch holdout: 2
+combined promoted TA catalog: 77
 ```
 
-这已经证明新源 adapter 路径能跑通，但还不足以直接开始 TA 全量筛选。下一步应为剩余 eligible TA 因子建立可恢复的 batch 计划。
-
-TA remaining batch dry-run：
-
-```powershell
-cd E:\qlib_prj\qlib_baseline
-E:\anaconda_envs\qlib_env\python.exe scripts\prepare_ta_batch_catalogs_v1.py --config configs\ta_factor_batch_catalogs_v1.yaml
-E:\anaconda_envs\qlib_env\python.exe scripts\run_factor_evaluation_batch_v1.py --config configs\factor_evaluation_batch_v1_ta_remaining74.yaml --dry-run
-```
-
-当前 batch 计划：
-
-```text
-remaining TA factors: 74
-planned batches: 15
-batch size: 5
-```
+两个 holdout 因子是 `ta_volatility_bbli` 和 `ta_volatility_kchi`。它们通过了 Qlib eval，但 Alphalens quantile turnover 没有产生数值，因此暂不进入 promoted runnable catalog。
 
 ## 当前因子研究结论
 
@@ -642,6 +633,7 @@ docs/ALPHA158_STABILITY_DIAGNOSTICS_V1.md
 docs/FACTOR_RESEARCH_TOOLCHAIN_READINESS_V1.md
 docs/TA_FACTOR_ADAPTER_SMOKE_V1.md
 docs/TA_BATCH_EVALUATION_PLAN_V1.md
+docs/TA_BATCH_PROMOTION_V1.md
 docs/STEP_5_FACTOR_RESEARCH_AND_MODEL_PLAN.md
 docs/PROJECT_CONTEXT_SUMMARY.md
 ```

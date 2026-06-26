@@ -1,0 +1,1739 @@
+version: 1
+updated: '2026-06-26'
+policy:
+  required_prefilter:
+  - data_quality
+  - tradability
+  principle:
+  - TA formulas are sourced from the local upstream ta repository.
+  - Promoted entries require Alphalens Reloaded and Qlib eval pass.
+  - jqfactor_analyzer partial_pass is allowed only for known factor_returns/factor_alpha_beta
+    index-name failures.
+  - Alphalens quantile_turnover partial failures are held out for review.
+  purpose: 'Combined TA promoted catalog: smoke passed plus batch passed.'
+factors:
+- name: ta_momentum_ao
+  registry_name: ta_momentum_ao
+  category: ta_momentum
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  - $volume
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_batch_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=0.790792 TA batch V4 passed.
+- name: ta_momentum_kama
+  registry_name: ta_momentum_kama
+  category: ta_momentum
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  - $volume
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_batch_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=0.915621 TA batch V4 passed.
+- name: ta_momentum_ppo
+  registry_name: ta_momentum_ppo
+  category: ta_momentum
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  - $volume
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_batch_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=0.858398 TA batch V4 passed.
+- name: ta_momentum_ppo_hist
+  registry_name: ta_momentum_ppo_hist
+  category: ta_momentum
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  - $volume
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_batch_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=0.813296 TA batch V4 passed.
+- name: ta_momentum_ppo_signal
+  registry_name: ta_momentum_ppo_signal
+  category: ta_momentum
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  - $volume
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_batch_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=0.813296 TA batch V4 passed.
+- name: ta_momentum_pvo
+  registry_name: ta_momentum_pvo
+  category: ta_momentum
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  - $volume
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_batch_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=0.858398 TA batch V4 passed.
+- name: ta_momentum_pvo_hist
+  registry_name: ta_momentum_pvo_hist
+  category: ta_momentum
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  - $volume
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_batch_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=0.813296 TA batch V4 passed.
+- name: ta_momentum_pvo_signal
+  registry_name: ta_momentum_pvo_signal
+  category: ta_momentum
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  - $volume
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_batch_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=0.813296 TA batch V4 passed.
+- name: ta_momentum_roc
+  registry_name: ta_momentum_roc
+  category: ta_momentum
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  - $volume
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_smoke_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=0.925206 V4 smoke passed for selected
+    TA adapter factor.
+- name: ta_momentum_rsi
+  registry_name: ta_momentum_rsi
+  category: ta_momentum
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  - $volume
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_smoke_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=0.926709 V4 smoke passed for selected
+    TA adapter factor.
+- name: ta_momentum_stoch
+  registry_name: ta_momentum_stoch
+  category: ta_momentum
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  - $volume
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_batch_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=0.912755 TA batch V4 passed.
+- name: ta_momentum_stoch_rsi
+  registry_name: ta_momentum_stoch_rsi
+  category: ta_momentum
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  - $volume
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_batch_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=0.852619 TA batch V4 passed.
+- name: ta_momentum_stoch_rsi_d
+  registry_name: ta_momentum_stoch_rsi_d
+  category: ta_momentum
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  - $volume
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_batch_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=0.829692 TA batch V4 passed.
+- name: ta_momentum_stoch_rsi_k
+  registry_name: ta_momentum_stoch_rsi_k
+  category: ta_momentum
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  - $volume
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_batch_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=0.841156 TA batch V4 passed.
+- name: ta_momentum_stoch_signal
+  registry_name: ta_momentum_stoch_signal
+  category: ta_momentum
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  - $volume
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_batch_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=0.900446 TA batch V4 passed.
+- name: ta_momentum_tsi
+  registry_name: ta_momentum_tsi
+  category: ta_momentum
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  - $volume
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_batch_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=0.790698 TA batch V4 passed.
+- name: ta_momentum_uo
+  registry_name: ta_momentum_uo
+  category: ta_momentum
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  - $volume
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_batch_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=0.820907 TA batch V4 passed.
+- name: ta_momentum_wr
+  registry_name: ta_momentum_wr
+  category: ta_momentum
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  - $volume
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_batch_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=0.912755 TA batch V4 passed.
+- name: ta_trend_adx
+  registry_name: ta_trend_adx
+  category: ta_trend
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_batch_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=0.967395 TA batch V4 passed.
+- name: ta_trend_adx_neg
+  registry_name: ta_trend_adx_neg
+  category: ta_trend
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_batch_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=0.967395 TA batch V4 passed.
+- name: ta_trend_adx_pos
+  registry_name: ta_trend_adx_pos
+  category: ta_trend
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_batch_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=0.967395 TA batch V4 passed.
+- name: ta_trend_aroon_down
+  registry_name: ta_trend_aroon_down
+  category: ta_trend
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_batch_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=0.839183 TA batch V4 passed.
+- name: ta_trend_aroon_ind
+  registry_name: ta_trend_aroon_ind
+  category: ta_trend
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_batch_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=0.839183 TA batch V4 passed.
+- name: ta_trend_aroon_up
+  registry_name: ta_trend_aroon_up
+  category: ta_trend
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_batch_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=0.839183 TA batch V4 passed.
+- name: ta_trend_cci
+  registry_name: ta_trend_cci
+  category: ta_trend
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_batch_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=0.875828 TA batch V4 passed.
+- name: ta_trend_dpo
+  registry_name: ta_trend_dpo
+  category: ta_trend
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_batch_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=0.875828 TA batch V4 passed.
+- name: ta_trend_ema_fast
+  registry_name: ta_trend_ema_fast
+  category: ta_trend
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_batch_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=0.937327 TA batch V4 passed.
+- name: ta_trend_ema_slow
+  registry_name: ta_trend_ema_slow
+  category: ta_trend
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_batch_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=0.858398 TA batch V4 passed.
+- name: ta_trend_ichimoku_a
+  registry_name: ta_trend_ichimoku_a
+  category: ta_trend
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_batch_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=0.839183 TA batch V4 passed.
+- name: ta_trend_ichimoku_b
+  registry_name: ta_trend_ichimoku_b
+  category: ta_trend
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_batch_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=0.999812 TA batch V4 passed.
+- name: ta_trend_ichimoku_base
+  registry_name: ta_trend_ichimoku_base
+  category: ta_trend
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_batch_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=0.839183 TA batch V4 passed.
+- name: ta_trend_ichimoku_conv
+  registry_name: ta_trend_ichimoku_conv
+  category: ta_trend
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_batch_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=0.943998 TA batch V4 passed.
+- name: ta_trend_kst
+  registry_name: ta_trend_kst
+  category: ta_trend
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_batch_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=0.890956 TA batch V4 passed.
+- name: ta_trend_kst_diff
+  registry_name: ta_trend_kst_diff
+  category: ta_trend
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_batch_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=0.890956 TA batch V4 passed.
+- name: ta_trend_kst_sig
+  registry_name: ta_trend_kst_sig
+  category: ta_trend
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_batch_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=0.896406 TA batch V4 passed.
+- name: ta_trend_macd
+  registry_name: ta_trend_macd
+  category: ta_trend
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_batch_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=0.858398 TA batch V4 passed.
+- name: ta_trend_macd_diff
+  registry_name: ta_trend_macd_diff
+  category: ta_trend
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_smoke_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=0.813296 V4 smoke passed for selected
+    TA adapter factor.
+- name: ta_trend_macd_signal
+  registry_name: ta_trend_macd_signal
+  category: ta_trend
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_batch_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=0.813296 TA batch V4 passed.
+- name: ta_trend_mass_index
+  registry_name: ta_trend_mass_index
+  category: ta_trend
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_batch_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=0.773831 TA batch V4 passed.
+- name: ta_trend_psar_down
+  registry_name: ta_trend_psar_down
+  category: ta_trend
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_batch_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=0.516232 TA batch V4 passed.
+- name: ta_trend_psar_down_indicator
+  registry_name: ta_trend_psar_down_indicator
+  category: ta_trend
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_batch_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=1.000000 TA batch V4 passed.
+- name: ta_trend_psar_up
+  registry_name: ta_trend_psar_up
+  category: ta_trend
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_batch_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=0.455955 TA batch V4 passed.
+- name: ta_trend_psar_up_indicator
+  registry_name: ta_trend_psar_up_indicator
+  category: ta_trend
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_batch_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=1.000000 TA batch V4 passed.
+- name: ta_trend_sma_fast
+  registry_name: ta_trend_sma_fast
+  category: ta_trend
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_batch_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=0.925253 TA batch V4 passed.
+- name: ta_trend_sma_slow
+  registry_name: ta_trend_sma_slow
+  category: ta_trend
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_batch_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=0.839183 TA batch V4 passed.
+- name: ta_trend_stc
+  registry_name: ta_trend_stc
+  category: ta_trend
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_batch_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=0.593470 TA batch V4 passed.
+- name: ta_trend_trix
+  registry_name: ta_trend_trix
+  category: ta_trend
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_batch_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=0.756918 TA batch V4 passed.
+- name: ta_trend_vortex_ind_diff
+  registry_name: ta_trend_vortex_ind_diff
+  category: ta_trend
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_batch_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=0.906601 TA batch V4 passed.
+- name: ta_trend_vortex_ind_neg
+  registry_name: ta_trend_vortex_ind_neg
+  category: ta_trend
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_batch_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=0.906601 TA batch V4 passed.
+- name: ta_trend_vortex_ind_pos
+  registry_name: ta_trend_vortex_ind_pos
+  category: ta_trend
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_batch_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=0.906601 TA batch V4 passed.
+- name: ta_volatility_atr
+  registry_name: ta_volatility_atr
+  category: ta_volatility
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_batch_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=0.959502 TA batch V4 passed.
+- name: ta_volatility_bbh
+  registry_name: ta_volatility_bbh
+  category: ta_volatility
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_batch_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=0.875828 TA batch V4 passed.
+- name: ta_volatility_bbhi
+  registry_name: ta_volatility_bbhi
+  category: ta_volatility
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_batch_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=1.000000 TA batch V4 passed.
+- name: ta_volatility_bbl
+  registry_name: ta_volatility_bbl
+  category: ta_volatility
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_batch_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=0.875828 TA batch V4 passed.
+- name: ta_volatility_bbm
+  registry_name: ta_volatility_bbm
+  category: ta_volatility
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_batch_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=0.875828 TA batch V4 passed.
+- name: ta_volatility_bbp
+  registry_name: ta_volatility_bbp
+  category: ta_volatility
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_batch_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=0.875828 TA batch V4 passed.
+- name: ta_volatility_bbw
+  registry_name: ta_volatility_bbw
+  category: ta_volatility
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_smoke_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=0.875828 V4 smoke passed for selected
+    TA adapter factor.
+- name: ta_volatility_dch
+  registry_name: ta_volatility_dch
+  category: ta_volatility
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_batch_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=0.875828 TA batch V4 passed.
+- name: ta_volatility_dcl
+  registry_name: ta_volatility_dcl
+  category: ta_volatility
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_batch_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=0.875828 TA batch V4 passed.
+- name: ta_volatility_dcm
+  registry_name: ta_volatility_dcm
+  category: ta_volatility
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_batch_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=0.875828 TA batch V4 passed.
+- name: ta_volatility_dcp
+  registry_name: ta_volatility_dcp
+  category: ta_volatility
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_batch_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=0.875828 TA batch V4 passed.
+- name: ta_volatility_dcw
+  registry_name: ta_volatility_dcw
+  category: ta_volatility
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_batch_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=0.875828 TA batch V4 passed.
+- name: ta_volatility_kcc
+  registry_name: ta_volatility_kcc
+  category: ta_volatility
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_batch_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=0.937750 TA batch V4 passed.
+- name: ta_volatility_kch
+  registry_name: ta_volatility_kch
+  category: ta_volatility
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_batch_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=0.997745 TA batch V4 passed.
+- name: ta_volatility_kcl
+  registry_name: ta_volatility_kcl
+  category: ta_volatility
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_batch_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=0.997745 TA batch V4 passed.
+- name: ta_volatility_kcli
+  registry_name: ta_volatility_kcli
+  category: ta_volatility
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_batch_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=1.000000 TA batch V4 passed.
+- name: ta_volatility_kcp
+  registry_name: ta_volatility_kcp
+  category: ta_volatility
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_batch_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=0.993892 TA batch V4 passed.
+- name: ta_volatility_kcw
+  registry_name: ta_volatility_kcw
+  category: ta_volatility
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_batch_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=0.937750 TA batch V4 passed.
+- name: ta_volatility_ui
+  registry_name: ta_volatility_ui
+  category: ta_volatility
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_batch_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=0.912755 TA batch V4 passed.
+- name: ta_volume_adi
+  registry_name: ta_volume_adi
+  category: ta_volume
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  - $volume
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_batch_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=0.994597 TA batch V4 passed.
+- name: ta_volume_cmf
+  registry_name: ta_volume_cmf
+  category: ta_volume
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  - $volume
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_smoke_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=0.875828 V4 smoke passed for selected
+    TA adapter factor.
+- name: ta_volume_em
+  registry_name: ta_volume_em
+  category: ta_volume
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  - $volume
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_batch_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=0.988161 TA batch V4 passed.
+- name: ta_volume_fi
+  registry_name: ta_volume_fi
+  category: ta_volume
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  - $volume
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_batch_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=0.926004 TA batch V4 passed.
+- name: ta_volume_mfi
+  registry_name: ta_volume_mfi
+  category: ta_volume
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  - $volume
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_batch_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=0.912755 TA batch V4 passed.
+- name: ta_volume_obv
+  registry_name: ta_volume_obv
+  category: ta_volume
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  - $volume
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_batch_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=0.994597 TA batch V4 passed.
+- name: ta_volume_sma_em
+  registry_name: ta_volume_sma_em
+  category: ta_volume
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  - $volume
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_batch_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=0.906601 TA batch V4 passed.
+- name: ta_volume_vwap
+  registry_name: ta_volume_vwap
+  category: ta_volume
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  - $volume
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_batch_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: Generated from ta wrapper smoke; coverage=0.912755 TA batch V4 passed.

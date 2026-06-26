@@ -1,0 +1,60 @@
+version: 1
+updated: '2026-06-26'
+policy:
+  required_prefilter:
+  - data_quality
+  - tradability
+  principle:
+  - TA formulas are sourced from the local upstream ta repository.
+  - Promoted entries require Alphalens Reloaded and Qlib eval pass.
+  - jqfactor_analyzer partial_pass is allowed only for known factor_returns/factor_alpha_beta
+    index-name failures.
+  - Alphalens quantile_turnover partial failures are held out for review.
+  purpose: TA holdout factors after remaining74 V4 evaluation.
+factors:
+- name: ta_volatility_bbli
+  registry_name: ta_volatility_bbli
+  category: ta_volatility
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_batch_holdout
+  enabled: false
+  runnable: false
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: 'Generated from ta wrapper smoke; coverage=1.000000 TA batch V4 holdout:
+    alphalens_reloaded_partial:quantile_turnover.'
+- name: ta_volatility_kchi
+  registry_name: ta_volatility_kchi
+  category: ta_volatility
+  source_project: ta
+  source_file: ta/wrapper.py
+  source_function: add_all_ta_features
+  source_commit: a890410710a6e483c9ba08da7f3dd5089e4b9dff
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $open
+  - $high
+  - $low
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: ta_adapter_v4_batch_holdout
+  enabled: false
+  runnable: false
+  compute_adapter: factor_research.ta_source.compute_ta_features
+  notes: 'Generated from ta wrapper smoke; coverage=1.000000 TA batch V4 holdout:
+    alphalens_reloaded_partial:quantile_turnover.'

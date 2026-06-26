@@ -27,6 +27,7 @@ Alpha158 的角色应从“继续深入调参的唯一对象”切换为“验�
 | open-source evaluator coexistence | 已跑通 | Alphalens Reloaded、jqfactor_analyzer、Qlib eval、本项目现有评价结果共存。 |
 | batch runner | 已有 | 支持 dry-run、分批、断点续跑、manifest、日志和输出摘要。 |
 | Alpha158 full pipeline | 已跑通 | 158 个 Qlib Alpha158 已进入表达式适配、批量评价、筛选、judgement、候选池、组合 smoke 和 OOS 稳定性诊断流程；其中 155 个进入 runnable catalog，3 个保留为 holdout。 |
+| TA promoted source | 已跑通 | `bukosabino/ta` 已完成 adapter smoke、剩余 74 个 eligible 因子 batch V4 和 promotion；77 个进入 promoted runnable catalog，2 个保留为 holdout。 |
 
 ## 3. 当前缺口
 
@@ -34,10 +35,9 @@ Alpha158 的角色应从“继续深入调参的唯一对象”切换为“验�
 
 | 缺口 | 影响 | 处理方式 |
 | --- | --- | --- |
-| 非 Alpha158 来源尚无 promoted runnable adapter | 无法安全进入真正多来源研究 | 先选择一个开源来源做 adapter、审计和 smoke。 |
 | 多来源 screening / candidate pool 契约尚未统一 | 后续 TA、Alpha101、Alpha158 难以共用候选池 | 将 Alpha158 专用输出抽象成通用 contract。 |
-| source readiness 没有自动检查 | 容易把仅登记、未审计的因子源误放入批量评估 | 新增 readiness 审计脚本。 |
-| 新因子源 license / local path / source file / runnable count 未统一出表 | 后续来源变多后难追踪 | 由 readiness 输出统一表。 |
+| 多来源候选池缺少机器可检验 contract | 容易把未评价、holdout 或不同口径的因子混入候选池 | 为筛选输入、候选池、holdout 和晋级决策建立统一输出表。 |
+| 后续来源 adapter 尚未接入统一闸门 | Alpha101、基本面、行业风格等来源容易重复造轮子 | 沿用 source manifest -> adapter audit -> V4 batch -> promotion/holdout -> generic screening 的流程。 |
 
 ## 4. 新增闸门
 
@@ -95,32 +95,35 @@ toolchain_readiness_report.md
 
 ## 6. 当前结论
 
-预期结论应是：
+当前结论是：
 
 ```text
 Alpha158 研究链路 ready。
-多来源大规模因子研究 partial / blocked。
+TA promoted 新来源 ready。
+多来源大规模因子研究 partial。
 ```
 
-原因不是评价体系不够，而是非 Alpha158 因子源目前仍处于 `metadata_registered_adapter_pending` 或 formula reference 阶段。此时直接大规模跑新因子，容易把未审计字段、窗口、数据假设或 license 问题混进候选池。
+当前不是评价体系不够，也不是缺少 Alpha158 细节研究。Alphalens Reloaded、jqfactor_analyzer、Qlib eval 和 project_current 已经共存；TA 也已提供 77 个 promoted runnable 新来源因子。真正缺口是筛选层仍偏 Alpha158 专用，尚未冻结一个能同时承接 Alpha158、TA、Alpha101 和后续来源的通用候选池契约。
 
-V3.19 后，`ta` 已有 5 个 smoke-level runnable 因子，但仍未达到大规模阈值：
+V3.21 后 readiness 关键状态：
 
 ```text
-new_source_runnable: 5
-large_scale_threshold: 20
-status: blocked
+total_runnable: 247
+new_source_runnable: 77
+new_source_adapter_inventory: pass
+generic_multi_source_screening: partial
+overall_status: partial
 ```
 
-这表示 adapter 路径已经打通，但还需要对剩余 eligible TA 因子执行 batch V4 后才能进入大规模筛选。
+这表示“引入更多因子”的入口已经打开，但大规模研究前还需要先把多来源筛选输入、主观判断列、候选池角色和 holdout 规则统一起来。
 
 ## 7. 下一步目标
 
-下一步不继续围绕 Alpha158 微调，而是进入“首个非 Alpha158 开源因子源 promoted adapter”阶段：
+下一步不继续围绕 Alpha158 微调，也不急着训练模型，而是进入“通用多来源筛选与候选池契约”阶段：
 
-1. 优先选择 `ta` 作为首个来源，因为本地参考仓库已存在、license 为 MIT、入口函数清晰。
-2. 审计 `ta/wrapper.py` 的 OHLCV 字段、窗口、是否存在未来函数、输出命名和 NaN 行为。
-3. 新增最小 adapter，将 Qlib OHLCV 面板转换为 `ta` 所需 DataFrame，再转回项目因子 frame。
-4. 只做少量 TA 因子 smoke，不立即全量评估。
-5. smoke 通过后，才把 TA 因子登记为 runnable catalog entries，并进入 batch V4。
-6. 同步抽象 multi-source screening/candidate-pool contract，让 Alpha158、TA、Alpha101 可以共用后续筛选流程。
+1. 读取 Alpha158 全量筛选输入和 TA promoted77 metric index，生成统一 screening input。
+2. 明确每个候选因子的 `source_project`、`stage`、`runnable`、`holdout_reason`、评价系统通过状态和核心指标列。
+3. 输出多来源 candidate board，先让不同开源评价体系结果共存，不改写其定义。
+4. 输出多来源 candidate pool，区分 `alpha_candidate`、`risk_control`、`monitor`、`holdout` 等角色。
+5. 将上述输出加入 readiness required contracts，使大规模新增因子前必须先通过工具链检查。
+6. 通过后再继续接 Alpha101、更多 TA 扩展、基本面和行业风格数据。

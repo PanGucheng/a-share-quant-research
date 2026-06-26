@@ -13,6 +13,10 @@ alpha158_recent_oos_portfolio_diagnostics,portfolio_smoke,outputs/alpha158_portf
 alpha158_stability_diagnostics,stability,outputs/alpha158_stability_diagnostics_v1/main_vs_recent_oos/single_factor_stability.csv,pass,14,1,3900
 ta_adapter_inventory,ta_adapter,outputs/ta_factor_adapter_v1/smoke/ta_factor_inventory.csv,pass,86,80,17525
 ta_smoke_passed_catalog,ta_adapter,outputs/ta_factor_adapter_v1/smoke/ta_factor_catalog_smoke_passed.yaml,pass,5,5,3780
+ta_promoted_catalog,ta_adapter,outputs/ta_factor_adapter_v1/smoke/ta_factor_catalog_promoted77.yaml,pass,77,77,48274
+ta_holdout_catalog,ta_adapter,outputs/ta_factor_adapter_v1/smoke/ta_factor_catalog_holdout2.yaml,pass,2,2,1873
+ta_batch_promotion_audit,ta_adapter,outputs/ta_factor_adapter_v1/smoke/ta_factor_batch_promotion_audit.csv,pass,74,74,6567
+ta_remaining74_metric_index,ta_v4_batch,outputs/factor_evaluation_batch_v1/ta_remaining74_batch1/ta_remaining74_metric_index.csv,pass,1332,1,333759
 ta_smoke_evaluator_status,ta_v4_smoke,outputs/factor_evaluation_v4/ta_smoke_v1/evaluator_status.csv,pass,15,15,2231
 ta_smoke_metric_index,ta_v4_smoke,outputs/factor_evaluation_v4/ta_smoke_v1/open_source_metric_index.csv,pass,90,1,18595
 ta_smoke_promotion_audit,ta_adapter,outputs/ta_factor_adapter_v1/smoke/ta_factor_smoke_promotion_audit.csv,pass,5,5,418

@@ -549,14 +549,16 @@ open_source_evaluator_systems: pass
 batch_runner: pass
 required_output_contracts: pass
 runnable_factor_inventory: pass
-new_source_adapter_inventory: blocked
+new_source_adapter_inventory: pass
 generic_multi_source_screening: partial
+total_runnable: 247
+new_source_runnable: 77
 ```
 
-This means the Alpha158 research path is reproducible, and the first
-non-Alpha158 adapter has started at smoke level. Large-scale multi-source
-discovery still needs more promoted TA factors before Alpha101 formula sources
-are added.
+This means the Alpha158 reference path and the first promoted non-Alpha158
+source are ready. The remaining toolchain gap is not another Alpha158 study; it
+is a generic multi-source screening and candidate-pool contract that can mix
+Alpha158, TA, Alpha101, and later sources without rewriting evaluator metrics.
 
 Key output:
 
@@ -564,47 +566,36 @@ Key output:
 outputs/factor_research_toolchain_readiness_v1/current/toolchain_readiness_report.md
 ```
 
-## TA Factor Adapter Smoke
+## TA Factor Adapter And Batch Promotion
 
-The first non-Alpha158 open-source factor source is now connected at smoke
-level through `bukosabino/ta`:
+The first non-Alpha158 open-source factor source is now connected through
+`bukosabino/ta`, with smoke and remaining-batch validation both complete:
 
 ```powershell
 cd E:\qlib_prj\qlib_baseline
 E:\anaconda_envs\qlib_env\python.exe scripts\run_ta_factor_adapter_smoke_v1.py --config configs\ta_factor_adapter_smoke_v1.yaml
 E:\anaconda_envs\qlib_env\python.exe scripts\run_factor_evaluation_v4.py --config configs\ta_factor_evaluation_smoke_v1.yaml
 E:\anaconda_envs\qlib_env\python.exe scripts\promote_ta_smoke_catalog_entries_v1.py --config configs\ta_factor_smoke_promotion_v1.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\prepare_ta_batch_catalogs_v1.py --config configs\ta_factor_batch_catalogs_v1.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\run_factor_evaluation_batch_v1.py --config configs\factor_evaluation_batch_v1_ta_remaining74.yaml --max-batches 15 --output-root outputs\factor_evaluation_batch_v1\ta_remaining74_batch1
+E:\anaconda_envs\qlib_env\python.exe scripts\promote_ta_batch_catalog_entries_v1.py --config configs\ta_factor_batch_promotion_v1.yaml
 ```
 
-Current TA smoke result:
+Current TA result:
 
 ```text
 eligible TA factors: 79
 excluded TA columns: 7
-V4 smoke factors: 5
-promoted smoke factors: 5
-readiness new_source_runnable: 5
+smoke promoted: 5
+remaining batch evaluated: 74
+batch promoted: 72
+batch holdout: 2
+combined promoted TA catalog: 77
 ```
 
-This is enough to prove the adapter path, but not enough to start full-scale
-TA screening. The next step is a resumable TA batch plan for the remaining
-eligible factors.
-
-TA remaining batch dry-run:
-
-```powershell
-cd E:\qlib_prj\qlib_baseline
-E:\anaconda_envs\qlib_env\python.exe scripts\prepare_ta_batch_catalogs_v1.py --config configs\ta_factor_batch_catalogs_v1.yaml
-E:\anaconda_envs\qlib_env\python.exe scripts\run_factor_evaluation_batch_v1.py --config configs\factor_evaluation_batch_v1_ta_remaining74.yaml --dry-run
-```
-
-Current batch plan:
-
-```text
-remaining TA factors: 74
-planned batches: 15
-batch size: 5
-```
+The two holdout factors are `ta_volatility_bbli` and `ta_volatility_kchi`; both
+passed Qlib eval but had no numeric Alphalens quantile-turnover result, so they
+stay outside the runnable promoted catalog.
 
 ## Open-Source References
 
@@ -661,6 +652,7 @@ docs/ALPHA158_STABILITY_DIAGNOSTICS_V1.md
 docs/FACTOR_RESEARCH_TOOLCHAIN_READINESS_V1.md
 docs/TA_FACTOR_ADAPTER_SMOKE_V1.md
 docs/TA_BATCH_EVALUATION_PLAN_V1.md
+docs/TA_BATCH_PROMOTION_V1.md
 docs/STEP_5_FACTOR_RESEARCH_AND_MODEL_PLAN.md
 docs/PROJECT_CONTEXT_SUMMARY.md
 ```

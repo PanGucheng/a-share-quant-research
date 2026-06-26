@@ -1,0 +1,23 @@
+source_catalog: "outputs/ta_factor_adapter_v1/smoke/ta_factor_catalog_remaining74.yaml"
+existing_passed_catalog: "outputs/ta_factor_adapter_v1/smoke/ta_factor_catalog_smoke_passed.yaml"
+batch_root: "outputs/factor_evaluation_batch_v1/ta_remaining74_batch1"
+batch_passed_catalog: "outputs/ta_factor_adapter_v1/smoke/ta_factor_catalog_batch_passed72.yaml"
+holdout_catalog: "outputs/ta_factor_adapter_v1/smoke/ta_factor_catalog_holdout2.yaml"
+combined_promoted_catalog: "outputs/ta_factor_adapter_v1/smoke/ta_factor_catalog_promoted77.yaml"
+promotion_audit: "outputs/ta_factor_adapter_v1/smoke/ta_factor_batch_promotion_audit.csv"
+metric_index_output: "outputs/factor_evaluation_batch_v1/ta_remaining74_batch1/ta_remaining74_metric_index.csv"
+report_output: "outputs/ta_factor_adapter_v1/smoke/ta_factor_batch_promotion_report.md"
+
+promotion:
+  passed_stage: "ta_adapter_v4_batch_passed"
+  holdout_stage: "ta_adapter_v4_batch_holdout"
+  required_pass_systems:
+    - "alphalens_reloaded"
+    - "qlib_eval"
+  allowed_partial_systems:
+    jqfactor_analyzer:
+      - "factor_returns"
+      - "factor_alpha_beta"
+  holdout_partial_systems:
+    alphalens_reloaded:
+      - "quantile_turnover"
