@@ -556,9 +556,9 @@ new_source_runnable: 77
 ```
 
 This means the Alpha158 reference path and the first promoted non-Alpha158
-source are ready. The remaining toolchain gap is not another Alpha158 study; it
-is a generic multi-source screening and candidate-pool contract that can mix
-Alpha158, TA, Alpha101, and later sources without rewriting evaluator metrics.
+source are ready. The generic multi-source screening and candidate-pool contract
+now also passes, so the next project stage is broad factor-source expansion
+rather than more Alpha158-only study.
 
 Key output:
 
@@ -596,6 +596,32 @@ combined promoted TA catalog: 77
 The two holdout factors are `ta_volatility_bbli` and `ta_volatility_kchi`; both
 passed Qlib eval but had no numeric Alphalens quantile-turnover result, so they
 stay outside the runnable promoted catalog.
+
+## Multi-Source Screening Contract
+
+Build the generic screening input and candidate pool from Alpha158 plus promoted
+TA factors:
+
+```powershell
+cd E:\qlib_prj\qlib_baseline
+E:\anaconda_envs\qlib_env\python.exe scripts\run_multi_source_screening_v1.py --config configs\multi_source_screening_v1.yaml
+```
+
+Current result:
+
+```text
+screening rows: 237
+sources: 2
+Alpha158 strict rows: 155
+TA strict rows: 77
+holdouts: 5
+alpha candidates: 14
+contract status: pass
+```
+
+TA promoted factors are intentionally kept as `monitor` rows until a generic
+judgement layer is added; this avoids turning a successful source adapter into a
+trading signal by accident.
 
 ## Open-Source References
 
@@ -653,6 +679,7 @@ docs/FACTOR_RESEARCH_TOOLCHAIN_READINESS_V1.md
 docs/TA_FACTOR_ADAPTER_SMOKE_V1.md
 docs/TA_BATCH_EVALUATION_PLAN_V1.md
 docs/TA_BATCH_PROMOTION_V1.md
+docs/MULTI_SOURCE_SCREENING_V1.md
 docs/STEP_5_FACTOR_RESEARCH_AND_MODEL_PLAN.md
 docs/PROJECT_CONTEXT_SUMMARY.md
 ```

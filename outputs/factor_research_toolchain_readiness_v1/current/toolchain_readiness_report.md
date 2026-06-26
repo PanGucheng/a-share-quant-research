@@ -1,12 +1,12 @@
 # Factor Research Toolchain Readiness V1
 
-- Overall status: `partial`
+- Overall status: `ready`
 - Scope: factor research and factor screening only.
 - Boundary: no Qlib baseline replacement, no new model training, no live trading, no evaluator definition changes.
 
 ## Conclusion
 
-The Alpha158 reference path and the first promoted non-Alpha158 source are ready; the remaining gap is a generic multi-source screening and candidate-pool contract for large-scale discovery.
+The factor research toolchain is ready for large-scale multi-source screening.
 
 ## Readiness Checks
 
@@ -14,11 +14,11 @@ The Alpha158 reference path and the first promoted non-Alpha158 source are ready
 | --- | --- | --- | --- |
 | prefilter_policy | pass | catalog=data_quality,tradability; manifest=data_quality,tradability | Keep data_quality and tradability as mandatory prefilters for every new factor source. |
 | open_source_evaluator_systems | pass | systems=alphalens_reloaded,jqfactor_analyzer,qlib_eval,project_current | Do not replace external evaluator definitions; keep Alphalens Reloaded, jqfactor_analyzer, Qlib eval, and project_current coexisting. |
-| batch_runner | pass | batch_configs=2 | Use the batch runner for large jobs, with dry-run, resume, manifests, and logs. |
+| batch_runner | pass | batch_configs=3 | Use the batch runner for large jobs, with dry-run, resume, manifests, and logs. |
 | required_output_contracts | pass | missing_or_failed=0 | Repair missing contracts before launching full-scale screening. |
-| runnable_factor_inventory | pass | total_runnable=247 | Alpha158 is enough to validate the machinery; more sources are needed for broad factor discovery. |
+| runnable_factor_inventory | pass | total_runnable=247 | Use Alpha158 and the promoted TA source to validate the machinery, then add more sources through the same gates. |
 | new_source_adapter_inventory | pass | new_source_runnable=77 | Keep the promoted non-Alpha158 catalog as a large-scale screening input and add later sources through the same adapter gate. |
-| generic_multi_source_screening | partial | Alpha158 has a mature specific screening/judgement/pool path; generic screening_v3 exists but is not yet the large-scale multi-source standard. | Generalize the screening input and candidate-pool contracts before mixing TA, Alpha101, and future factors. |
+| generic_multi_source_screening | pass | contracts=6, failed=0 | Use the generic multi-source screening contract as the entry point for Alpha158, TA, Alpha101, and future factors. |
 
 ## Catalog Summary
 
@@ -70,6 +70,12 @@ The Alpha158 reference path and the first promoted non-Alpha158 source are ready
 | ta_smoke_evaluator_status | ta_v4_smoke | outputs/factor_evaluation_v4/ta_smoke_v1/evaluator_status.csv | pass | 15 | 15 | 2231 |
 | ta_smoke_metric_index | ta_v4_smoke | outputs/factor_evaluation_v4/ta_smoke_v1/open_source_metric_index.csv | pass | 90 | 1 | 18595 |
 | ta_smoke_promotion_audit | ta_adapter | outputs/ta_factor_adapter_v1/smoke/ta_factor_smoke_promotion_audit.csv | pass | 5 | 5 | 418 |
+| multi_source_screening_input | multi_source_screening | outputs/multi_source_screening_v1/current/multi_source_screening_input.csv | pass | 237 | 200 | 127160 |
+| multi_source_candidate_board | multi_source_screening | outputs/multi_source_screening_v1/current/multi_source_candidate_board.csv | pass | 237 | 200 | 140199 |
+| multi_source_candidate_pool | multi_source_candidate_pool | outputs/multi_source_screening_v1/current/multi_source_candidate_pool.csv | pass | 237 | 200 | 140199 |
+| multi_source_alpha_candidates | multi_source_candidate_pool | outputs/multi_source_screening_v1/current/multi_source_alpha_candidates.csv | pass | 14 | 1 | 8594 |
+| multi_source_holdouts | multi_source_candidate_pool | outputs/multi_source_screening_v1/current/multi_source_holdouts.csv | pass | 5 | 1 | 3550 |
+| multi_source_contract_status | multi_source_screening | outputs/multi_source_screening_v1/current/multi_source_contract_status.csv | pass | 7 | 7 | 314 |
 
 ## Stage Counts
 
@@ -86,5 +92,5 @@ The Alpha158 reference path and the first promoted non-Alpha158 source are ready
 
 1. Keep Alpha158 as the validated reference pipeline, not the next research bottleneck.
 2. Treat the promoted TA catalog as the first large-scale non-Alpha158 input.
-3. Generalize screening and candidate-pool contracts so Alpha158, TA, Alpha101, and later sources can coexist without rewriting evaluator metrics.
-4. After the generic contract passes, start broad factor discovery by adding more open-source factor families through the same adapter, V4 batch, promotion, and holdout gates.
+3. Use the generic multi-source screening contract as the standard entry point for candidate-pool construction.
+4. Start broad factor discovery by adding more open-source factor families through the same adapter, V4 batch, promotion, and holdout gates.

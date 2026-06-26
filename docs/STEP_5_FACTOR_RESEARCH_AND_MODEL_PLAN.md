@@ -2635,3 +2635,67 @@ ta_volatility_kchi
 - 将 Alpha158 full runnable catalog、TA promoted77 catalog、V4 metric index 和 holdout 表合并为统一筛选输入。
 - 先让 Alphalens Reloaded、jqfactor_analyzer、Qlib eval、本项目 current evaluator 结果共存，再做主观判断层。
 - contract 通过 readiness 后，再继续接 Alpha101、基本面、行业风格和更多开源来源。
+
+## 54. V3.22：Multi-Source Screening Contract V1
+
+状态：已完成。
+
+阶段文档：
+
+```text
+docs/MULTI_SOURCE_SCREENING_V1.md
+```
+
+新增文件：
+
+```text
+configs/multi_source_screening_v1.yaml
+factor_research/multi_source_screening.py
+scripts/run_multi_source_screening_v1.py
+```
+
+运行命令：
+
+```powershell
+E:\anaconda_envs\qlib_env\python.exe scripts\run_multi_source_screening_v1.py --config configs\multi_source_screening_v1.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\audit_factor_research_toolchain_v1.py --config configs\factor_research_toolchain_readiness_v1.yaml
+```
+
+关键输出：
+
+```text
+outputs/multi_source_screening_v1/current/multi_source_screening_input.csv
+outputs/multi_source_screening_v1/current/multi_source_candidate_board.csv
+outputs/multi_source_screening_v1/current/multi_source_candidate_pool.csv
+outputs/multi_source_screening_v1/current/multi_source_alpha_candidates.csv
+outputs/multi_source_screening_v1/current/multi_source_holdouts.csv
+outputs/multi_source_screening_v1/current/multi_source_contract_status.csv
+outputs/multi_source_screening_v1/current/multi_source_screening_report.md
+```
+
+完成结果：
+
+```text
+screening rows: 237
+sources: 2
+Alpha158 strict rows: 155
+TA strict rows: 77
+holdouts: 5
+alpha candidates: 14
+multi-source contract status: pass
+factor research readiness: ready
+```
+
+设计结论：
+
+- Alpha158 继续作为验证过的 reference pipeline。
+- TA promoted77 进入通用候选池，但暂时保持 `monitor`，不直接判为 alpha。
+- readiness gate 已把 multi-source screening input、candidate board、candidate pool、holdouts 和 contract status 纳入必备输出。
+- 现在工具链已经可以支撑大规模多来源因子研究。
+
+下一步：
+
+- 进入 V3.23：Alpha101 或其他开源公式源 adapter。
+- 优先复用 KunQuant / Ginkgo Alpha101 等开源实现，避免手写公式。
+- 每个新来源继续走 source manifest -> adapter audit -> V4 smoke -> batch -> promotion/holdout -> multi-source screening。
+- 在更多新来源进入 `monitor` 后，再建设通用 judgement 层，把新来源因子筛成 `alpha_candidate`、`risk_control`、`monitor` 或 `holdout`。

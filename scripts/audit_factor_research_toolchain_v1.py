@@ -294,6 +294,10 @@ def build_readiness_checks(
     catalog_prefilter = set(catalog_payload.get("policy", {}).get("required_prefilter", []))
     manifest_prefilter = set(manifest_payload.get("policy", {}).get("required_prefilter", []))
     contract_missing = contract_status[contract_status["status"].ne("pass")]
+    multi_source_contracts = contract_status[
+        contract_status["group"].isin(["multi_source_screening", "multi_source_candidate_pool"])
+    ]
+    multi_source_contract_failures = multi_source_contracts[multi_source_contracts["status"].ne("pass")]
     total_runnable = int(catalog_summary["runnable_count"].sum()) if not catalog_summary.empty else 0
     baseline_sources = set(str(item) for item in rules.get("baseline_sources", []))
     new_source_rows = source_readiness[
@@ -341,7 +345,7 @@ def build_readiness_checks(
         "runnable_factor_inventory",
         "pass" if total_runnable >= int(rules.get("min_total_runnable_factors", 0)) else "partial",
         f"total_runnable={total_runnable}",
-        "Alpha158 is enough to validate the machinery; more sources are needed for broad factor discovery.",
+        "Use Alpha158 and the promoted TA source to validate the machinery, then add more sources through the same gates.",
     )
     add(
         "new_source_adapter_inventory",
@@ -357,9 +361,13 @@ def build_readiness_checks(
     )
     add(
         "generic_multi_source_screening",
-        "partial",
-        "Alpha158 has a mature specific screening/judgement/pool path; generic screening_v3 exists but is not yet the large-scale multi-source standard.",
-        "Generalize the screening input and candidate-pool contracts before mixing TA, Alpha101, and future factors.",
+        "pass" if not multi_source_contracts.empty and multi_source_contract_failures.empty else "partial",
+        f"contracts={len(multi_source_contracts)}, failed={len(multi_source_contract_failures)}",
+        (
+            "Use the generic multi-source screening contract as the entry point for Alpha158, TA, Alpha101, and future factors."
+            if not multi_source_contracts.empty and multi_source_contract_failures.empty
+            else "Generalize the screening input and candidate-pool contracts before mixing TA, Alpha101, and future factors."
+        ),
     )
     return pd.DataFrame(rows)
 
@@ -449,8 +457,8 @@ def write_report(
             "",
             "1. Keep Alpha158 as the validated reference pipeline, not the next research bottleneck.",
             "2. Treat the promoted TA catalog as the first large-scale non-Alpha158 input.",
-            "3. Generalize screening and candidate-pool contracts so Alpha158, TA, Alpha101, and later sources can coexist without rewriting evaluator metrics.",
-            "4. After the generic contract passes, start broad factor discovery by adding more open-source factor families through the same adapter, V4 batch, promotion, and holdout gates.",
+            "3. Use the generic multi-source screening contract as the standard entry point for candidate-pool construction.",
+            "4. Start broad factor discovery by adding more open-source factor families through the same adapter, V4 batch, promotion, and holdout gates.",
         ]
     )
     (output_dir / "toolchain_readiness_report.md").write_text("\n".join(lines) + "\n", encoding="utf-8")

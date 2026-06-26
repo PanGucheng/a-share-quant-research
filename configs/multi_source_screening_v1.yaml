@@ -1,0 +1,25 @@
+pool_name: "multi_source_v1"
+output_dir: "outputs/multi_source_screening_v1/current"
+
+alpha158:
+  catalog: "outputs/factor_catalog_alpha158_v1/alpha158_catalog_full158_runnable.yaml"
+  screening_input: "outputs/factor_screening_alpha158_v1/full158/alpha158_factor_screening_input.csv"
+  candidate_pool: "outputs/factor_candidate_pool_alpha158_v1/full158/alpha158_candidate_pool.csv"
+
+ta:
+  promoted_catalog: "outputs/ta_factor_adapter_v1/smoke/ta_factor_catalog_promoted77.yaml"
+  holdout_catalog: "outputs/ta_factor_adapter_v1/smoke/ta_factor_catalog_holdout2.yaml"
+  factor_summary: "outputs/ta_factor_adapter_v1/smoke/ta_factor_frame_summary.csv"
+  metric_indexes:
+    - "outputs/factor_evaluation_v4/ta_smoke_v1/open_source_metric_index.csv"
+    - "outputs/factor_evaluation_batch_v1/ta_remaining74_batch1/ta_remaining74_metric_index.csv"
+  promotion_audits:
+    - "outputs/ta_factor_adapter_v1/smoke/ta_factor_smoke_promotion_audit.csv"
+    - "outputs/ta_factor_adapter_v1/smoke/ta_factor_batch_promotion_audit.csv"
+  evaluator_statuses:
+    - "outputs/factor_evaluation_v4/ta_smoke_v1/evaluator_status.csv"
+
+contract:
+  min_sources: 2
+  min_total_rows: 200
+  min_new_source_rows: 20

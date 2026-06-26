@@ -535,7 +535,7 @@ total_runnable: 247
 new_source_runnable: 77
 ```
 
-这说明 Alpha158 参照链路和第一个非 Alpha158 promoted 来源都已经准备好。当前剩余缺口不是继续细抠 Alpha158，而是统一多来源 screening / candidate pool 契约，让 Alpha158、TA、Alpha101 和后续来源可以共用同一套筛选入口。
+这说明 Alpha158 参照链路、第一个非 Alpha158 promoted 来源，以及通用多来源 screening / candidate pool 契约都已经准备好。下一阶段应该进入大规模因子源扩张，而不是继续只围绕 Alpha158 细挖。
 
 关键输出：
 
@@ -570,6 +570,29 @@ combined promoted TA catalog: 77
 ```
 
 两个 holdout 因子是 `ta_volatility_bbli` 和 `ta_volatility_kchi`。它们通过了 Qlib eval，但 Alphalens quantile turnover 没有产生数值，因此暂不进入 promoted runnable catalog。
+
+## 多来源 screening contract
+
+基于 Alpha158 和 promoted TA 因子生成通用筛选输入与候选池：
+
+```powershell
+cd E:\qlib_prj\qlib_baseline
+E:\anaconda_envs\qlib_env\python.exe scripts\run_multi_source_screening_v1.py --config configs\multi_source_screening_v1.yaml
+```
+
+当前结果：
+
+```text
+screening rows: 237
+sources: 2
+Alpha158 strict rows: 155
+TA strict rows: 77
+holdouts: 5
+alpha candidates: 14
+contract status: pass
+```
+
+TA promoted 因子目前保守放入 `monitor`，不会直接当成 alpha 信号。后续应新增通用 judgement 层，再决定哪些新来源因子进入 `alpha_candidate`。
 
 ## 当前因子研究结论
 
@@ -634,6 +657,7 @@ docs/FACTOR_RESEARCH_TOOLCHAIN_READINESS_V1.md
 docs/TA_FACTOR_ADAPTER_SMOKE_V1.md
 docs/TA_BATCH_EVALUATION_PLAN_V1.md
 docs/TA_BATCH_PROMOTION_V1.md
+docs/MULTI_SOURCE_SCREENING_V1.md
 docs/STEP_5_FACTOR_RESEARCH_AND_MODEL_PLAN.md
 docs/PROJECT_CONTEXT_SUMMARY.md
 ```
