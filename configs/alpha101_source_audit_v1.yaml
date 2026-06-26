@@ -1,0 +1,30 @@
+sources:
+  - id: "kunquant_alpha101"
+    name: "KunQuant Alpha101"
+    local_path: "tmp/reference_repos/KunQuant"
+    source_file: "KunQuant/predefined/Alpha101.py"
+    source_commit: "d4b9e61f729df347730aa921b539b9df3c3fe36d"
+    license: "Apache-2.0"
+    implementation_role: "primary_formula_source"
+  - id: "ginkgo_alpha101"
+    name: "Ginkgo Alpha101"
+    local_path: "tmp/reference_repos/Ginkgo_Alpha101"
+    source_file: "README.md"
+    source_commit: "57cec7002698d89c130e027c7661bf53d307dcac"
+    license: "MIT"
+    implementation_role: "metadata_reference_only"
+
+output_dir: "outputs/factor_catalog_alpha101_v1/source_audit"
+metadata_catalog: "outputs/factor_catalog_alpha101_v1/kunquant_alpha101_catalog_metadata.yaml"
+
+labels:
+  - "label_10d_t1"
+  - "label_20d_t1"
+
+policy:
+  required_prefilter:
+    - "data_quality"
+    - "tradability"
+  default_stage: "alpha101_source_audit_adapter_pending"
+  compute_adapter: "kunquant_alpha101_adapter_pending"
+  expected_direction: "watch"

@@ -27,20 +27,21 @@ The factor research toolchain is ready for large-scale multi-source screening.
 | project_main_catalog | factor_research/factor_catalog.yaml | pass | 15 | 15 | 15 | Project planning catalog and currently registered seed factors. |
 | alpha158_full_runnable_catalog | outputs/factor_catalog_alpha158_v1/alpha158_catalog_full158_runnable.yaml | pass | 155 | 155 | 155 | Promoted Qlib Alpha158 catalog after expression validation and V4 batch evaluation. |
 | ta_promoted_catalog | outputs/ta_factor_adapter_v1/smoke/ta_factor_catalog_promoted77.yaml | pass | 77 | 77 | 77 | Promoted TA factors after adapter smoke and remaining batch V4 validation. |
+| kunquant_alpha101_metadata_catalog | outputs/factor_catalog_alpha101_v1/kunquant_alpha101_catalog_metadata.yaml | pass | 82 | 0 | 0 | KunQuant Alpha101 metadata catalog after source audit; adapter pending and non-runnable. |
 
 ## Source Readiness
 
 | source_project | declared_status | license | local_path_status | source_file_status | runnable_factor_count | readiness | readiness_reason |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | ginkgo_alpha101 | metadata_registered_adapter_pending | MIT | available | available | 0 | adapter_pending | source registered but calculation adapter is not promoted |
-| kunquant_alpha101 | metadata_registered_adapter_pending | Apache-2.0 | available | available | 0 | adapter_pending | source registered but calculation adapter is not promoted |
+| kunquant_alpha101 | source_audit_passed_adapter_pending | Apache-2.0 | available | available | 0 | adapter_pending | source registered but calculation adapter is not promoted |
 | qlib_alpha158 | formula_inventory_passed_expression_adapter_pending | MIT | available | available | 155 | ready | runnable catalog entries available |
 | ta | metadata_registered_adapter_pending | MIT | available | available | 77 | ready | runnable catalog entries available |
 | qlib_factor_platform_presets | design_reference | MIT | available | available | 0 | reference_only | design reference, not a runnable factor source |
 | alphalens_reloaded | factor_research/external/adapters.py::to_alphalens_factor_data | Apache-2.0 | available | available | 0 | reference_or_evaluator | Primary open-source factor evaluation reference. |
 | factortest | future data inventory and exposure adapters | MIT | available | available | 0 | reference_or_evaluator | A-share data layer, factor test, industry/style exposure reference. |
 | jqfactor_analyzer | factor_research/external/adapters.py::to_jqfactor_inputs | MIT | available | available | 0 | reference_or_evaluator | A-share style factor analysis reference with group, neutralization, and Chinese reporting conventions. |
-| kunquant | future factor catalog entries | Apache-2.0 | available | available | 0 | reference_or_evaluator | Alpha101/Alpha158 formula and high-performance factor calculation reference. |
+| kunquant | kunquant_alpha101_adapter_pending | Apache-2.0 | available | available | 0 | reference_or_evaluator | Alpha101/Alpha158 formula and high-performance factor calculation reference. |
 | multi_factor | future factor catalog entries after license review | unknown | available | available | 0 | reference_or_evaluator | A-share fundamental factor and single-factor test reference. |
 | qlib_evaluate | factor_research/external/adapters.py::to_qlib_score_frame | MIT | available | available | 0 | reference_or_evaluator | Keep compatibility with the baseline framework and Qlib-native risk/evaluation tools. |
 | qlib_factor_platform | none | MIT | available | available | 0 | reference_or_evaluator | Reference for factor management, workflow organization, and configurable analysis pages. |
@@ -76,6 +77,9 @@ The factor research toolchain is ready for large-scale multi-source screening.
 | multi_source_alpha_candidates | multi_source_candidate_pool | outputs/multi_source_screening_v1/current/multi_source_alpha_candidates.csv | pass | 14 | 1 | 8594 |
 | multi_source_holdouts | multi_source_candidate_pool | outputs/multi_source_screening_v1/current/multi_source_holdouts.csv | pass | 5 | 1 | 3550 |
 | multi_source_contract_status | multi_source_screening | outputs/multi_source_screening_v1/current/multi_source_contract_status.csv | pass | 7 | 7 | 314 |
+| alpha101_source_summary | alpha101_source_audit | outputs/factor_catalog_alpha101_v1/source_audit/alpha101_source_summary.csv | pass | 2 | 2 | 574 |
+| kunquant_alpha101_inventory | alpha101_source_audit | outputs/factor_catalog_alpha101_v1/source_audit/kunquant_alpha101_inventory.csv | pass | 82 | 80 | 19926 |
+| kunquant_alpha101_metadata_catalog | alpha101_source_audit | outputs/factor_catalog_alpha101_v1/kunquant_alpha101_catalog_metadata.yaml | pass | 82 | 80 | 51857 |
 
 ## Stage Counts
 
@@ -83,6 +87,7 @@ The factor research toolchain is ready for large-scale multi-source screening.
 | --- | --- | --- | --- | --- | --- |
 | alpha158_full_runnable_catalog | qlib_alpha158 | alpha158_first20_v4_smoke_passed | True | True | 20 |
 | alpha158_full_runnable_catalog | qlib_alpha158 | alpha158_remaining138_v4_batch_passed | True | True | 135 |
+| kunquant_alpha101_metadata_catalog | kunquant_alpha101 | alpha101_source_audit_adapter_pending | False | False | 82 |
 | project_main_catalog | qlib_baseline_basic | current_v4_seed | True | True | 5 |
 | project_main_catalog | qlib_baseline_basic | project_basic_available | True | True | 10 |
 | ta_promoted_catalog | ta | ta_adapter_v4_batch_passed | True | True | 72 |

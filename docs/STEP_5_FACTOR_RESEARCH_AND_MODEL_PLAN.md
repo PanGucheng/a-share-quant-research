@@ -2699,3 +2699,60 @@ factor research readiness: ready
 - 优先复用 KunQuant / Ginkgo Alpha101 等开源实现，避免手写公式。
 - 每个新来源继续走 source manifest -> adapter audit -> V4 smoke -> batch -> promotion/holdout -> multi-source screening。
 - 在更多新来源进入 `monitor` 后，再建设通用 judgement 层，把新来源因子筛成 `alpha_candidate`、`risk_control`、`monitor` 或 `holdout`。
+
+## 55. V3.23：Alpha101 Source Audit V1
+
+状态：已完成 source audit，adapter pending。
+
+阶段文档：
+
+```text
+docs/ALPHA101_SOURCE_AUDIT_V1.md
+```
+
+新增文件：
+
+```text
+configs/alpha101_source_audit_v1.yaml
+scripts/audit_alpha101_sources_v1.py
+```
+
+运行命令：
+
+```powershell
+E:\anaconda_envs\qlib_env\python.exe scripts\audit_alpha101_sources_v1.py --config configs\alpha101_source_audit_v1.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\audit_factor_research_toolchain_v1.py --config configs\factor_research_toolchain_readiness_v1.yaml
+```
+
+关键输出：
+
+```text
+outputs/factor_catalog_alpha101_v1/source_audit/alpha101_source_summary.csv
+outputs/factor_catalog_alpha101_v1/source_audit/kunquant_alpha101_inventory.csv
+outputs/factor_catalog_alpha101_v1/source_audit/alpha101_source_audit_report.md
+outputs/factor_catalog_alpha101_v1/kunquant_alpha101_catalog_metadata.yaml
+```
+
+完成结果：
+
+```text
+KunQuant parsed formula functions: 82
+KunQuant all_alpha entries: 82
+Ginkgo runnable implementation files: 0
+metadata catalog entries: 82
+status: source_audit_passed_adapter_pending
+```
+
+重要发现：
+
+- KunQuant 是当前可用的 Alpha101 主来源，license 为 Apache-2.0。
+- Ginkgo_Alpha101 本地克隆只有 README/LICENSE，不能作为 runnable adapter 来源。
+- KunQuant `all_alpha` 当前不是完整 101 个编号，而是 82 个公式。
+- metadata catalog 全部保持 `enabled: false`、`runnable: false`，防止未适配公式误入 batch runner。
+
+下一步：
+
+- 实现 KunQuant Alpha101 adapter smoke。
+- 先选择 3-5 个字段依赖简单、窗口较短的公式，例如 `alpha001`、`alpha009`、`alpha012`、`alpha033`、`alpha101`。
+- 尽量调用 KunQuant 的公式定义或 pandas reference，不手写公式。
+- smoke 通过后，再进入 V4 评价、promotion/holdout 和 multi-source screening。

@@ -594,6 +594,26 @@ contract status: pass
 
 TA promoted 因子目前保守放入 `monitor`，不会直接当成 alpha 信号。后续应新增通用 judgement 层，再决定哪些新来源因子进入 `alpha_candidate`。
 
+## Alpha101 来源审计
+
+下一批大规模因子源选择 Alpha101，优先使用 KunQuant 作为公式来源：
+
+```powershell
+cd E:\qlib_prj\qlib_baseline
+E:\anaconda_envs\qlib_env\python.exe scripts\audit_alpha101_sources_v1.py --config configs\alpha101_source_audit_v1.yaml
+```
+
+当前审计结果：
+
+```text
+KunQuant all_alpha entries: 82
+Ginkgo runnable implementation files: 0
+Alpha101 metadata catalog entries: 82
+status: adapter_pending, non-runnable
+```
+
+生成的 Alpha101 catalog 目前只是 metadata。所有条目保持 disabled / non-runnable，直到 KunQuant adapter smoke 和 V4 评价通过。
+
 ## 当前因子研究结论
 
 截至 V3.1/V3.2：
@@ -658,6 +678,7 @@ docs/TA_FACTOR_ADAPTER_SMOKE_V1.md
 docs/TA_BATCH_EVALUATION_PLAN_V1.md
 docs/TA_BATCH_PROMOTION_V1.md
 docs/MULTI_SOURCE_SCREENING_V1.md
+docs/ALPHA101_SOURCE_AUDIT_V1.md
 docs/STEP_5_FACTOR_RESEARCH_AND_MODEL_PLAN.md
 docs/PROJECT_CONTEXT_SUMMARY.md
 ```

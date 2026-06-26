@@ -1,0 +1,3 @@
+﻿source_project,name,implementation_role,local_path,source_file,source_status,license,license_status,source_commit,function_count,all_alpha_count,adapter_status
+kunquant_alpha101,KunQuant Alpha101,primary_formula_source,tmp/reference_repos/KunQuant,KunQuant/predefined/Alpha101.py,available,Apache-2.0,available,d4b9e61f729df347730aa921b539b9df3c3fe36d,82,82,adapter_pending
+ginkgo_alpha101,Ginkgo Alpha101,metadata_reference_only,tmp/reference_repos/Ginkgo_Alpha101,README.md,available,MIT,available,57cec7002698d89c130e027c7661bf53d307dcac,0,0,not_runnable_reference

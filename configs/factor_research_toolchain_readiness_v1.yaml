@@ -8,6 +8,9 @@ catalogs:
   - id: "ta_promoted_catalog"
     path: "outputs/ta_factor_adapter_v1/smoke/ta_factor_catalog_promoted77.yaml"
     role: "Promoted TA factors after adapter smoke and remaining batch V4 validation."
+  - id: "kunquant_alpha101_metadata_catalog"
+    path: "outputs/factor_catalog_alpha101_v1/kunquant_alpha101_catalog_metadata.yaml"
+    role: "KunQuant Alpha101 metadata catalog after source audit; adapter pending and non-runnable."
 
 source_manifest: "factor_research/external/source_manifest.yaml"
 output_dir: "outputs/factor_research_toolchain_readiness_v1/current"
@@ -138,6 +141,19 @@ required_output_contracts:
     group: "multi_source_screening"
     path: "outputs/multi_source_screening_v1/current/multi_source_contract_status.csv"
     min_rows: 7
+  - id: "alpha101_source_summary"
+    group: "alpha101_source_audit"
+    path: "outputs/factor_catalog_alpha101_v1/source_audit/alpha101_source_summary.csv"
+    min_rows: 2
+  - id: "kunquant_alpha101_inventory"
+    group: "alpha101_source_audit"
+    path: "outputs/factor_catalog_alpha101_v1/source_audit/kunquant_alpha101_inventory.csv"
+    min_rows: 80
+  - id: "kunquant_alpha101_metadata_catalog"
+    group: "alpha101_source_audit"
+    path: "outputs/factor_catalog_alpha101_v1/kunquant_alpha101_catalog_metadata.yaml"
+    yaml_key: "factors"
+    min_rows: 80
 
 large_scale_rules:
   min_total_runnable_factors: 100

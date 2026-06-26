@@ -623,6 +623,28 @@ TA promoted factors are intentionally kept as `monitor` rows until a generic
 judgement layer is added; this avoids turning a successful source adapter into a
 trading signal by accident.
 
+## Alpha101 Source Audit
+
+The next large-scale factor source is Alpha101, using KunQuant as the primary
+formula source:
+
+```powershell
+cd E:\qlib_prj\qlib_baseline
+E:\anaconda_envs\qlib_env\python.exe scripts\audit_alpha101_sources_v1.py --config configs\alpha101_source_audit_v1.yaml
+```
+
+Current audit result:
+
+```text
+KunQuant all_alpha entries: 82
+Ginkgo runnable implementation files: 0
+Alpha101 metadata catalog entries: 82
+status: adapter_pending, non-runnable
+```
+
+The generated Alpha101 catalog is metadata only. Entries stay disabled and
+non-runnable until a KunQuant adapter smoke and V4 evaluation pass.
+
 ## Open-Source References
 
 The factor research design intentionally borrows stable ideas from open-source
@@ -680,6 +702,7 @@ docs/TA_FACTOR_ADAPTER_SMOKE_V1.md
 docs/TA_BATCH_EVALUATION_PLAN_V1.md
 docs/TA_BATCH_PROMOTION_V1.md
 docs/MULTI_SOURCE_SCREENING_V1.md
+docs/ALPHA101_SOURCE_AUDIT_V1.md
 docs/STEP_5_FACTOR_RESEARCH_AND_MODEL_PLAN.md
 docs/PROJECT_CONTEXT_SUMMARY.md
 ```
