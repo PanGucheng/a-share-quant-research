@@ -590,6 +590,22 @@ This is enough to prove the adapter path, but not enough to start full-scale
 TA screening. The next step is a resumable TA batch plan for the remaining
 eligible factors.
 
+TA remaining batch dry-run:
+
+```powershell
+cd E:\qlib_prj\qlib_baseline
+E:\anaconda_envs\qlib_env\python.exe scripts\prepare_ta_batch_catalogs_v1.py --config configs\ta_factor_batch_catalogs_v1.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\run_factor_evaluation_batch_v1.py --config configs\factor_evaluation_batch_v1_ta_remaining74.yaml --dry-run
+```
+
+Current batch plan:
+
+```text
+remaining TA factors: 74
+planned batches: 15
+batch size: 5
+```
+
 ## Open-Source References
 
 The factor research design intentionally borrows stable ideas from open-source
@@ -644,6 +660,7 @@ docs/ALPHA158_RECENT_OOS_EXTENSION_V1.md
 docs/ALPHA158_STABILITY_DIAGNOSTICS_V1.md
 docs/FACTOR_RESEARCH_TOOLCHAIN_READINESS_V1.md
 docs/TA_FACTOR_ADAPTER_SMOKE_V1.md
+docs/TA_BATCH_EVALUATION_PLAN_V1.md
 docs/STEP_5_FACTOR_RESEARCH_AND_MODEL_PLAN.md
 docs/PROJECT_CONTEXT_SUMMARY.md
 ```

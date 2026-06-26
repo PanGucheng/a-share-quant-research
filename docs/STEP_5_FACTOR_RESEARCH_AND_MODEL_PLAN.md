@@ -2513,3 +2513,58 @@ V4 smoke 结果：
 - 为剩余 74 个未评价 eligible TA 因子生成可恢复 batch 配置。
 - 降低单次运行风险，使用 small-batch + resume + metric summary。
 - 通过 batch 后再把 TA promoted catalog 提升到至少 20 个新源 runnable，使 readiness gate 从 `blocked` 进入 `partial/ready-for-large-scale-screening`。
+
+## 52. V3.20：TA Batch Evaluation Plan V1
+
+状态：已完成 dry-run。
+
+阶段文档：
+
+```text
+docs/TA_BATCH_EVALUATION_PLAN_V1.md
+```
+
+新增文件：
+
+```text
+configs/ta_factor_batch_catalogs_v1.yaml
+configs/ta_factor_evaluation_batch_base_v1.yaml
+configs/factor_evaluation_batch_v1_ta_remaining74.yaml
+scripts/prepare_ta_batch_catalogs_v1.py
+```
+
+运行命令：
+
+```powershell
+E:\anaconda_envs\qlib_env\python.exe scripts\prepare_ta_batch_catalogs_v1.py --config configs\ta_factor_batch_catalogs_v1.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\run_factor_evaluation_batch_v1.py --config configs\factor_evaluation_batch_v1_ta_remaining74.yaml --dry-run
+```
+
+关键输出：
+
+```text
+outputs/ta_factor_adapter_v1/smoke/ta_factor_catalog_remaining74.yaml
+outputs/ta_factor_adapter_v1/smoke/ta_factor_catalog_combined79.yaml
+outputs/ta_factor_adapter_v1/smoke/ta_factor_batch_catalog_audit.csv
+outputs/factor_evaluation_batch_v1/ta_remaining74_smoke/batch_manifest.csv
+outputs/factor_evaluation_batch_v1/ta_remaining74_smoke/factor_evaluation_batch_v1_report.md
+outputs/factor_evaluation_batch_v1/ta_remaining74_smoke/generated_configs/batch_*.yaml
+```
+
+完成结果：
+
+```text
+source_smoke factors: 79
+smoke_passed runnable: 5
+remaining pending: 74
+planned batches: 15
+batch size: 5
+dry-run status: planned
+```
+
+下一步：
+
+- 执行 `--max-batches 1` 真实小批验证。
+- 如果第 1 批通过，再逐步执行 2-3 个 batch。
+- 每轮执行后汇总 evaluator_status、failure_reasons 和 open_source_metric_index。
+- 只有通过 V4 的 TA 因子才进入 promoted runnable catalog。

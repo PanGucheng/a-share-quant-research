@@ -1,0 +1,5 @@
+﻿catalog,path,factor_count,enabled_count,runnable_count
+source_smoke,E:/qlib_prj/qlib_baseline/outputs/ta_factor_adapter_v1/smoke/ta_factor_catalog_smoke.yaml,79,0,0
+passed_smoke,E:/qlib_prj/qlib_baseline/outputs/ta_factor_adapter_v1/smoke/ta_factor_catalog_smoke_passed.yaml,5,5,5
+remaining,E:/qlib_prj/qlib_baseline/outputs/ta_factor_adapter_v1/smoke/ta_factor_catalog_remaining74.yaml,74,0,0
+combined,E:/qlib_prj/qlib_baseline/outputs/ta_factor_adapter_v1/smoke/ta_factor_catalog_combined79.yaml,79,5,5

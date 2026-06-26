@@ -1,0 +1,17 @@
+source_catalog: "outputs/ta_factor_adapter_v1/smoke/ta_factor_catalog_smoke.yaml"
+passed_catalog: "outputs/ta_factor_adapter_v1/smoke/ta_factor_catalog_smoke_passed.yaml"
+remaining_catalog: "outputs/ta_factor_adapter_v1/smoke/ta_factor_catalog_remaining74.yaml"
+combined_catalog: "outputs/ta_factor_adapter_v1/smoke/ta_factor_catalog_combined79.yaml"
+audit_output: "outputs/ta_factor_adapter_v1/smoke/ta_factor_batch_catalog_audit.csv"
+report_output: "outputs/ta_factor_adapter_v1/smoke/ta_factor_batch_catalog_report.md"
+
+stages:
+  remaining: "ta_adapter_remaining_v4_pending"
+  passed: "ta_adapter_v4_smoke_passed"
+
+remaining:
+  enabled: false
+  runnable: false
+
+combined:
+  keep_passed_runnable: true

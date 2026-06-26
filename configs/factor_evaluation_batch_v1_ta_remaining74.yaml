@@ -1,0 +1,24 @@
+base_config: "configs/ta_factor_evaluation_batch_base_v1.yaml"
+catalog: "outputs/ta_factor_adapter_v1/smoke/ta_factor_catalog_remaining74.yaml"
+python: "E:/anaconda_envs/qlib_env/python.exe"
+output_root: "outputs/factor_evaluation_batch_v1/ta_remaining74_smoke"
+
+selection:
+  enabled_only: false
+  runnable_only: false
+  allow_external_specs: true
+  stages:
+    - "ta_adapter_remaining_v4_pending"
+  categories: []
+  sources:
+    - "ta"
+  names: []
+  max_factors:
+
+execution:
+  allow_non_runnable_external: true
+
+batching:
+  batch_size: 5
+  resume: true
+  max_batches:

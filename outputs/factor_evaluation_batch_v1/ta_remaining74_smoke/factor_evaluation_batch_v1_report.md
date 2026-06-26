@@ -1,0 +1,63 @@
+# Factor Evaluation Batch V1 Report
+
+- Config: `configs/factor_evaluation_batch_v1_ta_remaining74.yaml`
+- Dry run: `true`
+- Batch count: `15`
+- Total selected factors: `74`
+
+## Batch Status
+
+| status | batch_count |
+| --- | --- |
+| planned | 15 |
+
+## Batch Manifest
+
+| batch_id | status | factor_count | factors | output_dir |
+| --- | --- | --- | --- | --- |
+| batch_001 | planned | 5 | ta_momentum_ao,ta_momentum_kama,ta_momentum_ppo,ta_momentum_ppo_hist,ta_momentum_ppo_signal | E:\qlib_prj\qlib_baseline\outputs\factor_evaluation_batch_v1\ta_remaining74_smoke\runs\batch_001 |
+| batch_002 | planned | 5 | ta_momentum_pvo,ta_momentum_pvo_hist,ta_momentum_pvo_signal,ta_momentum_stoch,ta_momentum_stoch_rsi | E:\qlib_prj\qlib_baseline\outputs\factor_evaluation_batch_v1\ta_remaining74_smoke\runs\batch_002 |
+| batch_003 | planned | 5 | ta_momentum_stoch_rsi_d,ta_momentum_stoch_rsi_k,ta_momentum_stoch_signal,ta_momentum_tsi,ta_momentum_uo | E:\qlib_prj\qlib_baseline\outputs\factor_evaluation_batch_v1\ta_remaining74_smoke\runs\batch_003 |
+| batch_004 | planned | 5 | ta_momentum_wr,ta_trend_adx,ta_trend_adx_neg,ta_trend_adx_pos,ta_trend_aroon_down | E:\qlib_prj\qlib_baseline\outputs\factor_evaluation_batch_v1\ta_remaining74_smoke\runs\batch_004 |
+| batch_005 | planned | 5 | ta_trend_aroon_ind,ta_trend_aroon_up,ta_trend_cci,ta_trend_dpo,ta_trend_ema_fast | E:\qlib_prj\qlib_baseline\outputs\factor_evaluation_batch_v1\ta_remaining74_smoke\runs\batch_005 |
+| batch_006 | planned | 5 | ta_trend_ema_slow,ta_trend_ichimoku_a,ta_trend_ichimoku_b,ta_trend_ichimoku_base,ta_trend_ichimoku_conv | E:\qlib_prj\qlib_baseline\outputs\factor_evaluation_batch_v1\ta_remaining74_smoke\runs\batch_006 |
+| batch_007 | planned | 5 | ta_trend_kst,ta_trend_kst_diff,ta_trend_kst_sig,ta_trend_macd,ta_trend_macd_signal | E:\qlib_prj\qlib_baseline\outputs\factor_evaluation_batch_v1\ta_remaining74_smoke\runs\batch_007 |
+| batch_008 | planned | 5 | ta_trend_mass_index,ta_trend_psar_down,ta_trend_psar_down_indicator,ta_trend_psar_up,ta_trend_psar_up_indicator | E:\qlib_prj\qlib_baseline\outputs\factor_evaluation_batch_v1\ta_remaining74_smoke\runs\batch_008 |
+| batch_009 | planned | 5 | ta_trend_sma_fast,ta_trend_sma_slow,ta_trend_stc,ta_trend_trix,ta_trend_vortex_ind_diff | E:\qlib_prj\qlib_baseline\outputs\factor_evaluation_batch_v1\ta_remaining74_smoke\runs\batch_009 |
+| batch_010 | planned | 5 | ta_trend_vortex_ind_neg,ta_trend_vortex_ind_pos,ta_volatility_atr,ta_volatility_bbh,ta_volatility_bbhi | E:\qlib_prj\qlib_baseline\outputs\factor_evaluation_batch_v1\ta_remaining74_smoke\runs\batch_010 |
+| batch_011 | planned | 5 | ta_volatility_bbl,ta_volatility_bbli,ta_volatility_bbm,ta_volatility_bbp,ta_volatility_dch | E:\qlib_prj\qlib_baseline\outputs\factor_evaluation_batch_v1\ta_remaining74_smoke\runs\batch_011 |
+| batch_012 | planned | 5 | ta_volatility_dcl,ta_volatility_dcm,ta_volatility_dcp,ta_volatility_dcw,ta_volatility_kcc | E:\qlib_prj\qlib_baseline\outputs\factor_evaluation_batch_v1\ta_remaining74_smoke\runs\batch_012 |
+| batch_013 | planned | 5 | ta_volatility_kch,ta_volatility_kchi,ta_volatility_kcl,ta_volatility_kcli,ta_volatility_kcp | E:\qlib_prj\qlib_baseline\outputs\factor_evaluation_batch_v1\ta_remaining74_smoke\runs\batch_013 |
+| batch_014 | planned | 5 | ta_volatility_kcw,ta_volatility_ui,ta_volume_adi,ta_volume_em,ta_volume_fi | E:\qlib_prj\qlib_baseline\outputs\factor_evaluation_batch_v1\ta_remaining74_smoke\runs\batch_014 |
+| batch_015 | planned | 4 | ta_volume_mfi,ta_volume_obv,ta_volume_sma_em,ta_volume_vwap | E:\qlib_prj\qlib_baseline\outputs\factor_evaluation_batch_v1\ta_remaining74_smoke\runs\batch_015 |
+
+## Output Summary
+
+| batch_id | status | factor_count | factors | evaluator_status_rows | failure_rows | metric_rows | context_metric_rows | output_dir |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| batch_001 | planned | 5 | ta_momentum_ao,ta_momentum_kama,ta_momentum_ppo,ta_momentum_ppo_hist,ta_momentum_ppo_signal | 0 | 0 | 0 | 0 | E:\qlib_prj\qlib_baseline\outputs\factor_evaluation_batch_v1\ta_remaining74_smoke\runs\batch_001 |
+| batch_002 | planned | 5 | ta_momentum_pvo,ta_momentum_pvo_hist,ta_momentum_pvo_signal,ta_momentum_stoch,ta_momentum_stoch_rsi | 0 | 0 | 0 | 0 | E:\qlib_prj\qlib_baseline\outputs\factor_evaluation_batch_v1\ta_remaining74_smoke\runs\batch_002 |
+| batch_003 | planned | 5 | ta_momentum_stoch_rsi_d,ta_momentum_stoch_rsi_k,ta_momentum_stoch_signal,ta_momentum_tsi,ta_momentum_uo | 0 | 0 | 0 | 0 | E:\qlib_prj\qlib_baseline\outputs\factor_evaluation_batch_v1\ta_remaining74_smoke\runs\batch_003 |
+| batch_004 | planned | 5 | ta_momentum_wr,ta_trend_adx,ta_trend_adx_neg,ta_trend_adx_pos,ta_trend_aroon_down | 0 | 0 | 0 | 0 | E:\qlib_prj\qlib_baseline\outputs\factor_evaluation_batch_v1\ta_remaining74_smoke\runs\batch_004 |
+| batch_005 | planned | 5 | ta_trend_aroon_ind,ta_trend_aroon_up,ta_trend_cci,ta_trend_dpo,ta_trend_ema_fast | 0 | 0 | 0 | 0 | E:\qlib_prj\qlib_baseline\outputs\factor_evaluation_batch_v1\ta_remaining74_smoke\runs\batch_005 |
+| batch_006 | planned | 5 | ta_trend_ema_slow,ta_trend_ichimoku_a,ta_trend_ichimoku_b,ta_trend_ichimoku_base,ta_trend_ichimoku_conv | 0 | 0 | 0 | 0 | E:\qlib_prj\qlib_baseline\outputs\factor_evaluation_batch_v1\ta_remaining74_smoke\runs\batch_006 |
+| batch_007 | planned | 5 | ta_trend_kst,ta_trend_kst_diff,ta_trend_kst_sig,ta_trend_macd,ta_trend_macd_signal | 0 | 0 | 0 | 0 | E:\qlib_prj\qlib_baseline\outputs\factor_evaluation_batch_v1\ta_remaining74_smoke\runs\batch_007 |
+| batch_008 | planned | 5 | ta_trend_mass_index,ta_trend_psar_down,ta_trend_psar_down_indicator,ta_trend_psar_up,ta_trend_psar_up_indicator | 0 | 0 | 0 | 0 | E:\qlib_prj\qlib_baseline\outputs\factor_evaluation_batch_v1\ta_remaining74_smoke\runs\batch_008 |
+| batch_009 | planned | 5 | ta_trend_sma_fast,ta_trend_sma_slow,ta_trend_stc,ta_trend_trix,ta_trend_vortex_ind_diff | 0 | 0 | 0 | 0 | E:\qlib_prj\qlib_baseline\outputs\factor_evaluation_batch_v1\ta_remaining74_smoke\runs\batch_009 |
+| batch_010 | planned | 5 | ta_trend_vortex_ind_neg,ta_trend_vortex_ind_pos,ta_volatility_atr,ta_volatility_bbh,ta_volatility_bbhi | 0 | 0 | 0 | 0 | E:\qlib_prj\qlib_baseline\outputs\factor_evaluation_batch_v1\ta_remaining74_smoke\runs\batch_010 |
+| batch_011 | planned | 5 | ta_volatility_bbl,ta_volatility_bbli,ta_volatility_bbm,ta_volatility_bbp,ta_volatility_dch | 0 | 0 | 0 | 0 | E:\qlib_prj\qlib_baseline\outputs\factor_evaluation_batch_v1\ta_remaining74_smoke\runs\batch_011 |
+| batch_012 | planned | 5 | ta_volatility_dcl,ta_volatility_dcm,ta_volatility_dcp,ta_volatility_dcw,ta_volatility_kcc | 0 | 0 | 0 | 0 | E:\qlib_prj\qlib_baseline\outputs\factor_evaluation_batch_v1\ta_remaining74_smoke\runs\batch_012 |
+| batch_013 | planned | 5 | ta_volatility_kch,ta_volatility_kchi,ta_volatility_kcl,ta_volatility_kcli,ta_volatility_kcp | 0 | 0 | 0 | 0 | E:\qlib_prj\qlib_baseline\outputs\factor_evaluation_batch_v1\ta_remaining74_smoke\runs\batch_013 |
+| batch_014 | planned | 5 | ta_volatility_kcw,ta_volatility_ui,ta_volume_adi,ta_volume_em,ta_volume_fi | 0 | 0 | 0 | 0 | E:\qlib_prj\qlib_baseline\outputs\factor_evaluation_batch_v1\ta_remaining74_smoke\runs\batch_014 |
+| batch_015 | planned | 4 | ta_volume_mfi,ta_volume_obv,ta_volume_sma_em,ta_volume_vwap | 0 | 0 | 0 | 0 | E:\qlib_prj\qlib_baseline\outputs\factor_evaluation_batch_v1\ta_remaining74_smoke\runs\batch_015 |
+
+## Output Files
+
+- `factor_catalog_snapshot.csv`
+- `selected_factor_catalog.csv`
+- `factor_catalog_validation.csv`
+- `generated_configs/batch_*.yaml`
+- `batch_manifest.csv`
+- `batch_output_summary.csv`
+- `logs/batch_*.stdout.log`
+- `logs/batch_*.stderr.log`
