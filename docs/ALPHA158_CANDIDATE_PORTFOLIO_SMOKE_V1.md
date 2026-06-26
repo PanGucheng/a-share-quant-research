@@ -135,18 +135,30 @@ net_max_drawdown: -0.321708
 - 当前窗口只覆盖 expression frame 与 tradability 都具备的 `2021-01-01` 至 `2023-12-29`。
 - `alpha158_MIN5`、`alpha158_QTLD10`、`alpha158_VSUMN60`、`alpha158_ROC10` 的 `low_monotonicity` warning 已在报告中显式保留。
 
-## 8. 下一步
+## 8. 下一步状态
 
-V3.14 跑通后，再决定是否进入：
+Portfolio diagnostics 已经完成，对应文档：
 
 ```text
-V3.15 Portfolio Smoke Diagnostics
+docs/ALPHA158_PORTFOLIO_DIAGNOSTICS_V1.md
 ```
 
-下一步重点不是立刻优化收益，而是补齐组合诊断：
+已完成诊断：
 
-- 单因子候选对比。
-- 候选组合与等权 benchmark 对比。
-- 行业/市值/流动性暴露诊断。
-- 换手和容量敏感性。
-- main window 与 recent OOS 的衔接方式。
+```text
+single_factor_summary: 14 rows
+topk_sensitivity: 50, 100, 200
+cost_sensitivity: 5, 10, 20 bps
+liquidity_bucket_exposure: buckets 3, 4, 5
+```
+
+关键结果：
+
+```text
+best single factor: alpha158_ROC30, net_excess_ir 0.803985
+topk_50 net_excess_ir: 0.676352
+topk_100 net_excess_ir: 0.552843
+topk_200 net_excess_ir: 0.405610
+```
+
+下一步重点仍不是立刻优化收益，而是补齐 recent OOS、行业/市值/风格暴露和低换手机制。

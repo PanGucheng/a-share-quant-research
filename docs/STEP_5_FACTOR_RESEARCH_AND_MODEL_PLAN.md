@@ -2156,3 +2156,74 @@ net_max_drawdown: -0.321708
 - 进入 V3.15 Portfolio Smoke Diagnostics。
 - 先做单因子候选对比、换手/容量敏感性、暴露诊断和 recent OOS 衔接。
 - 等 portfolio diagnostics 稳定后，再考虑继续扩张 `ta`、Alpha101 或其他开源因子来源。
+
+## 47. V3.15：Alpha158 Portfolio Diagnostics V1
+
+状态：已完成。
+
+阶段文档：
+
+```text
+docs/ALPHA158_PORTFOLIO_DIAGNOSTICS_V1.md
+```
+
+新增文件：
+
+```text
+configs/alpha158_portfolio_diagnostics_v1.yaml
+factor_research/alpha158_portfolio_diagnostics.py
+scripts/run_alpha158_portfolio_diagnostics_v1.py
+```
+
+运行命令：
+
+```powershell
+E:\anaconda_envs\qlib_env\python.exe scripts\run_alpha158_portfolio_diagnostics_v1.py --config configs\alpha158_portfolio_diagnostics_v1.yaml
+```
+
+关键输出：
+
+```text
+outputs/alpha158_portfolio_diagnostics_v1/main_2021_2023/base_summary.csv
+outputs/alpha158_portfolio_diagnostics_v1/main_2021_2023/single_factor_summary.csv
+outputs/alpha158_portfolio_diagnostics_v1/main_2021_2023/topk_sensitivity.csv
+outputs/alpha158_portfolio_diagnostics_v1/main_2021_2023/cost_sensitivity.csv
+outputs/alpha158_portfolio_diagnostics_v1/main_2021_2023/liquidity_bucket_exposure.csv
+outputs/alpha158_portfolio_diagnostics_v1/main_2021_2023/alpha158_portfolio_diagnostics_report.md
+```
+
+完成结果：
+
+```text
+single_factor rows: 14
+topk_sensitivity rows: 3
+cost_sensitivity rows: 3
+best single factor: alpha158_ROC30
+best single factor net_excess_ir: 0.803985
+topk_50 net_excess_ir: 0.676352
+topk_100 net_excess_ir: 0.552843
+topk_200 net_excess_ir: 0.405610
+cost_5bps net_excess_ir: 0.596277
+cost_10bps net_excess_ir: 0.552843
+cost_20bps net_excess_ir: 0.465720
+```
+
+本阶段新增能力：
+
+- 单因子候选组合 smoke 对比。
+- TopK 50/100/200 敏感性。
+- 交易成本 5/10/20 bps 敏感性。
+- 基础组合持仓 liquidity bucket 分布。
+
+边界：
+
+- 不改变候选池。
+- 不做参数优化。
+- 不训练模型。
+- 不引入新因子。
+
+下一步：
+
+- 先扩展 Alpha158 expression frame 到 recent OOS，或构建一个只覆盖 2024-2026 的轻量候选因子 expression frame。
+- 增加行业、市值、流动性和风格代理暴露诊断。
+- 在暴露和 OOS 诊断完成前，不建议直接进入策略优化。

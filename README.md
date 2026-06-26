@@ -451,6 +451,33 @@ This is only an interface smoke test. The high average turnover means the next
 stage should add portfolio diagnostics before treating the candidate pool as a
 strategy.
 
+## Alpha158 Portfolio Diagnostics
+
+Run the current diagnostic layer:
+
+```powershell
+cd E:\qlib_prj\qlib_baseline
+E:\anaconda_envs\qlib_env\python.exe scripts\run_alpha158_portfolio_diagnostics_v1.py --config configs\alpha158_portfolio_diagnostics_v1.yaml
+```
+
+Current diagnostics:
+
+```text
+single_factor rows: 14
+best single factor: alpha158_ROC30
+best single factor net_excess_ir: 0.803985
+topk_50 net_excess_ir: 0.676352
+topk_100 net_excess_ir: 0.552843
+topk_200 net_excess_ir: 0.405610
+cost_20bps net_excess_ir: 0.465720
+```
+
+Key output:
+
+```text
+outputs/alpha158_portfolio_diagnostics_v1/main_2021_2023/alpha158_portfolio_diagnostics_report.md
+```
+
 ## Open-Source References
 
 The factor research design intentionally borrows stable ideas from open-source
@@ -500,6 +527,7 @@ docs/ALPHA158_FULL_SCREENING_INPUT_V1.md
 docs/ALPHA158_JUDGEMENT_LAYER_V1.md
 docs/ALPHA158_CANDIDATE_POOL_V1.md
 docs/ALPHA158_CANDIDATE_PORTFOLIO_SMOKE_V1.md
+docs/ALPHA158_PORTFOLIO_DIAGNOSTICS_V1.md
 docs/STEP_5_FACTOR_RESEARCH_AND_MODEL_PLAN.md
 docs/PROJECT_CONTEXT_SUMMARY.md
 ```

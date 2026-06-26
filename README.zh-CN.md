@@ -435,6 +435,33 @@ outputs/alpha158_candidate_portfolio_smoke_v1/main_2021_2023/candidate_weight_ta
 
 这只是接口 smoke，不是可直接使用的策略结论。当前平均换手率偏高，下一阶段应该先补齐组合诊断，再判断是否进入策略优化或扩张新因子。
 
+## Alpha158 组合诊断
+
+运行当前诊断层：
+
+```powershell
+cd E:\qlib_prj\qlib_baseline
+E:\anaconda_envs\qlib_env\python.exe scripts\run_alpha158_portfolio_diagnostics_v1.py --config configs\alpha158_portfolio_diagnostics_v1.yaml
+```
+
+当前诊断结果：
+
+```text
+single_factor rows: 14
+best single factor: alpha158_ROC30
+best single factor net_excess_ir: 0.803985
+topk_50 net_excess_ir: 0.676352
+topk_100 net_excess_ir: 0.552843
+topk_200 net_excess_ir: 0.405610
+cost_20bps net_excess_ir: 0.465720
+```
+
+关键输出：
+
+```text
+outputs/alpha158_portfolio_diagnostics_v1/main_2021_2023/alpha158_portfolio_diagnostics_report.md
+```
+
 ## 当前因子研究结论
 
 截至 V3.1/V3.2：
@@ -491,6 +518,7 @@ docs/ALPHA158_FULL_SCREENING_INPUT_V1.md
 docs/ALPHA158_JUDGEMENT_LAYER_V1.md
 docs/ALPHA158_CANDIDATE_POOL_V1.md
 docs/ALPHA158_CANDIDATE_PORTFOLIO_SMOKE_V1.md
+docs/ALPHA158_PORTFOLIO_DIAGNOSTICS_V1.md
 docs/STEP_5_FACTOR_RESEARCH_AND_MODEL_PLAN.md
 docs/PROJECT_CONTEXT_SUMMARY.md
 ```
