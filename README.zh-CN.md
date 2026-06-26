@@ -462,6 +462,30 @@ cost_20bps net_excess_ir: 0.465720
 outputs/alpha158_portfolio_diagnostics_v1/main_2021_2023/alpha158_portfolio_diagnostics_report.md
 ```
 
+## Alpha158 recent OOS
+
+当前已经为 14 个 Alpha158 候选因子单独构建了 2024-2026 recent OOS expression frame，并跑通组合 smoke 与诊断：
+
+```powershell
+cd E:\qlib_prj\qlib_baseline
+E:\anaconda_envs\qlib_env\python.exe scripts\build_alpha158_expression_frame_v1.py --config configs\alpha158_expression_adapter_candidates_recent_oos_v1.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\validate_alpha158_candidate_expression_frame_v1.py --config configs\alpha158_expression_adapter_candidates_recent_oos_v1.yaml --candidate-pool outputs\factor_candidate_pool_alpha158_v1\full158\alpha158_alpha_candidates.csv
+E:\anaconda_envs\qlib_env\python.exe scripts\run_alpha158_candidate_portfolio_smoke_v1.py --config configs\alpha158_candidate_portfolio_smoke_recent_oos_v1.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\run_alpha158_portfolio_diagnostics_v1.py --config configs\alpha158_portfolio_diagnostics_recent_oos_v1.yaml
+```
+
+当前 recent OOS 结果：
+
+```text
+expression rows: 1,096,231
+min factor coverage: 0.995898
+topk_100 net_excess_ir: 0.221295
+average_turnover: 0.799286
+best single factor: alpha158_VSUMN60
+```
+
+这个结果弱于 2021-2023 main window，因此下一步应先做稳定性与暴露诊断，而不是直接进入策略优化。
+
 ## 当前因子研究结论
 
 截至 V3.1/V3.2：
@@ -519,6 +543,7 @@ docs/ALPHA158_JUDGEMENT_LAYER_V1.md
 docs/ALPHA158_CANDIDATE_POOL_V1.md
 docs/ALPHA158_CANDIDATE_PORTFOLIO_SMOKE_V1.md
 docs/ALPHA158_PORTFOLIO_DIAGNOSTICS_V1.md
+docs/ALPHA158_RECENT_OOS_EXTENSION_V1.md
 docs/STEP_5_FACTOR_RESEARCH_AND_MODEL_PLAN.md
 docs/PROJECT_CONTEXT_SUMMARY.md
 ```

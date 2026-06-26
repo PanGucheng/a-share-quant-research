@@ -1,0 +1,8 @@
+﻿check,status,detail
+factor_count_matches_candidates,pass,"factor_columns=14, candidates=14"
+all_candidates_present,pass,
+no_unexpected_factors,pass,
+duplicate_datetime_instrument,pass,0
+date_range_non_empty,pass,2024-01-02 00:00:00 to 2026-06-09 00:00:00
+date_range_inside_config,pass,2024-01-02 00:00:00 to 2026-06-09 00:00:00; config=2024-01-01 to 2026-06-09
+min_factor_coverage,pass,0.9958977624241606

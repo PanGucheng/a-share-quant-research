@@ -2227,3 +2227,85 @@ cost_20bps net_excess_ir: 0.465720
 - 先扩展 Alpha158 expression frame 到 recent OOS，或构建一个只覆盖 2024-2026 的轻量候选因子 expression frame。
 - 增加行业、市值、流动性和风格代理暴露诊断。
 - 在暴露和 OOS 诊断完成前，不建议直接进入策略优化。
+
+## 48. V3.16：Alpha158 Recent OOS Extension V1
+
+状态：已完成。
+
+阶段文档：
+
+```text
+docs/ALPHA158_RECENT_OOS_EXTENSION_V1.md
+```
+
+新增文件：
+
+```text
+configs/alpha158_expression_adapter_candidates_recent_oos_v1.yaml
+configs/alpha158_candidate_portfolio_smoke_recent_oos_v1.yaml
+configs/alpha158_portfolio_diagnostics_recent_oos_v1.yaml
+scripts/validate_alpha158_candidate_expression_frame_v1.py
+```
+
+运行命令：
+
+```powershell
+E:\anaconda_envs\qlib_env\python.exe scripts\build_alpha158_expression_frame_v1.py --config configs\alpha158_expression_adapter_candidates_recent_oos_v1.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\validate_alpha158_candidate_expression_frame_v1.py --config configs\alpha158_expression_adapter_candidates_recent_oos_v1.yaml --candidate-pool outputs\factor_candidate_pool_alpha158_v1\full158\alpha158_alpha_candidates.csv
+E:\anaconda_envs\qlib_env\python.exe scripts\run_alpha158_candidate_portfolio_smoke_v1.py --config configs\alpha158_candidate_portfolio_smoke_recent_oos_v1.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\run_alpha158_portfolio_diagnostics_v1.py --config configs\alpha158_portfolio_diagnostics_recent_oos_v1.yaml
+```
+
+关键输出：
+
+```text
+outputs/alpha158_expression_frame_v1/candidates_recent_oos_2024_2026/expression_frame_summary.csv
+outputs/alpha158_expression_frame_v1/candidates_recent_oos_2024_2026/candidate_expression_validation_report.md
+outputs/alpha158_candidate_portfolio_smoke_v1/recent_oos_2024_2026/summary.csv
+outputs/alpha158_candidate_portfolio_smoke_v1/recent_oos_2024_2026/alpha158_candidate_portfolio_smoke_report.md
+outputs/alpha158_portfolio_diagnostics_v1/recent_oos_2024_2026/alpha158_portfolio_diagnostics_report.md
+```
+
+完成结果：
+
+```text
+recent OOS expression rows: 1,096,231
+candidate factors: 14
+min factor coverage: 0.995898
+validation: pass
+recent OOS trading_days: 560
+recent OOS executed_rebalances: 28
+recent OOS net_annualized_excess: 0.019804
+recent OOS net_excess_ir: 0.221295
+recent OOS average_turnover: 0.799286
+recent OOS best single factor: alpha158_VSUMN60
+recent OOS best single factor net_excess_ir: 0.814553
+```
+
+对比 main window：
+
+```text
+main topk_100 net_excess_ir: 0.552843
+recent OOS topk_100 net_excess_ir: 0.221295
+```
+
+本阶段新增能力：
+
+- 只构建 14 个候选因子的 recent OOS expression frame。
+- 候选 expression frame 轻量验证。
+- recent OOS portfolio smoke。
+- recent OOS portfolio diagnostics。
+
+边界：
+
+- 大体积 `factor_frame*.pkl` 不提交。
+- 不改候选池。
+- 不训练模型。
+- 不做策略优化。
+
+下一步：
+
+- 进入 V3.17 Alpha158 Stability And Exposure Diagnostics。
+- 比较 main 与 recent OOS 单因子排名稳定性。
+- 增加流动性、价格动量、波动率和成交量代理暴露诊断。
+- 在稳定性与暴露结论清晰前，不扩大新因子来源。

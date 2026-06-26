@@ -1,0 +1,15 @@
+﻿factor,weight,consensus_direction,judgement_label,issue_tags
+alpha158_MIN60,1.0,positive,strong_signal,
+alpha158_QTLD60,1.0,positive,strong_signal,
+alpha158_ROC60,1.0,positive,strong_signal,
+alpha158_MIN30,1.0,positive,strong_signal,
+alpha158_ROC30,1.0,positive,strong_signal,
+alpha158_QTLD30,1.0,positive,strong_signal,
+alpha158_IMIN60,1.0,positive,strong_signal,
+alpha158_MIN10,1.0,positive,strong_signal,
+alpha158_IMIN30,1.0,positive,strong_signal,
+alpha158_MIN5,1.0,positive,strong_signal,low_monotonicity
+alpha158_IMIN20,1.0,positive,consistent_signal,
+alpha158_QTLD10,1.0,positive,consistent_signal,low_monotonicity
+alpha158_VSUMN60,1.0,positive,consistent_signal,low_monotonicity
+alpha158_ROC10,1.0,positive,consistent_signal,low_monotonicity

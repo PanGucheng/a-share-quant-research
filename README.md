@@ -478,6 +478,32 @@ Key output:
 outputs/alpha158_portfolio_diagnostics_v1/main_2021_2023/alpha158_portfolio_diagnostics_report.md
 ```
 
+## Alpha158 Recent OOS
+
+The 14 Alpha158 candidates now have a separate recent OOS expression frame and
+portfolio diagnostic run for 2024-2026:
+
+```powershell
+cd E:\qlib_prj\qlib_baseline
+E:\anaconda_envs\qlib_env\python.exe scripts\build_alpha158_expression_frame_v1.py --config configs\alpha158_expression_adapter_candidates_recent_oos_v1.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\validate_alpha158_candidate_expression_frame_v1.py --config configs\alpha158_expression_adapter_candidates_recent_oos_v1.yaml --candidate-pool outputs\factor_candidate_pool_alpha158_v1\full158\alpha158_alpha_candidates.csv
+E:\anaconda_envs\qlib_env\python.exe scripts\run_alpha158_candidate_portfolio_smoke_v1.py --config configs\alpha158_candidate_portfolio_smoke_recent_oos_v1.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\run_alpha158_portfolio_diagnostics_v1.py --config configs\alpha158_portfolio_diagnostics_recent_oos_v1.yaml
+```
+
+Current recent OOS result:
+
+```text
+expression rows: 1,096,231
+min factor coverage: 0.995898
+topk_100 net_excess_ir: 0.221295
+average_turnover: 0.799286
+best single factor: alpha158_VSUMN60
+```
+
+This is weaker than the 2021-2023 main result, so the next work should focus on
+stability and exposure diagnostics before strategy optimization.
+
 ## Open-Source References
 
 The factor research design intentionally borrows stable ideas from open-source
@@ -528,6 +554,7 @@ docs/ALPHA158_JUDGEMENT_LAYER_V1.md
 docs/ALPHA158_CANDIDATE_POOL_V1.md
 docs/ALPHA158_CANDIDATE_PORTFOLIO_SMOKE_V1.md
 docs/ALPHA158_PORTFOLIO_DIAGNOSTICS_V1.md
+docs/ALPHA158_RECENT_OOS_EXTENSION_V1.md
 docs/STEP_5_FACTOR_RESEARCH_AND_MODEL_PLAN.md
 docs/PROJECT_CONTEXT_SUMMARY.md
 ```
