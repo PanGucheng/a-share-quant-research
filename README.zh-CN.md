@@ -360,6 +360,7 @@ E:\anaconda_envs\qlib_env\python.exe scripts\validate_alpha158_expression_frame_
 E:\anaconda_envs\qlib_env\python.exe scripts\run_factor_evaluation_batch_v1.py --config configs\factor_evaluation_batch_v1_alpha158_remaining138.yaml --max-batches 1
 E:\anaconda_envs\qlib_env\python.exe scripts\run_alpha158_screening_input_v1.py --config configs\factor_screening_alpha158_full_v1.yaml
 E:\anaconda_envs\qlib_env\python.exe scripts\run_alpha158_judgement_v1.py --config configs\factor_judgement_alpha158_v1.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\run_alpha158_candidate_pool_v1.py --config configs\factor_candidate_pool_alpha158_v1.yaml
 ```
 
 当前进展：
@@ -378,6 +379,13 @@ redundancy clusters：23 个
 strong_signal：10 个
 consistent_signal：4 个
 redundant：55 个
+candidate pool：158 行
+alpha_candidate：14 个
+excluded_redundant：55 个
+excluded_high_turnover：33 个
+excluded_unstable_context：16 个
+monitor：37 个
+holdout：3 个
 ```
 
 关键输出：
@@ -389,7 +397,12 @@ outputs/factor_screening_alpha158_v1/full158/alpha158_factor_correlation_top_pai
 outputs/factor_judgement_alpha158_v1/full158/alpha158_judgement_board.csv
 outputs/factor_judgement_alpha158_v1/full158/alpha158_judgement_report.md
 outputs/factor_judgement_alpha158_v1/full158/alpha158_redundancy_clusters.csv
+outputs/factor_candidate_pool_alpha158_v1/full158/alpha158_candidate_pool.csv
+outputs/factor_candidate_pool_alpha158_v1/full158/alpha158_alpha_candidates.csv
+outputs/factor_candidate_pool_alpha158_v1/full158/alpha158_candidate_pool_report.md
 ```
+
+当前 Alpha158 candidate pool 是后续模块默认读取的 alpha 输入。它保留 158 行完整角色表，同时单独暴露 14 个 `alpha_candidate` 给下一阶段组合 smoke 使用。这里仍然是研究输入，不是交易信号。
 
 ## 当前因子研究结论
 
@@ -445,6 +458,7 @@ docs/ALPHA158_EXPRESSION_ADAPTER_V1.md
 docs/ALPHA158_FULL_EVALUATION_STAGE_PLAN.md
 docs/ALPHA158_FULL_SCREENING_INPUT_V1.md
 docs/ALPHA158_JUDGEMENT_LAYER_V1.md
+docs/ALPHA158_CANDIDATE_POOL_V1.md
 docs/STEP_5_FACTOR_RESEARCH_AND_MODEL_PLAN.md
 docs/PROJECT_CONTEXT_SUMMARY.md
 ```

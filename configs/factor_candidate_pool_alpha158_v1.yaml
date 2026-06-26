@@ -1,0 +1,5 @@
+pool_name: "alpha158_full_v1"
+judgement_board: "outputs/factor_judgement_alpha158_v1/full158/alpha158_judgement_board.csv"
+redundancy_clusters: "outputs/factor_judgement_alpha158_v1/full158/alpha158_redundancy_clusters.csv"
+redundancy_cluster_members: "outputs/factor_judgement_alpha158_v1/full158/alpha158_redundancy_cluster_members.csv"
+output_dir: "outputs/factor_candidate_pool_alpha158_v1/full158"

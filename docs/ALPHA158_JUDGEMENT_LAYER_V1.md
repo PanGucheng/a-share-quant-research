@@ -137,13 +137,29 @@ outputs/factor_judgement_alpha158_v1/full158/alpha158_judgement_board.csv
 
 `review` 和 `weak_signal` 暂时只保留观察。
 
-## 7. 下一步
+## 7. 下一步状态
 
-下一阶段建议做候选池冻结：
+候选池冻结已经完成，对应文档：
 
-1. 从 `alpha158_judgement_board.csv` 读取 `strong_signal` 和 `consistent_signal`。
-2. 保留每个 redundancy cluster 的代表因子。
-3. 排除 `holdout`、`weak_signal`、`review`、`high_turnover`、`unstable_context` 和非代表 `redundant`。
-4. 输出 Alpha158 candidate pool v1，作为后续小规模组合回测接口的输入。
+```text
+docs/ALPHA158_CANDIDATE_POOL_V1.md
+```
 
-在候选池冻结完成前，仍不建议继续扩张 `ta` 或 Alpha101。先把现有 Alpha158 的筛选闭环打稳，更适合当前项目节奏。
+候选池结果：
+
+```text
+alpha_candidate: 14
+excluded_redundant: 55
+excluded_high_turnover: 33
+excluded_unstable_context: 16
+monitor: 37
+holdout: 3
+```
+
+核心下游入口：
+
+```text
+outputs/factor_candidate_pool_alpha158_v1/full158/alpha158_alpha_candidates.csv
+```
+
+下一阶段建议进入 Alpha158 candidate portfolio smoke，只验证候选池接口、交易约束和低频组合诊断，不训练新模型，不做实盘。

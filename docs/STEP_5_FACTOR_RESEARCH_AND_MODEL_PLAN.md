@@ -2000,3 +2000,88 @@ holdout: 3
 - 保留每个 redundancy cluster 的代表因子，排除非代表冗余因子。
 - 暂时排除 `holdout`、`weak_signal`、`review`、`high_turnover`、`unstable_context`。
 - candidate pool 冻结后，再进入小规模组合回测接口；之后才适合扩展 `ta` 和 Alpha101。
+
+## 45. V3.13：Alpha158 Candidate Pool V1
+
+状态：已完成。
+
+阶段文档：
+
+```text
+docs/ALPHA158_CANDIDATE_POOL_V1.md
+```
+
+新增文件：
+
+```text
+configs/factor_candidate_pool_alpha158_v1.yaml
+factor_research/alpha158_candidate_pool.py
+scripts/run_alpha158_candidate_pool_v1.py
+```
+
+运行命令：
+
+```powershell
+E:\anaconda_envs\qlib_env\python.exe scripts\run_alpha158_candidate_pool_v1.py --config configs\factor_candidate_pool_alpha158_v1.yaml
+```
+
+关键输出：
+
+```text
+outputs/factor_candidate_pool_alpha158_v1/full158/alpha158_candidate_pool.csv
+outputs/factor_candidate_pool_alpha158_v1/full158/alpha158_alpha_candidates.csv
+outputs/factor_candidate_pool_alpha158_v1/full158/alpha158_candidate_pool.json
+outputs/factor_candidate_pool_alpha158_v1/full158/alpha158_candidate_pool_report.md
+```
+
+完成结果：
+
+```text
+candidate pool rows: 158
+alpha_candidate: 14
+excluded_redundant: 55
+excluded_high_turnover: 33
+excluded_unstable_context: 16
+monitor: 37
+holdout: 3
+```
+
+当前 `alpha_candidate`：
+
+```text
+alpha158_MIN60
+alpha158_QTLD60
+alpha158_ROC60
+alpha158_MIN30
+alpha158_ROC30
+alpha158_QTLD30
+alpha158_IMIN60
+alpha158_MIN10
+alpha158_IMIN30
+alpha158_MIN5
+alpha158_IMIN20
+alpha158_QTLD10
+alpha158_VSUMN60
+alpha158_ROC10
+```
+
+本阶段新增能力：
+
+- 将 Alpha158 judgement board 冻结为完整角色表和下游 alpha candidate 子集。
+- 保留每个因子的排除原因、warning、冗余簇、代表因子和原始 judgement label。
+- 将 `low_monotonicity` 作为 warning 保留，不在 V1 中单独剔除。
+- 继续排除 holdout、非代表冗余因子、high turnover 和 unstable context 因子。
+
+边界：
+
+- 不训练模型。
+- 不调具体策略参数。
+- 不新增自研综合分。
+- 不替换开源评价结果。
+
+下一步：
+
+- 进入 V3.14 Alpha158 Candidate Portfolio Smoke。
+- 只消费 `alpha158_alpha_candidates.csv` 作为默认 alpha 输入。
+- 构建低频、可复现、带交易约束的组合 smoke，用于检查候选池接口是否可用。
+- 报告必须显式标记 `low_monotonicity` warning 和 holdout 排除原因。
