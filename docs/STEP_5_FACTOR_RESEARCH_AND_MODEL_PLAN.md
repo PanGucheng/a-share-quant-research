@@ -1928,3 +1928,75 @@ correlation used dates: 120
 - 在 `alpha158_factor_screening_input.csv` 之上建设 judgement layer。
 - 先输出候选分层和冗余簇，而不是立刻扩张更多因子。
 - 等筛选层可解释且稳定后，再启动 `ta` 和 Alpha101 来源审计与批量接入。
+
+## 44. V3.12：Alpha158 Judgement Layer 与冗余簇
+
+状态：已完成。
+
+阶段文档：
+
+```text
+docs/ALPHA158_JUDGEMENT_LAYER_V1.md
+```
+
+新增文件：
+
+```text
+configs/factor_judgement_alpha158_v1.yaml
+factor_research/alpha158_judgement.py
+scripts/run_alpha158_judgement_v1.py
+```
+
+运行命令：
+
+```powershell
+E:\anaconda_envs\qlib_env\python.exe scripts\run_alpha158_judgement_v1.py --config configs\factor_judgement_alpha158_v1.yaml
+```
+
+关键输出：
+
+```text
+outputs/factor_judgement_alpha158_v1/full158/alpha158_judgement_board.csv
+outputs/factor_judgement_alpha158_v1/full158/alpha158_redundancy_clusters.csv
+outputs/factor_judgement_alpha158_v1/full158/alpha158_redundancy_cluster_members.csv
+outputs/factor_judgement_alpha158_v1/full158/alpha158_judgement_report.md
+```
+
+完成结果：
+
+```text
+judgement board rows: 158
+redundancy clusters: 23
+cluster members: 78
+
+strong_signal: 10
+consistent_signal: 4
+redundant: 55
+high_turnover: 33
+unstable_context: 16
+review: 33
+weak_signal: 4
+holdout: 3
+```
+
+本阶段新增能力：
+
+- 在不生成综合分的前提下，为 Alpha158 因子生成可解释规则标签。
+- 保留 `signal_label` 和 `judgement_label` 两层结果，区分原始信号强弱与交易/稳定性/冗余问题。
+- 根据每日横截面 Spearman 相关性生成 redundancy clusters。
+- 每个冗余簇按可读规则选择代表因子：signal label、issue flags、方向一致性、Rank IC、ICIR、换手率、覆盖率、因子名。
+- 继续把 `alpha158_CNTN5`、`alpha158_IMAX5`、`alpha158_RANK5` 保留为 holdout。
+
+边界：
+
+- 不修改开源评价体系。
+- 不用 judgement label 替代原始指标。
+- 不训练模型，不做实盘。
+
+下一步：
+
+- 基于 `alpha158_judgement_board.csv` 冻结 Alpha158 candidate pool v1。
+- 优先纳入 `strong_signal` 和 `consistent_signal`。
+- 保留每个 redundancy cluster 的代表因子，排除非代表冗余因子。
+- 暂时排除 `holdout`、`weak_signal`、`review`、`high_turnover`、`unstable_context`。
+- candidate pool 冻结后，再进入小规模组合回测接口；之后才适合扩展 `ta` 和 Alpha101。

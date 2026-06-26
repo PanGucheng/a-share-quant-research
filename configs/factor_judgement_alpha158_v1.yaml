@@ -1,0 +1,23 @@
+screening_input: "outputs/factor_screening_alpha158_v1/full158/alpha158_factor_screening_input.csv"
+context_group_ic: "outputs/factor_screening_alpha158_v1/full158/alpha158_context_group_ic_summary.csv"
+correlation_summary: "outputs/factor_screening_alpha158_v1/full158/alpha158_factor_correlation_summary.csv"
+correlation_pairs: "outputs/factor_screening_alpha158_v1/full158/alpha158_factor_correlation_top_pairs.csv"
+output_dir: "outputs/factor_judgement_alpha158_v1/full158"
+
+rules:
+  min_coverage: 0.99
+  max_missing_rate: 0.01
+  weak_abs_rank_ic: 0.015
+  consistent_abs_rank_ic: 0.03
+  strong_abs_rank_ic: 0.05
+  consistent_abs_rank_icir: 0.20
+  strong_abs_rank_icir: 0.35
+  consistent_win_rate: 0.53
+  strong_win_rate: 0.58
+  min_direction_agreement_ratio: 0.67
+  strong_direction_agreement_ratio: 0.83
+  high_turnover_top1: 0.65
+  high_turnover_top5: 0.80
+  min_abs_monotonicity: 0.50
+  context_flip_tolerance: 0.005
+  redundancy_corr_threshold: 0.90

@@ -156,3 +156,10 @@ outputs/factor_screening_alpha158_v1/full158/alpha158_factor_screening_input.csv
 2. 先输出候选分层：strong signal、redundant、unstable、high turnover、holdout、review。
 3. 把强相关因子簇做成可读的 redundancy cluster，避免后续大量重复因子污染训练集。
 4. 在筛选层稳定后，再启动 `ta` 技术指标和 Alpha101 来源审计与批量接入。
+
+执行状态：
+
+```text
+V3.12 Alpha158 Judgement Layer 已完成。
+详见 docs/ALPHA158_JUDGEMENT_LAYER_V1.md
+```

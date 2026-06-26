@@ -369,6 +369,7 @@ E:\anaconda_envs\qlib_env\python.exe scripts\build_alpha158_expression_frame_v1.
 E:\anaconda_envs\qlib_env\python.exe scripts\validate_alpha158_expression_frame_v1.py --config configs\alpha158_expression_adapter_full_v1.yaml
 E:\anaconda_envs\qlib_env\python.exe scripts\run_factor_evaluation_batch_v1.py --config configs\factor_evaluation_batch_v1_alpha158_remaining138.yaml --max-batches 1
 E:\anaconda_envs\qlib_env\python.exe scripts\run_alpha158_screening_input_v1.py --config configs\factor_screening_alpha158_full_v1.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\run_alpha158_judgement_v1.py --config configs\factor_judgement_alpha158_v1.yaml
 ```
 
 Current full-stage status:
@@ -382,6 +383,11 @@ full strict runnable catalog: 155 factors
 full screening input: 158 rows
 strict_screening_input: 155 factors
 screening holdout: 3 factors
+judgement board: 158 rows
+redundancy clusters: 23
+strong_signal: 10
+consistent_signal: 4
+redundant: 55
 ```
 
 Key outputs:
@@ -390,6 +396,9 @@ Key outputs:
 outputs/factor_screening_alpha158_v1/full158/alpha158_factor_screening_input.csv
 outputs/factor_screening_alpha158_v1/full158/alpha158_full_screening_input_report.md
 outputs/factor_screening_alpha158_v1/full158/alpha158_factor_correlation_top_pairs.csv
+outputs/factor_judgement_alpha158_v1/full158/alpha158_judgement_board.csv
+outputs/factor_judgement_alpha158_v1/full158/alpha158_judgement_report.md
+outputs/factor_judgement_alpha158_v1/full158/alpha158_redundancy_clusters.csv
 ```
 
 ## Open-Source References
@@ -438,6 +447,7 @@ docs/ALPHA158_EXPRESSION_EVALUATION_STAGE_PLAN.md
 docs/ALPHA158_EXPRESSION_ADAPTER_V1.md
 docs/ALPHA158_FULL_EVALUATION_STAGE_PLAN.md
 docs/ALPHA158_FULL_SCREENING_INPUT_V1.md
+docs/ALPHA158_JUDGEMENT_LAYER_V1.md
 docs/STEP_5_FACTOR_RESEARCH_AND_MODEL_PLAN.md
 docs/PROJECT_CONTEXT_SUMMARY.md
 ```
