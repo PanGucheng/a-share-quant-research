@@ -347,7 +347,11 @@ def build_readiness_checks(
         "new_source_adapter_inventory",
         "pass" if new_source_runnable >= int(rules.get("min_new_source_runnable_factors", 0)) else "blocked",
         f"new_source_runnable={new_source_runnable}",
-        "Promote at least one non-Alpha158 open-source factor family, starting with an audited TA or Alpha101 adapter.",
+        (
+            "Expand the promoted non-Alpha158 catalog with resumable TA batch V4 before adding Alpha101."
+            if new_source_runnable > 0
+            else "Promote at least one non-Alpha158 open-source factor family, starting with an audited TA or Alpha101 adapter."
+        ),
     )
     add(
         "generic_multi_source_screening",
@@ -380,12 +384,22 @@ def write_report(
         "",
     ]
     if overall == "blocked":
-        lines.extend(
-            [
-                "The Alpha158 research path is reproducible, but the multi-source large-scale factor path is not ready yet.",
-                "The main blocker is that non-Alpha158 factor sources are registered as open-source references but do not yet have promoted runnable adapters.",
-            ]
-        )
+        new_source = checks[checks["check_id"].eq("new_source_adapter_inventory")]
+        detail = str(new_source.iloc[0]["detail"]) if not new_source.empty else ""
+        if detail == "new_source_runnable=0":
+            lines.extend(
+                [
+                    "The Alpha158 research path is reproducible, but the multi-source large-scale factor path is not ready yet.",
+                    "The main blocker is that non-Alpha158 factor sources are registered as open-source references but do not yet have promoted runnable adapters.",
+                ]
+            )
+        else:
+            lines.extend(
+                [
+                    "The Alpha158 research path is reproducible, and a non-Alpha158 source has smoke-level runnable factors.",
+                    "The multi-source large-scale path is still blocked because the promoted non-Alpha158 inventory is below the configured threshold.",
+                ]
+            )
     elif overall == "partial":
         lines.append("The toolchain can run validated Alpha158 research, but still needs one promoted non-Alpha158 source before broad discovery.")
     else:

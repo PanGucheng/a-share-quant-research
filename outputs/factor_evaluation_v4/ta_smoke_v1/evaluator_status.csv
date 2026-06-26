@@ -1,0 +1,16 @@
+﻿system,factor,status,output_file_count,failure_count,output_dir
+alphalens_reloaded,ta_momentum_rsi,pass,8,0,E:/qlib_prj/qlib_baseline/outputs/factor_evaluation_v4/ta_smoke_v1/alphalens_reloaded/ta_momentum_rsi
+alphalens_reloaded,ta_momentum_roc,pass,8,0,E:/qlib_prj/qlib_baseline/outputs/factor_evaluation_v4/ta_smoke_v1/alphalens_reloaded/ta_momentum_roc
+alphalens_reloaded,ta_volatility_bbw,pass,8,0,E:/qlib_prj/qlib_baseline/outputs/factor_evaluation_v4/ta_smoke_v1/alphalens_reloaded/ta_volatility_bbw
+alphalens_reloaded,ta_trend_macd_diff,pass,8,0,E:/qlib_prj/qlib_baseline/outputs/factor_evaluation_v4/ta_smoke_v1/alphalens_reloaded/ta_trend_macd_diff
+alphalens_reloaded,ta_volume_cmf,pass,8,0,E:/qlib_prj/qlib_baseline/outputs/factor_evaluation_v4/ta_smoke_v1/alphalens_reloaded/ta_volume_cmf
+jqfactor_analyzer,ta_momentum_rsi,partial_pass,5,2,E:/qlib_prj/qlib_baseline/outputs/factor_evaluation_v4/ta_smoke_v1/jqfactor_analyzer/ta_momentum_rsi
+jqfactor_analyzer,ta_momentum_roc,partial_pass,5,2,E:/qlib_prj/qlib_baseline/outputs/factor_evaluation_v4/ta_smoke_v1/jqfactor_analyzer/ta_momentum_roc
+jqfactor_analyzer,ta_volatility_bbw,partial_pass,5,2,E:/qlib_prj/qlib_baseline/outputs/factor_evaluation_v4/ta_smoke_v1/jqfactor_analyzer/ta_volatility_bbw
+jqfactor_analyzer,ta_trend_macd_diff,partial_pass,5,2,E:/qlib_prj/qlib_baseline/outputs/factor_evaluation_v4/ta_smoke_v1/jqfactor_analyzer/ta_trend_macd_diff
+jqfactor_analyzer,ta_volume_cmf,partial_pass,5,2,E:/qlib_prj/qlib_baseline/outputs/factor_evaluation_v4/ta_smoke_v1/jqfactor_analyzer/ta_volume_cmf
+qlib_eval,ta_momentum_rsi,pass,4,0,E:/qlib_prj/qlib_baseline/outputs/factor_evaluation_v4/ta_smoke_v1/qlib_eval/ta_momentum_rsi
+qlib_eval,ta_momentum_roc,pass,4,0,E:/qlib_prj/qlib_baseline/outputs/factor_evaluation_v4/ta_smoke_v1/qlib_eval/ta_momentum_roc
+qlib_eval,ta_volatility_bbw,pass,4,0,E:/qlib_prj/qlib_baseline/outputs/factor_evaluation_v4/ta_smoke_v1/qlib_eval/ta_volatility_bbw
+qlib_eval,ta_trend_macd_diff,pass,4,0,E:/qlib_prj/qlib_baseline/outputs/factor_evaluation_v4/ta_smoke_v1/qlib_eval/ta_trend_macd_diff
+qlib_eval,ta_volume_cmf,pass,4,0,E:/qlib_prj/qlib_baseline/outputs/factor_evaluation_v4/ta_smoke_v1/qlib_eval/ta_volume_cmf

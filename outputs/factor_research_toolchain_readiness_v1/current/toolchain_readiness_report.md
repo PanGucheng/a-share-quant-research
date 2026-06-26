@@ -6,8 +6,8 @@
 
 ## Conclusion
 
-The Alpha158 research path is reproducible, but the multi-source large-scale factor path is not ready yet.
-The main blocker is that non-Alpha158 factor sources are registered as open-source references but do not yet have promoted runnable adapters.
+The Alpha158 research path is reproducible, and a non-Alpha158 source has smoke-level runnable factors.
+The multi-source large-scale path is still blocked because the promoted non-Alpha158 inventory is below the configured threshold.
 
 ## Readiness Checks
 
@@ -17,8 +17,8 @@ The main blocker is that non-Alpha158 factor sources are registered as open-sour
 | open_source_evaluator_systems | pass | systems=alphalens_reloaded,jqfactor_analyzer,qlib_eval,project_current | Do not replace external evaluator definitions; keep Alphalens Reloaded, jqfactor_analyzer, Qlib eval, and project_current coexisting. |
 | batch_runner | pass | batch_configs=2 | Use the batch runner for large jobs, with dry-run, resume, manifests, and logs. |
 | required_output_contracts | pass | missing_or_failed=0 | Repair missing contracts before launching full-scale screening. |
-| runnable_factor_inventory | pass | total_runnable=170 | Alpha158 is enough to validate the machinery; more sources are needed for broad factor discovery. |
-| new_source_adapter_inventory | blocked | new_source_runnable=0 | Promote at least one non-Alpha158 open-source factor family, starting with an audited TA or Alpha101 adapter. |
+| runnable_factor_inventory | pass | total_runnable=175 | Alpha158 is enough to validate the machinery; more sources are needed for broad factor discovery. |
+| new_source_adapter_inventory | blocked | new_source_runnable=5 | Expand the promoted non-Alpha158 catalog with resumable TA batch V4 before adding Alpha101. |
 | generic_multi_source_screening | partial | Alpha158 has a mature specific screening/judgement/pool path; generic screening_v3 exists but is not yet the large-scale multi-source standard. | Generalize the screening input and candidate-pool contracts before mixing TA, Alpha101, and future factors. |
 
 ## Catalog Summary
@@ -27,6 +27,7 @@ The main blocker is that non-Alpha158 factor sources are registered as open-sour
 | --- | --- | --- | --- | --- | --- | --- |
 | project_main_catalog | factor_research/factor_catalog.yaml | pass | 15 | 15 | 15 | Project planning catalog and currently registered seed factors. |
 | alpha158_full_runnable_catalog | outputs/factor_catalog_alpha158_v1/alpha158_catalog_full158_runnable.yaml | pass | 155 | 155 | 155 | Promoted Qlib Alpha158 catalog after expression validation and V4 batch evaluation. |
+| ta_smoke_passed_catalog | outputs/ta_factor_adapter_v1/smoke/ta_factor_catalog_smoke_passed.yaml | pass | 5 | 5 | 5 | Promoted smoke-level TA factors after adapter and V4 smoke validation. |
 
 ## Source Readiness
 
@@ -34,8 +35,8 @@ The main blocker is that non-Alpha158 factor sources are registered as open-sour
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | ginkgo_alpha101 | metadata_registered_adapter_pending | MIT | available | available | 0 | adapter_pending | source registered but calculation adapter is not promoted |
 | kunquant_alpha101 | metadata_registered_adapter_pending | Apache-2.0 | available | available | 0 | adapter_pending | source registered but calculation adapter is not promoted |
-| ta | metadata_registered_adapter_pending | MIT | available | available | 0 | adapter_pending | source registered but calculation adapter is not promoted |
 | qlib_alpha158 | formula_inventory_passed_expression_adapter_pending | MIT | available | available | 155 | ready | runnable catalog entries available |
+| ta | metadata_registered_adapter_pending | MIT | available | available | 5 | ready | runnable catalog entries available |
 | qlib_factor_platform_presets | design_reference | MIT | available | available | 0 | reference_only | design reference, not a runnable factor source |
 | alphalens_reloaded | factor_research/external/adapters.py::to_alphalens_factor_data | Apache-2.0 | available | available | 0 | reference_or_evaluator | Primary open-source factor evaluation reference. |
 | factortest | future data inventory and exposure adapters | MIT | available | available | 0 | reference_or_evaluator | A-share data layer, factor test, industry/style exposure reference. |
@@ -61,6 +62,11 @@ The main blocker is that non-Alpha158 factor sources are registered as open-sour
 | alpha158_main_portfolio_diagnostics | portfolio_smoke | outputs/alpha158_portfolio_diagnostics_v1/main_2021_2023/single_factor_summary.csv | pass | 14 | 1 | 5454 |
 | alpha158_recent_oos_portfolio_diagnostics | portfolio_smoke | outputs/alpha158_portfolio_diagnostics_v1/recent_oos_2024_2026/single_factor_summary.csv | pass | 14 | 1 | 5448 |
 | alpha158_stability_diagnostics | stability | outputs/alpha158_stability_diagnostics_v1/main_vs_recent_oos/single_factor_stability.csv | pass | 14 | 1 | 3900 |
+| ta_adapter_inventory | ta_adapter | outputs/ta_factor_adapter_v1/smoke/ta_factor_inventory.csv | pass | 86 | 80 | 17525 |
+| ta_smoke_passed_catalog | ta_adapter | outputs/ta_factor_adapter_v1/smoke/ta_factor_catalog_smoke_passed.yaml | pass | 5 | 5 | 3780 |
+| ta_smoke_evaluator_status | ta_v4_smoke | outputs/factor_evaluation_v4/ta_smoke_v1/evaluator_status.csv | pass | 15 | 15 | 2231 |
+| ta_smoke_metric_index | ta_v4_smoke | outputs/factor_evaluation_v4/ta_smoke_v1/open_source_metric_index.csv | pass | 90 | 1 | 18595 |
+| ta_smoke_promotion_audit | ta_adapter | outputs/ta_factor_adapter_v1/smoke/ta_factor_smoke_promotion_audit.csv | pass | 5 | 5 | 418 |
 
 ## Stage Counts
 
@@ -70,6 +76,7 @@ The main blocker is that non-Alpha158 factor sources are registered as open-sour
 | alpha158_full_runnable_catalog | qlib_alpha158 | alpha158_remaining138_v4_batch_passed | True | True | 135 |
 | project_main_catalog | qlib_baseline_basic | current_v4_seed | True | True | 5 |
 | project_main_catalog | qlib_baseline_basic | project_basic_available | True | True | 10 |
+| ta_smoke_passed_catalog | ta | ta_adapter_v4_smoke_passed | True | True | 5 |
 
 ## Next Step
 

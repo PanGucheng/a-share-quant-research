@@ -533,13 +533,36 @@ new_source_adapter_inventory: blocked
 generic_multi_source_screening: partial
 ```
 
-这说明 Alpha158 研究链路已经可复现，但多来源大规模因子研究还不能直接开跑。下一步应优先把一个非 Alpha158 开源来源提升为 runnable adapter，首选 `ta`；随后再接 Alpha101 公式源，并统一多来源 screening / candidate pool 契约。
+这说明 Alpha158 研究链路已经可复现，第一个非 Alpha158 adapter 也已进入 smoke 阶段；但多来源大规模因子研究还不能直接开跑。下一步应先提升更多 TA 因子，再接 Alpha101 公式源，并统一多来源 screening / candidate pool 契约。
 
 关键输出：
 
 ```text
 outputs/factor_research_toolchain_readiness_v1/current/toolchain_readiness_report.md
 ```
+
+## TA 因子 adapter smoke
+
+第一个非 Alpha158 开源因子源已经以 smoke 级别接入：`bukosabino/ta`。
+
+```powershell
+cd E:\qlib_prj\qlib_baseline
+E:\anaconda_envs\qlib_env\python.exe scripts\run_ta_factor_adapter_smoke_v1.py --config configs\ta_factor_adapter_smoke_v1.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\run_factor_evaluation_v4.py --config configs\ta_factor_evaluation_smoke_v1.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\promote_ta_smoke_catalog_entries_v1.py --config configs\ta_factor_smoke_promotion_v1.yaml
+```
+
+当前 TA smoke 结果：
+
+```text
+eligible TA factors: 79
+excluded TA columns: 7
+V4 smoke factors: 5
+promoted smoke factors: 5
+readiness new_source_runnable: 5
+```
+
+这已经证明新源 adapter 路径能跑通，但还不足以直接开始 TA 全量筛选。下一步应为剩余 eligible TA 因子建立可恢复的 batch 计划。
 
 ## 当前因子研究结论
 
@@ -601,6 +624,7 @@ docs/ALPHA158_PORTFOLIO_DIAGNOSTICS_V1.md
 docs/ALPHA158_RECENT_OOS_EXTENSION_V1.md
 docs/ALPHA158_STABILITY_DIAGNOSTICS_V1.md
 docs/FACTOR_RESEARCH_TOOLCHAIN_READINESS_V1.md
+docs/TA_FACTOR_ADAPTER_SMOKE_V1.md
 docs/STEP_5_FACTOR_RESEARCH_AND_MODEL_PLAN.md
 docs/PROJECT_CONTEXT_SUMMARY.md
 ```

@@ -1,0 +1,19 @@
+source_catalog: "outputs/ta_factor_adapter_v1/smoke/ta_factor_catalog_smoke.yaml"
+evaluator_status: "outputs/factor_evaluation_v4/ta_smoke_v1/evaluator_status.csv"
+failure_reasons: "outputs/factor_evaluation_v4/ta_smoke_v1/factor_failure_reasons.csv"
+selected_factors: "outputs/ta_factor_adapter_v1/smoke/ta_selected_smoke_factors.csv"
+output_catalog: "outputs/ta_factor_adapter_v1/smoke/ta_factor_catalog_smoke_passed.yaml"
+audit_output: "outputs/ta_factor_adapter_v1/smoke/ta_factor_smoke_promotion_audit.csv"
+report_output: "outputs/ta_factor_adapter_v1/smoke/ta_factor_smoke_promotion_report.md"
+
+promotion:
+  stage: "ta_adapter_v4_smoke_passed"
+  enabled: true
+  runnable: true
+  required_pass_systems:
+    - "alphalens_reloaded"
+    - "qlib_eval"
+  allowed_partial_systems:
+    jqfactor_analyzer:
+      - "factor_returns"
+      - "factor_alpha_beta"

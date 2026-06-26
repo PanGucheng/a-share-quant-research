@@ -5,6 +5,9 @@ catalogs:
   - id: "alpha158_full_runnable_catalog"
     path: "outputs/factor_catalog_alpha158_v1/alpha158_catalog_full158_runnable.yaml"
     role: "Promoted Qlib Alpha158 catalog after expression validation and V4 batch evaluation."
+  - id: "ta_smoke_passed_catalog"
+    path: "outputs/ta_factor_adapter_v1/smoke/ta_factor_catalog_smoke_passed.yaml"
+    role: "Promoted smoke-level TA factors after adapter and V4 smoke validation."
 
 source_manifest: "factor_research/external/source_manifest.yaml"
 output_dir: "outputs/factor_research_toolchain_readiness_v1/current"
@@ -70,6 +73,27 @@ required_output_contracts:
     group: "stability"
     path: "outputs/alpha158_stability_diagnostics_v1/main_vs_recent_oos/single_factor_stability.csv"
     min_rows: 1
+  - id: "ta_adapter_inventory"
+    group: "ta_adapter"
+    path: "outputs/ta_factor_adapter_v1/smoke/ta_factor_inventory.csv"
+    min_rows: 80
+  - id: "ta_smoke_passed_catalog"
+    group: "ta_adapter"
+    path: "outputs/ta_factor_adapter_v1/smoke/ta_factor_catalog_smoke_passed.yaml"
+    yaml_key: "factors"
+    min_rows: 5
+  - id: "ta_smoke_evaluator_status"
+    group: "ta_v4_smoke"
+    path: "outputs/factor_evaluation_v4/ta_smoke_v1/evaluator_status.csv"
+    min_rows: 15
+  - id: "ta_smoke_metric_index"
+    group: "ta_v4_smoke"
+    path: "outputs/factor_evaluation_v4/ta_smoke_v1/open_source_metric_index.csv"
+    min_rows: 1
+  - id: "ta_smoke_promotion_audit"
+    group: "ta_adapter"
+    path: "outputs/ta_factor_adapter_v1/smoke/ta_factor_smoke_promotion_audit.csv"
+    min_rows: 5
 
 large_scale_rules:
   min_total_runnable_factors: 100

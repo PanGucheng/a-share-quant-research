@@ -1,0 +1,47 @@
+{
+  "config": {
+    "provider_uri": "E:/qlib_prj/qlib_data/cn_data_community_20260609_derived",
+    "market": "all_stock_shsz_liquid2000",
+    "start": "2020-10-01",
+    "end": "2021-06-30",
+    "max_instruments": 120,
+    "source_local_path": "E:/qlib_prj/qlib_baseline/tmp/reference_repos/ta",
+    "source_commit": "a890410710a6e483c9ba08da7f3dd5089e4b9dff",
+    "source_file": "ta/wrapper.py",
+    "source_function": "add_all_ta_features",
+    "license": "MIT",
+    "colprefix": "ta_",
+    "fillna": false,
+    "vectorized": false,
+    "exclude_prefixes": [
+      "ta_trend_visual_ichimoku",
+      "ta_others_",
+      "ta_volume_vpt",
+      "ta_volume_nvi"
+    ],
+    "selected_smoke_factors": [
+      "ta_momentum_rsi",
+      "ta_momentum_roc",
+      "ta_volatility_bbw",
+      "ta_trend_macd_diff",
+      "ta_volume_cmf"
+    ],
+    "catalog_stage": "ta_adapter_smoke_generated",
+    "catalog_enabled": false,
+    "catalog_runnable": false,
+    "labels": [
+      "label_10d_t1",
+      "label_20d_t1"
+    ],
+    "output_dir": "E:/qlib_prj/qlib_baseline/outputs/ta_factor_adapter_v1/smoke",
+    "refresh": false
+  },
+  "raw_rows": 21285,
+  "factor_frame_rows": 21285,
+  "instrument_count": 120,
+  "date_min": "2020-10-09 00:00:00",
+  "date_max": "2021-06-30 00:00:00",
+  "eligible_factor_count": 79,
+  "excluded_factor_count": 7,
+  "factor_frame_path": "E:/qlib_prj/qlib_baseline/outputs/ta_factor_adapter_v1/smoke/factor_frame.pkl"
+}

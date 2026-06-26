@@ -2440,3 +2440,76 @@ new_source_runnable: 0
 - 先做源码审计、字段映射、look-ahead 检查、少量 smoke。
 - 通过后再登记 runnable catalog entries，并进入 batch V4。
 - 同步抽象 multi-source screening / candidate-pool contract，避免后续 TA、Alpha101 和 Alpha158 各走各的筛选路径。
+
+## 51. V3.19：TA Factor Adapter Smoke V1
+
+状态：已完成。
+
+阶段文档：
+
+```text
+docs/TA_FACTOR_ADAPTER_SMOKE_V1.md
+```
+
+新增文件：
+
+```text
+configs/ta_factor_adapter_smoke_v1.yaml
+configs/ta_factor_evaluation_smoke_v1.yaml
+configs/ta_factor_smoke_promotion_v1.yaml
+factor_research/ta_source.py
+scripts/run_ta_factor_adapter_smoke_v1.py
+scripts/promote_ta_smoke_catalog_entries_v1.py
+```
+
+运行命令：
+
+```powershell
+E:\anaconda_envs\qlib_env\python.exe scripts\run_ta_factor_adapter_smoke_v1.py --config configs\ta_factor_adapter_smoke_v1.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\run_factor_evaluation_v4.py --config configs\ta_factor_evaluation_smoke_v1.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\promote_ta_smoke_catalog_entries_v1.py --config configs\ta_factor_smoke_promotion_v1.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\audit_factor_research_toolchain_v1.py --config configs\factor_research_toolchain_readiness_v1.yaml
+```
+
+关键输出：
+
+```text
+outputs/ta_factor_adapter_v1/smoke/ta_adapter_report.md
+outputs/ta_factor_adapter_v1/smoke/ta_factor_inventory.csv
+outputs/ta_factor_adapter_v1/smoke/ta_factor_catalog_smoke.yaml
+outputs/ta_factor_adapter_v1/smoke/ta_factor_catalog_smoke_passed.yaml
+outputs/factor_evaluation_v4/ta_smoke_v1/evaluator_status.csv
+outputs/factor_evaluation_v4/ta_smoke_v1/open_source_metric_index.csv
+outputs/ta_factor_adapter_v1/smoke/ta_factor_smoke_promotion_audit.csv
+```
+
+完成结果：
+
+```text
+TA eligible factors: 79
+TA excluded columns: 7
+selected V4 smoke factors: 5
+promoted smoke factors: 5
+readiness total_runnable: 175
+readiness new_source_runnable: 5
+readiness large-scale status: blocked
+```
+
+排除规则：
+
+- `ta_trend_visual_ichimoku*`：上游 `visual=True` 会向后平移值。
+- `ta_others_*`：日收益/累计收益类输出与项目 label 和 basic return 因子重叠。
+- `ta_volume_vpt`、`ta_volume_nvi`：上游当前依赖 pandas `pct_change` 默认填充行为，先排除。
+
+V4 smoke 结果：
+
+- Alphalens Reloaded：5/5 pass。
+- Qlib eval：5/5 pass。
+- jqfactor_analyzer：5/5 partial_pass，失败项仅为已知 `factor_returns` / `factor_alpha_beta` index-name 问题。
+
+下一步：
+
+- 进入 V3.20：TA eligible 因子 batch plan。
+- 为剩余 74 个未评价 eligible TA 因子生成可恢复 batch 配置。
+- 降低单次运行风险，使用 small-batch + resume + metric summary。
+- 通过 batch 后再把 TA promoted catalog 提升到至少 20 个新源 runnable，使 readiness gate 从 `blocked` 进入 `partial/ready-for-large-scale-screening`。

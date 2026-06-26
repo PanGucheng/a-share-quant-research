@@ -3,3 +3,4 @@ alpha158_full_runnable_catalog,qlib_alpha158,alpha158_first20_v4_smoke_passed,Tr
 alpha158_full_runnable_catalog,qlib_alpha158,alpha158_remaining138_v4_batch_passed,True,True,135
 project_main_catalog,qlib_baseline_basic,current_v4_seed,True,True,5
 project_main_catalog,qlib_baseline_basic,project_basic_available,True,True,10
+ta_smoke_passed_catalog,ta,ta_adapter_v4_smoke_passed,True,True,5

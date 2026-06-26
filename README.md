@@ -553,16 +553,42 @@ new_source_adapter_inventory: blocked
 generic_multi_source_screening: partial
 ```
 
-This means the Alpha158 research path is reproducible, but large-scale
-multi-source discovery should start by promoting a non-Alpha158 open-source
-factor adapter. The first practical target is `ta`, followed by Alpha101
-formula sources after their field and look-ahead assumptions are audited.
+This means the Alpha158 research path is reproducible, and the first
+non-Alpha158 adapter has started at smoke level. Large-scale multi-source
+discovery still needs more promoted TA factors before Alpha101 formula sources
+are added.
 
 Key output:
 
 ```text
 outputs/factor_research_toolchain_readiness_v1/current/toolchain_readiness_report.md
 ```
+
+## TA Factor Adapter Smoke
+
+The first non-Alpha158 open-source factor source is now connected at smoke
+level through `bukosabino/ta`:
+
+```powershell
+cd E:\qlib_prj\qlib_baseline
+E:\anaconda_envs\qlib_env\python.exe scripts\run_ta_factor_adapter_smoke_v1.py --config configs\ta_factor_adapter_smoke_v1.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\run_factor_evaluation_v4.py --config configs\ta_factor_evaluation_smoke_v1.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\promote_ta_smoke_catalog_entries_v1.py --config configs\ta_factor_smoke_promotion_v1.yaml
+```
+
+Current TA smoke result:
+
+```text
+eligible TA factors: 79
+excluded TA columns: 7
+V4 smoke factors: 5
+promoted smoke factors: 5
+readiness new_source_runnable: 5
+```
+
+This is enough to prove the adapter path, but not enough to start full-scale
+TA screening. The next step is a resumable TA batch plan for the remaining
+eligible factors.
 
 ## Open-Source References
 
@@ -617,6 +643,7 @@ docs/ALPHA158_PORTFOLIO_DIAGNOSTICS_V1.md
 docs/ALPHA158_RECENT_OOS_EXTENSION_V1.md
 docs/ALPHA158_STABILITY_DIAGNOSTICS_V1.md
 docs/FACTOR_RESEARCH_TOOLCHAIN_READINESS_V1.md
+docs/TA_FACTOR_ADAPTER_SMOKE_V1.md
 docs/STEP_5_FACTOR_RESEARCH_AND_MODEL_PLAN.md
 docs/PROJECT_CONTEXT_SUMMARY.md
 ```

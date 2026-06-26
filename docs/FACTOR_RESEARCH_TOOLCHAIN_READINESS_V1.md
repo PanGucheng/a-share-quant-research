@@ -104,6 +104,16 @@ Alpha158 研究链路 ready。
 
 原因不是评价体系不够，而是非 Alpha158 因子源目前仍处于 `metadata_registered_adapter_pending` 或 formula reference 阶段。此时直接大规模跑新因子，容易把未审计字段、窗口、数据假设或 license 问题混进候选池。
 
+V3.19 后，`ta` 已有 5 个 smoke-level runnable 因子，但仍未达到大规模阈值：
+
+```text
+new_source_runnable: 5
+large_scale_threshold: 20
+status: blocked
+```
+
+这表示 adapter 路径已经打通，但还需要对剩余 eligible TA 因子执行 batch V4 后才能进入大规模筛选。
+
 ## 7. 下一步目标
 
 下一步不继续围绕 Alpha158 微调，而是进入“首个非 Alpha158 开源因子源 promoted adapter”阶段：

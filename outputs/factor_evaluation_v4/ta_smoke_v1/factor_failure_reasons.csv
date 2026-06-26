@@ -1,0 +1,11 @@
+﻿system,factor,step,error_type,error,traceback_tail
+jqfactor_analyzer,ta_momentum_rsi,factor_returns,ValueError,"The name date occurs multiple times, use a level number","ValueError: The name date occurs multiple times, use a level number"
+jqfactor_analyzer,ta_momentum_rsi,factor_alpha_beta,ValueError,"The name date occurs multiple times, use a level number","ValueError: The name date occurs multiple times, use a level number"
+jqfactor_analyzer,ta_momentum_roc,factor_returns,ValueError,"The name date occurs multiple times, use a level number","ValueError: The name date occurs multiple times, use a level number"
+jqfactor_analyzer,ta_momentum_roc,factor_alpha_beta,ValueError,"The name date occurs multiple times, use a level number","ValueError: The name date occurs multiple times, use a level number"
+jqfactor_analyzer,ta_volatility_bbw,factor_returns,ValueError,"The name date occurs multiple times, use a level number","ValueError: The name date occurs multiple times, use a level number"
+jqfactor_analyzer,ta_volatility_bbw,factor_alpha_beta,ValueError,"The name date occurs multiple times, use a level number","ValueError: The name date occurs multiple times, use a level number"
+jqfactor_analyzer,ta_trend_macd_diff,factor_returns,ValueError,"The name date occurs multiple times, use a level number","ValueError: The name date occurs multiple times, use a level number"
+jqfactor_analyzer,ta_trend_macd_diff,factor_alpha_beta,ValueError,"The name date occurs multiple times, use a level number","ValueError: The name date occurs multiple times, use a level number"
+jqfactor_analyzer,ta_volume_cmf,factor_returns,ValueError,"The name date occurs multiple times, use a level number","ValueError: The name date occurs multiple times, use a level number"
+jqfactor_analyzer,ta_volume_cmf,factor_alpha_beta,ValueError,"The name date occurs multiple times, use a level number","ValueError: The name date occurs multiple times, use a level number"
