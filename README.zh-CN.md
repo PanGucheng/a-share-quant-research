@@ -404,6 +404,37 @@ outputs/factor_candidate_pool_alpha158_v1/full158/alpha158_candidate_pool_report
 
 当前 Alpha158 candidate pool 是后续模块默认读取的 alpha 输入。它保留 158 行完整角色表，同时单独暴露 14 个 `alpha_candidate` 给下一阶段组合 smoke 使用。这里仍然是研究输入，不是交易信号。
 
+## Alpha158 候选组合 smoke
+
+从冻结后的 Alpha158 候选池运行当前组合接口 smoke：
+
+```powershell
+cd E:\qlib_prj\qlib_baseline
+E:\anaconda_envs\qlib_env\python.exe scripts\run_alpha158_candidate_portfolio_smoke_v1.py --config configs\alpha158_candidate_portfolio_smoke_v1.yaml
+```
+
+当前 smoke 结果：
+
+```text
+candidate_count: 14
+warning_low_monotonicity_count: 4
+trading_days: 700
+executed_rebalances: 35
+net_annualized_excess: 0.060632
+net_excess_ir: 0.552843
+average_turnover: 0.824857
+```
+
+关键输出：
+
+```text
+outputs/alpha158_candidate_portfolio_smoke_v1/main_2021_2023/summary.csv
+outputs/alpha158_candidate_portfolio_smoke_v1/main_2021_2023/alpha158_candidate_portfolio_smoke_report.md
+outputs/alpha158_candidate_portfolio_smoke_v1/main_2021_2023/candidate_weight_table.csv
+```
+
+这只是接口 smoke，不是可直接使用的策略结论。当前平均换手率偏高，下一阶段应该先补齐组合诊断，再判断是否进入策略优化或扩张新因子。
+
 ## 当前因子研究结论
 
 截至 V3.1/V3.2：
@@ -459,6 +490,7 @@ docs/ALPHA158_FULL_EVALUATION_STAGE_PLAN.md
 docs/ALPHA158_FULL_SCREENING_INPUT_V1.md
 docs/ALPHA158_JUDGEMENT_LAYER_V1.md
 docs/ALPHA158_CANDIDATE_POOL_V1.md
+docs/ALPHA158_CANDIDATE_PORTFOLIO_SMOKE_V1.md
 docs/STEP_5_FACTOR_RESEARCH_AND_MODEL_PLAN.md
 docs/PROJECT_CONTEXT_SUMMARY.md
 ```

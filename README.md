@@ -417,6 +417,40 @@ keeps a complete 158-row role table while exposing 14 `alpha_candidate` factors
 for the next portfolio smoke stage. It is still a research input, not a trading
 signal.
 
+## Alpha158 Candidate Portfolio Smoke
+
+Run the current interface smoke from frozen Alpha158 candidates to a
+tradability-aware low-frequency portfolio:
+
+```powershell
+cd E:\qlib_prj\qlib_baseline
+E:\anaconda_envs\qlib_env\python.exe scripts\run_alpha158_candidate_portfolio_smoke_v1.py --config configs\alpha158_candidate_portfolio_smoke_v1.yaml
+```
+
+Current smoke result:
+
+```text
+candidate_count: 14
+warning_low_monotonicity_count: 4
+trading_days: 700
+executed_rebalances: 35
+net_annualized_excess: 0.060632
+net_excess_ir: 0.552843
+average_turnover: 0.824857
+```
+
+Key outputs:
+
+```text
+outputs/alpha158_candidate_portfolio_smoke_v1/main_2021_2023/summary.csv
+outputs/alpha158_candidate_portfolio_smoke_v1/main_2021_2023/alpha158_candidate_portfolio_smoke_report.md
+outputs/alpha158_candidate_portfolio_smoke_v1/main_2021_2023/candidate_weight_table.csv
+```
+
+This is only an interface smoke test. The high average turnover means the next
+stage should add portfolio diagnostics before treating the candidate pool as a
+strategy.
+
 ## Open-Source References
 
 The factor research design intentionally borrows stable ideas from open-source
@@ -465,6 +499,7 @@ docs/ALPHA158_FULL_EVALUATION_STAGE_PLAN.md
 docs/ALPHA158_FULL_SCREENING_INPUT_V1.md
 docs/ALPHA158_JUDGEMENT_LAYER_V1.md
 docs/ALPHA158_CANDIDATE_POOL_V1.md
+docs/ALPHA158_CANDIDATE_PORTFOLIO_SMOKE_V1.md
 docs/STEP_5_FACTOR_RESEARCH_AND_MODEL_PLAN.md
 docs/PROJECT_CONTEXT_SUMMARY.md
 ```

@@ -2085,3 +2085,74 @@ alpha158_ROC10
 - 只消费 `alpha158_alpha_candidates.csv` 作为默认 alpha 输入。
 - 构建低频、可复现、带交易约束的组合 smoke，用于检查候选池接口是否可用。
 - 报告必须显式标记 `low_monotonicity` warning 和 holdout 排除原因。
+
+## 46. V3.14：Alpha158 Candidate Portfolio Smoke V1
+
+状态：已完成。
+
+阶段文档：
+
+```text
+docs/ALPHA158_CANDIDATE_PORTFOLIO_SMOKE_V1.md
+```
+
+新增文件：
+
+```text
+configs/alpha158_candidate_portfolio_smoke_v1.yaml
+factor_research/alpha158_portfolio_smoke.py
+scripts/run_alpha158_candidate_portfolio_smoke_v1.py
+```
+
+运行命令：
+
+```powershell
+E:\anaconda_envs\qlib_env\python.exe scripts\run_alpha158_candidate_portfolio_smoke_v1.py --config configs\alpha158_candidate_portfolio_smoke_v1.yaml
+```
+
+关键输出：
+
+```text
+outputs/alpha158_candidate_portfolio_smoke_v1/main_2021_2023/summary.csv
+outputs/alpha158_candidate_portfolio_smoke_v1/main_2021_2023/daily_returns.csv
+outputs/alpha158_candidate_portfolio_smoke_v1/main_2021_2023/rebalance_summary.csv
+outputs/alpha158_candidate_portfolio_smoke_v1/main_2021_2023/positions.csv
+outputs/alpha158_candidate_portfolio_smoke_v1/main_2021_2023/candidate_weight_table.csv
+outputs/alpha158_candidate_portfolio_smoke_v1/main_2021_2023/score_component_summary.csv
+outputs/alpha158_candidate_portfolio_smoke_v1/main_2021_2023/alpha158_candidate_portfolio_smoke_report.md
+```
+
+完成结果：
+
+```text
+candidate_count: 14
+warning_low_monotonicity_count: 4
+trading_days: 700
+rebalance_count: 37
+executed_rebalances: 35
+positions: 3500
+net_annualized_excess: 0.060632
+net_excess_ir: 0.552843
+average_turnover: 0.824857
+net_max_drawdown: -0.321708
+```
+
+本阶段新增能力：
+
+- 从冻结后的 `alpha158_alpha_candidates.csv` 读取默认 alpha 输入。
+- 按 `equal_directional_zscore` 生成组合 score。
+- 使用 Alpha158 expression frame chunk，只抽取候选因子，避免全量重读 158 个因子。
+- 继续合并现有 tradability labels，按 `can_buy`、`liquidity_bucket` 和 `tradability_score` 过滤。
+- 输出低频换仓、持仓、逐日收益、组件覆盖率和候选权重表。
+
+边界：
+
+- 当前结果是接口 smoke，不是可直接使用的策略结论。
+- 不训练模型，不调复杂策略参数。
+- 暂不扩展新因子池。
+
+下一步：
+
+- 进入 V3.15 Portfolio Smoke Diagnostics。
+- 先做单因子候选对比、换手/容量敏感性、暴露诊断和 recent OOS 衔接。
+- 等 portfolio diagnostics 稳定后，再考虑继续扩张 `ta`、Alpha101 或其他开源因子来源。

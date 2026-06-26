@@ -132,21 +132,31 @@ alpha158_ROC10      consistent_signal
 - `alpha158_CNTN5`、`alpha158_IMAX5`、`alpha158_RANK5` 继续保持 holdout。
 - `excluded_redundant`、`excluded_high_turnover`、`excluded_unstable_context` 仍保留在完整角色表中，便于回溯，不作为下游默认 alpha 输入。
 
-## 8. 下一步
+## 8. 下一步状态
 
-V3.13 完成后进入：
-
-```text
-V3.14 Alpha158 Candidate Portfolio Smoke
-```
-
-下一步只验证接口和约束：
+Alpha158 candidate portfolio smoke 已经跑通，对应文档：
 
 ```text
-candidate pool
-  -> signal construction
-  -> low-frequency portfolio smoke
-  -> report
+docs/ALPHA158_CANDIDATE_PORTFOLIO_SMOKE_V1.md
 ```
 
-不急着训练模型，不急着扩展 `ta` 或 Alpha101。
+本阶段已经验证：
+
+```text
+alpha158_alpha_candidates.csv
+  -> equal_directional_zscore
+  -> tradability-aware low-frequency portfolio smoke
+  -> compact report
+```
+
+结果摘要：
+
+```text
+candidate_count: 14
+executed_rebalances: 35
+trading_days: 700
+net_excess_ir: 0.552843
+average_turnover: 0.824857
+```
+
+下一步不急着训练模型，也不急着扩展 `ta` 或 Alpha101。更合理的下一段是补齐 portfolio smoke diagnostics：单因子候选对比、换手/容量敏感性、暴露诊断和 recent OOS 衔接。
