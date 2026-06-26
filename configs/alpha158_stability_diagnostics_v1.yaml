@@ -1,0 +1,3 @@
+main_dir: "outputs/alpha158_portfolio_diagnostics_v1/main_2021_2023"
+recent_dir: "outputs/alpha158_portfolio_diagnostics_v1/recent_oos_2024_2026"
+output_dir: "outputs/alpha158_stability_diagnostics_v1/main_vs_recent_oos"

@@ -2309,3 +2309,71 @@ recent OOS topk_100 net_excess_ir: 0.221295
 - 比较 main 与 recent OOS 单因子排名稳定性。
 - 增加流动性、价格动量、波动率和成交量代理暴露诊断。
 - 在稳定性与暴露结论清晰前，不扩大新因子来源。
+
+## 49. V3.17：Alpha158 Stability Diagnostics V1
+
+状态：已完成。
+
+阶段文档：
+
+```text
+docs/ALPHA158_STABILITY_DIAGNOSTICS_V1.md
+```
+
+新增文件：
+
+```text
+configs/alpha158_stability_diagnostics_v1.yaml
+factor_research/alpha158_stability_diagnostics.py
+scripts/run_alpha158_stability_diagnostics_v1.py
+```
+
+运行命令：
+
+```powershell
+E:\anaconda_envs\qlib_env\python.exe scripts\run_alpha158_stability_diagnostics_v1.py --config configs\alpha158_stability_diagnostics_v1.yaml
+```
+
+关键输出：
+
+```text
+outputs/alpha158_stability_diagnostics_v1/main_vs_recent_oos/single_factor_stability.csv
+outputs/alpha158_stability_diagnostics_v1/main_vs_recent_oos/topk_sensitivity_delta.csv
+outputs/alpha158_stability_diagnostics_v1/main_vs_recent_oos/cost_sensitivity_delta.csv
+outputs/alpha158_stability_diagnostics_v1/main_vs_recent_oos/liquidity_bucket_exposure_delta.csv
+outputs/alpha158_stability_diagnostics_v1/main_vs_recent_oos/alpha158_stability_diagnostics_report.md
+```
+
+完成结果：
+
+```text
+single_factor rows: 14
+weak_or_negative_oos: 8
+positive_but_weaker_oos: 3
+main_only: 2
+oos_improved: 1
+topk_100 main net_excess_ir: 0.552843
+topk_100 recent net_excess_ir: 0.221295
+topk_100 delta: -0.331548
+bucket_3 exposure share delta: +0.063357
+```
+
+本阶段新增能力：
+
+- main vs recent OOS 单因子稳定性标签。
+- TopK 敏感性差异。
+- 成本敏感性差异。
+- liquidity bucket 暴露变化。
+
+边界：
+
+- 不重新计算因子。
+- 不调整候选池。
+- 不训练模型。
+- 不优化策略。
+
+下一步：
+
+- 进入 Alpha158 exposure diagnostics。
+- 优先诊断流动性、价格动量、波动率、成交量代理暴露。
+- 将候选池分成 `stable_positive`、`oos_improved`、`main_only`、`weak_oos` 等下游角色，再考虑低换手机制。

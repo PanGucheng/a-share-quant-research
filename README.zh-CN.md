@@ -486,6 +486,32 @@ best single factor: alpha158_VSUMN60
 
 这个结果弱于 2021-2023 main window，因此下一步应先做稳定性与暴露诊断，而不是直接进入策略优化。
 
+## Alpha158 稳定性诊断
+
+main 与 recent OOS 稳定性诊断：
+
+```powershell
+cd E:\qlib_prj\qlib_baseline
+E:\anaconda_envs\qlib_env\python.exe scripts\run_alpha158_stability_diagnostics_v1.py --config configs\alpha158_stability_diagnostics_v1.yaml
+```
+
+当前稳定性结果：
+
+```text
+weak_or_negative_oos: 8
+positive_but_weaker_oos: 3
+main_only: 2
+oos_improved: 1
+topk_100 net_excess_ir delta: -0.331548
+bucket_3 exposure share delta: +0.063357
+```
+
+关键输出：
+
+```text
+outputs/alpha158_stability_diagnostics_v1/main_vs_recent_oos/alpha158_stability_diagnostics_report.md
+```
+
 ## 当前因子研究结论
 
 截至 V3.1/V3.2：
@@ -544,6 +570,7 @@ docs/ALPHA158_CANDIDATE_POOL_V1.md
 docs/ALPHA158_CANDIDATE_PORTFOLIO_SMOKE_V1.md
 docs/ALPHA158_PORTFOLIO_DIAGNOSTICS_V1.md
 docs/ALPHA158_RECENT_OOS_EXTENSION_V1.md
+docs/ALPHA158_STABILITY_DIAGNOSTICS_V1.md
 docs/STEP_5_FACTOR_RESEARCH_AND_MODEL_PLAN.md
 docs/PROJECT_CONTEXT_SUMMARY.md
 ```

@@ -504,6 +504,32 @@ best single factor: alpha158_VSUMN60
 This is weaker than the 2021-2023 main result, so the next work should focus on
 stability and exposure diagnostics before strategy optimization.
 
+## Alpha158 Stability Diagnostics
+
+Main vs recent OOS stability diagnostics:
+
+```powershell
+cd E:\qlib_prj\qlib_baseline
+E:\anaconda_envs\qlib_env\python.exe scripts\run_alpha158_stability_diagnostics_v1.py --config configs\alpha158_stability_diagnostics_v1.yaml
+```
+
+Current stability result:
+
+```text
+weak_or_negative_oos: 8
+positive_but_weaker_oos: 3
+main_only: 2
+oos_improved: 1
+topk_100 net_excess_ir delta: -0.331548
+bucket_3 exposure share delta: +0.063357
+```
+
+Key output:
+
+```text
+outputs/alpha158_stability_diagnostics_v1/main_vs_recent_oos/alpha158_stability_diagnostics_report.md
+```
+
 ## Open-Source References
 
 The factor research design intentionally borrows stable ideas from open-source
@@ -555,6 +581,7 @@ docs/ALPHA158_CANDIDATE_POOL_V1.md
 docs/ALPHA158_CANDIDATE_PORTFOLIO_SMOKE_V1.md
 docs/ALPHA158_PORTFOLIO_DIAGNOSTICS_V1.md
 docs/ALPHA158_RECENT_OOS_EXTENSION_V1.md
+docs/ALPHA158_STABILITY_DIAGNOSTICS_V1.md
 docs/STEP_5_FACTOR_RESEARCH_AND_MODEL_PLAN.md
 docs/PROJECT_CONTEXT_SUMMARY.md
 ```
