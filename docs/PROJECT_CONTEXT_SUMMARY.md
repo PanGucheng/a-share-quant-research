@@ -97,6 +97,9 @@ tmp/reference_repos/multi-factor
 tmp/reference_repos/AlphaTrading
 tmp/reference_repos/alphalens-reloaded
 tmp/reference_repos/qlib_factor_platform
+tmp/reference_repos/GetAstockFactors
+tmp/reference_repos/ChinaAShareEquityCharacteristics
+tmp/reference_repos/techfactor
 ```
 
 参考规则：
@@ -111,6 +114,7 @@ tmp/reference_repos/qlib_factor_platform
 当前下一阶段：
 
 - 不继续围绕单个 Alpha158、TA 或 Alpha101 因子细调策略。
-- 优先寻找并接入下一批开源因子源和数据源：基本面、行业/风格暴露、风险暴露、其他 A 股公式库。
+- V3.27 open-source expansion audit 已完成；下一条直接因子 adapter 优先做 `qlib_alpha360`。
+- FactorTest-style 行业/风格/Barra 暴露诊断应先做数据能力审计。
 - 每个新来源继续走 source audit -> adapter smoke -> V4 batch -> promotion/holdout -> multi-source screening -> multi-source judgement。
 - 对现有 29 个 `new_source_alpha_probe` 增加更长 OOS、相关性/暴露和组合 smoke 验证后，再考虑训练输入。

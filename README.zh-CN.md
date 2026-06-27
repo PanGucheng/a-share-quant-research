@@ -652,6 +652,26 @@ combined Alpha101 holdout catalog: 18
 
 Alpha101 metadata catalog 默认仍保持 non-runnable。只有 promoted catalog 被标记为 enabled / runnable。Alpha101 promoted 因子在 screening contract 中仍放在 `monitor`；当前 judgement 层把其中 14 个标记为 `new_source_alpha_probe`，用于后续研究。
 
+## 开源因子源扩张审计
+
+写下一条 adapter 之前，先审计下一批因子/数据源：
+
+```powershell
+cd E:\qlib_prj\qlib_baseline
+E:\anaconda_envs\qlib_env\python.exe scripts\audit_open_source_factor_expansion_v1.py --config configs\open_source_factor_expansion_audit_v1.yaml
+```
+
+当前结果：
+
+```text
+candidates: 8
+direct_adapter_next: qlib_alpha360
+data_audit_next: factortest_exposure_diagnostics
+reference-only candidates: GPL 或 unknown-license 来源
+```
+
+这能保证后续扩张继续优先参考开源，但不把 license 或数据假设风险带入主项目。下一条直接因子 adapter 应优先做 Qlib Alpha360；FactorTest 风格的行业/风格暴露诊断应先做数据能力审计。
+
 ## 当前因子研究结论
 
 截至 V3.1/V3.2：
@@ -717,6 +737,7 @@ docs/TA_BATCH_EVALUATION_PLAN_V1.md
 docs/TA_BATCH_PROMOTION_V1.md
 docs/MULTI_SOURCE_SCREENING_V1.md
 docs/MULTI_SOURCE_JUDGEMENT_V1.md
+docs/OPEN_SOURCE_FACTOR_EXPANSION_AUDIT_V1.md
 docs/ALPHA101_SOURCE_AUDIT_V1.md
 docs/ALPHA101_ADAPTER_SMOKE_V1.md
 docs/ALPHA101_BATCH_PROMOTION_V1.md

@@ -160,6 +160,14 @@ required_output_contracts:
     group: "multi_source_judgement"
     path: "outputs/multi_source_judgement_v1/current/multi_source_judgement_contract_status.csv"
     min_rows: 6
+  - id: "open_source_factor_expansion_candidates"
+    group: "source_expansion_audit"
+    path: "outputs/open_source_factor_expansion_audit_v1/current/open_source_factor_source_candidates.csv"
+    min_rows: 8
+  - id: "open_source_factor_expansion_next_steps"
+    group: "source_expansion_audit"
+    path: "outputs/open_source_factor_expansion_audit_v1/current/open_source_factor_expansion_next_steps.csv"
+    min_rows: 3
   - id: "alpha101_source_summary"
     group: "alpha101_source_audit"
     path: "outputs/factor_catalog_alpha101_v1/source_audit/alpha101_source_summary.csv"

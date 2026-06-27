@@ -1,0 +1,4 @@
+﻿step_order,candidate_id,action,reason
+1,qlib_alpha360,build_adapter_smoke_plan,Best compatible high-fit source for immediate factor-pool expansion.
+2,factortest_exposure_diagnostics,build_data_capability_audit,Useful for industry/style/fundamental expansion but requires data mapping first.
+3,"get_astock_factors,techfactor_gtja191,alphatrading_notebook_workflow",keep_reference_only,"License, runtime, or data assumptions are not safe for direct import yet."

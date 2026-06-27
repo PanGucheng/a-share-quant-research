@@ -31,6 +31,7 @@ Alpha158 的角色应从“继续深入调参的唯一对象”切换为“验�
 | Alpha101 promoted source | 已跑通 | KunQuant Alpha101 已完成 source audit、82 公式 adapter、candidate71 V4 batch 和 promotion；64 个进入 promoted runnable catalog，18 个保留为 holdout。 |
 | multi-source screening contract | 已跑通 | Alpha158、TA 和 Alpha101 promoted 因子已进入统一 screening input、candidate board、candidate pool 和 contract status。 |
 | multi-source judgement contract | 已跑通 | 在统一 screening input 之上生成 319 行 judgement board、43 个 research candidates 和 29 个 new-source alpha probes。 |
+| open-source expansion audit | 已跑通 | 已审计 8 个下一阶段因子/数据来源；`qlib_alpha360` 为 direct adapter 下一候选，FactorTest 为 data audit 下一候选。 |
 
 ## 3. 当前缺口
 
@@ -138,6 +139,15 @@ generic_multi_source_judgement: pass
 multi_source_judgement_board rows: 319
 multi_source_new_source_alpha_probes rows: 29
 overall_status: ready
+```
+
+V3.27 后新增 readiness contract：
+
+```text
+open_source_factor_expansion_candidates rows: 8
+open_source_factor_expansion_next_steps rows: 3
+top direct adapter candidate: qlib_alpha360
+top data audit candidate: factortest_exposure_diagnostics
 ```
 
 这表示“引入更多因子”的入口已经打开，并且已由 TA 与 Alpha101 两类非 Alpha158 来源验证。下一阶段可以继续接入更多开源因子源、基本面/行业风格数据或更长 OOS 诊断，但仍需沿用 adapter audit、V4 batch、promotion/holdout、multi-source screening 和 multi-source judgement contract。

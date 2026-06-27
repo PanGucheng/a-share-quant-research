@@ -688,6 +688,28 @@ promoted catalog is enabled/runnable. Alpha101 promoted rows stay in `monitor`
 inside the screening contract; the judgement layer currently marks 14 Alpha101
 rows as `new_source_alpha_probe` for follow-up research.
 
+## Open-Source Factor Expansion Audit
+
+Audit the next factor/data sources before writing another adapter:
+
+```powershell
+cd E:\qlib_prj\qlib_baseline
+E:\anaconda_envs\qlib_env\python.exe scripts\audit_open_source_factor_expansion_v1.py --config configs\open_source_factor_expansion_audit_v1.yaml
+```
+
+Current result:
+
+```text
+candidates: 8
+direct_adapter_next: qlib_alpha360
+data_audit_next: factortest_exposure_diagnostics
+reference-only candidates: GPL or unknown-license sources
+```
+
+This keeps the next expansion open-source-first without importing unsafe code.
+The next direct factor adapter should be Qlib Alpha360; FactorTest-style
+industry/style exposure diagnostics should start with a data capability audit.
+
 ## Open-Source References
 
 The factor research design intentionally borrows stable ideas from open-source
@@ -746,6 +768,7 @@ docs/TA_BATCH_EVALUATION_PLAN_V1.md
 docs/TA_BATCH_PROMOTION_V1.md
 docs/MULTI_SOURCE_SCREENING_V1.md
 docs/MULTI_SOURCE_JUDGEMENT_V1.md
+docs/OPEN_SOURCE_FACTOR_EXPANSION_AUDIT_V1.md
 docs/ALPHA101_SOURCE_AUDIT_V1.md
 docs/ALPHA101_ADAPTER_SMOKE_V1.md
 docs/ALPHA101_BATCH_PROMOTION_V1.md

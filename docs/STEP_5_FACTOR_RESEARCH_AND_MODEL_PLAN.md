@@ -2947,3 +2947,58 @@ readiness overall: ready
 - 不继续研究单个 Alpha158、TA 或 Alpha101 因子。
 - 优先寻找下一批开源因子源和数据源：基本面、行业/风格暴露、风险暴露、其他 A 股公式库。
 - 对现有 29 个 `new_source_alpha_probe` 增加更长 OOS、相关性/暴露和组合 smoke 验证后，再决定是否进入模型训练输入。
+
+## 59. V3.27：Open Source Factor Expansion Audit V1
+
+状态：已完成。
+
+阶段文档：
+
+```text
+docs/OPEN_SOURCE_FACTOR_EXPANSION_AUDIT_V1.md
+```
+
+新增文件：
+
+```text
+configs/open_source_factor_expansion_audit_v1.yaml
+scripts/audit_open_source_factor_expansion_v1.py
+```
+
+运行命令：
+
+```powershell
+E:\anaconda_envs\qlib_env\python.exe scripts\audit_open_source_factor_expansion_v1.py --config configs\open_source_factor_expansion_audit_v1.yaml
+```
+
+完成结果：
+
+```text
+candidates: 8
+direct_adapter_next: 1
+data_audit_next: 1
+reference_only_due_gpl: 2
+reference_only_until_license_review: 4
+top candidate: qlib_alpha360
+second candidate: factortest_exposure_diagnostics
+```
+
+本阶段额外拉取到 `tmp/reference_repos/` 的参考仓库：
+
+```text
+GetAstockFactors
+ChinaAShareEquityCharacteristics
+techfactor
+```
+
+重要结论：
+
+- `qlib_alpha360` 是下一步最适合直接做 adapter smoke 的来源：MIT、Qlib 原生、当前 OHLCV/amount 数据即可支持。
+- `factortest_exposure_diagnostics` 是下一步最适合做数据能力审计的来源：MIT，适合补行业/风格/Barra 暴露，但要先映射本项目 provider 字段。
+- `techfactor_gtja191` 和 `ChinaAShareEquityCharacteristics` 因 GPL-3.0 暂不复制代码，只保留公式/数据结构参考。
+- `multi-factor`、`GetAstockFactors`、`AlphaTrading`、`Parsnip77` 因 unknown license 或外部数据假设，暂不直接接入。
+
+下一步：
+
+- 制定并执行 `qlib_alpha360` adapter smoke / batch 计划。
+- 并行制定 FactorTest-style industry/style/exposure data capability audit。
