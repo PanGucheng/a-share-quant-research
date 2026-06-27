@@ -1,8 +1,8 @@
 ﻿check_id,status,detail
-source_count,pass,sources=2
-total_screening_rows,pass,rows=237
-new_source_screening_rows,pass,new_source_rows=77
+source_count,pass,sources=3
+total_screening_rows,pass,rows=242
+new_source_screening_rows,pass,new_source_rows=82
 standard_columns,pass,columns=41
 alpha_candidates_not_holdout,pass,alpha_candidates=14
 holdout_visible,pass,holdouts=5
-board_pool_alignment,pass,"board=237, pool=237"
+board_pool_alignment,pass,"board=242, pool=242"

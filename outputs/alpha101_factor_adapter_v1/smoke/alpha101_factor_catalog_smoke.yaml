@@ -1,0 +1,112 @@
+version: 1
+updated: '2026-06-26'
+policy:
+  purpose: Temporary KunQuant Alpha101 adapter smoke catalog before V4 promotion.
+  principle:
+  - Formula definitions are sourced from KunQuant reference code.
+  - Entries remain disabled/non-runnable until V4 evaluation passes.
+  - Use data_quality and tradability filters before evaluation.
+  required_prefilter:
+  - data_quality
+  - tradability
+factors:
+- name: kunquant_alpha101_alpha004
+  registry_name: alpha004
+  category: alpha101
+  source_project: kunquant_alpha101
+  source_file: tests/KunTestUtil/ref_alpha101.py
+  source_function: alpha004
+  source_commit: d4b9e61f729df347730aa921b539b9df3c3fe36d
+  license: Apache-2.0
+  expected_direction: watch
+  required_fields:
+  - $low
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha101_adapter_smoke_generated
+  enabled: false
+  runnable: false
+  compute_adapter: factor_research.alpha101_source.compute_alpha101_features
+  notes: Generated from KunQuant pandas reference smoke; coverage=0.942281
+- name: kunquant_alpha101_alpha009
+  registry_name: alpha009
+  category: alpha101
+  source_project: kunquant_alpha101
+  source_file: tests/KunTestUtil/ref_alpha101.py
+  source_function: alpha009
+  source_commit: d4b9e61f729df347730aa921b539b9df3c3fe36d
+  license: Apache-2.0
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha101_adapter_smoke_generated
+  enabled: false
+  runnable: false
+  compute_adapter: factor_research.alpha101_source.compute_alpha101_features
+  notes: Generated from KunQuant pandas reference smoke; coverage=0.987213
+- name: kunquant_alpha101_alpha012
+  registry_name: alpha012
+  category: alpha101
+  source_project: kunquant_alpha101
+  source_file: tests/KunTestUtil/ref_alpha101.py
+  source_function: alpha012
+  source_commit: d4b9e61f729df347730aa921b539b9df3c3fe36d
+  license: Apache-2.0
+  expected_direction: watch
+  required_fields:
+  - $close
+  - $volume
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha101_adapter_smoke_generated
+  enabled: false
+  runnable: false
+  compute_adapter: factor_research.alpha101_source.compute_alpha101_features
+  notes: Generated from KunQuant pandas reference smoke; coverage=0.987213
+- name: kunquant_alpha101_alpha033
+  registry_name: alpha033
+  category: alpha101
+  source_project: kunquant_alpha101
+  source_file: tests/KunTestUtil/ref_alpha101.py
+  source_function: alpha033
+  source_commit: d4b9e61f729df347730aa921b539b9df3c3fe36d
+  license: Apache-2.0
+  expected_direction: watch
+  required_fields:
+  - $close
+  - $open
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha101_adapter_smoke_generated
+  enabled: false
+  runnable: false
+  compute_adapter: factor_research.alpha101_source.compute_alpha101_features
+  notes: Generated from KunQuant pandas reference smoke; coverage=0.993685
+- name: kunquant_alpha101_alpha101
+  registry_name: alpha101
+  category: alpha101
+  source_project: kunquant_alpha101
+  source_file: tests/KunTestUtil/ref_alpha101.py
+  source_function: alpha101
+  source_commit: d4b9e61f729df347730aa921b539b9df3c3fe36d
+  license: Apache-2.0
+  expected_direction: watch
+  required_fields:
+  - $close
+  - $high
+  - $low
+  - $open
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha101_adapter_smoke_generated
+  enabled: false
+  runnable: false
+  compute_adapter: factor_research.alpha101_source.compute_alpha101_features
+  notes: Generated from KunQuant pandas reference smoke; coverage=0.993685

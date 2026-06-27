@@ -122,7 +122,7 @@ sources:
     commit: "d4b9e61f729df347730aa921b539b9df3c3fe36d"
     license: "Apache-2.0"
     planned_role: "Alpha101/Alpha158 formula and high-performance factor calculation reference."
-    reuse_policy: "Use KunQuant Alpha101 formula definitions first; no compiler/runtime integration until adapter smoke proves the path."
+    reuse_policy: "Use KunQuant Alpha101 formula definitions through a smoke-promoted pandas reference adapter before considering compiler/runtime integration."
     source_files:
       - path: "KunQuant/predefined/Alpha101.py"
         functions:
@@ -134,7 +134,7 @@ sources:
       - path: "tests/gen_alpha158.py"
         functions:
           - "main"
-    local_adapter: "kunquant_alpha101_adapter_pending"
+    local_adapter: "factor_research/alpha101_source.py::compute_alpha101_features"
     output_namespace: "factor_source"
 
   - id: ginkgo_alpha101

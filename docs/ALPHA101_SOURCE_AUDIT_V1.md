@@ -78,3 +78,11 @@ compute_adapter: kunquant_alpha101_adapter_pending
 3. 优先使用 KunQuant Python API 或其 pandas reference 作为公式来源，不手写公式。
 4. 输出 factor frame、coverage summary、smoke catalog。
 5. 走 V4 smoke -> promotion/holdout -> multi-source screening contract。
+
+## 后续状态
+
+V3.24 已完成 KunQuant Alpha101 5 因子 adapter smoke、V4 评价、promotion 和 multi-source screening 接入。详见：
+
+```text
+docs/ALPHA101_ADAPTER_SMOKE_V1.md
+```

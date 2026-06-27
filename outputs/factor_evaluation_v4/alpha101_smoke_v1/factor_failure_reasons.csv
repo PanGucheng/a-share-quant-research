@@ -1,0 +1,11 @@
+﻿system,factor,step,error_type,error,traceback_tail
+jqfactor_analyzer,kunquant_alpha101_alpha004,factor_returns,ValueError,"The name date occurs multiple times, use a level number","ValueError: The name date occurs multiple times, use a level number"
+jqfactor_analyzer,kunquant_alpha101_alpha004,factor_alpha_beta,ValueError,"The name date occurs multiple times, use a level number","ValueError: The name date occurs multiple times, use a level number"
+jqfactor_analyzer,kunquant_alpha101_alpha009,factor_returns,ValueError,"The name date occurs multiple times, use a level number","ValueError: The name date occurs multiple times, use a level number"
+jqfactor_analyzer,kunquant_alpha101_alpha009,factor_alpha_beta,ValueError,"The name date occurs multiple times, use a level number","ValueError: The name date occurs multiple times, use a level number"
+jqfactor_analyzer,kunquant_alpha101_alpha012,factor_returns,ValueError,"The name date occurs multiple times, use a level number","ValueError: The name date occurs multiple times, use a level number"
+jqfactor_analyzer,kunquant_alpha101_alpha012,factor_alpha_beta,ValueError,"The name date occurs multiple times, use a level number","ValueError: The name date occurs multiple times, use a level number"
+jqfactor_analyzer,kunquant_alpha101_alpha033,factor_returns,ValueError,"The name date occurs multiple times, use a level number","ValueError: The name date occurs multiple times, use a level number"
+jqfactor_analyzer,kunquant_alpha101_alpha033,factor_alpha_beta,ValueError,"The name date occurs multiple times, use a level number","ValueError: The name date occurs multiple times, use a level number"
+jqfactor_analyzer,kunquant_alpha101_alpha101,factor_returns,ValueError,"The name date occurs multiple times, use a level number","ValueError: The name date occurs multiple times, use a level number"
+jqfactor_analyzer,kunquant_alpha101_alpha101,factor_alpha_beta,ValueError,"The name date occurs multiple times, use a level number","ValueError: The name date occurs multiple times, use a level number"

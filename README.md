@@ -550,15 +550,15 @@ batch_runner: pass
 required_output_contracts: pass
 runnable_factor_inventory: pass
 new_source_adapter_inventory: pass
-generic_multi_source_screening: partial
-total_runnable: 247
-new_source_runnable: 77
+generic_multi_source_screening: pass
+total_runnable: 252
+new_source_runnable: 82
 ```
 
-This means the Alpha158 reference path and the first promoted non-Alpha158
-source are ready. The generic multi-source screening and candidate-pool contract
-now also passes, so the next project stage is broad factor-source expansion
-rather than more Alpha158-only study.
+This means the Alpha158 reference path plus the first promoted TA and Alpha101
+non-Alpha158 sources are ready. The generic multi-source screening and
+candidate-pool contract also passes, so the next project stage is broad
+factor-source expansion rather than more Alpha158-only study.
 
 Key output:
 
@@ -600,7 +600,7 @@ stay outside the runnable promoted catalog.
 ## Multi-Source Screening Contract
 
 Build the generic screening input and candidate pool from Alpha158 plus promoted
-TA factors:
+TA and Alpha101 factors:
 
 ```powershell
 cd E:\qlib_prj\qlib_baseline
@@ -610,40 +610,50 @@ E:\anaconda_envs\qlib_env\python.exe scripts\run_multi_source_screening_v1.py --
 Current result:
 
 ```text
-screening rows: 237
-sources: 2
+screening rows: 242
+sources: 3
 Alpha158 strict rows: 155
 TA strict rows: 77
+Alpha101 strict rows: 5
 holdouts: 5
 alpha candidates: 14
 contract status: pass
 ```
 
-TA promoted factors are intentionally kept as `monitor` rows until a generic
-judgement layer is added; this avoids turning a successful source adapter into a
-trading signal by accident.
+TA and Alpha101 promoted factors are intentionally kept as `monitor` rows until a
+generic judgement layer is added; this avoids turning a successful source
+adapter into a trading signal by accident.
 
-## Alpha101 Source Audit
+## Alpha101 Source Audit And Adapter Smoke
 
-The next large-scale factor source is Alpha101, using KunQuant as the primary
-formula source:
+Alpha101 now uses KunQuant as the primary formula source. The source audit
+confirmed 82 available formulas, and the first 5-factor smoke adapter has passed
+V4 evaluation and promotion:
 
 ```powershell
 cd E:\qlib_prj\qlib_baseline
 E:\anaconda_envs\qlib_env\python.exe scripts\audit_alpha101_sources_v1.py --config configs\alpha101_source_audit_v1.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\run_alpha101_factor_adapter_smoke_v1.py --config configs\alpha101_factor_adapter_smoke_v1.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\run_factor_evaluation_v4.py --config configs\alpha101_factor_evaluation_smoke_v1.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\promote_alpha101_smoke_catalog_entries_v1.py --config configs\alpha101_factor_smoke_promotion_v1.yaml
 ```
 
-Current audit result:
+Current result:
 
 ```text
 KunQuant all_alpha entries: 82
 Ginkgo runnable implementation files: 0
 Alpha101 metadata catalog entries: 82
-status: adapter_pending, non-runnable
+smoke selected factors: 5
+Alphalens/Qlib smoke status: pass
+JQFactor smoke status: partial_pass with recorded known index-name failures
+smoke promoted catalog: 5
 ```
 
-The generated Alpha101 catalog is metadata only. Entries stay disabled and
-non-runnable until a KunQuant adapter smoke and V4 evaluation pass.
+The generated metadata catalog remains non-runnable by default. Only the
+smoke-passed catalog is enabled/runnable. The next Alpha101 step is batch
+expansion from the 5 smoke factors toward KunQuant's audited 82 available
+formulas.
 
 ## Open-Source References
 
@@ -703,6 +713,7 @@ docs/TA_BATCH_EVALUATION_PLAN_V1.md
 docs/TA_BATCH_PROMOTION_V1.md
 docs/MULTI_SOURCE_SCREENING_V1.md
 docs/ALPHA101_SOURCE_AUDIT_V1.md
+docs/ALPHA101_ADAPTER_SMOKE_V1.md
 docs/STEP_5_FACTOR_RESEARCH_AND_MODEL_PLAN.md
 docs/PROJECT_CONTEXT_SUMMARY.md
 ```

@@ -11,6 +11,9 @@ catalogs:
   - id: "kunquant_alpha101_metadata_catalog"
     path: "outputs/factor_catalog_alpha101_v1/kunquant_alpha101_catalog_metadata.yaml"
     role: "KunQuant Alpha101 metadata catalog after source audit; adapter pending and non-runnable."
+  - id: "kunquant_alpha101_smoke_passed_catalog"
+    path: "outputs/alpha101_factor_adapter_v1/smoke/alpha101_factor_catalog_smoke_passed.yaml"
+    role: "Smoke-promoted KunQuant Alpha101 factors after adapter and V4 evaluation."
 
 source_manifest: "factor_research/external/source_manifest.yaml"
 output_dir: "outputs/factor_research_toolchain_readiness_v1/current"
@@ -154,6 +157,31 @@ required_output_contracts:
     path: "outputs/factor_catalog_alpha101_v1/kunquant_alpha101_catalog_metadata.yaml"
     yaml_key: "factors"
     min_rows: 80
+  - id: "alpha101_adapter_inventory"
+    group: "alpha101_adapter"
+    path: "outputs/alpha101_factor_adapter_v1/smoke/alpha101_factor_inventory.csv"
+    min_rows: 5
+  - id: "alpha101_smoke_external_factor_summary"
+    group: "alpha101_v4_smoke"
+    path: "outputs/factor_evaluation_v4/alpha101_smoke_v1/external_factor_frame/external_factor_frame_summary.csv"
+    min_rows: 5
+  - id: "alpha101_smoke_evaluator_status"
+    group: "alpha101_v4_smoke"
+    path: "outputs/factor_evaluation_v4/alpha101_smoke_v1/evaluator_status.csv"
+    min_rows: 15
+  - id: "alpha101_smoke_metric_index"
+    group: "alpha101_v4_smoke"
+    path: "outputs/factor_evaluation_v4/alpha101_smoke_v1/open_source_metric_index.csv"
+    min_rows: 1
+  - id: "alpha101_smoke_promotion_audit"
+    group: "alpha101_adapter"
+    path: "outputs/alpha101_factor_adapter_v1/smoke/alpha101_factor_smoke_promotion_audit.csv"
+    min_rows: 5
+  - id: "alpha101_smoke_passed_catalog"
+    group: "alpha101_adapter"
+    path: "outputs/alpha101_factor_adapter_v1/smoke/alpha101_factor_catalog_smoke_passed.yaml"
+    yaml_key: "factors"
+    min_rows: 5
 
 large_scale_rules:
   min_total_runnable_factors: 100

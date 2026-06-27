@@ -38,6 +38,7 @@ def build_config(path: Path) -> MultiSourceScreeningConfig:
     payload = load_yaml(resolve_path(path))
     alpha = payload["alpha158"]
     ta = payload["ta"]
+    alpha101 = payload["alpha101"]
     contract = payload.get("contract", {})
     return MultiSourceScreeningConfig(
         alpha158_screening_input=resolve_path(alpha["screening_input"]),
@@ -49,6 +50,11 @@ def build_config(path: Path) -> MultiSourceScreeningConfig:
         ta_metric_indexes=list_paths(ta, "metric_indexes"),
         ta_promotion_audits=list_paths(ta, "promotion_audits"),
         ta_evaluator_statuses=list_paths(ta, "evaluator_statuses"),
+        alpha101_catalog=resolve_path(alpha101["promoted_catalog"]),
+        alpha101_factor_summary=resolve_path(alpha101["factor_summary"]),
+        alpha101_metric_indexes=list_paths(alpha101, "metric_indexes"),
+        alpha101_promotion_audits=list_paths(alpha101, "promotion_audits"),
+        alpha101_evaluator_statuses=list_paths(alpha101, "evaluator_statuses"),
         output_dir=resolve_path(payload.get("output_dir", "outputs/multi_source_screening_v1/current")),
         pool_name=str(payload.get("pool_name", "multi_source_v1")),
         min_sources=int(contract.get("min_sources", 2)),

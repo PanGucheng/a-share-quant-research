@@ -2756,3 +2756,78 @@ status: source_audit_passed_adapter_pending
 - 先选择 3-5 个字段依赖简单、窗口较短的公式，例如 `alpha001`、`alpha009`、`alpha012`、`alpha033`、`alpha101`。
 - 尽量调用 KunQuant 的公式定义或 pandas reference，不手写公式。
 - smoke 通过后，再进入 V4 评价、promotion/holdout 和 multi-source screening。
+
+## 56. V3.24：Alpha101 Adapter Smoke + 三来源 Screening
+
+状态：已完成。
+
+阶段文档：
+
+```text
+docs/ALPHA101_ADAPTER_SMOKE_V1.md
+```
+
+新增文件：
+
+```text
+configs/alpha101_factor_adapter_smoke_v1.yaml
+configs/alpha101_factor_evaluation_smoke_v1.yaml
+configs/alpha101_factor_smoke_promotion_v1.yaml
+factor_research/alpha101_source.py
+scripts/run_alpha101_factor_adapter_smoke_v1.py
+scripts/promote_alpha101_smoke_catalog_entries_v1.py
+```
+
+运行命令：
+
+```powershell
+E:\anaconda_envs\qlib_env\python.exe scripts\run_alpha101_factor_adapter_smoke_v1.py --config configs\alpha101_factor_adapter_smoke_v1.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\run_factor_evaluation_v4.py --config configs\alpha101_factor_evaluation_smoke_v1.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\promote_alpha101_smoke_catalog_entries_v1.py --config configs\alpha101_factor_smoke_promotion_v1.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\run_multi_source_screening_v1.py --config configs\multi_source_screening_v1.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\audit_factor_research_toolchain_v1.py --config configs\factor_research_toolchain_readiness_v1.yaml
+```
+
+关键输出：
+
+```text
+outputs/alpha101_factor_adapter_v1/smoke/alpha101_factor_inventory.csv
+outputs/alpha101_factor_adapter_v1/smoke/alpha101_factor_catalog_smoke_passed.yaml
+outputs/alpha101_factor_adapter_v1/smoke/alpha101_factor_smoke_promotion_audit.csv
+outputs/factor_evaluation_v4/alpha101_smoke_v1/evaluator_status.csv
+outputs/factor_evaluation_v4/alpha101_smoke_v1/open_source_metric_index.csv
+outputs/multi_source_screening_v1/current/multi_source_contract_status.csv
+outputs/factor_research_toolchain_readiness_v1/current/toolchain_readiness_report.md
+```
+
+完成结果：
+
+```text
+Alpha101 smoke selected factors: 5
+adapter rows: 89,000
+adapter coverage: 94.23% to 99.37%
+Alphalens/Qlib status: pass
+JQFactor status: partial_pass with recorded known index-name failures
+Alpha101 smoke promoted catalog: 5
+multi-source screening rows: 242
+multi-source sources: 3
+new source strict rows: 82
+readiness total_runnable: 252
+readiness new_source_runnable: 82
+readiness overall: ready
+```
+
+重要修正：
+
+- 外部 factor spec 现在使用 catalog `name` 作为项目内唯一因子 ID，避免不同来源的 `alpha001` 等原始名称互相撞。
+- JQFactor adapter 空输入时返回完整结构，单个因子过滤为空不会拖垮整批任务。
+- Alpha101 进入 multi-source screening 后保持 `monitor`，不直接作为 alpha 信号。
+- Readiness 合同已把 Alpha101 adapter inventory、V4 metric index、evaluator status、promotion audit 和 passed catalog 纳入必备输出。
+
+下一步：
+
+- 不继续围绕 Alpha158 或 5 个 Alpha101 smoke 因子做策略细调。
+- 将 Alpha101 从 5 个 smoke 因子扩展到 KunQuant 已审计的 82 个可用公式，优先复用开源实现。
+- 同步寻找更多可复用开源因子源，例如基本面、行业风格、风险暴露和其他公式库。
+- 每个新来源继续走 source audit -> adapter smoke -> V4 batch -> promotion/holdout -> multi-source screening。
+- 当新来源 monitor 因子足够多后，再建设通用 judgement 层，把新来源因子筛成 `alpha_candidate`、`risk_control`、`monitor` 或 `holdout`。

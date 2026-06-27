@@ -1,0 +1,19 @@
+source_catalog: "outputs/alpha101_factor_adapter_v1/smoke/alpha101_factor_catalog_smoke.yaml"
+evaluator_status: "outputs/factor_evaluation_v4/alpha101_smoke_v1/evaluator_status.csv"
+failure_reasons: "outputs/factor_evaluation_v4/alpha101_smoke_v1/factor_failure_reasons.csv"
+selected_factors: "outputs/alpha101_factor_adapter_v1/smoke/alpha101_selected_smoke_factors.csv"
+output_catalog: "outputs/alpha101_factor_adapter_v1/smoke/alpha101_factor_catalog_smoke_passed.yaml"
+audit_output: "outputs/alpha101_factor_adapter_v1/smoke/alpha101_factor_smoke_promotion_audit.csv"
+report_output: "outputs/alpha101_factor_adapter_v1/smoke/alpha101_factor_smoke_promotion_report.md"
+
+promotion:
+  stage: "alpha101_adapter_v4_smoke_passed"
+  enabled: true
+  runnable: true
+  required_pass_systems:
+    - "alphalens_reloaded"
+    - "qlib_eval"
+  allowed_partial_systems:
+    jqfactor_analyzer:
+      - "factor_returns"
+      - "factor_alpha_beta"

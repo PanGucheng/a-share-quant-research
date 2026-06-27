@@ -28,7 +28,8 @@ Alpha158 的角色应从“继续深入调参的唯一对象”切换为“验�
 | batch runner | 已有 | 支持 dry-run、分批、断点续跑、manifest、日志和输出摘要。 |
 | Alpha158 full pipeline | 已跑通 | 158 个 Qlib Alpha158 已进入表达式适配、批量评价、筛选、judgement、候选池、组合 smoke 和 OOS 稳定性诊断流程；其中 155 个进入 runnable catalog，3 个保留为 holdout。 |
 | TA promoted source | 已跑通 | `bukosabino/ta` 已完成 adapter smoke、剩余 74 个 eligible 因子 batch V4 和 promotion；77 个进入 promoted runnable catalog，2 个保留为 holdout。 |
-| multi-source screening contract | 已跑通 | Alpha158 与 TA promoted 因子已进入统一 screening input、candidate board、candidate pool 和 contract status。 |
+| Alpha101 smoke source | 已跑通 | KunQuant Alpha101 已完成 source audit、5 因子 adapter smoke、V4 评价和 promotion；5 个进入 smoke-passed runnable catalog。 |
+| multi-source screening contract | 已跑通 | Alpha158、TA 和 Alpha101 promoted 因子已进入统一 screening input、candidate board、candidate pool 和 contract status。 |
 
 ## 3. 当前缺口
 
@@ -115,15 +116,26 @@ generic_multi_source_screening: pass
 overall_status: ready
 ```
 
-这表示“引入更多因子”的入口已经打开。下一阶段可以开始接入更多开源因子源，但仍需沿用 adapter audit、V4 batch、promotion/holdout 和 multi-source screening contract。
+V3.24 后 readiness 关键状态：
+
+```text
+total_runnable: 252
+new_source_runnable: 82
+new_source_adapter_inventory: pass
+generic_multi_source_screening: pass
+overall_status: ready
+```
+
+这表示“引入更多因子”的入口已经打开，并且已由 TA 与 Alpha101 两类非 Alpha158 来源验证。下一阶段可以开始接入更多开源因子源，但仍需沿用 adapter audit、V4 batch、promotion/holdout 和 multi-source screening contract。
 
 ## 7. 下一步目标
 
 下一步不继续围绕 Alpha158 微调，也不急着训练模型，而是进入“更多开源因子源接入”阶段：
 
-1. 优先接入 Alpha101 公式源，复用已登记的 KunQuant / Ginkgo Alpha101 参考。
-2. 每个新来源先做 license、字段、窗口、look-ahead 和 adapter 审计。
-3. 通过小批 smoke 后，再用 batch runner 做可恢复 V4 批量评价。
-4. 通过 promotion/holdout 后，把新来源追加到 multi-source screening contract。
-5. 在候选池上新增通用 judgement 层，避免 TA、Alpha101 长期只停留在 `monitor`。
-6. 工具链继续保持“不训练模型、不改策略、不改开源评价口径”的边界，直到候选池有足够多经过筛选的新来源因子。
+1. 扩展 Alpha101 batch，从 5 个 smoke 因子扩大到 KunQuant 已审计的 82 个可用公式。
+2. 继续寻找并接入更多开源因子族，例如基本面、行业风格、风险暴露和其他公式库。
+3. 每个新来源先做 license、字段、窗口、look-ahead 和 adapter 审计。
+4. 通过小批 smoke 后，再用 batch runner 做可恢复 V4 批量评价。
+5. 通过 promotion/holdout 后，把新来源追加到 multi-source screening contract。
+6. 在候选池上新增通用 judgement 层，避免 TA、Alpha101 长期只停留在 `monitor`。
+7. 工具链继续保持“不训练模型、不改策略、不改开源评价口径”的边界，直到候选池有足够多经过筛选的新来源因子。

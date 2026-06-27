@@ -93,7 +93,7 @@ def to_alphalens_factor_data(
     source = _normalize_factor_data(factor_data)
     source = source[source["factor"] == factor_name].copy()
     if source.empty:
-        empty = pd.DataFrame().rename_axis(index=["date", "asset"])
+        empty = pd.DataFrame(index=pd.MultiIndex.from_arrays([[], []], names=["date", "asset"]))
         report = _base_report("alphalens_reloaded", source, empty, (f"factor `{factor_name}` has no rows",))
         return empty, report
 
@@ -140,8 +140,16 @@ def to_jqfactor_inputs(
     source = _normalize_factor_data(factor_data)
     source = source[source["factor"] == factor_name].copy()
     if source.empty:
-        report = _base_report("jqfactor_analyzer", source, pd.DataFrame(), (f"factor `{factor_name}` has no rows",))
-        return {"factor": pd.Series(dtype=float), "forward_returns": pd.DataFrame(), "groupby": None, "weights": None}, report
+        empty_index = pd.MultiIndex.from_arrays([[], []], names=["date", "asset"])
+        empty = pd.DataFrame(index=empty_index)
+        report = _base_report("jqfactor_analyzer", source, empty, (f"factor `{factor_name}` has no rows",))
+        return {
+            "factor": pd.Series(dtype=float, index=empty_index, name="factor"),
+            "forward_returns": pd.DataFrame(index=empty_index),
+            "groupby": None,
+            "weights": pd.Series(dtype=float, index=empty_index, name="weights"),
+            "factor_data": empty,
+        }, report
 
     index_cols = ["datetime", "instrument"]
     factor = (
@@ -204,7 +212,8 @@ def to_jqfactor_inputs(
     )["weights"].transform(lambda values: values / values.sum())
 
     factor = output["factor"]
-    forward_returns = output[[column for column in output.columns if str(column).startswith("period_")]]
+    metadata_columns = {"factor", "factor_quantile", "group", "weights"}
+    forward_returns = output[[column for column in output.columns if str(column) not in metadata_columns]]
     groupby = output["group"] if "group" in output.columns else None
     weights = output["weights"]
     report = _base_report(

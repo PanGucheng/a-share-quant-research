@@ -29,6 +29,11 @@ class MultiSourceScreeningConfig:
     ta_metric_indexes: tuple[Path, ...]
     ta_promotion_audits: tuple[Path, ...]
     ta_evaluator_statuses: tuple[Path, ...]
+    alpha101_catalog: Path
+    alpha101_factor_summary: Path
+    alpha101_metric_indexes: tuple[Path, ...]
+    alpha101_promotion_audits: tuple[Path, ...]
+    alpha101_evaluator_statuses: tuple[Path, ...]
     output_dir: Path
     pool_name: str = "multi_source_v1"
     min_sources: int = 2
@@ -292,6 +297,42 @@ def build_ta_rows(config: MultiSourceScreeningConfig) -> pd.DataFrame:
     return rows
 
 
+def build_alpha101_rows(config: MultiSourceScreeningConfig) -> pd.DataFrame:
+    catalog = load_catalog(config.alpha101_catalog, "alpha101_smoke_passed_catalog")
+    summary = read_csv_or_empty(config.alpha101_factor_summary)
+    if not summary.empty:
+        summary = summary[["factor", "valid_rows", "total_rows", "coverage", "missing_rate"]]
+    metrics = load_metric_snapshot(config.alpha101_metric_indexes)
+    audit = load_ta_promotion_audit(config.alpha101_promotion_audits)
+    status = aggregate_evaluator_status(config.alpha101_evaluator_statuses)
+    rows = catalog.merge(summary, on="factor", how="left")
+    rows = rows.merge(metrics, on="factor", how="left")
+    rows = rows.merge(audit, on="factor", how="left")
+    rows = rows.merge(status, on="factor", how="left", suffixes=("", "_status"))
+    for column in ["alphalens_status", "jqfactor_status", "qlib_status"]:
+        audit_column = column
+        status_column = f"{column}_status"
+        if status_column in rows.columns:
+            rows[audit_column] = rows[audit_column].fillna(rows[status_column])
+    rows["source_family"] = "alpha101"
+    rows["decision"] = rows["decision"].fillna("promoted")
+    rows["screening_gate"] = np.where(rows["decision"].eq("promoted"), "strict_screening_input", "holdout")
+    rows["promotion_decision"] = rows["decision"]
+    rows["promotion_reason"] = rows["reason"].fillna("")
+    rows["role"] = np.where(rows["screening_gate"].eq("holdout"), "holdout", "monitor")
+    rows["included"] = False
+    rows["pool_reason"] = np.where(
+        rows["screening_gate"].eq("holdout"),
+        "open_source_evaluator_holdout",
+        "promoted_new_source_pending_judgement",
+    )
+    rows["evaluation_gate"] = rows["screening_gate"]
+    rows["judgement_label"] = np.where(rows["screening_gate"].eq("holdout"), "holdout", "new_source_monitor")
+    rows["consensus_direction"] = "watch"
+    rows["issue_tags"] = ""
+    return rows
+
+
 STANDARD_COLUMNS = [
     "pool_name",
     "factor",
@@ -358,7 +399,7 @@ def standardize_columns(frame: pd.DataFrame, pool_name: str) -> pd.DataFrame:
     result["missing_rate"] = pd.to_numeric(result["missing_rate"], errors="coerce")
     sort_role = {"alpha_candidate": 0, "monitor": 1, "holdout": 2}
     result["_role_order"] = result["role"].map(sort_role).fillna(10)
-    result["_source_order"] = result["source_family"].map({"alpha158": 0, "ta": 1}).fillna(9)
+    result["_source_order"] = result["source_family"].map({"alpha158": 0, "ta": 1, "alpha101": 2}).fillna(9)
     result = result.sort_values(["_role_order", "_source_order", "factor"]).drop(columns=["_role_order", "_source_order"])
     return result.reset_index(drop=True)
 
@@ -378,7 +419,7 @@ def build_candidate_board(screening_input: pd.DataFrame) -> pd.DataFrame:
         [
             board["role"].eq("alpha_candidate"),
             board["role"].eq("holdout"),
-            board["source_family"].eq("ta") & board["screening_gate"].eq("strict_screening_input"),
+            board["source_family"].ne("alpha158") & board["screening_gate"].eq("strict_screening_input"),
         ],
         [
             "accepted_by_existing_alpha158_candidate_pool",
@@ -458,7 +499,7 @@ def write_report(
         "",
         f"- Pool name: `{config.pool_name}`",
         "- Scope: screening contract only; no model training, no strategy optimization, no evaluator redefinition.",
-        "- Sources: Alpha158 validated reference plus promoted TA catalog.",
+        "- Sources: Alpha158 validated reference plus promoted TA and Alpha101 catalogs.",
         "",
         "## Contract Status",
         "",
@@ -497,7 +538,11 @@ def run_multi_source_screening(config: MultiSourceScreeningConfig) -> dict[str, 
     config.output_dir.mkdir(parents=True, exist_ok=True)
     alpha_rows = build_alpha158_rows(config)
     ta_rows = build_ta_rows(config)
-    screening_input = standardize_columns(pd.concat([alpha_rows, ta_rows], ignore_index=True, sort=False), config.pool_name)
+    alpha101_rows = build_alpha101_rows(config)
+    screening_input = standardize_columns(
+        pd.concat([alpha_rows, ta_rows, alpha101_rows], ignore_index=True, sort=False),
+        config.pool_name,
+    )
     board = build_candidate_board(screening_input)
     pool = board.copy()
     alpha = pool[pool["role"].eq("alpha_candidate")].copy()

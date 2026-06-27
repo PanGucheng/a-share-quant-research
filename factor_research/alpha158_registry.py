@@ -8,11 +8,11 @@ from factor_research.registry import FactorSpec
 
 def catalog_entry_to_spec(entry: FactorCatalogEntry) -> FactorSpec:
     return FactorSpec(
-        name=entry.registry_name,
+        name=entry.name,
         category=entry.category,
         expected_direction=entry.expected_direction,
         dependencies=entry.required_fields,
-        description=entry.notes or f"{entry.source_project} factor {entry.name}",
+        description=entry.notes or f"{entry.source_project} factor {entry.name} ({entry.registry_name})",
         labels=entry.labels,
         enabled=entry.enabled,
     )

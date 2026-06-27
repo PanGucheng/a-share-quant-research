@@ -1,0 +1,34 @@
+provider_uri: "E:/qlib_prj/qlib_data/cn_data_community_20260609_derived"
+market: "all_stock_shsz_liquid2000"
+start: "2020-10-01"
+end: "2021-06-30"
+max_instruments: 500
+
+source:
+  local_path: "tmp/reference_repos/KunQuant"
+  source_commit: "d4b9e61f729df347730aa921b539b9df3c3fe36d"
+  source_file: "tests/KunTestUtil/ref_alpha101.py"
+  source_module: "KunTestUtil.ref_alpha101.Alphas"
+  license: "Apache-2.0"
+
+alpha101:
+  metadata_catalog: "outputs/factor_catalog_alpha101_v1/kunquant_alpha101_catalog_metadata.yaml"
+  selected_smoke_factors:
+    - "kunquant_alpha101_alpha004"
+    - "kunquant_alpha101_alpha009"
+    - "kunquant_alpha101_alpha012"
+    - "kunquant_alpha101_alpha033"
+    - "kunquant_alpha101_alpha101"
+
+catalog:
+  stage: "alpha101_adapter_smoke_generated"
+  enabled: false
+  runnable: false
+  labels:
+    - "label_10d_t1"
+    - "label_20d_t1"
+
+cache:
+  refresh: false
+
+output_dir: "outputs/alpha101_factor_adapter_v1/smoke"

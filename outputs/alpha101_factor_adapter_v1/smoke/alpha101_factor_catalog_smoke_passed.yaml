@@ -1,0 +1,120 @@
+version: 1
+updated: '2026-06-26'
+policy:
+  purpose: Promoted KunQuant Alpha101 smoke factors after V4 adapter evaluation.
+  principle:
+  - This is a smoke-level runnable catalog, not the full Alpha101 source catalog.
+  - Formula definitions are sourced from KunQuant pandas reference code.
+  - Promoted entries require Alphalens Reloaded and Qlib eval pass.
+  - jqfactor_analyzer partial_pass is allowed only for known factor_returns/factor_alpha_beta
+    index-name failures.
+  - data_quality and tradability remain mandatory prefilters.
+  required_prefilter:
+  - data_quality
+  - tradability
+factors:
+- name: kunquant_alpha101_alpha004
+  registry_name: alpha004
+  category: alpha101
+  source_project: kunquant_alpha101
+  source_file: tests/KunTestUtil/ref_alpha101.py
+  source_function: alpha004
+  source_commit: d4b9e61f729df347730aa921b539b9df3c3fe36d
+  license: Apache-2.0
+  expected_direction: watch
+  required_fields:
+  - $low
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha101_adapter_v4_smoke_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.alpha101_source.compute_alpha101_features
+  notes: Generated from KunQuant pandas reference smoke; coverage=0.942281 V4 smoke
+    passed for selected Alpha101 adapter factor.
+- name: kunquant_alpha101_alpha009
+  registry_name: alpha009
+  category: alpha101
+  source_project: kunquant_alpha101
+  source_file: tests/KunTestUtil/ref_alpha101.py
+  source_function: alpha009
+  source_commit: d4b9e61f729df347730aa921b539b9df3c3fe36d
+  license: Apache-2.0
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha101_adapter_v4_smoke_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.alpha101_source.compute_alpha101_features
+  notes: Generated from KunQuant pandas reference smoke; coverage=0.987213 V4 smoke
+    passed for selected Alpha101 adapter factor.
+- name: kunquant_alpha101_alpha012
+  registry_name: alpha012
+  category: alpha101
+  source_project: kunquant_alpha101
+  source_file: tests/KunTestUtil/ref_alpha101.py
+  source_function: alpha012
+  source_commit: d4b9e61f729df347730aa921b539b9df3c3fe36d
+  license: Apache-2.0
+  expected_direction: watch
+  required_fields:
+  - $close
+  - $volume
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha101_adapter_v4_smoke_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.alpha101_source.compute_alpha101_features
+  notes: Generated from KunQuant pandas reference smoke; coverage=0.987213 V4 smoke
+    passed for selected Alpha101 adapter factor.
+- name: kunquant_alpha101_alpha033
+  registry_name: alpha033
+  category: alpha101
+  source_project: kunquant_alpha101
+  source_file: tests/KunTestUtil/ref_alpha101.py
+  source_function: alpha033
+  source_commit: d4b9e61f729df347730aa921b539b9df3c3fe36d
+  license: Apache-2.0
+  expected_direction: watch
+  required_fields:
+  - $close
+  - $open
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha101_adapter_v4_smoke_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.alpha101_source.compute_alpha101_features
+  notes: Generated from KunQuant pandas reference smoke; coverage=0.993685 V4 smoke
+    passed for selected Alpha101 adapter factor.
+- name: kunquant_alpha101_alpha101
+  registry_name: alpha101
+  category: alpha101
+  source_project: kunquant_alpha101
+  source_file: tests/KunTestUtil/ref_alpha101.py
+  source_function: alpha101
+  source_commit: d4b9e61f729df347730aa921b539b9df3c3fe36d
+  license: Apache-2.0
+  expected_direction: watch
+  required_fields:
+  - $close
+  - $high
+  - $low
+  - $open
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha101_adapter_v4_smoke_passed
+  enabled: true
+  runnable: true
+  compute_adapter: factor_research.alpha101_source.compute_alpha101_features
+  notes: Generated from KunQuant pandas reference smoke; coverage=0.993685 V4 smoke
+    passed for selected Alpha101 adapter factor.
