@@ -748,6 +748,17 @@ The jqfactor partial status is recorded without changing the open-source metric
 definitions. The next Alpha360 step is a 358-factor batch candidate catalog,
 excluding `alpha360_CLOSE0` and `alpha360_VOLUME0`.
 
+Alpha360 batch preparation is now dry-run ready:
+
+```text
+batch candidates: 358
+adapter holdouts: 2
+planned dry-run batches: 72
+```
+
+Next gate: build the 358-factor batch frame, then run one resumable V4 batch
+before launching the remaining planned batches.
+
 ## Open-Source References
 
 The factor research design intentionally borrows stable ideas from open-source

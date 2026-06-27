@@ -1,0 +1,61 @@
+source_catalog: "outputs/factor_catalog_alpha360_v1/alpha360_catalog_all.yaml"
+batch_candidate_catalog: "outputs/factor_catalog_alpha360_v1/alpha360_catalog_batch_candidate358.yaml"
+adapter_holdout_catalog: "outputs/factor_catalog_alpha360_v1/alpha360_catalog_adapter_holdout2.yaml"
+combined_catalog: "outputs/factor_catalog_alpha360_v1/alpha360_catalog_combined360.yaml"
+audit_output: "outputs/factor_catalog_alpha360_v1/alpha360_batch_catalog_audit.csv"
+report_output: "outputs/factor_catalog_alpha360_v1/alpha360_batch_catalog_report.md"
+expression_config_output: "configs/alpha360_expression_adapter_batch358_v1.yaml"
+batch_base_config_output: "configs/alpha360_factor_evaluation_batch_base_v1.yaml"
+batch_runner_config_output: "configs/factor_evaluation_batch_v1_alpha360_candidate358.yaml"
+
+holdout:
+  stage: "alpha360_adapter_constant_holdout"
+  names:
+    - "alpha360_CLOSE0"
+    - "alpha360_VOLUME0"
+  reason: "constant_or_near_constant_normalization_identity"
+
+candidate:
+  stage: "alpha360_adapter_batch_v4_pending"
+  enabled: false
+  runnable: false
+
+expression_adapter:
+  provider_uri: "E:/qlib_prj/qlib_data/cn_data_community_20260609_derived"
+  market: "all_stock_shsz_liquid2000"
+  start: "2020-10-01"
+  end: "2021-06-30"
+  max_instruments: 500
+  output_dir: "outputs/alpha360_expression_frame_v1/batch358"
+  batch_size: 20
+  refresh: false
+
+v4_base:
+  provider_uri: "E:/qlib_prj/qlib_data/cn_data_community_20260609_derived"
+  market: "all_stock_shsz_liquid2000"
+  output_dir: "outputs/factor_evaluation_v4/alpha360_batch_base_placeholder"
+  window_name: "alpha360_batch_2021_h1"
+  start: "2021-01-01"
+  end: "2021-06-30"
+  tradability_dir: "outputs/tradability/all_stock_shsz_liquid2000_2021-01-01_2023-12-29"
+  data_quality_dir: "outputs/data_quality_tradability/all_stock_shsz_liquid2000_2021-01-01_2023-12-29"
+  labels:
+    - "label_10d_t1"
+    - "label_20d_t1"
+  systems:
+    - "alphalens_reloaded"
+    - "jqfactor_analyzer"
+    - "qlib_eval"
+  quantiles: 5
+  min_count: 50
+  sample_rows: 200
+  min_liquidity_bucket: 3
+  min_tradability_score: 75.0
+  context_enabled: false
+
+batch_runner:
+  python: "E:/anaconda_envs/qlib_env/python.exe"
+  output_root: "outputs/factor_evaluation_batch_v1/alpha360_candidate358_batch1"
+  batch_size: 5
+  resume: true
+  max_batches:

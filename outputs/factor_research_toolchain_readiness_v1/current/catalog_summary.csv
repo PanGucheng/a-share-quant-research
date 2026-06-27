@@ -5,3 +5,4 @@ ta_promoted_catalog,outputs/ta_factor_adapter_v1/smoke/ta_factor_catalog_promote
 kunquant_alpha101_metadata_catalog,outputs/factor_catalog_alpha101_v1/kunquant_alpha101_catalog_metadata.yaml,pass,82,0,0,KunQuant Alpha101 metadata catalog after source audit; adapter pending and non-runnable.
 kunquant_alpha101_promoted_catalog,outputs/alpha101_factor_adapter_v1/batch82/alpha101_factor_catalog_promoted64.yaml,pass,64,64,64,Promoted KunQuant Alpha101 factors after smoke and candidate71 batch V4 evaluation.
 qlib_alpha360_smoke_catalog,outputs/factor_catalog_alpha360_v1/alpha360_catalog_smoke.yaml,pass,24,0,0,Qlib Alpha360 smoke catalog after source audit; disabled/non-runnable until V4 evaluation.
+qlib_alpha360_batch_candidate_catalog,outputs/factor_catalog_alpha360_v1/alpha360_catalog_batch_candidate358.yaml,pass,358,0,0,Qlib Alpha360 batch candidate catalog after smoke V4; disabled/non-runnable until batch promotion.

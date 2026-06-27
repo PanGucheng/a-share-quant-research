@@ -116,6 +116,7 @@ tmp/reference_repos/techfactor
 - 不继续围绕单个 Alpha158、TA 或 Alpha101 因子细调策略。
 - V3.28 `qlib_alpha360` source audit 与 adapter smoke 已完成：360 个 Qlib 原生公式全部可用，24 个 smoke 因子已生成 expression frame。
 - V3.29 Alpha360 V4 smoke 已完成：22 个非恒等 smoke 因子进入 V4；Alphalens/Qlib eval 全部 pass，jqfactor_analyzer 保留已知 partial。
+- V3.30 Alpha360 batch catalog/dry-run 已完成：358 个 batch candidates、2 个 adapter holdouts、72 个 planned dry-run batches。
 - FactorTest-style 行业/风格/Barra 暴露诊断应先做数据能力审计。
-- 下一步生成 Alpha360 全量 batch candidate catalog，排除 `alpha360_CLOSE0` 与 `alpha360_VOLUME0`，再做 358 因子可恢复 V4 batch。
+- 下一步生成 Alpha360 358 因子 batch factor frame，并先跑 `--max-batches 1` 的小批 V4 验证。
 - 对现有 29 个 `new_source_alpha_probe` 增加更长 OOS、相关性/暴露和组合 smoke 验证后，再考虑训练输入。

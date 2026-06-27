@@ -3102,3 +3102,52 @@ context_metric_index rows: 4,224
 - 生成 Alpha360 batch candidate / adapter holdout catalog。
 - 对 358 个非恒等 Alpha360 因子生成完整 2021-2023 expression frame。
 - 走 batch V4、promotion/holdout、multi-source screening 和 judgement。
+
+## 62. V3.30：Alpha360 Batch Catalogs 与 Dry-Run V1
+
+状态：已完成 dry-run。
+
+阶段文档：
+
+```text
+docs/ALPHA360_BATCH_CATALOGS_V1.md
+```
+
+新增文件：
+
+```text
+configs/alpha360_factor_batch_catalogs_v1.yaml
+configs/alpha360_expression_adapter_batch358_v1.yaml
+configs/alpha360_factor_evaluation_batch_base_v1.yaml
+configs/factor_evaluation_batch_v1_alpha360_candidate358.yaml
+scripts/prepare_alpha360_batch_catalogs_v1.py
+```
+
+运行命令：
+
+```powershell
+E:\anaconda_envs\qlib_env\python.exe scripts\prepare_alpha360_batch_catalogs_v1.py --config configs\alpha360_factor_batch_catalogs_v1.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\run_factor_evaluation_batch_v1.py --config configs\factor_evaluation_batch_v1_alpha360_candidate358.yaml --dry-run
+```
+
+完成结果：
+
+```text
+source_all: 360
+batch_candidate: 358
+adapter_holdout: 2
+dry-run planned batches: 72
+batch size: 5
+```
+
+重要边界：
+
+- `alpha360_CLOSE0` 与 `alpha360_VOLUME0` 已放入 adapter holdout。
+- 358 个 batch candidates 仍是 disabled/non-runnable，未进入筛选或模型输入。
+- dry-run 只生成计划，不执行 V4 batch。
+
+下一步：
+
+- 运行 `configs/alpha360_expression_adapter_batch358_v1.yaml` 生成 batch factor frame。
+- 执行 `configs/factor_evaluation_batch_v1_alpha360_candidate358.yaml --max-batches 1` 小批验证。
+- 小批通过后再 resume 全部 72 个 batch。

@@ -1,0 +1,19 @@
+provider_uri: E:/qlib_prj/qlib_data/cn_data_community_20260609_derived
+market: all_stock_shsz_liquid2000
+start: '2020-10-01'
+end: '2021-06-30'
+max_instruments: 500
+catalog_path: outputs/factor_catalog_alpha360_v1/alpha360_catalog_batch_candidate358.yaml
+inventory_path: outputs/factor_catalog_alpha360_v1/alpha360_formula_inventory.csv
+output_dir: outputs/alpha360_expression_frame_v1/batch358
+selection:
+  enabled_only: false
+  runnable_only: false
+  stages:
+  - alpha360_adapter_batch_v4_pending
+  names: []
+  max_factors: 358
+expression:
+  batch_size: 20
+cache:
+  refresh: false

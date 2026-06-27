@@ -706,6 +706,16 @@ context_metric_index rows: 4,224
 
 jqfactor partial 会被记录，但不改开源评价口径。下一步是生成 Alpha360 358 因子 batch candidate catalog，并排除 `alpha360_CLOSE0` 与 `alpha360_VOLUME0`。
 
+Alpha360 batch 准备也已经 dry-run 通过：
+
+```text
+batch candidates: 358
+adapter holdouts: 2
+planned dry-run batches: 72
+```
+
+下一道门：先生成 358 因子 batch frame，再跑一个可恢复 V4 小批次，确认无误后才继续跑剩余批次。
+
 ## 当前因子研究结论
 
 截至 V3.1/V3.2：

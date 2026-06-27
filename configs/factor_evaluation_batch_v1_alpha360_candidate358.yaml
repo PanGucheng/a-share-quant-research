@@ -1,0 +1,21 @@
+base_config: configs/alpha360_factor_evaluation_batch_base_v1.yaml
+catalog: outputs/factor_catalog_alpha360_v1/alpha360_catalog_batch_candidate358.yaml
+python: E:/anaconda_envs/qlib_env/python.exe
+output_root: outputs/factor_evaluation_batch_v1/alpha360_candidate358_batch1
+selection:
+  enabled_only: false
+  runnable_only: false
+  allow_external_specs: true
+  stages:
+  - alpha360_adapter_batch_v4_pending
+  categories: []
+  sources:
+  - qlib_alpha360
+  names: []
+  max_factors: null
+execution:
+  allow_non_runnable_external: true
+batching:
+  batch_size: 5
+  resume: true
+  max_batches: null

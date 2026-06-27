@@ -1,0 +1,5 @@
+﻿catalog,path,factor_count,enabled_count,runnable_count
+source_all,outputs/factor_catalog_alpha360_v1/alpha360_catalog_all.yaml,360,0,0
+batch_candidate,outputs/factor_catalog_alpha360_v1/alpha360_catalog_batch_candidate358.yaml,358,0,0
+adapter_holdout,outputs/factor_catalog_alpha360_v1/alpha360_catalog_adapter_holdout2.yaml,2,0,0
+combined,outputs/factor_catalog_alpha360_v1/alpha360_catalog_combined360.yaml,360,0,0

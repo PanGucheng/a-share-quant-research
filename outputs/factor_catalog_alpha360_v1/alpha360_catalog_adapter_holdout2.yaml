@@ -1,0 +1,52 @@
+version: 1
+updated: '2026-06-28'
+policy:
+  required_prefilter:
+  - data_quality
+  - tradability
+  principle:
+  - Alpha360 formulas are sourced from the local Qlib repository.
+  - Batch candidates remain disabled/non-runnable until V4 promotion.
+  - Constant normalization identities are held out before batch evaluation.
+  purpose: Alpha360 adapter holdouts excluded from batch because they are constant
+    normalization identities.
+factors:
+- name: alpha360_CLOSE0
+  registry_name: alpha360_CLOSE0
+  category: alpha360_close_window
+  source_project: qlib_alpha360
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha360DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha360_adapter_constant_holdout
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha360 expression: $close/$close Alpha360 adapter holdout: constant_or_near_constant_normalization_identity.'
+- name: alpha360_VOLUME0
+  registry_name: alpha360_VOLUME0
+  category: alpha360_volume_window
+  source_project: qlib_alpha360
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha360DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $volume
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha360_adapter_constant_holdout
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha360 expression: $volume/($volume+1e-12) Alpha360 adapter holdout:
+    constant_or_near_constant_normalization_identity.'
