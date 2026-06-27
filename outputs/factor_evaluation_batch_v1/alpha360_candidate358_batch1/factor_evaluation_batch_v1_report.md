@@ -92,7 +92,7 @@
 
 | batch_id | status | factor_count | factors | evaluator_status_rows | failure_rows | metric_rows | context_metric_rows | output_dir |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| batch_001 | planned | 5 | alpha360_CLOSE59,alpha360_CLOSE58,alpha360_CLOSE57,alpha360_CLOSE56,alpha360_CLOSE55 | 0 | 0 | 0 | 0 | E:\qlib_prj\qlib_baseline\outputs\factor_evaluation_batch_v1\alpha360_candidate358_batch1\runs\batch_001 |
+| batch_001 | planned | 5 | alpha360_CLOSE59,alpha360_CLOSE58,alpha360_CLOSE57,alpha360_CLOSE56,alpha360_CLOSE55 | 15 | 10 | 90 | 0 | E:\qlib_prj\qlib_baseline\outputs\factor_evaluation_batch_v1\alpha360_candidate358_batch1\runs\batch_001 |
 | batch_002 | planned | 5 | alpha360_CLOSE54,alpha360_CLOSE53,alpha360_CLOSE52,alpha360_CLOSE51,alpha360_CLOSE50 | 0 | 0 | 0 | 0 | E:\qlib_prj\qlib_baseline\outputs\factor_evaluation_batch_v1\alpha360_candidate358_batch1\runs\batch_002 |
 | batch_003 | planned | 5 | alpha360_CLOSE49,alpha360_CLOSE48,alpha360_CLOSE47,alpha360_CLOSE46,alpha360_CLOSE45 | 0 | 0 | 0 | 0 | E:\qlib_prj\qlib_baseline\outputs\factor_evaluation_batch_v1\alpha360_candidate358_batch1\runs\batch_003 |
 | batch_004 | planned | 5 | alpha360_CLOSE44,alpha360_CLOSE43,alpha360_CLOSE42,alpha360_CLOSE41,alpha360_CLOSE40 | 0 | 0 | 0 | 0 | E:\qlib_prj\qlib_baseline\outputs\factor_evaluation_batch_v1\alpha360_candidate358_batch1\runs\batch_004 |

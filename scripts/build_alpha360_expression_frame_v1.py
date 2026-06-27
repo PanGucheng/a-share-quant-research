@@ -49,8 +49,15 @@ def load_config(path: Path) -> ExpressionFrameConfig:
 
 def write_report(config: ExpressionFrameConfig, expression_table: pd.DataFrame, summary: pd.DataFrame, output: Path) -> None:
     coverage = summary[["factor", "coverage", "missing_rate", "valid_rows", "total_rows"]].copy()
+    is_batch = "batch" in config.output_dir.as_posix().lower()
+    title = "Alpha360 Expression Frame Batch V1" if is_batch else "Alpha360 Expression Frame Smoke V1"
+    boundary = (
+        "This is a batch adapter run. Catalog entries stay disabled/non-runnable until V4 batch evaluation and promotion pass."
+        if is_batch
+        else "This is an adapter smoke run only. Catalog entries stay disabled/non-runnable until V4 evaluation and promotion pass."
+    )
     lines = [
-        "# Alpha360 Expression Frame Smoke V1",
+        f"# {title}",
         "",
         f"- Provider: `{config.provider_uri}`",
         f"- Market: `{config.market}`",
@@ -70,8 +77,7 @@ def write_report(config: ExpressionFrameConfig, expression_table: pd.DataFrame, 
         "",
         "## Boundary",
         "",
-        "- This is an adapter smoke run only.",
-        "- Catalog entries stay disabled/non-runnable until V4 evaluation and promotion pass.",
+        f"- {boundary}",
         "- Downstream evaluation must keep data_quality and tradability as mandatory prefilters.",
         "",
         "## Output Files",

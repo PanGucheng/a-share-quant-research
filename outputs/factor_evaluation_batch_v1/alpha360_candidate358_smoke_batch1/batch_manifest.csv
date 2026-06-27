@@ -1,0 +1,2 @@
+﻿batch_id,status,returncode,factor_count,factors,config_path,output_dir,started_at,ended_at,elapsed_seconds
+batch_001,pass,0,5,"alpha360_CLOSE59,alpha360_CLOSE58,alpha360_CLOSE57,alpha360_CLOSE56,alpha360_CLOSE55",E:\qlib_prj\qlib_baseline\outputs\factor_evaluation_batch_v1\alpha360_candidate358_smoke_batch1\generated_configs\batch_001.yaml,E:\qlib_prj\qlib_baseline\outputs\factor_evaluation_batch_v1\alpha360_candidate358_smoke_batch1\runs\batch_001,2026-06-28T02:16:47,2026-06-28T02:17:09,22.399

@@ -14,7 +14,7 @@ The factor research toolchain is ready for large-scale multi-source screening an
 | --- | --- | --- | --- |
 | prefilter_policy | pass | catalog=data_quality,tradability; manifest=data_quality,tradability | Keep data_quality and tradability as mandatory prefilters for every new factor source. |
 | open_source_evaluator_systems | pass | systems=alphalens_reloaded,jqfactor_analyzer,qlib_eval,project_current | Do not replace external evaluator definitions; keep Alphalens Reloaded, jqfactor_analyzer, Qlib eval, and project_current coexisting. |
-| batch_runner | pass | batch_configs=4 | Use the batch runner for large jobs, with dry-run, resume, manifests, and logs. |
+| batch_runner | pass | batch_configs=5 | Use the batch runner for large jobs, with dry-run, resume, manifests, and logs. |
 | required_output_contracts | pass | missing_or_failed=0 | Repair missing contracts before launching full-scale screening. |
 | runnable_factor_inventory | pass | total_runnable=311 | Use Alpha158 as the reference path and promoted TA/Alpha101 sources to validate the multi-source machinery before adding more families. |
 | new_source_adapter_inventory | pass | new_source_runnable=141 | Keep the promoted non-Alpha158 catalog as a large-scale screening input and add later sources through the same adapter gate. |
@@ -101,6 +101,10 @@ The factor research toolchain is ready for large-scale multi-source screening an
 | alpha360_batch_catalog_audit | alpha360_batch_catalog | outputs/factor_catalog_alpha360_v1/alpha360_batch_catalog_audit.csv | pass | 4 | 4 | 425 |
 | alpha360_batch_dry_run_manifest | alpha360_batch_dry_run | outputs/factor_evaluation_batch_v1/alpha360_candidate358_batch1/batch_manifest.csv | pass | 72 | 72 | 27210 |
 | alpha360_batch_dry_run_selected_catalog | alpha360_batch_dry_run | outputs/factor_evaluation_batch_v1/alpha360_candidate358_batch1/selected_factor_catalog.csv | pass | 358 | 358 | 138212 |
+| alpha360_batch_expression_table | alpha360_batch_adapter | outputs/alpha360_expression_frame_v1/batch358/expression_table.csv | pass | 358 | 358 | 95658 |
+| alpha360_batch_expression_summary | alpha360_batch_adapter | outputs/alpha360_expression_frame_v1/batch358/expression_frame_summary.csv | pass | 358 | 358 | 44933 |
+| alpha360_batch_smoke_manifest | alpha360_batch_smoke | outputs/factor_evaluation_batch_v1/alpha360_candidate358_smoke_batch1/batch_manifest.csv | pass | 1 | 1 | 505 |
+| alpha360_batch_smoke_output_summary | alpha360_batch_smoke | outputs/factor_evaluation_batch_v1/alpha360_candidate358_smoke_batch1/batch_output_summary.csv | pass | 1 | 1 | 346 |
 | alpha101_source_summary | alpha101_source_audit | outputs/factor_catalog_alpha101_v1/source_audit/alpha101_source_summary.csv | pass | 2 | 2 | 574 |
 | kunquant_alpha101_inventory | alpha101_source_audit | outputs/factor_catalog_alpha101_v1/source_audit/kunquant_alpha101_inventory.csv | pass | 82 | 80 | 19926 |
 | kunquant_alpha101_metadata_catalog | alpha101_source_audit | outputs/factor_catalog_alpha101_v1/kunquant_alpha101_catalog_metadata.yaml | pass | 82 | 80 | 51857 |

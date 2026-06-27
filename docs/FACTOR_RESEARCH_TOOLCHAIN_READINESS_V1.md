@@ -181,14 +181,24 @@ alpha360_batch_dry_run_selected_catalog rows: 358
 overall_status: ready
 ```
 
+V3.31 后新增 Alpha360 batch frame 与 smoke batch1 contract：
+
+```text
+alpha360_batch_expression_table rows: 358
+alpha360_batch_expression_summary rows: 358
+alpha360_batch_smoke_manifest rows: 1
+alpha360_batch_smoke_output_summary rows: 1
+overall_status: ready
+```
+
 这表示“引入更多因子”的入口已经打开，并且已由 TA、Alpha101 与 Alpha360 三类非 seed 来源验证。下一阶段可以继续接入更多开源因子源、基本面/行业风格数据或更长 OOS 诊断，但仍需沿用 adapter audit、V4 batch、promotion/holdout、multi-source screening 和 multi-source judgement contract。
 
 ## 7. 下一步目标
 
 下一步不继续围绕 Alpha158 微调，也不急着训练模型，而是进入“更多开源因子源接入”阶段：
 
-1. 运行 Alpha360 358 因子 expression adapter，生成 batch factor frame。
-2. 先执行 Alpha360 batch runner 的 `--max-batches 1` 小批验证，再 resume 全部 72 个批次。
+1. 以 `resume` 模式继续执行 Alpha360 剩余 batch，可用 `--max-batches` 分段推进。
+2. 批量完成后生成 Alpha360 batch metric index summary。
 3. 通过 promotion/holdout 后，把 Alpha360 promoted 因子追加到 multi-source screening 和 judgement contract。
 4. 并行推进 FactorTest-style 行业/风格/Barra 暴露数据能力审计。
 5. 为 `new_source_alpha_probe` 增加更长时段、更多数据源、相关性/暴露/组合 smoke 验证。

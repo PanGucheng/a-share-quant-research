@@ -716,6 +716,17 @@ planned dry-run batches: 72
 
 下一道门：先生成 358 因子 batch frame，再跑一个可恢复 V4 小批次，确认无误后才继续跑剩余批次。
 
+这道门已经通过：
+
+```text
+batch358 frame rows: 88,797
+batch358 factors: 358
+smoke batch_001: pass
+smoke batch_001 metric rows: 90
+```
+
+下一步是继续用 resume 模式跑剩余 Alpha360 batches，完成后再生成 promotion/holdout catalog，并接入 multi-source screening。
+
 ## 当前因子研究结论
 
 截至 V3.1/V3.2：

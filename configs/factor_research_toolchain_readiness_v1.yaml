@@ -33,6 +33,8 @@ batch_configs:
     path: "configs/factor_evaluation_batch_v1_ta_remaining74.yaml"
   - id: "alpha360_candidate358_batch"
     path: "configs/factor_evaluation_batch_v1_alpha360_candidate358.yaml"
+  - id: "alpha360_candidate358_smoke_batch"
+    path: "configs/factor_evaluation_batch_v1_alpha360_candidate358_smoke.yaml"
 
 evaluation_configs:
   - id: "factor_evaluation_v4_main"
@@ -231,6 +233,22 @@ required_output_contracts:
     group: "alpha360_batch_dry_run"
     path: "outputs/factor_evaluation_batch_v1/alpha360_candidate358_batch1/selected_factor_catalog.csv"
     min_rows: 358
+  - id: "alpha360_batch_expression_table"
+    group: "alpha360_batch_adapter"
+    path: "outputs/alpha360_expression_frame_v1/batch358/expression_table.csv"
+    min_rows: 358
+  - id: "alpha360_batch_expression_summary"
+    group: "alpha360_batch_adapter"
+    path: "outputs/alpha360_expression_frame_v1/batch358/expression_frame_summary.csv"
+    min_rows: 358
+  - id: "alpha360_batch_smoke_manifest"
+    group: "alpha360_batch_smoke"
+    path: "outputs/factor_evaluation_batch_v1/alpha360_candidate358_smoke_batch1/batch_manifest.csv"
+    min_rows: 1
+  - id: "alpha360_batch_smoke_output_summary"
+    group: "alpha360_batch_smoke"
+    path: "outputs/factor_evaluation_batch_v1/alpha360_candidate358_smoke_batch1/batch_output_summary.csv"
+    min_rows: 1
   - id: "alpha101_source_summary"
     group: "alpha101_source_audit"
     path: "outputs/factor_catalog_alpha101_v1/source_audit/alpha101_source_summary.csv"

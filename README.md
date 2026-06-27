@@ -759,6 +759,18 @@ planned dry-run batches: 72
 Next gate: build the 358-factor batch frame, then run one resumable V4 batch
 before launching the remaining planned batches.
 
+That gate has now passed:
+
+```text
+batch358 frame rows: 88,797
+batch358 factors: 358
+smoke batch_001: pass
+smoke batch_001 metric rows: 90
+```
+
+The next Alpha360 step is to continue the remaining resumable batches, then
+generate promotion/holdout catalogs before multi-source screening.
+
 ## Open-Source References
 
 The factor research design intentionally borrows stable ideas from open-source

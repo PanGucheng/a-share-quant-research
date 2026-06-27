@@ -3151,3 +3151,50 @@ batch size: 5
 - 运行 `configs/alpha360_expression_adapter_batch358_v1.yaml` 生成 batch factor frame。
 - 执行 `configs/factor_evaluation_batch_v1_alpha360_candidate358.yaml --max-batches 1` 小批验证。
 - 小批通过后再 resume 全部 72 个 batch。
+
+## 63. V3.31：Alpha360 Batch Frame 与 Smoke Batch1 V1
+
+状态：已完成小批验证。
+
+阶段文档：
+
+```text
+docs/ALPHA360_BATCH_FRAME_AND_SMOKE_BATCH1_V1.md
+```
+
+新增文件：
+
+```text
+configs/factor_evaluation_batch_v1_alpha360_candidate358_smoke.yaml
+```
+
+运行命令：
+
+```powershell
+E:\anaconda_envs\qlib_env\python.exe scripts\build_alpha360_expression_frame_v1.py --config configs\alpha360_expression_adapter_batch358_v1.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\run_factor_evaluation_batch_v1.py --config configs\factor_evaluation_batch_v1_alpha360_candidate358.yaml --dry-run
+E:\anaconda_envs\qlib_env\python.exe scripts\run_factor_evaluation_batch_v1.py --config configs\factor_evaluation_batch_v1_alpha360_candidate358_smoke.yaml
+```
+
+完成结果：
+
+```text
+batch358 factor frame rows: 88,797
+batch358 factor count: 358
+dry-run planned batches: 72
+smoke batch_001 status: pass
+smoke batch_001 factors: 5
+smoke batch_001 metric rows: 90
+```
+
+重要边界：
+
+- batch358 的 `factor_frame.pkl` 是缓存文件，不进入 Git。
+- smoke batch1 独立 output root，避免覆盖 72 批 dry-run manifest。
+- jqfactor partial 仍只记录，不改开源指标口径。
+
+下一步：
+
+- 以 resume 模式继续执行 Alpha360 剩余 batches。
+- 批量完成后生成 Alpha360 promotion/holdout catalog。
+- 再接入 multi-source screening 与 judgement。
