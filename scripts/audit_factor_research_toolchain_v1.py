@@ -298,6 +298,10 @@ def build_readiness_checks(
         contract_status["group"].isin(["multi_source_screening", "multi_source_candidate_pool"])
     ]
     multi_source_contract_failures = multi_source_contracts[multi_source_contracts["status"].ne("pass")]
+    multi_source_judgement_contracts = contract_status[contract_status["group"].eq("multi_source_judgement")]
+    multi_source_judgement_failures = multi_source_judgement_contracts[
+        multi_source_judgement_contracts["status"].ne("pass")
+    ]
     total_runnable = int(catalog_summary["runnable_count"].sum()) if not catalog_summary.empty else 0
     baseline_sources = set(str(item) for item in rules.get("baseline_sources", []))
     new_source_rows = source_readiness[
@@ -369,6 +373,18 @@ def build_readiness_checks(
             else "Generalize the screening input and candidate-pool contracts before mixing TA, Alpha101, and future factors."
         ),
     )
+    add(
+        "generic_multi_source_judgement",
+        "pass"
+        if not multi_source_judgement_contracts.empty and multi_source_judgement_failures.empty
+        else "partial",
+        f"contracts={len(multi_source_judgement_contracts)}, failed={len(multi_source_judgement_failures)}",
+        (
+            "Use the multi-source judgement board to triage Alpha158, TA, Alpha101, and future promoted factors before model training."
+            if not multi_source_judgement_contracts.empty and multi_source_judgement_failures.empty
+            else "Build the multi-source judgement contract before moving promoted new-source factors beyond monitor/probe status."
+        ),
+    )
     return pd.DataFrame(rows)
 
 
@@ -416,7 +432,7 @@ def write_report(
             "the remaining gap is a generic multi-source screening and candidate-pool contract for large-scale discovery."
         )
     else:
-        lines.append("The factor research toolchain is ready for large-scale multi-source screening.")
+        lines.append("The factor research toolchain is ready for large-scale multi-source screening and research judgement.")
     lines.extend(
         [
             "",
@@ -457,8 +473,8 @@ def write_report(
             "",
             "1. Keep Alpha158 as the validated reference pipeline, not the next research bottleneck.",
             "2. Treat promoted TA and Alpha101 catalogs as the first non-Alpha158 screening inputs.",
-            "3. Use the generic multi-source screening contract as the standard entry point for candidate-pool construction.",
-            "4. Start broad factor discovery by adding more open-source factor families through the same adapter, V4 batch, promotion, and holdout gates.",
+            "3. Use the generic multi-source screening and judgement contracts before promoting new-source factors into model or portfolio inputs.",
+            "4. Start broad factor discovery by adding more open-source factor families through the same adapter, V4 batch, promotion, holdout, and judgement gates.",
         ]
     )
     (output_dir / "toolchain_readiness_report.md").write_text("\n".join(lines) + "\n", encoding="utf-8")

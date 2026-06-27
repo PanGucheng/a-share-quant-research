@@ -1,0 +1,16 @@
+screening_input: "outputs/multi_source_screening_v1/current/multi_source_screening_input.csv"
+output_dir: "outputs/multi_source_judgement_v1/current"
+pool_name: "multi_source_judgement_v1"
+
+rules:
+  min_probe_coverage: 0.90
+  max_probe_missing_rate: 0.10
+  min_metric_value_count: 8
+  weak_abs_ic: 0.015
+  consistent_abs_ic: 0.03
+  strong_abs_ic: 0.05
+  consistent_abs_qlib_ir: 3.0
+  strong_abs_qlib_ir: 4.0
+  min_direction_agreement_ratio: 0.67
+  strong_direction_agreement_ratio: 0.83
+  min_new_source_probes: 5

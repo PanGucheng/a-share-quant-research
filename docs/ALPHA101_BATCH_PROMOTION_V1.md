@@ -70,4 +70,4 @@ total runnable factors: 311
 new-source runnable factors: 141
 ```
 
-Alpha101 promoted 因子仍保守放入 `monitor`，不直接作为 alpha 信号。下一步应继续扩展更多开源因子源，或在 multi-source 输出上建设通用 judgement 层。
+Alpha101 promoted 因子在 screening contract 中仍保守放入 `monitor`，不直接作为 alpha 信号。V3.26 已在 multi-source 输出上新增通用 judgement 层，其中 14 个 Alpha101 因子进入 `new_source_alpha_probe` 研究队列。

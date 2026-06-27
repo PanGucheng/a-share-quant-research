@@ -2896,3 +2896,54 @@ readiness overall: ready
 - 不继续围绕 Alpha158、TA 或 Alpha101 单个因子细调策略。
 - 优先寻找下一批开源因子源：基本面、行业风格、风险暴露、其他公式库或 A 股单因子测试框架。
 - 同时可开始设计通用 multi-source judgement 层，把现有 141 个新来源 promoted monitor 因子进一步筛成 alpha/risk/monitor/holdout。
+
+## 58. V3.26：Multi-Source Judgement V1
+
+状态：已完成。
+
+阶段文档：
+
+```text
+docs/MULTI_SOURCE_JUDGEMENT_V1.md
+```
+
+新增文件：
+
+```text
+configs/multi_source_judgement_v1.yaml
+factor_research/multi_source_judgement.py
+scripts/run_multi_source_judgement_v1.py
+```
+
+运行命令：
+
+```powershell
+E:\anaconda_envs\qlib_env\python.exe scripts\run_multi_source_judgement_v1.py --config configs\multi_source_judgement_v1.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\audit_factor_research_toolchain_v1.py --config configs\factor_research_toolchain_readiness_v1.yaml
+```
+
+完成结果：
+
+```text
+judgement board rows: 319
+research candidates: 43
+new-source alpha probes: 29
+TA probes: 15
+Alpha101 probes: 14
+holdouts: 23
+readiness generic_multi_source_judgement: pass
+readiness overall: ready
+```
+
+重要边界：
+
+- Alpha158 仍保留既有 14 个 `alpha_candidate`，不改变当前组合/模型默认输入。
+- TA 与 Alpha101 的 promoted 因子可以进入 `new_source_alpha_probe`，但不会成为 downstream default。
+- V1 只读取 Alphalens Reloaded、jqfactor_analyzer 和 Qlib eval 已生成指标，不改开源评价定义。
+- coverage / missing-rate gate 比 source promotion 更严格，避免低覆盖强信号被误当成 alpha。
+
+下一步：
+
+- 不继续研究单个 Alpha158、TA 或 Alpha101 因子。
+- 优先寻找下一批开源因子源和数据源：基本面、行业/风格暴露、风险暴露、其他 A 股公式库。
+- 对现有 29 个 `new_source_alpha_probe` 增加更长 OOS、相关性/暴露和组合 smoke 验证后，再决定是否进入模型训练输入。

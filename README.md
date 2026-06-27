@@ -551,14 +551,15 @@ required_output_contracts: pass
 runnable_factor_inventory: pass
 new_source_adapter_inventory: pass
 generic_multi_source_screening: pass
+generic_multi_source_judgement: pass
 total_runnable: 311
 new_source_runnable: 141
 ```
 
 This means the Alpha158 reference path plus the promoted TA and Alpha101
 non-Alpha158 sources are ready. The generic multi-source screening and
-candidate-pool contract also passes, so the next project stage is broad
-factor-source expansion rather than more Alpha158-only study.
+judgement contracts also pass, so the next project stage is broad factor-source
+expansion rather than more Alpha158-only study.
 
 Key output:
 
@@ -621,8 +622,32 @@ contract status: pass
 ```
 
 TA and Alpha101 promoted factors are intentionally kept as `monitor` rows until a
-generic judgement layer is added; this avoids turning a successful source
+generic judgement layer reviews them; this avoids turning a successful source
 adapter into a trading signal by accident.
+
+## Multi-Source Judgement
+
+Build a research judgement board on top of the multi-source screening input:
+
+```powershell
+cd E:\qlib_prj\qlib_baseline
+E:\anaconda_envs\qlib_env\python.exe scripts\run_multi_source_judgement_v1.py --config configs\multi_source_judgement_v1.yaml
+```
+
+Current result:
+
+```text
+judgement board rows: 319
+research candidates: 43
+new-source alpha probes: 29
+TA probes: 15
+Alpha101 probes: 14
+contract status: pass
+```
+
+`new_source_alpha_probe` is a research queue, not a default downstream model or
+portfolio input. Alpha158 keeps the existing 14 `alpha_candidate` rows; promoted
+TA and Alpha101 factors can only become probes until broader validation is added.
 
 ## Alpha101 Source Audit And Adapter Smoke
 
@@ -660,8 +685,8 @@ combined Alpha101 holdout catalog: 18
 
 The generated metadata catalog remains non-runnable by default. Only the
 promoted catalog is enabled/runnable. Alpha101 promoted rows stay in `monitor`
-until a generic multi-source judgement layer decides whether any should become
-alpha candidates.
+inside the screening contract; the judgement layer currently marks 14 Alpha101
+rows as `new_source_alpha_probe` for follow-up research.
 
 ## Open-Source References
 
@@ -720,6 +745,7 @@ docs/TA_FACTOR_ADAPTER_SMOKE_V1.md
 docs/TA_BATCH_EVALUATION_PLAN_V1.md
 docs/TA_BATCH_PROMOTION_V1.md
 docs/MULTI_SOURCE_SCREENING_V1.md
+docs/MULTI_SOURCE_JUDGEMENT_V1.md
 docs/ALPHA101_SOURCE_AUDIT_V1.md
 docs/ALPHA101_ADAPTER_SMOKE_V1.md
 docs/ALPHA101_BATCH_PROMOTION_V1.md

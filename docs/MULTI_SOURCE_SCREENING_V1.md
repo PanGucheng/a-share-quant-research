@@ -10,7 +10,7 @@
 - 不调整具体交易策略。
 - 不替换 Qlib baseline。
 - 不修改 Alphalens Reloaded、jqfactor_analyzer、Qlib eval 等开源评价口径。
-- 不把 TA 因子直接判成 alpha，只把 promoted 新来源放入 `monitor`，等待后续通用 judgement 规则。
+- 不把 TA 因子直接判成 alpha，只把 promoted 新来源放入 `monitor`；后续 judgement 层另行输出研究 probe。
 
 ## 输入
 
@@ -107,4 +107,12 @@ total_runnable: 311
 new_source_runnable: 141
 ```
 
-这表示工具链已经可以支撑大规模多来源因子研究。下一阶段应继续接入更多开源因子源，例如更多公式库、基本面因子、行业/风格暴露数据，或者在现有 multi-source 输出上建设通用 judgement 层，而不是继续围绕 Alpha158 个案细调。
+这表示工具链已经可以支撑大规模多来源因子研究。V3.26 已在现有 multi-source 输出上建设通用 judgement 层；下一阶段应继续接入更多开源因子源，例如更多公式库、基本面因子、行业/风格暴露数据，而不是继续围绕 Alpha158 个案细调。
+
+## 后续状态
+
+V3.26 已在本 contract 之上新增 `multi_source_judgement_v1`，输出 319 行 judgement board、43 个 research candidates 和 29 个 new-source alpha probes。详见：
+
+```text
+docs/MULTI_SOURCE_JUDGEMENT_V1.md
+```

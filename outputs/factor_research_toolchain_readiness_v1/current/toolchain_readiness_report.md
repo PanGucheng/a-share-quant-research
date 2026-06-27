@@ -6,7 +6,7 @@
 
 ## Conclusion
 
-The factor research toolchain is ready for large-scale multi-source screening.
+The factor research toolchain is ready for large-scale multi-source screening and research judgement.
 
 ## Readiness Checks
 
@@ -19,6 +19,7 @@ The factor research toolchain is ready for large-scale multi-source screening.
 | runnable_factor_inventory | pass | total_runnable=311 | Use Alpha158 as the reference path and promoted TA/Alpha101 sources to validate the multi-source machinery before adding more families. |
 | new_source_adapter_inventory | pass | new_source_runnable=141 | Keep the promoted non-Alpha158 catalog as a large-scale screening input and add later sources through the same adapter gate. |
 | generic_multi_source_screening | pass | contracts=6, failed=0 | Use the generic multi-source screening contract as the entry point for Alpha158, TA, Alpha101, and future factors. |
+| generic_multi_source_judgement | pass | contracts=4, failed=0 | Use the multi-source judgement board to triage Alpha158, TA, Alpha101, and future promoted factors before model training. |
 
 ## Catalog Summary
 
@@ -78,6 +79,10 @@ The factor research toolchain is ready for large-scale multi-source screening.
 | multi_source_alpha_candidates | multi_source_candidate_pool | outputs/multi_source_screening_v1/current/multi_source_alpha_candidates.csv | pass | 14 | 1 | 8594 |
 | multi_source_holdouts | multi_source_candidate_pool | outputs/multi_source_screening_v1/current/multi_source_holdouts.csv | pass | 23 | 1 | 11872 |
 | multi_source_contract_status | multi_source_screening | outputs/multi_source_screening_v1/current/multi_source_contract_status.csv | pass | 7 | 7 | 316 |
+| multi_source_judgement_board | multi_source_judgement | outputs/multi_source_judgement_v1/current/multi_source_judgement_board.csv | pass | 319 | 300 | 179814 |
+| multi_source_research_candidates | multi_source_judgement | outputs/multi_source_judgement_v1/current/multi_source_research_candidates.csv | pass | 43 | 1 | 26427 |
+| multi_source_new_source_alpha_probes | multi_source_judgement | outputs/multi_source_judgement_v1/current/multi_source_new_source_alpha_probes.csv | pass | 29 | 5 | 20229 |
+| multi_source_judgement_contract_status | multi_source_judgement | outputs/multi_source_judgement_v1/current/multi_source_judgement_contract_status.csv | pass | 6 | 6 | 378 |
 | alpha101_source_summary | alpha101_source_audit | outputs/factor_catalog_alpha101_v1/source_audit/alpha101_source_summary.csv | pass | 2 | 2 | 574 |
 | kunquant_alpha101_inventory | alpha101_source_audit | outputs/factor_catalog_alpha101_v1/source_audit/kunquant_alpha101_inventory.csv | pass | 82 | 80 | 19926 |
 | kunquant_alpha101_metadata_catalog | alpha101_source_audit | outputs/factor_catalog_alpha101_v1/kunquant_alpha101_catalog_metadata.yaml | pass | 82 | 80 | 51857 |
@@ -113,5 +118,5 @@ The factor research toolchain is ready for large-scale multi-source screening.
 
 1. Keep Alpha158 as the validated reference pipeline, not the next research bottleneck.
 2. Treat promoted TA and Alpha101 catalogs as the first non-Alpha158 screening inputs.
-3. Use the generic multi-source screening contract as the standard entry point for candidate-pool construction.
-4. Start broad factor discovery by adding more open-source factor families through the same adapter, V4 batch, promotion, and holdout gates.
+3. Use the generic multi-source screening and judgement contracts before promoting new-source factors into model or portfolio inputs.
+4. Start broad factor discovery by adding more open-source factor families through the same adapter, V4 batch, promotion, holdout, and judgement gates.

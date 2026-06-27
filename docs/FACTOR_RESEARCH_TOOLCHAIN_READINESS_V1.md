@@ -30,6 +30,7 @@ Alpha158 的角色应从“继续深入调参的唯一对象”切换为“验�
 | TA promoted source | 已跑通 | `bukosabino/ta` 已完成 adapter smoke、剩余 74 个 eligible 因子 batch V4 和 promotion；77 个进入 promoted runnable catalog，2 个保留为 holdout。 |
 | Alpha101 promoted source | 已跑通 | KunQuant Alpha101 已完成 source audit、82 公式 adapter、candidate71 V4 batch 和 promotion；64 个进入 promoted runnable catalog，18 个保留为 holdout。 |
 | multi-source screening contract | 已跑通 | Alpha158、TA 和 Alpha101 promoted 因子已进入统一 screening input、candidate board、candidate pool 和 contract status。 |
+| multi-source judgement contract | 已跑通 | 在统一 screening input 之上生成 319 行 judgement board、43 个 research candidates 和 29 个 new-source alpha probes。 |
 
 ## 3. 当前缺口
 
@@ -38,7 +39,7 @@ Alpha158 的角色应从“继续深入调参的唯一对象”切换为“验�
 | 缺口 | 影响 | 处理方式 |
 | --- | --- | --- |
 | 后续来源 adapter 尚未接入统一闸门 | Alpha101、基本面、行业风格等来源容易重复造轮子 | 沿用 source manifest -> adapter audit -> V4 batch -> promotion/holdout -> generic screening 的流程。 |
-| 通用 judgement 层仍较保守 | TA promoted 因子暂时只能进入 monitor，不能直接进入 alpha_candidate | 下一阶段在 multi-source screening output 上增加通用 judgement，而不是改开源评价口径。 |
+| 后续更丰富数据尚未接入 | 基本面、行业/风格暴露和更长 OOS 时段还不能参与 judgement | 下一阶段继续参考开源数据/因子框架，按相同闸门接入更多数据和因子源。 |
 
 ## 4. 新增闸门
 
@@ -93,6 +94,7 @@ toolchain_readiness_report.md
 | runnable factor inventory | 至少有足够数量的可运行因子证明工具链容量。 |
 | new source adapter inventory | 至少一个非 Alpha158 开源来源完成 promoted runnable adapter。 |
 | generic multi-source screening | 筛选与候选池接口能承接多个来源，而不是只服务 Alpha158。 |
+| generic multi-source judgement | judgement board 能承接 Alpha158、TA、Alpha101 和后续 promoted 因子，并区分默认 alpha、研究 probe、monitor、data watch 与 holdout。 |
 
 ## 6. 当前结论
 
@@ -126,7 +128,19 @@ generic_multi_source_screening: pass
 overall_status: ready
 ```
 
-这表示“引入更多因子”的入口已经打开，并且已由 TA 与 Alpha101 两类非 Alpha158 来源验证。下一阶段可以继续接入更多开源因子源，或在现有 multi-source 输出上建设通用 judgement 层，但仍需沿用 adapter audit、V4 batch、promotion/holdout 和 multi-source screening contract。
+V3.26 后 readiness 关键状态：
+
+```text
+total_runnable: 311
+new_source_runnable: 141
+generic_multi_source_screening: pass
+generic_multi_source_judgement: pass
+multi_source_judgement_board rows: 319
+multi_source_new_source_alpha_probes rows: 29
+overall_status: ready
+```
+
+这表示“引入更多因子”的入口已经打开，并且已由 TA 与 Alpha101 两类非 Alpha158 来源验证。下一阶段可以继续接入更多开源因子源、基本面/行业风格数据或更长 OOS 诊断，但仍需沿用 adapter audit、V4 batch、promotion/holdout、multi-source screening 和 multi-source judgement contract。
 
 ## 7. 下一步目标
 
@@ -135,6 +149,6 @@ overall_status: ready
 1. 继续寻找并接入更多开源因子族，例如基本面、行业风格、风险暴露和其他公式库。
 2. 每个新来源先做 license、字段、窗口、look-ahead 和 adapter 审计。
 3. 通过小批 smoke 后，再用 batch runner 做可恢复 V4 批量评价。
-4. 通过 promotion/holdout 后，把新来源追加到 multi-source screening contract。
-5. 在候选池上新增通用 judgement 层，避免 TA、Alpha101 长期只停留在 `monitor`。
-6. 工具链继续保持“不训练模型、不改策略、不改开源评价口径”的边界，直到候选池有足够多经过筛选的新来源因子。
+4. 通过 promotion/holdout 后，把新来源追加到 multi-source screening 和 judgement contract。
+5. 为 `new_source_alpha_probe` 增加更长时段、更多数据源、相关性/暴露/组合 smoke 验证。
+6. 工具链继续保持“不训练模型、不改策略、不改开源评价口径”的边界，直到候选池有足够多经过多层筛选的新来源因子。

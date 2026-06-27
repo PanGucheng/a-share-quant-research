@@ -44,29 +44,47 @@ E:/qlib_prj/qlib_data/cn_data_community_20260609_derived
 
 ## Current Factor Research Status
 
-V2：
+V2 / V3 早期：
 
 - 已实现因子注册、IC/Rank IC、分组收益、换手率、覆盖率、相关性、候选筛选。
-- 默认结果在：
-
-```text
-outputs/factor_research_v2/liquid2000_default
-```
-
-V3：
-
 - 已实现预处理、中性化、切片诊断和暴露相关性。
-- 默认结果在：
+- 早期结论是 `amplitude_20` 更像风险/流动性暴露，`std_20` 与其高度冗余，`rev_5` 还不足以直接 promote。
+
+Alpha158 reference pipeline：
 
 ```text
-outputs/factor_research_v3/liquid2000_core
+outputs/factor_catalog_alpha158_v1/alpha158_catalog_full158_runnable.yaml
+outputs/factor_candidate_pool_alpha158_v1/full158/alpha158_alpha_candidates.csv
 ```
 
-V3 结论：
+- Alpha158 已作为验证研究机器的参照链路，不再作为唯一细挖对象。
+- 155 个 Alpha158 因子进入 runnable catalog，14 个进入当前默认 `alpha_candidate`。
 
-- `amplitude_20` raw 很强，但联合中性化后基本消失，更像风险/流动性暴露。
-- `std_20` 与 `amplitude_20` 高度冗余。
-- `rev_5` 有一定潜力，但还不足以直接 promote。
+Open-source factor sources：
+
+```text
+outputs/ta_factor_adapter_v1/smoke/ta_factor_catalog_promoted77.yaml
+outputs/alpha101_factor_adapter_v1/batch82/alpha101_factor_catalog_promoted64.yaml
+```
+
+- TA 已有 77 个 promoted runnable 因子、2 个 holdout。
+- KunQuant Alpha101 已有 64 个 promoted runnable 因子、18 个 holdout。
+
+Multi-source toolchain：
+
+```text
+outputs/multi_source_screening_v1/current/multi_source_screening_input.csv
+outputs/multi_source_judgement_v1/current/multi_source_judgement_board.csv
+outputs/factor_research_toolchain_readiness_v1/current/toolchain_readiness_report.md
+```
+
+- Readiness 当前为 `ready`。
+- total runnable factors: 311。
+- new-source runnable factors: 141。
+- multi-source screening rows: 319。
+- multi-source judgement research candidates: 43。
+- new-source alpha probes: 29（TA 15，Alpha101 14）。
+- `new_source_alpha_probe` 是研究队列，不是默认模型或组合输入。
 
 ## Open Source References
 
@@ -90,9 +108,9 @@ tmp/reference_repos/qlib_factor_platform
 
 ## Next Work
 
-当前要执行 V3.1：
+当前下一阶段：
 
-- `directional_rank_icir`
-- 无未来信息 `market_state`
-- `--write-detail`
-- `factor_exposure_report.md`
+- 不继续围绕单个 Alpha158、TA 或 Alpha101 因子细调策略。
+- 优先寻找并接入下一批开源因子源和数据源：基本面、行业/风格暴露、风险暴露、其他 A 股公式库。
+- 每个新来源继续走 source audit -> adapter smoke -> V4 batch -> promotion/holdout -> multi-source screening -> multi-source judgement。
+- 对现有 29 个 `new_source_alpha_probe` 增加更长 OOS、相关性/暴露和组合 smoke 验证后，再考虑训练输入。

@@ -531,11 +531,12 @@ required_output_contracts: pass
 runnable_factor_inventory: pass
 new_source_adapter_inventory: pass
 generic_multi_source_screening: pass
+generic_multi_source_judgement: pass
 total_runnable: 311
 new_source_runnable: 141
 ```
 
-这说明 Alpha158 参照链路、TA 与 Alpha101 两类非 Alpha158 promoted 来源，以及通用多来源 screening / candidate pool 契约都已经准备好。下一阶段应该进入更多开源因子源扩张，或者在 multi-source 输出上建设通用 judgement 层，而不是继续只围绕 Alpha158 细挖。
+这说明 Alpha158 参照链路、TA 与 Alpha101 两类非 Alpha158 promoted 来源，以及通用多来源 screening / judgement 契约都已经准备好。下一阶段应该进入更多开源因子源扩张，而不是继续只围绕 Alpha158 细挖。
 
 关键输出：
 
@@ -593,7 +594,29 @@ alpha candidates: 14
 contract status: pass
 ```
 
-TA 和 Alpha101 promoted 因子目前保守放入 `monitor`，不会直接当成 alpha 信号。后续应新增通用 judgement 层，再决定哪些新来源因子进入 `alpha_candidate`。
+TA 和 Alpha101 promoted 因子在 screening contract 中仍保守放入 `monitor`，不会直接当成 alpha 信号。后续由通用 judgement 层决定哪些新来源因子进入研究 probe 队列。
+
+## 多来源 judgement
+
+在 multi-source screening 输入之上生成通用研究分层表：
+
+```powershell
+cd E:\qlib_prj\qlib_baseline
+E:\anaconda_envs\qlib_env\python.exe scripts\run_multi_source_judgement_v1.py --config configs\multi_source_judgement_v1.yaml
+```
+
+当前结果：
+
+```text
+judgement board rows: 319
+research candidates: 43
+new-source alpha probes: 29
+TA probes: 15
+Alpha101 probes: 14
+contract status: pass
+```
+
+`new_source_alpha_probe` 只是后续研究队列，不是默认模型或组合输入。Alpha158 保留既有 14 个 `alpha_candidate`；promoted TA 和 Alpha101 因子在更大范围验证前只会进入 probe。
 
 ## Alpha101 来源审计与 adapter smoke
 
@@ -627,7 +650,7 @@ combined Alpha101 promoted catalog: 64
 combined Alpha101 holdout catalog: 18
 ```
 
-Alpha101 metadata catalog 默认仍保持 non-runnable。只有 promoted catalog 被标记为 enabled / runnable。Alpha101 promoted 因子目前仍放在 `monitor`，等待后续通用 multi-source judgement 层决定是否进入 alpha candidate。
+Alpha101 metadata catalog 默认仍保持 non-runnable。只有 promoted catalog 被标记为 enabled / runnable。Alpha101 promoted 因子在 screening contract 中仍放在 `monitor`；当前 judgement 层把其中 14 个标记为 `new_source_alpha_probe`，用于后续研究。
 
 ## 当前因子研究结论
 
@@ -693,6 +716,7 @@ docs/TA_FACTOR_ADAPTER_SMOKE_V1.md
 docs/TA_BATCH_EVALUATION_PLAN_V1.md
 docs/TA_BATCH_PROMOTION_V1.md
 docs/MULTI_SOURCE_SCREENING_V1.md
+docs/MULTI_SOURCE_JUDGEMENT_V1.md
 docs/ALPHA101_SOURCE_AUDIT_V1.md
 docs/ALPHA101_ADAPTER_SMOKE_V1.md
 docs/ALPHA101_BATCH_PROMOTION_V1.md
