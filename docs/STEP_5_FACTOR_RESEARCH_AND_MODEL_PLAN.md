@@ -3055,3 +3055,50 @@ readiness overall: ready
 - 基于 Alpha360 smoke factor frame 跑 V4 smoke。
 - 若 smoke 通过，再生成 360 公式 batch candidate catalog 并走可恢复 V4 batch。
 - promotion/holdout 后再接入 multi-source screening 和 judgement。
+
+## 61. V3.29：Alpha360 V4 Smoke V1
+
+状态：已完成。
+
+阶段文档：
+
+```text
+docs/ALPHA360_V4_SMOKE_V1.md
+```
+
+新增文件：
+
+```text
+configs/factor_evaluation_v4_alpha360_smoke_v1.yaml
+```
+
+运行命令：
+
+```powershell
+E:\anaconda_envs\qlib_env\python.exe scripts\run_factor_evaluation_v4.py --config configs\factor_evaluation_v4_alpha360_smoke_v1.yaml
+```
+
+完成结果：
+
+```text
+evaluated factors: 22
+raw rows: 232,881
+tradable rows: 133,958
+Alphalens Reloaded: 22 pass
+Qlib eval: 22 pass
+jqfactor_analyzer: 22 partial_pass
+open_source_metric_index rows: 396
+context_metric_index rows: 4,224
+```
+
+重要边界：
+
+- 本阶段排除 `alpha360_CLOSE0` 和 `alpha360_VOLUME0`，因为它们是归一化恒等因子。
+- jqfactor partial 来自其 `factor_returns` / `factor_alpha_beta` 对 MultiIndex 的已知约束，当前只记录，不改开源评价口径。
+- 本次外部因子覆盖率约 25.3%，原因是 adapter smoke frame 只取 500 只股票；下一步全量 batch 需要完整 liquid2000 覆盖。
+
+下一步：
+
+- 生成 Alpha360 batch candidate / adapter holdout catalog。
+- 对 358 个非恒等 Alpha360 因子生成完整 2021-2023 expression frame。
+- 走 batch V4、promotion/holdout、multi-source screening 和 judgement。

@@ -734,6 +734,20 @@ The smoke catalog is still disabled/non-runnable. The next gate is V4 smoke
 evaluation, then 360-formula batch evaluation, promotion/holdout, and
 multi-source screening/judgement.
 
+Alpha360 V4 smoke has also run on the 22 non-constant smoke factors:
+
+```text
+Alphalens Reloaded: 22 pass
+Qlib eval: 22 pass
+jqfactor_analyzer: 22 partial_pass
+open_source_metric_index rows: 396
+context_metric_index rows: 4,224
+```
+
+The jqfactor partial status is recorded without changing the open-source metric
+definitions. The next Alpha360 step is a 358-factor batch candidate catalog,
+excluding `alpha360_CLOSE0` and `alpha360_VOLUME0`.
+
 ## Open-Source References
 
 The factor research design intentionally borrows stable ideas from open-source

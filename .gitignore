@@ -85,6 +85,22 @@ outputs/factor_evaluation_v4/alpha101_smoke_v1/external_factor_frame/*
 !outputs/factor_evaluation_v4/alpha101_smoke_v1/factor_evaluation_v4_report.md
 !outputs/factor_evaluation_v4/alpha101_smoke_v1/factor_failure_reasons.csv
 !outputs/factor_evaluation_v4/alpha101_smoke_v1/open_source_metric_index.csv
+outputs/factor_evaluation_v4/alpha360_smoke_v1/*
+!outputs/factor_evaluation_v4/alpha360_smoke_v1/
+!outputs/factor_evaluation_v4/alpha360_smoke_v1/dependency_status.csv
+!outputs/factor_evaluation_v4/alpha360_smoke_v1/evaluator_status.csv
+!outputs/factor_evaluation_v4/alpha360_smoke_v1/external_factor_frame/
+outputs/factor_evaluation_v4/alpha360_smoke_v1/external_factor_frame/*
+!outputs/factor_evaluation_v4/alpha360_smoke_v1/external_factor_frame/external_factor_frame_manifest.csv
+!outputs/factor_evaluation_v4/alpha360_smoke_v1/external_factor_frame/external_factor_frame_summary.csv
+!outputs/factor_evaluation_v4/alpha360_smoke_v1/factor_evaluation_v4_report.md
+!outputs/factor_evaluation_v4/alpha360_smoke_v1/factor_failure_reasons.csv
+!outputs/factor_evaluation_v4/alpha360_smoke_v1/open_source_metric_index.csv
+!outputs/factor_evaluation_v4/alpha360_smoke_v1/context/
+outputs/factor_evaluation_v4/alpha360_smoke_v1/context/*
+!outputs/factor_evaluation_v4/alpha360_smoke_v1/context/context_coverage.csv
+!outputs/factor_evaluation_v4/alpha360_smoke_v1/context/context_evaluator_status.csv
+!outputs/factor_evaluation_v4/alpha360_smoke_v1/context/context_metric_index.csv
 
 # Large precomputed factor frames. Keep manifests, summaries, and validation
 # reports under version control.

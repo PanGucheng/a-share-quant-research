@@ -694,6 +694,18 @@ readiness alpha360 contracts: pass
 
 当前 smoke catalog 仍是 disabled/non-runnable。下一道门是 V4 smoke 评价；通过后再进入 360 公式 batch、promotion/holdout、multi-source screening 和 judgement。
 
+Alpha360 V4 smoke 也已经完成，范围是 22 个非恒等 smoke 因子：
+
+```text
+Alphalens Reloaded: 22 pass
+Qlib eval: 22 pass
+jqfactor_analyzer: 22 partial_pass
+open_source_metric_index rows: 396
+context_metric_index rows: 4,224
+```
+
+jqfactor partial 会被记录，但不改开源评价口径。下一步是生成 Alpha360 358 因子 batch candidate catalog，并排除 `alpha360_CLOSE0` 与 `alpha360_VOLUME0`。
+
 ## 当前因子研究结论
 
 截至 V3.1/V3.2：
