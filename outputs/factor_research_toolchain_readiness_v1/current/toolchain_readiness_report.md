@@ -16,8 +16,8 @@ The factor research toolchain is ready for large-scale multi-source screening.
 | open_source_evaluator_systems | pass | systems=alphalens_reloaded,jqfactor_analyzer,qlib_eval,project_current | Do not replace external evaluator definitions; keep Alphalens Reloaded, jqfactor_analyzer, Qlib eval, and project_current coexisting. |
 | batch_runner | pass | batch_configs=3 | Use the batch runner for large jobs, with dry-run, resume, manifests, and logs. |
 | required_output_contracts | pass | missing_or_failed=0 | Repair missing contracts before launching full-scale screening. |
-| runnable_factor_inventory | pass | total_runnable=252 | Use Alpha158 as the reference path and promoted TA/Alpha101 sources to validate the multi-source machinery before adding more families. |
-| new_source_adapter_inventory | pass | new_source_runnable=82 | Keep the promoted non-Alpha158 catalog as a large-scale screening input and add later sources through the same adapter gate. |
+| runnable_factor_inventory | pass | total_runnable=311 | Use Alpha158 as the reference path and promoted TA/Alpha101 sources to validate the multi-source machinery before adding more families. |
+| new_source_adapter_inventory | pass | new_source_runnable=141 | Keep the promoted non-Alpha158 catalog as a large-scale screening input and add later sources through the same adapter gate. |
 | generic_multi_source_screening | pass | contracts=6, failed=0 | Use the generic multi-source screening contract as the entry point for Alpha158, TA, Alpha101, and future factors. |
 
 ## Catalog Summary
@@ -28,14 +28,14 @@ The factor research toolchain is ready for large-scale multi-source screening.
 | alpha158_full_runnable_catalog | outputs/factor_catalog_alpha158_v1/alpha158_catalog_full158_runnable.yaml | pass | 155 | 155 | 155 | Promoted Qlib Alpha158 catalog after expression validation and V4 batch evaluation. |
 | ta_promoted_catalog | outputs/ta_factor_adapter_v1/smoke/ta_factor_catalog_promoted77.yaml | pass | 77 | 77 | 77 | Promoted TA factors after adapter smoke and remaining batch V4 validation. |
 | kunquant_alpha101_metadata_catalog | outputs/factor_catalog_alpha101_v1/kunquant_alpha101_catalog_metadata.yaml | pass | 82 | 0 | 0 | KunQuant Alpha101 metadata catalog after source audit; adapter pending and non-runnable. |
-| kunquant_alpha101_smoke_passed_catalog | outputs/alpha101_factor_adapter_v1/smoke/alpha101_factor_catalog_smoke_passed.yaml | pass | 5 | 5 | 5 | Smoke-promoted KunQuant Alpha101 factors after adapter and V4 evaluation. |
+| kunquant_alpha101_promoted_catalog | outputs/alpha101_factor_adapter_v1/batch82/alpha101_factor_catalog_promoted64.yaml | pass | 64 | 64 | 64 | Promoted KunQuant Alpha101 factors after smoke and candidate71 batch V4 evaluation. |
 
 ## Source Readiness
 
 | source_project | declared_status | license | local_path_status | source_file_status | runnable_factor_count | readiness | readiness_reason |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | ginkgo_alpha101 | metadata_registered_adapter_pending | MIT | available | available | 0 | adapter_pending | source registered but calculation adapter is not promoted |
-| kunquant_alpha101 | source_audit_passed_adapter_pending | Apache-2.0 | available | available | 5 | ready | runnable catalog entries available |
+| kunquant_alpha101 | source_audit_passed_adapter_pending | Apache-2.0 | available | available | 64 | ready | runnable catalog entries available |
 | qlib_alpha158 | formula_inventory_passed_expression_adapter_pending | MIT | available | available | 155 | ready | runnable catalog entries available |
 | ta | metadata_registered_adapter_pending | MIT | available | available | 77 | ready | runnable catalog entries available |
 | qlib_factor_platform_presets | design_reference | MIT | available | available | 0 | reference_only | design reference, not a runnable factor source |
@@ -72,21 +72,28 @@ The factor research toolchain is ready for large-scale multi-source screening.
 | ta_smoke_evaluator_status | ta_v4_smoke | outputs/factor_evaluation_v4/ta_smoke_v1/evaluator_status.csv | pass | 15 | 15 | 2231 |
 | ta_smoke_metric_index | ta_v4_smoke | outputs/factor_evaluation_v4/ta_smoke_v1/open_source_metric_index.csv | pass | 90 | 1 | 18595 |
 | ta_smoke_promotion_audit | ta_adapter | outputs/ta_factor_adapter_v1/smoke/ta_factor_smoke_promotion_audit.csv | pass | 5 | 5 | 418 |
-| multi_source_screening_input | multi_source_screening | outputs/multi_source_screening_v1/current/multi_source_screening_input.csv | pass | 242 | 200 | 130243 |
-| multi_source_candidate_board | multi_source_screening | outputs/multi_source_screening_v1/current/multi_source_candidate_board.csv | pass | 242 | 200 | 143657 |
-| multi_source_candidate_pool | multi_source_candidate_pool | outputs/multi_source_screening_v1/current/multi_source_candidate_pool.csv | pass | 242 | 200 | 143657 |
+| multi_source_screening_input | multi_source_screening | outputs/multi_source_screening_v1/current/multi_source_screening_input.csv | pass | 319 | 200 | 173225 |
+| multi_source_candidate_board | multi_source_screening | outputs/multi_source_screening_v1/current/multi_source_candidate_board.csv | pass | 319 | 200 | 192054 |
+| multi_source_candidate_pool | multi_source_candidate_pool | outputs/multi_source_screening_v1/current/multi_source_candidate_pool.csv | pass | 319 | 200 | 192054 |
 | multi_source_alpha_candidates | multi_source_candidate_pool | outputs/multi_source_screening_v1/current/multi_source_alpha_candidates.csv | pass | 14 | 1 | 8594 |
-| multi_source_holdouts | multi_source_candidate_pool | outputs/multi_source_screening_v1/current/multi_source_holdouts.csv | pass | 5 | 1 | 3550 |
-| multi_source_contract_status | multi_source_screening | outputs/multi_source_screening_v1/current/multi_source_contract_status.csv | pass | 7 | 7 | 314 |
+| multi_source_holdouts | multi_source_candidate_pool | outputs/multi_source_screening_v1/current/multi_source_holdouts.csv | pass | 23 | 1 | 11872 |
+| multi_source_contract_status | multi_source_screening | outputs/multi_source_screening_v1/current/multi_source_contract_status.csv | pass | 7 | 7 | 316 |
 | alpha101_source_summary | alpha101_source_audit | outputs/factor_catalog_alpha101_v1/source_audit/alpha101_source_summary.csv | pass | 2 | 2 | 574 |
 | kunquant_alpha101_inventory | alpha101_source_audit | outputs/factor_catalog_alpha101_v1/source_audit/kunquant_alpha101_inventory.csv | pass | 82 | 80 | 19926 |
 | kunquant_alpha101_metadata_catalog | alpha101_source_audit | outputs/factor_catalog_alpha101_v1/kunquant_alpha101_catalog_metadata.yaml | pass | 82 | 80 | 51857 |
-| alpha101_adapter_inventory | alpha101_adapter | outputs/alpha101_factor_adapter_v1/smoke/alpha101_factor_inventory.csv | pass | 5 | 5 | 1415 |
+| alpha101_adapter_inventory | alpha101_adapter | outputs/alpha101_factor_adapter_v1/batch82/alpha101_factor_inventory.csv | pass | 82 | 80 | 19466 |
 | alpha101_smoke_external_factor_summary | alpha101_v4_smoke | outputs/factor_evaluation_v4/alpha101_smoke_v1/external_factor_frame/external_factor_frame_summary.csv | pass | 5 | 5 | 341 |
 | alpha101_smoke_evaluator_status | alpha101_v4_smoke | outputs/factor_evaluation_v4/alpha101_smoke_v1/evaluator_status.csv | pass | 15 | 15 | 2633 |
 | alpha101_smoke_metric_index | alpha101_v4_smoke | outputs/factor_evaluation_v4/alpha101_smoke_v1/open_source_metric_index.csv | pass | 90 | 1 | 20988 |
 | alpha101_smoke_promotion_audit | alpha101_adapter | outputs/alpha101_factor_adapter_v1/smoke/alpha101_factor_smoke_promotion_audit.csv | pass | 5 | 5 | 470 |
 | alpha101_smoke_passed_catalog | alpha101_adapter | outputs/alpha101_factor_adapter_v1/smoke/alpha101_factor_catalog_smoke_passed.yaml | pass | 5 | 5 | 4082 |
+| alpha101_batch_candidate_catalog | alpha101_adapter | outputs/alpha101_factor_adapter_v1/batch82/alpha101_factor_catalog_batch_candidate71.yaml | pass | 71 | 70 | 42641 |
+| alpha101_adapter_holdout_catalog | alpha101_adapter | outputs/alpha101_factor_adapter_v1/batch82/alpha101_factor_catalog_adapter_holdout6.yaml | pass | 6 | 1 | 4322 |
+| alpha101_batch_promotion_audit | alpha101_adapter | outputs/alpha101_factor_adapter_v1/batch82/alpha101_factor_batch_promotion_audit.csv | pass | 71 | 70 | 6912 |
+| alpha101_batch_promoted_catalog | alpha101_adapter | outputs/alpha101_factor_adapter_v1/batch82/alpha101_factor_catalog_promoted64.yaml | pass | 64 | 60 | 38088 |
+| alpha101_holdout_catalog | alpha101_adapter | outputs/alpha101_factor_adapter_v1/batch82/alpha101_factor_catalog_holdout18.yaml | pass | 18 | 1 | 11857 |
+| alpha101_candidate71_batch_metric_index | alpha101_v4_batch | outputs/factor_evaluation_batch_v1/alpha101_candidate71_batch1/alpha101_candidate71_metric_index.csv | pass | 1170 | 1 | 320385 |
+| alpha101_candidate71_batch_manifest | alpha101_v4_batch | outputs/factor_evaluation_batch_v1/alpha101_candidate71_batch1/batch_manifest.csv | pass | 15 | 15 | 6488 |
 
 ## Stage Counts
 
@@ -95,7 +102,8 @@ The factor research toolchain is ready for large-scale multi-source screening.
 | alpha158_full_runnable_catalog | qlib_alpha158 | alpha158_first20_v4_smoke_passed | True | True | 20 |
 | alpha158_full_runnable_catalog | qlib_alpha158 | alpha158_remaining138_v4_batch_passed | True | True | 135 |
 | kunquant_alpha101_metadata_catalog | kunquant_alpha101 | alpha101_source_audit_adapter_pending | False | False | 82 |
-| kunquant_alpha101_smoke_passed_catalog | kunquant_alpha101 | alpha101_adapter_v4_smoke_passed | True | True | 5 |
+| kunquant_alpha101_promoted_catalog | kunquant_alpha101 | alpha101_adapter_v4_batch_passed | True | True | 59 |
+| kunquant_alpha101_promoted_catalog | kunquant_alpha101 | alpha101_adapter_v4_smoke_passed | True | True | 5 |
 | project_main_catalog | qlib_baseline_basic | current_v4_seed | True | True | 5 |
 | project_main_catalog | qlib_baseline_basic | project_basic_available | True | True | 10 |
 | ta_promoted_catalog | ta | ta_adapter_v4_batch_passed | True | True | 72 |

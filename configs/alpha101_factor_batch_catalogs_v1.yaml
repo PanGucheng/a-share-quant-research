@@ -1,0 +1,38 @@
+source_catalog: "outputs/factor_catalog_alpha101_v1/kunquant_alpha101_catalog_metadata.yaml"
+passed_catalog: "outputs/alpha101_factor_adapter_v1/smoke/alpha101_factor_catalog_smoke_passed.yaml"
+remaining_catalog: "outputs/alpha101_factor_adapter_v1/batch82/alpha101_factor_catalog_remaining77.yaml"
+combined_catalog: "outputs/alpha101_factor_adapter_v1/batch82/alpha101_factor_catalog_combined82.yaml"
+adapter_inventory: "outputs/alpha101_factor_adapter_v1/batch82/alpha101_factor_inventory.csv"
+batch_candidate_catalog: "outputs/alpha101_factor_adapter_v1/batch82/alpha101_factor_catalog_batch_candidate71.yaml"
+adapter_holdout_catalog: "outputs/alpha101_factor_adapter_v1/batch82/alpha101_factor_catalog_adapter_holdout6.yaml"
+audit_output: "outputs/alpha101_factor_adapter_v1/batch82/alpha101_factor_batch_catalog_audit.csv"
+report_output: "outputs/alpha101_factor_adapter_v1/batch82/alpha101_factor_batch_catalog_report.md"
+adapter_config_output: "configs/alpha101_factor_adapter_batch82_v1.yaml"
+
+adapter:
+  provider_uri: "E:/qlib_prj/qlib_data/cn_data_community_20260609_derived"
+  market: "all_stock_shsz_liquid2000"
+  start: "2020-10-01"
+  end: "2021-06-30"
+  max_instruments: 500
+  output_dir: "outputs/alpha101_factor_adapter_v1/batch82"
+  source:
+    local_path: "tmp/reference_repos/KunQuant"
+    source_commit: "d4b9e61f729df347730aa921b539b9df3c3fe36d"
+    source_file: "tests/KunTestUtil/ref_alpha101.py"
+    source_module: "KunTestUtil.ref_alpha101.Alphas"
+    license: "Apache-2.0"
+  labels:
+    - "label_10d_t1"
+    - "label_20d_t1"
+  cache:
+    refresh: false
+
+stages:
+  remaining: "alpha101_adapter_remaining_v4_pending"
+  combined_pending: "alpha101_adapter_combined_v4_pending"
+  adapter_holdout: "alpha101_adapter_zero_valid_holdout"
+
+remaining:
+  enabled: false
+  runnable: false

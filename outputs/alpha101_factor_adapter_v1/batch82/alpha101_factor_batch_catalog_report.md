@@ -1,0 +1,29 @@
+# Alpha101 Batch Catalogs V1
+
+This report prepares KunQuant Alpha101 factors for resumable batch V4 evaluation.
+
+## Catalog Summary
+
+| catalog | path | factor_count | enabled_count | runnable_count |
+| --- | --- | --- | --- | --- |
+| metadata_source | E:/qlib_prj/qlib_baseline/outputs/factor_catalog_alpha101_v1/kunquant_alpha101_catalog_metadata.yaml | 82 | 0 | 0 |
+| passed_smoke | E:/qlib_prj/qlib_baseline/outputs/alpha101_factor_adapter_v1/smoke/alpha101_factor_catalog_smoke_passed.yaml | 5 | 5 | 5 |
+| remaining | E:/qlib_prj/qlib_baseline/outputs/alpha101_factor_adapter_v1/batch82/alpha101_factor_catalog_remaining77.yaml | 77 | 0 | 0 |
+| combined | E:/qlib_prj/qlib_baseline/outputs/alpha101_factor_adapter_v1/batch82/alpha101_factor_catalog_combined82.yaml | 82 | 5 | 5 |
+| batch_candidate | E:/qlib_prj/qlib_baseline/outputs/alpha101_factor_adapter_v1/batch82/alpha101_factor_catalog_batch_candidate71.yaml | 71 | 0 | 0 |
+| adapter_holdout | E:/qlib_prj/qlib_baseline/outputs/alpha101_factor_adapter_v1/batch82/alpha101_factor_catalog_adapter_holdout6.yaml | 6 | 0 | 0 |
+
+## Generated Adapter Config
+
+- `E:/qlib_prj/qlib_baseline/configs/alpha101_factor_adapter_batch82_v1.yaml`
+
+## Adapter Inventory
+
+- Inventory: `E:/qlib_prj/qlib_baseline/outputs/alpha101_factor_adapter_v1/batch82/alpha101_factor_inventory.csv`
+- Batch candidates: `71`
+- Adapter holdouts: `6`
+
+## Next Step
+
+Run the generated Alpha101 adapter config to build the combined factor frame.
+Then dry-run the batch runner against the batch candidate catalog before executing small batches.

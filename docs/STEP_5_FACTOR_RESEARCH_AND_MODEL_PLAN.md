@@ -2831,3 +2831,68 @@ readiness overall: ready
 - 同步寻找更多可复用开源因子源，例如基本面、行业风格、风险暴露和其他公式库。
 - 每个新来源继续走 source audit -> adapter smoke -> V4 batch -> promotion/holdout -> multi-source screening。
 - 当新来源 monitor 因子足够多后，再建设通用 judgement 层，把新来源因子筛成 `alpha_candidate`、`risk_control`、`monitor` 或 `holdout`。
+
+## 57. V3.25：Alpha101 Batch Promotion V1
+
+状态：已完成。
+
+阶段文档：
+
+```text
+docs/ALPHA101_BATCH_PROMOTION_V1.md
+```
+
+新增文件：
+
+```text
+configs/alpha101_factor_batch_catalogs_v1.yaml
+configs/alpha101_factor_adapter_batch82_v1.yaml
+configs/alpha101_factor_evaluation_batch_base_v1.yaml
+configs/factor_evaluation_batch_v1_alpha101_candidate71.yaml
+configs/alpha101_factor_batch_promotion_v1.yaml
+scripts/prepare_alpha101_batch_catalogs_v1.py
+scripts/promote_alpha101_batch_catalog_entries_v1.py
+```
+
+运行命令：
+
+```powershell
+E:\anaconda_envs\qlib_env\python.exe scripts\prepare_alpha101_batch_catalogs_v1.py --config configs\alpha101_factor_batch_catalogs_v1.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\run_alpha101_factor_adapter_smoke_v1.py --config configs\alpha101_factor_adapter_batch82_v1.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\run_factor_evaluation_batch_v1.py --config configs\factor_evaluation_batch_v1_alpha101_candidate71.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\promote_alpha101_batch_catalog_entries_v1.py --config configs\alpha101_factor_batch_promotion_v1.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\run_multi_source_screening_v1.py --config configs\multi_source_screening_v1.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\audit_factor_research_toolchain_v1.py --config configs\factor_research_toolchain_readiness_v1.yaml
+```
+
+完成结果：
+
+```text
+Alpha101 metadata formulas: 82
+adapter factor frame: 82 factors, 500 instruments, 89,000 rows
+adapter eligible: 76
+adapter zero-valid holdout: 6
+V4 batch candidates: 71
+V4 batch promoted: 59
+V4 batch holdout: 12
+combined Alpha101 promoted catalog: 64
+combined Alpha101 holdout catalog: 18
+multi-source screening rows: 319
+new-source strict rows: 141
+readiness total_runnable: 311
+readiness new_source_runnable: 141
+readiness overall: ready
+```
+
+重要修正：
+
+- Alpha101 adapter 现在会在 KunQuant pandas reference 丢失股票代码列名时重贴 Qlib instrument 标签，防止出现 `0..499` 这样的伪 instrument。
+- batch runner 使用 catalog `name` 作为项目内唯一 factor ID，避免多来源 `alpha001` 名称冲突。
+- `zero_valid_rows` 因子进入 adapter holdout，不送入 V4。
+- V4 partial/not_run 因子进入 holdout；已知 JQFactor alpha/beta index-name partial 不单独阻塞 promotion。
+
+下一步：
+
+- 不继续围绕 Alpha158、TA 或 Alpha101 单个因子细调策略。
+- 优先寻找下一批开源因子源：基本面、行业风格、风险暴露、其他公式库或 A 股单因子测试框架。
+- 同时可开始设计通用 multi-source judgement 层，把现有 141 个新来源 promoted monitor 因子进一步筛成 alpha/risk/monitor/holdout。

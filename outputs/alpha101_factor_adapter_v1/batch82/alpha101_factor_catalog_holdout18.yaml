@@ -1,0 +1,351 @@
+version: 1
+updated: '2026-06-28'
+policy:
+  required_prefilter:
+  - data_quality
+  - tradability
+  principle:
+  - Alpha101 formulas are sourced from the local KunQuant reference repository.
+  - Promoted entries require Alphalens Reloaded and Qlib eval pass.
+  - jqfactor_analyzer partial_pass is allowed only for known factor_returns/factor_alpha_beta
+    index-name failures.
+  - Alphalens or jqfactor quantile_turnover partial failures are held out for review.
+  - Adapter zero-valid factors remain holdouts and are not sent to V4.
+  purpose: 'Combined Alpha101 holdout catalog: adapter zero-valid plus V4 holdouts.'
+factors:
+- name: kunquant_alpha101_alpha001
+  registry_name: alpha001
+  category: alpha101
+  source_project: kunquant_alpha101
+  source_file: KunQuant/predefined/Alpha101.py
+  source_function: alpha001
+  source_commit: d4b9e61f729df347730aa921b539b9df3c3fe36d
+  license: Apache-2.0
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels: &id001
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha101_adapter_v4_batch_holdout
+  enabled: false
+  runnable: false
+  compute_adapter: factor_research.alpha101_source.compute_alpha101_features
+  notes: 'Alpha101 batch V4 holdout: alphalens_reloaded_partial:quantile_turnover.'
+- name: kunquant_alpha101_alpha007
+  registry_name: alpha007
+  category: alpha101
+  source_project: kunquant_alpha101
+  source_file: KunQuant/predefined/Alpha101.py
+  source_function: alpha007
+  source_commit: d4b9e61f729df347730aa921b539b9df3c3fe36d
+  license: Apache-2.0
+  expected_direction: watch
+  required_fields:
+  - $close
+  - $volume
+  labels: *id001
+  stage: alpha101_adapter_v4_batch_holdout
+  enabled: false
+  runnable: false
+  compute_adapter: factor_research.alpha101_source.compute_alpha101_features
+  notes: 'Alpha101 batch V4 holdout: alphalens_reloaded_partial:quantile_turnover.'
+- name: kunquant_alpha101_alpha019
+  registry_name: alpha019
+  category: alpha101
+  source_project: kunquant_alpha101
+  source_file: KunQuant/predefined/Alpha101.py
+  source_function: alpha019
+  source_commit: d4b9e61f729df347730aa921b539b9df3c3fe36d
+  license: Apache-2.0
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels: &id002
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha101_adapter_zero_valid_holdout
+  enabled: false
+  runnable: false
+  compute_adapter: factor_research.alpha101_source.compute_alpha101_features
+  notes: 'Pending Alpha101 batch V4 evaluation. Alpha101 adapter holdout: zero_valid_rows.'
+- name: kunquant_alpha101_alpha021
+  registry_name: alpha021
+  category: alpha101
+  source_project: kunquant_alpha101
+  source_file: KunQuant/predefined/Alpha101.py
+  source_function: alpha021
+  source_commit: d4b9e61f729df347730aa921b539b9df3c3fe36d
+  license: Apache-2.0
+  expected_direction: watch
+  required_fields:
+  - $close
+  - $volume
+  labels: *id001
+  stage: alpha101_adapter_v4_batch_holdout
+  enabled: false
+  runnable: false
+  compute_adapter: factor_research.alpha101_source.compute_alpha101_features
+  notes: 'Alpha101 batch V4 holdout: alphalens_reloaded_not_run.'
+- name: kunquant_alpha101_alpha023
+  registry_name: alpha023
+  category: alpha101
+  source_project: kunquant_alpha101
+  source_file: KunQuant/predefined/Alpha101.py
+  source_function: alpha023
+  source_commit: d4b9e61f729df347730aa921b539b9df3c3fe36d
+  license: Apache-2.0
+  expected_direction: watch
+  required_fields:
+  - $high
+  labels: *id001
+  stage: alpha101_adapter_v4_batch_holdout
+  enabled: false
+  runnable: false
+  compute_adapter: factor_research.alpha101_source.compute_alpha101_features
+  notes: 'Alpha101 batch V4 holdout: alphalens_reloaded_not_run.'
+- name: kunquant_alpha101_alpha027
+  registry_name: alpha027
+  category: alpha101
+  source_project: kunquant_alpha101
+  source_file: KunQuant/predefined/Alpha101.py
+  source_function: alpha027
+  source_commit: d4b9e61f729df347730aa921b539b9df3c3fe36d
+  license: Apache-2.0
+  expected_direction: watch
+  required_fields:
+  - $amount
+  - $volume
+  labels: *id001
+  stage: alpha101_adapter_v4_batch_holdout
+  enabled: false
+  runnable: false
+  compute_adapter: factor_research.alpha101_source.compute_alpha101_features
+  notes: 'Alpha101 batch V4 holdout: alphalens_reloaded_not_run.'
+- name: kunquant_alpha101_alpha032
+  registry_name: alpha032
+  category: alpha101
+  source_project: kunquant_alpha101
+  source_file: KunQuant/predefined/Alpha101.py
+  source_function: alpha032
+  source_commit: d4b9e61f729df347730aa921b539b9df3c3fe36d
+  license: Apache-2.0
+  expected_direction: watch
+  required_fields:
+  - $amount
+  - $close
+  - $volume
+  labels: *id002
+  stage: alpha101_adapter_zero_valid_holdout
+  enabled: false
+  runnable: false
+  compute_adapter: factor_research.alpha101_source.compute_alpha101_features
+  notes: 'Pending Alpha101 batch V4 evaluation. Alpha101 adapter holdout: zero_valid_rows.'
+- name: kunquant_alpha101_alpha036
+  registry_name: alpha036
+  category: alpha101
+  source_project: kunquant_alpha101
+  source_file: KunQuant/predefined/Alpha101.py
+  source_function: alpha036
+  source_commit: d4b9e61f729df347730aa921b539b9df3c3fe36d
+  license: Apache-2.0
+  expected_direction: watch
+  required_fields:
+  - $amount
+  - $close
+  - $open
+  - $volume
+  labels: *id002
+  stage: alpha101_adapter_zero_valid_holdout
+  enabled: false
+  runnable: false
+  compute_adapter: factor_research.alpha101_source.compute_alpha101_features
+  notes: 'Pending Alpha101 batch V4 evaluation. Alpha101 adapter holdout: zero_valid_rows.'
+- name: kunquant_alpha101_alpha037
+  registry_name: alpha037
+  category: alpha101
+  source_project: kunquant_alpha101
+  source_file: KunQuant/predefined/Alpha101.py
+  source_function: alpha037
+  source_commit: d4b9e61f729df347730aa921b539b9df3c3fe36d
+  license: Apache-2.0
+  expected_direction: watch
+  required_fields:
+  - $close
+  - $open
+  labels: *id002
+  stage: alpha101_adapter_zero_valid_holdout
+  enabled: false
+  runnable: false
+  compute_adapter: factor_research.alpha101_source.compute_alpha101_features
+  notes: 'Pending Alpha101 batch V4 evaluation. Alpha101 adapter holdout: zero_valid_rows.'
+- name: kunquant_alpha101_alpha039
+  registry_name: alpha039
+  category: alpha101
+  source_project: kunquant_alpha101
+  source_file: KunQuant/predefined/Alpha101.py
+  source_function: alpha039
+  source_commit: d4b9e61f729df347730aa921b539b9df3c3fe36d
+  license: Apache-2.0
+  expected_direction: watch
+  required_fields:
+  - $close
+  - $volume
+  labels: *id002
+  stage: alpha101_adapter_zero_valid_holdout
+  enabled: false
+  runnable: false
+  compute_adapter: factor_research.alpha101_source.compute_alpha101_features
+  notes: 'Pending Alpha101 batch V4 evaluation. Alpha101 adapter holdout: zero_valid_rows.'
+- name: kunquant_alpha101_alpha052
+  registry_name: alpha052
+  category: alpha101
+  source_project: kunquant_alpha101
+  source_file: KunQuant/predefined/Alpha101.py
+  source_function: alpha052
+  source_commit: d4b9e61f729df347730aa921b539b9df3c3fe36d
+  license: Apache-2.0
+  expected_direction: watch
+  required_fields:
+  - $close
+  - $low
+  - $volume
+  labels: *id002
+  stage: alpha101_adapter_zero_valid_holdout
+  enabled: false
+  runnable: false
+  compute_adapter: factor_research.alpha101_source.compute_alpha101_features
+  notes: 'Pending Alpha101 batch V4 evaluation. Alpha101 adapter holdout: zero_valid_rows.'
+- name: kunquant_alpha101_alpha061
+  registry_name: alpha061
+  category: alpha101
+  source_project: kunquant_alpha101
+  source_file: KunQuant/predefined/Alpha101.py
+  source_function: alpha061
+  source_commit: d4b9e61f729df347730aa921b539b9df3c3fe36d
+  license: Apache-2.0
+  expected_direction: watch
+  required_fields:
+  - $amount
+  - $volume
+  labels: *id001
+  stage: alpha101_adapter_v4_batch_holdout
+  enabled: false
+  runnable: false
+  compute_adapter: factor_research.alpha101_source.compute_alpha101_features
+  notes: 'Alpha101 batch V4 holdout: alphalens_reloaded_not_run.'
+- name: kunquant_alpha101_alpha065
+  registry_name: alpha065
+  category: alpha101
+  source_project: kunquant_alpha101
+  source_file: KunQuant/predefined/Alpha101.py
+  source_function: alpha065
+  source_commit: d4b9e61f729df347730aa921b539b9df3c3fe36d
+  license: Apache-2.0
+  expected_direction: watch
+  required_fields:
+  - $amount
+  - $open
+  - $volume
+  labels: *id001
+  stage: alpha101_adapter_v4_batch_holdout
+  enabled: false
+  runnable: false
+  compute_adapter: factor_research.alpha101_source.compute_alpha101_features
+  notes: 'Alpha101 batch V4 holdout: alphalens_reloaded_partial:quantile_turnover.'
+- name: kunquant_alpha101_alpha068
+  registry_name: alpha068
+  category: alpha101
+  source_project: kunquant_alpha101
+  source_file: KunQuant/predefined/Alpha101.py
+  source_function: alpha068
+  source_commit: d4b9e61f729df347730aa921b539b9df3c3fe36d
+  license: Apache-2.0
+  expected_direction: watch
+  required_fields:
+  - $close
+  - $high
+  - $low
+  - $volume
+  labels: *id001
+  stage: alpha101_adapter_v4_batch_holdout
+  enabled: false
+  runnable: false
+  compute_adapter: factor_research.alpha101_source.compute_alpha101_features
+  notes: 'Alpha101 batch V4 holdout: alphalens_reloaded_not_run.'
+- name: kunquant_alpha101_alpha075
+  registry_name: alpha075
+  category: alpha101
+  source_project: kunquant_alpha101
+  source_file: KunQuant/predefined/Alpha101.py
+  source_function: alpha075
+  source_commit: d4b9e61f729df347730aa921b539b9df3c3fe36d
+  license: Apache-2.0
+  expected_direction: watch
+  required_fields:
+  - $amount
+  - $low
+  - $volume
+  labels: *id001
+  stage: alpha101_adapter_v4_batch_holdout
+  enabled: false
+  runnable: false
+  compute_adapter: factor_research.alpha101_source.compute_alpha101_features
+  notes: 'Alpha101 batch V4 holdout: alphalens_reloaded_partial:quantile_turnover.'
+- name: kunquant_alpha101_alpha081
+  registry_name: alpha081
+  category: alpha101
+  source_project: kunquant_alpha101
+  source_file: KunQuant/predefined/Alpha101.py
+  source_function: alpha081
+  source_commit: d4b9e61f729df347730aa921b539b9df3c3fe36d
+  license: Apache-2.0
+  expected_direction: watch
+  required_fields:
+  - $amount
+  - $volume
+  labels: *id001
+  stage: alpha101_adapter_v4_batch_holdout
+  enabled: false
+  runnable: false
+  compute_adapter: factor_research.alpha101_source.compute_alpha101_features
+  notes: 'Alpha101 batch V4 holdout: alphalens_reloaded_partial:quantile_turnover.'
+- name: kunquant_alpha101_alpha086
+  registry_name: alpha086
+  category: alpha101
+  source_project: kunquant_alpha101
+  source_file: KunQuant/predefined/Alpha101.py
+  source_function: alpha086
+  source_commit: d4b9e61f729df347730aa921b539b9df3c3fe36d
+  license: Apache-2.0
+  expected_direction: watch
+  required_fields:
+  - $amount
+  - $close
+  - $open
+  - $volume
+  labels: *id001
+  stage: alpha101_adapter_v4_batch_holdout
+  enabled: false
+  runnable: false
+  compute_adapter: factor_research.alpha101_source.compute_alpha101_features
+  notes: 'Alpha101 batch V4 holdout: alphalens_reloaded_not_run.'
+- name: kunquant_alpha101_alpha099
+  registry_name: alpha099
+  category: alpha101
+  source_project: kunquant_alpha101
+  source_file: KunQuant/predefined/Alpha101.py
+  source_function: alpha099
+  source_commit: d4b9e61f729df347730aa921b539b9df3c3fe36d
+  license: Apache-2.0
+  expected_direction: watch
+  required_fields:
+  - $high
+  - $low
+  - $volume
+  labels: *id001
+  stage: alpha101_adapter_v4_batch_holdout
+  enabled: false
+  runnable: false
+  compute_adapter: factor_research.alpha101_source.compute_alpha101_features
+  notes: 'Alpha101 batch V4 holdout: alphalens_reloaded_partial:quantile_turnover.'

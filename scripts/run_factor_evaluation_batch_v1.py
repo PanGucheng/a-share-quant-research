@@ -113,7 +113,7 @@ def selected_factor_names(config: dict, catalog_path: Path, output_root: Path) -
         invalid_selected = invalid_selected[~invalid_selected["name"].isin(allowed_names)]
     if not invalid_selected.empty:
         raise ValueError(f"Selected runnable factors missing registry entries: {invalid_selected['name'].tolist()}")
-    return [entry.registry_name for entry in selected]
+    return [entry.name for entry in selected]
 
 
 def assert_runnable_selection_for_execution(config: dict, catalog_path: Path) -> None:

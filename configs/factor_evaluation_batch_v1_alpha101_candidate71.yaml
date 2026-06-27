@@ -1,0 +1,24 @@
+base_config: "configs/alpha101_factor_evaluation_batch_base_v1.yaml"
+catalog: "outputs/alpha101_factor_adapter_v1/batch82/alpha101_factor_catalog_batch_candidate71.yaml"
+python: "E:/anaconda_envs/qlib_env/python.exe"
+output_root: "outputs/factor_evaluation_batch_v1/alpha101_candidate71_batch1"
+
+selection:
+  enabled_only: false
+  runnable_only: false
+  allow_external_specs: true
+  stages:
+    - "alpha101_adapter_remaining_v4_pending"
+  categories: []
+  sources:
+    - "kunquant_alpha101"
+  names: []
+  max_factors:
+
+execution:
+  allow_non_runnable_external: true
+
+batching:
+  batch_size: 5
+  resume: true
+  max_batches:

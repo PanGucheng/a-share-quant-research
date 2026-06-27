@@ -51,6 +51,7 @@ def build_config(path: Path) -> MultiSourceScreeningConfig:
         ta_promotion_audits=list_paths(ta, "promotion_audits"),
         ta_evaluator_statuses=list_paths(ta, "evaluator_statuses"),
         alpha101_catalog=resolve_path(alpha101["promoted_catalog"]),
+        alpha101_holdout_catalog=resolve_path(alpha101["holdout_catalog"]),
         alpha101_factor_summary=resolve_path(alpha101["factor_summary"]),
         alpha101_metric_indexes=list_paths(alpha101, "metric_indexes"),
         alpha101_promotion_audits=list_paths(alpha101, "promotion_audits"),

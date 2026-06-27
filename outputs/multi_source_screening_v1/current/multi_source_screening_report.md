@@ -9,18 +9,19 @@
 | check_id | status | detail |
 | --- | --- | --- |
 | source_count | pass | sources=3 |
-| total_screening_rows | pass | rows=242 |
-| new_source_screening_rows | pass | new_source_rows=82 |
+| total_screening_rows | pass | rows=319 |
+| new_source_screening_rows | pass | new_source_rows=141 |
 | standard_columns | pass | columns=41 |
 | alpha_candidates_not_holdout | pass | alpha_candidates=14 |
-| holdout_visible | pass | holdouts=5 |
-| board_pool_alignment | pass | board=242, pool=242 |
+| holdout_visible | pass | holdouts=23 |
+| board_pool_alignment | pass | board=319, pool=319 |
 
 ## Source Counts
 
 | source_family | screening_gate | count |
 | --- | --- | --- |
-| alpha101 | strict_screening_input | 5 |
+| alpha101 | holdout | 18 |
+| alpha101 | strict_screening_input | 64 |
 | alpha158 | holdout | 3 |
 | alpha158 | strict_screening_input | 155 |
 | ta | holdout | 2 |
@@ -30,7 +31,8 @@
 
 | source_family | role | count |
 | --- | --- | --- |
-| alpha101 | monitor | 5 |
+| alpha101 | holdout | 18 |
+| alpha101 | monitor | 64 |
 | alpha158 | alpha_candidate | 14 |
 | alpha158 | excluded_high_turnover | 33 |
 | alpha158 | excluded_redundant | 55 |
@@ -68,6 +70,24 @@
 | alpha158_RANK5 | alpha158 | alphalens=partial_pass | partial_pass | partial_pass | pass |
 | ta_volatility_bbli | ta | alphalens_reloaded_partial:quantile_turnover | partial_pass | partial_pass | pass |
 | ta_volatility_kchi | ta | alphalens_reloaded_partial:quantile_turnover | partial_pass | partial_pass | pass |
+| kunquant_alpha101_alpha001 | alpha101 | alphalens_reloaded_partial:quantile_turnover | partial_pass | partial_pass | pass |
+| kunquant_alpha101_alpha007 | alpha101 | alphalens_reloaded_partial:quantile_turnover | partial_pass | partial_pass | pass |
+| kunquant_alpha101_alpha019 | alpha101 |  | nan | nan | nan |
+| kunquant_alpha101_alpha021 | alpha101 | alphalens_reloaded_not_run | not_run | not_run | pass |
+| kunquant_alpha101_alpha023 | alpha101 | alphalens_reloaded_not_run | not_run | not_run | pass |
+| kunquant_alpha101_alpha027 | alpha101 | alphalens_reloaded_not_run | not_run | not_run | pass |
+| kunquant_alpha101_alpha032 | alpha101 |  | nan | nan | nan |
+| kunquant_alpha101_alpha036 | alpha101 |  | nan | nan | nan |
+| kunquant_alpha101_alpha037 | alpha101 |  | nan | nan | nan |
+| kunquant_alpha101_alpha039 | alpha101 |  | nan | nan | nan |
+| kunquant_alpha101_alpha052 | alpha101 |  | nan | nan | nan |
+| kunquant_alpha101_alpha061 | alpha101 | alphalens_reloaded_not_run | not_run | not_run | pass |
+| kunquant_alpha101_alpha065 | alpha101 | alphalens_reloaded_partial:quantile_turnover | partial_pass | partial_pass | pass |
+| kunquant_alpha101_alpha068 | alpha101 | alphalens_reloaded_not_run | not_run | not_run | pass |
+| kunquant_alpha101_alpha075 | alpha101 | alphalens_reloaded_partial:quantile_turnover | partial_pass | partial_pass | pass |
+| kunquant_alpha101_alpha081 | alpha101 | alphalens_reloaded_partial:quantile_turnover | partial_pass | partial_pass | pass |
+| kunquant_alpha101_alpha086 | alpha101 | alphalens_reloaded_not_run | not_run | not_run | pass |
+| kunquant_alpha101_alpha099 | alpha101 | alphalens_reloaded_partial:quantile_turnover | partial_pass | partial_pass | pass |
 
 ## Output Files
 

@@ -20,12 +20,15 @@ ta:
     - "outputs/factor_evaluation_v4/ta_smoke_v1/evaluator_status.csv"
 
 alpha101:
-  promoted_catalog: "outputs/alpha101_factor_adapter_v1/smoke/alpha101_factor_catalog_smoke_passed.yaml"
-  factor_summary: "outputs/alpha101_factor_adapter_v1/smoke/alpha101_factor_inventory.csv"
+  promoted_catalog: "outputs/alpha101_factor_adapter_v1/batch82/alpha101_factor_catalog_promoted64.yaml"
+  holdout_catalog: "outputs/alpha101_factor_adapter_v1/batch82/alpha101_factor_catalog_holdout18.yaml"
+  factor_summary: "outputs/alpha101_factor_adapter_v1/batch82/alpha101_factor_inventory.csv"
   metric_indexes:
     - "outputs/factor_evaluation_v4/alpha101_smoke_v1/open_source_metric_index.csv"
+    - "outputs/factor_evaluation_batch_v1/alpha101_candidate71_batch1/alpha101_candidate71_metric_index.csv"
   promotion_audits:
     - "outputs/alpha101_factor_adapter_v1/smoke/alpha101_factor_smoke_promotion_audit.csv"
+    - "outputs/alpha101_factor_adapter_v1/batch82/alpha101_factor_batch_promotion_audit.csv"
   evaluator_statuses:
     - "outputs/factor_evaluation_v4/alpha101_smoke_v1/evaluator_status.csv"
 

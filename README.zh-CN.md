@@ -531,11 +531,11 @@ required_output_contracts: pass
 runnable_factor_inventory: pass
 new_source_adapter_inventory: pass
 generic_multi_source_screening: pass
-total_runnable: 252
-new_source_runnable: 82
+total_runnable: 311
+new_source_runnable: 141
 ```
 
-这说明 Alpha158 参照链路、TA 与 Alpha101 两类非 Alpha158 promoted 来源，以及通用多来源 screening / candidate pool 契约都已经准备好。下一阶段应该进入大规模因子源扩张，而不是继续只围绕 Alpha158 细挖。
+这说明 Alpha158 参照链路、TA 与 Alpha101 两类非 Alpha158 promoted 来源，以及通用多来源 screening / candidate pool 契约都已经准备好。下一阶段应该进入更多开源因子源扩张，或者在 multi-source 输出上建设通用 judgement 层，而不是继续只围绕 Alpha158 细挖。
 
 关键输出：
 
@@ -583,12 +583,12 @@ E:\anaconda_envs\qlib_env\python.exe scripts\run_multi_source_screening_v1.py --
 当前结果：
 
 ```text
-screening rows: 242
+screening rows: 319
 sources: 3
 Alpha158 strict rows: 155
 TA strict rows: 77
-Alpha101 strict rows: 5
-holdouts: 5
+Alpha101 strict rows: 64
+holdouts: 23
 alpha candidates: 14
 contract status: pass
 ```
@@ -597,7 +597,7 @@ TA 和 Alpha101 promoted 因子目前保守放入 `monitor`，不会直接当成
 
 ## Alpha101 来源审计与 adapter smoke
 
-Alpha101 当前优先使用 KunQuant 作为公式来源。source audit 确认了 82 个可用公式，首批 5 个 smoke 因子已经通过 V4 评价与 promotion：
+Alpha101 当前优先使用 KunQuant 作为公式来源。source audit 确认了 82 个可用公式；5 个 smoke 因子先通过验证后，完整 candidate batch 又 promotion 了 59 个，最终形成 64 个 promoted Alpha101 因子与 18 个 holdout：
 
 ```powershell
 cd E:\qlib_prj\qlib_baseline
@@ -605,6 +605,10 @@ E:\anaconda_envs\qlib_env\python.exe scripts\audit_alpha101_sources_v1.py --conf
 E:\anaconda_envs\qlib_env\python.exe scripts\run_alpha101_factor_adapter_smoke_v1.py --config configs\alpha101_factor_adapter_smoke_v1.yaml
 E:\anaconda_envs\qlib_env\python.exe scripts\run_factor_evaluation_v4.py --config configs\alpha101_factor_evaluation_smoke_v1.yaml
 E:\anaconda_envs\qlib_env\python.exe scripts\promote_alpha101_smoke_catalog_entries_v1.py --config configs\alpha101_factor_smoke_promotion_v1.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\prepare_alpha101_batch_catalogs_v1.py --config configs\alpha101_factor_batch_catalogs_v1.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\run_alpha101_factor_adapter_smoke_v1.py --config configs\alpha101_factor_adapter_batch82_v1.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\run_factor_evaluation_batch_v1.py --config configs\factor_evaluation_batch_v1_alpha101_candidate71.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\promote_alpha101_batch_catalog_entries_v1.py --config configs\alpha101_factor_batch_promotion_v1.yaml
 ```
 
 当前结果：
@@ -614,12 +618,16 @@ KunQuant all_alpha entries: 82
 Ginkgo runnable implementation files: 0
 Alpha101 metadata catalog entries: 82
 smoke selected factors: 5
-Alphalens/Qlib smoke status: pass
-JQFactor smoke status: partial_pass，已记录已知 index-name 兼容问题
-smoke promoted catalog: 5
+batch adapter eligible factors: 76
+adapter holdout: 6
+V4 batch candidates: 71
+batch promoted: 59
+V4 batch holdout: 12
+combined Alpha101 promoted catalog: 64
+combined Alpha101 holdout catalog: 18
 ```
 
-Alpha101 metadata catalog 默认仍保持 non-runnable。只有 smoke-passed catalog 被标记为 enabled / runnable。下一步应把 Alpha101 从 5 个 smoke 因子扩展到 KunQuant 已审计的 82 个可用公式。
+Alpha101 metadata catalog 默认仍保持 non-runnable。只有 promoted catalog 被标记为 enabled / runnable。Alpha101 promoted 因子目前仍放在 `monitor`，等待后续通用 multi-source judgement 层决定是否进入 alpha candidate。
 
 ## 当前因子研究结论
 
@@ -687,6 +695,7 @@ docs/TA_BATCH_PROMOTION_V1.md
 docs/MULTI_SOURCE_SCREENING_V1.md
 docs/ALPHA101_SOURCE_AUDIT_V1.md
 docs/ALPHA101_ADAPTER_SMOKE_V1.md
+docs/ALPHA101_BATCH_PROMOTION_V1.md
 docs/STEP_5_FACTOR_RESEARCH_AND_MODEL_PLAN.md
 docs/PROJECT_CONTEXT_SUMMARY.md
 ```

@@ -1,0 +1,127 @@
+version: 1
+updated: '2026-06-28'
+policy:
+  required_prefilter:
+  - data_quality
+  - tradability
+  principle:
+  - Alpha101 formulas are sourced from the local KunQuant reference repository.
+  - Remaining entries are disabled/non-runnable until batch V4 promotion.
+  - Use project-unique catalog names as factor IDs to avoid cross-source alpha name
+    collisions.
+  purpose: Alpha101 adapter holdouts excluded from V4 batch because factor values
+    were not evaluable.
+factors:
+- name: kunquant_alpha101_alpha019
+  registry_name: alpha019
+  category: alpha101
+  source_project: kunquant_alpha101
+  source_file: KunQuant/predefined/Alpha101.py
+  source_function: alpha019
+  source_commit: d4b9e61f729df347730aa921b539b9df3c3fe36d
+  license: Apache-2.0
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels: &id001
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha101_adapter_zero_valid_holdout
+  enabled: false
+  runnable: false
+  compute_adapter: factor_research.alpha101_source.compute_alpha101_features
+  notes: 'Pending Alpha101 batch V4 evaluation. Alpha101 adapter holdout: zero_valid_rows.'
+- name: kunquant_alpha101_alpha032
+  registry_name: alpha032
+  category: alpha101
+  source_project: kunquant_alpha101
+  source_file: KunQuant/predefined/Alpha101.py
+  source_function: alpha032
+  source_commit: d4b9e61f729df347730aa921b539b9df3c3fe36d
+  license: Apache-2.0
+  expected_direction: watch
+  required_fields:
+  - $amount
+  - $close
+  - $volume
+  labels: *id001
+  stage: alpha101_adapter_zero_valid_holdout
+  enabled: false
+  runnable: false
+  compute_adapter: factor_research.alpha101_source.compute_alpha101_features
+  notes: 'Pending Alpha101 batch V4 evaluation. Alpha101 adapter holdout: zero_valid_rows.'
+- name: kunquant_alpha101_alpha036
+  registry_name: alpha036
+  category: alpha101
+  source_project: kunquant_alpha101
+  source_file: KunQuant/predefined/Alpha101.py
+  source_function: alpha036
+  source_commit: d4b9e61f729df347730aa921b539b9df3c3fe36d
+  license: Apache-2.0
+  expected_direction: watch
+  required_fields:
+  - $amount
+  - $close
+  - $open
+  - $volume
+  labels: *id001
+  stage: alpha101_adapter_zero_valid_holdout
+  enabled: false
+  runnable: false
+  compute_adapter: factor_research.alpha101_source.compute_alpha101_features
+  notes: 'Pending Alpha101 batch V4 evaluation. Alpha101 adapter holdout: zero_valid_rows.'
+- name: kunquant_alpha101_alpha037
+  registry_name: alpha037
+  category: alpha101
+  source_project: kunquant_alpha101
+  source_file: KunQuant/predefined/Alpha101.py
+  source_function: alpha037
+  source_commit: d4b9e61f729df347730aa921b539b9df3c3fe36d
+  license: Apache-2.0
+  expected_direction: watch
+  required_fields:
+  - $close
+  - $open
+  labels: *id001
+  stage: alpha101_adapter_zero_valid_holdout
+  enabled: false
+  runnable: false
+  compute_adapter: factor_research.alpha101_source.compute_alpha101_features
+  notes: 'Pending Alpha101 batch V4 evaluation. Alpha101 adapter holdout: zero_valid_rows.'
+- name: kunquant_alpha101_alpha039
+  registry_name: alpha039
+  category: alpha101
+  source_project: kunquant_alpha101
+  source_file: KunQuant/predefined/Alpha101.py
+  source_function: alpha039
+  source_commit: d4b9e61f729df347730aa921b539b9df3c3fe36d
+  license: Apache-2.0
+  expected_direction: watch
+  required_fields:
+  - $close
+  - $volume
+  labels: *id001
+  stage: alpha101_adapter_zero_valid_holdout
+  enabled: false
+  runnable: false
+  compute_adapter: factor_research.alpha101_source.compute_alpha101_features
+  notes: 'Pending Alpha101 batch V4 evaluation. Alpha101 adapter holdout: zero_valid_rows.'
+- name: kunquant_alpha101_alpha052
+  registry_name: alpha052
+  category: alpha101
+  source_project: kunquant_alpha101
+  source_file: KunQuant/predefined/Alpha101.py
+  source_function: alpha052
+  source_commit: d4b9e61f729df347730aa921b539b9df3c3fe36d
+  license: Apache-2.0
+  expected_direction: watch
+  required_fields:
+  - $close
+  - $low
+  - $volume
+  labels: *id001
+  stage: alpha101_adapter_zero_valid_holdout
+  enabled: false
+  runnable: false
+  compute_adapter: factor_research.alpha101_source.compute_alpha101_features
+  notes: 'Pending Alpha101 batch V4 evaluation. Alpha101 adapter holdout: zero_valid_rows.'

@@ -1,0 +1,29 @@
+source_catalog: "outputs/alpha101_factor_adapter_v1/batch82/alpha101_factor_catalog_batch_candidate71.yaml"
+existing_passed_catalog: "outputs/alpha101_factor_adapter_v1/smoke/alpha101_factor_catalog_smoke_passed.yaml"
+adapter_holdout_catalog: "outputs/alpha101_factor_adapter_v1/batch82/alpha101_factor_catalog_adapter_holdout6.yaml"
+batch_root: "outputs/factor_evaluation_batch_v1/alpha101_candidate71_batch1"
+batch_passed_catalog: "outputs/alpha101_factor_adapter_v1/batch82/alpha101_factor_catalog_batch_passed59.yaml"
+holdout_catalog: "outputs/alpha101_factor_adapter_v1/batch82/alpha101_factor_catalog_v4_holdout12.yaml"
+all_holdout_catalog: "outputs/alpha101_factor_adapter_v1/batch82/alpha101_factor_catalog_holdout18.yaml"
+combined_promoted_catalog: "outputs/alpha101_factor_adapter_v1/batch82/alpha101_factor_catalog_promoted64.yaml"
+promotion_audit: "outputs/alpha101_factor_adapter_v1/batch82/alpha101_factor_batch_promotion_audit.csv"
+metric_index_output: "outputs/factor_evaluation_batch_v1/alpha101_candidate71_batch1/alpha101_candidate71_metric_index.csv"
+report_output: "outputs/alpha101_factor_adapter_v1/batch82/alpha101_factor_batch_promotion_report.md"
+
+promotion:
+  passed_stage: "alpha101_adapter_v4_batch_passed"
+  holdout_stage: "alpha101_adapter_v4_batch_holdout"
+  required_pass_systems:
+    - "alphalens_reloaded"
+    - "qlib_eval"
+  allowed_partial_systems:
+    jqfactor_analyzer:
+      - "factor_returns"
+      - "factor_alpha_beta"
+  holdout_partial_systems:
+    alphalens_reloaded:
+      - "quantile_turnover"
+    jqfactor_analyzer:
+      - "factor_returns"
+      - "factor_alpha_beta"
+      - "quantile_turnover"

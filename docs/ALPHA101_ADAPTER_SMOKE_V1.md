@@ -75,4 +75,8 @@ new source strict rows: 82
 alpha candidates: 14
 ```
 
-Alpha101 因子当前和 TA 一样保守放入 `monitor`，不会直接当作 alpha signal。下一阶段应扩展 Alpha101 batch 和更多开源因子源，并在 multi-source 输出上建设通用 judgement 层。
+Alpha101 因子当前和 TA 一样保守放入 `monitor`，不会直接当作 alpha signal。后续 V3.25 已把 Alpha101 扩展到 82 个已审计公式，并完成 candidate71 V4 batch 与 promotion。详见：
+
+```text
+docs/ALPHA101_BATCH_PROMOTION_V1.md
+```

@@ -30,6 +30,7 @@ class MultiSourceScreeningConfig:
     ta_promotion_audits: tuple[Path, ...]
     ta_evaluator_statuses: tuple[Path, ...]
     alpha101_catalog: Path
+    alpha101_holdout_catalog: Path
     alpha101_factor_summary: Path
     alpha101_metric_indexes: tuple[Path, ...]
     alpha101_promotion_audits: tuple[Path, ...]
@@ -298,7 +299,9 @@ def build_ta_rows(config: MultiSourceScreeningConfig) -> pd.DataFrame:
 
 
 def build_alpha101_rows(config: MultiSourceScreeningConfig) -> pd.DataFrame:
-    catalog = load_catalog(config.alpha101_catalog, "alpha101_smoke_passed_catalog")
+    promoted = load_catalog(config.alpha101_catalog, "alpha101_promoted_catalog")
+    holdout = load_catalog(config.alpha101_holdout_catalog, "alpha101_holdout_catalog")
+    catalog = pd.concat([promoted, holdout], ignore_index=True).drop_duplicates("factor", keep="first")
     summary = read_csv_or_empty(config.alpha101_factor_summary)
     if not summary.empty:
         summary = summary[["factor", "valid_rows", "total_rows", "coverage", "missing_rate"]]
@@ -315,7 +318,11 @@ def build_alpha101_rows(config: MultiSourceScreeningConfig) -> pd.DataFrame:
         if status_column in rows.columns:
             rows[audit_column] = rows[audit_column].fillna(rows[status_column])
     rows["source_family"] = "alpha101"
-    rows["decision"] = rows["decision"].fillna("promoted")
+    fallback_decision = pd.Series(
+        np.where(rows["catalog_id"].eq("alpha101_holdout_catalog"), "holdout", "promoted"),
+        index=rows.index,
+    )
+    rows["decision"] = rows["decision"].fillna(fallback_decision)
     rows["screening_gate"] = np.where(rows["decision"].eq("promoted"), "strict_screening_input", "holdout")
     rows["promotion_decision"] = rows["decision"]
     rows["promotion_reason"] = rows["reason"].fillna("")

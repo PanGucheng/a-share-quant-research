@@ -27,6 +27,10 @@ outputs/alpha101_factor_adapter_v1/smoke/alpha101_factor_catalog_smoke_passed.ya
 outputs/alpha101_factor_adapter_v1/smoke/alpha101_factor_inventory.csv
 outputs/factor_evaluation_v4/alpha101_smoke_v1/open_source_metric_index.csv
 outputs/alpha101_factor_adapter_v1/smoke/alpha101_factor_smoke_promotion_audit.csv
+outputs/alpha101_factor_adapter_v1/batch82/alpha101_factor_catalog_promoted64.yaml
+outputs/alpha101_factor_adapter_v1/batch82/alpha101_factor_catalog_holdout18.yaml
+outputs/factor_evaluation_batch_v1/alpha101_candidate71_batch1/alpha101_candidate71_metric_index.csv
+outputs/alpha101_factor_adapter_v1/batch82/alpha101_factor_batch_promotion_audit.csv
 ```
 
 ## 配置与脚本
@@ -60,12 +64,12 @@ outputs/multi_source_screening_v1/current/multi_source_screening_report.md
 ## 当前结果
 
 ```text
-screening rows: 242
+screening rows: 319
 sources: 3
 Alpha158 strict rows: 155
 TA strict rows: 77
-Alpha101 strict rows: 5
-holdouts: 5
+Alpha101 strict rows: 64
+holdouts: 23
 alpha candidates: 14
 contract status: pass
 ```
@@ -77,12 +81,13 @@ alpha158 alpha_candidate: 14
 alpha158 monitor/excluded/holdout: 144
 ta monitor: 77
 ta holdout: 2
-alpha101 monitor: 5
+alpha101 monitor: 64
+alpha101 holdout: 18
 ```
 
 ## 设计边界
 
-Alpha158 已有完整 judgement 和 candidate-pool 输出，因此 V1 直接复用其角色。TA 已通过 adapter、V4 batch 和 promotion，Alpha101 已通过 5 因子 smoke adapter、V4 和 promotion，但它们还没有与 Alpha158 等价的时序 ICIR、稳定性、冗余和主观 judgement 层，因此 V1 保守地把新来源 promoted 因子放入 `monitor`。
+Alpha158 已有完整 judgement 和 candidate-pool 输出，因此 V1 直接复用其角色。TA 已通过 adapter、V4 batch 和 promotion，Alpha101 已通过 82 公式 adapter、candidate71 V4 batch 和 promotion，但它们还没有与 Alpha158 等价的时序 ICIR、稳定性、冗余和主观 judgement 层，因此 V1 保守地把新来源 promoted 因子放入 `monitor`。
 
 这一步的价值是让后续来源都能进入统一表结构：
 
@@ -98,8 +103,8 @@ V3.22 后，`factor_research_toolchain_readiness_v1` 的关键结果为：
 overall_status: ready
 generic_multi_source_screening: pass
 required_output_contracts: pass
-total_runnable: 252
-new_source_runnable: 82
+total_runnable: 311
+new_source_runnable: 141
 ```
 
-这表示工具链已经可以支撑大规模多来源因子研究。下一阶段应把 Alpha101 从 smoke 扩到批量，并继续接入更多开源因子源，例如更多公式库、基本面因子、行业/风格暴露数据，而不是继续围绕 Alpha158 个案细调。
+这表示工具链已经可以支撑大规模多来源因子研究。下一阶段应继续接入更多开源因子源，例如更多公式库、基本面因子、行业/风格暴露数据，或者在现有 multi-source 输出上建设通用 judgement 层，而不是继续围绕 Alpha158 个案细调。

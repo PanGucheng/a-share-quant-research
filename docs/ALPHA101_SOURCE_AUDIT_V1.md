@@ -81,8 +81,10 @@ compute_adapter: kunquant_alpha101_adapter_pending
 
 ## 后续状态
 
-V3.24 已完成 KunQuant Alpha101 5 因子 adapter smoke、V4 评价、promotion 和 multi-source screening 接入。详见：
+V3.24 已完成 KunQuant Alpha101 5 因子 adapter smoke、V4 评价、promotion 和 multi-source screening 接入。
+V3.25 已继续把 KunQuant 审计出的 82 个公式扩展到 batch82 adapter、candidate71 V4 batch、64 个 promoted 因子和 18 个 holdout 因子。详见：
 
 ```text
 docs/ALPHA101_ADAPTER_SMOKE_V1.md
+docs/ALPHA101_BATCH_PROMOTION_V1.md
 ```

@@ -60,7 +60,7 @@ def factor_frame_cache_path(config: Alpha101SourceConfig) -> Path:
         "max_instruments": config.max_instruments,
         "source_commit": config.source_commit,
         "selected_smoke_factors": list(config.selected_smoke_factors),
-        "version": 1,
+        "version": 2,
     }
     return config.output_dir / f"factor_frame_{cache_digest(payload)}.pkl"
 
@@ -131,6 +131,7 @@ def load_metadata_catalog(path: Path) -> pd.DataFrame:
 def compute_alpha101_features(config: Alpha101SourceConfig, raw: pd.DataFrame) -> pd.DataFrame:
     ref_alpha101 = import_ref_alpha101(config.source_local_path)
     wide = to_wind_wide(raw)
+    reference = wide["S_DQ_CLOSE"]
     stock = ref_alpha101.Alphas(wide)
     metadata = load_metadata_catalog(config.metadata_catalog).set_index("factor")
     output_frames = []
@@ -141,6 +142,13 @@ def compute_alpha101_features(config: Alpha101SourceConfig, raw: pd.DataFrame) -
         if not hasattr(stock, method_name):
             raise ValueError(f"KunQuant reference missing method: {method_name}")
         values = getattr(stock, method_name)()
+        if not isinstance(values, pd.DataFrame):
+            raise TypeError(f"KunQuant reference method {method_name} returned {type(values).__name__}, expected DataFrame")
+        values = values.copy()
+        if len(values.index) == len(reference.index) and not values.index.equals(reference.index):
+            values.index = reference.index
+        if len(values.columns) == len(reference.columns) and not values.columns.equals(reference.columns):
+            values.columns = reference.columns
         values = values.sort_index().sort_index(axis=1)
         series = values.stack(future_stack=True).rename(factor)
         output_frames.append(series)
@@ -159,17 +167,18 @@ def build_inventory(config: Alpha101SourceConfig, frame: pd.DataFrame) -> pd.Dat
     total_rows = len(frame)
     for factor in config.selected_smoke_factors:
         numeric = pd.to_numeric(frame[factor], errors="coerce").replace([np.inf, -np.inf], np.nan)
+        valid_rows = int(numeric.notna().sum())
         rows.append(
             {
                 "factor": factor,
                 "registry_name": metadata.loc[factor, "registry_name"] if factor in metadata.index else factor,
                 "category": metadata.loc[factor, "category"] if factor in metadata.index else "alpha101",
-                "eligible": True,
-                "exclusion_reason": "",
-                "valid_rows": int(numeric.notna().sum()),
+                "eligible": bool(valid_rows > 0),
+                "exclusion_reason": "" if valid_rows > 0 else "zero_valid_rows",
+                "valid_rows": valid_rows,
                 "total_rows": int(total_rows),
-                "coverage": float(numeric.notna().sum() / total_rows) if total_rows else 0.0,
-                "missing_rate": float(1 - numeric.notna().sum() / total_rows) if total_rows else 1.0,
+                "coverage": float(valid_rows / total_rows) if total_rows else 0.0,
+                "missing_rate": float(1 - valid_rows / total_rows) if total_rows else 1.0,
                 "min": float(numeric.min()) if numeric.notna().any() else pd.NA,
                 "max": float(numeric.max()) if numeric.notna().any() else pd.NA,
                 "mean": float(numeric.mean()) if numeric.notna().any() else pd.NA,
@@ -203,14 +212,14 @@ def catalog_payload(config: Alpha101SourceConfig, inventory: pd.DataFrame) -> di
                 "enabled": bool(config.catalog_enabled),
                 "runnable": bool(config.catalog_runnable),
                 "compute_adapter": "factor_research.alpha101_source.compute_alpha101_features",
-                "notes": f"Generated from KunQuant pandas reference smoke; coverage={row.coverage:.6f}",
+                "notes": f"Generated from KunQuant pandas reference adapter; coverage={row.coverage:.6f}",
             }
         )
     return {
         "version": 1,
-        "updated": "2026-06-26",
+        "updated": "2026-06-28",
         "policy": {
-            "purpose": "Temporary KunQuant Alpha101 adapter smoke catalog before V4 promotion.",
+            "purpose": "Temporary KunQuant Alpha101 adapter catalog before V4 promotion.",
             "principle": [
                 "Formula definitions are sourced from KunQuant reference code.",
                 "Entries remain disabled/non-runnable until V4 evaluation passes.",
@@ -251,7 +260,7 @@ def manifest_payload(
 
 def write_report(config: Alpha101SourceConfig, inventory: pd.DataFrame, output: Path) -> None:
     lines = [
-        "# Alpha101 Adapter Smoke V1",
+        "# Alpha101 Adapter Run V1",
         "",
         f"- Source: `{config.source_local_path.as_posix()}`",
         f"- Source file: `{config.source_file}`",
@@ -265,7 +274,7 @@ def write_report(config: Alpha101SourceConfig, inventory: pd.DataFrame, output: 
         "",
         "## Boundary",
         "",
-        "- This smoke uses KunQuant's pandas reference implementation.",
+        "- This adapter run uses KunQuant's pandas reference implementation.",
         "- Catalog entries are disabled/non-runnable until V4 evaluation and promotion pass.",
         "- Ginkgo_Alpha101 remains a metadata reference because no local formula implementation is available.",
         "",
