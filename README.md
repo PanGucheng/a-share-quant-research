@@ -710,6 +710,30 @@ This keeps the next expansion open-source-first without importing unsafe code.
 The next direct factor adapter should be Qlib Alpha360; FactorTest-style
 industry/style exposure diagnostics should start with a data capability audit.
 
+## Qlib Alpha360 Adapter Smoke
+
+Alpha360 now has a source audit and adapter smoke path:
+
+```powershell
+cd E:\qlib_prj\qlib_baseline
+E:\anaconda_envs\qlib_env\python.exe scripts\audit_alpha360_catalog_v1.py --config configs\alpha360_catalog_audit_v1.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\build_alpha360_expression_frame_v1.py --config configs\alpha360_expression_adapter_smoke_v1.yaml
+```
+
+Current result:
+
+```text
+Alpha360 formulas: 360
+missing provider fields: 0
+smoke catalog entries: 24
+smoke frame rows: 88,797
+readiness alpha360 contracts: pass
+```
+
+The smoke catalog is still disabled/non-runnable. The next gate is V4 smoke
+evaluation, then 360-formula batch evaluation, promotion/holdout, and
+multi-source screening/judgement.
+
 ## Open-Source References
 
 The factor research design intentionally borrows stable ideas from open-source

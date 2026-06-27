@@ -1,0 +1,7 @@
+﻿field,factor_count,provider_presence_rate
+close,300,1.0
+high,60,1.0
+low,60,1.0
+open,60,1.0
+volume,60,1.0
+vwap,60,1.0

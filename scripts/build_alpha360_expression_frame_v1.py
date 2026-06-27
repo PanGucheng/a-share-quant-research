@@ -16,12 +16,12 @@ from factor_research.expression_adapter import ExpressionFrameConfig, build_expr
 from factor_research.report import markdown_table  # noqa: E402
 
 
-DEFAULT_CONFIG = Path("configs/alpha158_expression_adapter_v1.yaml")
+DEFAULT_CONFIG = Path("configs/alpha360_expression_adapter_smoke_v1.yaml")
 
 
 def resolve_path(path: str | Path) -> Path:
-    path = Path(path)
-    return path if path.is_absolute() else PROJECT_ROOT / path
+    value = Path(path)
+    return value if value.is_absolute() else PROJECT_ROOT / value
 
 
 def load_config(path: Path) -> ExpressionFrameConfig:
@@ -50,22 +50,29 @@ def load_config(path: Path) -> ExpressionFrameConfig:
 def write_report(config: ExpressionFrameConfig, expression_table: pd.DataFrame, summary: pd.DataFrame, output: Path) -> None:
     coverage = summary[["factor", "coverage", "missing_rate", "valid_rows", "total_rows"]].copy()
     lines = [
-        "# Alpha158 Expression Frame V1",
+        "# Alpha360 Expression Frame Smoke V1",
         "",
         f"- Provider: `{config.provider_uri}`",
         f"- Market: `{config.market}`",
         f"- Date range: `{config.start}` to `{config.end}`",
+        f"- Max instruments: `{config.max_instruments}`",
         f"- Factor count: `{len(expression_table)}`",
         f"- Catalog: `{config.catalog_path.as_posix()}`",
         f"- Inventory: `{config.inventory_path.as_posix()}`",
         "",
         "## Expression Table",
         "",
-        markdown_table(expression_table[["catalog_name", "factor_name", "category", "expression"]].head(30)),
+        markdown_table(expression_table[["catalog_name", "factor_name", "family", "lag", "category", "expression"]]),
         "",
         "## Coverage",
         "",
         markdown_table(coverage),
+        "",
+        "## Boundary",
+        "",
+        "- This is an adapter smoke run only.",
+        "- Catalog entries stay disabled/non-runnable until V4 evaluation and promotion pass.",
+        "- Downstream evaluation must keep data_quality and tradability as mandatory prefilters.",
         "",
         "## Output Files",
         "",
@@ -83,13 +90,13 @@ def run(args: argparse.Namespace) -> Path:
     frame, expression_table, frame_path = build_expression_frame(config)
     summary = pd.read_csv(config.output_dir / "expression_frame_summary.csv")
     write_report(config, expression_table, summary, config.output_dir / "expression_frame_report.md")
-    print(f"Alpha158 expression frame written to {frame_path}", flush=True)
+    print(f"Alpha360 expression frame written to {frame_path}", flush=True)
     print(f"Rows: {len(frame):,}; factors: {len(expression_table)}", flush=True)
     return config.output_dir
 
 
 def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(description="Build Qlib Alpha158 expression frame V1.")
+    parser = argparse.ArgumentParser(description="Build Qlib Alpha360 expression frame smoke V1.")
     parser.add_argument("--config", type=Path, default=DEFAULT_CONFIG)
     return parser
 

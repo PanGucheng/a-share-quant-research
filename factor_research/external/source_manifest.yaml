@@ -79,6 +79,20 @@ sources:
     local_adapter: "factor_research/external/adapters.py::to_qlib_score_frame"
     output_namespace: "qlib_eval"
 
+  - id: qlib_alpha360
+    name: Qlib Alpha360
+    local_path: "E:/qlib_prj/qlib_clone"
+    commit: "d5379c520f66a39953bad76234a7019a72796fd0"
+    license: "MIT"
+    planned_role: "Qlib-native normalized OHLCV lag factor source for broad factor-pool expansion."
+    reuse_policy: "Extract formulas from the installed editable Qlib source; do not hand-copy or alter formula definitions."
+    source_files:
+      - path: "qlib/contrib/data/loader.py"
+        functions:
+          - "Alpha360DL.get_feature_config"
+    local_adapter: "factor_research/qlib_alpha360.py::build_alpha360_formulas + factor_research/expression_adapter.py::compute_qlib_expression_frame"
+    output_namespace: "factor_source"
+
   - id: qlib_factor_platform
     name: qlib_factor_platform
     local_path: "tmp/reference_repos/qlib_factor_platform"

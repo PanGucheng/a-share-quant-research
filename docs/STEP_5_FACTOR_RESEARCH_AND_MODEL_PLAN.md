@@ -3002,3 +3002,56 @@ techfactor
 
 - 制定并执行 `qlib_alpha360` adapter smoke / batch 计划。
 - 并行制定 FactorTest-style industry/style/exposure data capability audit。
+
+## 60. V3.28：Qlib Alpha360 Source Audit 与 Adapter Smoke V1
+
+状态：已完成。
+
+阶段文档：
+
+```text
+docs/ALPHA360_ADAPTER_SMOKE_V1.md
+```
+
+新增文件：
+
+```text
+factor_research/qlib_alpha360.py
+configs/alpha360_catalog_audit_v1.yaml
+configs/alpha360_expression_adapter_smoke_v1.yaml
+scripts/audit_alpha360_catalog_v1.py
+scripts/build_alpha360_expression_frame_v1.py
+```
+
+运行命令：
+
+```powershell
+E:\anaconda_envs\qlib_env\python.exe scripts\audit_alpha360_catalog_v1.py --config configs\alpha360_catalog_audit_v1.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\build_alpha360_expression_frame_v1.py --config configs\alpha360_expression_adapter_smoke_v1.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\audit_factor_research_toolchain_v1.py --config configs\factor_research_toolchain_readiness_v1.yaml
+```
+
+完成结果：
+
+```text
+Alpha360 formulas: 360
+missing provider fields: 0
+smoke catalog entries: 24
+smoke factor frame rows: 88,797
+smoke instruments: 500
+smoke factors: 24
+readiness required_output_contracts: pass
+readiness overall: ready
+```
+
+重要边界：
+
+- Alpha360 公式直接来自 Qlib `Alpha360DL.get_feature_config`，不手写、不改公式。
+- `alpha360_catalog_smoke.yaml` 仍是 disabled/non-runnable，不会绕过 V4 评价进入筛选。
+- 本阶段只验证 adapter smoke；没有训练模型，没有策略优化，没有替换 Qlib baseline。
+
+下一步：
+
+- 基于 Alpha360 smoke factor frame 跑 V4 smoke。
+- 若 smoke 通过，再生成 360 公式 batch candidate catalog 并走可恢复 V4 batch。
+- promotion/holdout 后再接入 multi-source screening 和 judgement。

@@ -1,0 +1,18 @@
+provider_uri: "E:/qlib_prj/qlib_data/cn_data_community_20260609_derived"
+qlib_source: "E:/qlib_prj/qlib_clone"
+output_dir: "outputs/factor_catalog_alpha360_v1"
+
+smoke:
+  fields:
+    - "CLOSE"
+    - "OPEN"
+    - "HIGH"
+    - "LOW"
+    - "VWAP"
+    - "VOLUME"
+  lags:
+    - 0
+    - 5
+    - 20
+    - 59
+  expected_count: 24

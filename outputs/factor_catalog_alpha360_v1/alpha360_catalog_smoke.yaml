@@ -1,0 +1,484 @@
+version: 1
+updated: '2026-06-28'
+policy:
+  purpose: Generated Qlib Alpha360 catalog supplement.
+  principle:
+  - Expressions are copied from the local Qlib source via Alpha360DL.get_feature_config.
+  - Entries are not runnable until the Qlib expression adapter and V4 evaluation pass.
+  - Use data_quality and tradability filters before evaluation.
+  required_prefilter:
+  - data_quality
+  - tradability
+factors:
+- name: alpha360_CLOSE0
+  registry_name: alpha360_CLOSE0
+  category: alpha360_close_window
+  source_project: qlib_alpha360
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha360DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha360_smoke_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha360 expression: $close/$close'
+- name: alpha360_CLOSE5
+  registry_name: alpha360_CLOSE5
+  category: alpha360_close_window
+  source_project: qlib_alpha360
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha360DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha360_smoke_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha360 expression: Ref($close, 5)/$close'
+- name: alpha360_CLOSE20
+  registry_name: alpha360_CLOSE20
+  category: alpha360_close_window
+  source_project: qlib_alpha360
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha360DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha360_smoke_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha360 expression: Ref($close, 20)/$close'
+- name: alpha360_CLOSE59
+  registry_name: alpha360_CLOSE59
+  category: alpha360_close_window
+  source_project: qlib_alpha360
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha360DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha360_smoke_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha360 expression: Ref($close, 59)/$close'
+- name: alpha360_OPEN0
+  registry_name: alpha360_OPEN0
+  category: alpha360_open_window
+  source_project: qlib_alpha360
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha360DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  - $open
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha360_smoke_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha360 expression: $open/$close'
+- name: alpha360_OPEN5
+  registry_name: alpha360_OPEN5
+  category: alpha360_open_window
+  source_project: qlib_alpha360
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha360DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  - $open
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha360_smoke_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha360 expression: Ref($open, 5)/$close'
+- name: alpha360_OPEN20
+  registry_name: alpha360_OPEN20
+  category: alpha360_open_window
+  source_project: qlib_alpha360
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha360DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  - $open
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha360_smoke_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha360 expression: Ref($open, 20)/$close'
+- name: alpha360_OPEN59
+  registry_name: alpha360_OPEN59
+  category: alpha360_open_window
+  source_project: qlib_alpha360
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha360DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  - $open
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha360_smoke_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha360 expression: Ref($open, 59)/$close'
+- name: alpha360_HIGH0
+  registry_name: alpha360_HIGH0
+  category: alpha360_high_window
+  source_project: qlib_alpha360
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha360DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  - $high
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha360_smoke_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha360 expression: $high/$close'
+- name: alpha360_HIGH5
+  registry_name: alpha360_HIGH5
+  category: alpha360_high_window
+  source_project: qlib_alpha360
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha360DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  - $high
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha360_smoke_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha360 expression: Ref($high, 5)/$close'
+- name: alpha360_HIGH20
+  registry_name: alpha360_HIGH20
+  category: alpha360_high_window
+  source_project: qlib_alpha360
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha360DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  - $high
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha360_smoke_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha360 expression: Ref($high, 20)/$close'
+- name: alpha360_HIGH59
+  registry_name: alpha360_HIGH59
+  category: alpha360_high_window
+  source_project: qlib_alpha360
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha360DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  - $high
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha360_smoke_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha360 expression: Ref($high, 59)/$close'
+- name: alpha360_LOW0
+  registry_name: alpha360_LOW0
+  category: alpha360_low_window
+  source_project: qlib_alpha360
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha360DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  - $low
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha360_smoke_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha360 expression: $low/$close'
+- name: alpha360_LOW5
+  registry_name: alpha360_LOW5
+  category: alpha360_low_window
+  source_project: qlib_alpha360
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha360DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  - $low
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha360_smoke_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha360 expression: Ref($low, 5)/$close'
+- name: alpha360_LOW20
+  registry_name: alpha360_LOW20
+  category: alpha360_low_window
+  source_project: qlib_alpha360
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha360DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  - $low
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha360_smoke_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha360 expression: Ref($low, 20)/$close'
+- name: alpha360_LOW59
+  registry_name: alpha360_LOW59
+  category: alpha360_low_window
+  source_project: qlib_alpha360
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha360DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  - $low
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha360_smoke_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha360 expression: Ref($low, 59)/$close'
+- name: alpha360_VWAP0
+  registry_name: alpha360_VWAP0
+  category: alpha360_vwap_window
+  source_project: qlib_alpha360
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha360DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  - $vwap
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha360_smoke_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha360 expression: $vwap/$close'
+- name: alpha360_VWAP5
+  registry_name: alpha360_VWAP5
+  category: alpha360_vwap_window
+  source_project: qlib_alpha360
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha360DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  - $vwap
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha360_smoke_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha360 expression: Ref($vwap, 5)/$close'
+- name: alpha360_VWAP20
+  registry_name: alpha360_VWAP20
+  category: alpha360_vwap_window
+  source_project: qlib_alpha360
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha360DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  - $vwap
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha360_smoke_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha360 expression: Ref($vwap, 20)/$close'
+- name: alpha360_VWAP59
+  registry_name: alpha360_VWAP59
+  category: alpha360_vwap_window
+  source_project: qlib_alpha360
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha360DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $close
+  - $vwap
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha360_smoke_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha360 expression: Ref($vwap, 59)/$close'
+- name: alpha360_VOLUME0
+  registry_name: alpha360_VOLUME0
+  category: alpha360_volume_window
+  source_project: qlib_alpha360
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha360DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $volume
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha360_smoke_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha360 expression: $volume/($volume+1e-12)'
+- name: alpha360_VOLUME5
+  registry_name: alpha360_VOLUME5
+  category: alpha360_volume_window
+  source_project: qlib_alpha360
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha360DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $volume
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha360_smoke_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha360 expression: Ref($volume, 5)/($volume+1e-12)'
+- name: alpha360_VOLUME20
+  registry_name: alpha360_VOLUME20
+  category: alpha360_volume_window
+  source_project: qlib_alpha360
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha360DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $volume
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha360_smoke_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha360 expression: Ref($volume, 20)/($volume+1e-12)'
+- name: alpha360_VOLUME59
+  registry_name: alpha360_VOLUME59
+  category: alpha360_volume_window
+  source_project: qlib_alpha360
+  source_file: qlib/contrib/data/loader.py
+  source_function: Alpha360DL.get_feature_config
+  source_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  license: MIT
+  expected_direction: watch
+  required_fields:
+  - $volume
+  labels:
+  - label_10d_t1
+  - label_20d_t1
+  stage: alpha360_smoke_adapter_pending
+  enabled: false
+  runnable: false
+  compute_adapter: qlib_expression_adapter_pending
+  notes: 'Qlib Alpha360 expression: Ref($volume, 59)/($volume+1e-12)'

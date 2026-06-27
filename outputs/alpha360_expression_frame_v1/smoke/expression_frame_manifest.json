@@ -1,0 +1,173 @@
+{
+  "config": {
+    "provider_uri": "E:/qlib_prj/qlib_data/cn_data_community_20260609_derived",
+    "market": "all_stock_shsz_liquid2000",
+    "start": "2020-10-01",
+    "end": "2021-06-30",
+    "max_instruments": 500,
+    "catalog_path": "E:/qlib_prj/qlib_baseline/outputs/factor_catalog_alpha360_v1/alpha360_catalog_smoke.yaml",
+    "inventory_path": "E:/qlib_prj/qlib_baseline/outputs/factor_catalog_alpha360_v1/alpha360_formula_inventory.csv",
+    "output_dir": "E:/qlib_prj/qlib_baseline/outputs/alpha360_expression_frame_v1/smoke",
+    "enabled_only": false,
+    "runnable_only": false,
+    "stages": [
+      "alpha360_smoke_adapter_pending"
+    ],
+    "names": [],
+    "max_factors": null,
+    "batch_size": 8,
+    "refresh": false
+  },
+  "factor_count": 24,
+  "row_count": 88797,
+  "date_min": "2020-10-09 00:00:00",
+  "date_max": "2021-06-30 00:00:00",
+  "instrument_count": 500,
+  "factor_frame_path": "E:/qlib_prj/qlib_baseline/outputs/alpha360_expression_frame_v1/smoke/factor_frame.pkl",
+  "factors": [
+    {
+      "catalog_name": "alpha360_CLOSE0",
+      "factor_name": "CLOSE0",
+      "category": "alpha360_close_window",
+      "expression": "$close/$close"
+    },
+    {
+      "catalog_name": "alpha360_CLOSE5",
+      "factor_name": "CLOSE5",
+      "category": "alpha360_close_window",
+      "expression": "Ref($close, 5)/$close"
+    },
+    {
+      "catalog_name": "alpha360_CLOSE20",
+      "factor_name": "CLOSE20",
+      "category": "alpha360_close_window",
+      "expression": "Ref($close, 20)/$close"
+    },
+    {
+      "catalog_name": "alpha360_CLOSE59",
+      "factor_name": "CLOSE59",
+      "category": "alpha360_close_window",
+      "expression": "Ref($close, 59)/$close"
+    },
+    {
+      "catalog_name": "alpha360_OPEN0",
+      "factor_name": "OPEN0",
+      "category": "alpha360_open_window",
+      "expression": "$open/$close"
+    },
+    {
+      "catalog_name": "alpha360_OPEN5",
+      "factor_name": "OPEN5",
+      "category": "alpha360_open_window",
+      "expression": "Ref($open, 5)/$close"
+    },
+    {
+      "catalog_name": "alpha360_OPEN20",
+      "factor_name": "OPEN20",
+      "category": "alpha360_open_window",
+      "expression": "Ref($open, 20)/$close"
+    },
+    {
+      "catalog_name": "alpha360_OPEN59",
+      "factor_name": "OPEN59",
+      "category": "alpha360_open_window",
+      "expression": "Ref($open, 59)/$close"
+    },
+    {
+      "catalog_name": "alpha360_HIGH0",
+      "factor_name": "HIGH0",
+      "category": "alpha360_high_window",
+      "expression": "$high/$close"
+    },
+    {
+      "catalog_name": "alpha360_HIGH5",
+      "factor_name": "HIGH5",
+      "category": "alpha360_high_window",
+      "expression": "Ref($high, 5)/$close"
+    },
+    {
+      "catalog_name": "alpha360_HIGH20",
+      "factor_name": "HIGH20",
+      "category": "alpha360_high_window",
+      "expression": "Ref($high, 20)/$close"
+    },
+    {
+      "catalog_name": "alpha360_HIGH59",
+      "factor_name": "HIGH59",
+      "category": "alpha360_high_window",
+      "expression": "Ref($high, 59)/$close"
+    },
+    {
+      "catalog_name": "alpha360_LOW0",
+      "factor_name": "LOW0",
+      "category": "alpha360_low_window",
+      "expression": "$low/$close"
+    },
+    {
+      "catalog_name": "alpha360_LOW5",
+      "factor_name": "LOW5",
+      "category": "alpha360_low_window",
+      "expression": "Ref($low, 5)/$close"
+    },
+    {
+      "catalog_name": "alpha360_LOW20",
+      "factor_name": "LOW20",
+      "category": "alpha360_low_window",
+      "expression": "Ref($low, 20)/$close"
+    },
+    {
+      "catalog_name": "alpha360_LOW59",
+      "factor_name": "LOW59",
+      "category": "alpha360_low_window",
+      "expression": "Ref($low, 59)/$close"
+    },
+    {
+      "catalog_name": "alpha360_VWAP0",
+      "factor_name": "VWAP0",
+      "category": "alpha360_vwap_window",
+      "expression": "$vwap/$close"
+    },
+    {
+      "catalog_name": "alpha360_VWAP5",
+      "factor_name": "VWAP5",
+      "category": "alpha360_vwap_window",
+      "expression": "Ref($vwap, 5)/$close"
+    },
+    {
+      "catalog_name": "alpha360_VWAP20",
+      "factor_name": "VWAP20",
+      "category": "alpha360_vwap_window",
+      "expression": "Ref($vwap, 20)/$close"
+    },
+    {
+      "catalog_name": "alpha360_VWAP59",
+      "factor_name": "VWAP59",
+      "category": "alpha360_vwap_window",
+      "expression": "Ref($vwap, 59)/$close"
+    },
+    {
+      "catalog_name": "alpha360_VOLUME0",
+      "factor_name": "VOLUME0",
+      "category": "alpha360_volume_window",
+      "expression": "$volume/($volume+1e-12)"
+    },
+    {
+      "catalog_name": "alpha360_VOLUME5",
+      "factor_name": "VOLUME5",
+      "category": "alpha360_volume_window",
+      "expression": "Ref($volume, 5)/($volume+1e-12)"
+    },
+    {
+      "catalog_name": "alpha360_VOLUME20",
+      "factor_name": "VOLUME20",
+      "category": "alpha360_volume_window",
+      "expression": "Ref($volume, 20)/($volume+1e-12)"
+    },
+    {
+      "catalog_name": "alpha360_VOLUME59",
+      "factor_name": "VOLUME59",
+      "category": "alpha360_volume_window",
+      "expression": "Ref($volume, 59)/($volume+1e-12)"
+    }
+  ]
+}

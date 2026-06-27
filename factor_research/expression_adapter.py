@@ -16,6 +16,7 @@ class ExpressionFrameConfig:
     market: str
     start: str
     end: str
+    max_instruments: int | None
     catalog_path: Path
     inventory_path: Path
     output_dir: Path
@@ -76,6 +77,7 @@ def expression_frame_cache_path(config: ExpressionFrameConfig, expression_table:
         "market": config.market,
         "start": config.start,
         "end": config.end,
+        "max_instruments": config.max_instruments,
         "catalog_path": config.catalog_path.as_posix(),
         "inventory_path": config.inventory_path.as_posix(),
         "catalog_names": expression_table["catalog_name"].tolist(),
@@ -91,6 +93,7 @@ def expression_chunk_cache_path(config: ExpressionFrameConfig, expression_table:
         "market": config.market,
         "start": config.start,
         "end": config.end,
+        "max_instruments": config.max_instruments,
         "catalog_path": config.catalog_path.as_posix(),
         "inventory_path": config.inventory_path.as_posix(),
         "catalog_names": expression_table["catalog_name"].tolist(),
@@ -119,6 +122,14 @@ def compute_qlib_expression_frame(config: ExpressionFrameConfig, expression_tabl
     C.kernels = 1
     C.joblib_backend = "sequential"
     instruments = D.instruments(config.market)
+    if config.max_instruments is not None:
+        instruments = D.list_instruments(
+            instruments,
+            start_time=config.start,
+            end_time=config.end,
+            as_list=True,
+        )
+        instruments = sorted(str(item).upper() for item in instruments)[: int(config.max_instruments)]
     batch_size = config.batch_size or len(expression_table)
     batch_size = max(1, int(batch_size))
     total_chunks = (len(expression_table) + batch_size - 1) // batch_size

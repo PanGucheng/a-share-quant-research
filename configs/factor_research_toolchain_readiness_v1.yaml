@@ -14,6 +14,9 @@ catalogs:
   - id: "kunquant_alpha101_promoted_catalog"
     path: "outputs/alpha101_factor_adapter_v1/batch82/alpha101_factor_catalog_promoted64.yaml"
     role: "Promoted KunQuant Alpha101 factors after smoke and candidate71 batch V4 evaluation."
+  - id: "qlib_alpha360_smoke_catalog"
+    path: "outputs/factor_catalog_alpha360_v1/alpha360_catalog_smoke.yaml"
+    role: "Qlib Alpha360 smoke catalog after source audit; disabled/non-runnable until V4 evaluation."
 
 source_manifest: "factor_research/external/source_manifest.yaml"
 output_dir: "outputs/factor_research_toolchain_readiness_v1/current"
@@ -168,6 +171,23 @@ required_output_contracts:
     group: "source_expansion_audit"
     path: "outputs/open_source_factor_expansion_audit_v1/current/open_source_factor_expansion_next_steps.csv"
     min_rows: 3
+  - id: "alpha360_formula_inventory"
+    group: "alpha360_source_audit"
+    path: "outputs/factor_catalog_alpha360_v1/alpha360_formula_inventory.csv"
+    min_rows: 360
+  - id: "alpha360_smoke_catalog"
+    group: "alpha360_source_audit"
+    path: "outputs/factor_catalog_alpha360_v1/alpha360_catalog_smoke.yaml"
+    yaml_key: "factors"
+    min_rows: 24
+  - id: "alpha360_smoke_expression_table"
+    group: "alpha360_adapter_smoke"
+    path: "outputs/alpha360_expression_frame_v1/smoke/expression_table.csv"
+    min_rows: 24
+  - id: "alpha360_smoke_expression_summary"
+    group: "alpha360_adapter_smoke"
+    path: "outputs/alpha360_expression_frame_v1/smoke/expression_frame_summary.csv"
+    min_rows: 24
   - id: "alpha101_source_summary"
     group: "alpha101_source_audit"
     path: "outputs/factor_catalog_alpha101_v1/source_audit/alpha101_source_summary.csv"
@@ -247,6 +267,7 @@ large_scale_rules:
     - "qlib_alpha158"
   planned_new_sources:
     - "ta"
+    - "qlib_alpha360"
     - "kunquant_alpha101"
     - "ginkgo_alpha101"
   required_prefilter:

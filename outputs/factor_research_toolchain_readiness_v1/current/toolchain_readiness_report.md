@@ -30,12 +30,14 @@ The factor research toolchain is ready for large-scale multi-source screening an
 | ta_promoted_catalog | outputs/ta_factor_adapter_v1/smoke/ta_factor_catalog_promoted77.yaml | pass | 77 | 77 | 77 | Promoted TA factors after adapter smoke and remaining batch V4 validation. |
 | kunquant_alpha101_metadata_catalog | outputs/factor_catalog_alpha101_v1/kunquant_alpha101_catalog_metadata.yaml | pass | 82 | 0 | 0 | KunQuant Alpha101 metadata catalog after source audit; adapter pending and non-runnable. |
 | kunquant_alpha101_promoted_catalog | outputs/alpha101_factor_adapter_v1/batch82/alpha101_factor_catalog_promoted64.yaml | pass | 64 | 64 | 64 | Promoted KunQuant Alpha101 factors after smoke and candidate71 batch V4 evaluation. |
+| qlib_alpha360_smoke_catalog | outputs/factor_catalog_alpha360_v1/alpha360_catalog_smoke.yaml | pass | 24 | 0 | 0 | Qlib Alpha360 smoke catalog after source audit; disabled/non-runnable until V4 evaluation. |
 
 ## Source Readiness
 
 | source_project | declared_status | license | local_path_status | source_file_status | runnable_factor_count | readiness | readiness_reason |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | ginkgo_alpha101 | metadata_registered_adapter_pending | MIT | available | available | 0 | adapter_pending | source registered but calculation adapter is not promoted |
+| qlib_alpha360 | source_audit_adapter_smoke_pending | MIT | available | available | 0 | adapter_pending | source registered but calculation adapter is not promoted |
 | kunquant_alpha101 | source_audit_passed_adapter_pending | Apache-2.0 | available | available | 64 | ready | runnable catalog entries available |
 | qlib_alpha158 | formula_inventory_passed_expression_adapter_pending | MIT | available | available | 155 | ready | runnable catalog entries available |
 | ta | metadata_registered_adapter_pending | MIT | available | available | 77 | ready | runnable catalog entries available |
@@ -85,6 +87,10 @@ The factor research toolchain is ready for large-scale multi-source screening an
 | multi_source_judgement_contract_status | multi_source_judgement | outputs/multi_source_judgement_v1/current/multi_source_judgement_contract_status.csv | pass | 6 | 6 | 378 |
 | open_source_factor_expansion_candidates | source_expansion_audit | outputs/open_source_factor_expansion_audit_v1/current/open_source_factor_source_candidates.csv | pass | 8 | 8 | 5113 |
 | open_source_factor_expansion_next_steps | source_expansion_audit | outputs/open_source_factor_expansion_audit_v1/current/open_source_factor_expansion_next_steps.csv | pass | 3 | 3 | 467 |
+| alpha360_formula_inventory | alpha360_source_audit | outputs/factor_catalog_alpha360_v1/alpha360_formula_inventory.csv | pass | 360 | 360 | 96173 |
+| alpha360_smoke_catalog | alpha360_source_audit | outputs/factor_catalog_alpha360_v1/alpha360_catalog_smoke.yaml | pass | 24 | 24 | 14817 |
+| alpha360_smoke_expression_table | alpha360_adapter_smoke | outputs/alpha360_expression_frame_v1/smoke/expression_table.csv | pass | 24 | 24 | 6485 |
+| alpha360_smoke_expression_summary | alpha360_adapter_smoke | outputs/alpha360_expression_frame_v1/smoke/expression_frame_summary.csv | pass | 24 | 24 | 2948 |
 | alpha101_source_summary | alpha101_source_audit | outputs/factor_catalog_alpha101_v1/source_audit/alpha101_source_summary.csv | pass | 2 | 2 | 574 |
 | kunquant_alpha101_inventory | alpha101_source_audit | outputs/factor_catalog_alpha101_v1/source_audit/kunquant_alpha101_inventory.csv | pass | 82 | 80 | 19926 |
 | kunquant_alpha101_metadata_catalog | alpha101_source_audit | outputs/factor_catalog_alpha101_v1/kunquant_alpha101_catalog_metadata.yaml | pass | 82 | 80 | 51857 |
@@ -113,6 +119,7 @@ The factor research toolchain is ready for large-scale multi-source screening an
 | kunquant_alpha101_promoted_catalog | kunquant_alpha101 | alpha101_adapter_v4_smoke_passed | True | True | 5 |
 | project_main_catalog | qlib_baseline_basic | current_v4_seed | True | True | 5 |
 | project_main_catalog | qlib_baseline_basic | project_basic_available | True | True | 10 |
+| qlib_alpha360_smoke_catalog | qlib_alpha360 | alpha360_smoke_adapter_pending | False | False | 24 |
 | ta_promoted_catalog | ta | ta_adapter_v4_batch_passed | True | True | 72 |
 | ta_promoted_catalog | ta | ta_adapter_v4_smoke_passed | True | True | 5 |
 
@@ -121,4 +128,5 @@ The factor research toolchain is ready for large-scale multi-source screening an
 1. Keep Alpha158 as the validated reference pipeline, not the next research bottleneck.
 2. Treat promoted TA and Alpha101 catalogs as the first non-Alpha158 screening inputs.
 3. Use the generic multi-source screening and judgement contracts before promoting new-source factors into model or portfolio inputs.
-4. Start broad factor discovery by adding more open-source factor families through the same adapter, V4 batch, promotion, holdout, and judgement gates.
+4. Continue Qlib Alpha360 through V4 smoke before any promotion.
+5. Start broad factor discovery by adding more open-source factor families through the same adapter, V4 batch, promotion, holdout, and judgement gates.

@@ -672,6 +672,28 @@ reference-only candidates: GPL 或 unknown-license 来源
 
 这能保证后续扩张继续优先参考开源，但不把 license 或数据假设风险带入主项目。下一条直接因子 adapter 应优先做 Qlib Alpha360；FactorTest 风格的行业/风格暴露诊断应先做数据能力审计。
 
+## Qlib Alpha360 Adapter Smoke
+
+Alpha360 已经完成 source audit 和 adapter smoke：
+
+```powershell
+cd E:\qlib_prj\qlib_baseline
+E:\anaconda_envs\qlib_env\python.exe scripts\audit_alpha360_catalog_v1.py --config configs\alpha360_catalog_audit_v1.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\build_alpha360_expression_frame_v1.py --config configs\alpha360_expression_adapter_smoke_v1.yaml
+```
+
+当前结果：
+
+```text
+Alpha360 formulas: 360
+missing provider fields: 0
+smoke catalog entries: 24
+smoke frame rows: 88,797
+readiness alpha360 contracts: pass
+```
+
+当前 smoke catalog 仍是 disabled/non-runnable。下一道门是 V4 smoke 评价；通过后再进入 360 公式 batch、promotion/holdout、multi-source screening 和 judgement。
+
 ## 当前因子研究结论
 
 截至 V3.1/V3.2：

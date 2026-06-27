@@ -91,6 +91,7 @@ outputs/factor_evaluation_v4/alpha101_smoke_v1/external_factor_frame/*
 outputs/alpha158_expression_frame_v1/*/factor_frame*.pkl
 outputs/ta_factor_adapter_v1/*/factor_frame*.pkl
 outputs/alpha101_factor_adapter_v1/*/factor_frame*.pkl
+outputs/alpha360_expression_frame_v1/*/factor_frame*.pkl
 
 # Batch factor evaluation runtime outputs can become large. Keep the tiny dry-run
 # smoke manifest as a reproducibility fixture.

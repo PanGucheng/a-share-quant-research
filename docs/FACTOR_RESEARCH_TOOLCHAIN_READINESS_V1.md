@@ -150,15 +150,25 @@ top direct adapter candidate: qlib_alpha360
 top data audit candidate: factortest_exposure_diagnostics
 ```
 
-这表示“引入更多因子”的入口已经打开，并且已由 TA 与 Alpha101 两类非 Alpha158 来源验证。下一阶段可以继续接入更多开源因子源、基本面/行业风格数据或更长 OOS 诊断，但仍需沿用 adapter audit、V4 batch、promotion/holdout、multi-source screening 和 multi-source judgement contract。
+V3.28 后新增 Alpha360 adapter smoke contract：
+
+```text
+alpha360_formula_inventory rows: 360
+alpha360_smoke_catalog rows: 24
+alpha360_smoke_expression_table rows: 24
+alpha360_smoke_expression_summary rows: 24
+overall_status: ready
+```
+
+这表示“引入更多因子”的入口已经打开，并且已由 TA、Alpha101 与 Alpha360 smoke 三类非 seed 来源验证。下一阶段可以继续接入更多开源因子源、基本面/行业风格数据或更长 OOS 诊断，但仍需沿用 adapter audit、V4 batch、promotion/holdout、multi-source screening 和 multi-source judgement contract。
 
 ## 7. 下一步目标
 
 下一步不继续围绕 Alpha158 微调，也不急着训练模型，而是进入“更多开源因子源接入”阶段：
 
-1. 继续寻找并接入更多开源因子族，例如基本面、行业风格、风险暴露和其他公式库。
-2. 每个新来源先做 license、字段、窗口、look-ahead 和 adapter 审计。
-3. 通过小批 smoke 后，再用 batch runner 做可恢复 V4 批量评价。
-4. 通过 promotion/holdout 后，把新来源追加到 multi-source screening 和 judgement contract。
+1. 优先对 Alpha360 smoke catalog 跑 V4 smoke。
+2. 如果 smoke 通过，再生成 Alpha360 360 公式 batch candidate catalog，并用 batch runner 做可恢复 V4 批量评价。
+3. 通过 promotion/holdout 后，把 Alpha360 promoted 因子追加到 multi-source screening 和 judgement contract。
+4. 并行推进 FactorTest-style 行业/风格/Barra 暴露数据能力审计。
 5. 为 `new_source_alpha_probe` 增加更长时段、更多数据源、相关性/暴露/组合 smoke 验证。
 6. 工具链继续保持“不训练模型、不改策略、不改开源评价口径”的边界，直到候选池有足够多经过多层筛选的新来源因子。

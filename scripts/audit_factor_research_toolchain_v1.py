@@ -474,7 +474,8 @@ def write_report(
             "1. Keep Alpha158 as the validated reference pipeline, not the next research bottleneck.",
             "2. Treat promoted TA and Alpha101 catalogs as the first non-Alpha158 screening inputs.",
             "3. Use the generic multi-source screening and judgement contracts before promoting new-source factors into model or portfolio inputs.",
-            "4. Start broad factor discovery by adding more open-source factor families through the same adapter, V4 batch, promotion, holdout, and judgement gates.",
+            "4. Continue Qlib Alpha360 through V4 smoke before any promotion.",
+            "5. Start broad factor discovery by adding more open-source factor families through the same adapter, V4 batch, promotion, holdout, and judgement gates.",
         ]
     )
     (output_dir / "toolchain_readiness_report.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
