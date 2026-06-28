@@ -82,6 +82,7 @@ outputs/new_source_probe_review_v1/current/probe_review_board.csv
 outputs/alpha360_strict_oos_extension_v1/current/strict_oos_contract_status.csv
 outputs/alpha360_strict_oos_stability_v1/current/strict_oos_stability_contract_status.csv
 outputs/tradability_exposure_attribution_v1/current/tradability_exposure_contract_status.csv
+outputs/exposure_data_capability_audit_v1/current/exposure_data_capability_contract_status.csv
 outputs/factor_research_toolchain_readiness_v1/current/toolchain_readiness_report.md
 ```
 
@@ -96,6 +97,7 @@ outputs/factor_research_toolchain_readiness_v1/current/toolchain_readiness_repor
 - Alpha360 strict OOS extension: 3 个严格候选 recent-OOS frame 286,944 行，min coverage 0.996236，V4 metric index 54 行，contract pass。
 - Alpha360 strict OOS stability: main vs recent metric pairs 54 行，recent Alphalens mean IC min 0.063736，recent Qlib IR min 5.025121，signal sign flips 0，contract pass。
 - Tradability exposure attribution: 19 个 watchlist 全部归因，主代理均为 `liquidity_value`；14 个建议 holdout/residualization first，4 个 manual review，1 个 residualization candidate review。
+- Exposure data capability audit: FactorTest/qlib_factor_platform 参考能力存在；项目 context/tradability/data_quality 可用；当前 provider 缺市值、行业和 Barra 字段。
 - `new_source_alpha_probe` 是研究队列，不是默认模型或组合输入。
 
 ## Open Source References
@@ -136,6 +138,6 @@ tmp/reference_repos/techfactor
 - V3.35 Alpha360 strict OOS extension 已完成：3 个严格候选在 2024-2026 recent OOS 窗口重新生成 factor frame，并通过 V4 多评价体系与 contract audit。
 - V3.36 Alpha360 strict OOS stability 已完成：主窗口与 recent-OOS 指标对齐，信号指标无符号翻转，候选仍保持研究状态。
 - V3.37 Tradability exposure attribution 已完成：19 个高可交易性暴露 probes 已分层，直接 raw training 前需要 holdout、人工复核或 residualization。
-- FactorTest-style 行业/风格/Barra 暴露诊断应先做数据能力审计。
-- 下一步推进 FactorTest-style 行业/风格/Barra 暴露数据能力审计，并设计 residualized factor evaluation 的最小接口。
+- V3.38 Exposure data capability audit 已完成：当前 provider 不支持市值/行业/Barra 字段，不能直接做 FactorTest-style industry/Barra neutralization。
+- 下一步设计外部行业/市值数据接入 contract，或先做 liquidity residualized factor evaluation 的最小接口。
 - 后续继续接入更多开源因子源，但必须沿用 source audit、adapter、V4 batch、promotion/holdout、multi-source screening、multi-source judgement 的路径。

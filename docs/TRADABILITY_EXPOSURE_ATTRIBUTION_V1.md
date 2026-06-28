@@ -61,5 +61,5 @@ outputs/tradability_exposure_attribution_v1/current/tradability_exposure_attribu
 
 ## 下一步
 
-1. 推进 FactorTest-style 行业/风格/Barra 暴露数据能力审计。
-2. 后续如要研究这些高暴露因子，应先做 residualized factor evaluation。
+1. FactorTest-style 行业/风格/Barra 暴露数据能力审计已在 `docs/EXPOSURE_DATA_CAPABILITY_AUDIT_V1.md` 完成。
+2. 后续如要研究这些高暴露因子，应先做 liquidity residualized factor evaluation，或先接外部行业/市值数据。

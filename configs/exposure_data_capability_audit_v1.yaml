@@ -1,0 +1,35 @@
+provider_uri: "E:/qlib_prj/qlib_data/cn_data_community_20260609_derived"
+market: "all_stock_shsz_liquid2000"
+start: "2021-01-04"
+end: "2021-01-15"
+max_instruments: 5
+output_dir: "outputs/exposure_data_capability_audit_v1/current"
+
+reference_repos:
+  factortest: "tmp/reference_repos/FactorTest"
+  qlib_factor_platform: "tmp/reference_repos/qlib_factor_platform"
+
+existing_outputs:
+  factor_context: "outputs/factor_context_v1/main_research_2021_2023"
+  tradability: "outputs/tradability/all_stock_shsz_liquid2000_2021-01-01_2023-12-29"
+  data_quality_tradability: "outputs/data_quality_tradability/all_stock_shsz_liquid2000_2021-01-01_2023-12-29"
+  tradability_exposure_attribution: "outputs/tradability_exposure_attribution_v1/current"
+
+field_probe:
+  size:
+    - "$market_value"
+    - "$total_mv"
+    - "$circ_mv"
+    - "$float_mv"
+    - "$mkt_cap"
+  industry:
+    - "$industry"
+    - "$sw_l1"
+    - "$sw_industry"
+    - "$citics_l1"
+  barra:
+    - "$beta"
+    - "$momentum"
+    - "$size"
+    - "$residual_volatility"
+    - "$non_linear_size"

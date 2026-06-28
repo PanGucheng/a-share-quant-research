@@ -25,6 +25,7 @@ The factor research toolchain is ready for large-scale multi-source screening an
 | alpha360_strict_oos_extension | pass | contracts=5, failed=0 | Use strict OOS outputs as the recent-window diagnostic reference for reviewed Alpha360 probes. |
 | alpha360_strict_oos_stability | pass | contracts=3, failed=0 | Use main-vs-recent stability outputs to keep strict OOS candidates in the research queue. |
 | tradability_exposure_attribution | pass | contracts=3, failed=0 | Use exposure attribution actions before residualized evaluation or raw-factor training. |
+| exposure_data_capability_audit | pass | contracts=3, failed=0 | Use exposure data capability outputs to decide whether size, industry, Barra, or liquidity residualization can run. |
 
 ## Catalog Summary
 
@@ -117,6 +118,9 @@ The factor research toolchain is ready for large-scale multi-source screening an
 | tradability_exposure_attribution_board | tradability_exposure_attribution | outputs/tradability_exposure_attribution_v1/current/tradability_exposure_attribution_board.csv | pass | 19 | 19 | 7404 |
 | tradability_exposure_action_summary | tradability_exposure_attribution | outputs/tradability_exposure_attribution_v1/current/tradability_exposure_action_summary.csv | pass | 5 | 1 | 272 |
 | tradability_exposure_contract_status | tradability_exposure_attribution | outputs/tradability_exposure_attribution_v1/current/tradability_exposure_contract_status.csv | pass | 6 | 6 | 314 |
+| exposure_data_capability_board | exposure_data_capability_audit | outputs/exposure_data_capability_audit_v1/current/exposure_data_capability_board.csv | pass | 6 | 6 | 794 |
+| exposure_data_provider_field_probe | exposure_data_capability_audit | outputs/exposure_data_capability_audit_v1/current/provider_field_probe.csv | pass | 14 | 14 | 1146 |
+| exposure_data_capability_contract_status | exposure_data_capability_audit | outputs/exposure_data_capability_audit_v1/current/exposure_data_capability_contract_status.csv | pass | 6 | 6 | 357 |
 | open_source_factor_expansion_candidates | source_expansion_audit | outputs/open_source_factor_expansion_audit_v1/current/open_source_factor_source_candidates.csv | pass | 8 | 8 | 5113 |
 | open_source_factor_expansion_next_steps | source_expansion_audit | outputs/open_source_factor_expansion_audit_v1/current/open_source_factor_expansion_next_steps.csv | pass | 3 | 3 | 467 |
 | alpha360_formula_inventory | alpha360_source_audit | outputs/factor_catalog_alpha360_v1/alpha360_formula_inventory.csv | pass | 360 | 360 | 96173 |
@@ -185,4 +189,5 @@ The factor research toolchain is ready for large-scale multi-source screening an
 5. Use strict OOS extension outputs as stability diagnostics, not as automatic training admission.
 6. Use main-vs-recent stability to keep candidates in research status until exposure diagnostics are ready.
 7. Use tradability exposure attribution before raw-factor training or residualized evaluation.
-8. Start broad factor discovery by adding more open-source factor families through the same adapter, V4 batch, promotion, holdout, and judgement gates.
+8. Use exposure data capability audit before industry, size, or Barra neutralization.
+9. Start broad factor discovery by adding more open-source factor families through the same adapter, V4 batch, promotion, holdout, and judgement gates.

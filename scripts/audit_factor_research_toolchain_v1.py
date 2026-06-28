@@ -327,6 +327,8 @@ def build_readiness_checks(
     exposure_attribution_failures = exposure_attribution_contracts[
         exposure_attribution_contracts["status"].ne("pass")
     ]
+    exposure_data_contracts = contract_status[contract_status["group"].eq("exposure_data_capability_audit")]
+    exposure_data_failures = exposure_data_contracts[exposure_data_contracts["status"].ne("pass")]
     total_runnable = int(catalog_summary["runnable_count"].sum()) if not catalog_summary.empty else 0
     baseline_sources = set(str(item) for item in rules.get("baseline_sources", []))
     new_source_rows = source_readiness[
@@ -460,6 +462,16 @@ def build_readiness_checks(
             else "Run tradability exposure attribution for watchlist probes before residualization or training decisions."
         ),
     )
+    add(
+        "exposure_data_capability_audit",
+        "pass" if not exposure_data_contracts.empty and exposure_data_failures.empty else "partial",
+        f"contracts={len(exposure_data_contracts)}, failed={len(exposure_data_failures)}",
+        (
+            "Use exposure data capability outputs to decide whether size, industry, Barra, or liquidity residualization can run."
+            if not exposure_data_contracts.empty and exposure_data_failures.empty
+            else "Run exposure data capability audit before implementing neutralized or residualized factor evaluation."
+        ),
+    )
     return pd.DataFrame(rows)
 
 
@@ -553,7 +565,8 @@ def write_report(
             "5. Use strict OOS extension outputs as stability diagnostics, not as automatic training admission.",
             "6. Use main-vs-recent stability to keep candidates in research status until exposure diagnostics are ready.",
             "7. Use tradability exposure attribution before raw-factor training or residualized evaluation.",
-            "8. Start broad factor discovery by adding more open-source factor families through the same adapter, V4 batch, promotion, holdout, and judgement gates.",
+            "8. Use exposure data capability audit before industry, size, or Barra neutralization.",
+            "9. Start broad factor discovery by adding more open-source factor families through the same adapter, V4 batch, promotion, holdout, and judgement gates.",
         ]
     )
     (output_dir / "toolchain_readiness_report.md").write_text("\n".join(lines) + "\n", encoding="utf-8")

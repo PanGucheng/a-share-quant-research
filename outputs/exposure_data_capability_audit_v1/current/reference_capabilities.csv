@@ -1,0 +1,6 @@
+﻿reference_project,capability,status,matched_tokens,repo_path,scanned_file_count
+factortest,sw_industry,present,"getSWIndustryData,addSWIndustry,getZXIndustryData,addXZXind",tmp/reference_repos/FactorTest,10
+factortest,market_cap,present,"getCMV,addXSize,RegbySize,calcNeuSize",tmp/reference_repos/FactorTest,10
+factortest,industry_size_neutralization,present,"Regbysize,calcNeuIndsize",tmp/reference_repos/FactorTest,10
+factortest,barra,present,"getBarraData,addXBarra,RegbyBarra,calcNeuBarra",tmp/reference_repos/FactorTest,10
+qlib_factor_platform,neutralization_helper,present,neutralize_factor,tmp/reference_repos/qlib_factor_platform,28

@@ -1,0 +1,7 @@
+﻿check_id,status,detail
+reference_capabilities_scanned,pass,present=5/5
+provider_fields_probed,pass,probed_fields=14
+project_context_available,pass,factor_context_v1
+prefilter_outputs_available,pass,"tradability,data_quality_tradability"
+exposure_capability_board_written,pass,capabilities=6
+no_training_side_effect,pass,data_capability_audit_only

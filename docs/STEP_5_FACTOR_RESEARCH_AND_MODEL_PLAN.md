@@ -3538,3 +3538,54 @@ residualization_candidate_review material: 1
 
 - 推进 FactorTest-style 行业/风格/Barra 暴露数据能力审计。
 - 设计 residualized factor evaluation 的最小接口。
+
+## 70. V3.38：Exposure Data Capability Audit V1
+
+状态：已完成。
+
+阶段文档：
+
+```text
+docs/EXPOSURE_DATA_CAPABILITY_AUDIT_V1_PLAN.md
+docs/EXPOSURE_DATA_CAPABILITY_AUDIT_V1.md
+```
+
+新增文件：
+
+```text
+configs/exposure_data_capability_audit_v1.yaml
+scripts/audit_exposure_data_capability_v1.py
+```
+
+运行命令：
+
+```powershell
+E:\anaconda_envs\qlib_env\python.exe scripts\audit_exposure_data_capability_v1.py --config configs\exposure_data_capability_audit_v1.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\audit_factor_research_toolchain_v1.py --config configs\factor_research_toolchain_readiness_v1.yaml
+```
+
+完成结果：
+
+```text
+reference capabilities: present=5/5
+provider field probes: 14
+project context: available
+tradability/data_quality prefilters: available
+size fields: 0/5 available
+industry fields: 0/4 available
+barra fields: 0/5 available
+contract rows: 6 pass
+exposure_data_capability_audit: pass
+readiness overall_status: ready
+```
+
+重要结论：
+
+- FactorTest / qlib_factor_platform 的行业、市值、Barra、中性化设计可作为模块边界参考。
+- 当前项目已有 benchmark/universe/context、tradability 和 data_quality 前置能力。
+- 当前 provider 缺少市值、行业和 Barra 字段，不能直接做 FactorTest-style industry/Barra neutralization。
+
+下一步：
+
+- 设计外部行业/市值数据接入 contract。
+- 或先做 liquidity residualized factor evaluation 的最小接口。

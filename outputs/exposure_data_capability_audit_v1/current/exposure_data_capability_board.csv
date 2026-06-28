@@ -1,0 +1,7 @@
+﻿capability,status,detail,next_action
+reference_industry_size_barra_design,available,present=5/5,Use reference designs as module boundaries; do not copy data vendor assumptions.
+project_context_benchmark_universe,available,factor_context_v1 benchmark/universe/listing context,Keep as current context baseline.
+tradability_and_data_quality_prefilters,available,tradability labels and data quality outputs,Keep mandatory before exposure evaluation.
+provider_size_fields,missing,available=0/5,Find or derive market-cap data before size neutralization.
+provider_industry_fields,missing,available=0/4,Add external SW/CITICS industry mapping before industry neutralization.
+provider_barra_fields,missing,available=0/5,Do not run Barra neutralization until Barra/style exposures are sourced.

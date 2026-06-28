@@ -714,6 +714,25 @@ residualization candidate review: 1
 tradability_exposure_attribution: pass
 ```
 
+FactorTest-style 暴露数据能力审计也已经完成：
+
+```powershell
+E:\anaconda_envs\qlib_env\python.exe scripts\audit_exposure_data_capability_v1.py --config configs\exposure_data_capability_audit_v1.yaml
+```
+
+能力审计结果：
+
+```text
+reference industry/size/Barra design: available
+project context/tradability/data_quality: available
+provider size fields: missing
+provider industry fields: missing
+provider Barra fields: missing
+exposure_data_capability_audit: pass
+```
+
+所以下一步不能直接跳到行业/Barra 中性化；需要先接外部行业/市值数据，或先走更小的 liquidity residualization 路径。
+
 关键输出：
 
 ```text
@@ -722,11 +741,13 @@ docs/NEW_SOURCE_PROBE_REVIEW_V1.md
 docs/ALPHA360_STRICT_OOS_EXTENSION_V1.md
 docs/ALPHA360_STRICT_OOS_STABILITY_V1.md
 docs/TRADABILITY_EXPOSURE_ATTRIBUTION_V1.md
+docs/EXPOSURE_DATA_CAPABILITY_AUDIT_V1.md
 outputs/new_source_probe_diagnostics_v1/current/new_source_probe_diagnostics_report.md
 outputs/new_source_probe_review_v1/current/probe_review_report.md
 outputs/alpha360_strict_oos_extension_v1/current/alpha360_strict_oos_extension_report.md
 outputs/alpha360_strict_oos_stability_v1/current/alpha360_strict_oos_stability_report.md
 outputs/tradability_exposure_attribution_v1/current/tradability_exposure_attribution_report.md
+outputs/exposure_data_capability_audit_v1/current/exposure_data_capability_report.md
 ```
 
 ## Alpha101 来源审计与 adapter smoke

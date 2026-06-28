@@ -11,4 +11,5 @@ new_source_probe_review,diagnostic,configs/new_source_probe_review_v1.yaml,pass,
 alpha360_strict_oos_extension,diagnostic,configs/alpha360_strict_oos_extension_audit_v1.yaml,pass,
 alpha360_strict_oos_stability,diagnostic,configs/alpha360_strict_oos_stability_v1.yaml,pass,
 tradability_exposure_attribution,diagnostic,configs/tradability_exposure_attribution_v1.yaml,pass,
+exposure_data_capability_audit,diagnostic,configs/exposure_data_capability_audit_v1.yaml,pass,
 factor_evaluation_v4_main,evaluation,configs/factor_evaluation_v4.yaml,pass,"systems=alphalens_reloaded,jqfactor_analyzer,qlib_eval,project_current; tradability_dir=available; data_quality_dir=available"
