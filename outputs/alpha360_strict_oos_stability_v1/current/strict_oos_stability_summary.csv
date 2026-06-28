@@ -1,0 +1,4 @@
+﻿factor,metric_pairs,sign_flip_count,signal_sign_flip_count,positive_stable_or_improved_count,positive_but_weaker_count,min_recent_alphalens_mean_ic,mean_recent_alphalens_mean_ic,min_recent_qlib_information_ratio,mean_recent_qlib_information_ratio,min_retention_ratio
+alpha360_HIGH36,18,1,0,10,4,0.0637364999740596,0.06798390464682386,5.025120855312947,5.657403463229503,0.00969576619748199
+alpha360_HIGH37,18,1,0,10,4,0.065476916987875,0.06927477758358105,5.153589672824124,5.754125196874266,0.0076029673459046924
+alpha360_HIGH40,18,1,0,10,4,0.0658510548241803,0.06908254965795475,5.157218458058235,5.728006473376055,0.041135114458674446

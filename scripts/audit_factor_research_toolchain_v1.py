@@ -319,6 +319,10 @@ def build_readiness_checks(
     probe_review_failures = probe_review_contracts[probe_review_contracts["status"].ne("pass")]
     strict_oos_contracts = contract_status[contract_status["group"].eq("alpha360_strict_oos_extension")]
     strict_oos_failures = strict_oos_contracts[strict_oos_contracts["status"].ne("pass")]
+    strict_oos_stability_contracts = contract_status[contract_status["group"].eq("alpha360_strict_oos_stability")]
+    strict_oos_stability_failures = strict_oos_stability_contracts[
+        strict_oos_stability_contracts["status"].ne("pass")
+    ]
     total_runnable = int(catalog_summary["runnable_count"].sum()) if not catalog_summary.empty else 0
     baseline_sources = set(str(item) for item in rules.get("baseline_sources", []))
     new_source_rows = source_readiness[
@@ -432,6 +436,16 @@ def build_readiness_checks(
             else "Run strict OOS extension before treating reviewed Alpha360 probes as stable research candidates."
         ),
     )
+    add(
+        "alpha360_strict_oos_stability",
+        "pass" if not strict_oos_stability_contracts.empty and strict_oos_stability_failures.empty else "partial",
+        f"contracts={len(strict_oos_stability_contracts)}, failed={len(strict_oos_stability_failures)}",
+        (
+            "Use main-vs-recent stability outputs to keep strict OOS candidates in the research queue."
+            if not strict_oos_stability_contracts.empty and strict_oos_stability_failures.empty
+            else "Run main-vs-recent strict OOS stability before using recent-OOS diagnostics for candidate judgement."
+        ),
+    )
     return pd.DataFrame(rows)
 
 
@@ -523,7 +537,8 @@ def write_report(
             "3. Use the generic multi-source screening and judgement contracts before promoting new-source factors into model or portfolio inputs.",
             "4. Use probe review actions to prioritize strict OOS extension and exposure-data diagnostics before training.",
             "5. Use strict OOS extension outputs as stability diagnostics, not as automatic training admission.",
-            "6. Start broad factor discovery by adding more open-source factor families through the same adapter, V4 batch, promotion, holdout, and judgement gates.",
+            "6. Use main-vs-recent stability to keep candidates in research status until exposure diagnostics are ready.",
+            "7. Start broad factor discovery by adding more open-source factor families through the same adapter, V4 batch, promotion, holdout, and judgement gates.",
         ]
     )
     (output_dir / "toolchain_readiness_report.md").write_text("\n".join(lines) + "\n", encoding="utf-8")

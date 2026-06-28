@@ -681,15 +681,33 @@ alpha360_strict_oos_extension: pass
 
 3 个因子在 recent-OOS 中仍保持正 mean IC，但这只是诊断结果，不代表进入训练或策略结论。
 
+main-vs-recent 稳定性 audit 也已经完成：
+
+```powershell
+E:\anaconda_envs\qlib_env\python.exe scripts\audit_alpha360_strict_oos_stability_v1.py --config configs\alpha360_strict_oos_stability_v1.yaml
+```
+
+稳定性结果：
+
+```text
+metric pairs: 54
+recent Alphalens mean IC min: 0.063736
+recent Qlib information ratio min: 5.025121
+signal sign flips: 0
+alpha360_strict_oos_stability: pass
+```
+
 关键输出：
 
 ```text
 docs/NEW_SOURCE_PROBE_DIAGNOSTICS_V1.md
 docs/NEW_SOURCE_PROBE_REVIEW_V1.md
 docs/ALPHA360_STRICT_OOS_EXTENSION_V1.md
+docs/ALPHA360_STRICT_OOS_STABILITY_V1.md
 outputs/new_source_probe_diagnostics_v1/current/new_source_probe_diagnostics_report.md
 outputs/new_source_probe_review_v1/current/probe_review_report.md
 outputs/alpha360_strict_oos_extension_v1/current/alpha360_strict_oos_extension_report.md
+outputs/alpha360_strict_oos_stability_v1/current/alpha360_strict_oos_stability_report.md
 ```
 
 ## Alpha101 来源审计与 adapter smoke

@@ -3427,3 +3427,54 @@ alpha360_HIGH40 alphalens 10D mean IC: 0.065851, 20D mean IC: 0.072314
 - 做 main vs recent OOS 稳定性对比。
 - 对 19 个 `tradability_exposure_review` probes 做流动性/可交易性暴露归因。
 - 推进 FactorTest-style 行业/风格/Barra 暴露数据能力审计。
+
+## 68. V3.36：Alpha360 Strict OOS Stability V1
+
+状态：已完成。
+
+阶段文档：
+
+```text
+docs/ALPHA360_STRICT_OOS_STABILITY_V1_PLAN.md
+docs/ALPHA360_STRICT_OOS_STABILITY_V1.md
+```
+
+新增文件：
+
+```text
+configs/alpha360_strict_oos_stability_v1.yaml
+scripts/audit_alpha360_strict_oos_stability_v1.py
+```
+
+运行命令：
+
+```powershell
+E:\anaconda_envs\qlib_env\python.exe scripts\audit_alpha360_strict_oos_stability_v1.py --config configs\alpha360_strict_oos_stability_v1.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\audit_factor_research_toolchain_v1.py --config configs\factor_research_toolchain_readiness_v1.yaml
+```
+
+完成结果：
+
+```text
+metric pairs: 54
+summary rows: 3
+recent Alphalens mean IC min: 0.063736
+recent Qlib information ratio min: 5.025121
+signal sign flips: 0
+all sign flips: 3 beta-only flips
+strict OOS stability contract rows: 8 pass
+alpha360_strict_oos_stability: pass
+readiness overall_status: ready
+```
+
+关键观察：
+
+- 3 个因子 recent-OOS Alphalens mean IC 仍为正。
+- 3 个因子 recent-OOS Qlib IR 仍为正，但较主窗口变弱。
+- 3 个 sign flip 全部来自 beta 指标，不作为信号阻断。
+- 3 个候选仍然只是研究候选，不进入训练输入。
+
+下一步：
+
+- 对 19 个 `tradability_exposure_review` probes 做流动性/可交易性暴露归因。
+- 推进 FactorTest-style 行业/风格/Barra 暴露数据能力审计。

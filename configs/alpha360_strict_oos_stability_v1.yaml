@@ -1,0 +1,15 @@
+main_metric_index: "outputs/factor_evaluation_batch_v1/alpha360_candidate358_execution/alpha360_candidate358_metric_index.csv"
+recent_metric_index: "outputs/factor_evaluation_batch_v1/alpha360_strict_oos_recent/runs/batch_001/open_source_metric_index.csv"
+strict_oos_contract_status: "outputs/alpha360_strict_oos_extension_v1/current/strict_oos_contract_status.csv"
+output_dir: "outputs/alpha360_strict_oos_stability_v1/current"
+
+expected_factors:
+  - "alpha360_HIGH36"
+  - "alpha360_HIGH37"
+  - "alpha360_HIGH40"
+
+rules:
+  min_metric_pairs: 54
+  min_recent_alphalens_mean_ic: 0.0
+  min_recent_qlib_information_ratio: 0.0
+  weak_retention_ratio: 0.80

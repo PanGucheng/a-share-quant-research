@@ -67,6 +67,6 @@ outputs/alpha360_strict_oos_extension_v1/current/alpha360_strict_oos_extension_r
 
 ## 下一步
 
-1. 做 main vs recent OOS 稳定性对比，把 2021 H1 / 2021-2023 与 2024-2026 的指标放到同一张稳定性表。
+1. main vs recent OOS 稳定性对比已在 `docs/ALPHA360_STRICT_OOS_STABILITY_V1.md` 完成。
 2. 对 19 个 `tradability_exposure_review` probes 做流动性/可交易性暴露归因。
 3. 推进 FactorTest-style 行业/风格/Barra 暴露数据能力审计。

@@ -1,0 +1,9 @@
+﻿check_id,status,detail
+strict_oos_contract_passed,pass,failed=0
+expected_factor_coverage,pass,"factors=3, missing="
+metric_pair_count,pass,metric_pairs=54
+recent_alphalens_mean_ic_positive,pass,min_recent_ic=0.0637364999740596
+recent_qlib_information_ratio_positive,pass,min_recent_ir=5.025120855312947
+no_signal_sign_flip,pass,"signal_sign_flips=0, all_sign_flips=3"
+no_training_side_effect,pass,stability_audit_only
+factor_summary_rows,pass,summary_rows=3

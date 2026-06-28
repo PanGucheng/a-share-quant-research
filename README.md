@@ -719,15 +719,33 @@ alpha360_strict_oos_extension: pass
 The three factors still have positive recent-OOS mean IC, but this is a
 diagnostic result only, not training admission or a strategy conclusion.
 
+The main-vs-recent stability audit is also complete:
+
+```powershell
+E:\anaconda_envs\qlib_env\python.exe scripts\audit_alpha360_strict_oos_stability_v1.py --config configs\alpha360_strict_oos_stability_v1.yaml
+```
+
+Stability result:
+
+```text
+metric pairs: 54
+recent Alphalens mean IC min: 0.063736
+recent Qlib information ratio min: 5.025121
+signal sign flips: 0
+alpha360_strict_oos_stability: pass
+```
+
 Key output:
 
 ```text
 docs/NEW_SOURCE_PROBE_DIAGNOSTICS_V1.md
 docs/NEW_SOURCE_PROBE_REVIEW_V1.md
 docs/ALPHA360_STRICT_OOS_EXTENSION_V1.md
+docs/ALPHA360_STRICT_OOS_STABILITY_V1.md
 outputs/new_source_probe_diagnostics_v1/current/new_source_probe_diagnostics_report.md
 outputs/new_source_probe_review_v1/current/probe_review_report.md
 outputs/alpha360_strict_oos_extension_v1/current/alpha360_strict_oos_extension_report.md
+outputs/alpha360_strict_oos_stability_v1/current/alpha360_strict_oos_stability_report.md
 ```
 
 ## Alpha101 Source Audit And Adapter Smoke

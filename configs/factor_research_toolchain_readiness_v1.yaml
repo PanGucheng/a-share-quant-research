@@ -50,6 +50,8 @@ diagnostic_configs:
     path: "configs/new_source_probe_review_v1.yaml"
   - id: "alpha360_strict_oos_extension"
     path: "configs/alpha360_strict_oos_extension_audit_v1.yaml"
+  - id: "alpha360_strict_oos_stability"
+    path: "configs/alpha360_strict_oos_stability_v1.yaml"
 
 evaluation_configs:
   - id: "factor_evaluation_v4_main"
@@ -260,6 +262,18 @@ required_output_contracts:
   - id: "alpha360_strict_oos_contract_status"
     group: "alpha360_strict_oos_extension"
     path: "outputs/alpha360_strict_oos_extension_v1/current/strict_oos_contract_status.csv"
+    min_rows: 8
+  - id: "alpha360_strict_oos_stability_metrics"
+    group: "alpha360_strict_oos_stability"
+    path: "outputs/alpha360_strict_oos_stability_v1/current/strict_oos_stability_metrics.csv"
+    min_rows: 54
+  - id: "alpha360_strict_oos_stability_summary"
+    group: "alpha360_strict_oos_stability"
+    path: "outputs/alpha360_strict_oos_stability_v1/current/strict_oos_stability_summary.csv"
+    min_rows: 3
+  - id: "alpha360_strict_oos_stability_contract_status"
+    group: "alpha360_strict_oos_stability"
+    path: "outputs/alpha360_strict_oos_stability_v1/current/strict_oos_stability_contract_status.csv"
     min_rows: 8
   - id: "open_source_factor_expansion_candidates"
     group: "source_expansion_audit"
