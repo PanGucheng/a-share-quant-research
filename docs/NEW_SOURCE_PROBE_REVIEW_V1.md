@@ -79,6 +79,6 @@ outputs/new_source_probe_review_v1/current/probe_review_report.md
 ## 下一步
 
 1. strict OOS extension 已在 `docs/ALPHA360_STRICT_OOS_EXTENSION_V1.md` 完成。
-2. 对 3 个严格候选做 main vs recent OOS 稳定性对比。
-3. 对 19 个 `tradability_exposure_review` 做流动性/可交易性暴露归因。
+2. 3 个严格候选的 main vs recent OOS 稳定性已在 `docs/ALPHA360_STRICT_OOS_STABILITY_V1.md` 完成。
+3. 19 个 `tradability_exposure_review` 的流动性/可交易性暴露归因已在 `docs/TRADABILITY_EXPOSURE_ATTRIBUTION_V1.md` 完成。
 4. 推进 FactorTest-style 行业/风格/Barra 暴露数据能力审计。

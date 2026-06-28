@@ -3478,3 +3478,63 @@ readiness overall_status: ready
 
 - 对 19 个 `tradability_exposure_review` probes 做流动性/可交易性暴露归因。
 - 推进 FactorTest-style 行业/风格/Barra 暴露数据能力审计。
+
+## 69. V3.37：Tradability Exposure Attribution V1
+
+状态：已完成。
+
+阶段文档：
+
+```text
+docs/TRADABILITY_EXPOSURE_ATTRIBUTION_V1_PLAN.md
+docs/TRADABILITY_EXPOSURE_ATTRIBUTION_V1.md
+```
+
+新增文件：
+
+```text
+configs/tradability_exposure_attribution_v1.yaml
+scripts/audit_tradability_exposure_attribution_v1.py
+```
+
+运行命令：
+
+```powershell
+E:\anaconda_envs\qlib_env\python.exe scripts\audit_tradability_exposure_attribution_v1.py --config configs\tradability_exposure_attribution_v1.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\audit_factor_research_toolchain_v1.py --config configs\factor_research_toolchain_readiness_v1.yaml
+```
+
+完成结果：
+
+```text
+watchlist rows: 19
+attribution rows: 19
+source families: 2
+primary proxy present: 19/19
+diagnostic exposure rows: 120
+downstream default: 0
+contract rows: 6 pass
+tradability_exposure_attribution: pass
+readiness overall_status: ready
+```
+
+行动汇总：
+
+```text
+holdout_before_residualization strong: 6
+holdout_redundant_liquidity_proxy material: 7
+holdout_redundant_liquidity_proxy strong: 1
+manual_review_before_training moderate: 4
+residualization_candidate_review material: 1
+```
+
+重要结论：
+
+- 19 个 watchlist probes 的主暴露代理全部是 `liquidity_value`。
+- TA 因子主要是正向流动性暴露，Alpha101 多为负向流动性暴露。
+- 高暴露因子不能直接 raw training；应先 holdout、人工复核或进入 residualized evaluation。
+
+下一步：
+
+- 推进 FactorTest-style 行业/风格/Barra 暴露数据能力审计。
+- 设计 residualized factor evaluation 的最小接口。

@@ -1,0 +1,11 @@
+probe_review_board: "outputs/new_source_probe_review_v1/current/probe_review_board.csv"
+tradability_exposure_watchlist: "outputs/new_source_probe_review_v1/current/tradability_exposure_watchlist.csv"
+diagnostic_exposure: "outputs/new_source_probe_diagnostics_v1/current/selected_probe_tradability_exposure.csv"
+output_dir: "outputs/tradability_exposure_attribution_v1/current"
+
+rules:
+  min_watchlist_rows: 19
+  strong_abs_exposure: 0.65
+  material_abs_exposure: 0.45
+  moderate_abs_exposure: 0.30
+  strong_bucket_z_gap: 0.80

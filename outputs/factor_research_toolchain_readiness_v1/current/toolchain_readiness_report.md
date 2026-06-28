@@ -24,6 +24,7 @@ The factor research toolchain is ready for large-scale multi-source screening an
 | new_source_probe_review | pass | contracts=6, failed=0 | Use probe review actions to separate redundancy, tradability exposure, and strict OOS-extension candidates. |
 | alpha360_strict_oos_extension | pass | contracts=5, failed=0 | Use strict OOS outputs as the recent-window diagnostic reference for reviewed Alpha360 probes. |
 | alpha360_strict_oos_stability | pass | contracts=3, failed=0 | Use main-vs-recent stability outputs to keep strict OOS candidates in the research queue. |
+| tradability_exposure_attribution | pass | contracts=3, failed=0 | Use exposure attribution actions before residualized evaluation or raw-factor training. |
 
 ## Catalog Summary
 
@@ -113,6 +114,9 @@ The factor research toolchain is ready for large-scale multi-source screening an
 | alpha360_strict_oos_stability_metrics | alpha360_strict_oos_stability | outputs/alpha360_strict_oos_stability_v1/current/strict_oos_stability_metrics.csv | pass | 54 | 54 | 8735 |
 | alpha360_strict_oos_stability_summary | alpha360_strict_oos_stability | outputs/alpha360_strict_oos_stability_v1/current/strict_oos_stability_summary.csv | pass | 3 | 3 | 645 |
 | alpha360_strict_oos_stability_contract_status | alpha360_strict_oos_stability | outputs/alpha360_strict_oos_stability_v1/current/strict_oos_stability_contract_status.csv | pass | 8 | 8 | 470 |
+| tradability_exposure_attribution_board | tradability_exposure_attribution | outputs/tradability_exposure_attribution_v1/current/tradability_exposure_attribution_board.csv | pass | 19 | 19 | 7404 |
+| tradability_exposure_action_summary | tradability_exposure_attribution | outputs/tradability_exposure_attribution_v1/current/tradability_exposure_action_summary.csv | pass | 5 | 1 | 272 |
+| tradability_exposure_contract_status | tradability_exposure_attribution | outputs/tradability_exposure_attribution_v1/current/tradability_exposure_contract_status.csv | pass | 6 | 6 | 314 |
 | open_source_factor_expansion_candidates | source_expansion_audit | outputs/open_source_factor_expansion_audit_v1/current/open_source_factor_source_candidates.csv | pass | 8 | 8 | 5113 |
 | open_source_factor_expansion_next_steps | source_expansion_audit | outputs/open_source_factor_expansion_audit_v1/current/open_source_factor_expansion_next_steps.csv | pass | 3 | 3 | 467 |
 | alpha360_formula_inventory | alpha360_source_audit | outputs/factor_catalog_alpha360_v1/alpha360_formula_inventory.csv | pass | 360 | 360 | 96173 |
@@ -180,4 +184,5 @@ The factor research toolchain is ready for large-scale multi-source screening an
 4. Use probe review actions to prioritize strict OOS extension and exposure-data diagnostics before training.
 5. Use strict OOS extension outputs as stability diagnostics, not as automatic training admission.
 6. Use main-vs-recent stability to keep candidates in research status until exposure diagnostics are ready.
-7. Start broad factor discovery by adding more open-source factor families through the same adapter, V4 batch, promotion, holdout, and judgement gates.
+7. Use tradability exposure attribution before raw-factor training or residualized evaluation.
+8. Start broad factor discovery by adding more open-source factor families through the same adapter, V4 batch, promotion, holdout, and judgement gates.

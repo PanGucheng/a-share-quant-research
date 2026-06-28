@@ -11,3 +11,4 @@ new_source_probe_diagnostics,pass,"contracts=8, failed=0","Use probe diagnostics
 new_source_probe_review,pass,"contracts=6, failed=0","Use probe review actions to separate redundancy, tradability exposure, and strict OOS-extension candidates."
 alpha360_strict_oos_extension,pass,"contracts=5, failed=0",Use strict OOS outputs as the recent-window diagnostic reference for reviewed Alpha360 probes.
 alpha360_strict_oos_stability,pass,"contracts=3, failed=0",Use main-vs-recent stability outputs to keep strict OOS candidates in the research queue.
+tradability_exposure_attribution,pass,"contracts=3, failed=0",Use exposure attribution actions before residualized evaluation or raw-factor training.

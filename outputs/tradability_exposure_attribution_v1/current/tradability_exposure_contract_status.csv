@@ -1,0 +1,7 @@
+﻿check_id,status,detail
+watchlist_rows,pass,watchlist_rows=19
+attribution_rows,pass,attribution_rows=19
+source_family_coverage,pass,source_families=2
+primary_proxy_present,pass,missing_proxy=0
+diagnostic_exposure_available,pass,diagnostic_exposure_rows=120
+no_downstream_default,pass,downstream_default=0

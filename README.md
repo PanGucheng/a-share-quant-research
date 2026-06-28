@@ -735,6 +735,23 @@ signal sign flips: 0
 alpha360_strict_oos_stability: pass
 ```
 
+The 19 tradability exposure watchlist probes have also been attributed:
+
+```powershell
+E:\anaconda_envs\qlib_env\python.exe scripts\audit_tradability_exposure_attribution_v1.py --config configs\tradability_exposure_attribution_v1.yaml
+```
+
+Attribution result:
+
+```text
+watchlist rows: 19
+primary proxy: liquidity_value for all 19
+holdout before/residualization actions: 14
+manual review: 4
+residualization candidate review: 1
+tradability_exposure_attribution: pass
+```
+
 Key output:
 
 ```text
@@ -742,10 +759,12 @@ docs/NEW_SOURCE_PROBE_DIAGNOSTICS_V1.md
 docs/NEW_SOURCE_PROBE_REVIEW_V1.md
 docs/ALPHA360_STRICT_OOS_EXTENSION_V1.md
 docs/ALPHA360_STRICT_OOS_STABILITY_V1.md
+docs/TRADABILITY_EXPOSURE_ATTRIBUTION_V1.md
 outputs/new_source_probe_diagnostics_v1/current/new_source_probe_diagnostics_report.md
 outputs/new_source_probe_review_v1/current/probe_review_report.md
 outputs/alpha360_strict_oos_extension_v1/current/alpha360_strict_oos_extension_report.md
 outputs/alpha360_strict_oos_stability_v1/current/alpha360_strict_oos_stability_report.md
+outputs/tradability_exposure_attribution_v1/current/tradability_exposure_attribution_report.md
 ```
 
 ## Alpha101 Source Audit And Adapter Smoke

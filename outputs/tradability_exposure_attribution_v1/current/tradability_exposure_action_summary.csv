@@ -1,0 +1,6 @@
+﻿recommended_action,exposure_strength,factor_count
+holdout_before_residualization,strong,6
+holdout_redundant_liquidity_proxy,material,7
+holdout_redundant_liquidity_proxy,strong,1
+manual_review_before_training,moderate,4
+residualization_candidate_review,material,1

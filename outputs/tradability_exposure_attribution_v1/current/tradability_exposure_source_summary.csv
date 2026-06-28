@@ -1,0 +1,9 @@
+﻿source_family,exposure_direction,exposure_strength,attribution_label,factor_count
+alpha101,negative,moderate,moderate_tradability_review,3
+alpha101,negative,strong,strong_liquidity_proxy,2
+alpha101,negative,material,material_liquidity_proxy,1
+alpha101,negative,strong,material_liquidity_proxy,1
+alpha101,positive,strong,strong_liquidity_proxy,1
+ta,positive,material,material_liquidity_proxy,7
+ta,positive,strong,strong_liquidity_proxy,3
+ta,positive,moderate,moderate_tradability_review,1

@@ -323,6 +323,10 @@ def build_readiness_checks(
     strict_oos_stability_failures = strict_oos_stability_contracts[
         strict_oos_stability_contracts["status"].ne("pass")
     ]
+    exposure_attribution_contracts = contract_status[contract_status["group"].eq("tradability_exposure_attribution")]
+    exposure_attribution_failures = exposure_attribution_contracts[
+        exposure_attribution_contracts["status"].ne("pass")
+    ]
     total_runnable = int(catalog_summary["runnable_count"].sum()) if not catalog_summary.empty else 0
     baseline_sources = set(str(item) for item in rules.get("baseline_sources", []))
     new_source_rows = source_readiness[
@@ -446,6 +450,16 @@ def build_readiness_checks(
             else "Run main-vs-recent strict OOS stability before using recent-OOS diagnostics for candidate judgement."
         ),
     )
+    add(
+        "tradability_exposure_attribution",
+        "pass" if not exposure_attribution_contracts.empty and exposure_attribution_failures.empty else "partial",
+        f"contracts={len(exposure_attribution_contracts)}, failed={len(exposure_attribution_failures)}",
+        (
+            "Use exposure attribution actions before residualized evaluation or raw-factor training."
+            if not exposure_attribution_contracts.empty and exposure_attribution_failures.empty
+            else "Run tradability exposure attribution for watchlist probes before residualization or training decisions."
+        ),
+    )
     return pd.DataFrame(rows)
 
 
@@ -538,7 +552,8 @@ def write_report(
             "4. Use probe review actions to prioritize strict OOS extension and exposure-data diagnostics before training.",
             "5. Use strict OOS extension outputs as stability diagnostics, not as automatic training admission.",
             "6. Use main-vs-recent stability to keep candidates in research status until exposure diagnostics are ready.",
-            "7. Start broad factor discovery by adding more open-source factor families through the same adapter, V4 batch, promotion, holdout, and judgement gates.",
+            "7. Use tradability exposure attribution before raw-factor training or residualized evaluation.",
+            "8. Start broad factor discovery by adding more open-source factor families through the same adapter, V4 batch, promotion, holdout, and judgement gates.",
         ]
     )
     (output_dir / "toolchain_readiness_report.md").write_text("\n".join(lines) + "\n", encoding="utf-8")

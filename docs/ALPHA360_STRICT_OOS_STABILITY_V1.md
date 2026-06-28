@@ -64,5 +64,6 @@ outputs/alpha360_strict_oos_stability_v1/current/alpha360_strict_oos_stability_r
 
 ## 下一步
 
-1. 对 19 个 `tradability_exposure_review` probes 做流动性/可交易性暴露归因。
+1. 19 个 `tradability_exposure_review` probes 的流动性/可交易性暴露归因已在 `docs/TRADABILITY_EXPOSURE_ATTRIBUTION_V1.md` 完成。
 2. 推进 FactorTest-style 行业/风格/Barra 暴露数据能力审计。
+3. 设计 residualized factor evaluation 的最小接口。

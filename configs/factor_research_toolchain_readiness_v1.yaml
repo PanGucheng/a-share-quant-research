@@ -52,6 +52,8 @@ diagnostic_configs:
     path: "configs/alpha360_strict_oos_extension_audit_v1.yaml"
   - id: "alpha360_strict_oos_stability"
     path: "configs/alpha360_strict_oos_stability_v1.yaml"
+  - id: "tradability_exposure_attribution"
+    path: "configs/tradability_exposure_attribution_v1.yaml"
 
 evaluation_configs:
   - id: "factor_evaluation_v4_main"
@@ -275,6 +277,18 @@ required_output_contracts:
     group: "alpha360_strict_oos_stability"
     path: "outputs/alpha360_strict_oos_stability_v1/current/strict_oos_stability_contract_status.csv"
     min_rows: 8
+  - id: "tradability_exposure_attribution_board"
+    group: "tradability_exposure_attribution"
+    path: "outputs/tradability_exposure_attribution_v1/current/tradability_exposure_attribution_board.csv"
+    min_rows: 19
+  - id: "tradability_exposure_action_summary"
+    group: "tradability_exposure_attribution"
+    path: "outputs/tradability_exposure_attribution_v1/current/tradability_exposure_action_summary.csv"
+    min_rows: 1
+  - id: "tradability_exposure_contract_status"
+    group: "tradability_exposure_attribution"
+    path: "outputs/tradability_exposure_attribution_v1/current/tradability_exposure_contract_status.csv"
+    min_rows: 6
   - id: "open_source_factor_expansion_candidates"
     group: "source_expansion_audit"
     path: "outputs/open_source_factor_expansion_audit_v1/current/open_source_factor_source_candidates.csv"
