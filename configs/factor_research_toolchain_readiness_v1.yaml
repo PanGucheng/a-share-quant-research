@@ -44,6 +44,8 @@ batch_configs:
 diagnostic_configs:
   - id: "new_source_probe_diagnostics"
     path: "configs/new_source_probe_diagnostics_v1.yaml"
+  - id: "new_source_probe_review"
+    path: "configs/new_source_probe_review_v1.yaml"
 
 evaluation_configs:
   - id: "factor_evaluation_v4_main"
@@ -210,6 +212,30 @@ required_output_contracts:
   - id: "new_source_probe_diagnostics_contract_status"
     group: "new_source_probe_diagnostics"
     path: "outputs/new_source_probe_diagnostics_v1/current/new_source_probe_diagnostics_contract_status.csv"
+    min_rows: 6
+  - id: "probe_review_board"
+    group: "new_source_probe_review"
+    path: "outputs/new_source_probe_review_v1/current/probe_review_board.csv"
+    min_rows: 328
+  - id: "probe_review_redundancy_pairs"
+    group: "new_source_probe_review"
+    path: "outputs/new_source_probe_review_v1/current/redundancy_pairs.csv"
+    min_rows: 1
+  - id: "probe_review_redundancy_groups"
+    group: "new_source_probe_review"
+    path: "outputs/new_source_probe_review_v1/current/redundancy_groups.csv"
+    min_rows: 1
+  - id: "probe_review_tradability_exposure_watchlist"
+    group: "new_source_probe_review"
+    path: "outputs/new_source_probe_review_v1/current/tradability_exposure_watchlist.csv"
+    min_rows: 1
+  - id: "probe_review_oos_extension_candidates"
+    group: "new_source_probe_review"
+    path: "outputs/new_source_probe_review_v1/current/oos_extension_candidates.csv"
+    min_rows: 3
+  - id: "probe_review_contract_status"
+    group: "new_source_probe_review"
+    path: "outputs/new_source_probe_review_v1/current/probe_review_contract_status.csv"
     min_rows: 6
   - id: "open_source_factor_expansion_candidates"
     group: "source_expansion_audit"

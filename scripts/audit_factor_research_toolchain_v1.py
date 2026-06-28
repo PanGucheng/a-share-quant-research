@@ -315,6 +315,8 @@ def build_readiness_checks(
     ]
     probe_diagnostic_contracts = contract_status[contract_status["group"].eq("new_source_probe_diagnostics")]
     probe_diagnostic_failures = probe_diagnostic_contracts[probe_diagnostic_contracts["status"].ne("pass")]
+    probe_review_contracts = contract_status[contract_status["group"].eq("new_source_probe_review")]
+    probe_review_failures = probe_review_contracts[probe_review_contracts["status"].ne("pass")]
     total_runnable = int(catalog_summary["runnable_count"].sum()) if not catalog_summary.empty else 0
     baseline_sources = set(str(item) for item in rules.get("baseline_sources", []))
     new_source_rows = source_readiness[
@@ -408,6 +410,16 @@ def build_readiness_checks(
             else "Run new-source probe diagnostics before moving any probe toward model or portfolio inputs."
         ),
     )
+    add(
+        "new_source_probe_review",
+        "pass" if not probe_review_contracts.empty and probe_review_failures.empty else "partial",
+        f"contracts={len(probe_review_contracts)}, failed={len(probe_review_failures)}",
+        (
+            "Use probe review actions to separate redundancy, tradability exposure, and strict OOS-extension candidates."
+            if not probe_review_contracts.empty and probe_review_failures.empty
+            else "Run probe review before extending probes into OOS or exposure-data diagnostics."
+        ),
+    )
     return pd.DataFrame(rows)
 
 
@@ -497,7 +509,7 @@ def write_report(
             "1. Keep Alpha158 as the validated reference pipeline, not the next research bottleneck.",
             "2. Treat promoted TA, Alpha101, and Alpha360 catalogs as the first large non-Alpha158 screening inputs.",
             "3. Use the generic multi-source screening and judgement contracts before promoting new-source factors into model or portfolio inputs.",
-            "4. Use the new-source probe diagnostics outputs to prioritize redundancy/exposure review before training.",
+            "4. Use probe review actions to prioritize strict OOS extension and exposure-data diagnostics before training.",
             "5. Start broad factor discovery by adding more open-source factor families through the same adapter, V4 batch, promotion, holdout, and judgement gates.",
         ]
     )

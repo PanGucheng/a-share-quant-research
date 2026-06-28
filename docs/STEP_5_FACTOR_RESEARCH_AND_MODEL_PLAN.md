@@ -3305,3 +3305,61 @@ readiness overall_status: ready
 - 先复核 `redundancy_watch` 与 `tradability_exposure_watch`。
 - 再推进 FactorTest-style 行业/风格/Barra 暴露数据能力审计。
 - 等 exposure 数据能力完成后，再决定哪些 probes 可以进入训练候选，而不是直接训练全部 328 个。
+
+## 66. V3.34：New-Source Probe Review V1
+
+状态：已完成。
+
+阶段文档：
+
+```text
+docs/NEW_SOURCE_PROBE_REVIEW_V1.md
+docs/NEW_SOURCE_PROBE_REVIEW_V1_PLAN.md
+```
+
+新增文件：
+
+```text
+configs/new_source_probe_review_v1.yaml
+factor_research/new_source_probe_review.py
+scripts/run_new_source_probe_review_v1.py
+```
+
+运行命令：
+
+```powershell
+E:\anaconda_envs\qlib_env\python.exe scripts\run_new_source_probe_review_v1.py --config configs\new_source_probe_review_v1.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\audit_factor_research_toolchain_v1.py --config configs\factor_research_toolchain_readiness_v1.yaml
+```
+
+完成结果：
+
+```text
+review rows: 328
+redundancy pairs: 200
+redundancy groups: 4
+tradability exposure watchlist: 19
+strict OOS extension candidates: 3
+new_source_probe_review: pass
+readiness overall_status: ready
+```
+
+严格 OOS extension candidates：
+
+```text
+alpha360_HIGH36
+alpha360_HIGH37
+alpha360_HIGH40
+```
+
+重要发现：
+
+- 最大 Alpha360 冗余组包含 80 个 close/high/low/open/vwap lag 窗口因子。
+- TA / Alpha101 也存在混合高相关冗余组。
+- 19 个 probes 需要先做 tradability / liquidity exposure review。
+
+下一步：
+
+- 为 3 个严格候选扩展 recent OOS factor frame。
+- 并行推进 FactorTest-style 行业/风格/Barra 暴露数据能力审计。
+- 不直接训练全部 328 个 probes。

@@ -642,11 +642,32 @@ new_source_probe_diagnostics: pass
 
 组合 smoke 只是接口和风险诊断，不是策略结论。本轮已经暴露出部分 TA / Alpha101 因子高度冗余，部分 probe 与可交易性/流动性代理有较强相关。下一步应先做冗余和暴露复核，再考虑模型训练。
 
+第一层 probe review 也已经完成：
+
+```powershell
+E:\anaconda_envs\qlib_env\python.exe scripts\run_new_source_probe_review_v1.py --config configs\new_source_probe_review_v1.yaml
+```
+
+当前 review 结果：
+
+```text
+review rows: 328
+redundancy pairs: 200
+redundancy groups: 4
+tradability exposure watchlist: 19
+strict OOS extension candidates: 3
+new_source_probe_review: pass
+```
+
+严格候选是 `alpha360_HIGH36`、`alpha360_HIGH37`、`alpha360_HIGH40`。它们仍然只是研究候选，不是训练输入。
+
 关键输出：
 
 ```text
 docs/NEW_SOURCE_PROBE_DIAGNOSTICS_V1.md
+docs/NEW_SOURCE_PROBE_REVIEW_V1.md
 outputs/new_source_probe_diagnostics_v1/current/new_source_probe_diagnostics_report.md
+outputs/new_source_probe_review_v1/current/probe_review_report.md
 ```
 
 ## Alpha101 来源审计与 adapter smoke

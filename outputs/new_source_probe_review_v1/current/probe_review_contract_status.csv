@@ -1,0 +1,7 @@
+﻿check_id,status,detail
+review_board_rows,pass,rows=328
+redundancy_pairs_present,pass,pairs=200
+redundancy_groups_present,pass,groups=4
+tradability_exposure_watchlist_present,pass,watchlist=19
+oos_candidates_present,pass,candidates=3
+no_downstream_default,pass,downstream_default=0

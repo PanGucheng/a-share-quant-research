@@ -678,11 +678,33 @@ redundancy among several TA / Alpha101 factors and material tradability-proxy
 exposure for some probes, so the next work should prioritize redundancy and
 exposure review before model training.
 
+The first probe review layer is also complete:
+
+```powershell
+E:\anaconda_envs\qlib_env\python.exe scripts\run_new_source_probe_review_v1.py --config configs\new_source_probe_review_v1.yaml
+```
+
+Current review result:
+
+```text
+review rows: 328
+redundancy pairs: 200
+redundancy groups: 4
+tradability exposure watchlist: 19
+strict OOS extension candidates: 3
+new_source_probe_review: pass
+```
+
+The strict candidates are `alpha360_HIGH36`, `alpha360_HIGH37`, and
+`alpha360_HIGH40`. They are still research candidates only.
+
 Key output:
 
 ```text
 docs/NEW_SOURCE_PROBE_DIAGNOSTICS_V1.md
+docs/NEW_SOURCE_PROBE_REVIEW_V1.md
 outputs/new_source_probe_diagnostics_v1/current/new_source_probe_diagnostics_report.md
+outputs/new_source_probe_review_v1/current/probe_review_report.md
 ```
 
 ## Alpha101 Source Audit And Adapter Smoke

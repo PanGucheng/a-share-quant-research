@@ -1,0 +1,11 @@
+diagnostic_board: "outputs/new_source_probe_diagnostics_v1/current/new_source_probe_diagnostic_board.csv"
+correlation_pairs: "outputs/new_source_probe_diagnostics_v1/current/selected_probe_correlation_top_pairs.csv"
+tradability_exposure: "outputs/new_source_probe_diagnostics_v1/current/selected_probe_tradability_exposure.csv"
+output_dir: "outputs/new_source_probe_review_v1/current"
+
+rules:
+  high_abs_corr: 0.95
+  high_abs_tradability_exposure: 0.30
+  min_probe_rows: 328
+  min_redundancy_pairs: 1
+  min_oos_candidates: 3
