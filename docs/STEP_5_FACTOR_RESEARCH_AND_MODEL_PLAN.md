@@ -3255,3 +3255,53 @@ overall_status: ready
 - 为 328 个 `new_source_alpha_probe` 增加相关性、暴露、稳定性、分段 OOS 和组合 smoke 验证。
 - 并行推进 FactorTest-style 行业/风格/Barra 暴露数据能力审计。
 - 继续接入更多开源因子源，但必须沿用 source audit、adapter、V4 batch、promotion/holdout、multi-source screening、multi-source judgement 的路径。
+
+## 65. V3.33：New-Source Probe Diagnostics V1
+
+状态：已完成。
+
+阶段文档：
+
+```text
+docs/NEW_SOURCE_PROBE_DIAGNOSTICS_V1.md
+docs/NEW_SOURCE_PROBE_DIAGNOSTICS_V1_PLAN.md
+```
+
+新增文件：
+
+```text
+configs/new_source_probe_diagnostics_v1.yaml
+factor_research/new_source_probe_diagnostics.py
+scripts/run_new_source_probe_diagnostics_v1.py
+```
+
+运行命令：
+
+```powershell
+E:\anaconda_envs\qlib_env\python.exe scripts\run_new_source_probe_diagnostics_v1.py --config configs\new_source_probe_diagnostics_v1.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\audit_factor_research_toolchain_v1.py --config configs\factor_research_toolchain_readiness_v1.yaml
+```
+
+完成结果：
+
+```text
+all probes: 328
+frame diagnostics selected: 120
+portfolio smoke selected: 50
+correlation pairs: 200
+portfolio smoke executed rebalances: 4
+new_source_probe_diagnostics: pass
+readiness overall_status: ready
+```
+
+重要发现：
+
+- 部分 TA / Alpha101 probes 高度冗余，例如 `ta_trend_sma_fast` 与 `ta_volatility_kcc` 的日均横截面 Spearman 相关接近 1。
+- 部分 probes 与 liquidity / tradability 代理高度相关，例如 `kunquant_alpha101_alpha083` 与 `ta_volatility_atr`。
+- portfolio smoke 只验证接口和风险，不作为策略结论；当前只覆盖 factor frame 可用的 2021 H1 有效调仓窗口。
+
+下一步：
+
+- 先复核 `redundancy_watch` 与 `tradability_exposure_watch`。
+- 再推进 FactorTest-style 行业/风格/Barra 暴露数据能力审计。
+- 等 exposure 数据能力完成后，再决定哪些 probes 可以进入训练候选，而不是直接训练全部 328 个。

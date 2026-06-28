@@ -1,0 +1,4 @@
+﻿source_family,probe_count,label_consistent_signal_probe,label_strong_signal_probe,diagnostic_frame_diagnostic_probe,diagnostic_metric_only_probe,diagnostic_portfolio_smoke_probe,diagnostic_redundancy_watch,diagnostic_tradability_exposure_watch,frame_diagnostic_selected,portfolio_smoke_selected
+alpha101,14,6,8,0,6,0,3,5,8,0
+alpha360,299,86,213,1,199,39,60,0,100,39
+ta,15,3,12,1,3,11,0,0,12,11

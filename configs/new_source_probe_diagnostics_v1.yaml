@@ -1,0 +1,47 @@
+probe_input: "outputs/multi_source_judgement_v1/current/multi_source_new_source_alpha_probes.csv"
+judgement_board: "outputs/multi_source_judgement_v1/current/multi_source_judgement_board.csv"
+output_dir: "outputs/new_source_probe_diagnostics_v1/current"
+
+factor_frames:
+  ta: "outputs/ta_factor_adapter_v1/smoke/factor_frame.pkl"
+  alpha101: "outputs/alpha101_factor_adapter_v1/batch82/factor_frame.pkl"
+  alpha360: "outputs/alpha360_expression_frame_v1/batch358/factor_frame.pkl"
+
+tradability_dir: "outputs/tradability/all_stock_shsz_liquid2000_2021-01-01_2023-12-29"
+
+selection:
+  max_frame_factors: 120
+  max_portfolio_factors: 50
+  per_source_caps:
+    ta: 15
+    alpha101: 14
+    alpha360: 100
+
+correlation_max_dates: 60
+exposure_max_dates: 60
+min_instruments: 100
+top_pairs: 200
+
+rules:
+  min_total_probes: 300
+  min_frame_factors: 80
+  min_portfolio_factors: 30
+  high_abs_corr: 0.85
+  high_abs_tradability_exposure: 0.30
+  min_horizon_consistency: 0.67
+
+portfolio:
+  provider_uri: "E:/qlib_prj/qlib_data/cn_data_community_20260609_derived"
+  market: "all_stock_shsz_liquid2000"
+  start_time: "2021-01-01"
+  end_time: "2023-12-29"
+  label: "label_20d_t1"
+  feature_cache_dir: "tmp/factor_feature_cache"
+  rebalance_every: 20
+  topk: 50
+  cost_bps: 10.0
+  score_clip: 3.0
+  min_score_components: 5
+  min_liquidity_bucket: 3
+  min_tradability_score: 75.0
+  min_capacity_multiple: 1.2

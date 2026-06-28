@@ -1,0 +1,7 @@
+﻿check_id,status,detail
+probe_count,pass,probes=328
+frame_selection_count,pass,selected=120
+portfolio_selection_count,pass,selected=50
+correlation_pairs,pass,pairs=200
+portfolio_smoke_executed,pass,executed_rebalances=4
+new_source_not_downstream_default,pass,downstream_default=0

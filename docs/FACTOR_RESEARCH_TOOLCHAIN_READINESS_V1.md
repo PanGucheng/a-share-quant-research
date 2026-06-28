@@ -29,8 +29,9 @@ Alpha158 的角色应从“继续深入调参的唯一对象”切换为“验�
 | Alpha158 full pipeline | 已跑通 | 158 个 Qlib Alpha158 已进入表达式适配、批量评价、筛选、judgement、候选池、组合 smoke 和 OOS 稳定性诊断流程；其中 155 个进入 runnable catalog，3 个保留为 holdout。 |
 | TA promoted source | 已跑通 | `bukosabino/ta` 已完成 adapter smoke、剩余 74 个 eligible 因子 batch V4 和 promotion；77 个进入 promoted runnable catalog，2 个保留为 holdout。 |
 | Alpha101 promoted source | 已跑通 | KunQuant Alpha101 已完成 source audit、82 公式 adapter、candidate71 V4 batch 和 promotion；64 个进入 promoted runnable catalog，18 个保留为 holdout。 |
-| multi-source screening contract | 已跑通 | Alpha158、TA 和 Alpha101 promoted 因子已进入统一 screening input、candidate board、candidate pool 和 contract status。 |
-| multi-source judgement contract | 已跑通 | 在统一 screening input 之上生成 319 行 judgement board、43 个 research candidates 和 29 个 new-source alpha probes。 |
+| multi-source screening contract | 已跑通 | Alpha158、TA、Alpha101 和 Alpha360 promoted 因子已进入统一 screening input、candidate board、candidate pool 和 contract status。 |
+| multi-source judgement contract | 已跑通 | 在统一 screening input 之上生成 679 行 judgement board、342 个 research candidates 和 328 个 new-source alpha probes。 |
+| new-source probe diagnostics | 已跑通 | 对 328 个 probes 生成诊断看板，120 个进入相关性/可交易性暴露诊断，50 个进入 portfolio smoke，readiness contract pass。 |
 | open-source expansion audit | 已跑通 | 已审计 8 个下一阶段因子/数据来源；`qlib_alpha360` 为 direct adapter 下一候选，FactorTest 为 data audit 下一候选。 |
 
 ## 3. 当前缺口
@@ -205,13 +206,27 @@ multi_source_new_source_alpha_probes rows: 328
 overall_status: ready
 ```
 
-这表示“引入更多因子”的入口已经打开，并且已由 TA、Alpha101 与 Alpha360 三类非 seed 来源验证。下一阶段应先为 328 个 `new_source_alpha_probe` 补齐相关性、暴露、稳定性、分段 OOS 和组合 smoke 诊断，再继续接入更多开源因子源、基本面/行业风格数据。所有扩张仍需沿用 adapter audit、V4 batch、promotion/holdout、multi-source screening 和 multi-source judgement contract。
+V3.33 后新增 new-source probe diagnostics contract：
+
+```text
+new_source_probe_inventory rows: 328
+new_source_probe_diagnostic_board rows: 328
+selected_probe_factor_coverage rows: 120
+selected_probe_correlation_top_pairs rows: 200
+selected_probe_tradability_exposure rows: 120
+portfolio_smoke_weights rows: 50
+portfolio_smoke_summary rows: 1
+new_source_probe_diagnostics: pass
+overall_status: ready
+```
+
+这表示“引入更多因子”的入口已经打开，并且已由 TA、Alpha101 与 Alpha360 三类非 seed 来源验证；第一层 probes 诊断也已经接入 readiness。下一阶段应先复核 `redundancy_watch` 和 `tradability_exposure_watch`，再继续接入行业/风格数据或更多开源因子源。所有扩张仍需沿用 adapter audit、V4 batch、promotion/holdout、multi-source screening、multi-source judgement 和 probe diagnostics contract。
 
 ## 7. 下一步目标
 
-下一步不继续围绕 Alpha158 微调，也不急着训练模型，而是进入“新来源 probes 诊断 + 继续开源扩源”阶段：
+下一步不继续围绕 Alpha158 微调，也不急着训练模型，而是进入“新来源 probes 复核 + 暴露数据能力审计”阶段：
 
-1. 为 328 个 `new_source_alpha_probe` 增加相关性、暴露、稳定性、分段 OOS 和组合 smoke 验证。
-2. 并行推进 FactorTest-style 行业/风格/Barra 暴露数据能力审计。
+1. 复核 `redundancy_watch` 与 `tradability_exposure_watch`，避免同质价格/流动性暴露直接进入训练。
+2. 推进 FactorTest-style 行业/风格/Barra 暴露数据能力审计。
 3. 继续接入更多开源因子源，但必须沿用 source audit、adapter、V4 batch、promotion/holdout、multi-source screening、multi-source judgement 的路径。
 4. 工具链继续保持“不训练模型、不改策略、不改开源评价口径”的边界，直到候选池有足够多经过多层筛选的新来源因子。

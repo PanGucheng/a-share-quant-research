@@ -653,6 +653,38 @@ portfolio input. Alpha158 keeps the existing 14 `alpha_candidate` rows; promoted
 TA, Alpha101, and Alpha360 factors can only become probes until broader
 validation is added.
 
+## New-Source Probe Diagnostics
+
+Run the first diagnostics layer for the 328 new-source alpha probes:
+
+```powershell
+cd E:\qlib_prj\qlib_baseline
+E:\anaconda_envs\qlib_env\python.exe scripts\run_new_source_probe_diagnostics_v1.py --config configs\new_source_probe_diagnostics_v1.yaml
+```
+
+Current result:
+
+```text
+all probes: 328
+frame diagnostics selected: 120
+portfolio smoke selected: 50
+correlation pairs: 200
+portfolio smoke executed rebalances: 4
+new_source_probe_diagnostics: pass
+```
+
+The smoke portfolio is only an interface and risk diagnostic. It found very high
+redundancy among several TA / Alpha101 factors and material tradability-proxy
+exposure for some probes, so the next work should prioritize redundancy and
+exposure review before model training.
+
+Key output:
+
+```text
+docs/NEW_SOURCE_PROBE_DIAGNOSTICS_V1.md
+outputs/new_source_probe_diagnostics_v1/current/new_source_probe_diagnostics_report.md
+```
+
 ## Alpha101 Source Audit And Adapter Smoke
 
 Alpha101 now uses KunQuant as the primary formula source. The source audit

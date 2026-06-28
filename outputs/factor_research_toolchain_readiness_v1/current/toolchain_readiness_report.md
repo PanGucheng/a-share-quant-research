@@ -20,6 +20,7 @@ The factor research toolchain is ready for large-scale multi-source screening an
 | new_source_adapter_inventory | pass | new_source_runnable=499 | Keep the promoted non-Alpha158 catalog as a large-scale screening input and add later sources through the same adapter gate. |
 | generic_multi_source_screening | pass | contracts=6, failed=0 | Use the generic multi-source screening contract as the entry point for Alpha158, TA, Alpha101, Alpha360, and future factors. |
 | generic_multi_source_judgement | pass | contracts=4, failed=0 | Use the multi-source judgement board to triage Alpha158, TA, Alpha101, Alpha360, and future promoted factors before model training. |
+| new_source_probe_diagnostics | pass | contracts=8, failed=0 | Use probe diagnostics for correlation, tradability exposure, stability, and portfolio-smoke checks before training. |
 
 ## Catalog Summary
 
@@ -87,6 +88,14 @@ The factor research toolchain is ready for large-scale multi-source screening an
 | multi_source_research_candidates | multi_source_judgement | outputs/multi_source_judgement_v1/current/multi_source_research_candidates.csv | pass | 342 | 300 | 224070 |
 | multi_source_new_source_alpha_probes | multi_source_judgement | outputs/multi_source_judgement_v1/current/multi_source_new_source_alpha_probes.csv | pass | 328 | 300 | 217816 |
 | multi_source_judgement_contract_status | multi_source_judgement | outputs/multi_source_judgement_v1/current/multi_source_judgement_contract_status.csv | pass | 6 | 6 | 380 |
+| new_source_probe_inventory | new_source_probe_diagnostics | outputs/new_source_probe_diagnostics_v1/current/new_source_probe_inventory.csv | pass | 328 | 328 | 217816 |
+| new_source_probe_diagnostic_board | new_source_probe_diagnostics | outputs/new_source_probe_diagnostics_v1/current/new_source_probe_diagnostic_board.csv | pass | 328 | 328 | 273650 |
+| selected_probe_factor_coverage | new_source_probe_diagnostics | outputs/new_source_probe_diagnostics_v1/current/selected_probe_factor_coverage.csv | pass | 120 | 120 | 10677 |
+| selected_probe_correlation_top_pairs | new_source_probe_diagnostics | outputs/new_source_probe_diagnostics_v1/current/selected_probe_correlation_top_pairs.csv | pass | 200 | 100 | 15482 |
+| selected_probe_tradability_exposure | new_source_probe_diagnostics | outputs/new_source_probe_diagnostics_v1/current/selected_probe_tradability_exposure.csv | pass | 120 | 120 | 20473 |
+| portfolio_smoke_weights | new_source_probe_diagnostics | outputs/new_source_probe_diagnostics_v1/current/portfolio_smoke_weights.csv | pass | 50 | 50 | 2992 |
+| portfolio_smoke_summary | new_source_probe_diagnostics | outputs/new_source_probe_diagnostics_v1/current/portfolio_smoke_summary.csv | pass | 1 | 1 | 845 |
+| new_source_probe_diagnostics_contract_status | new_source_probe_diagnostics | outputs/new_source_probe_diagnostics_v1/current/new_source_probe_diagnostics_contract_status.csv | pass | 6 | 6 | 289 |
 | open_source_factor_expansion_candidates | source_expansion_audit | outputs/open_source_factor_expansion_audit_v1/current/open_source_factor_source_candidates.csv | pass | 8 | 8 | 5113 |
 | open_source_factor_expansion_next_steps | source_expansion_audit | outputs/open_source_factor_expansion_audit_v1/current/open_source_factor_expansion_next_steps.csv | pass | 3 | 3 | 467 |
 | alpha360_formula_inventory | alpha360_source_audit | outputs/factor_catalog_alpha360_v1/alpha360_formula_inventory.csv | pass | 360 | 360 | 96173 |
@@ -151,5 +160,5 @@ The factor research toolchain is ready for large-scale multi-source screening an
 1. Keep Alpha158 as the validated reference pipeline, not the next research bottleneck.
 2. Treat promoted TA, Alpha101, and Alpha360 catalogs as the first large non-Alpha158 screening inputs.
 3. Use the generic multi-source screening and judgement contracts before promoting new-source factors into model or portfolio inputs.
-4. Add correlation, exposure, stability, and portfolio-smoke diagnostics for the 328 new-source alpha probes before training.
+4. Use the new-source probe diagnostics outputs to prioritize redundancy/exposure review before training.
 5. Start broad factor discovery by adding more open-source factor families through the same adapter, V4 batch, promotion, holdout, and judgement gates.

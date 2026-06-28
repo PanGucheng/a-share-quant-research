@@ -7,3 +7,4 @@ runnable_factor_inventory,pass,total_runnable=669,Use Alpha158 as the reference 
 new_source_adapter_inventory,pass,new_source_runnable=499,Keep the promoted non-Alpha158 catalog as a large-scale screening input and add later sources through the same adapter gate.
 generic_multi_source_screening,pass,"contracts=6, failed=0","Use the generic multi-source screening contract as the entry point for Alpha158, TA, Alpha101, Alpha360, and future factors."
 generic_multi_source_judgement,pass,"contracts=4, failed=0","Use the multi-source judgement board to triage Alpha158, TA, Alpha101, Alpha360, and future promoted factors before model training."
+new_source_probe_diagnostics,pass,"contracts=8, failed=0","Use probe diagnostics for correlation, tradability exposure, stability, and portfolio-smoke checks before training."

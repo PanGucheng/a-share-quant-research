@@ -1,0 +1,2 @@
+﻿enabled,method,available_factor_count,candidate_date_count,used_date_count,min_instruments
+True,daily_cross_section_spearman_mean,120,60,60,100

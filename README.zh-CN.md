@@ -620,6 +620,35 @@ contract status: pass
 
 `new_source_alpha_probe` 只是后续研究队列，不是默认模型或组合输入。Alpha158 保留既有 14 个 `alpha_candidate`；promoted TA、Alpha101 和 Alpha360 因子在更大范围验证前只会进入 probe。
 
+## 新来源 probe 诊断
+
+对 328 个 `new_source_alpha_probe` 运行第一层诊断：
+
+```powershell
+cd E:\qlib_prj\qlib_baseline
+E:\anaconda_envs\qlib_env\python.exe scripts\run_new_source_probe_diagnostics_v1.py --config configs\new_source_probe_diagnostics_v1.yaml
+```
+
+当前结果：
+
+```text
+all probes: 328
+frame diagnostics selected: 120
+portfolio smoke selected: 50
+correlation pairs: 200
+portfolio smoke executed rebalances: 4
+new_source_probe_diagnostics: pass
+```
+
+组合 smoke 只是接口和风险诊断，不是策略结论。本轮已经暴露出部分 TA / Alpha101 因子高度冗余，部分 probe 与可交易性/流动性代理有较强相关。下一步应先做冗余和暴露复核，再考虑模型训练。
+
+关键输出：
+
+```text
+docs/NEW_SOURCE_PROBE_DIAGNOSTICS_V1.md
+outputs/new_source_probe_diagnostics_v1/current/new_source_probe_diagnostics_report.md
+```
+
 ## Alpha101 来源审计与 adapter smoke
 
 Alpha101 当前优先使用 KunQuant 作为公式来源。source audit 确认了 82 个可用公式；5 个 smoke 因子先通过验证后，完整 candidate batch 又 promotion 了 59 个，最终形成 64 个 promoted Alpha101 因子与 18 个 holdout：

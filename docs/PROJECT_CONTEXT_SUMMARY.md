@@ -77,6 +77,7 @@ Multi-source toolchain：
 ```text
 outputs/multi_source_screening_v1/current/multi_source_screening_input.csv
 outputs/multi_source_judgement_v1/current/multi_source_judgement_board.csv
+outputs/new_source_probe_diagnostics_v1/current/new_source_probe_diagnostic_board.csv
 outputs/factor_research_toolchain_readiness_v1/current/toolchain_readiness_report.md
 ```
 
@@ -86,6 +87,7 @@ outputs/factor_research_toolchain_readiness_v1/current/toolchain_readiness_repor
 - multi-source screening rows: 679。
 - multi-source judgement research candidates: 342。
 - new-source alpha probes: 328（TA 15，Alpha101 14，Alpha360 299）。
+- new-source probe diagnostics: 328 probes、120 个 frame diagnostics、50 个 portfolio smoke probes、4 次实际调仓，contract pass。
 - `new_source_alpha_probe` 是研究队列，不是默认模型或组合输入。
 
 ## Open Source References
@@ -121,6 +123,7 @@ tmp/reference_repos/techfactor
 - V3.30 Alpha360 batch catalog/dry-run 已完成：358 个 batch candidates、2 个 adapter holdouts、72 个 planned dry-run batches。
 - V3.31 Alpha360 batch358 factor frame 与真实 smoke batch_001 已完成：358 因子 frame 生成成功，batch_001 pass。
 - V3.32 Alpha360 358 因子 batch V4 已完成：358 promoted、0 V4 batch holdout；已接入 multi-source screening / judgement。
+- V3.33 new-source probe diagnostics 已完成：328 probes 全量看板、相关性诊断、tradability exposure 代理诊断、TopK portfolio smoke 均已接入 readiness。
 - FactorTest-style 行业/风格/Barra 暴露诊断应先做数据能力审计。
-- 下一步对现有 328 个 `new_source_alpha_probe` 增加更长 OOS、相关性/暴露、稳定性和组合 smoke 验证后，再考虑训练输入。
+- 下一步先复核 `redundancy_watch` 与 `tradability_exposure_watch`，再推进 FactorTest-style 行业/风格/Barra 暴露数据能力审计。
 - 后续继续接入更多开源因子源，但必须沿用 source audit、adapter、V4 batch、promotion/holdout、multi-source screening、multi-source judgement 的路径。
