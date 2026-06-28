@@ -1,0 +1,22 @@
+expression_summary: "outputs/alpha360_expression_frame_v1/strict_oos_recent_2024_2026/expression_frame_summary.csv"
+batch_manifest: "outputs/factor_evaluation_batch_v1/alpha360_strict_oos_recent/batch_manifest.csv"
+batch_output_summary: "outputs/factor_evaluation_batch_v1/alpha360_strict_oos_recent/batch_output_summary.csv"
+evaluator_status: "outputs/factor_evaluation_batch_v1/alpha360_strict_oos_recent/runs/batch_001/evaluator_status.csv"
+failure_reasons: "outputs/factor_evaluation_batch_v1/alpha360_strict_oos_recent/runs/batch_001/factor_failure_reasons.csv"
+metric_index: "outputs/factor_evaluation_batch_v1/alpha360_strict_oos_recent/runs/batch_001/open_source_metric_index.csv"
+output_dir: "outputs/alpha360_strict_oos_extension_v1/current"
+
+expected_factors:
+  - "alpha360_HIGH36"
+  - "alpha360_HIGH37"
+  - "alpha360_HIGH40"
+
+rules:
+  min_factor_count: 3
+  min_coverage: 0.95
+  min_passed_batches: 1
+  min_metric_rows: 54
+  allowed_partial_system: "jqfactor_analyzer"
+  allowed_partial_steps:
+    - "factor_returns"
+    - "factor_alpha_beta"

@@ -1,0 +1,27 @@
+base_config: "configs/alpha360_factor_evaluation_strict_oos_recent_base_v1.yaml"
+catalog: "outputs/factor_catalog_alpha360_v1/alpha360_catalog_promoted358.yaml"
+python: "E:/anaconda_envs/qlib_env/python.exe"
+output_root: "outputs/factor_evaluation_batch_v1/alpha360_strict_oos_recent"
+
+selection:
+  enabled_only: true
+  runnable_only: true
+  allow_external_specs: true
+  stages:
+    - "alpha360_adapter_v4_batch_passed"
+  categories: []
+  sources:
+    - "qlib_alpha360"
+  names:
+    - "alpha360_HIGH36"
+    - "alpha360_HIGH37"
+    - "alpha360_HIGH40"
+  max_factors:
+
+execution:
+  allow_non_runnable_external: false
+
+batching:
+  batch_size: 3
+  resume: true
+  max_batches:

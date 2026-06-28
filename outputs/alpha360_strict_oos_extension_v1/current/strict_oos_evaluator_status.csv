@@ -1,0 +1,10 @@
+﻿system,factor,status,output_file_count,failure_count,output_dir
+alphalens_reloaded,alpha360_HIGH36,pass,8,0,E:/qlib_prj/qlib_baseline/outputs/factor_evaluation_batch_v1/alpha360_strict_oos_recent/runs/batch_001/alphalens_reloaded/alpha360_HIGH36
+alphalens_reloaded,alpha360_HIGH37,pass,8,0,E:/qlib_prj/qlib_baseline/outputs/factor_evaluation_batch_v1/alpha360_strict_oos_recent/runs/batch_001/alphalens_reloaded/alpha360_HIGH37
+alphalens_reloaded,alpha360_HIGH40,pass,8,0,E:/qlib_prj/qlib_baseline/outputs/factor_evaluation_batch_v1/alpha360_strict_oos_recent/runs/batch_001/alphalens_reloaded/alpha360_HIGH40
+jqfactor_analyzer,alpha360_HIGH36,partial_pass,5,2,E:/qlib_prj/qlib_baseline/outputs/factor_evaluation_batch_v1/alpha360_strict_oos_recent/runs/batch_001/jqfactor_analyzer/alpha360_HIGH36
+jqfactor_analyzer,alpha360_HIGH37,partial_pass,5,2,E:/qlib_prj/qlib_baseline/outputs/factor_evaluation_batch_v1/alpha360_strict_oos_recent/runs/batch_001/jqfactor_analyzer/alpha360_HIGH37
+jqfactor_analyzer,alpha360_HIGH40,partial_pass,5,2,E:/qlib_prj/qlib_baseline/outputs/factor_evaluation_batch_v1/alpha360_strict_oos_recent/runs/batch_001/jqfactor_analyzer/alpha360_HIGH40
+qlib_eval,alpha360_HIGH36,pass,4,0,E:/qlib_prj/qlib_baseline/outputs/factor_evaluation_batch_v1/alpha360_strict_oos_recent/runs/batch_001/qlib_eval/alpha360_HIGH36
+qlib_eval,alpha360_HIGH37,pass,4,0,E:/qlib_prj/qlib_baseline/outputs/factor_evaluation_batch_v1/alpha360_strict_oos_recent/runs/batch_001/qlib_eval/alpha360_HIGH37
+qlib_eval,alpha360_HIGH40,pass,4,0,E:/qlib_prj/qlib_baseline/outputs/factor_evaluation_batch_v1/alpha360_strict_oos_recent/runs/batch_001/qlib_eval/alpha360_HIGH40

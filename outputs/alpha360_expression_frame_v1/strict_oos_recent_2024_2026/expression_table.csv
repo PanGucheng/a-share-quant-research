@@ -1,0 +1,4 @@
+﻿catalog_name,factor_name,family,lag,category,expression,required_fields,missing_fields,field_status,source_project,source_file,source_function,source_commit,source_path
+alpha360_HIGH36,HIGH36,HIGH,36,alpha360_high_window,"Ref($high, 36)/$close","$close,$high",,available,qlib_alpha360,qlib/contrib/data/loader.py,Alpha360DL.get_feature_config,d5379c520f66a39953bad76234a7019a72796fd0,E:/qlib_prj/qlib_clone/qlib/contrib/data/loader.py
+alpha360_HIGH37,HIGH37,HIGH,37,alpha360_high_window,"Ref($high, 37)/$close","$close,$high",,available,qlib_alpha360,qlib/contrib/data/loader.py,Alpha360DL.get_feature_config,d5379c520f66a39953bad76234a7019a72796fd0,E:/qlib_prj/qlib_clone/qlib/contrib/data/loader.py
+alpha360_HIGH40,HIGH40,HIGH,40,alpha360_high_window,"Ref($high, 40)/$close","$close,$high",,available,qlib_alpha360,qlib/contrib/data/loader.py,Alpha360DL.get_feature_config,d5379c520f66a39953bad76234a7019a72796fd0,E:/qlib_prj/qlib_clone/qlib/contrib/data/loader.py

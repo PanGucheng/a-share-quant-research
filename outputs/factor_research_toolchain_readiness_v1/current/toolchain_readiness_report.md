@@ -14,7 +14,7 @@ The factor research toolchain is ready for large-scale multi-source screening an
 | --- | --- | --- | --- |
 | prefilter_policy | pass | catalog=data_quality,tradability; manifest=data_quality,tradability | Keep data_quality and tradability as mandatory prefilters for every new factor source. |
 | open_source_evaluator_systems | pass | systems=alphalens_reloaded,jqfactor_analyzer,qlib_eval,project_current | Do not replace external evaluator definitions; keep Alphalens Reloaded, jqfactor_analyzer, Qlib eval, and project_current coexisting. |
-| batch_runner | pass | batch_configs=6 | Use the batch runner for large jobs, with dry-run, resume, manifests, and logs. |
+| batch_runner | pass | batch_configs=7 | Use the batch runner for large jobs, with dry-run, resume, manifests, and logs. |
 | required_output_contracts | pass | missing_or_failed=0 | Repair missing contracts before launching full-scale screening. |
 | runnable_factor_inventory | pass | total_runnable=669 | Use Alpha158 as the reference path and promoted TA/Alpha101/Alpha360 sources to validate the multi-source machinery before adding more families. |
 | new_source_adapter_inventory | pass | new_source_runnable=499 | Keep the promoted non-Alpha158 catalog as a large-scale screening input and add later sources through the same adapter gate. |
@@ -22,6 +22,7 @@ The factor research toolchain is ready for large-scale multi-source screening an
 | generic_multi_source_judgement | pass | contracts=4, failed=0 | Use the multi-source judgement board to triage Alpha158, TA, Alpha101, Alpha360, and future promoted factors before model training. |
 | new_source_probe_diagnostics | pass | contracts=8, failed=0 | Use probe diagnostics for correlation, tradability exposure, stability, and portfolio-smoke checks before training. |
 | new_source_probe_review | pass | contracts=6, failed=0 | Use probe review actions to separate redundancy, tradability exposure, and strict OOS-extension candidates. |
+| alpha360_strict_oos_extension | pass | contracts=5, failed=0 | Use strict OOS outputs as the recent-window diagnostic reference for reviewed Alpha360 probes. |
 
 ## Catalog Summary
 
@@ -103,6 +104,11 @@ The factor research toolchain is ready for large-scale multi-source screening an
 | probe_review_tradability_exposure_watchlist | new_source_probe_review | outputs/new_source_probe_review_v1/current/tradability_exposure_watchlist.csv | pass | 19 | 1 | 3453 |
 | probe_review_oos_extension_candidates | new_source_probe_review | outputs/new_source_probe_review_v1/current/oos_extension_candidates.csv | pass | 3 | 3 | 4828 |
 | probe_review_contract_status | new_source_probe_review | outputs/new_source_probe_review_v1/current/probe_review_contract_status.csv | pass | 6 | 6 | 291 |
+| alpha360_strict_oos_expression_summary | alpha360_strict_oos_extension | outputs/alpha360_strict_oos_extension_v1/current/strict_oos_expression_summary.csv | pass | 3 | 3 | 441 |
+| alpha360_strict_oos_batch_manifest | alpha360_strict_oos_extension | outputs/alpha360_strict_oos_extension_v1/current/strict_oos_batch_manifest.csv | pass | 1 | 1 | 451 |
+| alpha360_strict_oos_metric_summary | alpha360_strict_oos_extension | outputs/alpha360_strict_oos_extension_v1/current/strict_oos_metric_summary.csv | pass | 3 | 3 | 1053 |
+| alpha360_strict_oos_evaluator_status | alpha360_strict_oos_extension | outputs/alpha360_strict_oos_extension_v1/current/strict_oos_evaluator_status.csv | pass | 9 | 9 | 1679 |
+| alpha360_strict_oos_contract_status | alpha360_strict_oos_extension | outputs/alpha360_strict_oos_extension_v1/current/strict_oos_contract_status.csv | pass | 8 | 8 | 433 |
 | open_source_factor_expansion_candidates | source_expansion_audit | outputs/open_source_factor_expansion_audit_v1/current/open_source_factor_source_candidates.csv | pass | 8 | 8 | 5113 |
 | open_source_factor_expansion_next_steps | source_expansion_audit | outputs/open_source_factor_expansion_audit_v1/current/open_source_factor_expansion_next_steps.csv | pass | 3 | 3 | 467 |
 | alpha360_formula_inventory | alpha360_source_audit | outputs/factor_catalog_alpha360_v1/alpha360_formula_inventory.csv | pass | 360 | 360 | 96173 |
@@ -168,4 +174,5 @@ The factor research toolchain is ready for large-scale multi-source screening an
 2. Treat promoted TA, Alpha101, and Alpha360 catalogs as the first large non-Alpha158 screening inputs.
 3. Use the generic multi-source screening and judgement contracts before promoting new-source factors into model or portfolio inputs.
 4. Use probe review actions to prioritize strict OOS extension and exposure-data diagnostics before training.
-5. Start broad factor discovery by adding more open-source factor families through the same adapter, V4 batch, promotion, holdout, and judgement gates.
+5. Use strict OOS extension outputs as stability diagnostics, not as automatic training admission.
+6. Start broad factor discovery by adding more open-source factor families through the same adapter, V4 batch, promotion, holdout, and judgement gates.

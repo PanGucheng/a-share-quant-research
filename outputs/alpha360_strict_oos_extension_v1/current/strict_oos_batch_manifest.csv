@@ -1,0 +1,2 @@
+﻿batch_id,status,returncode,factor_count,factors,config_path,output_dir,started_at,ended_at,elapsed_seconds
+batch_001,pass,0,3,"alpha360_HIGH36,alpha360_HIGH37,alpha360_HIGH40",E:\qlib_prj\qlib_baseline\outputs\factor_evaluation_batch_v1\alpha360_strict_oos_recent\generated_configs\batch_001.yaml,E:\qlib_prj\qlib_baseline\outputs\factor_evaluation_batch_v1\alpha360_strict_oos_recent\runs\batch_001,2026-06-28T12:15:53,2026-06-28T12:16:48,54.17

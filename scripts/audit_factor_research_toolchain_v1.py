@@ -317,6 +317,8 @@ def build_readiness_checks(
     probe_diagnostic_failures = probe_diagnostic_contracts[probe_diagnostic_contracts["status"].ne("pass")]
     probe_review_contracts = contract_status[contract_status["group"].eq("new_source_probe_review")]
     probe_review_failures = probe_review_contracts[probe_review_contracts["status"].ne("pass")]
+    strict_oos_contracts = contract_status[contract_status["group"].eq("alpha360_strict_oos_extension")]
+    strict_oos_failures = strict_oos_contracts[strict_oos_contracts["status"].ne("pass")]
     total_runnable = int(catalog_summary["runnable_count"].sum()) if not catalog_summary.empty else 0
     baseline_sources = set(str(item) for item in rules.get("baseline_sources", []))
     new_source_rows = source_readiness[
@@ -420,6 +422,16 @@ def build_readiness_checks(
             else "Run probe review before extending probes into OOS or exposure-data diagnostics."
         ),
     )
+    add(
+        "alpha360_strict_oos_extension",
+        "pass" if not strict_oos_contracts.empty and strict_oos_failures.empty else "partial",
+        f"contracts={len(strict_oos_contracts)}, failed={len(strict_oos_failures)}",
+        (
+            "Use strict OOS outputs as the recent-window diagnostic reference for reviewed Alpha360 probes."
+            if not strict_oos_contracts.empty and strict_oos_failures.empty
+            else "Run strict OOS extension before treating reviewed Alpha360 probes as stable research candidates."
+        ),
+    )
     return pd.DataFrame(rows)
 
 
@@ -510,7 +522,8 @@ def write_report(
             "2. Treat promoted TA, Alpha101, and Alpha360 catalogs as the first large non-Alpha158 screening inputs.",
             "3. Use the generic multi-source screening and judgement contracts before promoting new-source factors into model or portfolio inputs.",
             "4. Use probe review actions to prioritize strict OOS extension and exposure-data diagnostics before training.",
-            "5. Start broad factor discovery by adding more open-source factor families through the same adapter, V4 batch, promotion, holdout, and judgement gates.",
+            "5. Use strict OOS extension outputs as stability diagnostics, not as automatic training admission.",
+            "6. Start broad factor discovery by adding more open-source factor families through the same adapter, V4 batch, promotion, holdout, and judgement gates.",
         ]
     )
     (output_dir / "toolchain_readiness_report.md").write_text("\n".join(lines) + "\n", encoding="utf-8")

@@ -1,0 +1,7 @@
+﻿system,factor,step,error_type,error,traceback_tail
+jqfactor_analyzer,alpha360_HIGH36,factor_returns,ValueError,"The name date occurs multiple times, use a level number","ValueError: The name date occurs multiple times, use a level number"
+jqfactor_analyzer,alpha360_HIGH36,factor_alpha_beta,ValueError,"The name date occurs multiple times, use a level number","ValueError: The name date occurs multiple times, use a level number"
+jqfactor_analyzer,alpha360_HIGH37,factor_returns,ValueError,"The name date occurs multiple times, use a level number","ValueError: The name date occurs multiple times, use a level number"
+jqfactor_analyzer,alpha360_HIGH37,factor_alpha_beta,ValueError,"The name date occurs multiple times, use a level number","ValueError: The name date occurs multiple times, use a level number"
+jqfactor_analyzer,alpha360_HIGH40,factor_returns,ValueError,"The name date occurs multiple times, use a level number","ValueError: The name date occurs multiple times, use a level number"
+jqfactor_analyzer,alpha360_HIGH40,factor_alpha_beta,ValueError,"The name date occurs multiple times, use a level number","ValueError: The name date occurs multiple times, use a level number"

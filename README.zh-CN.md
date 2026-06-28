@@ -661,13 +661,35 @@ new_source_probe_review: pass
 
 严格候选是 `alpha360_HIGH36`、`alpha360_HIGH37`、`alpha360_HIGH40`。它们仍然只是研究候选，不是训练输入。
 
+这 3 个候选的 strict recent-OOS extension 也已经完成：
+
+```powershell
+E:\anaconda_envs\qlib_env\python.exe scripts\build_alpha360_expression_frame_v1.py --config configs\alpha360_expression_adapter_strict_oos_recent_v1.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\run_factor_evaluation_batch_v1.py --config configs\factor_evaluation_batch_v1_alpha360_strict_oos_recent.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\audit_alpha360_strict_oos_extension_v1.py --config configs\alpha360_strict_oos_extension_audit_v1.yaml
+```
+
+Strict-OOS 结果：
+
+```text
+recent OOS factor frame rows: 286,944
+min coverage: 0.996236
+V4 batches: 1 pass
+metric index rows: 54
+alpha360_strict_oos_extension: pass
+```
+
+3 个因子在 recent-OOS 中仍保持正 mean IC，但这只是诊断结果，不代表进入训练或策略结论。
+
 关键输出：
 
 ```text
 docs/NEW_SOURCE_PROBE_DIAGNOSTICS_V1.md
 docs/NEW_SOURCE_PROBE_REVIEW_V1.md
+docs/ALPHA360_STRICT_OOS_EXTENSION_V1.md
 outputs/new_source_probe_diagnostics_v1/current/new_source_probe_diagnostics_report.md
 outputs/new_source_probe_review_v1/current/probe_review_report.md
+outputs/alpha360_strict_oos_extension_v1/current/alpha360_strict_oos_extension_report.md
 ```
 
 ## Alpha101 来源审计与 adapter smoke

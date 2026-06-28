@@ -3363,3 +3363,67 @@ alpha360_HIGH40
 - 为 3 个严格候选扩展 recent OOS factor frame。
 - 并行推进 FactorTest-style 行业/风格/Barra 暴露数据能力审计。
 - 不直接训练全部 328 个 probes。
+
+## 67. V3.35：Alpha360 Strict OOS Extension V1
+
+状态：已完成。
+
+阶段文档：
+
+```text
+docs/ALPHA360_STRICT_OOS_EXTENSION_V1_PLAN.md
+docs/ALPHA360_STRICT_OOS_EXTENSION_V1.md
+```
+
+新增文件：
+
+```text
+configs/alpha360_expression_adapter_strict_oos_recent_v1.yaml
+configs/alpha360_factor_evaluation_strict_oos_recent_base_v1.yaml
+configs/factor_evaluation_batch_v1_alpha360_strict_oos_recent.yaml
+configs/alpha360_strict_oos_extension_audit_v1.yaml
+scripts/audit_alpha360_strict_oos_extension_v1.py
+```
+
+运行命令：
+
+```powershell
+E:\anaconda_envs\qlib_env\python.exe scripts\build_alpha360_expression_frame_v1.py --config configs\alpha360_expression_adapter_strict_oos_recent_v1.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\run_factor_evaluation_batch_v1.py --config configs\factor_evaluation_batch_v1_alpha360_strict_oos_recent.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\audit_alpha360_strict_oos_extension_v1.py --config configs\alpha360_strict_oos_extension_audit_v1.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\audit_factor_research_toolchain_v1.py --config configs\factor_research_toolchain_readiness_v1.yaml
+```
+
+完成结果：
+
+```text
+strict candidates: 3
+recent OOS expression rows: 286,944
+min coverage: 0.996236
+V4 batches: 1 pass
+evaluator status rows: 9
+metric index rows: 54
+strict OOS contract rows: 8 pass
+alpha360_strict_oos_extension: pass
+readiness overall_status: ready
+```
+
+Recent OOS 指标摘录：
+
+```text
+alpha360_HIGH36 alphalens 10D mean IC: 0.063736, 20D mean IC: 0.072231
+alpha360_HIGH37 alphalens 10D mean IC: 0.065477, 20D mean IC: 0.073073
+alpha360_HIGH40 alphalens 10D mean IC: 0.065851, 20D mean IC: 0.072314
+```
+
+重要边界：
+
+- 3 个因子仍然只是 strict-OOS research candidates。
+- `jqfactor_analyzer` 保留已知 partial pass，只允许 `factor_returns` / `factor_alpha_beta` index-name 问题。
+- 本阶段不训练模型、不调策略、不改开源评价体系。
+
+下一步：
+
+- 做 main vs recent OOS 稳定性对比。
+- 对 19 个 `tradability_exposure_review` probes 做流动性/可交易性暴露归因。
+- 推进 FactorTest-style 行业/风格/Barra 暴露数据能力审计。

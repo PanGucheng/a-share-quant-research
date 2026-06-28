@@ -1,0 +1,51 @@
+{
+  "config": {
+    "provider_uri": "E:/qlib_prj/qlib_data/cn_data_community_20260609_derived",
+    "market": "all_stock_shsz_liquid2000",
+    "start": "2024-01-01",
+    "end": "2026-06-09",
+    "max_instruments": 500,
+    "catalog_path": "E:/qlib_prj/qlib_baseline/outputs/factor_catalog_alpha360_v1/alpha360_catalog_promoted358.yaml",
+    "inventory_path": "E:/qlib_prj/qlib_baseline/outputs/factor_catalog_alpha360_v1/alpha360_formula_inventory.csv",
+    "output_dir": "E:/qlib_prj/qlib_baseline/outputs/alpha360_expression_frame_v1/strict_oos_recent_2024_2026",
+    "enabled_only": true,
+    "runnable_only": true,
+    "stages": [
+      "alpha360_adapter_v4_batch_passed"
+    ],
+    "names": [
+      "alpha360_HIGH36",
+      "alpha360_HIGH37",
+      "alpha360_HIGH40"
+    ],
+    "max_factors": null,
+    "batch_size": 3,
+    "refresh": false
+  },
+  "factor_count": 3,
+  "row_count": 286944,
+  "date_min": "2024-01-02 00:00:00",
+  "date_max": "2026-06-09 00:00:00",
+  "instrument_count": 500,
+  "factor_frame_path": "E:/qlib_prj/qlib_baseline/outputs/alpha360_expression_frame_v1/strict_oos_recent_2024_2026/factor_frame.pkl",
+  "factors": [
+    {
+      "catalog_name": "alpha360_HIGH36",
+      "factor_name": "HIGH36",
+      "category": "alpha360_high_window",
+      "expression": "Ref($high, 36)/$close"
+    },
+    {
+      "catalog_name": "alpha360_HIGH37",
+      "factor_name": "HIGH37",
+      "category": "alpha360_high_window",
+      "expression": "Ref($high, 37)/$close"
+    },
+    {
+      "catalog_name": "alpha360_HIGH40",
+      "factor_name": "HIGH40",
+      "category": "alpha360_high_window",
+      "expression": "Ref($high, 40)/$close"
+    }
+  ]
+}

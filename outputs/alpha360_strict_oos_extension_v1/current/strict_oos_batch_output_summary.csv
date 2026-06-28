@@ -1,0 +1,2 @@
+﻿batch_id,status,factor_count,factors,evaluator_status_rows,failure_rows,metric_rows,context_metric_rows,output_dir
+batch_001,pass,3,"alpha360_HIGH36,alpha360_HIGH37,alpha360_HIGH40",9,6,54,0,E:\qlib_prj\qlib_baseline\outputs\factor_evaluation_batch_v1\alpha360_strict_oos_recent\runs\batch_001

@@ -79,6 +79,7 @@ outputs/multi_source_screening_v1/current/multi_source_screening_input.csv
 outputs/multi_source_judgement_v1/current/multi_source_judgement_board.csv
 outputs/new_source_probe_diagnostics_v1/current/new_source_probe_diagnostic_board.csv
 outputs/new_source_probe_review_v1/current/probe_review_board.csv
+outputs/alpha360_strict_oos_extension_v1/current/strict_oos_contract_status.csv
 outputs/factor_research_toolchain_readiness_v1/current/toolchain_readiness_report.md
 ```
 
@@ -90,6 +91,7 @@ outputs/factor_research_toolchain_readiness_v1/current/toolchain_readiness_repor
 - new-source alpha probes: 328（TA 15，Alpha101 14，Alpha360 299）。
 - new-source probe diagnostics: 328 probes、120 个 frame diagnostics、50 个 portfolio smoke probes、4 次实际调仓，contract pass。
 - new-source probe review: 4 个冗余组、19 个 tradability exposure watchlist、3 个严格 OOS extension candidates（`alpha360_HIGH36`、`alpha360_HIGH37`、`alpha360_HIGH40`），contract pass。
+- Alpha360 strict OOS extension: 3 个严格候选 recent-OOS frame 286,944 行，min coverage 0.996236，V4 metric index 54 行，contract pass。
 - `new_source_alpha_probe` 是研究队列，不是默认模型或组合输入。
 
 ## Open Source References
@@ -127,6 +129,7 @@ tmp/reference_repos/techfactor
 - V3.32 Alpha360 358 因子 batch V4 已完成：358 promoted、0 V4 batch holdout；已接入 multi-source screening / judgement。
 - V3.33 new-source probe diagnostics 已完成：328 probes 全量看板、相关性诊断、tradability exposure 代理诊断、TopK portfolio smoke 均已接入 readiness。
 - V3.34 new-source probe review 已完成：冗余/暴露复核层已接入 readiness，严格 OOS 候选收缩到 3 个 Alpha360 high-window 代表因子。
+- V3.35 Alpha360 strict OOS extension 已完成：3 个严格候选在 2024-2026 recent OOS 窗口重新生成 factor frame，并通过 V4 多评价体系与 contract audit。
 - FactorTest-style 行业/风格/Barra 暴露诊断应先做数据能力审计。
-- 下一步为 3 个严格 OOS candidates 扩展 recent OOS factor frame，并推进 FactorTest-style 行业/风格/Barra 暴露数据能力审计。
+- 下一步做 main vs recent OOS 稳定性对比，并推进 19 个 tradability exposure watchlist 与 FactorTest-style 行业/风格/Barra 暴露数据能力审计。
 - 后续继续接入更多开源因子源，但必须沿用 source audit、adapter、V4 batch、promotion/holdout、multi-source screening、multi-source judgement 的路径。

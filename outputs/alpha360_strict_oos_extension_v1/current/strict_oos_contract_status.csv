@@ -1,0 +1,9 @@
+﻿check_id,status,detail
+expected_factor_count,pass,"factors=3, missing="
+expression_coverage,pass,min_coverage=0.996236
+batch_passed,pass,passed_batches=1
+metric_index_rows,pass,metric_rows=54
+metric_factor_coverage,pass,metric_factors=3
+evaluator_status_allowed,pass,"allowed_partial_rows=3, allowed_failure_rows=6"
+no_training_side_effect,pass,strict_oos_audit_only
+batch_summary_metric_rows,pass,summary_metric_rows=54
