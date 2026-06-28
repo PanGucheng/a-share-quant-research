@@ -32,7 +32,17 @@ alpha101:
   evaluator_statuses:
     - "outputs/factor_evaluation_v4/alpha101_smoke_v1/evaluator_status.csv"
 
+alpha360:
+  promoted_catalog: "outputs/factor_catalog_alpha360_v1/alpha360_catalog_promoted358.yaml"
+  holdout_catalog: "outputs/factor_catalog_alpha360_v1/alpha360_catalog_holdout2.yaml"
+  factor_summary: "outputs/alpha360_expression_frame_v1/batch358/expression_frame_summary.csv"
+  metric_indexes:
+    - "outputs/factor_evaluation_batch_v1/alpha360_candidate358_execution/alpha360_candidate358_metric_index.csv"
+  promotion_audits:
+    - "outputs/factor_catalog_alpha360_v1/alpha360_batch_promotion_audit.csv"
+  evaluator_statuses: []
+
 contract:
-  min_sources: 3
-  min_total_rows: 200
+  min_sources: 4
+  min_total_rows: 600
   min_new_source_rows: 20

@@ -3195,6 +3195,63 @@ smoke batch_001 metric rows: 90
 
 下一步：
 
-- 以 resume 模式继续执行 Alpha360 剩余 batches。
-- 批量完成后生成 Alpha360 promotion/holdout catalog。
-- 再接入 multi-source screening 与 judgement。
+- 后续 V3.32 已完成全部 Alpha360 execution batches、promotion/holdout、multi-source screening 与 judgement。
+- 当前状态见 `docs/ALPHA360_BATCH_PROMOTION_AND_MULTI_SOURCE_V1.md`。
+
+## 64. V3.32：Alpha360 完整 Batch Promotion 与 Multi-Source 接入
+
+状态：已完成。
+
+阶段文档：
+
+```text
+docs/ALPHA360_BATCH_PROMOTION_AND_MULTI_SOURCE_V1.md
+```
+
+新增文件：
+
+```text
+configs/alpha360_factor_batch_promotion_v1.yaml
+configs/factor_evaluation_batch_v1_alpha360_candidate358_execution.yaml
+scripts/promote_alpha360_batch_catalog_entries_v1.py
+```
+
+运行命令：
+
+```powershell
+E:\anaconda_envs\qlib_env\python.exe scripts\run_factor_evaluation_batch_v1.py --config configs\factor_evaluation_batch_v1_alpha360_candidate358_execution.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\promote_alpha360_batch_catalog_entries_v1.py --config configs\alpha360_factor_batch_promotion_v1.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\run_multi_source_screening_v1.py --config configs\multi_source_screening_v1.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\run_multi_source_judgement_v1.py --config configs\multi_source_judgement_v1.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\audit_factor_research_toolchain_v1.py --config configs\factor_research_toolchain_readiness_v1.yaml
+```
+
+完成结果：
+
+```text
+Alpha360 execution batches: 72
+Alpha360 source factors: 358
+Alpha360 metric index rows: 6,444
+Alpha360 batch promoted: 358
+Alpha360 V4 batch holdout: 0
+Alpha360 adapter holdout: 2
+multi-source screening rows: 679
+multi-source judgement board rows: 679
+new-source alpha probes: 328
+Alpha360 probes: 299
+readiness total_runnable: 669
+readiness new_source_runnable: 499
+overall_status: ready
+```
+
+重要边界：
+
+- `alpha360_CLOSE0` 与 `alpha360_VOLUME0` 继续作为 adapter holdout。
+- jqfactor_analyzer 的 `factor_returns` / `factor_alpha_beta` partial 仍只记录，不改开源评价口径。
+- Alpha360 promoted catalog 已 enabled/runnable，但 judgement 后仍只是研究 probes，不是默认模型或组合输入。
+
+下一步：
+
+- 为 328 个 `new_source_alpha_probe` 增加相关性、暴露、稳定性、分段 OOS 和组合 smoke 验证。
+- 并行推进 FactorTest-style 行业/风格/Barra 暴露数据能力审计。
+- 继续接入更多开源因子源，但必须沿用 source audit、adapter、V4 batch、promotion/holdout、multi-source screening、multi-source judgement 的路径。

@@ -20,6 +20,9 @@ catalogs:
   - id: "qlib_alpha360_batch_candidate_catalog"
     path: "outputs/factor_catalog_alpha360_v1/alpha360_catalog_batch_candidate358.yaml"
     role: "Qlib Alpha360 batch candidate catalog after smoke V4; disabled/non-runnable until batch promotion."
+  - id: "qlib_alpha360_promoted_catalog"
+    path: "outputs/factor_catalog_alpha360_v1/alpha360_catalog_promoted358.yaml"
+    role: "Promoted Qlib Alpha360 factors after candidate358 batch V4 evaluation."
 
 source_manifest: "factor_research/external/source_manifest.yaml"
 output_dir: "outputs/factor_research_toolchain_readiness_v1/current"
@@ -35,6 +38,8 @@ batch_configs:
     path: "configs/factor_evaluation_batch_v1_alpha360_candidate358.yaml"
   - id: "alpha360_candidate358_smoke_batch"
     path: "configs/factor_evaluation_batch_v1_alpha360_candidate358_smoke.yaml"
+  - id: "alpha360_candidate358_execution_batch"
+    path: "configs/factor_evaluation_batch_v1_alpha360_candidate358_execution.yaml"
 
 evaluation_configs:
   - id: "factor_evaluation_v4_main"
@@ -133,15 +138,15 @@ required_output_contracts:
   - id: "multi_source_screening_input"
     group: "multi_source_screening"
     path: "outputs/multi_source_screening_v1/current/multi_source_screening_input.csv"
-    min_rows: 200
+    min_rows: 600
   - id: "multi_source_candidate_board"
     group: "multi_source_screening"
     path: "outputs/multi_source_screening_v1/current/multi_source_candidate_board.csv"
-    min_rows: 200
+    min_rows: 600
   - id: "multi_source_candidate_pool"
     group: "multi_source_candidate_pool"
     path: "outputs/multi_source_screening_v1/current/multi_source_candidate_pool.csv"
-    min_rows: 200
+    min_rows: 600
   - id: "multi_source_alpha_candidates"
     group: "multi_source_candidate_pool"
     path: "outputs/multi_source_screening_v1/current/multi_source_alpha_candidates.csv"
@@ -157,15 +162,15 @@ required_output_contracts:
   - id: "multi_source_judgement_board"
     group: "multi_source_judgement"
     path: "outputs/multi_source_judgement_v1/current/multi_source_judgement_board.csv"
-    min_rows: 300
+    min_rows: 600
   - id: "multi_source_research_candidates"
     group: "multi_source_judgement"
     path: "outputs/multi_source_judgement_v1/current/multi_source_research_candidates.csv"
-    min_rows: 1
+    min_rows: 300
   - id: "multi_source_new_source_alpha_probes"
     group: "multi_source_judgement"
     path: "outputs/multi_source_judgement_v1/current/multi_source_new_source_alpha_probes.csv"
-    min_rows: 5
+    min_rows: 300
   - id: "multi_source_judgement_contract_status"
     group: "multi_source_judgement"
     path: "outputs/multi_source_judgement_v1/current/multi_source_judgement_contract_status.csv"
@@ -249,6 +254,32 @@ required_output_contracts:
     group: "alpha360_batch_smoke"
     path: "outputs/factor_evaluation_batch_v1/alpha360_candidate358_smoke_batch1/batch_output_summary.csv"
     min_rows: 1
+  - id: "alpha360_execution_manifest"
+    group: "alpha360_v4_batch"
+    path: "outputs/factor_evaluation_batch_v1/alpha360_candidate358_execution/batch_manifest.csv"
+    min_rows: 72
+  - id: "alpha360_execution_output_summary"
+    group: "alpha360_v4_batch"
+    path: "outputs/factor_evaluation_batch_v1/alpha360_candidate358_execution/batch_output_summary.csv"
+    min_rows: 72
+  - id: "alpha360_candidate358_metric_index"
+    group: "alpha360_v4_batch"
+    path: "outputs/factor_evaluation_batch_v1/alpha360_candidate358_execution/alpha360_candidate358_metric_index.csv"
+    min_rows: 1
+  - id: "alpha360_batch_promotion_audit"
+    group: "alpha360_promotion"
+    path: "outputs/factor_catalog_alpha360_v1/alpha360_batch_promotion_audit.csv"
+    min_rows: 358
+  - id: "alpha360_batch_promoted_catalog"
+    group: "alpha360_promotion"
+    path: "outputs/factor_catalog_alpha360_v1/alpha360_catalog_promoted358.yaml"
+    yaml_key: "factors"
+    min_rows: 358
+  - id: "alpha360_holdout_catalog"
+    group: "alpha360_promotion"
+    path: "outputs/factor_catalog_alpha360_v1/alpha360_catalog_holdout2.yaml"
+    yaml_key: "factors"
+    min_rows: 2
   - id: "alpha101_source_summary"
     group: "alpha101_source_audit"
     path: "outputs/factor_catalog_alpha101_v1/source_audit/alpha101_source_summary.csv"

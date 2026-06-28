@@ -4,13 +4,19 @@
 
 ## 定位
 
-当前工具链已经可以承接更多因子：
+V3.27 当时工具链已经可以承接更多因子：
 
 ```text
 total runnable factors: 311
 new-source runnable factors: 141
 multi-source judgement board rows: 319
 new-source alpha probes: 29
+```
+
+当前 Alpha360 直接 adapter 路径已经完成，最新状态见：
+
+```text
+docs/ALPHA360_BATCH_PROMOTION_AND_MULTI_SOURCE_V1.md
 ```
 
 下一步不应继续研究单个常见因子，而是先回答：

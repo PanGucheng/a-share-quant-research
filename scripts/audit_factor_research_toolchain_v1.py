@@ -349,7 +349,7 @@ def build_readiness_checks(
         "runnable_factor_inventory",
         "pass" if total_runnable >= int(rules.get("min_total_runnable_factors", 0)) else "partial",
         f"total_runnable={total_runnable}",
-        "Use Alpha158 as the reference path and promoted TA/Alpha101 sources to validate the multi-source machinery before adding more families.",
+        "Use Alpha158 as the reference path and promoted TA/Alpha101/Alpha360 sources to validate the multi-source machinery before adding more families.",
     )
     add(
         "new_source_adapter_inventory",
@@ -368,7 +368,7 @@ def build_readiness_checks(
         "pass" if not multi_source_contracts.empty and multi_source_contract_failures.empty else "partial",
         f"contracts={len(multi_source_contracts)}, failed={len(multi_source_contract_failures)}",
         (
-            "Use the generic multi-source screening contract as the entry point for Alpha158, TA, Alpha101, and future factors."
+            "Use the generic multi-source screening contract as the entry point for Alpha158, TA, Alpha101, Alpha360, and future factors."
             if not multi_source_contracts.empty and multi_source_contract_failures.empty
             else "Generalize the screening input and candidate-pool contracts before mixing TA, Alpha101, and future factors."
         ),
@@ -380,7 +380,7 @@ def build_readiness_checks(
         else "partial",
         f"contracts={len(multi_source_judgement_contracts)}, failed={len(multi_source_judgement_failures)}",
         (
-            "Use the multi-source judgement board to triage Alpha158, TA, Alpha101, and future promoted factors before model training."
+            "Use the multi-source judgement board to triage Alpha158, TA, Alpha101, Alpha360, and future promoted factors before model training."
             if not multi_source_judgement_contracts.empty and multi_source_judgement_failures.empty
             else "Build the multi-source judgement contract before moving promoted new-source factors beyond monitor/probe status."
         ),
@@ -472,9 +472,9 @@ def write_report(
             "## Next Step",
             "",
             "1. Keep Alpha158 as the validated reference pipeline, not the next research bottleneck.",
-            "2. Treat promoted TA and Alpha101 catalogs as the first non-Alpha158 screening inputs.",
+            "2. Treat promoted TA, Alpha101, and Alpha360 catalogs as the first large non-Alpha158 screening inputs.",
             "3. Use the generic multi-source screening and judgement contracts before promoting new-source factors into model or portfolio inputs.",
-            "4. Continue Qlib Alpha360 through V4 smoke before any promotion.",
+            "4. Add correlation, exposure, stability, and portfolio-smoke diagnostics for the 328 new-source alpha probes before training.",
             "5. Start broad factor discovery by adding more open-source factor families through the same adapter, V4 batch, promotion, holdout, and judgement gates.",
         ]
     )

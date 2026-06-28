@@ -536,7 +536,7 @@ def write_report(
         f"- Pool name: `{config.pool_name}`",
         "- Scope: research judgement only; no model training, no strategy optimization, no evaluator redefinition.",
         "- Alpha158 roles are preserved from the existing Alpha158 candidate pool.",
-        "- TA and Alpha101 promoted factors can become `new_source_alpha_probe`, but are not downstream defaults.",
+        "- TA, Alpha101, and Alpha360 promoted factors can become `new_source_alpha_probe`, but are not downstream defaults.",
         "",
         "## Rule Snapshot",
         "",

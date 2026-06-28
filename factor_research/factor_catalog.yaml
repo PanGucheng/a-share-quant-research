@@ -26,7 +26,7 @@ planned_sources:
     source_function: "Alpha360DL.get_feature_config"
     license: "MIT"
     planned_role: "Qlib-native normalized OHLCV lag factor family selected as the next direct open-source adapter source."
-    status: "source_audit_adapter_smoke_pending"
+    status: "batch_v4_promoted"
   - source_project: "qlib_factor_platform_presets"
     local_path: "tmp/reference_repos/qlib_factor_platform"
     source_commit: "9611ac2d1392761af5988e8a571f2075c61c601e"

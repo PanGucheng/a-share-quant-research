@@ -88,7 +88,10 @@ overall readiness: ready
 
 ## 6. 下一步
 
-1. 继续以 resume 模式执行 Alpha360 剩余 batch。
-2. 每次可先限制 `--max-batches`，避免长任务中断后难以定位。
-3. 批量完成后生成 Alpha360 batch metric index summary。
-4. 按既有 promotion/holdout 规则生成 promoted catalog，再进入 multi-source screening 和 judgement。
+后续 V3.32 已完成全部 72 个 Alpha360 execution batches，并生成 promoted catalog、multi-source screening 与 judgement 输出。当前状态见：
+
+```text
+docs/ALPHA360_BATCH_PROMOTION_AND_MULTI_SOURCE_V1.md
+```
+
+下一步不再是继续跑 Alpha360 batch，而是为 328 个 `new_source_alpha_probe` 增加相关性、暴露、稳定性、分段 OOS 和组合 smoke 验证。

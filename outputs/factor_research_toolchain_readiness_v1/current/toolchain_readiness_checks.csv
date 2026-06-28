@@ -1,9 +1,9 @@
 ﻿check_id,status,detail,recommendation
 prefilter_policy,pass,"catalog=data_quality,tradability; manifest=data_quality,tradability",Keep data_quality and tradability as mandatory prefilters for every new factor source.
 open_source_evaluator_systems,pass,"systems=alphalens_reloaded,jqfactor_analyzer,qlib_eval,project_current","Do not replace external evaluator definitions; keep Alphalens Reloaded, jqfactor_analyzer, Qlib eval, and project_current coexisting."
-batch_runner,pass,batch_configs=5,"Use the batch runner for large jobs, with dry-run, resume, manifests, and logs."
+batch_runner,pass,batch_configs=6,"Use the batch runner for large jobs, with dry-run, resume, manifests, and logs."
 required_output_contracts,pass,missing_or_failed=0,Repair missing contracts before launching full-scale screening.
-runnable_factor_inventory,pass,total_runnable=311,Use Alpha158 as the reference path and promoted TA/Alpha101 sources to validate the multi-source machinery before adding more families.
-new_source_adapter_inventory,pass,new_source_runnable=141,Keep the promoted non-Alpha158 catalog as a large-scale screening input and add later sources through the same adapter gate.
-generic_multi_source_screening,pass,"contracts=6, failed=0","Use the generic multi-source screening contract as the entry point for Alpha158, TA, Alpha101, and future factors."
-generic_multi_source_judgement,pass,"contracts=4, failed=0","Use the multi-source judgement board to triage Alpha158, TA, Alpha101, and future promoted factors before model training."
+runnable_factor_inventory,pass,total_runnable=669,Use Alpha158 as the reference path and promoted TA/Alpha101/Alpha360 sources to validate the multi-source machinery before adding more families.
+new_source_adapter_inventory,pass,new_source_runnable=499,Keep the promoted non-Alpha158 catalog as a large-scale screening input and add later sources through the same adapter gate.
+generic_multi_source_screening,pass,"contracts=6, failed=0","Use the generic multi-source screening contract as the entry point for Alpha158, TA, Alpha101, Alpha360, and future factors."
+generic_multi_source_judgement,pass,"contracts=4, failed=0","Use the multi-source judgement board to triage Alpha158, TA, Alpha101, Alpha360, and future promoted factors before model training."

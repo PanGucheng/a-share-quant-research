@@ -65,10 +65,12 @@ Open-source factor sources：
 ```text
 outputs/ta_factor_adapter_v1/smoke/ta_factor_catalog_promoted77.yaml
 outputs/alpha101_factor_adapter_v1/batch82/alpha101_factor_catalog_promoted64.yaml
+outputs/factor_catalog_alpha360_v1/alpha360_catalog_promoted358.yaml
 ```
 
 - TA 已有 77 个 promoted runnable 因子、2 个 holdout。
 - KunQuant Alpha101 已有 64 个 promoted runnable 因子、18 个 holdout。
+- Qlib Alpha360 已有 358 个 promoted runnable 因子、2 个 adapter holdout。
 
 Multi-source toolchain：
 
@@ -79,11 +81,11 @@ outputs/factor_research_toolchain_readiness_v1/current/toolchain_readiness_repor
 ```
 
 - Readiness 当前为 `ready`。
-- total runnable factors: 311。
-- new-source runnable factors: 141。
-- multi-source screening rows: 319。
-- multi-source judgement research candidates: 43。
-- new-source alpha probes: 29（TA 15，Alpha101 14）。
+- total runnable factors: 669。
+- new-source runnable factors: 499。
+- multi-source screening rows: 679。
+- multi-source judgement research candidates: 342。
+- new-source alpha probes: 328（TA 15，Alpha101 14，Alpha360 299）。
 - `new_source_alpha_probe` 是研究队列，不是默认模型或组合输入。
 
 ## Open Source References
@@ -118,6 +120,7 @@ tmp/reference_repos/techfactor
 - V3.29 Alpha360 V4 smoke 已完成：22 个非恒等 smoke 因子进入 V4；Alphalens/Qlib eval 全部 pass，jqfactor_analyzer 保留已知 partial。
 - V3.30 Alpha360 batch catalog/dry-run 已完成：358 个 batch candidates、2 个 adapter holdouts、72 个 planned dry-run batches。
 - V3.31 Alpha360 batch358 factor frame 与真实 smoke batch_001 已完成：358 因子 frame 生成成功，batch_001 pass。
+- V3.32 Alpha360 358 因子 batch V4 已完成：358 promoted、0 V4 batch holdout；已接入 multi-source screening / judgement。
 - FactorTest-style 行业/风格/Barra 暴露诊断应先做数据能力审计。
-- 下一步以 resume / max-batches 限制继续执行 Alpha360 剩余 batch，再做 promotion/holdout。
-- 对现有 29 个 `new_source_alpha_probe` 增加更长 OOS、相关性/暴露和组合 smoke 验证后，再考虑训练输入。
+- 下一步对现有 328 个 `new_source_alpha_probe` 增加更长 OOS、相关性/暴露、稳定性和组合 smoke 验证后，再考虑训练输入。
+- 后续继续接入更多开源因子源，但必须沿用 source audit、adapter、V4 batch、promotion/holdout、multi-source screening、multi-source judgement 的路径。

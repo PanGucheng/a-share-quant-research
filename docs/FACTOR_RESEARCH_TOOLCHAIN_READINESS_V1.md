@@ -191,15 +191,27 @@ alpha360_batch_smoke_output_summary rows: 1
 overall_status: ready
 ```
 
-这表示“引入更多因子”的入口已经打开，并且已由 TA、Alpha101 与 Alpha360 三类非 seed 来源验证。下一阶段可以继续接入更多开源因子源、基本面/行业风格数据或更长 OOS 诊断，但仍需沿用 adapter audit、V4 batch、promotion/holdout、multi-source screening 和 multi-source judgement contract。
+V3.32 后新增 Alpha360 完整 batch / promotion / multi-source contract：
+
+```text
+total_runnable: 669
+new_source_runnable: 499
+alpha360_execution_manifest rows: 72
+alpha360_candidate358_metric_index rows: 6,444
+alpha360_batch_promoted_catalog rows: 358
+multi_source_screening_input rows: 679
+multi_source_judgement_board rows: 679
+multi_source_new_source_alpha_probes rows: 328
+overall_status: ready
+```
+
+这表示“引入更多因子”的入口已经打开，并且已由 TA、Alpha101 与 Alpha360 三类非 seed 来源验证。下一阶段应先为 328 个 `new_source_alpha_probe` 补齐相关性、暴露、稳定性、分段 OOS 和组合 smoke 诊断，再继续接入更多开源因子源、基本面/行业风格数据。所有扩张仍需沿用 adapter audit、V4 batch、promotion/holdout、multi-source screening 和 multi-source judgement contract。
 
 ## 7. 下一步目标
 
-下一步不继续围绕 Alpha158 微调，也不急着训练模型，而是进入“更多开源因子源接入”阶段：
+下一步不继续围绕 Alpha158 微调，也不急着训练模型，而是进入“新来源 probes 诊断 + 继续开源扩源”阶段：
 
-1. 以 `resume` 模式继续执行 Alpha360 剩余 batch，可用 `--max-batches` 分段推进。
-2. 批量完成后生成 Alpha360 batch metric index summary。
-3. 通过 promotion/holdout 后，把 Alpha360 promoted 因子追加到 multi-source screening 和 judgement contract。
-4. 并行推进 FactorTest-style 行业/风格/Barra 暴露数据能力审计。
-5. 为 `new_source_alpha_probe` 增加更长时段、更多数据源、相关性/暴露/组合 smoke 验证。
-6. 工具链继续保持“不训练模型、不改策略、不改开源评价口径”的边界，直到候选池有足够多经过多层筛选的新来源因子。
+1. 为 328 个 `new_source_alpha_probe` 增加相关性、暴露、稳定性、分段 OOS 和组合 smoke 验证。
+2. 并行推进 FactorTest-style 行业/风格/Barra 暴露数据能力审计。
+3. 继续接入更多开源因子源，但必须沿用 source audit、adapter、V4 batch、promotion/holdout、multi-source screening、multi-source judgement 的路径。
+4. 工具链继续保持“不训练模型、不改策略、不改开源评价口径”的边界，直到候选池有足够多经过多层筛选的新来源因子。

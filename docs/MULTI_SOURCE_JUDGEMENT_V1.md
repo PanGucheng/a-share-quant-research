@@ -1,6 +1,6 @@
 # Multi-Source Judgement V1
 
-本文档记录 V3.26：在现有 multi-source screening 之后增加通用研究分层。目标是让 Alpha158、TA、Alpha101 和后续开源因子源共用一个 judgement board，但不替换已有 Qlib 主线、不训练新模型、不改 Alphalens / jqfactor / Qlib eval 的评价定义。
+本文档记录在现有 multi-source screening 之后增加通用研究分层。目标是让 Alpha158、TA、Alpha101、Alpha360 和后续开源因子源共用一个 judgement board，但不替换已有 Qlib 主线、不训练新模型、不改 Alphalens / jqfactor / Qlib eval 的评价定义。
 
 ## 定位
 
@@ -8,7 +8,7 @@
 
 - 读取已有 `multi_source_screening_input.csv`。
 - 保留 Alpha158 已有 candidate-pool 角色。
-- 对 TA / Alpha101 promoted monitor 因子增加 `new_source_alpha_probe`、`new_source_monitor`、`new_source_data_watch`、`new_source_mixed_signal` 等研究分层。
+- 对 TA / Alpha101 / Alpha360 promoted monitor 因子增加 `new_source_alpha_probe`、`new_source_monitor`、`new_source_data_watch`、`new_source_mixed_signal` 等研究分层。
 - `new_source_alpha_probe` 只是后续研究队列，不是交易信号，也不会成为默认组合或模型输入。
 
 ## 输入
@@ -75,12 +75,13 @@ outputs/multi_source_judgement_v1/current/multi_source_judgement_report.md
 ## 当前结果
 
 ```text
-judgement board rows: 319
-research candidates: 43
-new-source alpha probes: 29
+judgement board rows: 679
+research candidates: 342
+new-source alpha probes: 328
 TA probes: 15
 Alpha101 probes: 14
-holdouts: 23
+Alpha360 probes: 299
+holdouts: 25
 contract status: pass
 readiness generic_multi_source_judgement: pass
 ```
@@ -100,6 +101,9 @@ alpha101 new_source_data_watch: 16
 alpha101 new_source_mixed_signal: 7
 alpha101 new_source_monitor: 27
 alpha101 holdout: 18
+alpha360 new_source_alpha_probe: 299
+alpha360 new_source_monitor: 59
+alpha360 holdout: 2
 ```
 
 合同检查：

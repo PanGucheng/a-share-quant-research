@@ -1,6 +1,6 @@
 # Multi-Source Screening V1
 
-本文档记录 V3.22 的通用多来源因子筛选契约。目标是让 Alpha158、TA、Alpha101 和后续因子源共用同一套筛选入口，而不是每接一个开源项目就写一条专用链路。
+本文档记录通用多来源因子筛选契约。目标是让 Alpha158、TA、Alpha101、Alpha360 和后续因子源共用同一套筛选入口，而不是每接一个开源项目就写一条专用链路。
 
 ## 定位
 
@@ -10,7 +10,7 @@
 - 不调整具体交易策略。
 - 不替换 Qlib baseline。
 - 不修改 Alphalens Reloaded、jqfactor_analyzer、Qlib eval 等开源评价口径。
-- 不把 TA 因子直接判成 alpha，只把 promoted 新来源放入 `monitor`；后续 judgement 层另行输出研究 probe。
+- 不把 TA、Alpha101、Alpha360 等新来源因子直接判成 alpha，只把 promoted 新来源放入 `monitor`；后续 judgement 层另行输出研究 probe。
 
 ## 输入
 
@@ -31,6 +31,11 @@ outputs/alpha101_factor_adapter_v1/batch82/alpha101_factor_catalog_promoted64.ya
 outputs/alpha101_factor_adapter_v1/batch82/alpha101_factor_catalog_holdout18.yaml
 outputs/factor_evaluation_batch_v1/alpha101_candidate71_batch1/alpha101_candidate71_metric_index.csv
 outputs/alpha101_factor_adapter_v1/batch82/alpha101_factor_batch_promotion_audit.csv
+outputs/factor_catalog_alpha360_v1/alpha360_catalog_promoted358.yaml
+outputs/factor_catalog_alpha360_v1/alpha360_catalog_holdout2.yaml
+outputs/alpha360_expression_frame_v1/batch358/expression_frame_summary.csv
+outputs/factor_evaluation_batch_v1/alpha360_candidate358_execution/alpha360_candidate358_metric_index.csv
+outputs/factor_catalog_alpha360_v1/alpha360_batch_promotion_audit.csv
 ```
 
 ## 配置与脚本
@@ -64,12 +69,13 @@ outputs/multi_source_screening_v1/current/multi_source_screening_report.md
 ## 当前结果
 
 ```text
-screening rows: 319
-sources: 3
+screening rows: 679
+sources: 4
 Alpha158 strict rows: 155
 TA strict rows: 77
 Alpha101 strict rows: 64
-holdouts: 23
+Alpha360 strict rows: 358
+holdouts: 25
 alpha candidates: 14
 contract status: pass
 ```
@@ -83,11 +89,13 @@ ta monitor: 77
 ta holdout: 2
 alpha101 monitor: 64
 alpha101 holdout: 18
+alpha360 monitor: 358
+alpha360 holdout: 2
 ```
 
 ## 设计边界
 
-Alpha158 已有完整 judgement 和 candidate-pool 输出，因此 V1 直接复用其角色。TA 已通过 adapter、V4 batch 和 promotion，Alpha101 已通过 82 公式 adapter、candidate71 V4 batch 和 promotion，但它们还没有与 Alpha158 等价的时序 ICIR、稳定性、冗余和主观 judgement 层，因此 V1 保守地把新来源 promoted 因子放入 `monitor`。
+Alpha158 已有完整 judgement 和 candidate-pool 输出，因此 V1 直接复用其角色。TA 已通过 adapter、V4 batch 和 promotion，Alpha101 已通过 82 公式 adapter、candidate71 V4 batch 和 promotion，Alpha360 已通过 358 因子 batch V4 和 promotion，但它们还没有与 Alpha158 等价的时序 ICIR、稳定性、冗余和主观 judgement 层，因此 V1 保守地把新来源 promoted 因子放入 `monitor`。
 
 这一步的价值是让后续来源都能进入统一表结构：
 
@@ -103,15 +111,15 @@ V3.22 后，`factor_research_toolchain_readiness_v1` 的关键结果为：
 overall_status: ready
 generic_multi_source_screening: pass
 required_output_contracts: pass
-total_runnable: 311
-new_source_runnable: 141
+total_runnable: 669
+new_source_runnable: 499
 ```
 
-这表示工具链已经可以支撑大规模多来源因子研究。V3.26 已在现有 multi-source 输出上建设通用 judgement 层；下一阶段应继续接入更多开源因子源，例如更多公式库、基本面因子、行业/风格暴露数据，而不是继续围绕 Alpha158 个案细调。
+这表示工具链已经可以支撑大规模多来源因子研究。当前 multi-source 已经接入 Alpha360 批量因子；下一阶段应继续完善横截面诊断、相关性/暴露/组合 smoke 等工具，再扩张更多开源因子源、基本面因子、行业/风格暴露数据。
 
 ## 后续状态
 
-V3.26 已在本 contract 之上新增 `multi_source_judgement_v1`，输出 319 行 judgement board、43 个 research candidates 和 29 个 new-source alpha probes。详见：
+当前已在本 contract 之上新增 `multi_source_judgement_v1`，输出 679 行 judgement board、342 个 research candidates 和 328 个 new-source alpha probes。详见：
 
 ```text
 docs/MULTI_SOURCE_JUDGEMENT_V1.md

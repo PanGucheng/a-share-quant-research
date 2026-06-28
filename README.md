@@ -552,14 +552,15 @@ runnable_factor_inventory: pass
 new_source_adapter_inventory: pass
 generic_multi_source_screening: pass
 generic_multi_source_judgement: pass
-total_runnable: 311
-new_source_runnable: 141
+total_runnable: 669
+new_source_runnable: 499
 ```
 
-This means the Alpha158 reference path plus the promoted TA and Alpha101
-non-Alpha158 sources are ready. The generic multi-source screening and
-judgement contracts also pass, so the next project stage is broad factor-source
-expansion rather than more Alpha158-only study.
+This means the Alpha158 reference path plus the promoted TA, Alpha101, and
+Alpha360 non-Alpha158 sources are ready. The generic multi-source screening and
+judgement contracts also pass, so the next project stage is broader diagnostics
+for new-source probes and continued open-source factor expansion rather than
+more Alpha158-only study.
 
 Key output:
 
@@ -601,7 +602,7 @@ stay outside the runnable promoted catalog.
 ## Multi-Source Screening Contract
 
 Build the generic screening input and candidate pool from Alpha158 plus promoted
-TA and Alpha101 factors:
+TA, Alpha101, and Alpha360 factors:
 
 ```powershell
 cd E:\qlib_prj\qlib_baseline
@@ -611,19 +612,20 @@ E:\anaconda_envs\qlib_env\python.exe scripts\run_multi_source_screening_v1.py --
 Current result:
 
 ```text
-screening rows: 319
-sources: 3
+screening rows: 679
+sources: 4
 Alpha158 strict rows: 155
 TA strict rows: 77
 Alpha101 strict rows: 64
-holdouts: 23
+Alpha360 strict rows: 358
+holdouts: 25
 alpha candidates: 14
 contract status: pass
 ```
 
-TA and Alpha101 promoted factors are intentionally kept as `monitor` rows until a
-generic judgement layer reviews them; this avoids turning a successful source
-adapter into a trading signal by accident.
+TA, Alpha101, and Alpha360 promoted factors are intentionally kept as `monitor`
+rows until the generic judgement layer reviews them; this avoids turning a
+successful source adapter into a trading signal by accident.
 
 ## Multi-Source Judgement
 
@@ -637,17 +639,19 @@ E:\anaconda_envs\qlib_env\python.exe scripts\run_multi_source_judgement_v1.py --
 Current result:
 
 ```text
-judgement board rows: 319
-research candidates: 43
-new-source alpha probes: 29
+judgement board rows: 679
+research candidates: 342
+new-source alpha probes: 328
 TA probes: 15
 Alpha101 probes: 14
+Alpha360 probes: 299
 contract status: pass
 ```
 
 `new_source_alpha_probe` is a research queue, not a default downstream model or
 portfolio input. Alpha158 keeps the existing 14 `alpha_candidate` rows; promoted
-TA and Alpha101 factors can only become probes until broader validation is added.
+TA, Alpha101, and Alpha360 factors can only become probes until broader
+validation is added.
 
 ## Alpha101 Source Audit And Adapter Smoke
 
@@ -706,18 +710,21 @@ data_audit_next: factortest_exposure_diagnostics
 reference-only candidates: GPL or unknown-license sources
 ```
 
-This keeps the next expansion open-source-first without importing unsafe code.
-The next direct factor adapter should be Qlib Alpha360; FactorTest-style
+This keeps expansion open-source-first without importing unsafe code. Qlib
+Alpha360 has now completed the direct-adapter path; FactorTest-style
 industry/style exposure diagnostics should start with a data capability audit.
 
-## Qlib Alpha360 Adapter Smoke
+## Qlib Alpha360 Batch Promotion
 
-Alpha360 now has a source audit and adapter smoke path:
+Alpha360 now has a source audit, adapter smoke, V4 smoke, full 358-factor batch
+V4, promotion/holdout, and multi-source integration path:
 
 ```powershell
 cd E:\qlib_prj\qlib_baseline
 E:\anaconda_envs\qlib_env\python.exe scripts\audit_alpha360_catalog_v1.py --config configs\alpha360_catalog_audit_v1.yaml
 E:\anaconda_envs\qlib_env\python.exe scripts\build_alpha360_expression_frame_v1.py --config configs\alpha360_expression_adapter_smoke_v1.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\run_factor_evaluation_batch_v1.py --config configs\factor_evaluation_batch_v1_alpha360_candidate358_execution.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\promote_alpha360_batch_catalog_entries_v1.py --config configs\alpha360_factor_batch_promotion_v1.yaml
 ```
 
 Current result:
@@ -727,14 +734,16 @@ Alpha360 formulas: 360
 missing provider fields: 0
 smoke catalog entries: 24
 smoke frame rows: 88,797
+batch candidates: 358
+batch manifests: 72
+metric index rows: 6,444
+batch promoted: 358
+adapter holdouts: 2
+multi-source Alpha360 probes: 299
 readiness alpha360 contracts: pass
 ```
 
-The smoke catalog is still disabled/non-runnable. The next gate is V4 smoke
-evaluation, then 360-formula batch evaluation, promotion/holdout, and
-multi-source screening/judgement.
-
-Alpha360 V4 smoke has also run on the 22 non-constant smoke factors:
+Alpha360 V4 smoke ran on the 22 non-constant smoke factors:
 
 ```text
 Alphalens Reloaded: 22 pass
@@ -745,31 +754,29 @@ context_metric_index rows: 4,224
 ```
 
 The jqfactor partial status is recorded without changing the open-source metric
-definitions. The next Alpha360 step is a 358-factor batch candidate catalog,
-excluding `alpha360_CLOSE0` and `alpha360_VOLUME0`.
-
-Alpha360 batch preparation is now dry-run ready:
+definitions. Full Alpha360 batch V4 then evaluated the 358 non-holdout factors:
 
 ```text
-batch candidates: 358
-adapter holdouts: 2
-planned dry-run batches: 72
+Alphalens Reloaded: 358 pass
+Qlib eval: 358 pass
+jqfactor_analyzer: 358 partial_pass
+batch promoted: 358
+V4 batch holdout: 0
+adapter holdout: alpha360_CLOSE0, alpha360_VOLUME0
 ```
 
-Next gate: build the 358-factor batch frame, then run one resumable V4 batch
-before launching the remaining planned batches.
+The two adapter holdouts are `alpha360_CLOSE0` and `alpha360_VOLUME0`.
+The promoted catalog is enabled/runnable, but Alpha360 rows remain research
+probes after judgement until correlation, exposure, stability, OOS, and
+portfolio-smoke diagnostics are added.
 
-That gate has now passed:
+Key output:
 
 ```text
-batch358 frame rows: 88,797
-batch358 factors: 358
-smoke batch_001: pass
-smoke batch_001 metric rows: 90
+docs/ALPHA360_BATCH_PROMOTION_AND_MULTI_SOURCE_V1.md
+outputs/factor_catalog_alpha360_v1/alpha360_catalog_promoted358.yaml
+outputs/factor_evaluation_batch_v1/alpha360_candidate358_execution/alpha360_candidate358_metric_index.csv
 ```
-
-The next Alpha360 step is to continue the remaining resumable batches, then
-generate promotion/holdout catalogs before multi-source screening.
 
 ## Open-Source References
 

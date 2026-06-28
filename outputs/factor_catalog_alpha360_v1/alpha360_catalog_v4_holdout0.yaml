@@ -1,0 +1,14 @@
+version: 1
+updated: '2026-06-28'
+policy:
+  required_prefilter:
+  - data_quality
+  - tradability
+  principle:
+  - Alpha360 formulas are sourced from the local Qlib repository.
+  - Promoted entries require Alphalens Reloaded and Qlib eval pass.
+  - jqfactor_analyzer partial_pass is allowed only for known factor_returns/factor_alpha_beta
+    index-name failures.
+  - Adapter constant identity factors remain holdouts and are not sent to V4 batch.
+  purpose: Alpha360 V4 holdout factors after candidate358 batch evaluation.
+factors: []

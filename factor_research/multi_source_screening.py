@@ -35,6 +35,12 @@ class MultiSourceScreeningConfig:
     alpha101_metric_indexes: tuple[Path, ...]
     alpha101_promotion_audits: tuple[Path, ...]
     alpha101_evaluator_statuses: tuple[Path, ...]
+    alpha360_catalog: Path
+    alpha360_holdout_catalog: Path
+    alpha360_factor_summary: Path
+    alpha360_metric_indexes: tuple[Path, ...]
+    alpha360_promotion_audits: tuple[Path, ...]
+    alpha360_evaluator_statuses: tuple[Path, ...]
     output_dir: Path
     pool_name: str = "multi_source_v1"
     min_sources: int = 2
@@ -340,6 +346,47 @@ def build_alpha101_rows(config: MultiSourceScreeningConfig) -> pd.DataFrame:
     return rows
 
 
+def build_alpha360_rows(config: MultiSourceScreeningConfig) -> pd.DataFrame:
+    promoted = load_catalog(config.alpha360_catalog, "alpha360_promoted_catalog")
+    holdout = load_catalog(config.alpha360_holdout_catalog, "alpha360_holdout_catalog")
+    catalog = pd.concat([promoted, holdout], ignore_index=True).drop_duplicates("factor", keep="first")
+    summary = read_csv_or_empty(config.alpha360_factor_summary)
+    if not summary.empty:
+        summary = summary[["factor", "valid_rows", "total_rows", "coverage", "missing_rate"]]
+    metrics = load_metric_snapshot(config.alpha360_metric_indexes)
+    audit = load_ta_promotion_audit(config.alpha360_promotion_audits)
+    status = aggregate_evaluator_status(config.alpha360_evaluator_statuses)
+    rows = catalog.merge(summary, on="factor", how="left")
+    rows = rows.merge(metrics, on="factor", how="left")
+    rows = rows.merge(audit, on="factor", how="left")
+    rows = rows.merge(status, on="factor", how="left", suffixes=("", "_status"))
+    for column in ["alphalens_status", "jqfactor_status", "qlib_status"]:
+        status_column = f"{column}_status"
+        if status_column in rows.columns:
+            rows[column] = rows[column].fillna(rows[status_column])
+    rows["source_family"] = "alpha360"
+    fallback_decision = pd.Series(
+        np.where(rows["catalog_id"].eq("alpha360_holdout_catalog"), "holdout", "promoted"),
+        index=rows.index,
+    )
+    rows["decision"] = rows["decision"].fillna(fallback_decision)
+    rows["screening_gate"] = np.where(rows["decision"].eq("promoted"), "strict_screening_input", "holdout")
+    rows["promotion_decision"] = rows["decision"]
+    rows["promotion_reason"] = rows["reason"].fillna("")
+    rows["role"] = np.where(rows["screening_gate"].eq("holdout"), "holdout", "monitor")
+    rows["included"] = False
+    rows["pool_reason"] = np.where(
+        rows["screening_gate"].eq("holdout"),
+        "open_source_evaluator_holdout",
+        "promoted_new_source_pending_judgement",
+    )
+    rows["evaluation_gate"] = rows["screening_gate"]
+    rows["judgement_label"] = np.where(rows["screening_gate"].eq("holdout"), "holdout", "new_source_monitor")
+    rows["consensus_direction"] = "watch"
+    rows["issue_tags"] = ""
+    return rows
+
+
 STANDARD_COLUMNS = [
     "pool_name",
     "factor",
@@ -406,7 +453,7 @@ def standardize_columns(frame: pd.DataFrame, pool_name: str) -> pd.DataFrame:
     result["missing_rate"] = pd.to_numeric(result["missing_rate"], errors="coerce")
     sort_role = {"alpha_candidate": 0, "monitor": 1, "holdout": 2}
     result["_role_order"] = result["role"].map(sort_role).fillna(10)
-    result["_source_order"] = result["source_family"].map({"alpha158": 0, "ta": 1, "alpha101": 2}).fillna(9)
+    result["_source_order"] = result["source_family"].map({"alpha158": 0, "ta": 1, "alpha101": 2, "alpha360": 3}).fillna(9)
     result = result.sort_values(["_role_order", "_source_order", "factor"]).drop(columns=["_role_order", "_source_order"])
     return result.reset_index(drop=True)
 
@@ -506,7 +553,7 @@ def write_report(
         "",
         f"- Pool name: `{config.pool_name}`",
         "- Scope: screening contract only; no model training, no strategy optimization, no evaluator redefinition.",
-        "- Sources: Alpha158 validated reference plus promoted TA and Alpha101 catalogs.",
+        "- Sources: Alpha158 validated reference plus promoted TA, Alpha101, and Alpha360 catalogs.",
         "",
         "## Contract Status",
         "",
@@ -546,8 +593,9 @@ def run_multi_source_screening(config: MultiSourceScreeningConfig) -> dict[str, 
     alpha_rows = build_alpha158_rows(config)
     ta_rows = build_ta_rows(config)
     alpha101_rows = build_alpha101_rows(config)
+    alpha360_rows = build_alpha360_rows(config)
     screening_input = standardize_columns(
-        pd.concat([alpha_rows, ta_rows, alpha101_rows], ignore_index=True, sort=False),
+        pd.concat([alpha_rows, ta_rows, alpha101_rows, alpha360_rows], ignore_index=True, sort=False),
         config.pool_name,
     )
     board = build_candidate_board(screening_input)

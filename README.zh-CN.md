@@ -532,11 +532,11 @@ runnable_factor_inventory: pass
 new_source_adapter_inventory: pass
 generic_multi_source_screening: pass
 generic_multi_source_judgement: pass
-total_runnable: 311
-new_source_runnable: 141
+total_runnable: 669
+new_source_runnable: 499
 ```
 
-这说明 Alpha158 参照链路、TA 与 Alpha101 两类非 Alpha158 promoted 来源，以及通用多来源 screening / judgement 契约都已经准备好。下一阶段应该进入更多开源因子源扩张，而不是继续只围绕 Alpha158 细挖。
+这说明 Alpha158 参照链路、TA、Alpha101 与 Alpha360 三类非 Alpha158 promoted 来源，以及通用多来源 screening / judgement 契约都已经准备好。下一阶段应该先补新来源 probes 的相关性、暴露、稳定性、组合 smoke 等诊断，再继续扩张更多开源因子源，而不是继续只围绕 Alpha158 细挖。
 
 关键输出：
 
@@ -574,7 +574,7 @@ combined promoted TA catalog: 77
 
 ## 多来源 screening contract
 
-基于 Alpha158、promoted TA 和 Alpha101 因子生成通用筛选输入与候选池：
+基于 Alpha158、promoted TA、Alpha101 和 Alpha360 因子生成通用筛选输入与候选池：
 
 ```powershell
 cd E:\qlib_prj\qlib_baseline
@@ -584,17 +584,18 @@ E:\anaconda_envs\qlib_env\python.exe scripts\run_multi_source_screening_v1.py --
 当前结果：
 
 ```text
-screening rows: 319
-sources: 3
+screening rows: 679
+sources: 4
 Alpha158 strict rows: 155
 TA strict rows: 77
 Alpha101 strict rows: 64
-holdouts: 23
+Alpha360 strict rows: 358
+holdouts: 25
 alpha candidates: 14
 contract status: pass
 ```
 
-TA 和 Alpha101 promoted 因子在 screening contract 中仍保守放入 `monitor`，不会直接当成 alpha 信号。后续由通用 judgement 层决定哪些新来源因子进入研究 probe 队列。
+TA、Alpha101 和 Alpha360 promoted 因子在 screening contract 中仍保守放入 `monitor`，不会直接当成 alpha 信号。后续由通用 judgement 层决定哪些新来源因子进入研究 probe 队列。
 
 ## 多来源 judgement
 
@@ -608,15 +609,16 @@ E:\anaconda_envs\qlib_env\python.exe scripts\run_multi_source_judgement_v1.py --
 当前结果：
 
 ```text
-judgement board rows: 319
-research candidates: 43
-new-source alpha probes: 29
+judgement board rows: 679
+research candidates: 342
+new-source alpha probes: 328
 TA probes: 15
 Alpha101 probes: 14
+Alpha360 probes: 299
 contract status: pass
 ```
 
-`new_source_alpha_probe` 只是后续研究队列，不是默认模型或组合输入。Alpha158 保留既有 14 个 `alpha_candidate`；promoted TA 和 Alpha101 因子在更大范围验证前只会进入 probe。
+`new_source_alpha_probe` 只是后续研究队列，不是默认模型或组合输入。Alpha158 保留既有 14 个 `alpha_candidate`；promoted TA、Alpha101 和 Alpha360 因子在更大范围验证前只会进入 probe。
 
 ## Alpha101 来源审计与 adapter smoke
 
@@ -670,16 +672,18 @@ data_audit_next: factortest_exposure_diagnostics
 reference-only candidates: GPL 或 unknown-license 来源
 ```
 
-这能保证后续扩张继续优先参考开源，但不把 license 或数据假设风险带入主项目。下一条直接因子 adapter 应优先做 Qlib Alpha360；FactorTest 风格的行业/风格暴露诊断应先做数据能力审计。
+这能保证后续扩张继续优先参考开源，但不把 license 或数据假设风险带入主项目。Qlib Alpha360 已完成直接 adapter 路径；FactorTest 风格的行业/风格暴露诊断应先做数据能力审计。
 
-## Qlib Alpha360 Adapter Smoke
+## Qlib Alpha360 Batch Promotion
 
-Alpha360 已经完成 source audit 和 adapter smoke：
+Alpha360 已经完成 source audit、adapter smoke、V4 smoke、完整 358 因子 batch V4、promotion/holdout 与 multi-source 接入：
 
 ```powershell
 cd E:\qlib_prj\qlib_baseline
 E:\anaconda_envs\qlib_env\python.exe scripts\audit_alpha360_catalog_v1.py --config configs\alpha360_catalog_audit_v1.yaml
 E:\anaconda_envs\qlib_env\python.exe scripts\build_alpha360_expression_frame_v1.py --config configs\alpha360_expression_adapter_smoke_v1.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\run_factor_evaluation_batch_v1.py --config configs\factor_evaluation_batch_v1_alpha360_candidate358_execution.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\promote_alpha360_batch_catalog_entries_v1.py --config configs\alpha360_factor_batch_promotion_v1.yaml
 ```
 
 当前结果：
@@ -689,12 +693,16 @@ Alpha360 formulas: 360
 missing provider fields: 0
 smoke catalog entries: 24
 smoke frame rows: 88,797
+batch candidates: 358
+batch manifests: 72
+metric index rows: 6,444
+batch promoted: 358
+adapter holdouts: 2
+multi-source Alpha360 probes: 299
 readiness alpha360 contracts: pass
 ```
 
-当前 smoke catalog 仍是 disabled/non-runnable。下一道门是 V4 smoke 评价；通过后再进入 360 公式 batch、promotion/holdout、multi-source screening 和 judgement。
-
-Alpha360 V4 smoke 也已经完成，范围是 22 个非恒等 smoke 因子：
+Alpha360 V4 smoke 已完成，范围是 22 个非恒等 smoke 因子：
 
 ```text
 Alphalens Reloaded: 22 pass
@@ -704,28 +712,26 @@ open_source_metric_index rows: 396
 context_metric_index rows: 4,224
 ```
 
-jqfactor partial 会被记录，但不改开源评价口径。下一步是生成 Alpha360 358 因子 batch candidate catalog，并排除 `alpha360_CLOSE0` 与 `alpha360_VOLUME0`。
-
-Alpha360 batch 准备也已经 dry-run 通过：
+jqfactor partial 会被记录，但不改开源评价口径。完整 Alpha360 batch V4 随后评估了 358 个非 holdout 因子：
 
 ```text
-batch candidates: 358
-adapter holdouts: 2
-planned dry-run batches: 72
+Alphalens Reloaded: 358 pass
+Qlib eval: 358 pass
+jqfactor_analyzer: 358 partial_pass
+batch promoted: 358
+V4 batch holdout: 0
+adapter holdout: alpha360_CLOSE0, alpha360_VOLUME0
 ```
 
-下一道门：先生成 358 因子 batch frame，再跑一个可恢复 V4 小批次，确认无误后才继续跑剩余批次。
+两个 adapter holdout 是 `alpha360_CLOSE0` 和 `alpha360_VOLUME0`。Promoted catalog 已 enabled/runnable，但 Alpha360 行在 judgement 后仍只是研究 probes；下一步需补相关性、暴露、稳定性、OOS 和组合 smoke 诊断。
 
-这道门已经通过：
+关键输出：
 
 ```text
-batch358 frame rows: 88,797
-batch358 factors: 358
-smoke batch_001: pass
-smoke batch_001 metric rows: 90
+docs/ALPHA360_BATCH_PROMOTION_AND_MULTI_SOURCE_V1.md
+outputs/factor_catalog_alpha360_v1/alpha360_catalog_promoted358.yaml
+outputs/factor_evaluation_batch_v1/alpha360_candidate358_execution/alpha360_candidate358_metric_index.csv
 ```
-
-下一步是继续用 resume 模式跑剩余 Alpha360 batches，完成后再生成 promotion/holdout catalog，并接入 multi-source screening。
 
 ## 当前因子研究结论
 

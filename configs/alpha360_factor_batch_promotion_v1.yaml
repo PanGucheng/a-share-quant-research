@@ -1,0 +1,28 @@
+source_catalog: "outputs/factor_catalog_alpha360_v1/alpha360_catalog_batch_candidate358.yaml"
+adapter_holdout_catalog: "outputs/factor_catalog_alpha360_v1/alpha360_catalog_adapter_holdout2.yaml"
+batch_root: "outputs/factor_evaluation_batch_v1/alpha360_candidate358_execution"
+batch_passed_catalog: "outputs/factor_catalog_alpha360_v1/alpha360_catalog_batch_passed358.yaml"
+v4_holdout_catalog: "outputs/factor_catalog_alpha360_v1/alpha360_catalog_v4_holdout0.yaml"
+all_holdout_catalog: "outputs/factor_catalog_alpha360_v1/alpha360_catalog_holdout2.yaml"
+combined_promoted_catalog: "outputs/factor_catalog_alpha360_v1/alpha360_catalog_promoted358.yaml"
+promotion_audit: "outputs/factor_catalog_alpha360_v1/alpha360_batch_promotion_audit.csv"
+metric_index_output: "outputs/factor_evaluation_batch_v1/alpha360_candidate358_execution/alpha360_candidate358_metric_index.csv"
+report_output: "outputs/factor_catalog_alpha360_v1/alpha360_batch_promotion_report.md"
+
+promotion:
+  passed_stage: "alpha360_adapter_v4_batch_passed"
+  holdout_stage: "alpha360_adapter_v4_batch_holdout"
+  required_pass_systems:
+    - "alphalens_reloaded"
+    - "qlib_eval"
+  allowed_partial_systems:
+    jqfactor_analyzer:
+      - "factor_returns"
+      - "factor_alpha_beta"
+  holdout_partial_systems:
+    alphalens_reloaded:
+      - "quantile_turnover"
+    jqfactor_analyzer:
+      - "factor_returns"
+      - "factor_alpha_beta"
+      - "quantile_turnover"

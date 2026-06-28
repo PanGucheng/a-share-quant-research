@@ -1,8 +1,8 @@
 ﻿source_project,manifest_id,declared_status,license,local_path,local_path_status,source_file,source_file_status,catalog_factor_count,enabled_factor_count,runnable_factor_count,readiness,readiness_reason
 ginkgo_alpha101,,metadata_registered_adapter_pending,MIT,tmp/reference_repos/Ginkgo_Alpha101,available,README.md,available,0,0,0,adapter_pending,source registered but calculation adapter is not promoted
-qlib_alpha360,,source_audit_adapter_smoke_pending,MIT,E:/qlib_prj/qlib_clone,available,qlib/contrib/data/loader.py,available,382,0,0,adapter_pending,source registered but calculation adapter is not promoted
 kunquant_alpha101,,source_audit_passed_adapter_pending,Apache-2.0,tmp/reference_repos/KunQuant,available,KunQuant/predefined/Alpha101.py,available,146,64,64,ready,runnable catalog entries available
 qlib_alpha158,,formula_inventory_passed_expression_adapter_pending,MIT,E:/qlib_prj/qlib_clone,available,qlib/contrib/data/loader.py,available,155,155,155,ready,runnable catalog entries available
+qlib_alpha360,,batch_v4_promoted,MIT,E:/qlib_prj/qlib_clone,available,qlib/contrib/data/loader.py,available,740,358,358,ready,runnable catalog entries available
 ta,,metadata_registered_adapter_pending,MIT,tmp/reference_repos/ta,available,ta/wrapper.py,available,77,77,77,ready,runnable catalog entries available
 qlib_factor_platform_presets,,design_reference,MIT,tmp/reference_repos/qlib_factor_platform,available,qlib_factor_platform/factors/presets.py,available,0,0,0,reference_only,"design reference, not a runnable factor source"
 alphalens_reloaded,alphalens_reloaded,factor_research/external/adapters.py::to_alphalens_factor_data,Apache-2.0,tmp/reference_repos/alphalens-reloaded,available,"src/alphalens/performance.py,src/alphalens/tears.py",available,0,0,0,reference_or_evaluator,Primary open-source factor evaluation reference.

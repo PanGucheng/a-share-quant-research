@@ -1,7 +1,7 @@
 ﻿check_id,status,detail
-row_alignment,pass,"source=319, board=319"
+row_alignment,pass,"source=679, board=679"
 alpha158_role_preserved,pass,"source_alpha=14, board_alpha=14"
-new_source_probe_count,pass,new_source_alpha_probe=29
-holdout_not_research_included,pass,research_included=43
+new_source_probe_count,pass,new_source_alpha_probe=328
+holdout_not_research_included,pass,research_included=342
 new_source_not_downstream_default,pass,new_source_downstream_default=0
-strict_new_source_metrics,pass,strict_new_source_rows=141
+strict_new_source_metrics,pass,strict_new_source_rows=499

@@ -3,7 +3,7 @@
 - Pool name: `multi_source_judgement_v1`
 - Scope: research judgement only; no model training, no strategy optimization, no evaluator redefinition.
 - Alpha158 roles are preserved from the existing Alpha158 candidate pool.
-- TA and Alpha101 promoted factors can become `new_source_alpha_probe`, but are not downstream defaults.
+- TA, Alpha101, and Alpha360 promoted factors can become `new_source_alpha_probe`, but are not downstream defaults.
 
 ## Rule Snapshot
 
@@ -15,12 +15,12 @@
 
 | check_id | status | detail |
 | --- | --- | --- |
-| row_alignment | pass | source=319, board=319 |
+| row_alignment | pass | source=679, board=679 |
 | alpha158_role_preserved | pass | source_alpha=14, board_alpha=14 |
-| new_source_probe_count | pass | new_source_alpha_probe=29 |
-| holdout_not_research_included | pass | research_included=43 |
+| new_source_probe_count | pass | new_source_alpha_probe=328 |
+| holdout_not_research_included | pass | research_included=342 |
 | new_source_not_downstream_default | pass | new_source_downstream_default=0 |
-| strict_new_source_metrics | pass | strict_new_source_rows=141 |
+| strict_new_source_metrics | pass | strict_new_source_rows=499 |
 
 ## Role Counts
 
@@ -37,6 +37,9 @@
 | alpha158 | excluded_unstable_context | 16 |
 | alpha158 | holdout | 3 |
 | alpha158 | monitor | 37 |
+| alpha360 | holdout | 2 |
+| alpha360 | new_source_alpha_probe | 299 |
+| alpha360 | new_source_monitor | 59 |
 | ta | holdout | 2 |
 | ta | new_source_alpha_probe | 15 |
 | ta | new_source_data_watch | 43 |
@@ -62,6 +65,11 @@
 | alpha158 | strong_signal | 10 |
 | alpha158 | unstable_context | 16 |
 | alpha158 | weak_signal | 4 |
+| alpha360 | consistent_signal_probe | 86 |
+| alpha360 | holdout | 2 |
+| alpha360 | monitor | 27 |
+| alpha360 | strong_signal_probe | 213 |
+| alpha360 | weak_signal | 32 |
 | ta | consistent_signal_probe | 3 |
 | ta | data_quality_watch | 43 |
 | ta | holdout | 2 |
@@ -117,6 +125,43 @@
 | kunquant_alpha101_alpha074 | alpha101 | new_source_alpha_probe | consistent_signal_probe | negative | 0.032551 | 8.454882 |
 | kunquant_alpha101_alpha020 | alpha101 | new_source_alpha_probe | consistent_signal_probe | negative | 0.031684 | 4.412716 |
 | kunquant_alpha101_alpha003 | alpha101 | new_source_alpha_probe | consistent_signal_probe | positive | 0.031336 | 7.160174 |
+| alpha360_HIGH45 | alpha360 | new_source_alpha_probe | strong_signal_probe | positive | 0.085583 | 8.470426 |
+| alpha360_HIGH46 | alpha360 | new_source_alpha_probe | strong_signal_probe | positive | 0.084900 | 8.381918 |
+| alpha360_HIGH44 | alpha360 | new_source_alpha_probe | strong_signal_probe | positive | 0.084780 | 8.460897 |
+| alpha360_OPEN45 | alpha360 | new_source_alpha_probe | strong_signal_probe | positive | 0.083850 | 8.168397 |
+| alpha360_HIGH43 | alpha360 | new_source_alpha_probe | strong_signal_probe | positive | 0.083845 | 8.410509 |
+| alpha360_VWAP45 | alpha360 | new_source_alpha_probe | strong_signal_probe | positive | 0.083835 | 8.194263 |
+| alpha360_HIGH47 | alpha360 | new_source_alpha_probe | strong_signal_probe | positive | 0.083752 | 8.256177 |
+| alpha360_CLOSE46 | alpha360 | new_source_alpha_probe | strong_signal_probe | positive | 0.083528 | 8.147478 |
+| alpha360_CLOSE45 | alpha360 | new_source_alpha_probe | strong_signal_probe | positive | 0.083518 | 8.199197 |
+| alpha360_OPEN44 | alpha360 | new_source_alpha_probe | strong_signal_probe | positive | 0.083363 | 8.160880 |
+| alpha360_HIGH41 | alpha360 | new_source_alpha_probe | strong_signal_probe | positive | 0.083258 | 8.556907 |
+| alpha360_VWAP46 | alpha360 | new_source_alpha_probe | strong_signal_probe | positive | 0.083236 | 8.112684 |
+| alpha360_HIGH42 | alpha360 | new_source_alpha_probe | strong_signal_probe | positive | 0.082947 | 8.440146 |
+| alpha360_VWAP44 | alpha360 | new_source_alpha_probe | strong_signal_probe | positive | 0.082892 | 8.195194 |
+| alpha360_HIGH48 | alpha360 | new_source_alpha_probe | strong_signal_probe | positive | 0.082681 | 8.193271 |
+| alpha360_OPEN46 | alpha360 | new_source_alpha_probe | strong_signal_probe | positive | 0.082676 | 8.044498 |
+| alpha360_HIGH40 | alpha360 | new_source_alpha_probe | strong_signal_probe | positive | 0.082376 | 8.588899 |
+| alpha360_CLOSE44 | alpha360 | new_source_alpha_probe | strong_signal_probe | positive | 0.082339 | 8.162219 |
+| alpha360_OPEN43 | alpha360 | new_source_alpha_probe | strong_signal_probe | positive | 0.082281 | 8.127592 |
+| alpha360_VWAP43 | alpha360 | new_source_alpha_probe | strong_signal_probe | positive | 0.082133 | 8.133997 |
+| alpha360_LOW45 | alpha360 | new_source_alpha_probe | strong_signal_probe | positive | 0.081873 | 7.868505 |
+| alpha360_CLOSE47 | alpha360 | new_source_alpha_probe | strong_signal_probe | positive | 0.081690 | 7.952610 |
+| alpha360_VWAP47 | alpha360 | new_source_alpha_probe | strong_signal_probe | positive | 0.081611 | 7.933018 |
+| alpha360_LOW44 | alpha360 | new_source_alpha_probe | strong_signal_probe | positive | 0.081413 | 7.890984 |
+| alpha360_OPEN42 | alpha360 | new_source_alpha_probe | strong_signal_probe | positive | 0.081345 | 8.057024 |
+| alpha360_VWAP41 | alpha360 | new_source_alpha_probe | strong_signal_probe | positive | 0.081306 | 8.239365 |
+| alpha360_HIGH50 | alpha360 | new_source_alpha_probe | strong_signal_probe | positive | 0.081176 | 8.006105 |
+| alpha360_VWAP42 | alpha360 | new_source_alpha_probe | strong_signal_probe | positive | 0.081149 | 8.124166 |
+| alpha360_CLOSE43 | alpha360 | new_source_alpha_probe | strong_signal_probe | positive | 0.081130 | 8.064945 |
+| alpha360_OPEN40 | alpha360 | new_source_alpha_probe | strong_signal_probe | positive | 0.081099 | 8.263567 |
+| alpha360_HIGH49 | alpha360 | new_source_alpha_probe | strong_signal_probe | positive | 0.081088 | 8.022020 |
+| alpha360_OPEN47 | alpha360 | new_source_alpha_probe | strong_signal_probe | positive | 0.081072 | 7.904475 |
+| alpha360_OPEN41 | alpha360 | new_source_alpha_probe | strong_signal_probe | positive | 0.081070 | 8.114599 |
+| alpha360_LOW46 | alpha360 | new_source_alpha_probe | strong_signal_probe | positive | 0.081031 | 7.782813 |
+| alpha360_CLOSE48 | alpha360 | new_source_alpha_probe | strong_signal_probe | positive | 0.080884 | 7.911678 |
+| alpha360_VWAP48 | alpha360 | new_source_alpha_probe | strong_signal_probe | positive | 0.080667 | 7.871870 |
+| alpha360_HIGH51 | alpha360 | new_source_alpha_probe | strong_signal_probe | positive | 0.080644 | 7.907079 |
 
 ## New Source Alpha Probes
 
@@ -151,6 +196,57 @@
 | kunquant_alpha101_alpha074 | alpha101 | consistent_signal_probe | negative | -0.032551 | 0.032551 | 8.454882 | 1.000000 |
 | kunquant_alpha101_alpha020 | alpha101 | consistent_signal_probe | negative | -0.031684 | 0.031684 | 4.412716 | 0.987213 |
 | kunquant_alpha101_alpha003 | alpha101 | consistent_signal_probe | positive | 0.013729 | 0.031336 | 7.160174 | 1.000000 |
+| alpha360_HIGH45 | alpha360 | strong_signal_probe | positive | 0.085583 | 0.085583 | 8.470426 | 0.993581 |
+| alpha360_HIGH46 | alpha360 | strong_signal_probe | positive | 0.084900 | 0.084900 | 8.381918 | 0.993570 |
+| alpha360_HIGH44 | alpha360 | strong_signal_probe | positive | 0.084780 | 0.084780 | 8.460897 | 0.993603 |
+| alpha360_OPEN45 | alpha360 | strong_signal_probe | positive | 0.083850 | 0.083850 | 8.168397 | 0.993581 |
+| alpha360_HIGH43 | alpha360 | strong_signal_probe | positive | 0.083845 | 0.083845 | 8.410509 | 0.993592 |
+| alpha360_VWAP45 | alpha360 | strong_signal_probe | positive | 0.083835 | 0.083835 | 8.194263 | 0.993581 |
+| alpha360_HIGH47 | alpha360 | strong_signal_probe | positive | 0.083752 | 0.083752 | 8.256177 | 0.993536 |
+| alpha360_CLOSE46 | alpha360 | strong_signal_probe | positive | 0.083528 | 0.083528 | 8.147478 | 0.993570 |
+| alpha360_CLOSE45 | alpha360 | strong_signal_probe | positive | 0.083518 | 0.083518 | 8.199197 | 0.993581 |
+| alpha360_OPEN44 | alpha360 | strong_signal_probe | positive | 0.083363 | 0.083363 | 8.160880 | 0.993603 |
+| alpha360_HIGH41 | alpha360 | strong_signal_probe | positive | 0.083258 | 0.083258 | 8.556907 | 0.993536 |
+| alpha360_VWAP46 | alpha360 | strong_signal_probe | positive | 0.083236 | 0.083236 | 8.112684 | 0.993570 |
+| alpha360_HIGH42 | alpha360 | strong_signal_probe | positive | 0.082947 | 0.082947 | 8.440146 | 0.993570 |
+| alpha360_VWAP44 | alpha360 | strong_signal_probe | positive | 0.082892 | 0.082892 | 8.195194 | 0.993603 |
+| alpha360_HIGH48 | alpha360 | strong_signal_probe | positive | 0.082681 | 0.082681 | 8.193271 | 0.993513 |
+| alpha360_OPEN46 | alpha360 | strong_signal_probe | positive | 0.082676 | 0.082676 | 8.044498 | 0.993570 |
+| alpha360_HIGH40 | alpha360 | strong_signal_probe | positive | 0.082376 | 0.082376 | 8.588899 | 0.993468 |
+| alpha360_CLOSE44 | alpha360 | strong_signal_probe | positive | 0.082339 | 0.082339 | 8.162219 | 0.993603 |
+| alpha360_OPEN43 | alpha360 | strong_signal_probe | positive | 0.082281 | 0.082281 | 8.127592 | 0.993592 |
+| alpha360_VWAP43 | alpha360 | strong_signal_probe | positive | 0.082133 | 0.082133 | 8.133997 | 0.993592 |
+| alpha360_LOW45 | alpha360 | strong_signal_probe | positive | 0.081873 | 0.081873 | 7.868505 | 0.993581 |
+| alpha360_CLOSE47 | alpha360 | strong_signal_probe | positive | 0.081690 | 0.081690 | 7.952610 | 0.993536 |
+| alpha360_VWAP47 | alpha360 | strong_signal_probe | positive | 0.081611 | 0.081611 | 7.933018 | 0.993536 |
+| alpha360_LOW44 | alpha360 | strong_signal_probe | positive | 0.081413 | 0.081413 | 7.890984 | 0.993603 |
+| alpha360_OPEN42 | alpha360 | strong_signal_probe | positive | 0.081345 | 0.081345 | 8.057024 | 0.993570 |
+| alpha360_VWAP41 | alpha360 | strong_signal_probe | positive | 0.081306 | 0.081306 | 8.239365 | 0.993536 |
+| alpha360_HIGH50 | alpha360 | strong_signal_probe | positive | 0.081176 | 0.081176 | 8.006105 | 0.993412 |
+| alpha360_VWAP42 | alpha360 | strong_signal_probe | positive | 0.081149 | 0.081149 | 8.124166 | 0.993570 |
+| alpha360_CLOSE43 | alpha360 | strong_signal_probe | positive | 0.081130 | 0.081130 | 8.064945 | 0.993592 |
+| alpha360_OPEN40 | alpha360 | strong_signal_probe | positive | 0.081099 | 0.081099 | 8.263567 | 0.993468 |
+| alpha360_HIGH49 | alpha360 | strong_signal_probe | positive | 0.081088 | 0.081088 | 8.022020 | 0.993457 |
+| alpha360_OPEN47 | alpha360 | strong_signal_probe | positive | 0.081072 | 0.081072 | 7.904475 | 0.993536 |
+| alpha360_OPEN41 | alpha360 | strong_signal_probe | positive | 0.081070 | 0.081070 | 8.114599 | 0.993536 |
+| alpha360_LOW46 | alpha360 | strong_signal_probe | positive | 0.081031 | 0.081031 | 7.782813 | 0.993570 |
+| alpha360_CLOSE48 | alpha360 | strong_signal_probe | positive | 0.080884 | 0.080884 | 7.911678 | 0.993513 |
+| alpha360_VWAP48 | alpha360 | strong_signal_probe | positive | 0.080667 | 0.080667 | 7.871870 | 0.993513 |
+| alpha360_HIGH51 | alpha360 | strong_signal_probe | positive | 0.080644 | 0.080644 | 7.907079 | 0.993389 |
+| alpha360_CLOSE41 | alpha360 | strong_signal_probe | positive | 0.080587 | 0.080587 | 8.214771 | 0.993536 |
+| alpha360_HIGH52 | alpha360 | strong_signal_probe | positive | 0.080517 | 0.080517 | 7.886839 | 0.993356 |
+| alpha360_CLOSE42 | alpha360 | strong_signal_probe | positive | 0.080505 | 0.080505 | 8.090536 | 0.993570 |
+| alpha360_VWAP40 | alpha360 | strong_signal_probe | positive | 0.080353 | 0.080353 | 8.292359 | 0.993468 |
+| alpha360_OPEN39 | alpha360 | strong_signal_probe | positive | 0.080255 | 0.080255 | 8.292056 | 0.993367 |
+| alpha360_HIGH39 | alpha360 | strong_signal_probe | positive | 0.080192 | 0.080192 | 8.486266 | 0.993367 |
+| alpha360_LOW43 | alpha360 | strong_signal_probe | positive | 0.080040 | 0.080040 | 7.796694 | 0.993592 |
+| alpha360_OPEN48 | alpha360 | strong_signal_probe | positive | 0.080007 | 0.080007 | 7.809073 | 0.993513 |
+| alpha360_HIGH53 | alpha360 | strong_signal_probe | positive | 0.079764 | 0.079764 | 7.860220 | 0.993299 |
+| alpha360_CLOSE40 | alpha360 | strong_signal_probe | positive | 0.079523 | 0.079523 | 8.254367 | 0.993468 |
+| alpha360_LOW42 | alpha360 | strong_signal_probe | positive | 0.079486 | 0.079486 | 7.777211 | 0.993570 |
+| alpha360_HIGH38 | alpha360 | strong_signal_probe | positive | 0.079433 | 0.079433 | 8.524929 | 0.993356 |
+| alpha360_LOW47 | alpha360 | strong_signal_probe | positive | 0.079374 | 0.079374 | 7.603502 | 0.993536 |
+| alpha360_CLOSE49 | alpha360 | strong_signal_probe | positive | 0.079353 | 0.079353 | 7.750127 | 0.993457 |
 
 ## Holdouts
 
@@ -179,6 +275,8 @@
 | kunquant_alpha101_alpha061 | alpha101 | alphalens_reloaded_not_run | not_run | not_run | pass |
 | kunquant_alpha101_alpha068 | alpha101 | alphalens_reloaded_not_run | not_run | not_run | pass |
 | kunquant_alpha101_alpha086 | alpha101 | alphalens_reloaded_not_run | not_run | not_run | pass |
+| alpha360_CLOSE0 | alpha360 | nan | nan | nan | nan |
+| alpha360_VOLUME0 | alpha360 | nan | nan | nan | nan |
 
 ## Output Files
 

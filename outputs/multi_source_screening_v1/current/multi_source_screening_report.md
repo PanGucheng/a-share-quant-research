@@ -2,19 +2,19 @@
 
 - Pool name: `multi_source_v1`
 - Scope: screening contract only; no model training, no strategy optimization, no evaluator redefinition.
-- Sources: Alpha158 validated reference plus promoted TA and Alpha101 catalogs.
+- Sources: Alpha158 validated reference plus promoted TA, Alpha101, and Alpha360 catalogs.
 
 ## Contract Status
 
 | check_id | status | detail |
 | --- | --- | --- |
-| source_count | pass | sources=3 |
-| total_screening_rows | pass | rows=319 |
-| new_source_screening_rows | pass | new_source_rows=141 |
+| source_count | pass | sources=4 |
+| total_screening_rows | pass | rows=679 |
+| new_source_screening_rows | pass | new_source_rows=499 |
 | standard_columns | pass | columns=41 |
 | alpha_candidates_not_holdout | pass | alpha_candidates=14 |
-| holdout_visible | pass | holdouts=23 |
-| board_pool_alignment | pass | board=319, pool=319 |
+| holdout_visible | pass | holdouts=25 |
+| board_pool_alignment | pass | board=679, pool=679 |
 
 ## Source Counts
 
@@ -24,6 +24,8 @@
 | alpha101 | strict_screening_input | 64 |
 | alpha158 | holdout | 3 |
 | alpha158 | strict_screening_input | 155 |
+| alpha360 | holdout | 2 |
+| alpha360 | strict_screening_input | 358 |
 | ta | holdout | 2 |
 | ta | strict_screening_input | 77 |
 
@@ -39,6 +41,8 @@
 | alpha158 | excluded_unstable_context | 16 |
 | alpha158 | holdout | 3 |
 | alpha158 | monitor | 37 |
+| alpha360 | holdout | 2 |
+| alpha360 | monitor | 358 |
 | ta | holdout | 2 |
 | ta | monitor | 77 |
 
@@ -88,6 +92,8 @@
 | kunquant_alpha101_alpha081 | alpha101 | alphalens_reloaded_partial:quantile_turnover | partial_pass | partial_pass | pass |
 | kunquant_alpha101_alpha086 | alpha101 | alphalens_reloaded_not_run | not_run | not_run | pass |
 | kunquant_alpha101_alpha099 | alpha101 | alphalens_reloaded_partial:quantile_turnover | partial_pass | partial_pass | pass |
+| alpha360_CLOSE0 | alpha360 |  | nan | nan | nan |
+| alpha360_VOLUME0 | alpha360 |  | nan | nan | nan |
 
 ## Output Files
 

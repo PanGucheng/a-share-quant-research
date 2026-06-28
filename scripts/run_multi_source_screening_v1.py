@@ -39,6 +39,7 @@ def build_config(path: Path) -> MultiSourceScreeningConfig:
     alpha = payload["alpha158"]
     ta = payload["ta"]
     alpha101 = payload["alpha101"]
+    alpha360 = payload["alpha360"]
     contract = payload.get("contract", {})
     return MultiSourceScreeningConfig(
         alpha158_screening_input=resolve_path(alpha["screening_input"]),
@@ -56,6 +57,12 @@ def build_config(path: Path) -> MultiSourceScreeningConfig:
         alpha101_metric_indexes=list_paths(alpha101, "metric_indexes"),
         alpha101_promotion_audits=list_paths(alpha101, "promotion_audits"),
         alpha101_evaluator_statuses=list_paths(alpha101, "evaluator_statuses"),
+        alpha360_catalog=resolve_path(alpha360["promoted_catalog"]),
+        alpha360_holdout_catalog=resolve_path(alpha360["holdout_catalog"]),
+        alpha360_factor_summary=resolve_path(alpha360["factor_summary"]),
+        alpha360_metric_indexes=list_paths(alpha360, "metric_indexes"),
+        alpha360_promotion_audits=list_paths(alpha360, "promotion_audits"),
+        alpha360_evaluator_statuses=list_paths(alpha360, "evaluator_statuses"),
         output_dir=resolve_path(payload.get("output_dir", "outputs/multi_source_screening_v1/current")),
         pool_name=str(payload.get("pool_name", "multi_source_v1")),
         min_sources=int(contract.get("min_sources", 2)),
