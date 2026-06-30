@@ -945,7 +945,7 @@ outputs/factor_research_v3/liquid2000_core/factor_research_v3_report.md
 
 ## 26. 因子研究 V3.1 工具链修正
 
-状态：已完成。
+状态：代码链路已完成，当前 coverage contract blocked。
 
 新增计划文档：
 
@@ -3592,12 +3592,13 @@ readiness overall_status: ready
 
 ## 71. V3.39：Liquidity Residualized Factor Evaluation V1
 
-状态：计划已制定，尚未执行。
+状态：已完成。
 
 阶段文档：
 
 ```text
 docs/LIQUIDITY_RESIDUALIZED_FACTOR_EVALUATION_V1_PLAN.md
+docs/LIQUIDITY_RESIDUALIZED_FACTOR_EVALUATION_V1.md
 ```
 
 阶段目标：
@@ -3607,7 +3608,7 @@ docs/LIQUIDITY_RESIDUALIZED_FACTOR_EVALUATION_V1_PLAN.md
 判断 raw 因子信号是否主要来自 liquidity_value / liquidity_bucket / tradability_score。
 ```
 
-计划新增文件：
+新增文件：
 
 ```text
 configs/liquidity_residualized_factor_evaluation_v1.yaml
@@ -3617,19 +3618,19 @@ scripts/audit_liquidity_residualized_factor_evaluation_v1.py
 docs/LIQUIDITY_RESIDUALIZED_FACTOR_EVALUATION_V1.md
 ```
 
-计划输入：
+输入：
 
 ```text
 outputs/tradability_exposure_attribution_v1/current/tradability_exposure_attribution_board.csv
-outputs/new_source_probe_review_v1/current/probe_review_board.csv
 outputs/tradability/all_stock_shsz_liquid2000_2021-01-01_2023-12-29/tradability_labels.csv
 outputs/ta_factor_adapter_v1/smoke/factor_frame.pkl
 outputs/alpha101_factor_adapter_v1/batch82/factor_frame.pkl
 ```
 
-计划输出：
+输出：
 
 ```text
+outputs/liquidity_residualized_factor_evaluation_v1/current/residualized_factor_frame.pkl
 outputs/liquidity_residualized_factor_evaluation_v1/current/residualized_factor_summary.csv
 outputs/liquidity_residualized_factor_evaluation_v1/current/daily_residualization_diagnostics.csv
 outputs/liquidity_residualized_factor_evaluation_v1/current/raw_vs_residualized_metric_comparison.csv
@@ -3638,20 +3639,41 @@ outputs/liquidity_residualized_factor_evaluation_v1/current/liquidity_residualiz
 outputs/liquidity_residualized_factor_evaluation_v1/current/liquidity_residualized_factor_evaluation_report.md
 ```
 
+实现：
+
+- 复用现有 tradability labels 和 factor frames。
+- 每个交易日独立 OLS 残差化：`factor_z ~ intercept + liquidity_value_z + liquidity_bucket_z + tradability_score_z + residual`。
+- 当前 tradability labels 中 `tradability_score` 多数情况下为常数，代码会按日自动剔除零方差 proxy，实际回归通常由 `liquidity_value` 与 `liquidity_bucket` 驱动。
+- 残差化前对因子和代理做 MAD winsorization + robust z-score (clip ±3)。
+- 残差列后缀 `__resid_liquidity`，不覆写原始因子列。
+- 日度诊断：coverage、R²、raw-residual 相关性。
+- 如 factor frames 或 feature cache 中有 label 列，则计算 IC/IR 比较；否则使用诊断指标。
+- 候选动作分层：`residual_signal_survives`、`liquidity_proxy_confirmed`、`holdout`、`needs_manual_review`。
+
+运行命令：
+
+```powershell
+E:\anaconda_envs\qlib_env\python.exe scripts\run_liquidity_residualized_factor_evaluation_v1.py --config configs\liquidity_residualized_factor_evaluation_v1.yaml
+E:\anaconda_envs\qlib_env\python.exe scripts\audit_liquidity_residualized_factor_evaluation_v1.py --config configs\liquidity_residualized_factor_evaluation_v1.yaml
+```
+
 边界：
 
 - 不训练模型。
 - 不进入策略优化。
 - 不做行业/Barra 中性化。
 - 不把 residualized 因子自动加入 downstream default。
+- 不修改现有 evaluator 定义。
 
-通过标准：
+Contract（≥ 8 checks）：
 
 ```text
-input_watchlist_rows >= 19
+watchlist_rows >= 19
 residualized_factor_count >= 19
-residualized_coverage_min >= 0.80
+residualized_coverage_min >= 0.80  # current: 0.1495, blocked
+daily_diagnostics_rows > 0
 raw_vs_residualized_metric_rows > 0
+contract_status_rows >= 8
 downstream_default_included == 0
 ```
 

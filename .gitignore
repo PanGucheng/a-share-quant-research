@@ -1,6 +1,7 @@
 # Runtime scratch files
 tmp/
 *.tmp
+.delegate/
 
 # Earlier failed/interrupted experiment attempts.
 # The validated baseline result is kept under outputs/mlruns_validated/.
@@ -108,6 +109,7 @@ outputs/alpha158_expression_frame_v1/*/factor_frame*.pkl
 outputs/ta_factor_adapter_v1/*/factor_frame*.pkl
 outputs/alpha101_factor_adapter_v1/*/factor_frame*.pkl
 outputs/alpha360_expression_frame_v1/*/factor_frame*.pkl
+outputs/liquidity_residualized_factor_evaluation_v1/*/residualized_factor_frame.pkl
 
 # Batch factor evaluation runtime outputs can become large. Keep the tiny dry-run
 # smoke manifest as a reproducibility fixture.

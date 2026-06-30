@@ -279,14 +279,28 @@ exposure_data_capability_audit: pass
 overall_status: ready
 ```
 
-这表示“引入更多因子”的入口已经打开，并且已由 TA、Alpha101 与 Alpha360 三类非 seed 来源验证；第一层 probes 诊断、review、strict-OOS 复核、main-vs-recent 稳定性、tradability exposure attribution 和 exposure data capability audit 也已经接入 readiness。当前 provider 缺少市值、行业和 Barra 字段，所以不能直接做 FactorTest-style industry/Barra neutralization。V3.39 应先按 `docs/LIQUIDITY_RESIDUALIZED_FACTOR_EVALUATION_V1_PLAN.md` 实现 liquidity residualized factor evaluation 的最小链路。所有扩张仍需沿用 adapter audit、V4 batch、promotion/holdout、multi-source screening、multi-source judgement、probe diagnostics、probe review、strict-OOS stability、exposure attribution 和 exposure data capability contract。
+V3.39 后新增 liquidity residualized factor evaluation contract：
+
+```text
+liquidity_residualized contract_status rows: >=8
+residualized_factor_count: >=19 (watchlist probes)
+residualized_coverage_min: 0.1495 (<0.80, blocked)
+daily_diagnostics_rows: >0
+raw_vs_residualized_metric_rows: >0
+downstream_default_included: 0
+liquidity_residualized_factor_evaluation: blocked_by_coverage
+overall_status: research_blocked
+```
+
+这表示”引入更多因子”的基础入口已经打开，并且已由 TA、Alpha101 与 Alpha360 三类非 seed 来源验证；第一层 probes 诊断、review、strict-OOS 复核、main-vs-recent 稳定性、tradability exposure attribution、exposure data capability audit 和 liquidity residualized evaluation 最小链路也已经接入。当前 provider 缺少市值、行业和 Barra 字段，所以不能直接做 FactorTest-style industry/Barra neutralization；V3.39 已能通过 liquidity proxies 生成残差化诊断，但当前 19 个 watchlist probes 的最小残差覆盖率只有 0.1495，未达到 0.80 contract，不应进入后续训练或默认候选。所有扩张仍需沿用 adapter audit、V4 batch、promotion/holdout、multi-source screening、multi-source judgement、probe diagnostics、probe review、strict-OOS stability、exposure attribution 和 exposure data capability contract。
 
 ## 7. 下一步目标
 
-下一步不继续围绕 Alpha158 微调，也不急着训练模型，而是进入“liquidity residualized evaluation 最小链路”阶段：
+V3.39 liquidity residualized evaluation 的代码链路已完成，但 coverage contract 当前 blocked。下一步：
 
-1. 按 `docs/LIQUIDITY_RESIDUALIZED_FACTOR_EVALUATION_V1_PLAN.md` 对 19 个高流动性暴露 probes 做 residualized evaluation。
-2. 用 raw vs residualized 对比判断信号是 alpha 还是 liquidity/tradability proxy。
-3. 继续设计外部行业/市值数据接入 contract，优先支持 SW/CITICS 行业和 market-cap/float-cap。
-4. 继续接入更多开源因子源，但必须沿用 source audit、adapter、V4 batch、promotion/holdout、multi-source screening、multi-source judgement 的路径。
-5. 工具链继续保持“不训练模型、不改策略、不改开源评价口径”的边界，直到候选池有足够多经过多层筛选的新来源因子。
+1. 先复核低覆盖来源，区分 TA frame 时间/股票池覆盖不足与 Alpha101 覆盖不足。
+2. 只有当 coverage contract 通过后，才对 `residual_signal_survives` 因子做 recent-OOS residualized evaluation。
+3. 设计外部行业/市值数据接入 contract，优先支持 SW/CITICS 行业和 market-cap/float-cap。
+4. 在行业/市值数据 ready 后，实现 FactorTest-style industry/size neutralized evaluation。
+5. 继续接入更多开源因子源，但必须沿用 source audit、adapter、V4 batch、promotion/holdout、multi-source screening、multi-source judgement 的路径。
+6. 工具链继续保持”不训练模型、不改策略、不改开源评价口径”的边界，直到候选池有足够多经过多层筛选的新来源因子。

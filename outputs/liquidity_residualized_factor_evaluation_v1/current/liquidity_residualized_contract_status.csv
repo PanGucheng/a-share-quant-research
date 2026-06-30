@@ -1,0 +1,9 @@
+﻿check_id,status,detail
+watchlist_rows,pass,watchlist_rows=19
+residualized_factor_count,pass,residualized_factor_count=19
+residualized_coverage_min,blocked,residualized_coverage_min=0.1495
+daily_diagnostics_rows,pass,daily_diagnostics_rows=2242
+raw_vs_residualized_metric_rows,pass,raw_vs_residualized_metric_rows=19
+contract_status_rows,pass,contract_status_rows=8 (target fulfilled)
+downstream_default_included,pass,downstream_default_included=0
+residualized_factor_frame_produced,pass,residualized_columns_in_frame=19

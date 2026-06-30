@@ -1,0 +1,48 @@
+# Liquidity Residualized Factor Evaluation V1 Configuration
+# V3.39: Residualize 19 tradability-exposed probes against liquidity proxies.
+# Uses existing tradability labels and factor frames; does not train models.
+# Residualized factors use suffix __resid_liquidity; raw factors are never overwritten.
+
+inputs:
+  # Board of 19 watchlist factors with tradability exposure attribution
+  tradability_exposure_attribution_board: "outputs/tradability_exposure_attribution_v1/current/tradability_exposure_attribution_board.csv"
+
+  # Factor frame sources for TA-pipeline and Alpha101-pipeline factors
+  ta_factor_frame: "outputs/ta_factor_adapter_v1/smoke/factor_frame.pkl"
+  alpha101_factor_frame: "outputs/alpha101_factor_adapter_v1/batch82/factor_frame.pkl"
+
+  # Unified tradability label layer (provides liquidity_value, liquidity_bucket, tradability_score)
+  tradability_dir: "outputs/tradability/all_stock_shsz_liquid2000_2021-01-01_2023-12-29"
+
+  # Cached feature frames directory (optional; scanned for labels if factor frames lack them)
+  feature_cache_dir: "tmp/factor_feature_cache"
+
+output_dir: "outputs/liquidity_residualized_factor_evaluation_v1/current"
+
+residualization:
+  # Liquidity/tradability proxies regressed out per trading day
+  proxies:
+    - "liquidity_value"
+    - "liquidity_bucket"
+    - "tradability_score"
+
+  # Minimum valid observations per trading day for OLS estimation
+  min_count: 50
+
+  # Suffix appended to raw factor name for residualized column
+  suffix: "__resid_liquidity"
+
+  # Z-score winsorization clip threshold
+  zscore_clip: 3.0
+
+labels:
+  - "label_10d_t1"
+  - "label_20d_t1"
+
+# IC computation minimum daily count
+min_ic_count: 50
+
+contract:
+  min_watchlist_rows: 19
+  min_residualized_factor_count: 19
+  min_residualized_coverage: 0.80

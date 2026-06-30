@@ -84,6 +84,7 @@ outputs/alpha360_strict_oos_stability_v1/current/strict_oos_stability_contract_s
 outputs/tradability_exposure_attribution_v1/current/tradability_exposure_contract_status.csv
 outputs/exposure_data_capability_audit_v1/current/exposure_data_capability_contract_status.csv
 outputs/factor_research_toolchain_readiness_v1/current/toolchain_readiness_report.md
+outputs/liquidity_residualized_factor_evaluation_v1/current/liquidity_residualized_contract_status.csv
 ```
 
 - Readiness 当前为 `ready`。
@@ -139,6 +140,17 @@ tmp/reference_repos/techfactor
 - V3.36 Alpha360 strict OOS stability 已完成：主窗口与 recent-OOS 指标对齐，信号指标无符号翻转，候选仍保持研究状态。
 - V3.37 Tradability exposure attribution 已完成：19 个高可交易性暴露 probes 已分层，直接 raw training 前需要 holdout、人工复核或 residualization。
 - V3.38 Exposure data capability audit 已完成：当前 provider 不支持市值/行业/Barra 字段，不能直接做 FactorTest-style industry/Barra neutralization。
-- V3.39 Liquidity residualized factor evaluation 计划已制定：先用已有 tradability labels 对 19 个高流动性暴露 probes 做残差化复核，不直接做行业/Barra 中性化。
-- 下一步按 `docs/LIQUIDITY_RESIDUALIZED_FACTOR_EVALUATION_V1_PLAN.md` 实施最小 residualized evaluation 链路。
+- V3.39 Liquidity residualized factor evaluation 代码链路已完成但 contract blocked：19 个 watchlist probes 通过每日横截面 OLS 残差化（configured proxies: `liquidity_value`, `liquidity_bucket`, `tradability_score`；常数 proxy 会按日自动剔除）。残差列后缀 `__resid_liquidity`，不覆写原始因子。产出了 residualized factor frame、每日诊断、raw-vs-residualized 比较、候选动作决策与 contract status。当前 `residualized_coverage_min=0.1495 < 0.80`，audit 正确失败；downstream default 仍为 0。
+  关键输出：
+  ```text
+  outputs/liquidity_residualized_factor_evaluation_v1/current/
+    residualized_factor_frame.pkl
+    residualized_factor_summary.csv
+    daily_residualization_diagnostics.csv
+    raw_vs_residualized_metric_comparison.csv
+    residualized_candidate_actions.csv
+    liquidity_residualized_contract_status.csv
+    liquidity_residualized_factor_evaluation_report.md
+  ```
+- 下一步：先复核低覆盖来源，暂不把 V3.39 结果用于训练或默认候选；随后设计外部行业/市值数据接入 contract。
 - 后续继续接入更多开源因子源，但必须沿用 source audit、adapter、V4 batch、promotion/holdout、multi-source screening、multi-source judgement 的路径。
