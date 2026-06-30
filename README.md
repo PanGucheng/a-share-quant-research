@@ -40,7 +40,7 @@ data_quality/     Data-quality diagnostic module.
 tradability/      Tradability label builder and reports.
 factor_research/  Factor evaluation, preprocessing, neutralization, and reports.
 scripts/          Reproducible command-line runners and summaries.
-docs/             Development plans, audits, reference surveys, and design notes.
+docs/             Current development docs plus archived plans and audits.
 outputs/          Selected validated outputs and compact research summaries.
 logs/             Kept baseline log plus local ignored runtime logs.
 tmp/              Ignored local caches, reference repos, and scratch outputs.
@@ -258,7 +258,7 @@ E:\anaconda_envs\qlib_env\python.exe scripts\run_factor_evaluation_v4.py --confi
 E:\anaconda_envs\qlib_env\python.exe scripts\validate_factor_evaluation_context.py
 ```
 
-The module reads existing Qlib provider intervals and benchmark features. It is an input to factor evaluation and does not bypass the required data-quality and tradability filters. See `docs/FACTOR_CONTEXT_V1.md` for time semantics and known listing-date limitations.
+The module reads existing Qlib provider intervals and benchmark features. It is an input to factor evaluation and does not bypass the required data-quality and tradability filters. The historical design note is archived under `docs/_archive/03_factor_research_history/FACTOR_CONTEXT_V1.md`.
 
 ## Batch Factor Evaluation V1
 
@@ -277,7 +277,7 @@ Key files:
 factor_research/factor_catalog.yaml
 factor_research/catalog.py
 scripts/run_factor_evaluation_batch_v1.py
-docs/FACTOR_BATCH_EVALUATION_V1.md
+docs/_archive/03_factor_research_history/FACTOR_BATCH_EVALUATION_V1.md
 ```
 
 This layer only selects factors, generates V4 configs, and records manifests and
@@ -776,12 +776,12 @@ liquidity residualization path first.
 Key output:
 
 ```text
-docs/NEW_SOURCE_PROBE_DIAGNOSTICS_V1.md
-docs/NEW_SOURCE_PROBE_REVIEW_V1.md
-docs/ALPHA360_STRICT_OOS_EXTENSION_V1.md
-docs/ALPHA360_STRICT_OOS_STABILITY_V1.md
-docs/TRADABILITY_EXPOSURE_ATTRIBUTION_V1.md
-docs/EXPOSURE_DATA_CAPABILITY_AUDIT_V1.md
+docs/_archive/06_probe_and_tradeability_audits/NEW_SOURCE_PROBE_DIAGNOSTICS_V1.md
+docs/_archive/06_probe_and_tradeability_audits/NEW_SOURCE_PROBE_REVIEW_V1.md
+docs/_archive/06_probe_and_tradeability_audits/ALPHA360_STRICT_OOS_EXTENSION_V1.md
+docs/_archive/06_probe_and_tradeability_audits/ALPHA360_STRICT_OOS_STABILITY_V1.md
+docs/_archive/06_probe_and_tradeability_audits/TRADABILITY_EXPOSURE_ATTRIBUTION_V1.md
+docs/_archive/06_probe_and_tradeability_audits/EXPOSURE_DATA_CAPABILITY_AUDIT_V1.md
 outputs/new_source_probe_diagnostics_v1/current/new_source_probe_diagnostics_report.md
 outputs/new_source_probe_review_v1/current/probe_review_report.md
 outputs/alpha360_strict_oos_extension_v1/current/alpha360_strict_oos_extension_report.md
@@ -910,7 +910,7 @@ portfolio-smoke diagnostics are added.
 Key output:
 
 ```text
-docs/ALPHA360_BATCH_PROMOTION_AND_MULTI_SOURCE_V1.md
+docs/_archive/05_open_source_factor_batches/ALPHA360_BATCH_PROMOTION_AND_MULTI_SOURCE_V1.md
 outputs/factor_catalog_alpha360_v1/alpha360_catalog_promoted358.yaml
 outputs/factor_evaluation_batch_v1/alpha360_candidate358_execution/alpha360_candidate358_metric_index.csv
 ```
@@ -932,10 +932,10 @@ projects instead of reinventing every component:
 Reference notes are documented in:
 
 ```text
-docs/FACTOR_RESEARCH_ALGORITHM_AUDIT.md
-docs/FACTOR_RESEARCH_V3_REFERENCE_SURVEY.md
-docs/FACTOR_RESEARCH_V3_1_PLAN.md
-docs/FACTOR_EXPANSION_V3_5_REFERENCE_SURVEY.md
+docs/_archive/03_factor_research_history/FACTOR_RESEARCH_ALGORITHM_AUDIT.md
+docs/_archive/03_factor_research_history/FACTOR_RESEARCH_V3_REFERENCE_SURVEY.md
+docs/_archive/03_factor_research_history/FACTOR_RESEARCH_V3_1_PLAN.md
+docs/_archive/03_factor_research_history/FACTOR_EXPANSION_V3_5_REFERENCE_SURVEY.md
 ```
 
 ## Development Notes
@@ -949,34 +949,15 @@ docs/FACTOR_EXPANSION_V3_5_REFERENCE_SURVEY.md
 ## Key Documents
 
 ```text
-docs/DEVELOPMENT_PLAN.md
+docs/DOC_INDEX.md
+docs/PROJECT_CONTEXT_SUMMARY.md
+docs/STEP_5_FACTOR_RESEARCH_AND_MODEL_PLAN.md
+docs/FACTOR_RESEARCH_TOOLCHAIN_READINESS_V1.md
+docs/LIQUIDITY_RESIDUALIZED_FACTOR_EVALUATION_V1_PLAN.md
 docs/ENVIRONMENT.md
 docs/BASELINE_REPRODUCIBILITY.md
+docs/DATA_SOURCE_DECISION.md
+docs/UNIVERSE_POLICY.md
 docs/TRADABILITY_LABEL_LAYER.md
-docs/PROVIDER_DATA_CAPABILITY_V3_6.md
-docs/FACTOR_CONTEXT_V1.md
-docs/FACTOR_BATCH_EVALUATION_V1.md
-docs/ALPHA158_CATALOG_AUDIT_V1.md
-docs/ALPHA158_EXPRESSION_EVALUATION_STAGE_PLAN.md
-docs/ALPHA158_EXPRESSION_ADAPTER_V1.md
-docs/ALPHA158_FULL_EVALUATION_STAGE_PLAN.md
-docs/ALPHA158_FULL_SCREENING_INPUT_V1.md
-docs/ALPHA158_JUDGEMENT_LAYER_V1.md
-docs/ALPHA158_CANDIDATE_POOL_V1.md
-docs/ALPHA158_CANDIDATE_PORTFOLIO_SMOKE_V1.md
-docs/ALPHA158_PORTFOLIO_DIAGNOSTICS_V1.md
-docs/ALPHA158_RECENT_OOS_EXTENSION_V1.md
-docs/ALPHA158_STABILITY_DIAGNOSTICS_V1.md
-docs/FACTOR_RESEARCH_TOOLCHAIN_READINESS_V1.md
-docs/TA_FACTOR_ADAPTER_SMOKE_V1.md
-docs/TA_BATCH_EVALUATION_PLAN_V1.md
-docs/TA_BATCH_PROMOTION_V1.md
-docs/MULTI_SOURCE_SCREENING_V1.md
-docs/MULTI_SOURCE_JUDGEMENT_V1.md
-docs/OPEN_SOURCE_FACTOR_EXPANSION_AUDIT_V1.md
-docs/ALPHA101_SOURCE_AUDIT_V1.md
-docs/ALPHA101_ADAPTER_SMOKE_V1.md
-docs/ALPHA101_BATCH_PROMOTION_V1.md
-docs/STEP_5_FACTOR_RESEARCH_AND_MODEL_PLAN.md
-docs/PROJECT_CONTEXT_SUMMARY.md
+docs/_archive/README.md
 ```

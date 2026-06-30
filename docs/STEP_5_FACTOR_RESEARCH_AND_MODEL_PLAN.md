@@ -748,7 +748,7 @@ monotonicity_score > 0
 factor_research/dataset.py
 factor_research/metrics.py
 factor_research/selector.py
-docs/FACTOR_RESEARCH_MODULE_PLAN.md
+docs/_archive/03_factor_research_history/FACTOR_RESEARCH_MODULE_PLAN.md
 ```
 
 借鉴边界：
@@ -824,7 +824,7 @@ tmp/reference_repos/alphalens-reloaded
 审计文档：
 
 ```text
-docs/FACTOR_RESEARCH_ALGORITHM_AUDIT.md
+docs/_archive/03_factor_research_history/FACTOR_RESEARCH_ALGORITHM_AUDIT.md
 ```
 
 本轮校准结果：
@@ -851,7 +851,7 @@ outputs/factor_research_v2/liquid2000_default/factor_research_v2_report.md
 新增调研文档：
 
 ```text
-docs/FACTOR_RESEARCH_V3_REFERENCE_SURVEY.md
+docs/_archive/03_factor_research_history/FACTOR_RESEARCH_V3_REFERENCE_SURVEY.md
 ```
 
 本轮额外拉取到 `tmp/reference_repos/` 的参考仓库：
@@ -950,7 +950,7 @@ outputs/factor_research_v3/liquid2000_core/factor_research_v3_report.md
 新增计划文档：
 
 ```text
-docs/FACTOR_RESEARCH_V3_1_PLAN.md
+docs/_archive/03_factor_research_history/FACTOR_RESEARCH_V3_1_PLAN.md
 docs/PROJECT_CONTEXT_SUMMARY.md
 ```
 
@@ -1055,7 +1055,7 @@ smoke basic factor cache hit:      about 9.9s
 新增计划文档：
 
 ```text
-docs/FACTOR_SCREENING_V3_3_PLAN.md
+docs/_archive/03_factor_research_history/FACTOR_SCREENING_V3_3_PLAN.md
 ```
 
 本阶段目标：
@@ -1116,7 +1116,7 @@ amount_mean_20 -> watch
 新增计划文档：
 
 ```text
-docs/FACTOR_CANDIDATE_POOL_V3_4_PLAN.md
+docs/_archive/03_factor_research_history/FACTOR_CANDIDATE_POOL_V3_4_PLAN.md
 ```
 
 本阶段目标：
@@ -1171,7 +1171,7 @@ amount_mean_20 -> monitor
 新增文档：
 
 ```text
-docs/FACTOR_EXPANSION_V3_5_REFERENCE_SURVEY.md
+docs/_archive/03_factor_research_history/FACTOR_EXPANSION_V3_5_REFERENCE_SURVEY.md
 ```
 
 新增克隆到本地忽略目录的参考仓库：
@@ -1213,7 +1213,7 @@ corr_ret_amount_20
 新增实施文档：
 
 ```text
-docs/FACTOR_EXPANSION_V3_5_IMPLEMENTATION.md
+docs/_archive/03_factor_research_history/FACTOR_EXPANSION_V3_5_IMPLEMENTATION.md
 ```
 
 新增因子：
@@ -1278,7 +1278,7 @@ corr_ret_amount_20  -> monitor
 详细计划：
 
 ```text
-docs/FACTOR_EVALUATION_OPEN_SOURCE_COEXISTENCE_PLAN.md
+docs/_archive/03_factor_research_history/FACTOR_EVALUATION_OPEN_SOURCE_COEXISTENCE_PLAN.md
 ```
 
 路线修正：
@@ -1325,7 +1325,7 @@ V3.6 目标：
 factor_research/external/__init__.py
 factor_research/external/source_manifest.yaml
 factor_research/external/adapters.py
-docs/FACTOR_EVALUATION_SOURCE_MANIFEST.md
+docs/_archive/03_factor_research_history/FACTOR_EVALUATION_SOURCE_MANIFEST.md
 ```
 
 完成内容：
@@ -1350,7 +1350,7 @@ docs/FACTOR_EVALUATION_SOURCE_MANIFEST.md
 
 ```text
 scripts/run_factor_evaluation_v4.py
-docs/FACTOR_EVALUATION_V4_SMOKE_TEST.md
+docs/_archive/03_factor_research_history/FACTOR_EVALUATION_V4_SMOKE_TEST.md
 requirements-factor-evaluation.txt
 ```
 
@@ -1406,7 +1406,7 @@ factor_research/external/summary.py
 
 ```text
 scripts/run_factor_evaluation_v4.py
-docs/FACTOR_EVALUATION_V4_SMOKE_TEST.md
+docs/_archive/03_factor_research_history/FACTOR_EVALUATION_V4_SMOKE_TEST.md
 ```
 
 新增能力：
@@ -1441,7 +1441,7 @@ open_source_metric_index: 90 rows
 
 ```text
 scripts/inspect_provider_fields.py
-docs/PROVIDER_DATA_CAPABILITY_V3_6.md
+docs/_archive/02_data_layer_history/PROVIDER_DATA_CAPABILITY_V3_6.md
 ```
 
 输出目录：
@@ -1487,7 +1487,7 @@ factor_research/context/listing.py
 factor_research/context/universe.py
 scripts/build_factor_context_v1.py
 scripts/validate_factor_context_v1.py
-docs/FACTOR_CONTEXT_V1.md
+docs/_archive/03_factor_research_history/FACTOR_CONTEXT_V1.md
 ```
 
 输出目录：
@@ -1539,7 +1539,7 @@ scripts/validate_factor_evaluation_context.py
 configs/factor_evaluation_v4.yaml
 factor_research/external/adapters.py
 scripts/run_factor_evaluation_v4.py
-docs/FACTOR_CONTEXT_V1.md
+docs/_archive/03_factor_research_history/FACTOR_CONTEXT_V1.md
 ```
 
 实现原则：
@@ -1598,7 +1598,7 @@ configs/factor_evaluation_batch_v1_smoke.yaml
 factor_research/catalog.py
 factor_research/factor_catalog.yaml
 scripts/run_factor_evaluation_batch_v1.py
-docs/FACTOR_BATCH_EVALUATION_V1.md
+docs/_archive/03_factor_research_history/FACTOR_BATCH_EVALUATION_V1.md
 ```
 
 实现目标：
@@ -1645,7 +1645,7 @@ outputs/factor_evaluation_batch_v1/smoke_dry_run/
 configs/factor_evaluation_batch_v1_alpha158_metadata_smoke.yaml
 factor_research/qlib_alpha158.py
 scripts/audit_alpha158_catalog_v1.py
-docs/ALPHA158_CATALOG_AUDIT_V1.md
+docs/_archive/04_alpha158_history/ALPHA158_CATALOG_AUDIT_V1.md
 ```
 
 输出目录：
@@ -1707,8 +1707,8 @@ E:\anaconda_envs\qlib_env\python.exe scripts\run_factor_evaluation_batch_v1.py -
 阶段计划文档：
 
 ```text
-docs/ALPHA158_EXPRESSION_EVALUATION_STAGE_PLAN.md
-docs/ALPHA158_EXPRESSION_ADAPTER_V1.md
+docs/_archive/04_alpha158_history/ALPHA158_EXPRESSION_EVALUATION_STAGE_PLAN.md
+docs/_archive/04_alpha158_history/ALPHA158_EXPRESSION_ADAPTER_V1.md
 ```
 
 本阶段完成内容：
@@ -1794,7 +1794,7 @@ batch_004: pass
 阶段文档：
 
 ```text
-docs/ALPHA158_FULL_EVALUATION_STAGE_PLAN.md
+docs/_archive/04_alpha158_history/ALPHA158_FULL_EVALUATION_STAGE_PLAN.md
 ```
 
 新增文件：
@@ -1867,7 +1867,7 @@ holdout: alpha158_CNTN5, alpha158_IMAX5, alpha158_RANK5
 阶段文档：
 
 ```text
-docs/ALPHA158_FULL_SCREENING_INPUT_V1.md
+docs/_archive/04_alpha158_history/ALPHA158_FULL_SCREENING_INPUT_V1.md
 ```
 
 新增文件：
@@ -1936,7 +1936,7 @@ correlation used dates: 120
 阶段文档：
 
 ```text
-docs/ALPHA158_JUDGEMENT_LAYER_V1.md
+docs/_archive/04_alpha158_history/ALPHA158_JUDGEMENT_LAYER_V1.md
 ```
 
 新增文件：
@@ -2008,7 +2008,7 @@ holdout: 3
 阶段文档：
 
 ```text
-docs/ALPHA158_CANDIDATE_POOL_V1.md
+docs/_archive/04_alpha158_history/ALPHA158_CANDIDATE_POOL_V1.md
 ```
 
 新增文件：
@@ -2093,7 +2093,7 @@ alpha158_ROC10
 阶段文档：
 
 ```text
-docs/ALPHA158_CANDIDATE_PORTFOLIO_SMOKE_V1.md
+docs/_archive/04_alpha158_history/ALPHA158_CANDIDATE_PORTFOLIO_SMOKE_V1.md
 ```
 
 新增文件：
@@ -2164,7 +2164,7 @@ net_max_drawdown: -0.321708
 阶段文档：
 
 ```text
-docs/ALPHA158_PORTFOLIO_DIAGNOSTICS_V1.md
+docs/_archive/04_alpha158_history/ALPHA158_PORTFOLIO_DIAGNOSTICS_V1.md
 ```
 
 新增文件：
@@ -2235,7 +2235,7 @@ cost_20bps net_excess_ir: 0.465720
 阶段文档：
 
 ```text
-docs/ALPHA158_RECENT_OOS_EXTENSION_V1.md
+docs/_archive/04_alpha158_history/ALPHA158_RECENT_OOS_EXTENSION_V1.md
 ```
 
 新增文件：
@@ -2317,7 +2317,7 @@ recent OOS topk_100 net_excess_ir: 0.221295
 阶段文档：
 
 ```text
-docs/ALPHA158_STABILITY_DIAGNOSTICS_V1.md
+docs/_archive/04_alpha158_history/ALPHA158_STABILITY_DIAGNOSTICS_V1.md
 ```
 
 新增文件：
@@ -2448,7 +2448,7 @@ new_source_runnable: 0
 阶段文档：
 
 ```text
-docs/TA_FACTOR_ADAPTER_SMOKE_V1.md
+docs/_archive/05_open_source_factor_batches/TA_FACTOR_ADAPTER_SMOKE_V1.md
 ```
 
 新增文件：
@@ -2521,7 +2521,7 @@ V4 smoke 结果：
 阶段文档：
 
 ```text
-docs/TA_BATCH_EVALUATION_PLAN_V1.md
+docs/_archive/05_open_source_factor_batches/TA_BATCH_EVALUATION_PLAN_V1.md
 ```
 
 新增文件：
@@ -2576,7 +2576,7 @@ dry-run status: planned
 阶段文档：
 
 ```text
-docs/TA_BATCH_PROMOTION_V1.md
+docs/_archive/05_open_source_factor_batches/TA_BATCH_PROMOTION_V1.md
 ```
 
 新增文件：
@@ -2643,7 +2643,7 @@ ta_volatility_kchi
 阶段文档：
 
 ```text
-docs/MULTI_SOURCE_SCREENING_V1.md
+docs/_archive/05_open_source_factor_batches/MULTI_SOURCE_SCREENING_V1.md
 ```
 
 新增文件：
@@ -2707,7 +2707,7 @@ factor research readiness: ready
 阶段文档：
 
 ```text
-docs/ALPHA101_SOURCE_AUDIT_V1.md
+docs/_archive/05_open_source_factor_batches/ALPHA101_SOURCE_AUDIT_V1.md
 ```
 
 新增文件：
@@ -2764,7 +2764,7 @@ status: source_audit_passed_adapter_pending
 阶段文档：
 
 ```text
-docs/ALPHA101_ADAPTER_SMOKE_V1.md
+docs/_archive/05_open_source_factor_batches/ALPHA101_ADAPTER_SMOKE_V1.md
 ```
 
 新增文件：
@@ -2839,7 +2839,7 @@ readiness overall: ready
 阶段文档：
 
 ```text
-docs/ALPHA101_BATCH_PROMOTION_V1.md
+docs/_archive/05_open_source_factor_batches/ALPHA101_BATCH_PROMOTION_V1.md
 ```
 
 新增文件：
@@ -2904,7 +2904,7 @@ readiness overall: ready
 阶段文档：
 
 ```text
-docs/MULTI_SOURCE_JUDGEMENT_V1.md
+docs/_archive/05_open_source_factor_batches/MULTI_SOURCE_JUDGEMENT_V1.md
 ```
 
 新增文件：
@@ -2955,7 +2955,7 @@ readiness overall: ready
 阶段文档：
 
 ```text
-docs/OPEN_SOURCE_FACTOR_EXPANSION_AUDIT_V1.md
+docs/_archive/05_open_source_factor_batches/OPEN_SOURCE_FACTOR_EXPANSION_AUDIT_V1.md
 ```
 
 新增文件：
@@ -3010,7 +3010,7 @@ techfactor
 阶段文档：
 
 ```text
-docs/ALPHA360_ADAPTER_SMOKE_V1.md
+docs/_archive/05_open_source_factor_batches/ALPHA360_ADAPTER_SMOKE_V1.md
 ```
 
 新增文件：
@@ -3063,7 +3063,7 @@ readiness overall: ready
 阶段文档：
 
 ```text
-docs/ALPHA360_V4_SMOKE_V1.md
+docs/_archive/05_open_source_factor_batches/ALPHA360_V4_SMOKE_V1.md
 ```
 
 新增文件：
@@ -3110,7 +3110,7 @@ context_metric_index rows: 4,224
 阶段文档：
 
 ```text
-docs/ALPHA360_BATCH_CATALOGS_V1.md
+docs/_archive/05_open_source_factor_batches/ALPHA360_BATCH_CATALOGS_V1.md
 ```
 
 新增文件：
@@ -3159,7 +3159,7 @@ batch size: 5
 阶段文档：
 
 ```text
-docs/ALPHA360_BATCH_FRAME_AND_SMOKE_BATCH1_V1.md
+docs/_archive/05_open_source_factor_batches/ALPHA360_BATCH_FRAME_AND_SMOKE_BATCH1_V1.md
 ```
 
 新增文件：
@@ -3196,7 +3196,7 @@ smoke batch_001 metric rows: 90
 下一步：
 
 - 后续 V3.32 已完成全部 Alpha360 execution batches、promotion/holdout、multi-source screening 与 judgement。
-- 当前状态见 `docs/ALPHA360_BATCH_PROMOTION_AND_MULTI_SOURCE_V1.md`。
+- 当前状态见 `docs/_archive/05_open_source_factor_batches/ALPHA360_BATCH_PROMOTION_AND_MULTI_SOURCE_V1.md`。
 
 ## 64. V3.32：Alpha360 完整 Batch Promotion 与 Multi-Source 接入
 
@@ -3205,7 +3205,7 @@ smoke batch_001 metric rows: 90
 阶段文档：
 
 ```text
-docs/ALPHA360_BATCH_PROMOTION_AND_MULTI_SOURCE_V1.md
+docs/_archive/05_open_source_factor_batches/ALPHA360_BATCH_PROMOTION_AND_MULTI_SOURCE_V1.md
 ```
 
 新增文件：
@@ -3263,8 +3263,8 @@ overall_status: ready
 阶段文档：
 
 ```text
-docs/NEW_SOURCE_PROBE_DIAGNOSTICS_V1.md
-docs/NEW_SOURCE_PROBE_DIAGNOSTICS_V1_PLAN.md
+docs/_archive/06_probe_and_tradeability_audits/NEW_SOURCE_PROBE_DIAGNOSTICS_V1.md
+docs/_archive/06_probe_and_tradeability_audits/NEW_SOURCE_PROBE_DIAGNOSTICS_V1_PLAN.md
 ```
 
 新增文件：
@@ -3313,8 +3313,8 @@ readiness overall_status: ready
 阶段文档：
 
 ```text
-docs/NEW_SOURCE_PROBE_REVIEW_V1.md
-docs/NEW_SOURCE_PROBE_REVIEW_V1_PLAN.md
+docs/_archive/06_probe_and_tradeability_audits/NEW_SOURCE_PROBE_REVIEW_V1.md
+docs/_archive/06_probe_and_tradeability_audits/NEW_SOURCE_PROBE_REVIEW_V1_PLAN.md
 ```
 
 新增文件：
@@ -3371,8 +3371,8 @@ alpha360_HIGH40
 阶段文档：
 
 ```text
-docs/ALPHA360_STRICT_OOS_EXTENSION_V1_PLAN.md
-docs/ALPHA360_STRICT_OOS_EXTENSION_V1.md
+docs/_archive/06_probe_and_tradeability_audits/ALPHA360_STRICT_OOS_EXTENSION_V1_PLAN.md
+docs/_archive/06_probe_and_tradeability_audits/ALPHA360_STRICT_OOS_EXTENSION_V1.md
 ```
 
 新增文件：
@@ -3435,8 +3435,8 @@ alpha360_HIGH40 alphalens 10D mean IC: 0.065851, 20D mean IC: 0.072314
 阶段文档：
 
 ```text
-docs/ALPHA360_STRICT_OOS_STABILITY_V1_PLAN.md
-docs/ALPHA360_STRICT_OOS_STABILITY_V1.md
+docs/_archive/06_probe_and_tradeability_audits/ALPHA360_STRICT_OOS_STABILITY_V1_PLAN.md
+docs/_archive/06_probe_and_tradeability_audits/ALPHA360_STRICT_OOS_STABILITY_V1.md
 ```
 
 新增文件：
@@ -3486,8 +3486,8 @@ readiness overall_status: ready
 阶段文档：
 
 ```text
-docs/TRADABILITY_EXPOSURE_ATTRIBUTION_V1_PLAN.md
-docs/TRADABILITY_EXPOSURE_ATTRIBUTION_V1.md
+docs/_archive/06_probe_and_tradeability_audits/TRADABILITY_EXPOSURE_ATTRIBUTION_V1_PLAN.md
+docs/_archive/06_probe_and_tradeability_audits/TRADABILITY_EXPOSURE_ATTRIBUTION_V1.md
 ```
 
 新增文件：
@@ -3546,8 +3546,8 @@ residualization_candidate_review material: 1
 阶段文档：
 
 ```text
-docs/EXPOSURE_DATA_CAPABILITY_AUDIT_V1_PLAN.md
-docs/EXPOSURE_DATA_CAPABILITY_AUDIT_V1.md
+docs/_archive/06_probe_and_tradeability_audits/EXPOSURE_DATA_CAPABILITY_AUDIT_V1_PLAN.md
+docs/_archive/06_probe_and_tradeability_audits/EXPOSURE_DATA_CAPABILITY_AUDIT_V1.md
 ```
 
 新增文件：

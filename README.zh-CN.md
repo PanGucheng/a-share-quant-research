@@ -28,7 +28,7 @@ data_quality/     数据质量诊断模块。
 tradability/      可交易性标签构建与报告。
 factor_research/  因子评价、预处理、中性化和报告模块。
 scripts/          可复现运行脚本和汇总脚本。
-docs/             开发计划、算法审计、开源参考调研和设计文档。
+docs/             当前开发文档，以及已归档的历史计划和审计记录。
 outputs/          已验证输出和较小的研究汇总结果。
 logs/             保留的 baseline 日志和本地运行日志。
 tmp/              被忽略的本地缓存、参考仓库和临时输出。
@@ -257,7 +257,7 @@ E:\anaconda_envs\qlib_env\python.exe scripts\run_factor_evaluation_v4.py --confi
 E:\anaconda_envs\qlib_env\python.exe scripts\validate_factor_evaluation_context.py
 ```
 
-该模块直接读取现有 Qlib provider 的成分区间和基准特征，只为因子评价补充上下文，不绕过既有数据质量检查与可交易性前置过滤。时点规则和上市日期代理限制见 `docs/FACTOR_CONTEXT_V1.md`。
+该模块直接读取现有 Qlib provider 的成分区间和基准特征，只为因子评价补充上下文，不绕过既有数据质量检查与可交易性前置过滤。历史设计说明已归档到 `docs/_archive/03_factor_research_history/FACTOR_CONTEXT_V1.md`。
 
 ## 批量因子评估 V1
 
@@ -275,7 +275,7 @@ E:\anaconda_envs\qlib_env\python.exe scripts\run_factor_evaluation_batch_v1.py -
 factor_research/factor_catalog.yaml
 factor_research/catalog.py
 scripts/run_factor_evaluation_batch_v1.py
-docs/FACTOR_BATCH_EVALUATION_V1.md
+docs/_archive/03_factor_research_history/FACTOR_BATCH_EVALUATION_V1.md
 ```
 
 该模块只负责选择因子、生成 V4 配置、记录 manifest 和失败批次。具体 IC、分组收益、换手率和上下文评价仍由 V4 调用 Alphalens Reloaded、jqfactor_analyzer、Qlib eval 和本项目已有输出完成。
@@ -736,12 +736,12 @@ exposure_data_capability_audit: pass
 关键输出：
 
 ```text
-docs/NEW_SOURCE_PROBE_DIAGNOSTICS_V1.md
-docs/NEW_SOURCE_PROBE_REVIEW_V1.md
-docs/ALPHA360_STRICT_OOS_EXTENSION_V1.md
-docs/ALPHA360_STRICT_OOS_STABILITY_V1.md
-docs/TRADABILITY_EXPOSURE_ATTRIBUTION_V1.md
-docs/EXPOSURE_DATA_CAPABILITY_AUDIT_V1.md
+docs/_archive/06_probe_and_tradeability_audits/NEW_SOURCE_PROBE_DIAGNOSTICS_V1.md
+docs/_archive/06_probe_and_tradeability_audits/NEW_SOURCE_PROBE_REVIEW_V1.md
+docs/_archive/06_probe_and_tradeability_audits/ALPHA360_STRICT_OOS_EXTENSION_V1.md
+docs/_archive/06_probe_and_tradeability_audits/ALPHA360_STRICT_OOS_STABILITY_V1.md
+docs/_archive/06_probe_and_tradeability_audits/TRADABILITY_EXPOSURE_ATTRIBUTION_V1.md
+docs/_archive/06_probe_and_tradeability_audits/EXPOSURE_DATA_CAPABILITY_AUDIT_V1.md
 outputs/new_source_probe_diagnostics_v1/current/new_source_probe_diagnostics_report.md
 outputs/new_source_probe_review_v1/current/probe_review_report.md
 outputs/alpha360_strict_oos_extension_v1/current/alpha360_strict_oos_extension_report.md
@@ -858,7 +858,7 @@ adapter holdout: alpha360_CLOSE0, alpha360_VOLUME0
 关键输出：
 
 ```text
-docs/ALPHA360_BATCH_PROMOTION_AND_MULTI_SOURCE_V1.md
+docs/_archive/05_open_source_factor_batches/ALPHA360_BATCH_PROMOTION_AND_MULTI_SOURCE_V1.md
 outputs/factor_catalog_alpha360_v1/alpha360_catalog_promoted358.yaml
 outputs/factor_evaluation_batch_v1/alpha360_candidate358_execution/alpha360_candidate358_metric_index.csv
 ```
@@ -886,10 +886,10 @@ outputs/factor_evaluation_batch_v1/alpha360_candidate358_execution/alpha360_cand
 相关文档：
 
 ```text
-docs/FACTOR_RESEARCH_ALGORITHM_AUDIT.md
-docs/FACTOR_RESEARCH_V3_REFERENCE_SURVEY.md
-docs/FACTOR_RESEARCH_V3_1_PLAN.md
-docs/FACTOR_EXPANSION_V3_5_REFERENCE_SURVEY.md
+docs/_archive/03_factor_research_history/FACTOR_RESEARCH_ALGORITHM_AUDIT.md
+docs/_archive/03_factor_research_history/FACTOR_RESEARCH_V3_REFERENCE_SURVEY.md
+docs/_archive/03_factor_research_history/FACTOR_RESEARCH_V3_1_PLAN.md
+docs/_archive/03_factor_research_history/FACTOR_EXPANSION_V3_5_REFERENCE_SURVEY.md
 ```
 
 ## 开发约束
@@ -904,34 +904,15 @@ docs/FACTOR_EXPANSION_V3_5_REFERENCE_SURVEY.md
 ## 关键文档
 
 ```text
-docs/DEVELOPMENT_PLAN.md
+docs/DOC_INDEX.md
+docs/PROJECT_CONTEXT_SUMMARY.md
+docs/STEP_5_FACTOR_RESEARCH_AND_MODEL_PLAN.md
+docs/FACTOR_RESEARCH_TOOLCHAIN_READINESS_V1.md
+docs/LIQUIDITY_RESIDUALIZED_FACTOR_EVALUATION_V1_PLAN.md
 docs/ENVIRONMENT.md
 docs/BASELINE_REPRODUCIBILITY.md
+docs/DATA_SOURCE_DECISION.md
+docs/UNIVERSE_POLICY.md
 docs/TRADABILITY_LABEL_LAYER.md
-docs/PROVIDER_DATA_CAPABILITY_V3_6.md
-docs/FACTOR_CONTEXT_V1.md
-docs/FACTOR_BATCH_EVALUATION_V1.md
-docs/ALPHA158_CATALOG_AUDIT_V1.md
-docs/ALPHA158_EXPRESSION_EVALUATION_STAGE_PLAN.md
-docs/ALPHA158_EXPRESSION_ADAPTER_V1.md
-docs/ALPHA158_FULL_EVALUATION_STAGE_PLAN.md
-docs/ALPHA158_FULL_SCREENING_INPUT_V1.md
-docs/ALPHA158_JUDGEMENT_LAYER_V1.md
-docs/ALPHA158_CANDIDATE_POOL_V1.md
-docs/ALPHA158_CANDIDATE_PORTFOLIO_SMOKE_V1.md
-docs/ALPHA158_PORTFOLIO_DIAGNOSTICS_V1.md
-docs/ALPHA158_RECENT_OOS_EXTENSION_V1.md
-docs/ALPHA158_STABILITY_DIAGNOSTICS_V1.md
-docs/FACTOR_RESEARCH_TOOLCHAIN_READINESS_V1.md
-docs/TA_FACTOR_ADAPTER_SMOKE_V1.md
-docs/TA_BATCH_EVALUATION_PLAN_V1.md
-docs/TA_BATCH_PROMOTION_V1.md
-docs/MULTI_SOURCE_SCREENING_V1.md
-docs/MULTI_SOURCE_JUDGEMENT_V1.md
-docs/OPEN_SOURCE_FACTOR_EXPANSION_AUDIT_V1.md
-docs/ALPHA101_SOURCE_AUDIT_V1.md
-docs/ALPHA101_ADAPTER_SMOKE_V1.md
-docs/ALPHA101_BATCH_PROMOTION_V1.md
-docs/STEP_5_FACTOR_RESEARCH_AND_MODEL_PLAN.md
-docs/PROJECT_CONTEXT_SUMMARY.md
+docs/_archive/README.md
 ```
