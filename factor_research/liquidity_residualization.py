@@ -315,6 +315,21 @@ def build_residualized_factor_frame(
         resid = residualize_daily(result, factor, proxies=proxies, min_count=min_count, suffix=suffix)
         # Positional assignment: both result and resid are sorted by datetime
         # index, so .values safely aligns without pandas duplicate-label issues.
+        # ------------------------------------------------------------------
+        # Guards: verify the index arrays are identical before relying on
+        # positional assignment.  A mismatch means the residual series rows
+        # would silently misalign with the frame rows.
+        if len(resid) != len(result):
+            raise ValueError(
+                f"residualize_daily returned {len(resid)} rows but frame has "
+                f"{len(result)} rows for factor '{factor}' - "
+                f"positional assignment would be corrupted"
+            )
+        if not np.array_equal(result.index.values, resid.index.values):
+            raise ValueError(
+                f"residualize_daily index differs from frame index for factor "
+                f"'{factor}' - positional assignment would misalign residuals"
+            )
         result[resid.name] = resid.values
 
     # Restore default integer index for downstream consumers

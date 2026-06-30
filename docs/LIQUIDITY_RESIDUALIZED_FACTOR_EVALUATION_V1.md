@@ -81,6 +81,7 @@ outputs/liquidity_residualized_factor_evaluation_v1/current/
 | raw_vs_residualized_metric_rows | > 0 |
 | contract_status_rows | ≥ 8 |
 | downstream_default_included | = 0 |
+| residualized_factor_frame_produced | ≥ 19 |
 
 ## Run
 
@@ -90,6 +91,16 @@ E:\anaconda_envs\qlib_env\python.exe scripts\run_liquidity_residualized_factor_e
 E:\anaconda_envs\qlib_env\python.exe scripts\audit_liquidity_residualized_factor_evaluation_v1.py --config configs\liquidity_residualized_factor_evaluation_v1.yaml
 ```
 
+## Validate
+
+The lightweight validation script uses synthetic data and does not require Qlib data:
+
+```powershell
+E:\anaconda_envs\qlib_env\python.exe scripts\validate_liquidity_residualized_factor_evaluation_v1.py
+```
+
+It covers constant-proxy handling, all-NaN guard cases, unsorted-row alignment, R^2 scale, and `liquidity_value` merge behavior.
+
 ## Residualization details
 
 - **Method**: daily cross-sectional OLS via `numpy.linalg.lstsq`.
@@ -97,6 +108,8 @@ E:\anaconda_envs\qlib_env\python.exe scripts\audit_liquidity_residualized_factor
 - **Proxies**: `liquidity_value`, `liquidity_bucket`, `tradability_score`.  Any proxy that
   is constant (zero cross-sectional variance) on a given day is auto-excluded from that day's
   regression; the configured set represents the maximum, not the guarantee.
+  `liquidity_bucket` is treated as an ordinal numeric regressor (its integer bucket rank
+  is used directly in the OLS design matrix without one-hot encoding).
 - **Suffix**: `__resid_liquidity` (never overwrites raw).
 - **Min observations**: 50 valid rows per day for OLS.
 
