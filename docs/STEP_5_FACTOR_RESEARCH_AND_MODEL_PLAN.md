@@ -3589,3 +3589,74 @@ readiness overall_status: ready
 
 - 设计外部行业/市值数据接入 contract。
 - 或先做 liquidity residualized factor evaluation 的最小接口。
+
+## 71. V3.39：Liquidity Residualized Factor Evaluation V1
+
+状态：计划已制定，尚未执行。
+
+阶段文档：
+
+```text
+docs/LIQUIDITY_RESIDUALIZED_FACTOR_EVALUATION_V1_PLAN.md
+```
+
+阶段目标：
+
+```text
+对 19 个 tradability_exposure_review probes 做 liquidity/tradability residualized evaluation，
+判断 raw 因子信号是否主要来自 liquidity_value / liquidity_bucket / tradability_score。
+```
+
+计划新增文件：
+
+```text
+configs/liquidity_residualized_factor_evaluation_v1.yaml
+factor_research/liquidity_residualization.py
+scripts/run_liquidity_residualized_factor_evaluation_v1.py
+scripts/audit_liquidity_residualized_factor_evaluation_v1.py
+docs/LIQUIDITY_RESIDUALIZED_FACTOR_EVALUATION_V1.md
+```
+
+计划输入：
+
+```text
+outputs/tradability_exposure_attribution_v1/current/tradability_exposure_attribution_board.csv
+outputs/new_source_probe_review_v1/current/probe_review_board.csv
+outputs/tradability/all_stock_shsz_liquid2000_2021-01-01_2023-12-29/tradability_labels.csv
+outputs/ta_factor_adapter_v1/smoke/factor_frame.pkl
+outputs/alpha101_factor_adapter_v1/batch82/factor_frame.pkl
+```
+
+计划输出：
+
+```text
+outputs/liquidity_residualized_factor_evaluation_v1/current/residualized_factor_summary.csv
+outputs/liquidity_residualized_factor_evaluation_v1/current/daily_residualization_diagnostics.csv
+outputs/liquidity_residualized_factor_evaluation_v1/current/raw_vs_residualized_metric_comparison.csv
+outputs/liquidity_residualized_factor_evaluation_v1/current/residualized_candidate_actions.csv
+outputs/liquidity_residualized_factor_evaluation_v1/current/liquidity_residualized_contract_status.csv
+outputs/liquidity_residualized_factor_evaluation_v1/current/liquidity_residualized_factor_evaluation_report.md
+```
+
+边界：
+
+- 不训练模型。
+- 不进入策略优化。
+- 不做行业/Barra 中性化。
+- 不把 residualized 因子自动加入 downstream default。
+
+通过标准：
+
+```text
+input_watchlist_rows >= 19
+residualized_factor_count >= 19
+residualized_coverage_min >= 0.80
+raw_vs_residualized_metric_rows > 0
+downstream_default_included == 0
+```
+
+完成后再决定：
+
+- 对残差信号仍存活的少量因子做 recent-OOS residualized evaluation。
+- 设计外部行业/市值数据接入 contract。
+- 在外部行业/市值数据 ready 后，再实现 FactorTest-style industry/size neutralized evaluation。

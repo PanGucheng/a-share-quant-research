@@ -139,5 +139,6 @@ tmp/reference_repos/techfactor
 - V3.36 Alpha360 strict OOS stability 已完成：主窗口与 recent-OOS 指标对齐，信号指标无符号翻转，候选仍保持研究状态。
 - V3.37 Tradability exposure attribution 已完成：19 个高可交易性暴露 probes 已分层，直接 raw training 前需要 holdout、人工复核或 residualization。
 - V3.38 Exposure data capability audit 已完成：当前 provider 不支持市值/行业/Barra 字段，不能直接做 FactorTest-style industry/Barra neutralization。
-- 下一步设计外部行业/市值数据接入 contract，或先做 liquidity residualized factor evaluation 的最小接口。
+- V3.39 Liquidity residualized factor evaluation 计划已制定：先用已有 tradability labels 对 19 个高流动性暴露 probes 做残差化复核，不直接做行业/Barra 中性化。
+- 下一步按 `docs/LIQUIDITY_RESIDUALIZED_FACTOR_EVALUATION_V1_PLAN.md` 实施最小 residualized evaluation 链路。
 - 后续继续接入更多开源因子源，但必须沿用 source audit、adapter、V4 batch、promotion/holdout、multi-source screening、multi-source judgement 的路径。

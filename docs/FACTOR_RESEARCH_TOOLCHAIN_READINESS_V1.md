@@ -279,13 +279,14 @@ exposure_data_capability_audit: pass
 overall_status: ready
 ```
 
-这表示“引入更多因子”的入口已经打开，并且已由 TA、Alpha101 与 Alpha360 三类非 seed 来源验证；第一层 probes 诊断、review、strict-OOS 复核、main-vs-recent 稳定性、tradability exposure attribution 和 exposure data capability audit 也已经接入 readiness。当前 provider 缺少市值、行业和 Barra 字段，所以不能直接做 FactorTest-style industry/Barra neutralization。下一阶段应设计外部行业/市值数据接入 contract，或先做 liquidity residualized factor evaluation 的最小接口。所有扩张仍需沿用 adapter audit、V4 batch、promotion/holdout、multi-source screening、multi-source judgement、probe diagnostics、probe review、strict-OOS stability、exposure attribution 和 exposure data capability contract。
+这表示“引入更多因子”的入口已经打开，并且已由 TA、Alpha101 与 Alpha360 三类非 seed 来源验证；第一层 probes 诊断、review、strict-OOS 复核、main-vs-recent 稳定性、tradability exposure attribution 和 exposure data capability audit 也已经接入 readiness。当前 provider 缺少市值、行业和 Barra 字段，所以不能直接做 FactorTest-style industry/Barra neutralization。V3.39 应先按 `docs/LIQUIDITY_RESIDUALIZED_FACTOR_EVALUATION_V1_PLAN.md` 实现 liquidity residualized factor evaluation 的最小链路。所有扩张仍需沿用 adapter audit、V4 batch、promotion/holdout、multi-source screening、multi-source judgement、probe diagnostics、probe review、strict-OOS stability、exposure attribution 和 exposure data capability contract。
 
 ## 7. 下一步目标
 
-下一步不继续围绕 Alpha158 微调，也不急着训练模型，而是进入“外部暴露数据接入 + 残差化评价接口”阶段：
+下一步不继续围绕 Alpha158 微调，也不急着训练模型，而是进入“liquidity residualized evaluation 最小链路”阶段：
 
-1. 设计外部行业/市值数据接入 contract，优先支持 SW/CITICS 行业和 market-cap/float-cap。
-2. 设计 liquidity residualized factor evaluation 的最小接口，用于高流动性暴露因子的后续复核。
-3. 继续接入更多开源因子源，但必须沿用 source audit、adapter、V4 batch、promotion/holdout、multi-source screening、multi-source judgement 的路径。
-4. 工具链继续保持“不训练模型、不改策略、不改开源评价口径”的边界，直到候选池有足够多经过多层筛选的新来源因子。
+1. 按 `docs/LIQUIDITY_RESIDUALIZED_FACTOR_EVALUATION_V1_PLAN.md` 对 19 个高流动性暴露 probes 做 residualized evaluation。
+2. 用 raw vs residualized 对比判断信号是 alpha 还是 liquidity/tradability proxy。
+3. 继续设计外部行业/市值数据接入 contract，优先支持 SW/CITICS 行业和 market-cap/float-cap。
+4. 继续接入更多开源因子源，但必须沿用 source audit、adapter、V4 batch、promotion/holdout、multi-source screening、multi-source judgement 的路径。
+5. 工具链继续保持“不训练模型、不改策略、不改开源评价口径”的边界，直到候选池有足够多经过多层筛选的新来源因子。
