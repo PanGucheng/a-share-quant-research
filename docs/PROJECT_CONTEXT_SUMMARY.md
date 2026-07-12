@@ -126,6 +126,8 @@ tmp/reference_repos/techfactor
 
 ## Next Work
 
+> 2026-07-12 优先级更新：后续工作以 `Qlib A股因子研究框架完整升级计划 V1.md` 和 `FACTOR_VALIDATION_ROADMAP_V1.md` 为准。下面的 V3.28—V3.39 条目保留为已完成历史；暂停新增因子源，下一步只执行阶段 0 的 baseline freeze、依赖兼容性和输出契约审计。
+
 当前下一阶段：
 
 - 不继续围绕单个 Alpha158、TA 或 Alpha101 因子细调策略。
@@ -153,4 +155,4 @@ tmp/reference_repos/techfactor
     liquidity_residualized_factor_evaluation_report.md
   ```
 - 下一步：先复核低覆盖来源，暂不把 V3.39 结果用于训练或默认候选；随后设计外部行业/市值数据接入 contract。
-- 后续继续接入更多开源因子源，但必须沿用 source audit、adapter、V4 batch、promotion/holdout、multi-source screening、multi-source judgement 的路径。
+- 新增开源因子源、模型训练、策略优化和默认候选变更全部暂停，直至阶段 0 完成且后续对应门禁明确允许。

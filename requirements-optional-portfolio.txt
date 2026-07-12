@@ -1,0 +1,2 @@
+# Optional only. Stage 6 must verify compatibility before installation.
+Riskfolio-Lib>=7,<8

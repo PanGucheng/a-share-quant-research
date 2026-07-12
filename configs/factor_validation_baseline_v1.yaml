@@ -1,0 +1,116 @@
+schema_version: 1
+profile: current
+output_dir: outputs/factor_validation_baseline_v1/current
+
+environment:
+  project_root: E:/qlib_prj/qlib_baseline
+  python: E:/anaconda_envs/qlib_env/python.exe
+  qlib_source: E:/qlib_prj/qlib_clone
+  qlib_provider: E:/qlib_prj/qlib_data/cn_data_community_20260609_derived
+
+artifacts:
+  - id: toolchain_catalog_summary
+    path: outputs/factor_research_toolchain_readiness_v1/current/catalog_summary.csv
+    critical: true
+  - id: toolchain_readiness_checks
+    path: outputs/factor_research_toolchain_readiness_v1/current/toolchain_readiness_checks.csv
+    critical: true
+  - id: multi_source_screening_input
+    path: outputs/multi_source_screening_v1/current/multi_source_screening_input.csv
+    critical: true
+  - id: multi_source_judgement_board
+    path: outputs/multi_source_judgement_v1/current/multi_source_judgement_board.csv
+    critical: true
+  - id: multi_source_research_candidates
+    path: outputs/multi_source_judgement_v1/current/multi_source_research_candidates.csv
+    critical: true
+  - id: multi_source_new_source_alpha_probes
+    path: outputs/multi_source_judgement_v1/current/multi_source_new_source_alpha_probes.csv
+    critical: true
+  - id: alpha158_alpha_candidates
+    path: outputs/factor_candidate_pool_alpha158_v1/full158/alpha158_alpha_candidates.csv
+    critical: true
+  - id: alpha158_recent_oos_diagnostics
+    path: outputs/alpha158_portfolio_diagnostics_v1/recent_oos_2024_2026/single_factor_summary.csv
+    critical: true
+  - id: alpha360_strict_oos_stability
+    path: outputs/alpha360_strict_oos_stability_v1/current/strict_oos_stability_summary.csv
+    critical: true
+  - id: liquidity_residualized_contract
+    path: outputs/liquidity_residualized_factor_evaluation_v1/current/liquidity_residualized_contract_status.csv
+    critical: true
+  - id: liquidity_residualized_actions
+    path: outputs/liquidity_residualized_factor_evaluation_v1/current/residualized_candidate_actions.csv
+    critical: true
+
+dependencies:
+  - distribution: pyqlib
+    import_name: qlib
+    role: existing_core
+    license: MIT
+  - distribution: pandas
+    import_name: pandas
+    role: existing_core
+    license: BSD-3-Clause
+  - distribution: numpy
+    import_name: numpy
+    role: existing_core
+    license: BSD-3-Clause
+  - distribution: scipy
+    import_name: scipy
+    role: existing_core
+    license: BSD-3-Clause
+  - distribution: scikit-learn
+    import_name: sklearn
+    role: existing_core
+    license: BSD-3-Clause
+  - distribution: statsmodels
+    import_name: statsmodels
+    role: research_validation_core
+    license: BSD-3-Clause
+  - distribution: pandera
+    import_name: pandera
+    role: phase_1_required
+    license: MIT
+  - distribution: mlfinpy
+    import_name: mlfinpy
+    role: phase_3_required
+    license: MIT
+  - distribution: Riskfolio-Lib
+    import_name: riskfolio
+    role: optional_portfolio
+    license: BSD-3-Clause
+
+expected_metrics:
+  total_runnable_factors: 669
+  new_source_runnable_factors: 499
+  multi_source_screening_rows: 679
+  multi_source_judgement_rows: 679
+  multi_source_research_candidate_rows: 342
+  new_source_alpha_probe_rows: 328
+  alpha158_candidate_rows: 14
+  alpha360_strict_oos_factor_rows: 3
+  liquidity_watchlist_rows: 19
+  liquidity_residualized_factor_count: 19
+  liquidity_residualized_coverage_min: 0.1495
+  liquidity_residualized_required_coverage_min: 0.80
+  liquidity_downstream_default_included: 0
+
+command_checks:
+  - id: liquidity_residualized_synthetic_validation
+    command:
+      - scripts/validate_liquidity_residualized_factor_evaluation_v1.py
+    expected_exit_codes: [0]
+  - id: liquidity_residualized_contract_audit
+    command:
+      - scripts/audit_liquidity_residualized_factor_evaluation_v1.py
+      - --config
+      - configs/liquidity_residualized_factor_evaluation_v1.yaml
+    expected_exit_codes: [1]
+    expected_reason: V3.39 coverage gate is deliberately blocked at 0.1495 below 0.80.
+  - id: factor_research_toolchain_readiness
+    command:
+      - scripts/audit_factor_research_toolchain_v1.py
+      - --config
+      - configs/factor_research_toolchain_readiness_v1.yaml
+    expected_exit_codes: [0]

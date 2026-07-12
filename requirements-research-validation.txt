@@ -1,0 +1,9 @@
+# Stage 0 records compatibility; install additions only when their stage starts.
+# Existing numerical stack is intentionally bounded to avoid a broad Qlib environment upgrade.
+pandas>=2.3,<2.4
+numpy>=2.2,<2.3
+scipy>=1.15,<1.16
+scikit-learn>=1.7,<1.8
+statsmodels>=0.14,<0.15
+pandera>=0.20,<1
+mlfinpy>=0.1,<1

@@ -4,6 +4,10 @@
 
 ## Current Working Documents
 
+- `Qlib A股因子研究框架完整升级计划 V1.md`
+  新一轮研究框架升级总纲，定义阶段目标、约束、输出和最终完成标准。
+- `FACTOR_VALIDATION_ROADMAP_V1.md`
+  上述升级总纲的详细执行路线图，包含工作包编号、依赖、预计文件、验证顺序、阶段门禁和失败停止条件。
 - `PROJECT_CONTEXT_SUMMARY.md`
   项目当前状态、最新阶段、关键路径和下一步入口。
 - `STEP_5_FACTOR_RESEARCH_AND_MODEL_PLAN.md`
@@ -38,10 +42,11 @@ docs/_archive/README.md
 
 ## Current Stage
 
-当前阶段是 V3.39：
+当前阶段已切换到完整升级计划的阶段 0：现状冻结与兼容性审计。
 
 ```text
-docs/LIQUIDITY_RESIDUALIZED_FACTOR_EVALUATION_V1_PLAN.md
+docs/Qlib A股因子研究框架完整升级计划 V1.md
+docs/FACTOR_VALIDATION_ROADMAP_V1.md
 ```
 
-目标是在不训练新模型、不调整策略、不引入实盘模块的前提下，对 V3.38 识别出的 19 个高流动性/可交易性暴露 probes 做残差化复核，判断信号是否仍具有独立 alpha，还是主要来自 liquidity/tradability proxy。
+V3.39 已成为阶段 0 必须冻结和复核的已知门禁：当前 `residualized_coverage_min=0.1495 < 0.80`，结果不得进入训练或默认候选。阶段 0 完成前，不开始动态股票池、滚动验证、组合优化或模型训练。

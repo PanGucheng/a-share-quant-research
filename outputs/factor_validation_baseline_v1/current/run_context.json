@@ -1,0 +1,26 @@
+{
+  "captured_at": "2026-07-12T11:16:13.881966+00:00",
+  "project_root": ".",
+  "branch": "agent/factor-validation-roadmap-v1",
+  "commit": "873a0db01695a33c893deebadbcac2333d397fc3",
+  "git_status": [
+    "M docs/DOC_INDEX.md",
+    " M docs/PROJECT_CONTEXT_SUMMARY.md",
+    "?? configs/factor_validation_baseline_v1.yaml",
+    "?? docs/FACTOR_VALIDATION_ROADMAP_V1.md",
+    "?? \"docs/Qlib A\\350\\202\\241\\345\\233\\240\\345\\255\\220\\347\\240\\224\\347\\251\\266\\346\\241\\206\\346\\236\\266\\345\\256\\214\\346\\225\\264\\345\\215\\207\\347\\272\\247\\350\\256\\241\\345\\210\\222 V1.md\"",
+    "?? outputs/factor_validation_baseline_v1/",
+    "?? requirements-optional-portfolio.txt",
+    "?? requirements-research-validation.txt",
+    "?? scripts/audit_factor_validation_baseline_v1.py"
+  ],
+  "python_executable": "E:\\anaconda_envs\\qlib_env\\python.exe",
+  "python_version": "3.10.19 | packaged by Anaconda, Inc. | (main, Oct 21 2025, 16:41:31) [MSC v.1929 64 bit (AMD64)]",
+  "platform": "Windows-10-10.0.26200-SP0",
+  "qlib_source": "E:/qlib_prj/qlib_clone",
+  "qlib_source_exists": true,
+  "qlib_provider": "E:/qlib_prj/qlib_data/cn_data_community_20260609_derived",
+  "qlib_provider_exists": true,
+  "qlib_provider_modified_at": "2026-06-11T16:03:10.503013+00:00",
+  "config": "configs/factor_validation_baseline_v1.yaml"
+}
