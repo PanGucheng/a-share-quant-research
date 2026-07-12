@@ -264,12 +264,13 @@ def contract_status(
     coverage = float(metrics.loc[metrics["metric"] == "liquidity_residualized_coverage_min", "observed_value"].iloc[0])
     required = float(metrics.loc[metrics["metric"] == "liquidity_residualized_required_coverage_min", "observed_value"].iloc[0])
     downstream = int(metrics.loc[metrics["metric"] == "liquidity_downstream_default_included", "observed_value"].iloc[0])
+    deferred_names = ", ".join(dependencies.loc[dependencies["status"] == "warning", "distribution"].astype(str))
     checks = [
         ("critical_artifacts", int(((artifacts["critical"]) & (artifacts["status"] != "pass")).sum()), 0, "critical", "All baseline artifacts must exist and be non-empty."),
         ("baseline_metric_drift", int((metrics["status"] != "pass").sum()), 0, "critical", "Frozen metrics must match the declared baseline."),
         ("existing_core_dependencies", int(((dependencies["role"] == "existing_core") & (dependencies["status"] != "pass")).sum()), 0, "critical", "Existing Qlib runtime dependencies must remain available."),
         ("research_validation_runtime", int(((dependencies["role"] == "research_validation_core") & (dependencies["status"] != "pass")).sum()), 0, "critical", "Statsmodels must be available for the validation layer."),
-        ("future_phase_dependency_warnings", int((dependencies["status"] == "warning").sum()), "recorded", "warning", "Pandera, mlfinpy, and optional Riskfolio are installed only in their owning phases."),
+        ("future_phase_dependency_warnings", int((dependencies["status"] == "warning").sum()), "recorded", "warning", f"Deferred phase-owned dependencies: {deferred_names or 'none'}."),
         ("command_checks", int((commands["status"] != "pass").sum()), 0, "critical", "Existing lightweight validation and audits must return their expected codes."),
         ("v3_39_coverage_gate", coverage, f">={required}", "critical", "Known blocker is preserved; do not lower the threshold or promote residualized factors."),
         ("v3_39_downstream_default", downstream, 0, "critical", "Blocked residualized factors must remain outside downstream defaults."),
@@ -327,6 +328,8 @@ def write_report(
     contract: pd.DataFrame,
 ) -> None:
     overall = "fail" if (contract["status"] == "fail").any() else "research_blocked" if (contract["status"] == "blocked").any() else "pass"
+    deferred = dependencies.loc[dependencies["status"] == "warning", "distribution"].astype(str).tolist()
+    deferred_text = ", ".join(deferred) if deferred else "none"
     lines = [
         "# Factor Validation Baseline V1 Audit",
         "",
@@ -362,7 +365,7 @@ def write_report(
         "## Risks And Blockers",
         "",
         "- V3.39 minimum residualized coverage is 0.1495 versus the unchanged 0.80 requirement. Residualized factors remain excluded from downstream defaults.",
-        "- Pandera and mlfinpy are not installed at baseline freeze. Install and verify them separately in phases 1 and 3; do not upgrade the full Qlib environment.",
+        f"- Phase-owned dependencies still deferred: {deferred_text}. Install and verify each only in its owning phase; do not upgrade the full Qlib environment.",
         "- Riskfolio-Lib is optional. Phase 6 may use SciPy if compatibility is not acceptable.",
         "- Historical industry/size point-in-time data is still unavailable and remains a later-stage blocker.",
         "",

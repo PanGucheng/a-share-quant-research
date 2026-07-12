@@ -8,6 +8,8 @@
   新一轮研究框架升级总纲，定义阶段目标、约束、输出和最终完成标准。
 - `FACTOR_VALIDATION_ROADMAP_V1.md`
   上述升级总纲的详细执行路线图，包含工作包编号、依赖、预计文件、验证顺序、阶段门禁和失败停止条件。
+- `outputs/research_data_contracts_v1/current/schema_report.md`
+  阶段 1 DataFrame contract 对现有 factor、tradability、screening 与 judgement 输出的兼容审计。
 - `PROJECT_CONTEXT_SUMMARY.md`
   项目当前状态、最新阶段、关键路径和下一步入口。
 - `STEP_5_FACTOR_RESEARCH_AND_MODEL_PLAN.md`
@@ -42,11 +44,11 @@ docs/_archive/README.md
 
 ## Current Stage
 
-当前阶段已切换到完整升级计划的阶段 0：现状冻结与兼容性审计。
+阶段 0 与阶段 1 已完成实现，当前执行阶段 2：时点化动态股票池。
 
 ```text
 docs/Qlib A股因子研究框架完整升级计划 V1.md
 docs/FACTOR_VALIDATION_ROADMAP_V1.md
 ```
 
-V3.39 已成为阶段 0 必须冻结和复核的已知门禁：当前 `residualized_coverage_min=0.1495 < 0.80`，结果不得进入训练或默认候选。阶段 0 完成前，不开始动态股票池、滚动验证、组合优化或模型训练。
+V3.39 仍是已冻结的下游门禁：当前 `residualized_coverage_min=0.1495 < 0.80`，结果不得进入训练或默认候选。阶段 2 只创建实验性 PIT 股票池；门禁通过前不重评全部因子。

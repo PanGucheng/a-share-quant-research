@@ -1,0 +1,27 @@
+schema_version: 1
+output_dir: outputs/research_data_contracts_v1/current
+
+datasets:
+  - id: residualized_factor_frame
+    schema: factor_frame
+    path: outputs/liquidity_residualized_factor_evaluation_v1/current/residualized_factor_frame.pkl
+    factor_column_regex: "^(ta_|kunquant_alpha101_).*$"
+  - id: residualized_tradability_frame
+    schema: tradability_frame
+    path: outputs/liquidity_residualized_factor_evaluation_v1/current/residualized_factor_frame.pkl
+  - id: multi_source_screening
+    schema: screening_frame
+    path: outputs/multi_source_screening_v1/current/multi_source_screening_input.csv
+  - id: multi_source_judgement
+    schema: judgement_frame
+    path: outputs/multi_source_judgement_v1/current/multi_source_judgement_board.csv
+
+compatibility_exceptions:
+  - dataset_id: existing_factor_labels
+    schema: label_frame
+    status: compatibility_exception
+    reason: Existing factor frames encode labels by name and do not expose feature_time, label_start_time, and label_end_time columns; all new rolling-validation outputs must use the explicit label contract.
+  - dataset_id: existing_static_liquid2000
+    schema: universe_interval
+    status: compatibility_exception
+    reason: The current static liquid2000 universe is a text instrument list without selection/effective lineage; phase 2 replaces it only for the experimental PIT path.

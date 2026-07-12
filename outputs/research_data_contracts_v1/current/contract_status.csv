@@ -1,0 +1,7 @@
+﻿check_name,status,observed_value,required_value,severity,reason
+configured_datasets,pass,4,>=4,critical,"Core factor, tradability, screening, and judgement frames must be audited."
+dataset_validation_failures,pass,0,0,critical,Configured existing outputs must pass their applicable schemas.
+compatibility_exceptions,warning,2,recorded,warning,Legacy label/universe gaps are explicitly scoped and cannot be inherited by new outputs.
+schema_inventory_rows,pass,181,>0,critical,Every audited dataset column must be inventoried.
+input_lineage,pass,4,4,critical,Every validated input must have a SHA256 lineage hash.
+existing_defaults_modified,pass,0,0,critical,Schema audit is read-only and does not modify source frames or defaults.

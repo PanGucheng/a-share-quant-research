@@ -128,6 +128,10 @@ tmp/reference_repos/techfactor
 
 > 2026-07-12 优先级更新：后续工作以 `Qlib A股因子研究框架完整升级计划 V1.md` 和 `FACTOR_VALIDATION_ROADMAP_V1.md` 为准。下面的 V3.28—V3.39 条目保留为已完成历史；暂停新增因子源，下一步只执行阶段 0 的 baseline freeze、依赖兼容性和输出契约审计。
 
+- 升级阶段 0 已完成：冻结 669 runnable / 499 new-source runnable、679 screening/judgement rows、342 research candidates、328 probes 和 V3.39 `0.1495 < 0.80` blocker；现有核心依赖与轻量命令检查通过。
+- 升级阶段 1 已完成实现：Pandera DataFrame contracts 覆盖 factor、label、tradability、universe interval、screening 和 judgement；真实 compact output audit 4/4 pass，旧 label/universe 两项兼容缺口显式 warning，新输出不得继承例外。
+- 当前下一步切换到阶段 2：只实现并验证实验性的 point-in-time 动态股票池；门禁通过前不重评全部因子。
+
 当前下一阶段：
 
 - 不继续围绕单个 Alpha158、TA 或 Alpha101 因子细调策略。
