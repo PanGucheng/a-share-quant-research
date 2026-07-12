@@ -130,7 +130,8 @@ tmp/reference_repos/techfactor
 
 - 升级阶段 0 已完成：冻结 669 runnable / 499 new-source runnable、679 screening/judgement rows、342 research candidates、328 probes 和 V3.39 `0.1495 < 0.80` blocker；现有核心依赖与轻量命令检查通过。
 - 升级阶段 1 已完成实现：Pandera DataFrame contracts 覆盖 factor、label、tradability、universe interval、screening 和 judgement；真实 compact output audit 4/4 pass，旧 label/universe 两项兼容缺口显式 warning，新输出不得继承例外。
-- 当前下一步切换到阶段 2：只实现并验证实验性的 point-in-time 动态股票池；门禁通过前不重评全部因子。
+- 升级阶段 2 已完成实现：实验性月度 PIT 流动性股票池复用 Qlib calendar/instrument interval，按历史 250 日成交额、180 有效日、120 上市交易日和次交易日生效规则生成；2024H1 local smoke 为 5 个可生效月份、1,000 snapshot rows，future reference、invalid interval、historical mutation 均为 0，Qlib instruments round-trip pass。
+- 当前下一步切换到阶段 3：实现 date-level Purged Walk-Forward；动态股票池门禁已通过，但仍不重评全部因子。
 
 当前下一阶段：
 

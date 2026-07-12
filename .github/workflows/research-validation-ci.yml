@@ -31,7 +31,11 @@ jobs:
           tests/test_output_schemas.py
           tests/test_config_parsing.py
           tests/test_imports.py
+          tests/test_point_in_time_universe.py
+          tests/test_no_future_leakage.py
           -q
       - name: Run synthetic contract validator
         shell: pwsh
-        run: python scripts/validate_research_data_contracts_v1.py
+        run: |
+          python scripts/validate_research_data_contracts_v1.py
+          python scripts/validate_point_in_time_universe_v1.py
