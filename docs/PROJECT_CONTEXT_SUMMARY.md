@@ -135,7 +135,8 @@ tmp/reference_repos/techfactor
 - 升级阶段 4 已完成实现：moving-block bootstrap 对现有 10 个 V4 daily Rank IC 序列生成标准误和 raw p-value，statsmodels 统一生成 BH/BY q-value；test family 明确到 source × horizon × window × preprocessing。200 个 null factors 的 BH false-discovery rate 为 0，稳定合成信号检出，seed/order/NaN contract 均通过。
 - 升级阶段 5 已完成 reference profile：复用 V4 daily Rank IC 和阶段 3 split manifest，10 个 factor×horizon 覆盖 4 个严格窗口，19 个窗口决策入选；输出 4 `stable_core`、3 `conditional_signal`、3 `monitor`。selection API 拒绝任何 `test_*` 列，实际 `test_metrics_used_in_selection=false`，旧 candidate pool 未修改。
 - 升级阶段 6 已完成 reference profile：7 个 stable/conditional 因子同时使用 60 个历史截面 exposure Spearman 和 daily Rank IC performance Spearman，SciPy average linkage 得到 3 个簇、3 个代表，duplicate cluster votes=0。Riskfolio-Lib 保持可选未安装，不影响兼容后端。
-- 当前下一步切换到阶段 7：以 3 个 cluster representatives 构建透明 composite score。
+- 升级阶段 7 已完成 reference profile：3 个 cluster representatives 在 4 个冻结 test 窗口生成 `equal_directional_zscore`、`cluster_equal`、`stability_weight`；权重只读取当前及更早 selection history，单因子上限 0.60 通过 capped renormalization 强制执行。future weight reference、duplicate cluster vote、weight sum error 均为 0，minimum components=3 ≥2；大型 score parquet 仅存 ignored runtime。
+- 当前下一步切换到阶段 8：建立订单、A股交易约束、费用、部分成交和容量会计。
 
 当前下一阶段：
 

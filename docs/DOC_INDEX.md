@@ -20,6 +20,8 @@
   阶段 5 严格窗口选择历史、冻结方向、OOS degradation 与稳定性角色看板。
 - `outputs/factor_clustering_v1/local_reference/clustering_report.md`
   阶段 6 exposure/performance 双相似度、SciPy 聚类与代表因子选择。
+- `outputs/factor_score_construction_v1/local_reference/score_construction_report.md`
+  阶段 7 三种透明组合、窗口权重、组件覆盖与防未来权重 contract。
 - `PROJECT_CONTEXT_SUMMARY.md`
   项目当前状态、最新阶段、关键路径和下一步入口。
 - `STEP_5_FACTOR_RESEARCH_AND_MODEL_PLAN.md`
@@ -54,7 +56,7 @@ docs/_archive/README.md
 
 ## Current Stage
 
-阶段 0—6 已完成实现，当前执行阶段 7：透明的多因子组合基线。
+阶段 0—7 已完成实现，当前执行阶段 8：A股交易约束、成本和容量。
 
 ```text
 docs/Qlib A股因子研究框架完整升级计划 V1.md

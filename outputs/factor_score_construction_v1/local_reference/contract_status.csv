@@ -1,0 +1,5 @@
+﻿check_name,status,observed_value,required_value,severity,reason
+future_weight_reference_count,pass,0,0,critical,Transparent score output contract.
+same_cluster_double_counting,pass,0,0,critical,Transparent score output contract.
+weight_sum_error,pass,True,True,critical,Transparent score output contract.
+minimum_component_policy_pass,pass,True,True,critical,Transparent score output contract.
