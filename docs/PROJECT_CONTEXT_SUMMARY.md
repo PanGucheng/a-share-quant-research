@@ -131,7 +131,8 @@ tmp/reference_repos/techfactor
 - 升级阶段 0 已完成：冻结 669 runnable / 499 new-source runnable、679 screening/judgement rows、342 research candidates、328 probes 和 V3.39 `0.1495 < 0.80` blocker；现有核心依赖与轻量命令检查通过。
 - 升级阶段 1 已完成实现：Pandera DataFrame contracts 覆盖 factor、label、tradability、universe interval、screening 和 judgement；真实 compact output audit 4/4 pass，旧 label/universe 两项兼容缺口显式 warning，新输出不得继承例外。
 - 升级阶段 2 已完成实现：实验性月度 PIT 流动性股票池复用 Qlib calendar/instrument interval，按历史 250 日成交额、180 有效日、120 上市交易日和次交易日生效规则生成；2024H1 local smoke 为 5 个可生效月份、1,000 snapshot rows，future reference、invalid interval、historical mutation 均为 0，Qlib instruments round-trip pass。
-- 当前下一步切换到阶段 3：实现 date-level Purged Walk-Forward；动态股票池门禁已通过，但仍不重评全部因子。
+- 升级阶段 3 已完成实现：唯一交易日层面的 expanding Purged Walk-Forward 使用 20 日标签、T+1、20 交易日 embargo，2017—2026 真实日历生成 split manifest；train/test、train/validation 标签重叠、same-date cross-fold 和 embargo violation 均为 0。mlfinpy 官方包要求 Python ≥3.11，与固定 Python 3.10 环境不兼容，当前使用隔离的 `ml_get_train_times` 等价薄实现并保留后端切换边界。
+- 当前下一步切换到阶段 4：实现 block bootstrap 与 FDR；仍不使用 test 指标做选择。
 
 当前下一阶段：
 
