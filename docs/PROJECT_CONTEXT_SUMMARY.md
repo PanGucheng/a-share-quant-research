@@ -137,7 +137,8 @@ tmp/reference_repos/techfactor
 - 升级阶段 6 已完成 reference profile：7 个 stable/conditional 因子同时使用 60 个历史截面 exposure Spearman 和 daily Rank IC performance Spearman，SciPy average linkage 得到 3 个簇、3 个代表，duplicate cluster votes=0。Riskfolio-Lib 保持可选未安装，不影响兼容后端。
 - 升级阶段 7 已完成 reference profile：3 个 cluster representatives 在 4 个冻结 test 窗口生成 `equal_directional_zscore`、`cluster_equal`、`stability_weight`；权重只读取当前及更早 selection history，单因子上限 0.60 通过 capped renormalization 强制执行。future weight reference、duplicate cluster vote、weight sum error 均为 0，minimum components=3 ≥2；大型 score parquet 仅存 ignored runtime。
 - 升级阶段 8 已完成 reference profile：订单/成交/持仓/现金会计支持 100 股整手、最低佣金、买卖费率、卖出税、滑点、涨跌停/停牌拒单、T+1 状态、成交量参与率和部分成交；真实 composite score 执行的 cash conservation error、invalid trades、future-price executions 均为 0，并输出容量诊断。当前基础行情无显式涨跌停字段，真实 run 不猜测状态，该规则由合成 contract 覆盖。
-- 当前下一步切换到阶段 9：外部行业与市值 PIT 数据契约和向前快照采集。
+- 升级阶段 9 已完成采集与 PIT contract 基础设施：AKShare 1.18.64 条件依赖安装且未升级核心数值栈；market-cap/float-cap 当前快照强制 `forward_only`，历史回填、缺 effective date、不可追溯来源和非法区间 contract 均为 0。当前东财端点被网络代理断开，`forward_snapshot_collection` 与 `historical_neutralization_ready` 正确保持 blocked，不生成或回填虚假历史暴露。
+- 当前下一步切换到阶段 10：完成不依赖行业/市值的共同口径组合诊断；完整 exposure diagnosis 继承阶段 9 downstream blocker。
 
 当前下一阶段：
 

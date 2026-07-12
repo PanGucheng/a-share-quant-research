@@ -24,6 +24,8 @@
   阶段 7 三种透明组合、窗口权重、组件覆盖与防未来权重 contract。
 - `outputs/a_share_execution_v1/local_reference/execution_report.md`
   阶段 8 A股订单约束、费用、部分成交、会计守恒和容量诊断。
+- `outputs/external_exposure_data_v1/current/exposure_data_report.md`
+  阶段 9 AKShare forward-only 快照、PIT 字段契约和当前外部采集阻塞状态。
 - `PROJECT_CONTEXT_SUMMARY.md`
   项目当前状态、最新阶段、关键路径和下一步入口。
 - `STEP_5_FACTOR_RESEARCH_AND_MODEL_PLAN.md`
@@ -58,7 +60,7 @@ docs/_archive/README.md
 
 ## Current Stage
 
-阶段 0—8 已完成实现，当前执行阶段 9：行业与市值时点数据接入。
+阶段 0—9 的代码与门禁基础设施已完成；阶段 9 真实外部快照受网络阻塞。当前执行阶段 10：最终组合诊断与压力测试。
 
 ```text
 docs/Qlib A股因子研究框架完整升级计划 V1.md

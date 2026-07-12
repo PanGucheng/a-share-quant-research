@@ -40,6 +40,7 @@ jobs:
           tests/test_score_construction.py
           tests/test_portfolio_accounting.py
           tests/test_trade_constraints.py
+          tests/test_point_in_time_fields.py
           -q
       - name: Run synthetic contract validator
         shell: pwsh
@@ -52,3 +53,4 @@ jobs:
           python scripts/validate_factor_clustering_v1.py
           python scripts/validate_factor_score_construction_v1.py
           python scripts/validate_a_share_execution_v1.py
+          python scripts/validate_external_exposure_data_v1.py
