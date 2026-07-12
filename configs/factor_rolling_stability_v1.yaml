@@ -1,0 +1,12 @@
+schema_version: 1
+profile: local_reference
+split_manifest: outputs/purged_walk_forward_v1/full_research/split_manifest.csv
+input_glob: outputs/factor_evaluation_v4/liquid2000_open_source_eval/qlib_eval/*/label_*_daily_rank_ic.csv
+metric_column: daily_rank_ic
+bootstrap_samples: 1000
+block_length: 20
+random_seed: 20260712
+fdr_alpha: 0.05
+min_abs_validation_ic: 0.01
+minimum_dates_per_fold: 40
+output_dir: outputs/factor_rolling_stability_v1/local_reference

@@ -133,7 +133,8 @@ tmp/reference_repos/techfactor
 - 升级阶段 2 已完成实现：实验性月度 PIT 流动性股票池复用 Qlib calendar/instrument interval，按历史 250 日成交额、180 有效日、120 上市交易日和次交易日生效规则生成；2024H1 local smoke 为 5 个可生效月份、1,000 snapshot rows，future reference、invalid interval、historical mutation 均为 0，Qlib instruments round-trip pass。
 - 升级阶段 3 已完成实现：唯一交易日层面的 expanding Purged Walk-Forward 使用 20 日标签、T+1、20 交易日 embargo，2017—2026 真实日历生成 split manifest；train/test、train/validation 标签重叠、same-date cross-fold 和 embargo violation 均为 0。mlfinpy 官方包要求 Python ≥3.11，与固定 Python 3.10 环境不兼容，当前使用隔离的 `ml_get_train_times` 等价薄实现并保留后端切换边界。
 - 升级阶段 4 已完成实现：moving-block bootstrap 对现有 10 个 V4 daily Rank IC 序列生成标准误和 raw p-value，statsmodels 统一生成 BH/BY q-value；test family 明确到 source × horizon × window × preprocessing。200 个 null factors 的 BH false-discovery rate 为 0，稳定合成信号检出，seed/order/NaN contract 均通过。
-- 当前下一步切换到阶段 5：滚动评价与稳定性看板；因子选择只读取 train/validation。
+- 升级阶段 5 已完成 reference profile：复用 V4 daily Rank IC 和阶段 3 split manifest，10 个 factor×horizon 覆盖 4 个严格窗口，19 个窗口决策入选；输出 4 `stable_core`、3 `conditional_signal`、3 `monitor`。selection API 拒绝任何 `test_*` 列，实际 `test_metrics_used_in_selection=false`，旧 candidate pool 未修改。
+- 当前下一步切换到阶段 6：在 stable/conditional 输入上构建 exposure/performance similarity、聚类和代表选择。
 
 当前下一阶段：
 

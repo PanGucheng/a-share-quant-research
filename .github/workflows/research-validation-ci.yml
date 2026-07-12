@@ -35,6 +35,7 @@ jobs:
           tests/test_no_future_leakage.py
           tests/test_purged_split.py
           tests/test_multiple_testing.py
+          tests/test_rolling_evaluation.py
           -q
       - name: Run synthetic contract validator
         shell: pwsh
@@ -43,3 +44,4 @@ jobs:
           python scripts/validate_point_in_time_universe_v1.py
           python scripts/validate_purged_walk_forward_v1.py
           python scripts/validate_factor_multiple_testing_v1.py
+          python scripts/validate_factor_rolling_stability_v1.py
