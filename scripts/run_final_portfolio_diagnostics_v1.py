@@ -21,6 +21,8 @@ def main() -> int:
     parser.add_argument("--config", type=Path, default=Path("configs/final_portfolio_diagnostics_v1.yaml"))
     args = parser.parse_args(); path = args.config if args.config.is_absolute() else PROJECT_ROOT / args.config
     config = yaml.safe_load(path.read_text(encoding="utf-8")) or {}; scores = pd.read_parquet(PROJECT_ROOT / config["scores"])
+    if config.get("additional_scores"):
+        scores = pd.concat([scores, pd.read_parquet(PROJECT_ROOT / config["additional_scores"])], ignore_index=True)
     raw = pd.read_pickle(PROJECT_ROOT / config["factor_frame"])
     market = raw[["datetime", "instrument", "$open", "$close", "$volume", "$amount"]].rename(columns={"$open": "open", "$close": "close", "$volume": "volume", "$amount": "amount"})
     market = market.loc[(market.datetime >= scores.datetime.min()) & (market.datetime <= scores.datetime.max() + pd.Timedelta(days=10))].dropna(subset=["open", "close"])

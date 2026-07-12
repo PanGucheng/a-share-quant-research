@@ -26,6 +26,8 @@ def capped_normalize(raw_weights: pd.Series, maximum: float) -> pd.Series:
 
 
 def cross_sectional_zscore(series: pd.Series, clip: float) -> pd.Series:
+    if series.notna().sum() == 0:
+        return pd.Series(np.nan, index=series.index)
     median = series.median()
     scale = (series - median).abs().median() * 1.4826
     if not np.isfinite(scale) or scale <= 0:

@@ -28,6 +28,8 @@
   阶段 9 AKShare forward-only 快照、PIT 字段契约和当前外部采集阻塞状态。
 - `outputs/final_portfolio_diagnostics_v1/local_reference/final_portfolio_report.md`
   阶段 10 共同执行组合比较、成本/容量/区间诊断及未满足方法与暴露门禁。
+- `outputs/legacy_common_scores_v1/local_reference/legacy_common_scores_report.md`
+  Alpha158 与旧 V3.5 candidate pool 在相同 purged test windows 下的共同口径等权 score。
 - `PROJECT_CONTEXT_SUMMARY.md`
   项目当前状态、最新阶段、关键路径和下一步入口。
 - `STEP_5_FACTOR_RESEARCH_AND_MODEL_PLAN.md`

@@ -1,8 +1,9 @@
 schema_version: 1
 profile: local_reference
 scores: outputs/factor_score_construction_v1/local_reference/runtime/composite_scores.parquet
+additional_scores: outputs/legacy_common_scores_v1/local_reference/runtime/legacy_common_scores.parquet
 factor_frame: tmp/factor_frame_cache/basic_factors_0be49ade4d4ba8d3.pkl
-methods: [equal_directional_zscore, cluster_equal, stability_weight]
+methods: [alpha158_equal, old_candidate_equal, equal_directional_zscore, cluster_equal, stability_weight]
 required_methods: [alpha158_equal, old_candidate_equal, stable_equal, cluster_equal, stability_weight, regularized_linear]
 cost_scenarios_bps: [5, 10, 20, 30]
 base_cost_bps: 10
