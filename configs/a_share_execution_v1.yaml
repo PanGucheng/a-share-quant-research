@@ -1,0 +1,16 @@
+schema_version: 1
+profile: local_reference
+scores: outputs/factor_score_construction_v1/local_reference/runtime/composite_scores.parquet
+factor_frame: tmp/factor_frame_cache/basic_factors_0be49ade4d4ba8d3.pkl
+method: equal_directional_zscore
+lot_size: 100
+buy_commission_rate: 0.0003
+sell_commission_rate: 0.0003
+sell_tax_rate: 0.001
+minimum_commission: 5.0
+slippage_bps: 10.0
+max_participation_rate: 0.05
+top_k: 50
+rebalance_every: 20
+initial_cash: 10000000
+output_dir: outputs/a_share_execution_v1/local_reference

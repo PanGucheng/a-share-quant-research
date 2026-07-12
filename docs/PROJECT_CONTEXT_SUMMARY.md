@@ -136,7 +136,8 @@ tmp/reference_repos/techfactor
 - 升级阶段 5 已完成 reference profile：复用 V4 daily Rank IC 和阶段 3 split manifest，10 个 factor×horizon 覆盖 4 个严格窗口，19 个窗口决策入选；输出 4 `stable_core`、3 `conditional_signal`、3 `monitor`。selection API 拒绝任何 `test_*` 列，实际 `test_metrics_used_in_selection=false`，旧 candidate pool 未修改。
 - 升级阶段 6 已完成 reference profile：7 个 stable/conditional 因子同时使用 60 个历史截面 exposure Spearman 和 daily Rank IC performance Spearman，SciPy average linkage 得到 3 个簇、3 个代表，duplicate cluster votes=0。Riskfolio-Lib 保持可选未安装，不影响兼容后端。
 - 升级阶段 7 已完成 reference profile：3 个 cluster representatives 在 4 个冻结 test 窗口生成 `equal_directional_zscore`、`cluster_equal`、`stability_weight`；权重只读取当前及更早 selection history，单因子上限 0.60 通过 capped renormalization 强制执行。future weight reference、duplicate cluster vote、weight sum error 均为 0，minimum components=3 ≥2；大型 score parquet 仅存 ignored runtime。
-- 当前下一步切换到阶段 8：建立订单、A股交易约束、费用、部分成交和容量会计。
+- 升级阶段 8 已完成 reference profile：订单/成交/持仓/现金会计支持 100 股整手、最低佣金、买卖费率、卖出税、滑点、涨跌停/停牌拒单、T+1 状态、成交量参与率和部分成交；真实 composite score 执行的 cash conservation error、invalid trades、future-price executions 均为 0，并输出容量诊断。当前基础行情无显式涨跌停字段，真实 run 不猜测状态，该规则由合成 contract 覆盖。
+- 当前下一步切换到阶段 9：外部行业与市值 PIT 数据契约和向前快照采集。
 
 当前下一阶段：
 

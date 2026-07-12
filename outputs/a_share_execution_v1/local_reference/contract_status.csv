@@ -1,0 +1,6 @@
+﻿check_name,status,observed_value,required_value,severity,reason
+cash_conservation_error,pass,True,True,critical,A-share execution output contract.
+position_conservation_error,pass,0,0,critical,A-share execution output contract.
+invalid_trade_count,pass,0,0,critical,A-share execution output contract.
+future_price_execution_count,pass,0,0,critical,A-share execution output contract.
+execution_contract,pass,pass,pass,critical,A-share execution output contract.
