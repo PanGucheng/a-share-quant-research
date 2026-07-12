@@ -1,0 +1,8 @@
+﻿factor,cluster_id
+amount_mean_20|10d_t1,cluster_002
+amount_mean_20|20d_t1,cluster_002
+downside_std_20|10d_t1,cluster_001
+downside_std_20|20d_t1,cluster_001
+rev_20_exclude_5|10d_t1,cluster_003
+std_20|10d_t1,cluster_001
+std_20|20d_t1,cluster_001

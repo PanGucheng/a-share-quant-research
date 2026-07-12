@@ -1,0 +1,4 @@
+﻿check_name,status,observed_value,required_value,severity,reason
+every_selected_factor_has_cluster,pass,0,0,critical,Factor clustering output contract.
+every_cluster_has_representative,pass,3,3,critical,Factor clustering output contract.
+default_combination_duplicate_cluster_votes,pass,0,0,critical,Factor clustering output contract.
