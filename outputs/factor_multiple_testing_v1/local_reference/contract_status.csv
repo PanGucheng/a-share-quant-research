@@ -1,0 +1,5 @@
+﻿check_name,status,observed_value,required_value,severity,reason
+all_selected_factors_have_q_value,pass,True,True,critical,Multiple-testing output audit.
+missing_test_family_count,pass,0,0,critical,Multiple-testing output audit.
+nan_p_value_promoted_count,pass,0,0,critical,Multiple-testing output audit.
+null_simulation_false_discovery_rate,pass,0.0,<=0.05,critical,Multiple-testing output audit.

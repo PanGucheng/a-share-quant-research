@@ -14,6 +14,8 @@
   阶段 2 动态股票池真实 provider smoke、PIT 审计与 Qlib instruments 回读结果。
 - `outputs/purged_walk_forward_v1/full_research/purged_walk_forward_report.md`
   阶段 3 date-level Purged Walk-Forward manifest、泄漏审计与 mlfinpy 兼容性边界。
+- `outputs/factor_multiple_testing_v1/local_reference/multiple_testing_report.md`
+  阶段 4 block bootstrap、BH/BY FDR、null simulation 与 test-family 审计。
 - `PROJECT_CONTEXT_SUMMARY.md`
   项目当前状态、最新阶段、关键路径和下一步入口。
 - `STEP_5_FACTOR_RESEARCH_AND_MODEL_PLAN.md`
@@ -48,7 +50,7 @@ docs/_archive/README.md
 
 ## Current Stage
 
-阶段 0—3 已完成实现，当前执行阶段 4：Block Bootstrap 与多重检验控制。
+阶段 0—4 已完成实现，当前执行阶段 5：滚动评价与稳定性看板。
 
 ```text
 docs/Qlib A股因子研究框架完整升级计划 V1.md
