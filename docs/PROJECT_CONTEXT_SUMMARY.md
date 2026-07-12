@@ -140,6 +140,7 @@ tmp/reference_repos/techfactor
 - 升级阶段 9 已完成采集与 PIT contract 基础设施：AKShare 1.18.64 条件依赖安装且未升级核心数值栈；market-cap/float-cap 当前快照强制 `forward_only`，历史回填、缺 effective date、不可追溯来源和非法区间 contract 均为 0。当前东财端点被网络代理断开，`forward_snapshot_collection` 与 `historical_neutralization_ready` 正确保持 blocked，不生成或回填虚假历史暴露。
 - 升级阶段 10 已完成核心 reference diagnostics：`alpha158_equal`（14 candidates）、`old_candidate_equal`（V3.5 两因子）、`stable_equal`、`cluster_equal`、`stability_weight` 共享相同 score windows、交易约束、成本和资金配置，并输出 rolling/regime/cost/capacity/concentration diagnostics。required method coverage 已由 3/6 提升为 5/6；仅 `regularized_linear` 因阶段 11 尚未获准训练而 blocked，历史 industry/size exposure 继承阶段 9 blocked。
 - 阶段 11 的正式开始条件尚未满足：阶段 9 历史 PIT 暴露和阶段 10 required method coverage 未 pass。下一步先补齐仓库内可生成的共同口径方法；不绕过门禁启动模型晋级。
+- 阶段 11 前置门禁入口已实现：9 个 prerequisite contracts 当前 7 pass、2 blocked，runner 返回 blocked/exit 2 并确认 `model_training_started=false`；feature allowlist 仅允许稳定角色与 cluster representatives 的交集。
 
 当前下一阶段：
 

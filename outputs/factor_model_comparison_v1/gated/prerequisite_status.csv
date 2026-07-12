@@ -1,0 +1,10 @@
+﻿prerequisite,status,blocking_checks,blocking_count
+point_in_time_universe,pass,,0
+purged_walk_forward,pass,,0
+multiple_testing,pass,,0
+rolling_stability,pass,,0
+factor_clustering,pass,,0
+score_construction,pass,,0
+execution,pass,,0
+external_exposure,blocked,historical_neutralization_ready,1
+final_diagnostics,blocked,required_method_coverage;historical_exposure_diagnostics,2

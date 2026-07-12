@@ -1,0 +1,16 @@
+schema_version: 1
+profile: gated
+prerequisites:
+  point_in_time_universe: outputs/point_in_time_universe_v1/local_smoke/contract_status.csv
+  purged_walk_forward: outputs/purged_walk_forward_v1/full_research/contract_status.csv
+  multiple_testing: outputs/factor_multiple_testing_v1/local_reference/contract_status.csv
+  rolling_stability: outputs/factor_rolling_stability_v1/local_reference/contract_status.csv
+  factor_clustering: outputs/factor_clustering_v1/local_reference/contract_status.csv
+  score_construction: outputs/factor_score_construction_v1/local_reference/contract_status.csv
+  execution: outputs/a_share_execution_v1/local_reference/contract_status.csv
+  external_exposure: outputs/external_exposure_data_v1/current/contract_status.csv
+  final_diagnostics: outputs/final_portfolio_diagnostics_v1/local_reference/contract_status.csv
+models: [equal_weight, stability_weight, ridge, elastic_net, lightgbm]
+stability_board: outputs/factor_rolling_stability_v1/local_reference/factor_stability_board.csv
+representatives: outputs/factor_clustering_v1/local_reference/cluster_representatives.csv
+output_dir: outputs/factor_model_comparison_v1/gated

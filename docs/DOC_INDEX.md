@@ -30,6 +30,8 @@
   阶段 10 共同执行组合比较、成本/容量/区间诊断及未满足方法与暴露门禁。
 - `outputs/legacy_common_scores_v1/local_reference/legacy_common_scores_report.md`
   Alpha158 与旧 V3.5 candidate pool 在相同 purged test windows 下的共同口径等权 score。
+- `outputs/factor_model_comparison_v1/gated/model_comparison_report.md`
+  阶段 11 前置门禁；当前明确阻止在历史 PIT exposure/final diagnostics 未通过时启动训练。
 - `PROJECT_CONTEXT_SUMMARY.md`
   项目当前状态、最新阶段、关键路径和下一步入口。
 - `STEP_5_FACTOR_RESEARCH_AND_MODEL_PLAN.md`
