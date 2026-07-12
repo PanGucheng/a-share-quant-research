@@ -1,0 +1,7 @@
+﻿required_method,comparison_status,source_method,reason,method,trading_days,net_annualized_return,net_ir,maximum_drawdown,average_turnover,positive_day_ratio,final_nav
+alpha158_equal,blocked,,No score under common PIT/purged/execution assumptions.,,,,,,,,
+old_candidate_equal,blocked,,No score under common PIT/purged/execution assumptions.,,,,,,,,
+stable_equal,pass,equal_directional_zscore,,equal_directional_zscore,486.0,0.00977343586444835,1.1915439747656835,-0.0037955552596334874,0.010679654467082939,0.030864197530864196,10062238.167135958
+cluster_equal,pass,cluster_equal,,cluster_equal,486.0,0.00977343586444835,1.1915439747656835,-0.0037955552596334874,0.010679654467082939,0.030864197530864196,10062238.167135958
+stability_weight,pass,stability_weight,,stability_weight,486.0,0.010979965359789018,0.8485954362267555,-0.010958091568332606,0.01858464170503463,0.02880658436213992,10208841.807599694
+regularized_linear,blocked,,No score under common PIT/purged/execution assumptions.,,,,,,,,

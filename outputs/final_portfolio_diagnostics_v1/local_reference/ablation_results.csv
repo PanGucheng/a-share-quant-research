@@ -1,0 +1,13 @@
+﻿split_id,method,max_factor_weight,cluster_count,status
+split_004,cluster_equal,0.3333333333333333,3,diagnostic_only_not_reexecuted
+split_004,equal_directional_zscore,0.3333333333333333,3,diagnostic_only_not_reexecuted
+split_004,stability_weight,0.6,3,diagnostic_only_not_reexecuted
+split_005,cluster_equal,0.3333333333333333,3,diagnostic_only_not_reexecuted
+split_005,equal_directional_zscore,0.3333333333333333,3,diagnostic_only_not_reexecuted
+split_005,stability_weight,0.6,3,diagnostic_only_not_reexecuted
+split_006,cluster_equal,0.3333333333333333,3,diagnostic_only_not_reexecuted
+split_006,equal_directional_zscore,0.3333333333333333,3,diagnostic_only_not_reexecuted
+split_006,stability_weight,0.5534624441347494,3,diagnostic_only_not_reexecuted
+split_007,cluster_equal,0.3333333333333333,3,diagnostic_only_not_reexecuted
+split_007,equal_directional_zscore,0.3333333333333333,3,diagnostic_only_not_reexecuted
+split_007,stability_weight,0.4531739161562844,3,diagnostic_only_not_reexecuted

@@ -1,0 +1,25 @@
+schema_version: 1
+profile: local_reference
+scores: outputs/factor_score_construction_v1/local_reference/runtime/composite_scores.parquet
+factor_frame: tmp/factor_frame_cache/basic_factors_0be49ade4d4ba8d3.pkl
+methods: [equal_directional_zscore, cluster_equal, stability_weight]
+required_methods: [alpha158_equal, old_candidate_equal, stable_equal, cluster_equal, stability_weight, regularized_linear]
+cost_scenarios_bps: [5, 10, 20, 30]
+base_cost_bps: 10
+capital_scenarios: [1000000, 10000000, 50000000, 100000000]
+regimes:
+  - {name: early_2022, start: 2022-01-01, end: 2022-06-30}
+  - {name: late_2022, start: 2022-07-01, end: 2022-12-31}
+  - {name: year_2023, start: 2023-01-01, end: 2023-12-31}
+execution:
+  lot_size: 100
+  buy_commission_rate: 0.0003
+  sell_commission_rate: 0.0003
+  sell_tax_rate: 0.001
+  minimum_commission: 5.0
+  slippage_bps: 10.0
+  max_participation_rate: 0.05
+  top_k: 50
+  rebalance_every: 20
+  initial_cash: 10000000
+output_dir: outputs/final_portfolio_diagnostics_v1/local_reference

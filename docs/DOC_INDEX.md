@@ -26,6 +26,8 @@
   阶段 8 A股订单约束、费用、部分成交、会计守恒和容量诊断。
 - `outputs/external_exposure_data_v1/current/exposure_data_report.md`
   阶段 9 AKShare forward-only 快照、PIT 字段契约和当前外部采集阻塞状态。
+- `outputs/final_portfolio_diagnostics_v1/local_reference/final_portfolio_report.md`
+  阶段 10 共同执行组合比较、成本/容量/区间诊断及未满足方法与暴露门禁。
 - `PROJECT_CONTEXT_SUMMARY.md`
   项目当前状态、最新阶段、关键路径和下一步入口。
 - `STEP_5_FACTOR_RESEARCH_AND_MODEL_PLAN.md`
@@ -60,7 +62,7 @@ docs/_archive/README.md
 
 ## Current Stage
 
-阶段 0—9 的代码与门禁基础设施已完成；阶段 9 真实外部快照受网络阻塞。当前执行阶段 10：最终组合诊断与压力测试。
+阶段 0—10 的代码与核心 reference 运行已完成；阶段 9 历史 PIT 暴露、阶段 10 required method coverage 仍 blocked，因此阶段 11 暂未获准启动。
 
 ```text
 docs/Qlib A股因子研究框架完整升级计划 V1.md

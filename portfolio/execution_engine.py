@@ -13,6 +13,8 @@ def run_execution(scores: pd.DataFrame, market: pd.DataFrame, assumptions: Execu
     scores = scores.copy(); scores["datetime"] = pd.to_datetime(scores["datetime"])
     market_dates = pd.DatetimeIndex(sorted(data.datetime.unique()))
     signal_dates = pd.DatetimeIndex(sorted(set(scores.datetime) & set(market_dates)))
+    market_by_date = {date: group.set_index("instrument") for date, group in data.groupby("datetime", sort=False)}
+    scores_by_date = {date: group for date, group in scores.groupby("datetime", sort=False)}
     cash = assumptions.initial_cash
     positions: dict[str, int] = {}
     buy_dates: dict[str, pd.Timestamp] = {}
@@ -23,14 +25,14 @@ def run_execution(scores: pd.DataFrame, market: pd.DataFrame, assumptions: Execu
         if later.empty:
             break
         execution_date = later[0]
-        day_market = data.loc[data.datetime == execution_date].set_index("instrument")
+        day_market = market_by_date[execution_date]
         close_prices = day_market["close"].to_dict()
         nav_before = cash + sum(quantity * close_prices.get(instrument, 0.0) for instrument, quantity in positions.items())
         if date_index % assumptions.rebalance_every != 0:
             daily_rows.append({"datetime": execution_date, "cash": cash, "nav": nav_before, "turnover": 0.0, "accounting_error": 0.0})
             previous_nav = nav_before
             continue
-        ranked = scores.loc[scores.datetime == signal_date].dropna(subset=["composite_score"]).nlargest(assumptions.top_k, "composite_score")
+        ranked = scores_by_date[signal_date].dropna(subset=["composite_score"]).nlargest(assumptions.top_k, "composite_score")
         targets = set(ranked.instrument)
         target_value = nav_before / max(1, len(targets))
         cash_start = cash; buy_gross = sell_gross = total_cost = turnover_value = 0.0
