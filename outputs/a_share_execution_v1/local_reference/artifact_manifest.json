@@ -1,19 +1,19 @@
 {
-  "artifact_id": "a_share_execution_v1:4cdba9667bb7d4b65d79bd39a5592068946cafae055a526b9dafd71bc62f19c3",
-  "code_commit_sha": "22bb453e44fb4a42a9d38e5bcb1648e1d23f3e41",
+  "artifact_id": "a_share_execution_v1:0e8e80db53ab9a07d6fddde54c836045267c4a0a5298d9c787547b40fd7b832c",
+  "code_commit_sha": "bc7ea4b383c7c8ba39c02901cf3dc9d1844c55ae",
   "code_diff_sha256": "",
   "code_dirty": false,
   "config_sha256": "ddae86c1724ce0ec106ecb258b1f272f87b293ad30ce20eac90d1c56c6c8d75a",
-  "created_at": "2026-07-13T11:33:43.160788+00:00",
+  "created_at": "2026-07-13T11:37:57.324790+00:00",
   "end_date": "2024-01-05",
   "factor_catalog_id": "factor-catalog:61a60413f1fed6627fe3cb02e5afe11fe1189f142c6a2591a1075ad615516ff7",
   "factor_frame_id": "factor-series:61a60413f1fed6627fe3cb02e5afe11fe1189f142c6a2591a1075ad615516ff7",
   "input_artifact_ids": [
-    "factor_score_construction_v1:96327b6589d0427b2ff2f9845cc8ffc6e292502d4ef4bd58a21a11d24de01f05"
+    "factor_score_construction_v1:2b30955c3a5b572ad944a52b4802b987bab923c21a89214f59ea271b157cd003"
   ],
   "lineage_status": "reference_only",
   "missing_lineage_fields": [
-    "reference_execution_signal_date_only",
+    "legacy_output_pre_lineage",
     "universe_artifact_id"
   ],
   "output_file_hashes": {
@@ -31,7 +31,7 @@
   },
   "profile_name": "local_reference",
   "profile_type": "reference",
-  "run_id": "20260713T113343Z-86dfa717",
+  "run_id": "20260713T113757Z-947b4523",
   "schema_version": 1,
   "split_manifest_id": "split-manifest:67887eac73a24cffed9bfcf7366726b771dcb899c6da67f5d872af25097ea66b",
   "stage_id": "a_share_execution_v1",

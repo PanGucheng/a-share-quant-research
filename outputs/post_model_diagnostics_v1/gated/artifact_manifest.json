@@ -1,15 +1,15 @@
 {
-  "artifact_id": "post_model_diagnostics_v1:ee24f5611dba42381c018c51bdf256bca59751429fce81bdda98a50cda067918",
-  "code_commit_sha": "22bb453e44fb4a42a9d38e5bcb1648e1d23f3e41",
+  "artifact_id": "post_model_diagnostics_v1:52247862062315e56a9498a6238d55a059366f81653261946e6a05ec207be3ca",
+  "code_commit_sha": "bc7ea4b383c7c8ba39c02901cf3dc9d1844c55ae",
   "code_diff_sha256": "",
   "code_dirty": false,
   "config_sha256": "82e819846ad13e2dc75703f55c61a59a45623ff1d33cf18b3abe7eb527eafa7c",
-  "created_at": "2026-07-13T11:34:16.575152+00:00",
+  "created_at": "2026-07-13T11:38:22.137928+00:00",
   "end_date": null,
   "factor_catalog_id": "factor-catalog:61a60413f1fed6627fe3cb02e5afe11fe1189f142c6a2591a1075ad615516ff7",
   "factor_frame_id": "factor-series:61a60413f1fed6627fe3cb02e5afe11fe1189f142c6a2591a1075ad615516ff7",
   "input_artifact_ids": [
-    "factor_model_comparison_v1:a3f0bf5ed7a01d9eff3f616b6f73a5f4e8c22dd276e95d54063bd7826bf141fc"
+    "factor_model_comparison_v1:84dc90112c862ceab408f055cc20a22ce803bbeffb5b8b1ba436abfc0b36a58c"
   ],
   "lineage_status": "reference_only",
   "missing_lineage_fields": [
@@ -21,7 +21,7 @@
   },
   "profile_name": "gated_reference",
   "profile_type": "reference",
-  "run_id": "20260713T113416Z-b30a208b",
+  "run_id": "20260713T113822Z-30bde706",
   "schema_version": 1,
   "split_manifest_id": "split-manifest:67887eac73a24cffed9bfcf7366726b771dcb899c6da67f5d872af25097ea66b",
   "stage_id": "post_model_diagnostics_v1",
