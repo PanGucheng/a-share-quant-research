@@ -126,9 +126,13 @@ tmp/reference_repos/techfactor
 
 ## Next Work
 
-> 2026-07-13 完成更新：V1.1 已实施并通过 60 项仓库轻量测试。以下“冻结审计”保留为修复前证据；其后各阶段描述中的“V1.1 仍需”以本段最新状态为准。
+> 2026-07-13 V1.1.1 一致性审计：当前最高优先级改为 `REFERENCE_PIPELINE_CONSISTENCY_V1_1_1.md`。复核确认 hardened stability 为 10 个 holdout、0 eligible windows、120 条 selection 全部 false，但活动 clustering 仍有 3 个旧 representatives，score 仍有对应权重和 2,819,616 行 runtime，execution/diagnostics 继续消费旧结果；当前 model gate 也未实际调用 `validate_lineage_chain()`。因此旧 `reference_ready=true` 是假阳性。
 
-V1.1 当前结果：诊断门禁已无环；pre-model 五种方法在统一 486 日公共区间比较；旧低覆盖稳定性输入的 10 个因子全部降为 `holdout`；reference execution 使用最近收盘价处理 2,203 次缺行情估值并披露 230,394,300 股未成交量；模型门禁输出 `reference_ready=true`，其余 full/core/扩展能力均为 false，训练未启动。九类关键阶段已有统一 manifest，历史链明确为 `reference_only`。`mlfinpy` 只作实现语义参考，不更新 Python、不作为仓库依赖。下一 PR 为 Qlib Exchange integration。
+V1.1.1 目标状态：`reference_infrastructure_ready=true`、`reference_pipeline_ready=false`、兼容字段 `reference_ready=false`，其余 full/core/扩展能力和训练状态仍为 false。先完成 lineage/freshness、stale 输出清理、空选择阻断传播、semantic consistency、NAV 归一化和路径配置化；本轮仍不接入 Qlib Exchange、不训练模型、不运行 669 因子。
+
+> 2026-07-13 V1.1 历史完成记录：V1.1 曾通过 60 项仓库轻量测试，但其 readiness 结论已被上方 V1.1.1 一致性审计推翻。以下内容只保留为修复前证据。
+
+V1.1 当时报告的结果（已废止 readiness 部分）：诊断门禁已无环；pre-model 五种方法在统一 486 日公共区间比较；旧低覆盖稳定性输入的 10 个因子全部降为 `holdout`；reference execution 使用最近收盘价处理 2,203 次缺行情估值并披露 230,394,300 股未成交量。九类阶段已有 manifest，但后续确认部分 manifest 只是附加到旧业务结果，不能证明 freshness。`mlfinpy` 仍只作实现语义参考，不更新 Python、不作为仓库依赖。
 
 > 2026-07-13 优先级更新：当前以 `FACTOR_VALIDATION_HARDENING_V1_1.md` 为最高优先级执行计划；它增补并修正 `Qlib A股因子研究框架完整升级计划 V1.md` 和 `FACTOR_VALIDATION_ROADMAP_V1.md` 的收尾门禁。本轮暂停新增因子源、模型训练、669 因子全量运行和 Qlib Exchange 接入。
 

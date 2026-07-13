@@ -4,8 +4,10 @@
 
 ## Current Working Documents
 
+- `REFERENCE_PIPELINE_CONSISTENCY_V1_1_1.md`
+  当前最高优先级执行计划；修复新版稳定性全 holdout 与旧 clustering/score/execution/diagnostics 混用、stale artifact、未生效 lineage gate 和 readiness 假阳性。
 - `FACTOR_VALIDATION_HARDENING_V1_1.md`
-  当前最高优先级执行计划；修复 PR #1 的诊断门禁循环、Profile 语义、稳定性 eligibility、common-period 比较、reference execution 会计和端到端 artifact lineage。
+  V1.1 已实施计划与历史证据；其 `reference_ready=true` 结论已被 V1.1.1 一致性审计更正。
 - `Qlib A股因子研究框架完整升级计划 V1.md`
   新一轮研究框架升级总纲，定义阶段目标、约束、输出和最终完成标准。
 - `FACTOR_VALIDATION_ROADMAP_V1.md`
@@ -21,19 +23,19 @@
 - `outputs/factor_rolling_stability_v1/local_reference/stability_report.md`
   阶段 5 严格窗口选择历史、冻结方向、OOS degradation 与稳定性角色看板。
 - `outputs/factor_clustering_v1/local_reference/clustering_report.md`
-  阶段 6 exposure/performance 双相似度、SciPy 聚类与代表因子选择。
+  阶段 6 历史 reference 输出；当前仍含 3 个旧 representatives，已被 V1.1.1 判定为 stale，不得继续作为活动链证据。
 - `outputs/factor_score_construction_v1/local_reference/score_construction_report.md`
-  阶段 7 三种透明组合、窗口权重、组件覆盖与防未来权重 contract。
+  阶段 7 历史 reference 输出；当前权重和 runtime 与全 holdout stability 不一致，待 V1.1.1 受控替换。
 - `outputs/a_share_execution_v1/local_reference/execution_report.md`
-  阶段 8 A股订单约束、费用、部分成交、会计守恒和容量诊断。
+  阶段 8 执行会计能力证据；当前业务结果消费 stale score，只能证明基础设施，不证明 reference pipeline 可用。
 - `outputs/external_exposure_data_v1/current/exposure_data_report.md`
   阶段 9 AKShare forward-only 快照、PIT 字段契约和当前外部采集阻塞状态。
 - `outputs/pre_model_diagnostics_v1/local_reference/final_portfolio_report.md`
-  阶段 10 pre-model reference 诊断；已拆分 native/common-period，方法排名只使用 486 个公共交易日结果。post-model 层因本 PR 不训练模型而保持 blocked。
+  阶段 10 pre-model 历史诊断；common-period 算法仍需 NAV 归一化，且 current stability methods 来自 stale score，当前不得用于 readiness。
 - `outputs/legacy_common_scores_v1/local_reference/legacy_common_scores_report.md`
   Alpha158 与旧 V3.5 candidate pool 在相同 purged test windows 下的共同口径等权 score。
 - `outputs/factor_model_comparison_v1/gated/model_comparison_report.md`
-  阶段 11 现有前置门禁；V1.1 将改为 reference/full/core/可选能力分层，当前仍禁止启动训练。
+  阶段 11 V1.1 能力门禁；其旧 `reference_ready=true` 未执行真实 lineage/freshness/semantic gate，已由 V1.1.1 更正为 false，训练仍禁止启动。
 - `PROJECT_CONTEXT_SUMMARY.md`
   项目当前状态、最新阶段、关键路径和下一步入口。
 - `STEP_5_FACTOR_RESEARCH_AND_MODEL_PLAN.md`
@@ -68,12 +70,13 @@ docs/_archive/README.md
 
 ## Current Stage
 
-V1.1 收尾硬化已实施：门禁循环、Profile、lineage、稳定性 coverage、共同日期比较和 reference execution 会计均已修复。当前 reference implementation 可运行，但尚不能视为 full-research 结果；本轮未训练模型、未运行 669 因子全量结果、未接入 Qlib Exchange。
+V1.1 基础设施硬化已实施，但 V1.1.1 审计确认真实 reference 数据链不一致：新版稳定性为 10 个 holdout、0 eligible windows，活动下游仍保留旧 3 个代表因子及 score/runtime。当前先修复 freshness、阻断传播和 readiness 语义；未训练模型、未运行 669 因子全量结果、未接入 Qlib Exchange。
 
 ```text
 docs/Qlib A股因子研究框架完整升级计划 V1.md
 docs/FACTOR_VALIDATION_ROADMAP_V1.md
 docs/FACTOR_VALIDATION_HARDENING_V1_1.md
+docs/REFERENCE_PIPELINE_CONSISTENCY_V1_1_1.md
 ```
 
-V1.1 实际状态为 `reference_ready=true`；`full_research_ready`、`core_model_ready`、`liquidity_residualized_model_ready`、`historical_exposure_model_ready` 和 `model_training_started` 均为 false。V3.39 的 `residualized_coverage_min=0.1495 < 0.80` 只阻塞流动性残差化模型能力；AKShare 历史暴露缺口只阻塞历史暴露模型能力。下一 PR 明确为 Qlib Exchange integration。
+当前诚实状态应解释为 `reference_infrastructure_ready=true`、`reference_pipeline_ready=false`、兼容字段 `reference_ready=false`；full/core/扩展能力和 `model_training_started` 均为 false。V3.39 低 coverage 与 AKShare 历史暴露仍只阻塞各自能力。完成 V1.1.1 后，下一 PR 才进入 Qlib Exchange integration。
