@@ -6,5 +6,4 @@ rolling_stability,pass,,0
 factor_clustering,pass,,0
 score_construction,pass,,0
 execution,pass,,0
-external_exposure,blocked,historical_neutralization_ready,1
-final_diagnostics,blocked,required_method_coverage;historical_exposure_diagnostics,2
+pre_model_diagnostics,pass,,0

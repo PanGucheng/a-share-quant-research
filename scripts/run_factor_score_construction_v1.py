@@ -13,6 +13,7 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 from portfolio.score_construction import capped_normalize, construct_daily_scores  # noqa: E402
+from research_validation.lineage import capture_code_state, write_stage_artifact_manifest  # noqa: E402
 
 
 def main() -> int:
@@ -21,6 +22,7 @@ def main() -> int:
     args = parser.parse_args()
     config_path = args.config if args.config.is_absolute() else PROJECT_ROOT / args.config
     config = yaml.safe_load(config_path.read_text(encoding="utf-8")) or {}
+    code_state = capture_code_state(PROJECT_ROOT)
     representatives = pd.read_csv(PROJECT_ROOT / config["representatives"])
     history = pd.read_csv(PROJECT_ROOT / config["selection_history"])
     splits = pd.read_csv(PROJECT_ROOT / config["split_manifest"], parse_dates=["test_start", "test_end"])
@@ -71,6 +73,14 @@ def main() -> int:
     scores.groupby("method").agg(rows=("composite_score", "size"), coverage=("composite_score", lambda values: values.notna().mean()), score_std=("composite_score", "std")).reset_index().to_csv(output / "score_diagnostics.csv", index=False, encoding="utf-8-sig")
     contract.to_csv(output / "contract_status.csv", index=False, encoding="utf-8-sig")
     (output / "score_construction_report.md").write_text(f"# Factor Score Construction V1\n\n- Methods: `{len(config['methods'])}`\n- Representatives: `{representatives.cluster_id.nunique()}`\n- Score rows: `{len(scores)}`\n", encoding="utf-8")
+    output_files = [item for item in output.iterdir() if item.is_file() and item.name != "artifact_manifest.json"] + [runtime / "composite_scores.parquet"]
+    write_stage_artifact_manifest(
+        project_root=PROJECT_ROOT, stage_id="factor_score_construction_v1", config=config, output_dir=output,
+        output_files=output_files, code_state=code_state,
+        input_manifest_paths=[PROJECT_ROOT / item for item in config.get("input_manifests", [])],
+        start_date=scores.datetime.min(), end_date=scores.datetime.max(),
+        missing_lineage_fields=["legacy_reference_scores", "universe_artifact_id"],
+    )
     print(contract.to_string(index=False))
     return 1 if (contract.status == "fail").any() else 0
 

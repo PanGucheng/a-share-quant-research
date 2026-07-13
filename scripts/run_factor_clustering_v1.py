@@ -16,6 +16,7 @@ if str(PROJECT_ROOT) not in sys.path:
 from factor_research.factor_clustering import hierarchical_clusters  # noqa: E402
 from factor_research.factor_similarity import combined_distance, daily_exposure_similarity, performance_similarity  # noqa: E402
 from factor_research.representative_selection import select_representatives  # noqa: E402
+from research_validation.lineage import capture_code_state, write_stage_artifact_manifest  # noqa: E402
 
 
 def main() -> int:
@@ -24,6 +25,7 @@ def main() -> int:
     args = parser.parse_args()
     config_path = args.config if args.config.is_absolute() else PROJECT_ROOT / args.config
     config = yaml.safe_load(config_path.read_text(encoding="utf-8")) or {}
+    code_state = capture_code_state(PROJECT_ROOT)
     stability = pd.read_csv(PROJECT_ROOT / config["stability_board"])
     stability = stability.loc[stability["stability_role"].isin(config["eligible_roles"])].copy()
     factor_map = {factor: factor.split("|")[0] for factor in stability["factor"]}
@@ -58,6 +60,14 @@ def main() -> int:
     cluster_stability.to_csv(output / "cluster_stability.csv", index=False, encoding="utf-8-sig")
     contract.to_csv(output / "contract_status.csv", index=False, encoding="utf-8-sig")
     (output / "clustering_report.md").write_text(f"# Factor Clustering V1\n\n- Eligible factors: `{len(stability)}`\n- Clusters: `{clusters.cluster_id.nunique()}`\n- Representatives: `{len(representatives)}`\n- Backend: `scipy`\n", encoding="utf-8")
+    output_files = [item for item in output.iterdir() if item.is_file() and item.name != "artifact_manifest.json"]
+    write_stage_artifact_manifest(
+        project_root=PROJECT_ROOT, stage_id="factor_clustering_v1", config=config, output_dir=output,
+        output_files=output_files, code_state=code_state,
+        input_manifest_paths=[PROJECT_ROOT / item for item in config.get("input_manifests", [])],
+        start_date=frame.datetime.min(), end_date=frame.datetime.max(),
+        missing_lineage_fields=["legacy_liquid2000_input", "universe_artifact_id"],
+    )
     print(contract.to_string(index=False))
     return 1 if (contract.status == "fail").any() else 0
 

@@ -10,8 +10,23 @@ prerequisites:
   factor_clustering: outputs/factor_clustering_v1/local_reference/contract_status.csv
   score_construction: outputs/factor_score_construction_v1/local_reference/contract_status.csv
   execution: outputs/a_share_execution_v1/local_reference/contract_status.csv
-  external_exposure: outputs/external_exposure_data_v1/current/contract_status.csv
-  final_diagnostics: outputs/final_portfolio_diagnostics_v1/local_reference/contract_status.csv
+  pre_model_diagnostics: outputs/pre_model_diagnostics_v1/local_reference/contract_status.csv
+input_manifests:
+  - outputs/point_in_time_universe_v1/local_smoke/artifact_manifest.json
+  - outputs/purged_walk_forward_v1/local_reference/artifact_manifest.json
+  - outputs/factor_multiple_testing_v1/local_reference/artifact_manifest.json
+  - outputs/factor_rolling_stability_v1/local_reference/artifact_manifest.json
+  - outputs/factor_clustering_v1/local_reference/artifact_manifest.json
+  - outputs/factor_score_construction_v1/local_reference/artifact_manifest.json
+  - outputs/a_share_execution_v1/local_reference/artifact_manifest.json
+  - outputs/pre_model_diagnostics_v1/local_reference/artifact_manifest.json
+full_research_prerequisites:
+  - outputs/point_in_time_universe_v1/full_research/contract_status.csv
+  - outputs/purged_walk_forward_v1/full_research/contract_status.csv
+  - outputs/pre_model_diagnostics_v1/full_research/contract_status.csv
+capability_prerequisites:
+  liquidity_residualized: outputs/liquidity_residualized_factor_evaluation_v1/contract_status.csv
+  historical_exposure: outputs/external_exposure_data_v1/current/contract_status.csv
 models: [equal_weight, stability_weight, ridge, elastic_net, lightgbm]
 stability_board: outputs/factor_rolling_stability_v1/local_reference/factor_stability_board.csv
 representatives: outputs/factor_clustering_v1/local_reference/cluster_representatives.csv
