@@ -29,4 +29,4 @@ execution:
   top_k: 50
   rebalance_every: 20
   initial_cash: 10000000
-output_dir: outputs/final_portfolio_diagnostics_v1/local_reference
+output_dir: outputs/pre_model_diagnostics_v1/local_reference

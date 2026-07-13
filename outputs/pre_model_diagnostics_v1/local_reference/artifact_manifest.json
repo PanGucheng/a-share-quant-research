@@ -1,0 +1,40 @@
+{
+  "artifact_id": "pre_model_diagnostics_v1:cb4eaa4cafb019abb5c7451dd0bc6d0a5ace0351ff5cb43cd03ff76095ba56e8",
+  "code_commit_sha": "865aa1e24bf42f374e736a968963e4ae04e35b37",
+  "code_diff_sha256": "d1d972fd3310df0c2e69aec4c5064c6fd1dcce091e2f824e4d6c19accfd06d84",
+  "code_dirty": true,
+  "config_sha256": "707993967b2dce97c8a5a449755666e6b3dde5ff434783578f96a460d6b3d95a",
+  "created_at": "2026-07-13T11:27:37.179656+00:00",
+  "end_date": "2024-01-05",
+  "factor_catalog_id": null,
+  "factor_frame_id": null,
+  "input_artifact_ids": [],
+  "lineage_status": "reference_only",
+  "missing_lineage_fields": [
+    "input_manifest:E:/qlib_prj/qlib_baseline/outputs/a_share_execution_v1/local_reference/artifact_manifest.json",
+    "input_manifest:E:/qlib_prj/qlib_baseline/outputs/factor_score_construction_v1/local_reference/artifact_manifest.json",
+    "reference_execution_signal_date_only",
+    "universe_artifact_id"
+  ],
+  "output_file_hashes": {
+    "ablation_results.csv": "7cc3618f0cf2296218a77b5ea1187a1dc9589837fd6d1abd40f5f7ce2e93b380",
+    "capacity_sensitivity.csv": "26748e62e1bd3960f2ad35ca062b599420a0527292c078d9838a752c24fc1b3e",
+    "common_period_method_comparison.csv": "69974be10fb4562ebbdfe98f2fdce2861613b3fc997d09c2da50d81707d85ba5",
+    "contract_status.csv": "1cf6794558ab440563ca529c1e2509a4630bbe49bdd6d1d9874dd4265807168f",
+    "cost_sensitivity.csv": "ee75a9a45fe9440955b13205725faa7a570256941627a49461d7a8851e2e9f92",
+    "exposure_diagnostics.csv": "5c5b6a5168497f5c0952ada6bf841e5d1af6be24f25e2d89844873ad8f2ad8a0",
+    "final_portfolio_report.md": "d054beb4abda24d49e0686b6ad04daa2181620cb46017090264f42d1a31b4387",
+    "method_comparison.csv": "69974be10fb4562ebbdfe98f2fdce2861613b3fc997d09c2da50d81707d85ba5",
+    "native_period_method_comparison.csv": "cac1ec6b895d1a13455803c2e0f0865e48dee8661c78e2c56b73f31108f73444",
+    "regime_performance.csv": "4a56905e966c151bb9624e10b9b36b5a9862f6b85f771d010e37460b0962b124",
+    "rolling_performance.csv": "69ec8613f7f1b3bce92c7e44f9386f910745a8ea427798d3b07382aa3e3f83e8"
+  },
+  "profile_name": "local_reference",
+  "profile_type": "reference",
+  "run_id": "20260713T112737Z-a2d4f12b",
+  "schema_version": 1,
+  "split_manifest_id": null,
+  "stage_id": "pre_model_diagnostics_v1",
+  "start_date": "2022-01-06",
+  "universe_artifact_id": null
+}

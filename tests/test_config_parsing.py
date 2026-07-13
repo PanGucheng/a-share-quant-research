@@ -35,6 +35,8 @@ def test_v11_critical_configs_declare_profile_type() -> None:
         "purged_walk_forward_v1.yaml",
         "factor_multiple_testing_v1.yaml",
         "factor_rolling_stability_v1.yaml",
+        "pre_model_diagnostics_v1.yaml",
+        "post_model_diagnostics_v1.yaml",
         "factor_clustering_v1.yaml",
         "factor_score_construction_v1.yaml",
         "a_share_execution_v1.yaml",
