@@ -3,7 +3,10 @@
 > 文档状态：执行版路线图<br>
 > 制定日期：2026-07-12<br>
 > 上位总纲：[Qlib A股因子研究框架完整升级计划 V1](./Qlib%20A股因子研究框架完整升级计划%20V1.md)<br>
+> 收尾增补：[V1.1 门禁、Profile 与 Lineage 硬化计划](./FACTOR_VALIDATION_HARDENING_V1_1.md)<br>
 > 适用仓库：`E:\qlib_prj\qlib_baseline`
+
+> 2026-07-13 执行说明：涉及阶段 5 eligibility、阶段 8 reference execution、阶段 10/11 诊断门禁、Profile 和 artifact lineage 时，以 V1.1 增补计划为准。
 
 ## 1. 文档目的
 
@@ -78,9 +81,12 @@ fail          实现或正确性不满足要求，必须修复
 | --- | --- | --- | --- |
 | `synthetic_smoke` | 合成数据正确性与边界测试 | 极小 | 是 |
 | `local_smoke` | 少量真实交易日/因子集成验证 | 小 | 否 |
+| `local_reference` | reference implementation 与接口验证 | 小 | 否 |
 | `full_research` | 完整本地研究 | 大 | 否 |
 
 配置继承应通过显式 YAML 字段或生成脚本完成，不在 Python 中隐藏覆盖参数。每次运行都保存 resolved config 或配置哈希。
+
+V1.1 起另设规范字段 `profile_type: smoke | reference | full_research`。旧 Profile 名称只作为 `profile_name`；目录名和 `profile_name` 均不能替代强校验。`reference_ready` 可受控消费 smoke/reference，但任何 full/core 门禁只能消费同一条 full-research lineage。
 
 ### 3.4 统一 contract 规则
 
@@ -128,10 +134,11 @@ flowchart TD
     S5 --> S6["阶段6：聚类去重"]
     S6 --> S7["阶段7：透明组合"]
     S7 --> S8["阶段8：A股执行与成本"]
-    S8 --> S10["阶段10：最终组合诊断"]
+    S8 --> S10["阶段10：Pre-model diagnostics"]
     S1 --> S9["阶段9：外部时点暴露数据"]
-    S9 --> S10
+    S9 --> S9G["历史暴露专属能力门禁"]
     S10 --> S11["阶段11：模型比较"]
+    S11 --> S10P["Post-model diagnostics"]
 ```
 
 推荐严格按 PR 1—12 的顺序合并。阶段 9 的采集准备可以在阶段 2—8 期间持续积累快照，但其历史数据使用和中性化实现仍在 PR 10 独立验收。
@@ -148,8 +155,8 @@ flowchart TD
 | M7 | 7 | 透明 composite score | M6 | 进入真实约束回测 |
 | M8 | 8 | A股执行、成本和容量 contract | M7 | 统一执行口径比较组合 |
 | M9 | 9 | 行业/市值 PIT 数据 contract | M1 | 合法中性化和暴露诊断 |
-| M10 | 10 | 公平组合对比与压力测试 | M8、M9 | 冻结最终研究候选 |
-| M11 | 11 | 简单模型与 ML 公平比较 | M10 | 仅在达标时晋级复杂模型 |
+| M10 | 10 | 五种非模型方法的 pre-model 公平对比与压力测试 | M8 | 形成 core model 的诊断前置；历史暴露保持独立能力 |
+| M11 | 11 | 简单模型与 ML 公平比较及 post-model diagnostics | M10、full/core gate | 仅在独立 PR 获准后训练并比较复杂模型 |
 
 ## 5. 阶段 0：现状冻结与兼容性审计
 
@@ -647,28 +654,30 @@ raw_factor_overwrite_count = 0
 point_in_time_exposure_contract = pass
 ```
 
-若只能获得当前快照，本阶段可将“向前采集”判为 pass，但“历史中性化”必须保持 blocked；阶段 10 的行业/市值完整诊断和最终 DoD 同步 blocked。
+若只能获得当前快照，本阶段可将“向前采集”判为 pass，但“历史中性化”必须保持 blocked；历史暴露专属诊断和整个 V1 最终 DoD 同步 blocked。该状态不再阻塞 V1.1 的 core pre-model diagnostics，只阻塞 `historical_exposure_model_ready`。
 
 ## 15. 阶段 10：最终组合诊断与压力测试
 
 ### 15.1 公平比较矩阵
 
-所有方法共享同一 run manifest：动态股票池、walk-forward split、label、execution lag、交易约束、成本、基准、资金、调仓频率。方法专属配置仅允许因子选择与权重方式不同。
+所有方法共享同一 run manifest：动态股票池、walk-forward split、label、execution lag、交易约束、成本、基准、资金、调仓频率。方法专属配置仅允许因子选择与权重方式不同。V1.1 将本阶段拆成模型前后两层：本阶段先完成不依赖训练的 `pre_model_diagnostics`；模型产出只进入后续 `post_model_diagnostics`。
 
 ### 15.2 工作包
 
 | ID | 步骤 | 主要动作 | 完成证据 |
 | --- | --- | --- | --- |
-| S10.1 | Baseline adapters | 统一接入 Alpha158 等权、旧 candidate 等权、stable 等权、cluster equal、stability weight、regularized linear | method manifest |
+| S10.1 | Baseline adapters | 统一接入 Alpha158 等权、旧 candidate 等权、stable 等权、cluster equal、stability weight；不得要求 regularized/model output | method manifest |
 | S10.2 | Common execution | 所有方法复用阶段 8 的订单、费用和容量模型 | execution hash 相同 |
 | S10.3 | Rolling results | 按 test window 生成净收益、IR、回撤、换手、win ratio、worst window 和 degradation | rolling performance |
 | S10.4 | Cost/capacity | 运行 5/10/20/30 bps 与流动性成本、多个资金规模 | sensitivity tables |
 | S10.5 | Portfolio grid | 比较 TopK、调仓周期、流动性阈值和股票池规模；网格预先配置 | no post-hoc hidden scan |
 | S10.6 | Ablation | 剔除最强单因子与最强簇，检查收益集中度 | ablation results |
 | S10.7 | Regime | 预先定义熊市、震荡、高波动区间，禁止按结果挑日期 | regime manifest |
-| S10.8 | Exposure | 输出 factor/cluster/liquidity/industry/size 暴露；缺 PIT 数据时明确 blocked | exposure diagnostics |
+| S10.8 | Exposure | 输出 factor/cluster/liquidity/industry/size 暴露；缺 PIT 数据时仅将历史暴露能力标记 blocked | exposure diagnostics |
 | S10.9 | Promotion rule | 多指标规则决定 research candidate，不按单一最高收益 | decision board |
 | S10.10 | Freeze | 冻结最终研究候选、参数、输入哈希；声明仍非实盘信号 | final manifest |
+| S10.11 | Common period | 同时输出 native/common-period；公共日期上重新计算全部排名指标 | alignment violation=0 |
+| S10.12 | Diagnostic split | pre-model contract 不读取模型，post-model 只建立后续入口 | gate DAG cycle=0 |
 
 ### 15.3 预计文件
 
@@ -685,19 +694,21 @@ outputs/final_portfolio_diagnostics_v1/<profile>/
 ### 15.4 阶段门禁
 
 - 所有方法 common run fields 完全一致；
+- pre-model required methods 只包含五种非训练方法；
+- 方法排名只读取 common-period，公共日期完全一致；
 - 多数 OOS 窗口为正，且最差窗口在配置阈值内；
 - 较高成本场景下未明显失效；
 - 换手和容量未越过门禁；
 - 单因子/单簇 ablation 后不是完全失效；
 - 流动性依赖不过度集中；
 - test 只用于最终冻结评价；
-- `final_portfolio_contract = pass`。
+- `pre_model_diagnostics_contract = pass`；历史行业/市值缺失可保持 capability-specific blocked。
 
 ## 16. 阶段 11：机器学习模型比较
 
 ### 16.1 开始条件
 
-只有以下 contract 均 pass 才能开始：PIT universe、purged split、multiple testing、stability、clustering、score construction、execution 和 final diagnostics。若历史行业/市值 contract blocked，模型可以做隔离实验，但不得晋级最终默认。
+只有 `core_model_ready=true` 才能在后续独立 PR 开始 core model 训练。该能力要求同一条 full-research lineage 上的 PIT universe、purged split、multiple testing、stability、clustering、score construction、正式 execution 和 pre-model diagnostics 全部通过。历史行业/市值只限制历史暴露模型，V3.39 只限制流动性残差化模型；二者不再作为所有 core model 的全局前置。
 
 ### 16.2 工作包
 
@@ -795,20 +806,20 @@ CI 只运行不依赖完整 Qlib provider 和网络的测试。需要真实数�
 | 交易会计错误 | cash/position 不守恒 | 先手算 synthetic，再接 Qlib Exchange | 只看收益曲线 |
 | 用户已有改动被覆盖 | 工作树非 clean | 阶段开始记录 status，只改本阶段文件 | reset/checkout 用户改动 |
 
-## 20. 首次实际推进顺序
+## 20. 当前实际推进顺序
 
-下一次开始实施时只执行阶段 0，顺序固定如下：
+阶段 0—4 的基础实现和阶段 5—10 的 reference implementation 已形成。2026-07-13 起，后续推进顺序由 V1.1 收尾计划接管：
 
-1. 保存 Git、环境、Qlib 和 provider 快照；
-2. 建立 baseline artifact manifest；
-3. 提取并交叉校验 baseline metrics；
-4. 重跑 readiness 与 V3.39 audit，统一状态语义；
-5. 检查核心/可选依赖兼容性和许可证；
-6. 运行现有轻量验证，记录退出码；
-7. 生成 baseline contract 与 audit report；
-8. 仅当阶段 0 contract 允许时，提交阶段 1 的最终文件清单和实现顺序。
+1. 冻结门禁循环、Profile 混用、稳定性覆盖率、方法日历和 lineage 基线；
+2. 建立 Profile 与 artifact lineage 基础契约；
+3. 为 PIT universe 至 model gate 的关键阶段接入 manifest；
+4. 修复稳定性 eligibility 与角色规则；
+5. 修复 reference execution 会计和日历语义；
+6. 拆分 pre/post-model diagnostics 并生成 common-period 比较；
+7. 拆分 reference/full/core/可选能力门禁；
+8. 重跑轻量测试、reference audit、CI，并更新草稿 PR。
 
-阶段 0 的最终回复和报告必须包含：当前仓库状态总结、拟修改文件列表、依赖兼容性结果、分阶段实施顺序、风险与阻塞项、阶段 1 具体实现计划。未完成这八步，不开始 Pandera schema 代码。
+完整任务编号、禁止项和结束条件见 [V1.1 门禁、Profile 与 Lineage 硬化计划](./FACTOR_VALIDATION_HARDENING_V1_1.md)。本轮仍不启动模型训练、不执行 669 因子全量运行、不接入新因子源和 Qlib Exchange。
 
 ## 21. 整体完成判定
 

@@ -87,7 +87,7 @@ outputs/factor_research_toolchain_readiness_v1/current/toolchain_readiness_repor
 outputs/liquidity_residualized_factor_evaluation_v1/current/liquidity_residualized_contract_status.csv
 ```
 
-- Readiness 当前为 `ready`。
+- 旧版多来源 factor toolchain readiness 为 `ready`；这只表示 adapter、V4、screening/judgement 等工具链可运行，不代表 V1.1 的 full-research 或 model readiness 已通过。
 - total runnable factors: 669。
 - new-source runnable factors: 499。
 - multi-source screening rows: 679。
@@ -126,23 +126,31 @@ tmp/reference_repos/techfactor
 
 ## Next Work
 
-> 2026-07-12 优先级更新：后续工作以 `Qlib A股因子研究框架完整升级计划 V1.md` 和 `FACTOR_VALIDATION_ROADMAP_V1.md` 为准。下面的 V3.28—V3.39 条目保留为已完成历史；暂停新增因子源，下一步只执行阶段 0 的 baseline freeze、依赖兼容性和输出契约审计。
+> 2026-07-13 优先级更新：当前以 `FACTOR_VALIDATION_HARDENING_V1_1.md` 为最高优先级执行计划；它增补并修正 `Qlib A股因子研究框架完整升级计划 V1.md` 和 `FACTOR_VALIDATION_ROADMAP_V1.md` 的收尾门禁。本轮暂停新增因子源、模型训练、669 因子全量运行和 Qlib Exchange 接入。
+
+V1.1 冻结审计：
+
+- 当前阶段 10 要求 `regularized_linear`，阶段 11 又要求阶段 10 先通过，形成循环依赖；V1.1 将拆分 pre/post-model diagnostics。
+- 当前模型 gate 混用 `local_smoke`、`local_reference`、目录名为 `full_research` 的 split 和 `current` 外部快照，尚无统一 artifact lineage。
+- 当前稳定性仍读取旧 `liquid2000_open_source_eval`；4 个 `stable_core` 的 `coverage_min` 均约为 `0.074074`，不能代表 full-research 稳定性。
+- 当前方法日历为 821 日与 486 日两组，公共有效日期为 486 日、差异日期为 335 日；V1.1 后排名只使用 common-period。
+- AKShare 历史行业/市值缺口只应阻塞 `historical_exposure_model_ready`，不得作为所有 core model 的全局阻塞。
+- V1.1 目标状态为 `reference_ready=true`，其余 full/core/可选模型能力和 `model_training_started` 均为 false。
 
 - 升级阶段 0 已完成：冻结 669 runnable / 499 new-source runnable、679 screening/judgement rows、342 research candidates、328 probes 和 V3.39 `0.1495 < 0.80` blocker；现有核心依赖与轻量命令检查通过。
 - 升级阶段 1 已完成实现：Pandera DataFrame contracts 覆盖 factor、label、tradability、universe interval、screening 和 judgement；真实 compact output audit 4/4 pass，旧 label/universe 两项兼容缺口显式 warning，新输出不得继承例外。
 - 升级阶段 2 已完成实现：实验性月度 PIT 流动性股票池复用 Qlib calendar/instrument interval，按历史 250 日成交额、180 有效日、120 上市交易日和次交易日生效规则生成；2024H1 local smoke 为 5 个可生效月份、1,000 snapshot rows，future reference、invalid interval、historical mutation 均为 0，Qlib instruments round-trip pass。
 - 升级阶段 3 已完成实现：唯一交易日层面的 expanding Purged Walk-Forward 使用 20 日标签、T+1、20 交易日 embargo，2017—2026 真实日历生成 split manifest；train/test、train/validation 标签重叠、same-date cross-fold 和 embargo violation 均为 0。mlfinpy 官方包要求 Python ≥3.11，与固定 Python 3.10 环境不兼容，当前使用隔离的 `ml_get_train_times` 等价薄实现并保留后端切换边界。
 - 升级阶段 4 已完成实现：moving-block bootstrap 对现有 10 个 V4 daily Rank IC 序列生成标准误和 raw p-value，statsmodels 统一生成 BH/BY q-value；test family 明确到 source × horizon × window × preprocessing。200 个 null factors 的 BH false-discovery rate 为 0，稳定合成信号检出，seed/order/NaN contract 均通过。
-- 升级阶段 5 已完成 reference profile：复用 V4 daily Rank IC 和阶段 3 split manifest，10 个 factor×horizon 覆盖 4 个严格窗口，19 个窗口决策入选；输出 4 `stable_core`、3 `conditional_signal`、3 `monitor`。selection API 拒绝任何 `test_*` 列，实际 `test_metrics_used_in_selection=false`，旧 candidate pool 未修改。
+- 升级阶段 5 已有 reference profile：复用旧 V4 daily Rank IC 和阶段 3 split manifest，10 个 factor×horizon 覆盖 4 个窗口，19 个窗口决策入选；输出 4 `stable_core`、3 `conditional_signal`、3 `monitor`。selection API 拒绝任何 `test_*` 列，但 eligibility 仍缺 coverage/valid-IC 强校验，当前不能视为稳定性阶段完成。
 - 升级阶段 6 已完成 reference profile：7 个 stable/conditional 因子同时使用 60 个历史截面 exposure Spearman 和 daily Rank IC performance Spearman，SciPy average linkage 得到 3 个簇、3 个代表，duplicate cluster votes=0。Riskfolio-Lib 保持可选未安装，不影响兼容后端。
 - 升级阶段 7 已完成 reference profile：3 个 cluster representatives 在 4 个冻结 test 窗口生成 `equal_directional_zscore`、`cluster_equal`、`stability_weight`；权重只读取当前及更早 selection history，单因子上限 0.60 通过 capped renormalization 强制执行。future weight reference、duplicate cluster vote、weight sum error 均为 0，minimum components=3 ≥2；大型 score parquet 仅存 ignored runtime。
-- 升级阶段 8 已完成 reference profile：订单/成交/持仓/现金会计支持 100 股整手、最低佣金、买卖费率、卖出税、滑点、涨跌停/停牌拒单、T+1 状态、成交量参与率和部分成交；真实 composite score 执行的 cash conservation error、invalid trades、future-price executions 均为 0，并输出容量诊断。当前基础行情无显式涨跌停字段，真实 run 不猜测状态，该规则由合成 contract 覆盖。
+- 升级阶段 8 已有 reference profile：订单/成交/持仓/现金会计支持 100 股整手、最低佣金、买卖费率、卖出税、滑点、涨跌停/停牌拒单、T+1 状态、成交量参与率和部分成交。V1.1 仍需修复缺行情零价估值、含费用可承受数量、负现金门禁、完整日历/信号日历标记和未成交汇总；正式 Qlib Exchange 留到下一 PR。
 - 升级阶段 9 已完成采集与 PIT contract 基础设施：AKShare 1.18.64 条件依赖安装且未升级核心数值栈；market-cap/float-cap 当前快照强制 `forward_only`，历史回填、缺 effective date、不可追溯来源和非法区间 contract 均为 0。当前东财端点被网络代理断开，`forward_snapshot_collection` 与 `historical_neutralization_ready` 正确保持 blocked，不生成或回填虚假历史暴露。
-- 升级阶段 10 已完成核心 reference diagnostics：`alpha158_equal`（14 candidates）、`old_candidate_equal`（V3.5 两因子）、`stable_equal`、`cluster_equal`、`stability_weight` 共享相同 score windows、交易约束、成本和资金配置，并输出 rolling/regime/cost/capacity/concentration diagnostics。required method coverage 已由 3/6 提升为 5/6；仅 `regularized_linear` 因阶段 11 尚未获准训练而 blocked，历史 industry/size exposure 继承阶段 9 blocked。
-- 阶段 11 的正式开始条件尚未满足：阶段 9 历史 PIT 暴露和阶段 10 required method coverage 未 pass。下一步先补齐仓库内可生成的共同口径方法；不绕过门禁启动模型晋级。
-- 阶段 11 前置门禁入口已实现：9 个 prerequisite contracts 当前 7 pass、2 blocked，runner 返回 blocked/exit 2 并确认 `model_training_started=false`；feature allowlist 仅允许稳定角色与 cluster representatives 的交集。
+- 升级阶段 10 已有五种非模型方法的 reference diagnostics，但 Alpha158/旧 candidate 为 821 日，三种稳定性方法为 486 日，当前 `method_comparison.csv` 不能直接用于公平排名。V1.1 将输出 native/common-period 双表，并把当前入口明确重构为 pre-model diagnostics。
+- 阶段 11 前置门禁入口当前为 9 个 prerequisite contracts、7 pass/2 blocked，runner 返回 blocked/exit 2 并确认 `model_training_started=false`。V1.1 将其改为五类能力门禁，删除 regularized-linear 循环和外部 PIT 的全局阻塞语义。
 
-当前下一阶段：
+已完成历史里程碑（供追溯）：
 
 - 不继续围绕单个 Alpha158、TA 或 Alpha101 因子细调策略。
 - V3.28 `qlib_alpha360` source audit 与 adapter smoke 已完成：360 个 Qlib 原生公式全部可用，24 个 smoke 因子已生成 expression frame。

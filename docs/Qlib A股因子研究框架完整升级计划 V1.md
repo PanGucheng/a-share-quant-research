@@ -1,6 +1,8 @@
 # Qlib A股因子研究框架完整升级计划 V1
 
 > 本文件是升级目标与阶段门禁总纲。可直接执行的任务编号、依赖关系、预计文件、验证顺序和失败停止条件见 [Qlib A股因子研究框架详细实施路线图 V1](./FACTOR_VALIDATION_ROADMAP_V1.md)。
+>
+> 2026-07-13 增补：[V1.1 门禁、Profile 与 Lineage 硬化计划](./FACTOR_VALIDATION_HARDENING_V1_1.md) 修正阶段 5、8、10、11 的收尾语义。涉及 pre/post-model diagnostics、能力门禁、Profile 和 lineage 时，以 V1.1 为准。
 
 ## 一、项目背景
 
@@ -1185,14 +1187,17 @@ point_in_time_exposure_contract = pass
 
 ## 必须比较
 
+模型训练前的 `pre_model_diagnostics` 必须比较：
+
 ```text
 原Alpha158等权组合
 旧candidate pool等权组合
 stable factors等权组合
 cluster equal组合
 stability weighted组合
-regularized linear组合
 ```
+
+`regularized linear`、Ridge、Elastic Net 和 LightGBM 属于模型产出，只能在模型训练完成后的 `post_model_diagnostics` 中加入。`pre_model_diagnostics` 不得要求任何模型产物，避免形成“诊断要求模型、模型又要求诊断先通过”的循环依赖。
 
 所有组合必须共享：
 
@@ -1242,7 +1247,8 @@ liquidity bucket exposure
 
 ```text
 outputs/final_portfolio_diagnostics_v1/<profile>/
-    method_comparison.csv
+    native_period_method_comparison.csv
+    common_period_method_comparison.csv
     rolling_performance.csv
     regime_performance.csv
     cost_sensitivity.csv
@@ -1252,6 +1258,8 @@ outputs/final_portfolio_diagnostics_v1/<profile>/
     contract_status.csv
     final_portfolio_report.md
 ```
+
+兼容入口可以暂时保留 `final_portfolio_diagnostics_v1` 名称，但 contract 必须明确它当前对应 `pre_model_diagnostics`。模型比较和方法排名只能使用所有 required methods 的公共有效日期；native-period 结果只用于诊断展示。
 
 ## 晋级条件
 
@@ -1284,7 +1292,11 @@ multiple testing pass
 stability board pass
 factor clustering pass
 execution contract pass
+pre-model diagnostics pass
+full-research profile and lineage pass
 ```
+
+历史行业/市值 PIT 不是 core model 的通用前置，只阻塞需要该数据的 `historical_exposure_model_ready`；流动性残差化 contract 只阻塞 `liquidity_residualized_model_ready`。任何模型训练仍须由独立 PR 显式启动。
 
 ## 模型顺序
 

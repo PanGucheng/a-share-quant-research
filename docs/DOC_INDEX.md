@@ -4,6 +4,8 @@
 
 ## Current Working Documents
 
+- `FACTOR_VALIDATION_HARDENING_V1_1.md`
+  当前最高优先级执行计划；修复 PR #1 的诊断门禁循环、Profile 语义、稳定性 eligibility、common-period 比较、reference execution 会计和端到端 artifact lineage。
 - `Qlib A股因子研究框架完整升级计划 V1.md`
   新一轮研究框架升级总纲，定义阶段目标、约束、输出和最终完成标准。
 - `FACTOR_VALIDATION_ROADMAP_V1.md`
@@ -27,11 +29,11 @@
 - `outputs/external_exposure_data_v1/current/exposure_data_report.md`
   阶段 9 AKShare forward-only 快照、PIT 字段契约和当前外部采集阻塞状态。
 - `outputs/final_portfolio_diagnostics_v1/local_reference/final_portfolio_report.md`
-  阶段 10 共同执行组合比较、成本/容量/区间诊断及未满足方法与暴露门禁。
+  阶段 10 现有 reference 诊断；V1.1 将其拆为 pre/post-model diagnostics，并要求 native/common-period 双输出。
 - `outputs/legacy_common_scores_v1/local_reference/legacy_common_scores_report.md`
   Alpha158 与旧 V3.5 candidate pool 在相同 purged test windows 下的共同口径等权 score。
 - `outputs/factor_model_comparison_v1/gated/model_comparison_report.md`
-  阶段 11 前置门禁；当前明确阻止在历史 PIT exposure/final diagnostics 未通过时启动训练。
+  阶段 11 现有前置门禁；V1.1 将改为 reference/full/core/可选能力分层，当前仍禁止启动训练。
 - `PROJECT_CONTEXT_SUMMARY.md`
   项目当前状态、最新阶段、关键路径和下一步入口。
 - `STEP_5_FACTOR_RESEARCH_AND_MODEL_PLAN.md`
@@ -66,11 +68,12 @@ docs/_archive/README.md
 
 ## Current Stage
 
-阶段 0—10 的代码与核心 reference 运行已完成；阶段 9 历史 PIT 暴露、阶段 10 required method coverage 仍 blocked，因此阶段 11 暂未获准启动。
+阶段 0—4 已形成基础实现，阶段 5—10 已有局部 reference implementation，但尚不能视为 full-research 结果。当前进入 V1.1 收尾硬化：先修复门禁循环、Profile、lineage、稳定性 coverage、共同日期比较和 reference execution 会计；本轮不训练模型、不运行 669 因子全量结果、不接入 Qlib Exchange。
 
 ```text
 docs/Qlib A股因子研究框架完整升级计划 V1.md
 docs/FACTOR_VALIDATION_ROADMAP_V1.md
+docs/FACTOR_VALIDATION_HARDENING_V1_1.md
 ```
 
-V3.39 仍是已冻结的下游门禁：当前 `residualized_coverage_min=0.1495 < 0.80`，结果不得进入训练或默认候选。PIT 股票池已通过 local smoke，但在阶段 3 时间切分门禁通过前不重评全部因子。
+V1.1 预期只让 `reference_ready=true`；`full_research_ready`、`core_model_ready`、`liquidity_residualized_model_ready`、`historical_exposure_model_ready` 和 `model_training_started` 均保持 false。V3.39 的 `residualized_coverage_min=0.1495 < 0.80` 只阻塞流动性残差化模型能力；AKShare 历史暴露缺口只阻塞历史暴露模型能力。
