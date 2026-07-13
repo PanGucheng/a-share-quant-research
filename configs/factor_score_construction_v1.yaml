@@ -1,9 +1,15 @@
 schema_version: 1
 profile: local_reference
+profile_name: local_reference
+profile_type: reference
 factor_frame: tmp/factor_frame_cache/basic_factors_0be49ade4d4ba8d3.pkl
 representatives: outputs/factor_clustering_v1/local_reference/cluster_representatives.csv
 selection_history: outputs/factor_rolling_stability_v1/local_reference/factor_selection_history.csv
-split_manifest: outputs/purged_walk_forward_v1/full_research/split_manifest.csv
+split_manifest: outputs/purged_walk_forward_v1/local_reference/split_manifest.csv
+input_manifests:
+  - outputs/purged_walk_forward_v1/local_reference/artifact_manifest.json
+  - outputs/factor_rolling_stability_v1/local_reference/artifact_manifest.json
+  - outputs/factor_clustering_v1/local_reference/artifact_manifest.json
 methods: [equal_directional_zscore, cluster_equal, stability_weight]
 minimum_components: 2
 score_clip: 3.0

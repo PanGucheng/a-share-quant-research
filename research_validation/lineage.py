@@ -11,7 +11,7 @@ from typing import Any, Iterable, Mapping, Sequence
 
 import pandas as pd
 
-from .profiles import Profile, ProfileType, assert_profiles_compatible
+from .profiles import Profile, ProfileType, assert_profiles_compatible, resolve_profile
 
 
 MANIFEST_SCHEMA_VERSION = 1
@@ -179,6 +179,79 @@ def load_artifact_manifest(path: Path) -> dict[str, Any]:
     value = json.loads(path.read_text(encoding="utf-8"))
     validate_manifest_schema(value)
     return value
+
+
+def load_input_manifests(paths: Sequence[Path]) -> tuple[list[dict[str, Any]], list[str]]:
+    manifests: list[dict[str, Any]] = []
+    missing: list[str] = []
+    for path in paths:
+        if path.is_file():
+            manifests.append(load_artifact_manifest(path))
+        else:
+            missing.append(path.as_posix())
+    return manifests, missing
+
+
+def inherited_lineage_id(input_manifests: Sequence[Mapping[str, Any]], field: str) -> tuple[str | None, bool]:
+    if field not in LINEAGE_ID_FIELDS:
+        raise ValueError(f"not a lineage id field: {field}")
+    values = {str(item[field]) for item in input_manifests if item.get(field)}
+    if len(values) == 1:
+        return next(iter(values)), False
+    return None, len(values) > 1
+
+
+def write_stage_artifact_manifest(
+    *,
+    project_root: Path,
+    stage_id: str,
+    config: Mapping[str, Any],
+    output_dir: Path,
+    output_files: Sequence[Path],
+    code_state: CodeState,
+    input_manifest_paths: Sequence[Path] = (),
+    universe_artifact_id: str | None = None,
+    split_manifest_id: str | None = None,
+    factor_catalog_id: str | None = None,
+    factor_frame_id: str | None = None,
+    start_date: Any = None,
+    end_date: Any = None,
+    missing_lineage_fields: Sequence[str] = (),
+    lineage_status: str | None = None,
+) -> dict[str, Any]:
+    del project_root  # Reserved for future repository-relative output metadata.
+    inputs, missing_inputs = load_input_manifests(input_manifest_paths)
+    ids = {
+        "universe_artifact_id": universe_artifact_id,
+        "split_manifest_id": split_manifest_id,
+        "factor_catalog_id": factor_catalog_id,
+        "factor_frame_id": factor_frame_id,
+    }
+    missing = list(missing_lineage_fields)
+    missing.extend(f"input_manifest:{value}" for value in missing_inputs)
+    for field, value in list(ids.items()):
+        if value is not None:
+            continue
+        inherited, conflict = inherited_lineage_id(inputs, field)
+        ids[field] = inherited
+        if conflict:
+            missing.append(f"inconsistent:{field}")
+            lineage_status = "inconsistent"
+    manifest = build_artifact_manifest(
+        stage_id=stage_id,
+        profile=resolve_profile(config),
+        config=config,
+        output_files=output_files,
+        code_state=code_state,
+        input_manifests=inputs,
+        start_date=start_date,
+        end_date=end_date,
+        missing_lineage_fields=missing,
+        lineage_status=lineage_status,
+        **ids,
+    )
+    write_artifact_manifest(output_dir / "artifact_manifest.json", manifest)
+    return manifest
 
 
 def validate_manifest_schema(manifest: Mapping[str, Any]) -> None:

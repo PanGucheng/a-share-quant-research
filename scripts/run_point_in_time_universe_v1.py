@@ -15,6 +15,7 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 from factor_research.context.universe import load_instrument_intervals  # noqa: E402
+from research_validation.lineage import capture_code_state, content_reference_id, write_stage_artifact_manifest  # noqa: E402
 from universes.interval_writer import snapshots_to_intervals, write_qlib_instruments  # noqa: E402
 from universes.point_in_time_universe import build_point_in_time_universe, monthly_selection_dates  # noqa: E402
 from universes.universe_audit import audit_universe  # noqa: E402
@@ -39,6 +40,7 @@ def main() -> int:
     parser.add_argument("--config", type=Path, default=Path("configs/point_in_time_universe_smoke_v1.yaml"))
     args = parser.parse_args()
     config = yaml.safe_load(resolve(args.config).read_text(encoding="utf-8")) or {}
+    code_state = capture_code_state(PROJECT_ROOT)
     output = resolve(config["output_dir"])
     output.mkdir(parents=True, exist_ok=True)
 
@@ -96,6 +98,29 @@ def main() -> int:
     (output / "resolved_config.json").write_text(json.dumps(config, ensure_ascii=False, indent=2, default=str) + "\n", encoding="utf-8")
     report = ["# Point-In-Time Universe V1", "", f"- Profile: `{config['profile']}`", f"- Selection months: `{len(selections)}`", f"- Snapshot rows: `{len(snapshots)}`", f"- Interval rows: `{len(intervals)}`", "", markdown_table(contract), ""]
     (output / "universe_report.md").write_text("\n".join(report), encoding="utf-8")
+    compact_files = [
+        output / "universe_membership_snapshots.csv",
+        output / "universe_selection_metrics.csv",
+        output / "universe_intervals.csv",
+        output / "universe_change_log.csv",
+        output / "qlib_instruments.txt",
+        output / "contract_status.csv",
+        output / "resolved_config.json",
+        output / "universe_report.md",
+    ]
+    write_stage_artifact_manifest(
+        project_root=PROJECT_ROOT,
+        stage_id="point_in_time_universe_v1",
+        config=config,
+        output_dir=output,
+        output_files=compact_files,
+        code_state=code_state,
+        universe_artifact_id=content_reference_id(
+            "universe", [output / "universe_membership_snapshots.csv", output / "universe_intervals.csv"]
+        ),
+        start_date=snapshots["effective_date"].min(),
+        end_date=intervals["end_date"].max(),
+    )
     print(contract.to_string(index=False))
     return 1 if (contract["status"] == "fail").any() else 0
 

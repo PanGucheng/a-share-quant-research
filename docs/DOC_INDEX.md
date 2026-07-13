@@ -14,7 +14,7 @@
   阶段 1 DataFrame contract 对现有 factor、tradability、screening 与 judgement 输出的兼容审计。
 - `outputs/point_in_time_universe_v1/local_smoke/universe_report.md`
   阶段 2 动态股票池真实 provider smoke、PIT 审计与 Qlib instruments 回读结果。
-- `outputs/purged_walk_forward_v1/full_research/purged_walk_forward_report.md`
+- `outputs/purged_walk_forward_v1/local_reference/purged_walk_forward_report.md`
   阶段 3 date-level Purged Walk-Forward manifest、泄漏审计与 mlfinpy 非依赖语义参考边界。
 - `outputs/factor_multiple_testing_v1/local_reference/multiple_testing_report.md`
   阶段 4 block bootstrap、BH/BY FDR、null simulation 与 test-family 审计。

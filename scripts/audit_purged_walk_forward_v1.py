@@ -16,7 +16,7 @@ from research_validation.purged_split import leakage_audit  # noqa: E402
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Re-audit purged walk-forward runtime assignments.")
-    parser.add_argument("--output-dir", type=Path, default=Path("outputs/purged_walk_forward_v1/full_research"))
+    parser.add_argument("--output-dir", type=Path, default=Path("outputs/purged_walk_forward_v1/local_reference"))
     args = parser.parse_args()
     output = args.output_dir if args.output_dir.is_absolute() else PROJECT_ROOT / args.output_dir
     assignments = pd.read_csv(output / "runtime/date_assignments.csv", parse_dates=["datetime"])

@@ -1,5 +1,10 @@
 schema_version: 1
 profile: local_reference
+profile_name: local_reference
+profile_type: reference
+input_manifests:
+  - outputs/a_share_execution_v1/local_reference/artifact_manifest.json
+  - outputs/factor_score_construction_v1/local_reference/artifact_manifest.json
 scores: outputs/factor_score_construction_v1/local_reference/runtime/composite_scores.parquet
 additional_scores: outputs/legacy_common_scores_v1/local_reference/runtime/legacy_common_scores.parquet
 factor_frame: tmp/factor_frame_cache/basic_factors_0be49ade4d4ba8d3.pkl

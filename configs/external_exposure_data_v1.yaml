@@ -1,5 +1,7 @@
 schema_version: 1
 profile: current
+profile_name: current
+profile_type: reference
 collector: akshare.stock_zh_a_spot_em
 akshare_version: 1.18.64
 usage_policy: forward_only

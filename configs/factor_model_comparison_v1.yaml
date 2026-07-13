@@ -1,8 +1,10 @@
 schema_version: 1
-profile: gated
+profile: gated_reference
+profile_name: gated_reference
+profile_type: reference
 prerequisites:
   point_in_time_universe: outputs/point_in_time_universe_v1/local_smoke/contract_status.csv
-  purged_walk_forward: outputs/purged_walk_forward_v1/full_research/contract_status.csv
+  purged_walk_forward: outputs/purged_walk_forward_v1/local_reference/contract_status.csv
   multiple_testing: outputs/factor_multiple_testing_v1/local_reference/contract_status.csv
   rolling_stability: outputs/factor_rolling_stability_v1/local_reference/contract_status.csv
   factor_clustering: outputs/factor_clustering_v1/local_reference/contract_status.csv

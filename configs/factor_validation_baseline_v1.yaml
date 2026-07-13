@@ -1,5 +1,7 @@
 schema_version: 1
 profile: current
+profile_name: current
+profile_type: reference
 output_dir: outputs/factor_validation_baseline_v1/current
 
 environment:

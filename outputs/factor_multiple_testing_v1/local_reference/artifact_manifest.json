@@ -1,0 +1,35 @@
+{
+  "artifact_id": "factor_multiple_testing_v1:b0c60b6ae99ab24b46ab43ca9752915478dec9c0963ea44027248d0ab1264414",
+  "code_commit_sha": "4affd9bb8c08677f8e3121361a6802d33c4664b7",
+  "code_diff_sha256": "88e898e28119d68c4d3d57d4402df53343b08963c85cb3951299b8f539623734",
+  "code_dirty": true,
+  "config_sha256": "172e6ca64e5f36a5f90de15d0bb1eec7a5f074ee6b100b110ceef79ed6fc97da",
+  "created_at": "2026-07-13T11:17:02.360096+00:00",
+  "end_date": "2023-12-29",
+  "factor_catalog_id": "factor-catalog:61a60413f1fed6627fe3cb02e5afe11fe1189f142c6a2591a1075ad615516ff7",
+  "factor_frame_id": "factor-series:61a60413f1fed6627fe3cb02e5afe11fe1189f142c6a2591a1075ad615516ff7",
+  "input_artifact_ids": [],
+  "lineage_status": "reference_only",
+  "missing_lineage_fields": [
+    "legacy_liquid2000_input",
+    "split_manifest_id",
+    "universe_artifact_id"
+  ],
+  "output_file_hashes": {
+    "contract_status.csv": "27120008eaa1521c1415da4e9b85c781b0edfda1d1cbe95864eaf68e38106633",
+    "factor_hypothesis_tests.csv": "34e6e2241e6fbbe610f0336e060b1754665f92f0a2b07ef5f3c917ce9b36985e",
+    "fdr_results.csv": "34e6e2241e6fbbe610f0336e060b1754665f92f0a2b07ef5f3c917ce9b36985e",
+    "multiple_testing_report.md": "eb7d79feeee9f1b99c9691ad30ed6a4bea4ae3bf8529312851fde0e6aed49f07",
+    "null_simulation_results.csv": "863db7840ab3e6dce85bedcc890800e89ab2e15e21ab7a7fc9b0904b807c794e",
+    "rejected_hypotheses.csv": "34e6e2241e6fbbe610f0336e060b1754665f92f0a2b07ef5f3c917ce9b36985e",
+    "test_family_summary.csv": "2bf5d5d039f6da74c6e02af387d5d739463487777524fac243565c492f96c658"
+  },
+  "profile_name": "local_reference",
+  "profile_type": "reference",
+  "run_id": "20260713T111702Z-13f86047",
+  "schema_version": 1,
+  "split_manifest_id": null,
+  "stage_id": "factor_multiple_testing_v1",
+  "start_date": "2021-01-05",
+  "universe_artifact_id": null
+}

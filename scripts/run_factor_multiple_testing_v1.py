@@ -16,6 +16,7 @@ if str(PROJECT_ROOT) not in sys.path:
 
 from research_validation.bootstrap import moving_block_mean_test  # noqa: E402
 from research_validation.multiple_testing import apply_fdr  # noqa: E402
+from research_validation.lineage import capture_code_state, content_reference_id, write_stage_artifact_manifest  # noqa: E402
 
 
 def family(config: dict, horizon: str) -> str:
@@ -28,12 +29,17 @@ def main() -> int:
     args = parser.parse_args()
     config_path = args.config if args.config.is_absolute() else PROJECT_ROOT / args.config
     config = yaml.safe_load(config_path.read_text(encoding="utf-8")) or {}
+    code_state = capture_code_state(PROJECT_ROOT)
     rows = []
-    for path in sorted(PROJECT_ROOT.glob(config["input_glob"])):
+    input_paths = sorted(PROJECT_ROOT.glob(config["input_glob"]))
+    input_dates: list[pd.Timestamp] = []
+    for path in input_paths:
         factor = path.parent.name
         match = re.search(r"label_(\d+d_t\d+)_", path.name)
         horizon = match.group(1) if match else "unknown"
         frame = pd.read_csv(path)
+        if "datetime" in frame:
+            input_dates.extend(pd.to_datetime(frame["datetime"], errors="coerce").dropna().tolist())
         stats = moving_block_mean_test(frame[config["metric"]], samples=int(config["bootstrap_samples"]), block_length=int(config["block_length"]), seed=int(config["random_seed"]))
         rows.append({"factor": factor, "test_family": family(config, horizon), "metric": config["metric"], **stats, "input_path": path.relative_to(PROJECT_ROOT).as_posix()})
     tests = apply_fdr(pd.DataFrame(rows), float(config["fdr_alpha"]))
@@ -69,6 +75,28 @@ def main() -> int:
     null_results.to_csv(output / "null_simulation_results.csv", index=False, encoding="utf-8-sig")
     contract.to_csv(output / "contract_status.csv", index=False, encoding="utf-8-sig")
     (output / "multiple_testing_report.md").write_text(f"# Factor Multiple Testing V1\n\n- Hypotheses: `{len(tests)}`\n- Null FDR: `{false_discovery_rate:.6f}`\n- Stable signal p-value: `{stable_stats['raw_p_value']:.6f}`\n", encoding="utf-8")
+    compact_files = [
+        output / "factor_hypothesis_tests.csv",
+        output / "test_family_summary.csv",
+        output / "fdr_results.csv",
+        output / "rejected_hypotheses.csv",
+        output / "null_simulation_results.csv",
+        output / "contract_status.csv",
+        output / "multiple_testing_report.md",
+    ]
+    write_stage_artifact_manifest(
+        project_root=PROJECT_ROOT,
+        stage_id="factor_multiple_testing_v1",
+        config=config,
+        output_dir=output,
+        output_files=compact_files,
+        code_state=code_state,
+        factor_catalog_id=content_reference_id("factor-catalog", input_paths),
+        factor_frame_id=content_reference_id("factor-series", input_paths),
+        start_date=min(input_dates) if input_dates else None,
+        end_date=max(input_dates) if input_dates else None,
+        missing_lineage_fields=["universe_artifact_id", "split_manifest_id", "legacy_liquid2000_input"],
+    )
     print(contract.to_string(index=False))
     return 1 if (contract["status"] == "fail").any() else 0
 

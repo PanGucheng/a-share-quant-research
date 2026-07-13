@@ -1,6 +1,11 @@
 schema_version: 1
 profile: local_reference
-split_manifest: outputs/purged_walk_forward_v1/full_research/split_manifest.csv
+profile_name: local_reference
+profile_type: reference
+split_manifest: outputs/purged_walk_forward_v1/local_reference/split_manifest.csv
+input_manifests:
+  - outputs/purged_walk_forward_v1/local_reference/artifact_manifest.json
+  - outputs/factor_multiple_testing_v1/local_reference/artifact_manifest.json
 input_glob: outputs/factor_evaluation_v4/liquid2000_open_source_eval/qlib_eval/*/label_*_daily_rank_ic.csv
 metric_column: daily_rank_ic
 bootstrap_samples: 1000

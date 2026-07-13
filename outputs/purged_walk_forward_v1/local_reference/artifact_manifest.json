@@ -1,0 +1,36 @@
+{
+  "artifact_id": "purged_walk_forward_v1:953b32c7402a9d2c7d420d0efe02ca77057b4b72580b84e84410897428852c3a",
+  "code_commit_sha": "4affd9bb8c08677f8e3121361a6802d33c4664b7",
+  "code_diff_sha256": "88e898e28119d68c4d3d57d4402df53343b08963c85cb3951299b8f539623734",
+  "code_dirty": true,
+  "config_sha256": "9ab4bc493445fa2e4e90ad3afc2a149eaf7f859ba9f9eada960245936cfd2a51",
+  "created_at": "2026-07-13T11:16:55.518347+00:00",
+  "end_date": "2026-06-09",
+  "factor_catalog_id": null,
+  "factor_frame_id": null,
+  "input_artifact_ids": [],
+  "lineage_status": "reference_only",
+  "missing_lineage_fields": [
+    "pit_universe_integration",
+    "universe_artifact_id"
+  ],
+  "output_file_hashes": {
+    "contract_status.csv": "1fb5a94a20a73143dc9a2d87d25259e8f271cb86f6e2dd365015f4bec9b18e86",
+    "embargoed_dates.csv": "5c516000861a9169fc6c5bb668d558280bf2acd8a8668c9ad6cb251d83a7d21d",
+    "leakage_audit.csv": "1fb5a94a20a73143dc9a2d87d25259e8f271cb86f6e2dd365015f4bec9b18e86",
+    "purged_dates.csv": "4bf89470b4e19324b3f352425f1d62bd6aa30c2816d061ea6a6f17101b019c85",
+    "purged_walk_forward_report.md": "c77c3820bbc3e50240470da349f04c6f5e5dd887380dceebbbe6fd86c769dcba",
+    "resolved_config.json": "8dff99f71b57fd6986ba4683eedaf0740e8b66357072c21f9da8d57b0213bfa9",
+    "sample_counts.csv": "7a4ccb878788894739bd934e8df7f0914c24033b2568720bc1108087923fcbf7",
+    "split_date_ranges.csv": "d300427b6c98a8b6a0715f6b41a0add04661e69a50cd17a7a0d6811b7962bfe9",
+    "split_manifest.csv": "d300427b6c98a8b6a0715f6b41a0add04661e69a50cd17a7a0d6811b7962bfe9"
+  },
+  "profile_name": "local_reference",
+  "profile_type": "reference",
+  "run_id": "20260713T111655Z-c7dc820d",
+  "schema_version": 1,
+  "split_manifest_id": "split-manifest:67887eac73a24cffed9bfcf7366726b771dcb899c6da67f5d872af25097ea66b",
+  "stage_id": "purged_walk_forward_v1",
+  "start_date": "2017-01-03",
+  "universe_artifact_id": null
+}
