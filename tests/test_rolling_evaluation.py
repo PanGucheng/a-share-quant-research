@@ -24,3 +24,17 @@ def test_selection_freezes_direction() -> None:
 def test_stability_role_requires_multiple_windows() -> None:
     rows = pd.DataFrame([{"factor": "a", "selected": True, "eligible": True, "frozen_direction": 1, "train_mean_ic": 0.03, "validation_mean_ic": 0.02, "test_mean_ic": 0.01, "fdr_bh_pass": True, "train_coverage": 1.0, "validation_coverage": 1.0, "test_coverage": 1.0}] * 3)
     assert stability_board(rows).iloc[0]["stability_role"] == "stable_core"
+
+
+def test_low_coverage_cannot_become_stable_core() -> None:
+    rows = pd.DataFrame([{"factor": "a", "selected": True, "eligible": False, "frozen_direction": 1, "train_mean_ic": 0.03, "validation_mean_ic": 0.02, "test_mean_ic": 0.01, "fdr_bh_pass": True, "train_coverage": 0.074, "validation_coverage": 1.0, "test_coverage": 1.0}] * 3)
+    result = stability_board(rows).iloc[0]
+    assert result["stability_role"] == "holdout"
+    assert result["eligible_window_count"] == 0
+
+
+def test_negative_direction_uses_direction_adjusted_success() -> None:
+    rows = pd.DataFrame([{"factor": "short_signal", "selected": True, "eligible": True, "frozen_direction": -1, "train_mean_ic": -0.03, "validation_mean_ic": -0.02, "test_mean_ic": -0.01, "fdr_bh_pass": True, "train_coverage": 1.0, "validation_coverage": 1.0, "test_coverage": 1.0}] * 3)
+    result = stability_board(rows).iloc[0]
+    assert result["direction_adjusted_positive_window_ratio"] == 1.0
+    assert result["stability_role"] == "stable_core"

@@ -14,4 +14,15 @@ random_seed: 20260712
 fdr_alpha: 0.05
 min_abs_validation_ic: 0.01
 minimum_dates_per_fold: 40
+minimum_train_coverage: 0.80
+minimum_validation_coverage: 0.80
+minimum_test_coverage: 0.80
+minimum_train_valid_ic_count: 40
+minimum_validation_valid_ic_count: 40
+minimum_test_valid_ic_count: 40
+minimum_eligible_windows: 3
+minimum_selection_frequency: 0.60
+minimum_direction_agreement: 0.80
+minimum_direction_adjusted_positive_window_ratio: 0.60
+maximum_allowed_oos_degradation: 0.03
 output_dir: outputs/factor_rolling_stability_v1/local_reference

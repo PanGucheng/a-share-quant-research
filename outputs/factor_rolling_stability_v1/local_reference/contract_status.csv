@@ -1,6 +1,5 @@
 ﻿check_name,status,observed_value,required_value,severity,reason
-test_metrics_used_in_selection,pass,False,False,critical,Rolling stability output contract.
-all_selected_factors_have_multiple_windows,pass,0,0,critical,Rolling stability output contract.
-all_selected_factors_have_fdr_result,pass,0,0,critical,Rolling stability output contract.
-all_roles_have_reason_code,pass,0,0,critical,Rolling stability output contract.
-existing_candidate_pool_changed,pass,False,False,critical,Rolling stability output contract.
+test_metrics_used_in_selection,pass,False,False,critical,Selection function accepts only train/validation columns.
+stable_core_eligibility,pass,0,0,critical,Stable-core factors must meet coverage and eligible-window thresholds.
+all_selected_factors_have_fdr_result,pass,0,0,critical,Every selection requires a q-value.
+existing_candidate_pool_changed,pass,False,False,critical,Reference stability output is experimental only.

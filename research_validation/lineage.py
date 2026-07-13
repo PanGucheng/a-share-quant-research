@@ -90,8 +90,9 @@ def _git(repo_root: Path, *args: str) -> str:
 
 def capture_code_state(repo_root: Path) -> CodeState:
     commit = _git(repo_root, "rev-parse", "HEAD")
-    status = _git(repo_root, "status", "--short", "--untracked-files=no")
-    diff = _git(repo_root, "diff", "--binary", "HEAD") if status else ""
+    pathspec = ("--", ".", ":(exclude)outputs")
+    status = _git(repo_root, "status", "--short", "--untracked-files=no", *pathspec)
+    diff = _git(repo_root, "diff", "--binary", "HEAD", *pathspec) if status else ""
     return CodeState(commit_sha=commit, dirty=bool(status), diff_sha256=sha256_text(diff) if diff else "")
 
 
