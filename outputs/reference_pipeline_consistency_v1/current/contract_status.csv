@@ -1,0 +1,6 @@
+﻿check_name,status,observed_value,required_value,severity,reason
+clustering_factors_subset_stability,fail,3,0,critical,Clustering inputs must be current eligible stability factors.
+score_factors_subset_selected_representatives,fail,3,0,critical,"Score factors must be selected, eligible representatives."
+execution_methods_subset_score_methods,pass,0,0,critical,Execution methods must exist in the current score artifact.
+diagnostic_methods_subset_execution_methods,pass,0,0,critical,Current diagnostic methods must have current execution evidence.
+current_reference_pipeline,blocked,0,>=1,critical,No factor passes the hardened reference eligibility contract.
