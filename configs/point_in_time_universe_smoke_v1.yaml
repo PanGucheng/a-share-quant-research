@@ -2,6 +2,7 @@ schema_version: 1
 profile: local_smoke
 profile_name: local_smoke
 profile_type: smoke
+research_run_family_id: reference_v1_1_1
 provider_uri: E:/qlib_prj/qlib_data/cn_data_community_20260609_derived
 source_intervals: outputs/universes/community_20260609/all_stock_shsz.txt
 start_date: 2024-01-01

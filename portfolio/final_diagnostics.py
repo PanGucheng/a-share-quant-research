@@ -8,7 +8,8 @@ def performance_summary(daily: pd.DataFrame, method: str) -> dict:
     returns = pd.to_numeric(daily["daily_return"], errors="coerce").fillna(0)
     nav = (1 + returns).cumprod()
     drawdown = nav / nav.cummax() - 1
-    return {"method": method, "trading_days": len(returns), "net_annualized_return": returns.mean() * 252, "net_ir": returns.mean() / returns.std(ddof=1) * np.sqrt(252) if returns.std(ddof=1) > 0 else np.nan, "maximum_drawdown": drawdown.min(), "average_turnover": daily.turnover.mean(), "positive_day_ratio": (returns > 0).mean(), "final_nav": daily.nav.iloc[-1]}
+    period_growth = float((1 + returns).prod())
+    return {"method": method, "trading_days": len(returns), "net_annualized_return": returns.mean() * 252, "net_ir": returns.mean() / returns.std(ddof=1) * np.sqrt(252) if returns.std(ddof=1) > 0 else np.nan, "maximum_drawdown": drawdown.min(), "average_turnover": daily.turnover.mean(), "positive_day_ratio": (returns > 0).mean(), "period_growth": period_growth, "normalized_final_nav": period_growth, "account_ending_nav": daily.nav.iloc[-1]}
 
 
 def cost_sensitivity(daily: pd.DataFrame, method: str, scenarios_bps: list[int], base_bps: int) -> pd.DataFrame:

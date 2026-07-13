@@ -63,3 +63,4 @@ jobs:
           python scripts/validate_a_share_execution_v1.py
           python scripts/validate_external_exposure_data_v1.py
           python scripts/validate_final_portfolio_diagnostics_v1.py
+          python scripts/validate_reference_pipeline_consistency_v1.py

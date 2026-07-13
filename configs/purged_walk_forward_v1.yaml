@@ -2,6 +2,7 @@ schema_version: 1
 profile: local_reference
 profile_name: local_reference
 profile_type: reference
+research_run_family_id: reference_v1_1_1
 provider_uri: E:/qlib_prj/qlib_data/cn_data_community_20260609_derived
 start_date: 2017-01-01
 end_date: 2026-06-09

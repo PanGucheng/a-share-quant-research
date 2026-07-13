@@ -2,6 +2,7 @@ schema_version: 1
 profile: local_reference
 profile_name: local_reference
 profile_type: reference
+research_run_family_id: reference_v1_1_1
 split_manifest: outputs/purged_walk_forward_v1/local_reference/split_manifest.csv
 input_manifests:
   - outputs/purged_walk_forward_v1/local_reference/artifact_manifest.json

@@ -48,6 +48,8 @@ def main() -> int:
             start_date=start_date, end_date=end_date,
             missing_lineage_fields=["legacy_output_pre_lineage", "universe_artifact_id"],
             lineage_status="reference_only",
+            artifact_status="blocked",
+            blocked_reason="legacy_output_pre_lineage",
         )
         print(f"attached reference-only lineage: {stage_id}")
     return 0

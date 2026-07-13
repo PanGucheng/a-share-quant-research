@@ -24,3 +24,14 @@ def test_common_period_uses_identical_dates_for_every_method() -> None:
     assert common.trading_days.iloc[0] == contract["common_trading_days"] == 3
     assert common.start_date.nunique() == common.end_date.nunique() == 1
     assert contract["method_date_mismatch_count"] == 2
+
+
+def test_common_period_normalized_nav_ignores_preperiod_account_level() -> None:
+    dates = pd.bdate_range("2026-01-01", periods=3)
+    frames = {
+        "low_account": pd.DataFrame({"datetime": dates, "daily_return": [0.01, -0.01, 0.02], "turnover": 0.1, "nav": [101, 100, 102]}),
+        "high_account": pd.DataFrame({"datetime": dates, "daily_return": [0.01, -0.01, 0.02], "turnover": 0.1, "nav": [1010, 1000, 1020]}),
+    }
+    _, common, _ = build_period_comparisons(frames, list(frames))
+    assert common.normalized_final_nav.nunique() == 1
+    assert common.account_ending_nav.nunique() == 2

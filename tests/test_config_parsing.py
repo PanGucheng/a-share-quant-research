@@ -49,3 +49,4 @@ def test_v11_critical_configs_declare_profile_type() -> None:
     for name in names:
         payload = yaml.safe_load((PROJECT_ROOT / "configs" / name).read_text(encoding="utf-8")) or {}
         assert resolve_profile(payload).type.value == payload["profile_type"]
+        assert payload["research_run_family_id"]

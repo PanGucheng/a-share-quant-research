@@ -2,6 +2,7 @@ schema_version: 1
 profile: local_reference
 profile_name: local_reference
 profile_type: reference
+research_run_family_id: reference_v1_1_1
 stability_board: outputs/factor_rolling_stability_v1/local_reference/factor_stability_board.csv
 selection_history: outputs/factor_rolling_stability_v1/local_reference/factor_selection_history.csv
 cluster_representatives: outputs/factor_clustering_v1/local_reference/cluster_representatives.csv

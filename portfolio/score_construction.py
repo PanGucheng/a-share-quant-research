@@ -4,6 +4,24 @@ import numpy as np
 import pandas as pd
 
 
+def filter_eligible_representatives(current: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
+    required = {"selected", "selection_eligible", "eligible", "frozen_direction"}
+    missing = required - set(current.columns)
+    if missing:
+        raise ValueError(f"representative selection missing fields: {sorted(missing)}")
+    values = current.copy()
+    allowed = (
+        values.selected.fillna(False).astype(bool)
+        & values.selection_eligible.fillna(False).astype(bool)
+        & values.eligible.fillna(False).astype(bool)
+        & values.frozen_direction.isin([-1, 1])
+    )
+    excluded = values.loc[~allowed].copy()
+    excluded["reason"] = "not_selected_or_eligible"
+    excluded.loc[excluded.frozen_direction.fillna(0).eq(0), "reason"] = "excluded_zero_direction"
+    return values.loc[allowed].copy(), excluded
+
+
 def capped_normalize(raw_weights: pd.Series, maximum: float) -> pd.Series:
     weights = pd.to_numeric(raw_weights, errors="coerce").fillna(0).clip(lower=0)
     if weights.sum() <= 0 or maximum <= 0 or maximum * len(weights) < 1 - 1e-12:

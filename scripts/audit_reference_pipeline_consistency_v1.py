@@ -12,6 +12,7 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 from research_validation.lineage import capture_code_state, write_stage_artifact_manifest  # noqa: E402
+from research_validation.pipeline_consistency import evaluate_semantic_consistency  # noqa: E402
 
 
 def _read_csv(path: Path) -> pd.DataFrame:
@@ -52,12 +53,21 @@ def main() -> int:
     weight_factors = _set(weights, "factor")
     score_methods = _set(scores, "method")
     diagnostic_methods = _set(diagnostics, "method") & set(config["current_diagnostic_methods"])
-    execution_methods = {str(config["execution_method"])} if not _read_csv(PROJECT_ROOT / config["execution_contract"]).empty else set()
+    execution_contract = _read_csv(PROJECT_ROOT / config["execution_contract"])
+    execution_ready = not execution_contract.empty and execution_contract.loc[
+        execution_contract.status.isin(["fail", "blocked"]) & execution_contract.severity.eq("critical")
+    ].empty
+    execution_methods = {str(config["execution_method"])} if execution_ready else set()
 
-    unexpected_clustering = representative_factors - eligible_factors
-    unexpected_score = weight_factors - (representative_factors & selected_factors & eligible_factors)
-    unexpected_execution = execution_methods - score_methods
-    unexpected_diagnostics = diagnostic_methods - ({"stable_equal" if value == "equal_directional_zscore" else value for value in execution_methods} | score_methods)
+    normalized_execution = {"stable_equal" if value == "equal_directional_zscore" else value for value in execution_methods} | execution_methods
+    semantic = evaluate_semantic_consistency(
+        stability, history, representatives, weights, score_methods=score_methods,
+        execution_methods=execution_methods, diagnostic_methods=diagnostic_methods,
+    )
+    unexpected_clustering = set(semantic.unexpected_clustering_factors)
+    unexpected_score = set(semantic.unexpected_score_factors)
+    unexpected_execution = set(semantic.unexpected_execution_methods)
+    unexpected_diagnostics = diagnostic_methods - (normalized_execution | score_methods)
 
     inventory = pd.DataFrame([
         {"check_name": "stability_factor_count", "observed_value": len(stability), "expected_value": "reported", "status": "pass"},

@@ -3,7 +3,7 @@ from __future__ import annotations
 import pandas as pd
 import pytest
 
-from portfolio.score_construction import capped_normalize, construct_daily_scores
+from portfolio.score_construction import capped_normalize, construct_daily_scores, filter_eligible_representatives
 
 
 def test_equal_directional_score_matches_order() -> None:
@@ -24,3 +24,16 @@ def test_capped_normalization_respects_limit() -> None:
     weights = capped_normalize(pd.Series([100.0, 1.0, 1.0]), 0.6)
     assert abs(weights.sum() - 1) < 1e-12
     assert weights.max() <= 0.6 + 1e-12
+
+
+def test_unselected_ineligible_and_zero_direction_factors_are_excluded() -> None:
+    values = pd.DataFrame([
+        {"factor": "ok", "selected": True, "selection_eligible": True, "eligible": True, "frozen_direction": -1},
+        {"factor": "not_selected", "selected": False, "selection_eligible": True, "eligible": True, "frozen_direction": 1},
+        {"factor": "not_eligible", "selected": True, "selection_eligible": True, "eligible": False, "frozen_direction": 1},
+        {"factor": "zero", "selected": True, "selection_eligible": True, "eligible": True, "frozen_direction": 0},
+    ])
+    included, excluded = filter_eligible_representatives(values)
+    assert included.factor.tolist() == ["ok"]
+    assert set(excluded.factor) == {"not_selected", "not_eligible", "zero"}
+    assert excluded.set_index("factor").loc["zero", "reason"] == "excluded_zero_direction"

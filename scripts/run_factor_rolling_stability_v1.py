@@ -109,7 +109,7 @@ def main() -> int:
     output = PROJECT_ROOT / config["output_dir"]
     output.mkdir(parents=True, exist_ok=True)
     metrics.to_csv(output / "factor_window_metrics.csv", index=False, encoding="utf-8-sig")
-    metrics[["factor", "split_id", "selected", "selection_reason", "frozen_direction", "fdr_bh_q_value"]].to_csv(output / "factor_selection_history.csv", index=False, encoding="utf-8-sig")
+    metrics[["factor", "split_id", "selected", "selection_eligible", "eligible", "eligibility_reason", "selection_reason", "frozen_direction", "fdr_bh_q_value"]].to_csv(output / "factor_selection_history.csv", index=False, encoding="utf-8-sig")
     metrics[["factor", "split_id", "frozen_direction"]].to_csv(output / "factor_direction_history.csv", index=False, encoding="utf-8-sig")
     metrics.assign(oos_degradation=metrics.test_mean_ic.abs() - metrics.validation_mean_ic.abs())[["factor", "split_id", "oos_degradation"]].to_csv(output / "factor_oos_degradation.csv", index=False, encoding="utf-8-sig")
     board.to_csv(output / "factor_stability_board.csv", index=False, encoding="utf-8-sig")
