@@ -46,6 +46,9 @@ jobs:
           tests/test_point_in_time_fields.py
           tests/test_method_comparison_contract.py
           tests/test_model_selection_leakage.py
+          tests/test_profile_gates.py
+          tests/test_artifact_lineage.py
+          tests/test_model_readiness.py
           -q
       - name: Run synthetic contract validator
         shell: pwsh

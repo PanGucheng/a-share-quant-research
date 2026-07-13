@@ -1,18 +1,19 @@
 {
-  "artifact_id": "pre_model_diagnostics_v1:cb4eaa4cafb019abb5c7451dd0bc6d0a5ace0351ff5cb43cd03ff76095ba56e8",
-  "code_commit_sha": "865aa1e24bf42f374e736a968963e4ae04e35b37",
-  "code_diff_sha256": "d1d972fd3310df0c2e69aec4c5064c6fd1dcce091e2f824e4d6c19accfd06d84",
-  "code_dirty": true,
+  "artifact_id": "pre_model_diagnostics_v1:f3f2b42aacd8145f259ecb7ab971ee453a43f40561c5ca0a5a71ae31ae296046",
+  "code_commit_sha": "22bb453e44fb4a42a9d38e5bcb1648e1d23f3e41",
+  "code_diff_sha256": "",
+  "code_dirty": false,
   "config_sha256": "707993967b2dce97c8a5a449755666e6b3dde5ff434783578f96a460d6b3d95a",
-  "created_at": "2026-07-13T11:27:37.179656+00:00",
+  "created_at": "2026-07-13T11:34:14.833216+00:00",
   "end_date": "2024-01-05",
-  "factor_catalog_id": null,
-  "factor_frame_id": null,
-  "input_artifact_ids": [],
+  "factor_catalog_id": "factor-catalog:61a60413f1fed6627fe3cb02e5afe11fe1189f142c6a2591a1075ad615516ff7",
+  "factor_frame_id": "factor-series:61a60413f1fed6627fe3cb02e5afe11fe1189f142c6a2591a1075ad615516ff7",
+  "input_artifact_ids": [
+    "a_share_execution_v1:4cdba9667bb7d4b65d79bd39a5592068946cafae055a526b9dafd71bc62f19c3",
+    "factor_score_construction_v1:96327b6589d0427b2ff2f9845cc8ffc6e292502d4ef4bd58a21a11d24de01f05"
+  ],
   "lineage_status": "reference_only",
   "missing_lineage_fields": [
-    "input_manifest:E:/qlib_prj/qlib_baseline/outputs/a_share_execution_v1/local_reference/artifact_manifest.json",
-    "input_manifest:E:/qlib_prj/qlib_baseline/outputs/factor_score_construction_v1/local_reference/artifact_manifest.json",
     "reference_execution_signal_date_only",
     "universe_artifact_id"
   ],
@@ -31,9 +32,9 @@
   },
   "profile_name": "local_reference",
   "profile_type": "reference",
-  "run_id": "20260713T112737Z-a2d4f12b",
+  "run_id": "20260713T113414Z-51d8195d",
   "schema_version": 1,
-  "split_manifest_id": null,
+  "split_manifest_id": "split-manifest:67887eac73a24cffed9bfcf7366726b771dcb899c6da67f5d872af25097ea66b",
   "stage_id": "pre_model_diagnostics_v1",
   "start_date": "2022-01-06",
   "universe_artifact_id": null

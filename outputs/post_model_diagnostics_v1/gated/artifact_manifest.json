@@ -1,17 +1,18 @@
 {
-  "artifact_id": "post_model_diagnostics_v1:19db2ce5d0399784844269be49bb56f040b2abff3e924692953721288e05a0d6",
-  "code_commit_sha": "865aa1e24bf42f374e736a968963e4ae04e35b37",
-  "code_diff_sha256": "7d2e7443cf12666a57b225fe21697e9cb0cd731e1ea72a9fd7ed6277475d9ec7",
-  "code_dirty": true,
+  "artifact_id": "post_model_diagnostics_v1:ee24f5611dba42381c018c51bdf256bca59751429fce81bdda98a50cda067918",
+  "code_commit_sha": "22bb453e44fb4a42a9d38e5bcb1648e1d23f3e41",
+  "code_diff_sha256": "",
+  "code_dirty": false,
   "config_sha256": "82e819846ad13e2dc75703f55c61a59a45623ff1d33cf18b3abe7eb527eafa7c",
-  "created_at": "2026-07-13T11:28:09.910480+00:00",
+  "created_at": "2026-07-13T11:34:16.575152+00:00",
   "end_date": null,
-  "factor_catalog_id": null,
-  "factor_frame_id": null,
-  "input_artifact_ids": [],
+  "factor_catalog_id": "factor-catalog:61a60413f1fed6627fe3cb02e5afe11fe1189f142c6a2591a1075ad615516ff7",
+  "factor_frame_id": "factor-series:61a60413f1fed6627fe3cb02e5afe11fe1189f142c6a2591a1075ad615516ff7",
+  "input_artifact_ids": [
+    "factor_model_comparison_v1:a3f0bf5ed7a01d9eff3f616b6f73a5f4e8c22dd276e95d54063bd7826bf141fc"
+  ],
   "lineage_status": "reference_only",
   "missing_lineage_fields": [
-    "input_manifest:E:/qlib_prj/qlib_baseline/outputs/factor_model_comparison_v1/gated/artifact_manifest.json",
     "trained_model_outputs"
   ],
   "output_file_hashes": {
@@ -20,10 +21,10 @@
   },
   "profile_name": "gated_reference",
   "profile_type": "reference",
-  "run_id": "20260713T112809Z-1c69f3e0",
+  "run_id": "20260713T113416Z-b30a208b",
   "schema_version": 1,
-  "split_manifest_id": null,
+  "split_manifest_id": "split-manifest:67887eac73a24cffed9bfcf7366726b771dcb899c6da67f5d872af25097ea66b",
   "stage_id": "post_model_diagnostics_v1",
   "start_date": null,
-  "universe_artifact_id": null
+  "universe_artifact_id": "universe:f435d7b8d4a351ad9c155dadf61f767fd9d0272b3096c33d180b0f0eafc9cc6c"
 }

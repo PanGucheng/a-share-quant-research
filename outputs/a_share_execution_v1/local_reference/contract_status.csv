@@ -1,6 +1,10 @@
 ﻿check_name,status,observed_value,required_value,severity,reason
-cash_conservation_error,pass,True,True,critical,A-share execution output contract.
-position_conservation_error,pass,0,0,critical,A-share execution output contract.
-invalid_trade_count,pass,0,0,critical,A-share execution output contract.
-future_price_execution_count,pass,0,0,critical,A-share execution output contract.
-execution_contract,pass,pass,pass,critical,A-share execution output contract.
+cash_conservation_error,pass,1.4901161193847656e-08,<=1e-6,critical,Cash ledger must reconcile.
+non_negative_cash,pass,6347563.774282516,>=0,critical,Buy sizing must reserve commissions before execution.
+holding_valuation_missing_count,pass,2203,reported_and_carried_forward,critical,Missing current quotes use the last observed close and are never valued at zero.
+unfilled_share_count,pass,230394300,reported,critical,Rejected and partial quantities must remain observable.
+execution_calendar_mode,pass,signal_date_only,signal_date_only,critical,Reference execution does not claim a complete daily exchange calendar.
+position_conservation_error,pass,0,0,critical,Position mutations occur only through recorded fills.
+invalid_trade_count,pass,0,0,critical,"All fills pass lot, cash, volume, and tradability checks."
+future_price_execution_count,pass,0,0,critical,Execution date must follow signal date.
+execution_contract,pass,pass,pass,critical,Reference execution completed.

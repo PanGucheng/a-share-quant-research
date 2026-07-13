@@ -1,0 +1,40 @@
+{
+  "artifact_id": "a_share_execution_v1:4cdba9667bb7d4b65d79bd39a5592068946cafae055a526b9dafd71bc62f19c3",
+  "code_commit_sha": "22bb453e44fb4a42a9d38e5bcb1648e1d23f3e41",
+  "code_diff_sha256": "",
+  "code_dirty": false,
+  "config_sha256": "ddae86c1724ce0ec106ecb258b1f272f87b293ad30ce20eac90d1c56c6c8d75a",
+  "created_at": "2026-07-13T11:33:43.160788+00:00",
+  "end_date": "2024-01-05",
+  "factor_catalog_id": "factor-catalog:61a60413f1fed6627fe3cb02e5afe11fe1189f142c6a2591a1075ad615516ff7",
+  "factor_frame_id": "factor-series:61a60413f1fed6627fe3cb02e5afe11fe1189f142c6a2591a1075ad615516ff7",
+  "input_artifact_ids": [
+    "factor_score_construction_v1:96327b6589d0427b2ff2f9845cc8ffc6e292502d4ef4bd58a21a11d24de01f05"
+  ],
+  "lineage_status": "reference_only",
+  "missing_lineage_fields": [
+    "reference_execution_signal_date_only",
+    "universe_artifact_id"
+  ],
+  "output_file_hashes": {
+    "capacity_diagnostics.csv": "34d5205977e1e659a8d00a2e7f4499a273c1bd6b11995466e62c2527437634be",
+    "contract_status.csv": "75042598dbdccc11d90824b425ec5e78769373130df8374c46e180eb275a9e65",
+    "daily_turnover.csv": "c9fc0ca252ee8667941a31934b43ac3a32321062479d2df0ea61f7950377edc5",
+    "executed_orders.csv": "1a906377b362514783a88dc16ec218512742b69e3ce3c408dd55400e6496d184",
+    "execution_report.md": "3585bc62bc6bc835d9ded216cffe764891d4483f7b2e8048c3c72609465bbd7b",
+    "execution_summary.csv": "b7031a9bc021a2e2dda8221a9dfbdb4c56340e83d93289fa463ab66ee9350190",
+    "order_intents.csv": "d21028bc6fad1336d0b4c32c03bf8d139656f0bf6e0bc4bcf96bf78003fbc45b",
+    "partial_fills.csv": "44ef4643d0731fcf25877cdd071043fc88c221e5c4336e6c0952c5c9a25e7054",
+    "positions.csv": "4873d7ba4b7b1b101794e2e4fa318096c9681a3fcc56452979f7d0ae52a88405",
+    "rejected_orders.csv": "d89076d959a1e8c3e557cffc66eb71b308bfd39487c98864375d1e434c133e81",
+    "transaction_costs.csv": "5f58d6c1c4d3be443c623bdd4f6eba959c6615e3b4fcdb27e9025c91fd67b645"
+  },
+  "profile_name": "local_reference",
+  "profile_type": "reference",
+  "run_id": "20260713T113343Z-86dfa717",
+  "schema_version": 1,
+  "split_manifest_id": "split-manifest:67887eac73a24cffed9bfcf7366726b771dcb899c6da67f5d872af25097ea66b",
+  "stage_id": "a_share_execution_v1",
+  "start_date": "2022-01-06",
+  "universe_artifact_id": null
+}

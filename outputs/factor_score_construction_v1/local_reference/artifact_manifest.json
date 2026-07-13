@@ -1,0 +1,38 @@
+{
+  "artifact_id": "factor_score_construction_v1:96327b6589d0427b2ff2f9845cc8ffc6e292502d4ef4bd58a21a11d24de01f05",
+  "code_commit_sha": "22bb453e44fb4a42a9d38e5bcb1648e1d23f3e41",
+  "code_diff_sha256": "",
+  "code_dirty": false,
+  "config_sha256": "ead843d136fe871f69b1919400e6c533103994e6716b4ff79565e7c15a879589",
+  "created_at": "2026-07-13T11:31:46.625003+00:00",
+  "end_date": "2024-01-04",
+  "factor_catalog_id": "factor-catalog:61a60413f1fed6627fe3cb02e5afe11fe1189f142c6a2591a1075ad615516ff7",
+  "factor_frame_id": "factor-series:61a60413f1fed6627fe3cb02e5afe11fe1189f142c6a2591a1075ad615516ff7",
+  "input_artifact_ids": [
+    "factor_clustering_v1:530d1f5b59ccbdd0ddc8c11ab70980cf0b452a733b1f3f1b0ab0fc840c9a232e",
+    "factor_rolling_stability_v1:9a08792e277005400994baac1a797b295001d1cb9b6c2fbc55de70ff61db2a31",
+    "purged_walk_forward_v1:73bca0aa49c15d310793441aaa743bfb120bafec9b7f32c6dbb7ea09daffcbe2"
+  ],
+  "lineage_status": "reference_only",
+  "missing_lineage_fields": [
+    "legacy_output_pre_lineage",
+    "universe_artifact_id"
+  ],
+  "output_file_hashes": {
+    "composite_scores.parquet": "b1324ef7cbc59a57b68e7e565763f133287cafe20708af336d6849a2d573310e",
+    "contract_status.csv": "045fe1079ea7cbd4648969d18bb3387230da521dd83fb56c05c1253c987bb3e8",
+    "daily_factor_component_count.csv": "dc740a819079671afd54dbf14cd8518ad5d3148befe56f7aecd3a75399cd65c7",
+    "factor_weights_by_window.csv": "4ba30c270029308da92176fbddfdd36d39989ac1b352599ee40b0c4374300d82",
+    "score_construction_report.md": "bd128f58631b4bd334d5a6539b23ebab5e53523d0ac1cf407e7598fe6f5ed58c",
+    "score_diagnostics.csv": "4c4b7d640beb6bf29b42db683fcca2e5d2466a9b97b30e0d1cee137106881eeb",
+    "score_method_manifest.csv": "b5dd4fc60d24f8ae2a63990c934dae78f52ff616eb7d926ea94867edee8dc8b0"
+  },
+  "profile_name": "local_reference",
+  "profile_type": "reference",
+  "run_id": "20260713T113146Z-54339fee",
+  "schema_version": 1,
+  "split_manifest_id": "split-manifest:67887eac73a24cffed9bfcf7366726b771dcb899c6da67f5d872af25097ea66b",
+  "stage_id": "factor_score_construction_v1",
+  "start_date": "2022-01-05",
+  "universe_artifact_id": null
+}

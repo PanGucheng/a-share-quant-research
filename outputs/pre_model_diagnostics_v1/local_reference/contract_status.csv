@@ -1,5 +1,10 @@
 ﻿check_name,status,observed_value,required_value,severity,reason
-common_execution_methods,pass,5,>=3,critical,At least three transparent methods share execution assumptions.
-common_period_date_identity,pass,0,0,critical,"Every ranked method must use the same start, end, and trading-day count."
-historical_exposure_diagnostics,blocked,1,3,capability,Historical PIT exposure blocks only its dedicated capability gate.
-test_metrics_used_for_selection,pass,False,False,critical,Frozen methods only.
+diagnostic_stage,pass,pre_model_diagnostics,pre_model_diagnostics,critical,This gate must not consume trained-model output.
+common_execution_methods,pass,5,5,critical,Transparent methods share one execution config.
+required_method_coverage,pass,5,5,critical,Pre-model diagnostics requires only transparent non-trained methods.
+common_start_date,pass,2022-01-06,reported,critical,Ranking period begins on the shared valid calendar.
+common_end_date,pass,2024-01-05,reported,critical,Ranking period ends on the shared valid calendar.
+common_trading_days,pass,486,>0,critical,Every compared method uses the identical non-empty date set.
+method_date_mismatch_count,pass,2,reported,critical,Native-period mismatch is disclosed; rankings use common-period results only.
+historical_exposure_diagnostics,blocked,0,2,capability,Only historical_exposure_model_ready is blocked by unavailable PIT industry/size data.
+test_metrics_used_for_selection,pass,False,False,critical,This stage evaluates already frozen methods.

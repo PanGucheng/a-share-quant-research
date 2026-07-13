@@ -1,6 +1,6 @@
 # Qlib A股因子验证框架 V1.1 门禁、Profile 与 Lineage 硬化计划
 
-> 文档状态：执行版计划<br>
+> 文档状态：实施完成，等待 PR CI 最终确认<br>
 > 制定日期：2026-07-13<br>
 > 适用分支：`agent/factor-validation-roadmap-v1`<br>
 > 适用 PR：草稿 PR #1<br>
@@ -44,6 +44,32 @@
 | `model_training_started` | `false` | 本轮禁止训练 |
 
 `reference_ready=true` 不得被描述成“完整研究完成”或“允许模型训练”。`blocked` 是有效、可验收的结果，不得通过降低阈值、伪造 lineage 或混用 Profile 消除。
+
+### 2.1 实施结果（2026-07-13）
+
+V1.1 已按冻结边界实施，实际 readiness 与目标状态一致：
+
+```text
+reference_ready = true
+full_research_ready = false
+core_model_ready = false
+liquidity_residualized_model_ready = false
+historical_exposure_model_ready = false
+model_training_started = false
+lineage_status = reference_only
+```
+
+关键验收结果：
+
+- 诊断门禁已拆为 `pre_model_diagnostics` / `post_model_diagnostics`；pre 层只要求五种非训练方法，不再依赖 `regularized_linear` 或 `lightgbm`。
+- native-period 保留 821/486 日差异；common-period 五种方法统一使用 2022-01-06—2024-01-05 的 486 个交易日，排名兼容入口指向 common-period 表。
+- 稳定性门禁加入日期数、coverage 和有效 IC 数联合 eligibility；旧 reference 输入的 10 个因子全部降为 `holdout`，不再出现 7.4% coverage 的 `stable_core`。
+- execution 不再按零价估值缺行情持仓；本次 reference 重跑披露 2,203 次持仓行情缺失、230,394,300 股未成交量，现金最小值保持非负，日历明确为 `signal_date_only`。
+- 九类关键阶段均输出统一 artifact manifest；历史 clustering/score 产物明确为 `reference_only`，模型门禁可追溯 8 个上游 artifact，不伪造 full lineage。
+- AKShare 历史行业/市值缺口只阻塞 `historical_exposure_model_ready`；`mlfinpy` 只作语义参考，不升级 Python，也不进入仓库依赖。
+- 仓库轻量测试为 60 passed；`pytest.ini` 将发现范围限定到 `tests/`，避免误收集 `tmp/reference_repos` 的第三方测试。
+
+本轮未训练模型、未运行 669 因子全量任务、未回填 AKShare 历史快照、未接入 Qlib Exchange。下一 PR 边界仍为 Qlib Exchange integration。
 
 ## 3. 当前实现基线审计
 

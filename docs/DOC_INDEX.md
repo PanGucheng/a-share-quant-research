@@ -28,8 +28,8 @@
   阶段 8 A股订单约束、费用、部分成交、会计守恒和容量诊断。
 - `outputs/external_exposure_data_v1/current/exposure_data_report.md`
   阶段 9 AKShare forward-only 快照、PIT 字段契约和当前外部采集阻塞状态。
-- `outputs/final_portfolio_diagnostics_v1/local_reference/final_portfolio_report.md`
-  阶段 10 现有 reference 诊断；V1.1 将其拆为 pre/post-model diagnostics，并要求 native/common-period 双输出。
+- `outputs/pre_model_diagnostics_v1/local_reference/final_portfolio_report.md`
+  阶段 10 pre-model reference 诊断；已拆分 native/common-period，方法排名只使用 486 个公共交易日结果。post-model 层因本 PR 不训练模型而保持 blocked。
 - `outputs/legacy_common_scores_v1/local_reference/legacy_common_scores_report.md`
   Alpha158 与旧 V3.5 candidate pool 在相同 purged test windows 下的共同口径等权 score。
 - `outputs/factor_model_comparison_v1/gated/model_comparison_report.md`
@@ -68,7 +68,7 @@ docs/_archive/README.md
 
 ## Current Stage
 
-阶段 0—4 已形成基础实现，阶段 5—10 已有局部 reference implementation，但尚不能视为 full-research 结果。当前进入 V1.1 收尾硬化：先修复门禁循环、Profile、lineage、稳定性 coverage、共同日期比较和 reference execution 会计；本轮不训练模型、不运行 669 因子全量结果、不接入 Qlib Exchange。
+V1.1 收尾硬化已实施：门禁循环、Profile、lineage、稳定性 coverage、共同日期比较和 reference execution 会计均已修复。当前 reference implementation 可运行，但尚不能视为 full-research 结果；本轮未训练模型、未运行 669 因子全量结果、未接入 Qlib Exchange。
 
 ```text
 docs/Qlib A股因子研究框架完整升级计划 V1.md
@@ -76,4 +76,4 @@ docs/FACTOR_VALIDATION_ROADMAP_V1.md
 docs/FACTOR_VALIDATION_HARDENING_V1_1.md
 ```
 
-V1.1 预期只让 `reference_ready=true`；`full_research_ready`、`core_model_ready`、`liquidity_residualized_model_ready`、`historical_exposure_model_ready` 和 `model_training_started` 均保持 false。V3.39 的 `residualized_coverage_min=0.1495 < 0.80` 只阻塞流动性残差化模型能力；AKShare 历史暴露缺口只阻塞历史暴露模型能力。
+V1.1 实际状态为 `reference_ready=true`；`full_research_ready`、`core_model_ready`、`liquidity_residualized_model_ready`、`historical_exposure_model_ready` 和 `model_training_started` 均为 false。V3.39 的 `residualized_coverage_min=0.1495 < 0.80` 只阻塞流动性残差化模型能力；AKShare 历史暴露缺口只阻塞历史暴露模型能力。下一 PR 明确为 Qlib Exchange integration。
