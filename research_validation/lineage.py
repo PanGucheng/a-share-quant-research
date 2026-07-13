@@ -14,8 +14,8 @@ import pandas as pd
 from .profiles import Profile, ProfileType, assert_profiles_compatible, resolve_profile
 
 
-MANIFEST_SCHEMA_VERSION = 1
-REQUIRED_MANIFEST_FIELDS = frozenset(
+MANIFEST_SCHEMA_VERSION = 2
+V1_REQUIRED_MANIFEST_FIELDS = frozenset(
     {
         "schema_version",
         "artifact_id",
@@ -39,6 +39,9 @@ REQUIRED_MANIFEST_FIELDS = frozenset(
         "missing_lineage_fields",
     }
 )
+V2_REQUIRED_MANIFEST_FIELDS = V1_REQUIRED_MANIFEST_FIELDS | frozenset(
+    {"artifact_status", "blocked_reason", "research_run_family_id", "producer_run_id"}
+)
 LINEAGE_ID_FIELDS = (
     "universe_artifact_id",
     "split_manifest_id",
@@ -46,6 +49,7 @@ LINEAGE_ID_FIELDS = (
     "factor_frame_id",
 )
 VALID_LINEAGE_STATUSES = {"complete", "reference_only", "incomplete", "inconsistent"}
+VALID_ARTIFACT_STATUSES = {"pass", "blocked", "failed"}
 
 
 def canonical_json(value: Any) -> str:
@@ -90,10 +94,11 @@ def _git(repo_root: Path, *args: str) -> str:
 
 def capture_code_state(repo_root: Path) -> CodeState:
     commit = _git(repo_root, "rev-parse", "HEAD")
-    pathspec = ("--", ".", ":(exclude)outputs")
-    status = _git(repo_root, "status", "--short", "--untracked-files=no", *pathspec)
+    pathspec = ("--", ".", ":(exclude)outputs", ":(exclude)tmp", ":(exclude).pytest_cache")
+    status = _git(repo_root, "status", "--short", "--untracked-files=normal", *pathspec)
     diff = _git(repo_root, "diff", "--binary", "HEAD", *pathspec) if status else ""
-    return CodeState(commit_sha=commit, dirty=bool(status), diff_sha256=sha256_text(diff) if diff else "")
+    state = f"{status}\n{diff}" if status else ""
+    return CodeState(commit_sha=commit, dirty=bool(status), diff_sha256=sha256_text(state) if state else "")
 
 
 def content_reference_id(kind: str, paths: Sequence[Path]) -> str:
@@ -107,8 +112,19 @@ def _normalized_date(value: Any) -> str | None:
     return pd.Timestamp(value).date().isoformat()
 
 
-def _output_hashes(paths: Sequence[Path]) -> dict[str, str]:
-    return {path.name: sha256_file(path) for path in sorted(paths, key=lambda item: item.name) if path.is_file()}
+def _output_hashes(paths: Sequence[Path], output_dir: Path | None) -> dict[str, str]:
+    hashes: dict[str, str] = {}
+    for path in sorted(paths, key=lambda item: item.as_posix()):
+        if not path.is_file():
+            continue
+        try:
+            key = path.resolve().relative_to(output_dir.resolve()).as_posix() if output_dir else path.name
+        except ValueError:
+            key = path.name
+        if key in hashes:
+            raise ValueError(f"duplicate output manifest key: {key}")
+        hashes[key] = sha256_file(path)
+    return hashes
 
 
 def build_artifact_manifest(
@@ -129,6 +145,10 @@ def build_artifact_manifest(
     lineage_status: str | None = None,
     created_at: datetime | None = None,
     run_id: str | None = None,
+    output_dir: Path | None = None,
+    artifact_status: str = "pass",
+    blocked_reason: str = "",
+    research_run_family_id: str | None = None,
 ) -> dict[str, Any]:
     missing = sorted(set(str(item) for item in missing_lineage_fields))
     if lineage_status is None:
@@ -138,8 +158,13 @@ def build_artifact_manifest(
             lineage_status = "complete"
     if lineage_status not in VALID_LINEAGE_STATUSES:
         raise ValueError(f"invalid lineage_status: {lineage_status}")
+    if artifact_status not in VALID_ARTIFACT_STATUSES:
+        raise ValueError(f"invalid artifact_status: {artifact_status}")
+    if artifact_status == "blocked" and not blocked_reason:
+        raise ValueError("blocked artifact requires blocked_reason")
 
     timestamp = created_at or datetime.now(timezone.utc)
+    effective_run_id = run_id or f"{timestamp:%Y%m%dT%H%M%SZ}-{uuid.uuid4().hex[:8]}"
     core = {
         "schema_version": MANIFEST_SCHEMA_VERSION,
         "stage_id": stage_id,
@@ -159,14 +184,18 @@ def build_artifact_manifest(
         ),
         "start_date": _normalized_date(start_date),
         "end_date": _normalized_date(end_date),
-        "output_file_hashes": _output_hashes(output_files),
+        "output_file_hashes": _output_hashes(output_files, output_dir),
         "missing_lineage_fields": missing,
+        "artifact_status": artifact_status,
+        "blocked_reason": blocked_reason,
+        "research_run_family_id": research_run_family_id or str(config.get("research_run_family_id", profile.name)),
     }
     artifact_id = f"{stage_id}:{sha256_text(canonical_json(core))}"
     return {
         **core,
         "artifact_id": artifact_id,
-        "run_id": run_id or f"{timestamp:%Y%m%dT%H%M%SZ}-{uuid.uuid4().hex[:8]}",
+        "run_id": effective_run_id,
+        "producer_run_id": effective_run_id,
         "created_at": timestamp.isoformat(),
     }
 
@@ -219,8 +248,10 @@ def write_stage_artifact_manifest(
     end_date: Any = None,
     missing_lineage_fields: Sequence[str] = (),
     lineage_status: str | None = None,
+    artifact_status: str = "pass",
+    blocked_reason: str = "",
 ) -> dict[str, Any]:
-    del project_root  # Reserved for future repository-relative output metadata.
+    del project_root
     inputs, missing_inputs = load_input_manifests(input_manifest_paths)
     ids = {
         "universe_artifact_id": universe_artifact_id,
@@ -249,6 +280,9 @@ def write_stage_artifact_manifest(
         end_date=end_date,
         missing_lineage_fields=missing,
         lineage_status=lineage_status,
+        output_dir=output_dir,
+        artifact_status=artifact_status,
+        blocked_reason=blocked_reason,
         **ids,
     )
     write_artifact_manifest(output_dir / "artifact_manifest.json", manifest)
@@ -256,7 +290,11 @@ def write_stage_artifact_manifest(
 
 
 def validate_manifest_schema(manifest: Mapping[str, Any]) -> None:
-    missing = REQUIRED_MANIFEST_FIELDS - set(manifest)
+    version = int(manifest.get("schema_version", 0))
+    required = V1_REQUIRED_MANIFEST_FIELDS if version == 1 else V2_REQUIRED_MANIFEST_FIELDS if version == 2 else frozenset()
+    if not required:
+        raise ValueError(f"unsupported artifact manifest schema_version: {version}")
+    missing = required - set(manifest)
     if missing:
         raise ValueError(f"artifact manifest missing fields: {sorted(missing)}")
     ProfileType(str(manifest["profile_type"]))
@@ -266,6 +304,13 @@ def validate_manifest_schema(manifest: Mapping[str, Any]) -> None:
         raise ValueError("input_artifact_ids must be a list")
     if not isinstance(manifest["output_file_hashes"], dict):
         raise ValueError("output_file_hashes must be a mapping")
+    if version == 2:
+        if manifest["artifact_status"] not in VALID_ARTIFACT_STATUSES:
+            raise ValueError(f"invalid artifact_status: {manifest['artifact_status']}")
+        if manifest["artifact_status"] == "blocked" and not manifest["blocked_reason"]:
+            raise ValueError("blocked artifact requires blocked_reason")
+        if manifest["producer_run_id"] != manifest["run_id"]:
+            raise ValueError("producer_run_id must equal run_id")
 
 
 @dataclass(frozen=True)
@@ -273,6 +318,42 @@ class LineageIssue:
     check_name: str
     artifact_id: str
     reason: str
+    stage_id: str = ""
+    severity: str = "critical"
+
+
+def validate_manifest_outputs(
+    manifest: Mapping[str, Any],
+    output_dir: Path,
+    *,
+    config: Mapping[str, Any] | None = None,
+    controlled_outputs: Sequence[str] | None = None,
+) -> list[LineageIssue]:
+    stage_id = str(manifest.get("stage_id", ""))
+    artifact_id = str(manifest.get("artifact_id", ""))
+    issues: list[LineageIssue] = []
+    try:
+        validate_manifest_schema(manifest)
+    except ValueError as exc:
+        return [LineageIssue("manifest_schema", artifact_id, str(exc), stage_id)]
+    if int(manifest["schema_version"]) < 2:
+        issues.append(LineageIssue("manifest_freshness_schema", artifact_id, "schema v1 is read-only legacy evidence and cannot prove freshness", stage_id))
+        return issues
+    if config is not None and str(manifest["config_sha256"]) != config_sha256(config):
+        issues.append(LineageIssue("config_sha256", artifact_id, "current config hash differs from manifest", stage_id))
+    recorded = dict(manifest["output_file_hashes"])
+    for relative, expected in recorded.items():
+        path = output_dir / Path(relative)
+        if not path.is_file():
+            issues.append(LineageIssue("output_file_missing", artifact_id, f"missing output: {relative}", stage_id))
+        elif sha256_file(path) != expected:
+            issues.append(LineageIssue("output_hash_mismatch", artifact_id, f"hash differs: {relative}", stage_id))
+    if controlled_outputs is not None:
+        allowed = {Path(item).as_posix() for item in controlled_outputs}
+        unexpected = sorted(set(recorded) - allowed)
+        for relative in unexpected:
+            issues.append(LineageIssue("uncontrolled_manifest_output", artifact_id, f"not in controlled output set: {relative}", stage_id))
+    return issues
 
 
 def _manifest_profile(manifest: Mapping[str, Any]) -> Profile:
@@ -302,6 +383,34 @@ def _detect_cycles(manifests: Sequence[Mapping[str, Any]]) -> list[str]:
     return sorted(cycles)
 
 
+def validate_current_upstream_ids(
+    manifests: Iterable[Mapping[str, Any]],
+    required_edges: Mapping[str, Sequence[str]],
+) -> list[LineageIssue]:
+    values = [dict(item) for item in manifests]
+    by_stage: dict[str, list[dict[str, Any]]] = {}
+    for item in values:
+        by_stage.setdefault(str(item.get("stage_id", "")), []).append(item)
+    issues: list[LineageIssue] = []
+    for stage_id, items in by_stage.items():
+        if len(items) > 1:
+            issues.append(LineageIssue("duplicate_current_stage", "", f"multiple current manifests for stage: {stage_id}", stage_id))
+    current = {stage: items[0] for stage, items in by_stage.items() if len(items) == 1}
+    for child_stage, parent_stages in required_edges.items():
+        child = current.get(child_stage)
+        if child is None:
+            issues.append(LineageIssue("current_stage_missing", "", f"missing current manifest: {child_stage}", child_stage))
+            continue
+        actual = set(str(value) for value in child.get("input_artifact_ids", []))
+        for parent_stage in parent_stages:
+            parent = current.get(parent_stage)
+            if parent is None:
+                issues.append(LineageIssue("current_upstream_missing", str(child.get("artifact_id", "")), f"missing current upstream stage: {parent_stage}", child_stage))
+            elif str(parent["artifact_id"]) not in actual:
+                issues.append(LineageIssue("stale_upstream_artifact", str(child.get("artifact_id", "")), f"does not reference current {parent_stage}: {parent['artifact_id']}", child_stage))
+    return issues
+
+
 def validate_lineage_chain(
     manifests: Iterable[Mapping[str, Any]],
     *,
@@ -325,6 +434,13 @@ def validate_lineage_chain(
         assert_profiles_compatible([_manifest_profile(item) for item in values], profile_gate)
     except ValueError as exc:
         issues.append(LineageIssue("profile_compatibility", "", str(exc)))
+    if profile_gate in {"full_research", "core_model", "model_comparison"}:
+        profile_names = {str(item["profile_name"]) for item in values}
+        if len(profile_names) > 1:
+            issues.append(LineageIssue("full_profile_name_homogeneity", "", f"mixed profile names: {sorted(profile_names)}"))
+        run_families = {str(item.get("research_run_family_id", "")) for item in values}
+        if "" in run_families or len(run_families) > 1:
+            issues.append(LineageIssue("research_run_family_homogeneity", "", f"mixed or missing run families: {sorted(run_families)}"))
 
     known = {str(item["artifact_id"]): item for item in values}
     if require_known_inputs:
@@ -340,6 +456,9 @@ def validate_lineage_chain(
         for item in values:
             if item["lineage_status"] != "complete":
                 issues.append(LineageIssue("lineage_complete", str(item["artifact_id"]), f"status={item['lineage_status']}"))
+    for item in values:
+        if item.get("artifact_status", "pass") != "pass":
+            issues.append(LineageIssue("artifact_status", str(item["artifact_id"]), f"status={item.get('artifact_status')};reason={item.get('blocked_reason', '')}", str(item["stage_id"])))
     if require_clean_code:
         for item in values:
             if bool(item["code_dirty"]):

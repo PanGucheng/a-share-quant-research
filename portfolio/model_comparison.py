@@ -24,6 +24,9 @@ def readiness_flags(
     profiles: list[Profile],
     *,
     lineage_status: str,
+    reference_infrastructure_ready: bool = True,
+    reference_lineage_valid: bool = True,
+    semantic_consistency_pass: bool = True,
     full_research_contracts_pass: bool,
     liquidity_contract_pass: bool,
     historical_exposure_contract_pass: bool,
@@ -34,7 +37,14 @@ def readiness_flags(
         reference_profiles_pass = True
     except ValueError:
         reference_profiles_pass = False
-    reference_ready = reference_contracts_pass and reference_profiles_pass and lineage_status in {"complete", "reference_only"}
+    reference_pipeline_ready = (
+        reference_infrastructure_ready
+        and reference_contracts_pass
+        and reference_profiles_pass
+        and reference_lineage_valid
+        and semantic_consistency_pass
+        and lineage_status in {"complete", "reference_only"}
+    )
     try:
         assert_profiles_compatible(profiles, "full_research")
         full_profiles_pass = True
@@ -42,7 +52,9 @@ def readiness_flags(
         full_profiles_pass = False
     full_research_ready = full_research_contracts_pass and full_profiles_pass and lineage_status == "complete"
     return {
-        "reference_ready": reference_ready,
+        "reference_infrastructure_ready": reference_infrastructure_ready,
+        "reference_pipeline_ready": reference_pipeline_ready,
+        "reference_ready": reference_pipeline_ready,
         "full_research_ready": full_research_ready,
         "core_model_ready": full_research_ready,
         "liquidity_residualized_model_ready": full_research_ready and liquidity_contract_pass,

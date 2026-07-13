@@ -7,6 +7,7 @@ from research_validation.lineage import (
     CodeState,
     build_artifact_manifest,
     validate_lineage_chain,
+    validate_current_upstream_ids,
     write_artifact_manifest,
 )
 from research_validation.profiles import Profile, ProfileType
@@ -87,3 +88,19 @@ def test_lineage_cycle_and_date_range_are_detected(tmp_path: Path) -> None:
         require_consistent_ids=False,
     )
     assert {issue.check_name for issue in issues} >= {"artifact_dag_cycle", "date_range_compatibility"}
+
+
+def test_current_upstream_id_change_marks_child_stale(tmp_path: Path) -> None:
+    old_parent = manifest(tmp_path, stage="parent", config_value=1)
+    child = manifest(tmp_path, stage="child", inputs=[old_parent])
+    current_parent = manifest(tmp_path, stage="parent", config_value=2)
+    issues = validate_current_upstream_ids([current_parent, child], {"child": ["parent"]})
+    assert {issue.check_name for issue in issues} == {"stale_upstream_artifact"}
+
+
+def test_full_research_profile_names_must_match(tmp_path: Path) -> None:
+    first = manifest(tmp_path, stage="first", profile_type=ProfileType.FULL_RESEARCH, research_run_family_id="family")
+    second = manifest(tmp_path, stage="second", profile_type=ProfileType.FULL_RESEARCH, research_run_family_id="family")
+    second["profile_name"] = "full_research_b"
+    issues = validate_lineage_chain([first, second], profile_gate="full_research", require_complete=True, require_known_inputs=False, require_consistent_ids=True)
+    assert "full_profile_name_homogeneity" in {issue.check_name for issue in issues}
