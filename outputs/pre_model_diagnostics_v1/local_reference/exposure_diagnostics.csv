@@ -1,4 +1,3 @@
 ﻿exposure,status,reason
-industry,blocked,historical PIT industry unavailable
-size,blocked,historical PIT market cap unavailable
-liquidity,pass,capacity participation diagnostics available
+legacy_baselines,pass,Independent display only.
+current_stability_pipeline,blocked,blocked_no_current_reference_pipeline

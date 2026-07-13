@@ -126,6 +126,8 @@ tmp/reference_repos/techfactor
 
 ## Next Work
 
+> 2026-07-13 V1.1.1 实施完成：manifest v2、output freshness、真实 lineage gate、受控 staging 发布、空选择阻断、semantic consistency、readiness 拆分、common-period NAV 归一化和路径配置化均已落地。活动 representatives/weights 均为 0，score parquet 已移除，execution/pre-model 已预期 blocked；stale stage count=0。当前 `reference_infrastructure_ready=true`、`reference_pipeline_ready=false`、`reference_ready=false`，74 tests 与 11 validators 通过。
+
 > 2026-07-13 V1.1.1 一致性审计：当前最高优先级改为 `REFERENCE_PIPELINE_CONSISTENCY_V1_1_1.md`。复核确认 hardened stability 为 10 个 holdout、0 eligible windows、120 条 selection 全部 false，但活动 clustering 仍有 3 个旧 representatives，score 仍有对应权重和 2,819,616 行 runtime，execution/diagnostics 继续消费旧结果；当前 model gate 也未实际调用 `validate_lineage_chain()`。因此旧 `reference_ready=true` 是假阳性。
 
 V1.1.1 目标状态：`reference_infrastructure_ready=true`、`reference_pipeline_ready=false`、兼容字段 `reference_ready=false`，其余 full/core/扩展能力和训练状态仍为 false。先完成 lineage/freshness、stale 输出清理、空选择阻断传播、semantic consistency、NAV 归一化和路径配置化；本轮仍不接入 Qlib Exchange、不训练模型、不运行 669 因子。

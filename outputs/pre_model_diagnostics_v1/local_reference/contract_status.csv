@@ -1,10 +1,4 @@
 ﻿check_name,status,observed_value,required_value,severity,reason
-diagnostic_stage,pass,pre_model_diagnostics,pre_model_diagnostics,critical,This gate must not consume trained-model output.
-common_execution_methods,pass,5,5,critical,Transparent methods share one execution config.
-required_method_coverage,pass,5,5,critical,Pre-model diagnostics requires only transparent non-trained methods.
-common_start_date,pass,2022-01-06,reported,critical,Ranking period begins on the shared valid calendar.
-common_end_date,pass,2024-01-05,reported,critical,Ranking period ends on the shared valid calendar.
-common_trading_days,pass,486,>0,critical,Every compared method uses the identical non-empty date set.
-method_date_mismatch_count,pass,2,reported,critical,Native-period mismatch is disclosed; rankings use common-period results only.
-historical_exposure_diagnostics,blocked,0,2,capability,Only historical_exposure_model_ready is blocked by unavailable PIT industry/size data.
-test_metrics_used_for_selection,pass,False,False,critical,This stage evaluates already frozen methods.
+pre_model_diagnostics_status,blocked,blocked_no_current_reference_pipeline,pass,critical,execution_artifact_blocked;execution_contract_blocked;score_artifact_blocked;score_contract_blocked
+legacy_baselines_available,pass,True,reported,warning,Legacy baselines do not substitute for current methods.
+current_stability_pipeline_available,blocked,False,True,critical,Current score/execution chain is blocked.

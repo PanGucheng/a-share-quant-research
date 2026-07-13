@@ -2,6 +2,6 @@
 stability_factor_count,10,reported,pass
 stability_eligible_factor_count,0,>=1 for pipeline,blocked
 selection_selected_row_count,0,>=1 for pipeline,blocked
-cluster_representative_count,3,subset of eligible,fail
-score_weight_factor_count,3,subset of selected representatives,fail
-score_row_count,2819616,0 when upstream blocked,fail
+cluster_representative_count,0,subset of eligible,pass
+score_weight_factor_count,0,subset of selected representatives,pass
+score_row_count,0,0 when upstream blocked,pass

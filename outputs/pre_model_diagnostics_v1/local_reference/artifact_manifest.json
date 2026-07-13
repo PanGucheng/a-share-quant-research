@@ -1,16 +1,18 @@
 {
-  "artifact_id": "pre_model_diagnostics_v1:330672264eec170e57570c5711dc053c94d2db348e02990fe423d6f0f76392b2",
-  "code_commit_sha": "bc7ea4b383c7c8ba39c02901cf3dc9d1844c55ae",
+  "artifact_id": "pre_model_diagnostics_v1:41414e632b84767c312edd710b921baf01e4e0342a2a9fc9f227901703c3f2fe",
+  "artifact_status": "blocked",
+  "blocked_reason": "blocked_no_current_reference_pipeline",
+  "code_commit_sha": "c31802b109db377ca517c2f6e20c687cedd9c948",
   "code_diff_sha256": "",
   "code_dirty": false,
-  "config_sha256": "707993967b2dce97c8a5a449755666e6b3dde5ff434783578f96a460d6b3d95a",
-  "created_at": "2026-07-13T11:38:20.264786+00:00",
-  "end_date": "2024-01-05",
+  "config_sha256": "c0fd6e7dde2c089edac388a31c63fc823e8c86d6c1c6dfd9b58aaff0c3cc01eb",
+  "created_at": "2026-07-13T12:22:03.415153+00:00",
+  "end_date": null,
   "factor_catalog_id": "factor-catalog:61a60413f1fed6627fe3cb02e5afe11fe1189f142c6a2591a1075ad615516ff7",
   "factor_frame_id": "factor-series:61a60413f1fed6627fe3cb02e5afe11fe1189f142c6a2591a1075ad615516ff7",
   "input_artifact_ids": [
-    "a_share_execution_v1:0e8e80db53ab9a07d6fddde54c836045267c4a0a5298d9c787547b40fd7b832c",
-    "factor_score_construction_v1:2b30955c3a5b572ad944a52b4802b987bab923c21a89214f59ea271b157cd003"
+    "a_share_execution_v1:331048530afbd956e14701acbab544fd7339e7343ec91ee5c610d017a6aaecb5",
+    "factor_score_construction_v1:fa75b2a57f8d20c6336538b8a11d171d5e6852a10b1fa2a697f6614f24324bb7"
   ],
   "lineage_status": "reference_only",
   "missing_lineage_fields": [
@@ -18,24 +20,26 @@
     "universe_artifact_id"
   ],
   "output_file_hashes": {
-    "ablation_results.csv": "7cc3618f0cf2296218a77b5ea1187a1dc9589837fd6d1abd40f5f7ce2e93b380",
-    "capacity_sensitivity.csv": "26748e62e1bd3960f2ad35ca062b599420a0527292c078d9838a752c24fc1b3e",
-    "common_period_method_comparison.csv": "69974be10fb4562ebbdfe98f2fdce2861613b3fc997d09c2da50d81707d85ba5",
-    "contract_status.csv": "1cf6794558ab440563ca529c1e2509a4630bbe49bdd6d1d9874dd4265807168f",
-    "cost_sensitivity.csv": "ee75a9a45fe9440955b13205725faa7a570256941627a49461d7a8851e2e9f92",
-    "exposure_diagnostics.csv": "5c5b6a5168497f5c0952ada6bf841e5d1af6be24f25e2d89844873ad8f2ad8a0",
-    "final_portfolio_report.md": "d054beb4abda24d49e0686b6ad04daa2181620cb46017090264f42d1a31b4387",
-    "method_comparison.csv": "69974be10fb4562ebbdfe98f2fdce2861613b3fc997d09c2da50d81707d85ba5",
-    "native_period_method_comparison.csv": "cac1ec6b895d1a13455803c2e0f0865e48dee8661c78e2c56b73f31108f73444",
-    "regime_performance.csv": "4a56905e966c151bb9624e10b9b36b5a9862f6b85f771d010e37460b0962b124",
-    "rolling_performance.csv": "69ec8613f7f1b3bce92c7e44f9386f910745a8ea427798d3b07382aa3e3f83e8"
+    "ablation_results.csv": "6641f7b63f7f3755b3e13ca1bd7739605145101d99acb6ffe9e5a7a250af6d08",
+    "capacity_sensitivity.csv": "a1f0efcc49904479bc63b9b222546b6229f73014140356cd43fe97ae30334aa8",
+    "common_period_method_comparison.csv": "cf2d94fdde9d44bee45a20bb1daeaf7cfd1803569f01a0b792afcdc9f13956f9",
+    "contract_status.csv": "a546938edf000d9a891be26c1574141af8c57f5e5c47a9d424ff105f5d5d5dd0",
+    "cost_sensitivity.csv": "fd94d696bbe9f9dc799c83b12604cf689e395870f286fe379012d5cad98d3105",
+    "exposure_diagnostics.csv": "37d33508c144beaacb0c0b50e388089efdb2646f6cf4bbd1615877252a38ef39",
+    "final_portfolio_report.md": "26f17e6322e39be4769fdf681e1703e8ef6babfe99ed63252ecab1d2f7a6a314",
+    "method_comparison.csv": "cf2d94fdde9d44bee45a20bb1daeaf7cfd1803569f01a0b792afcdc9f13956f9",
+    "native_period_method_comparison.csv": "cf2d94fdde9d44bee45a20bb1daeaf7cfd1803569f01a0b792afcdc9f13956f9",
+    "regime_performance.csv": "437602b18c59d00b3831ee45d738f12dde31f86218bf4a6ac53594c1997e4160",
+    "rolling_performance.csv": "e43ca32710b6c113169bb9bbcdbee0bc31ef9cd7cfbcd70d2e54128394c6fe83"
   },
+  "producer_run_id": "20260713T122203Z-a41c1230",
   "profile_name": "local_reference",
   "profile_type": "reference",
-  "run_id": "20260713T113820Z-b189e6df",
-  "schema_version": 1,
+  "research_run_family_id": "reference_v1_1_1",
+  "run_id": "20260713T122203Z-a41c1230",
+  "schema_version": 2,
   "split_manifest_id": "split-manifest:67887eac73a24cffed9bfcf7366726b771dcb899c6da67f5d872af25097ea66b",
   "stage_id": "pre_model_diagnostics_v1",
-  "start_date": "2022-01-06",
+  "start_date": null,
   "universe_artifact_id": null
 }

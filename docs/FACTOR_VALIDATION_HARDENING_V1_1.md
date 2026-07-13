@@ -7,7 +7,7 @@
 > 上位总纲：[Qlib A股因子研究框架完整升级计划 V1](./Qlib%20A股因子研究框架完整升级计划%20V1.md)<br>
 > 原始路线图：[Qlib A股因子研究框架详细实施路线图 V1](./FACTOR_VALIDATION_ROADMAP_V1.md)
 
-> **V1.1.1 审计更正（2026-07-13）：** V1.1 的基础设施实现仍有效，但后续复核确认新版 stability 已全部 holdout，而活动 clustering、score、execution 与 diagnostics 仍保留并消费旧成功产物。因此本文件中的 `reference_ready=true` 仅是被审计推翻的历史结论，不再作为当前 readiness。后续以 [REFERENCE_PIPELINE_CONSISTENCY_V1_1_1.md](./REFERENCE_PIPELINE_CONSISTENCY_V1_1_1.md) 为最高优先级计划；当前预期为 `reference_infrastructure_ready=true`、`reference_pipeline_ready=false`、兼容字段 `reference_ready=false`。
+> **V1.1.1 审计更正（2026-07-13）：** V1.1 的基础设施实现仍有效，但后续复核确认新版 stability 已全部 holdout，而活动 clustering、score、execution 与 diagnostics 曾保留并消费旧成功产物。因此本文件中的 `reference_ready=true` 仅是被审计推翻的历史结论。该问题已由 [REFERENCE_PIPELINE_CONSISTENCY_V1_1_1.md](./REFERENCE_PIPELINE_CONSISTENCY_V1_1_1.md) 修复；当前状态为 `reference_infrastructure_ready=true`、`reference_pipeline_ready=false`、兼容字段 `reference_ready=false`。
 
 ## 1. 任务定位
 

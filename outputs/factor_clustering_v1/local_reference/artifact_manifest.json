@@ -1,38 +1,41 @@
 {
-  "artifact_id": "factor_clustering_v1:a35f3734d2285da4c66f747dfbbfee87cf56d0cf514ded3c4f09327f2b1a7b60",
-  "code_commit_sha": "bc7ea4b383c7c8ba39c02901cf3dc9d1844c55ae",
+  "artifact_id": "factor_clustering_v1:1ab9baa362ce0776edcb4222e41b8bb8afd25706ba9e789c25cb4327819cf689",
+  "artifact_status": "blocked",
+  "blocked_reason": "blocked_no_eligible_factors",
+  "code_commit_sha": "c31802b109db377ca517c2f6e20c687cedd9c948",
   "code_diff_sha256": "",
   "code_dirty": false,
-  "config_sha256": "05c9eb65818ffea54afc0c972f3ef7ed1ec0e833be6fdf0e518d6154054193a8",
-  "created_at": "2026-07-13T11:37:57.140679+00:00",
-  "end_date": "2026-06-09",
+  "config_sha256": "2a84fd97b6397f9ee4395712a6bc38914cb9d003befe666ea71a1446c45c85d4",
+  "created_at": "2026-07-13T12:21:59.241410+00:00",
+  "end_date": null,
   "factor_catalog_id": "factor-catalog:61a60413f1fed6627fe3cb02e5afe11fe1189f142c6a2591a1075ad615516ff7",
   "factor_frame_id": "factor-series:61a60413f1fed6627fe3cb02e5afe11fe1189f142c6a2591a1075ad615516ff7",
   "input_artifact_ids": [
-    "factor_rolling_stability_v1:dbb47cf60d3d826052a026efa8b99522e8fd53ec1a08bc8e5ae5b0140689e62b"
+    "factor_rolling_stability_v1:c06b58333e0d0eb2b70e0cdfb853fa49a0cd2523de8f24efc239c92460554c40"
   ],
   "lineage_status": "reference_only",
   "missing_lineage_fields": [
-    "legacy_output_pre_lineage",
     "universe_artifact_id"
   ],
   "output_file_hashes": {
-    "cluster_representatives.csv": "8a8916acd6392ebc24ca067564b2ae20c5e643039be4d8c1805736431559be2d",
-    "cluster_stability.csv": "6ab31699edc89658b7491962abe36c32d46bf6314e3bce989051587260dd8c4a",
-    "clustering_report.md": "5e08982b691f2ec64f099cb994b4f3eee2273a00667e4f3dad25d865bc0b8eca",
-    "contract_status.csv": "3153e9a7ba3259c3d613a8107f37a136fc522798d21221077252cc138061c042",
-    "excluded_redundant_factors.csv": "6fa934eb6e981310fa4537a375d11a0b027177910b7590a94e10e0eb20c714f0",
-    "exposure_correlation_matrix.csv": "c93567c44eedf0322dfa3ff0c31c1458e7507e72349250f12f0178bba4cfdfbc",
-    "factor_clusters.csv": "d81e26aecfff096f3e5501fee4cbf14b9e9016c609f20146d8d7239aec854df4",
-    "factor_distance_matrix.csv": "32fe51a5ea946af10fff85323db9986c54dd70c18214692e75556dce547473b6",
-    "performance_correlation_matrix.csv": "b1c420c92fe7474182090ab648fb07ef8055a9ab2865440d31ea4bc7c3ff51d4"
+    "cluster_representatives.csv": "2fbb8f9db0ed315e4db2048323581411f90360209fe4ae65441b2a135c70bcbe",
+    "cluster_stability.csv": "5f57435b863e10bea9e87ecaa323f3678d89fd745a7c200321a8448a2fd57eeb",
+    "clustering_report.md": "ff7c568f1bfa2b1d878413fd91bad02f397e55eb2a329ab055808d6f5a5e3a4e",
+    "contract_status.csv": "7beb517a4612318d2cc7daa794c7d88f3af7b4137cafd3840d46335001bfad5d",
+    "excluded_redundant_factors.csv": "a8abb7b974cf641c964de28c0d47fb2263d55de71ff4dc5f86028898c27384de",
+    "exposure_correlation_matrix.csv": "5dfe57de221c160d973c61c350e7b83167204cc40937ba08f8606390602b7e95",
+    "factor_clusters.csv": "4307eb4507d30322cc650911abb55fd0d681ec8c9a4049b080d39a52d35a9aa2",
+    "factor_distance_matrix.csv": "5dfe57de221c160d973c61c350e7b83167204cc40937ba08f8606390602b7e95",
+    "performance_correlation_matrix.csv": "5dfe57de221c160d973c61c350e7b83167204cc40937ba08f8606390602b7e95"
   },
+  "producer_run_id": "20260713T122159Z-5a652850",
   "profile_name": "local_reference",
   "profile_type": "reference",
-  "run_id": "20260713T113757Z-50bb30fb",
-  "schema_version": 1,
+  "research_run_family_id": "reference_v1_1_1",
+  "run_id": "20260713T122159Z-5a652850",
+  "schema_version": 2,
   "split_manifest_id": "split-manifest:67887eac73a24cffed9bfcf7366726b771dcb899c6da67f5d872af25097ea66b",
   "stage_id": "factor_clustering_v1",
-  "start_date": "2017-01-03",
+  "start_date": null,
   "universe_artifact_id": null
 }

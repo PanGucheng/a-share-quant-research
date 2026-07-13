@@ -1,10 +1,12 @@
 # Qlib A股因子验证框架 V1.1.1 Reference Pipeline Consistency Fix
 
-> 文档状态：待实施的冻结执行计划  
+> 文档状态：实施完成，等待 PR CI 最终确认
 > 制定日期：2026-07-13  
 > 适用分支：`agent/factor-validation-roadmap-v1`  
 > 适用 PR：Draft PR #1  
 > 前置计划：[FACTOR_VALIDATION_HARDENING_V1_1.md](./FACTOR_VALIDATION_HARDENING_V1_1.md)
+
+> **实施结果（2026-07-13）：** V1.1.1 已按本计划完成。当前 `reference_infrastructure_ready=true`、`reference_pipeline_ready=false`、兼容字段 `reference_ready=false`；clustering representatives 和 score weights 均为 0，活动 score parquet 已移除，execution 与 pre-model diagnostics 已传播预期 blocker。reference lineage 的 4 个 critical issues 全部来自四个下游 blocked artifact status，没有 freshness、hash、未知 input 或 stale-upstream issue。本地 74 项测试和 11 个 synthetic validators 全部通过。
 
 ## 1. 任务定位
 
@@ -505,4 +507,27 @@ lineage/freshness/semantic issue summary
 本地测试与 CI 结果
 最新提交 SHA
 下一 PR 建议范围
+```
+
+### 11.1 实际交付状态
+
+```text
+reference_infrastructure_ready = true
+reference_pipeline_ready = false
+reference_ready = false
+full_research_ready = false
+core_model_ready = false
+liquidity_residualized_model_ready = false
+historical_exposure_model_ready = false
+model_training_started = false
+
+active cluster representatives = 0
+active score weight factors = 0
+active composite_scores.parquet = absent
+active execution daily rows = 0
+active pre-model comparison rows = 0
+stale downstream stage count = 0
+reference lineage issues = 4 expected blocked artifact statuses
+pytest = 74 passed
+synthetic validators = 11 passed
 ```
