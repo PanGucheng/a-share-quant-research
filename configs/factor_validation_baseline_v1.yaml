@@ -74,7 +74,8 @@ dependencies:
     license: MIT
   - distribution: mlfinpy
     import_name: mlfinpy
-    role: phase_3_required
+    role: semantic_reference_only
+    install_policy: do_not_install
     license: MIT
   - distribution: Riskfolio-Lib
     import_name: riskfolio

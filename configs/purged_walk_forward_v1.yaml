@@ -14,5 +14,7 @@ embargo_trading_days: 20
 minimum_train_dates: 500
 minimum_validation_dates: 70
 minimum_test_dates: 80
-backend: builtin_ml_get_train_times_equivalent
+backend: independent_interval_overlap_equivalent
+semantic_reference: mlfinpy.ml_get_train_times
+repository_dependency: false
 output_dir: outputs/purged_walk_forward_v1/full_research

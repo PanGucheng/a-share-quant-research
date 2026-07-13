@@ -148,7 +148,7 @@ vectorbt
 
 ## 3.5 许可证边界
 
-* mlfinpy：MIT，可正常依赖；
+* mlfinpy：MIT，仅作时间区间 purge 语义参考；因其 Python/NumPy 约束，不作为仓库依赖；
 * statsmodels：宽松许可证，可正常依赖；
 * Riskfolio-Lib：BSD 3-Clause，可正常依赖；
 * RQAlpha：存在非商业限制，只能研究其规则语义和测试思路，不复制源码；
@@ -521,7 +521,7 @@ qlib_instruments_load = pass
 
 ## 开源复用
 
-使用 mlfinpy 的：
+参考 mlfinpy 的以下语义，但使用仓库内自主实现：
 
 ```text
 PurgedKFold

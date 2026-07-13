@@ -336,7 +336,7 @@ historical_membership_mutation_count = 0
 | --- | --- | --- | --- |
 | S3.1 | Label metadata | 从 label frame/config 解析 horizon、execution lag、label start/end；拒绝缺失 metadata | 1日和20日标签元数据不同 |
 | S3.2 | Window planner | 实现 rolling/expanding 的 train/validation/test 日期边界和 step；不足窗口明确失败 | deterministic manifest |
-| S3.3 | Purge adapter | 复用 mlfinpy `ml_get_train_times`/`PurgedKFold` 的重叠区间语义，封装为唯一交易日适配层 | overlap=0 |
+| S3.3 | Purge adapter | 参考 mlfinpy `ml_get_train_times` 的重叠区间语义，自主实现唯一交易日适配层；mlfinpy 不作为仓库依赖 | overlap=0 与语义对照测试 |
 | S3.4 | Embargo | 在 test 边界后按交易日而非自然日 embargo；保存被排除日期及原因 | violation=0 |
 | S3.5 | Row expansion | date split 完成后将同日全部 instrument 分配到同一 fold | cross-fold=0 |
 | S3.6 | Manifest | 为每个 split 保存计划日期、实际日期、样本数、purged/embargo 数、配置哈希 | manifest 可审计 |
@@ -798,7 +798,7 @@ CI 只运行不依赖完整 Qlib provider 和网络的测试。需要真实数�
 | --- | --- | --- | --- |
 | V3.39 低覆盖 | residualized coverage 仍远低于 0.80 | 阶段 0 定位 source/universe/time overlap；保持 downstream=0 | 降阈值过门禁 |
 | readiness 语义冲突 | 同一版本同时出现 ready/research_blocked | 拆分 toolchain readiness 与 downstream research gate | 只改文案不重跑 audit |
-| mlfinpy 兼容问题 | import/version 或 embargo 行为失败 | 薄适配并用合成标签区间验证；必要时 pin 兼容版本 | 未测试直接用 CPCV |
+| mlfinpy 环境要求 | Python/NumPy 约束与已验证环境冲突 | 不安装该包；只参考 MIT 语义并用合成标签区间验证自主实现 | 为安装单包升级或降级整个环境 |
 | Riskfolio-Lib 冲突 | 依赖解析影响 Qlib 环境 | 保持 optional，回退 SciPy | 重建整个 Qlib 环境 |
 | PIT 外部数据不足 | 只有当前快照、无 effective date | 只做向前采集，历史研究 blocked | 当前值回填历史 |
 | 计算量失控 | 669 因子 × 多窗口 × bootstrap 产生巨量输出 | manifest 驱动、窗口 checkpoint、复用 V4 metric index、runtime ignored | 一次性全量重跑后再补审计 |

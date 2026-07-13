@@ -208,10 +208,13 @@ def dependency_compatibility(config: dict[str, Any]) -> pd.DataFrame:
             installed = False
         import_available = importlib.util.find_spec(import_name) is not None
         role = str(item["role"])
-        if installed and import_available:
+        if role == "semantic_reference_only":
+            status = "pass"
+            reason = "semantic reference only; independent implementation is contract-tested and package installation is prohibited"
+        elif installed and import_available:
             status = "pass"
             reason = "installed and import target discoverable"
-        elif role in {"phase_1_required", "phase_3_required", "optional_portfolio"}:
+        elif role in {"phase_1_required", "optional_portfolio"}:
             status = "warning"
             reason = "not installed during baseline freeze; install and verify only when the owning phase starts"
         else:
@@ -226,6 +229,7 @@ def dependency_compatibility(config: dict[str, Any]) -> pd.DataFrame:
                 "version": version,
                 "import_available": import_available,
                 "license_record": item.get("license", ""),
+                "install_policy": item.get("install_policy", ""),
                 "status": status,
                 "reason": reason,
             }
@@ -366,6 +370,7 @@ def write_report(
         "",
         "- V3.39 minimum residualized coverage is 0.1495 versus the unchanged 0.80 requirement. Residualized factors remain excluded from downstream defaults.",
         f"- Phase-owned dependencies still deferred: {deferred_text}. Install and verify each only in its owning phase; do not upgrade the full Qlib environment.",
+        "- mlfinpy is a semantic reference only, not a repository dependency. The project keeps an independent interval-overlap implementation on Python 3.10 and verifies equivalent purge behavior with synthetic contracts.",
         "- Riskfolio-Lib is optional. Phase 6 may use SciPy if compatibility is not acceptable.",
         "- Historical industry/size point-in-time data is still unavailable and remains a later-stage blocker.",
         "",

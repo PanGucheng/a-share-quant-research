@@ -1,8 +1,8 @@
 # Factor Validation Baseline V1 Audit
 
-- Captured at: `2026-07-12T11:24:56.812542+00:00`
+- Captured at: `2026-07-13T11:09:34.069472+00:00`
 - Branch: `agent/factor-validation-roadmap-v1`
-- Commit: `bea43640f76dc4ed3b1d50c6609b6d77caf1933e`
+- Commit: `dedae323faab0aa99287beca82d78d5677560174`
 - Overall status: `research_blocked`
 
 ## Current Repository Status
@@ -15,17 +15,17 @@ Stage 0 adds one audit config, one audit runner, separated core/optional require
 
 ## Dependency Compatibility
 
-| distribution | import_name | role | installed | version | import_available | license_record | status | reason |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| pyqlib | qlib | existing_core | True | 0.1.dev6 | True | MIT | pass | installed and import target discoverable |
-| pandas | pandas | existing_core | True | 2.3.3 | True | BSD-3-Clause | pass | installed and import target discoverable |
-| numpy | numpy | existing_core | True | 2.2.6 | True | BSD-3-Clause | pass | installed and import target discoverable |
-| scipy | scipy | existing_core | True | 1.15.3 | True | BSD-3-Clause | pass | installed and import target discoverable |
-| scikit-learn | sklearn | existing_core | True | 1.7.2 | True | BSD-3-Clause | pass | installed and import target discoverable |
-| statsmodels | statsmodels | research_validation_core | True | 0.14.6 | True | BSD-3-Clause | pass | installed and import target discoverable |
-| pandera | pandera | phase_1_required | True | 0.32.1 | True | MIT | pass | installed and import target discoverable |
-| mlfinpy | mlfinpy | phase_3_required | False |  | False | MIT | warning | not installed during baseline freeze; install and verify only when the owning phase starts |
-| Riskfolio-Lib | riskfolio | optional_portfolio | False |  | False | BSD-3-Clause | warning | not installed during baseline freeze; install and verify only when the owning phase starts |
+| distribution | import_name | role | installed | version | import_available | license_record | install_policy | status | reason |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| pyqlib | qlib | existing_core | True | 0.1.dev6 | True | MIT |  | pass | installed and import target discoverable |
+| pandas | pandas | existing_core | True | 2.3.3 | True | BSD-3-Clause |  | pass | installed and import target discoverable |
+| numpy | numpy | existing_core | True | 2.2.6 | True | BSD-3-Clause |  | pass | installed and import target discoverable |
+| scipy | scipy | existing_core | True | 1.15.3 | True | BSD-3-Clause |  | pass | installed and import target discoverable |
+| scikit-learn | sklearn | existing_core | True | 1.7.2 | True | BSD-3-Clause |  | pass | installed and import target discoverable |
+| statsmodels | statsmodels | research_validation_core | True | 0.14.6 | True | BSD-3-Clause |  | pass | installed and import target discoverable |
+| pandera | pandera | phase_1_required | True | 0.32.1 | True | MIT |  | pass | installed and import target discoverable |
+| mlfinpy | mlfinpy | semantic_reference_only | False |  | False | MIT | do_not_install | pass | semantic reference only; independent implementation is contract-tested and package installation is prohibited |
+| Riskfolio-Lib | riskfolio | optional_portfolio | False |  | False | BSD-3-Clause |  | warning | not installed during baseline freeze; install and verify only when the owning phase starts |
 
 ## Baseline Metrics
 
@@ -49,9 +49,9 @@ Stage 0 adds one audit config, one audit runner, separated core/optional require
 
 | check_id | status | exit_code | expected_exit_codes | duration_seconds |
 | --- | --- | --- | --- | --- |
-| liquidity_residualized_synthetic_validation | pass | 0 | 0 | 0.874 |
-| liquidity_residualized_contract_audit | pass | 1 | 1 | 0.717 |
-| factor_research_toolchain_readiness | pass | 0 | 0 | 4.738 |
+| liquidity_residualized_synthetic_validation | pass | 0 | 0 | 0.981 |
+| liquidity_residualized_contract_audit | pass | 1 | 1 | 0.795 |
+| factor_research_toolchain_readiness | pass | 0 | 0 | 4.62 |
 
 ## Contract
 
@@ -61,7 +61,7 @@ Stage 0 adds one audit config, one audit runner, separated core/optional require
 | baseline_metric_drift | pass | 0.0 | 0 | critical | Frozen metrics must match the declared baseline. |
 | existing_core_dependencies | pass | 0.0 | 0 | critical | Existing Qlib runtime dependencies must remain available. |
 | research_validation_runtime | pass | 0.0 | 0 | critical | Statsmodels must be available for the validation layer. |
-| future_phase_dependency_warnings | warning | 2.0 | recorded | warning | Deferred phase-owned dependencies: mlfinpy, Riskfolio-Lib. |
+| future_phase_dependency_warnings | warning | 1.0 | recorded | warning | Deferred phase-owned dependencies: Riskfolio-Lib. |
 | command_checks | pass | 0.0 | 0 | critical | Existing lightweight validation and audits must return their expected codes. |
 | v3_39_coverage_gate | blocked | 0.1495 | >=0.8 | critical | Known blocker is preserved; do not lower the threshold or promote residualized factors. |
 | v3_39_downstream_default | pass | 0.0 | 0 | critical | Blocked residualized factors must remain outside downstream defaults. |
@@ -69,7 +69,8 @@ Stage 0 adds one audit config, one audit runner, separated core/optional require
 ## Risks And Blockers
 
 - V3.39 minimum residualized coverage is 0.1495 versus the unchanged 0.80 requirement. Residualized factors remain excluded from downstream defaults.
-- Phase-owned dependencies still deferred: mlfinpy, Riskfolio-Lib. Install and verify each only in its owning phase; do not upgrade the full Qlib environment.
+- Phase-owned dependencies still deferred: Riskfolio-Lib. Install and verify each only in its owning phase; do not upgrade the full Qlib environment.
+- mlfinpy is a semantic reference only, not a repository dependency. The project keeps an independent interval-overlap implementation on Python 3.10 and verifies equivalent purge behavior with synthetic contracts.
 - Riskfolio-Lib is optional. Phase 6 may use SciPy if compatibility is not acceptable.
 - Historical industry/size point-in-time data is still unavailable and remains a later-stage blocker.
 

@@ -44,7 +44,14 @@ def main() -> int:
     contract.to_csv(output / "leakage_audit.csv", index=False, encoding="utf-8-sig")
     contract.to_csv(output / "contract_status.csv", index=False, encoding="utf-8-sig")
     (output / "resolved_config.json").write_text(json.dumps(config, indent=2, default=str) + "\n", encoding="utf-8")
-    (output / "purged_walk_forward_report.md").write_text("# Purged Walk-Forward V1\n\n" + f"- Splits: `{len(outputs['split_manifest'])}`\n- Backend: `{config['backend']}`\n- mlfinpy status: `blocked_on_python_3_10_requires_3_11`\n", encoding="utf-8")
+    (output / "purged_walk_forward_report.md").write_text(
+        "# Purged Walk-Forward V1\n\n"
+        + f"- Splits: `{len(outputs['split_manifest'])}`\n"
+        + f"- Backend: `{config['backend']}`\n"
+        + f"- Semantic reference: `{config['semantic_reference']}`\n"
+        + "- mlfinpy repository dependency: `false`\n",
+        encoding="utf-8",
+    )
     print(contract.to_string(index=False))
     return 1 if (contract["status"] == "fail").any() else 0
 

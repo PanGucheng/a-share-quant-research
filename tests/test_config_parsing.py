@@ -22,5 +22,5 @@ def test_baseline_config_keeps_core_and_optional_dependencies_separate() -> None
     payload = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
     roles = {item["distribution"]: item["role"] for item in payload["dependencies"]}
     assert roles["pandera"] == "phase_1_required"
-    assert roles["mlfinpy"] == "phase_3_required"
+    assert roles["mlfinpy"] == "semantic_reference_only"
     assert roles["Riskfolio-Lib"] == "optional_portfolio"
