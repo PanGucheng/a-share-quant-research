@@ -1,0 +1,4 @@
+﻿test_family,hypotheses,bh_pass,by_pass
+full_research_80_factor_trial|label_20d_t1|split_001|train|raw,80,59,46
+full_research_80_factor_trial|label_20d_t1|split_002|train|raw,80,57,37
+full_research_80_factor_trial|label_20d_t1|split_003|train|raw,80,66,50

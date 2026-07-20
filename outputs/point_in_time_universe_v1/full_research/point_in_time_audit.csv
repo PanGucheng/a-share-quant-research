@@ -1,0 +1,8 @@
+﻿check_name,status,observed_value,required_value,severity,reason
+point_in_time_audit,pass,pass,pass,critical,PIT lineage and intervals must be valid.
+future_data_reference_count,pass,0,0,critical,No source date may exceed selection date.
+invalid_interval_count,pass,0,0,critical,Intervals must satisfy the universe schema.
+same_selection_effective_date_count,pass,0,0,critical,Membership must take effect on a later trading day.
+qlib_instruments_load,pass,pass,pass,critical,Generated TSV must round-trip through the Qlib instrument file format.
+historical_membership_mutation_count,pass,0,0,critical,Adding later observations must not change an earlier snapshot.
+selected_snapshot_rows,pass,130000,>0,critical,At least one member snapshot is required.

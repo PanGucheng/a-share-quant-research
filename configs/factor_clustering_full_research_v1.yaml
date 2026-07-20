@@ -1,0 +1,22 @@
+schema_version: 1
+profile: full_research
+profile_name: full_research
+profile_type: full_research
+research_run_family_id: full_research_factor_trial_v1
+input_manifests:
+  - outputs/factor_rolling_stability_v1/full_research/artifact_manifest.json
+  - outputs/full_research_feature_matrix_v1/current/artifact_manifest.json
+  - outputs/full_research_daily_ic_v1/current/artifact_manifest.json
+stability_board: outputs/factor_rolling_stability_v1/full_research/factor_stability_board.csv
+factor_batch_manifest: outputs/full_research_feature_matrix_v1/current/batch_manifest.csv
+daily_ic_table: outputs/full_research_daily_ic_v1/current/daily_rank_ic.csv
+daily_ic_column: rank_ic
+eligible_roles:
+  - stable_core
+max_exposure_dates: 60
+exposure_weight: 0.5
+cluster_distance_threshold: 0.30
+linkage_method: average
+backend: scipy
+missing_lineage_fields: []
+output_dir: outputs/factor_clustering_v1/full_research

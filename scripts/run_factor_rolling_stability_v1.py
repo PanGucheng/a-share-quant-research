@@ -28,11 +28,16 @@ def main() -> int:
     code_state = capture_code_state(PROJECT_ROOT)
     splits = pd.read_csv(PROJECT_ROOT / config["split_manifest"], parse_dates=["train_start", "train_end", "validation_start", "validation_end", "test_start", "test_end"])
     series_map = {}
-    for path in sorted(PROJECT_ROOT.glob(config["input_glob"])):
-        horizon = re.search(r"label_(\d+d_t\d+)_", path.name).group(1)
-        factor = f"{path.parent.name}|{horizon}"
-        frame = pd.read_csv(path, parse_dates=["datetime"])
-        series_map[factor] = frame.set_index("datetime")[config["metric_column"]].sort_index()
+    if config.get("input_table"):
+        frame = pd.read_csv(PROJECT_ROOT / config["input_table"], parse_dates=["datetime"])
+        for factor, group in frame.groupby("factor", sort=True):
+            series_map[str(factor)] = group.set_index("datetime")[config["metric_column"]].sort_index()
+    else:
+        for path in sorted(PROJECT_ROOT.glob(config["input_glob"])):
+            horizon = re.search(r"label_(\d+d_t\d+)_", path.name).group(1)
+            factor = f"{path.parent.name}|{horizon}"
+            frame = pd.read_csv(path, parse_dates=["datetime"])
+            series_map[factor] = frame.set_index("datetime")[config["metric_column"]].sort_index()
     pre_rows = []
     minimum_train_count = int(config["minimum_train_valid_ic_count"])
     minimum_validation_count = int(config["minimum_validation_valid_ic_count"])
@@ -123,7 +128,7 @@ def main() -> int:
         output_dir=output, output_files=output_files, code_state=code_state,
         input_manifest_paths=[PROJECT_ROOT / path for path in config.get("input_manifests", [])],
         start_date=min(index.min() for index in series_dates), end_date=max(index.max() for index in series_dates),
-        missing_lineage_fields=["legacy_liquid2000_input", "universe_artifact_id"],
+        missing_lineage_fields=config.get("missing_lineage_fields", ["legacy_liquid2000_input", "universe_artifact_id"]),
     )
     print(contract.to_string(index=False))
     return 1 if (contract["status"] == "fail").any() else 0

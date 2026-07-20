@@ -1,8 +1,11 @@
 {
   "schema_version": 1,
   "profile": "full_research",
-  "provider_uri": "E:/qlib_prj/qlib_data/cn_data_community_20260609_derived",
-  "start_date": "2017-01-01",
+  "profile_name": "full_research",
+  "profile_type": "full_research",
+  "research_run_family_id": "full_research_factor_trial_v1",
+  "provider_uri": "../qlib_data/cn_data_community_20260609_derived",
+  "start_date": "2021-02-01",
   "end_date": "2026-06-09",
   "split_mode": "expanding",
   "train_years": 3,
@@ -18,5 +21,11 @@
   "backend": "independent_interval_overlap_equivalent",
   "semantic_reference": "mlfinpy.ml_get_train_times",
   "repository_dependency": false,
+  "input_manifests": [
+    "outputs/point_in_time_universe_v1/full_research/artifact_manifest.json",
+    "outputs/full_research_feature_matrix_v1/current/artifact_manifest.json",
+    "outputs/full_research_labels_v1/current/artifact_manifest.json"
+  ],
+  "missing_lineage_fields": [],
   "output_dir": "outputs/purged_walk_forward_v1/full_research"
 }

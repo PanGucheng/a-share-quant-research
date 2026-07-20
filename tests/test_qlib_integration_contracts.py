@@ -5,6 +5,7 @@ import pytest
 
 from qlib_integration.contracts import normalize_instrument, validate_market_frame, validate_signal_frame
 from qlib_integration.exchange_adapter import TPlusOneLedger, apply_slippage, component_costs, to_qlib_quote
+from qlib_integration.reference_data import build_market_frame
 from qlib_integration.reconciliation import semantic_difference, unknown_difference_count
 from qlib_integration.signal_adapter import to_qlib_signal
 
@@ -78,6 +79,28 @@ def test_market_contract_enforces_directional_limits() -> None:
     invalid = market_frame().assign(limit_up=True, can_buy=True)
     with pytest.raises(ValueError, match="limit-up"):
         validate_market_frame(invalid)
+
+
+def test_reference_market_builder_completes_suspended_calendar_rows() -> None:
+    index = pd.MultiIndex.from_tuples(
+        [("SH600000", pd.Timestamp("2026-01-05")), ("SH600000", pd.Timestamp("2026-01-07"))],
+        names=["instrument", "datetime"],
+    )
+    features = pd.DataFrame(
+        {"$open": [10.0, 10.2], "$close": [10.1, 10.3], "$volume": [1000.0, 1200.0],
+         "$amount": [10000.0, 12000.0], "$factor": [2.0, 2.0], "$change": [0.01, 0.02]},
+        index=index,
+    )
+    market = build_market_frame(
+        features, pd.DatetimeIndex(["2026-01-05", "2026-01-06", "2026-01-07"]), ["SH600000"],
+        limit_threshold=0.095,
+    )
+    missing = market.loc[market["datetime"].eq(pd.Timestamp("2026-01-06"))].iloc[0]
+    assert missing["suspended"]
+    assert not missing["can_buy"] and not missing["can_sell"]
+    assert missing["close"] == pytest.approx(10.1 / 2.0)
+    assert missing["volume"] == 0
+    validate_market_frame(market)
 
 
 def test_qlib_quote_converts_raw_units_at_adapter_boundary() -> None:

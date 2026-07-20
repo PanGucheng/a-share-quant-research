@@ -1,0 +1,9 @@
+﻿check_name,status,observed_value,required_value,severity,reason
+factor_count_in_trial_range,pass,80,50..100,critical,
+target_factor_count,pass,80,80,critical,
+source_quotas_exact,pass,"{'alpha101': 10, 'alpha158': 30, 'alpha360': 18, 'project_basic': 8, 'ta': 14}","{'alpha158': 30, 'alpha360': 18, 'ta': 14, 'alpha101': 10, 'project_basic': 8}",critical,
+factor_names_unique,pass,0,0,critical,
+all_entries_runnable,pass,True,True,critical,
+category_diversity,pass,22,>=10,critical,
+required_directions_present,pass,"['negative', 'positive', 'watch']","['negative', 'positive']",critical,
+performance_metrics_not_used,pass,source/category/name deterministic sampling,no IC/return/ranking inputs,critical,

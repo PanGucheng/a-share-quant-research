@@ -57,4 +57,4 @@ outputs/qlib_exchange_readiness_v1/current/
 
 ## 下一阶段边界
 
-下一阶段为 PR #3：50–100 个分层抽样因子的 full-research 特征矩阵试运行。必须复用本执行链，并补入真实 PIT universe artifact。权威历史可交易性标签未补齐前，不得把 `qlib_exchange_reference_ready` 强行改为 true。仍不得直接运行 669 因子或启动 Ridge、Elastic Net、LightGBM 训练。
+PR #3 的 80 因子 full-research 试运行现已完成，详见 `FULL_RESEARCH_FACTOR_TRIAL_V1.md`。该阶段复用了本执行链并接入真实 PIT universe artifact；历史可交易性仍是代理数据，因此没有强行改写 PR #2 的 `qlib_exchange_reference_ready=false`。后续 PR #4 才运行 669 因子，Ridge、Elastic Net 和 LightGBM 仍留在 PR #5。

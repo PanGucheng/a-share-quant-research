@@ -13,12 +13,12 @@ Chinese documentation is available in [README.zh-CN.md](README.zh-CN.md).
 
 ## Current Direction
 
-> **Current milestone:** Qlib Exchange infrastructure, synthetic execution, and
-> reference-engine reconciliation are ready. A 30-stock/80-day local-reference run
-> passes all critical execution contracts, while full reference readiness remains
-> honestly blocked by the lack of an authoritative PIT universe and historical
-> directional tradability labels. The 669-factor run and model training have not
-> started; the next stage is a 50–100 factor full-research matrix trial.
+> **Current milestone:** the stratified 80-factor full-research trial is complete.
+> The real PIT universe, partitioned feature matrix, t+1 labels, purged/FDR/stability
+> chain, transparent scores, and three-split Qlib Exchange execution all pass their
+> critical contracts. Historical directional tradability labels remain proxy-based.
+> The 669-factor run and model training have not started; the next stage is the
+> scale-only 669-factor run.
 
 The project keeps Qlib as the main data and model backbone while adding independent
 research modules around it:
@@ -36,9 +36,9 @@ research modules around it:
 - **Qlib execution layer**: pinned Exchange/Executor adapters, A-share constraints,
   normalized artifacts, exact synthetic reconciliation, and a local-reference run.
 
-The current development priority is the 50–100 factor full-research matrix trial.
-It must reuse the validated Qlib execution semantics before any 669-factor run or
-model training.
+The current development priority is scaling the validated trial semantics to all
+669 runnable factors. Model training remains gated until the full run freezes a
+feature allowlist.
 
 ## Repository Layout
 

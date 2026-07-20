@@ -1,0 +1,61 @@
+schema_version: 1
+profile: full_research
+profile_name: full_research
+profile_type: full_research
+research_run_family_id: full_research_factor_trial_v1
+evidence:
+  catalog:
+    config: configs/full_research_factor_trial_v1.yaml
+    manifest: outputs/full_research_factor_trial_v1/catalog/artifact_manifest.json
+    contract: outputs/full_research_factor_trial_v1/catalog/contract_status.csv
+  universe:
+    config: configs/point_in_time_universe_v1.yaml
+    manifest: outputs/point_in_time_universe_v1/full_research/artifact_manifest.json
+    contract: outputs/point_in_time_universe_v1/full_research/contract_status.csv
+  matrix:
+    config: configs/full_research_feature_matrix_v1.yaml
+    manifest: outputs/full_research_feature_matrix_v1/current/artifact_manifest.json
+    contract: outputs/full_research_feature_matrix_v1/current/contract_status.csv
+  labels:
+    config: configs/full_research_labels_v1.yaml
+    manifest: outputs/full_research_labels_v1/current/artifact_manifest.json
+    contract: outputs/full_research_labels_v1/current/contract_status.csv
+  daily_ic:
+    config: configs/full_research_daily_ic_v1.yaml
+    manifest: outputs/full_research_daily_ic_v1/current/artifact_manifest.json
+    contract: outputs/full_research_daily_ic_v1/current/contract_status.csv
+  splits:
+    config: configs/purged_walk_forward_full_research_v1.yaml
+    manifest: outputs/purged_walk_forward_v1/full_research/artifact_manifest.json
+    contract: outputs/purged_walk_forward_v1/full_research/contract_status.csv
+  fdr:
+    config: configs/factor_multiple_testing_full_research_v1.yaml
+    manifest: outputs/factor_multiple_testing_v1/full_research/artifact_manifest.json
+    contract: outputs/factor_multiple_testing_v1/full_research/contract_status.csv
+  stability:
+    config: configs/factor_rolling_stability_full_research_v1.yaml
+    manifest: outputs/factor_rolling_stability_v1/full_research/artifact_manifest.json
+    contract: outputs/factor_rolling_stability_v1/full_research/contract_status.csv
+  clustering:
+    config: configs/factor_clustering_full_research_v1.yaml
+    manifest: outputs/factor_clustering_v1/full_research/artifact_manifest.json
+    contract: outputs/factor_clustering_v1/full_research/contract_status.csv
+  score:
+    config: configs/factor_score_construction_full_research_v1.yaml
+    manifest: outputs/factor_score_construction_v1/full_research/artifact_manifest.json
+    contract: outputs/factor_score_construction_v1/full_research/contract_status.csv
+  execution:
+    config: configs/qlib_exchange_full_research_v1.yaml
+    manifest: outputs/qlib_exchange_v1/full_research/artifact_manifest.json
+    contract: outputs/qlib_exchange_v1/full_research/contract_status.csv
+expected_edges:
+  matrix: [catalog, universe]
+  labels: [matrix, universe]
+  daily_ic: [matrix, labels]
+  splits: [matrix, labels, universe]
+  fdr: [daily_ic, splits]
+  stability: [daily_ic, splits, fdr]
+  clustering: [matrix, daily_ic, stability]
+  score: [matrix, splits, stability, clustering]
+  execution: [score]
+output_dir: outputs/full_research_trial_readiness_v1/current

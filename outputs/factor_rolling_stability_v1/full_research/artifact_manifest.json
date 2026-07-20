@@ -1,0 +1,40 @@
+{
+  "artifact_id": "factor_rolling_stability_v1:aad7282979272be9fec027e3f6078f9bc071058184fa3faead63ee122f67e6cf",
+  "artifact_status": "pass",
+  "blocked_reason": "",
+  "code_commit_sha": "bddc62156d439646e8197e6837a7a74121f9024d",
+  "code_diff_sha256": "",
+  "code_dirty": false,
+  "config_sha256": "5fff487721495b2c4159145dd6ccec9dcb935ddd054db08aaef5f6867145add9",
+  "created_at": "2026-07-20T08:03:40.919527+00:00",
+  "end_date": "2026-06-09",
+  "factor_catalog_id": "factor-catalog:486118555dbf8e2f48ed79cc31ea4fe5a13633bfaedadeb582b6f9f00dabeaef",
+  "factor_frame_id": "factor-frame:9f0992901ea23d4452b1f9b98f8891c21a61db576286576e621d9e816c34f028",
+  "input_artifact_ids": [
+    "factor_multiple_testing_v1:2075e16671d59bfb2fa87e783d138163c6507640840d4b33be32e43ae8ec951f",
+    "full_research_daily_ic_v1:1ce6399aa2ce61dce4678f89ab96eb0efebd5bcde38d5c4d8909ccb4fd55f041",
+    "purged_walk_forward_v1:a0ea6f203056c0be3260e560661a5f6e7d1213d4106527127ece1c3323cf39aa"
+  ],
+  "lineage_status": "complete",
+  "missing_lineage_fields": [],
+  "output_file_hashes": {
+    "contract_status.csv": "5c76dd7641bd240152f60d382d77346655390874a2c3a7e716b376e8fc0e5c0d",
+    "factor_direction_history.csv": "1df7c2b3f09d2af31fe256cfca09f95f2b2636c02fcc571c17f6ec7a6a7704e4",
+    "factor_oos_degradation.csv": "97215182aada87cfbb534499c4b76b50d90a6f1dbf4d577aa5bc1af3e89b9658",
+    "factor_selection_history.csv": "01567a3bf788c3d65670d1d8a1ba982e68d7f3616644dc531753b624b924b6a1",
+    "factor_stability_board.csv": "521950f59a75f6fc3717ed582f201c79e76214c639090ae301cffe5c9e716aec",
+    "factor_window_metrics.csv": "644101564c64889a0723c55a96a4b81b9e667f7a8db0a6edb50c0a5348037024",
+    "stability_report.md": "7da73bc2db17411b549d14cc220e0229426dee2874ac92c7450d7e1554b91f70",
+    "stability_role_summary.csv": "e158f2c41a2eb6e38d33ad215dcbfcb47bb81cf9c193beb737a8099d1776e2e3"
+  },
+  "producer_run_id": "20260720T080340Z-3e0dbb53",
+  "profile_name": "full_research",
+  "profile_type": "full_research",
+  "research_run_family_id": "full_research_factor_trial_v1",
+  "run_id": "20260720T080340Z-3e0dbb53",
+  "schema_version": 2,
+  "split_manifest_id": "split-manifest:75ccf0f37e85422729d54aef5a363f68d4f9b3daed3d42a87eb120e6b5aefe0e",
+  "stage_id": "factor_rolling_stability_v1",
+  "start_date": "2021-02-01",
+  "universe_artifact_id": "universe:10287ec42be03cb525de034b1bea1b53fa5da11cda5de4b5ed8f1f2ad1dcdad5"
+}

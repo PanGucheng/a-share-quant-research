@@ -1,0 +1,4 @@
+﻿check_name,status,observed_value,required_value,severity,reason
+score_construction_status,pass,pass,pass,critical,Current selected eligible representatives produced scores.
+zero_direction_weight_count,pass,0,0,critical,Zero direction cannot be converted to positive.
+weight_sum_error,pass,2.220446049250313e-16,<=1e-12,critical,Weights normalize to one.

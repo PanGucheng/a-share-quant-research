@@ -31,17 +31,37 @@ def main() -> int:
     config = yaml.safe_load(config_path.read_text(encoding="utf-8")) or {}
     code_state = capture_code_state(PROJECT_ROOT)
     rows = []
-    input_paths = sorted(PROJECT_ROOT.glob(config["input_glob"]))
+    input_paths = (
+        [PROJECT_ROOT / config["input_table"]]
+        if config.get("input_table")
+        else sorted(PROJECT_ROOT.glob(config["input_glob"]))
+    )
     input_dates: list[pd.Timestamp] = []
-    for path in input_paths:
-        factor = path.parent.name
-        match = re.search(r"label_(\d+d_t\d+)_", path.name)
-        horizon = match.group(1) if match else "unknown"
-        frame = pd.read_csv(path)
-        if "datetime" in frame:
-            input_dates.extend(pd.to_datetime(frame["datetime"], errors="coerce").dropna().tolist())
-        stats = moving_block_mean_test(frame[config["metric"]], samples=int(config["bootstrap_samples"]), block_length=int(config["block_length"]), seed=int(config["random_seed"]))
-        rows.append({"factor": factor, "test_family": family(config, horizon), "metric": config["metric"], **stats, "input_path": path.relative_to(PROJECT_ROOT).as_posix()})
+    if config.get("input_table"):
+        frame = pd.read_csv(input_paths[0])
+        frame["datetime"] = pd.to_datetime(frame["datetime"])
+        assignments = pd.read_csv(PROJECT_ROOT / config["date_assignments"])
+        assignments["datetime"] = pd.to_datetime(assignments["datetime"])
+        included_folds = set(config.get("included_folds", ["train"]))
+        assignments = assignments.loc[assignments["fold"].isin(included_folds)]
+        input_dates.extend(frame["datetime"].dropna().tolist())
+        for split_id, dates in assignments.groupby("split_id", sort=True):
+            selected_dates = set(dates["datetime"])
+            selected = frame.loc[frame["datetime"].isin(selected_dates)]
+            for factor, values in selected.groupby("factor", sort=True):
+                stats = moving_block_mean_test(values[config["metric"]], samples=int(config["bootstrap_samples"]), block_length=int(config["block_length"]), seed=int(config["random_seed"]))
+                test_family = "|".join([config["source_family"], config["label_name"], str(split_id), "+".join(sorted(included_folds)), config["preprocessing_variant"]])
+                rows.append({"factor": factor, "test_family": test_family, "metric": config["metric"], **stats, "input_path": input_paths[0].relative_to(PROJECT_ROOT).as_posix(), "split_id": split_id, "included_folds": "+".join(sorted(included_folds))})
+    else:
+        for path in input_paths:
+            factor = path.parent.name
+            match = re.search(r"label_(\d+d_t\d+)_", path.name)
+            horizon = match.group(1) if match else "unknown"
+            frame = pd.read_csv(path)
+            if "datetime" in frame:
+                input_dates.extend(pd.to_datetime(frame["datetime"], errors="coerce").dropna().tolist())
+            stats = moving_block_mean_test(frame[config["metric"]], samples=int(config["bootstrap_samples"]), block_length=int(config["block_length"]), seed=int(config["random_seed"]))
+            rows.append({"factor": factor, "test_family": family(config, horizon), "metric": config["metric"], **stats, "input_path": path.relative_to(PROJECT_ROOT).as_posix()})
     tests = apply_fdr(pd.DataFrame(rows), float(config["fdr_alpha"]))
 
     rng = np.random.default_rng(int(config["random_seed"]))
@@ -84,6 +104,7 @@ def main() -> int:
         output / "contract_status.csv",
         output / "multiple_testing_report.md",
     ]
+    input_manifest_paths = [PROJECT_ROOT / item for item in config.get("input_manifests", [])]
     write_stage_artifact_manifest(
         project_root=PROJECT_ROOT,
         stage_id="factor_multiple_testing_v1",
@@ -91,11 +112,12 @@ def main() -> int:
         output_dir=output,
         output_files=compact_files,
         code_state=code_state,
-        factor_catalog_id=content_reference_id("factor-catalog", input_paths),
-        factor_frame_id=content_reference_id("factor-series", input_paths),
+        input_manifest_paths=input_manifest_paths,
+        factor_catalog_id=None if input_manifest_paths else content_reference_id("factor-catalog", input_paths),
+        factor_frame_id=None if input_manifest_paths else content_reference_id("factor-series", input_paths),
         start_date=min(input_dates) if input_dates else None,
         end_date=max(input_dates) if input_dates else None,
-        missing_lineage_fields=["universe_artifact_id", "split_manifest_id", "legacy_liquid2000_input"],
+        missing_lineage_fields=config.get("missing_lineage_fields", ["universe_artifact_id", "split_manifest_id", "legacy_liquid2000_input"]),
     )
     print(contract.to_string(index=False))
     return 1 if (contract["status"] == "fail").any() else 0

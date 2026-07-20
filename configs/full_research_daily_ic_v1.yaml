@@ -1,0 +1,13 @@
+schema_version: 1
+profile: full_research
+profile_name: full_research
+profile_type: full_research
+research_run_family_id: full_research_factor_trial_v1
+feature_matrix_manifest: outputs/full_research_feature_matrix_v1/current/artifact_manifest.json
+feature_batch_manifest: outputs/full_research_feature_matrix_v1/current/batch_manifest.csv
+label_manifest: outputs/full_research_labels_v1/current/artifact_manifest.json
+label_runtime: outputs/full_research_feature_matrix_v1/runtime/labels.parquet
+label_name: label_20d_t1
+minimum_cross_section: 100
+minimum_ic_days: 1000
+output_dir: outputs/full_research_daily_ic_v1/current

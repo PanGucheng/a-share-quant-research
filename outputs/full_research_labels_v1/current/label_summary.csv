@@ -1,0 +1,2 @@
+﻿label,row_count,valid_rows,coverage,output_path,output_sha256,input_hash
+label_20d_t1,2588000,2538428,0.9808454404945904,E:/qlib_prj/qlib_baseline/outputs/full_research_feature_matrix_v1/runtime/labels.parquet,aeedd05d69debe8e8d4da6e997c19aa31bc84a349a8b988eed2019e900e5fa4b,9a0e226648b5a2d083528239e73a9bbbe00ffaa4f5d0dfd179cebe1e03d9ad73

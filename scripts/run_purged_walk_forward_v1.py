@@ -65,6 +65,7 @@ def main() -> int:
         output / "resolved_config.json",
         output / "purged_walk_forward_report.md",
     ]
+    input_manifest_paths = [PROJECT_ROOT / item for item in config.get("input_manifests", [])]
     write_stage_artifact_manifest(
         project_root=PROJECT_ROOT,
         stage_id="purged_walk_forward_v1",
@@ -73,9 +74,10 @@ def main() -> int:
         output_files=compact_files,
         code_state=code_state,
         split_manifest_id=content_reference_id("split-manifest", [output / "split_manifest.csv"]),
+        input_manifest_paths=input_manifest_paths,
         start_date=outputs["split_manifest"]["train_start"].min(),
         end_date=outputs["split_manifest"]["test_end"].max(),
-        missing_lineage_fields=["universe_artifact_id", "pit_universe_integration"],
+        missing_lineage_fields=config.get("missing_lineage_fields", ["universe_artifact_id", "pit_universe_integration"]),
     )
     print(contract.to_string(index=False))
     return 1 if (contract["status"] == "fail").any() else 0
