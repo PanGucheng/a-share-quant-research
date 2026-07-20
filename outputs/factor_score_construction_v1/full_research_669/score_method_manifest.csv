@@ -1,0 +1,4 @@
+﻿method,description
+equal_directional_zscore,equal frozen-direction z-scores
+cluster_equal,one equal vote per representative cluster
+stability_weight,historical selection/FDR weighted

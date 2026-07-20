@@ -1,0 +1,43 @@
+{
+  "artifact_id": "factor_score_construction_v1:84ff612e8946efc7207ef1471af261ec04c97acc3265b44ea334c2a9d00d2f52",
+  "artifact_status": "pass",
+  "blocked_reason": "",
+  "code_commit_sha": "0f4e3f08f0b4391f5a388430e2e24259b7eb9092",
+  "code_diff_sha256": "",
+  "code_dirty": false,
+  "config_sha256": "e906c1372e27da90830ec13c46b6c3cabf5608a1f0429b1e6605e38fa687f0e8",
+  "created_at": "2026-07-20T13:21:39.076049+00:00",
+  "end_date": "2026-02-04",
+  "factor_catalog_id": "factor-catalog:8c031a09892fc915ac45201942f563925a9bab617e60fce5ecbbe274a51a02e1",
+  "factor_frame_id": "factor-frame:839242fe9d004216cf468a48cc44ad32584b9fe4a139c8e0644358c0f03d8d78",
+  "input_artifact_ids": [
+    "factor_clustering_v1:be2a91c7207b17504378273ab703f88e57de11ab7b343530715aba495ee7a507",
+    "factor_rolling_stability_v1:b1c28af58cd2feb36e3b7ceaa050a0f2619d37a250f668285c1976807a6780a3",
+    "full_research_feature_matrix_v1:b7cde3ebe279b91a2863147312128240a22677568648433db683b767825ef384",
+    "purged_walk_forward_v1:c67bd55ece2e6972962f5687ca971cd3c1cf5379dd616402a92836fc1314a55e"
+  ],
+  "lineage_status": "complete",
+  "missing_lineage_fields": [],
+  "output_file_hashes": {
+    "contract_status.csv": "a14390ca697d472b435c4c5e45c3a67ef1e9cfd02750401a5a256b65f69bba63",
+    "daily_factor_component_count.csv": "dd4bd102d407e7c8398092ca910a5009cc08b5cbffd48214752ff142afca1070",
+    "excluded_score_factors.csv": "4c58305f56cd6d4073e5749f66f56c704aa58daa27794ec1048e8500ac6fe362",
+    "factor_weights_by_window.csv": "93a85f8936315292ab73ed4cd51e16fac16a30d83eb4953713f54c4f1d1ebe97",
+    "score_artifact.csv": "7877ce2e73dbf56e0548f6672ca417e6d168afcc40b73f6ff35085e3c531e309",
+    "score_availability.csv": "11995062bcc3f3b9e5f264df8ae814404e26bf227c11460f9a1d2bc044c6d1c8",
+    "score_construction_report.md": "1c99e4a569744141976fce24abab7325899edc854c3b92c8dccfd2fdb33b6d1c",
+    "score_diagnostics.csv": "478d53944a8ba4f3cfffa33beb6382b88f497b178398da58defd1c783e515f9a",
+    "score_method_manifest.csv": "b5dd4fc60d24f8ae2a63990c934dae78f52ff616eb7d926ea94867edee8dc8b0",
+    "score_sample.csv": "e38c1c25ff467e3e214e6e0f381cf3167d31a0f0b2cee249b606ce4dc06b72dd"
+  },
+  "producer_run_id": "20260720T132139Z-013efa7c",
+  "profile_name": "full_research",
+  "profile_type": "full_research",
+  "research_run_family_id": "full_research_factor_669_v1",
+  "run_id": "20260720T132139Z-013efa7c",
+  "schema_version": 2,
+  "split_manifest_id": "split-manifest:75ccf0f37e85422729d54aef5a363f68d4f9b3daed3d42a87eb120e6b5aefe0e",
+  "stage_id": "factor_score_construction_v1",
+  "start_date": "2024-08-01",
+  "universe_artifact_id": "universe:10287ec42be03cb525de034b1bea1b53fa5da11cda5de4b5ed8f1f2ad1dcdad5"
+}

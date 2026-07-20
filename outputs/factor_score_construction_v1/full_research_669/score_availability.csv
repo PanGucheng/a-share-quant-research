@@ -1,0 +1,10 @@
+﻿split_id,method,valid_component_count,status,reason
+split_001,equal_directional_zscore,16,pass,
+split_001,cluster_equal,16,pass,
+split_001,stability_weight,16,pass,
+split_002,equal_directional_zscore,15,pass,
+split_002,cluster_equal,15,pass,
+split_002,stability_weight,15,pass,
+split_003,equal_directional_zscore,14,pass,
+split_003,cluster_equal,14,pass,
+split_003,stability_weight,14,pass,
