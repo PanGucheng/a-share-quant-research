@@ -1,0 +1,1 @@
+﻿batch_id,status,factor_count,row_count,instrument_count,start_date,end_date,input_hash,output_path,output_sha256,attempts,runtime_seconds,cache_hit,reindexed_from_cache,key_schema_version,error
