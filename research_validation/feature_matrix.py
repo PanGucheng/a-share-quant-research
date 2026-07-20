@@ -41,6 +41,21 @@ def filter_to_pit_intervals(frame: pd.DataFrame, intervals: pd.DataFrame) -> pd.
     return result.sort_values(["datetime", "instrument"], kind="stable").reset_index(drop=True)
 
 
+def build_pit_key_grid(intervals: pd.DataFrame, calendar: pd.DatetimeIndex) -> pd.DataFrame:
+    dates = pd.DatetimeIndex(calendar).normalize()
+    rows: list[pd.DataFrame] = []
+    for item in intervals[["instrument", "start_date", "end_date"]].itertuples(index=False):
+        start = pd.Timestamp(item.start_date).normalize()
+        end = pd.Timestamp(item.end_date).normalize()
+        active = dates[(dates >= start) & (dates <= end)]
+        if len(active):
+            rows.append(pd.DataFrame({"datetime": active, "instrument": str(item.instrument).upper()}))
+    if not rows:
+        return pd.DataFrame(columns=["datetime", "instrument"])
+    result = pd.concat(rows, ignore_index=True).drop_duplicates(["datetime", "instrument"])
+    return result.sort_values(["datetime", "instrument"], kind="stable").reset_index(drop=True)
+
+
 def resumable_batch_valid(row: dict[str, object], expected_input_hash: str, path: Path) -> bool:
     return (
         str(row.get("status")) == "pass"

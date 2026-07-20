@@ -21,7 +21,7 @@ from factor_research.catalog import load_factor_catalog  # noqa: E402
 from factor_research.factor_library import BASE_FIELDS, add_basic_factors  # noqa: E402
 from factor_research.ta_source import import_ta_wrapper  # noqa: E402
 from qlib_integration.contracts import contract_row  # noqa: E402
-from research_validation.feature_matrix import atomic_parquet, canonical_hash, file_sha256, filter_to_pit_intervals, resumable_batch_valid  # noqa: E402
+from research_validation.feature_matrix import atomic_parquet, build_pit_key_grid, canonical_hash, file_sha256, filter_to_pit_intervals, resumable_batch_valid  # noqa: E402
 from research_validation.lineage import capture_code_state, load_artifact_manifest, write_stage_artifact_manifest  # noqa: E402
 from research_validation.stage_output import StageOutputPublisher  # noqa: E402
 
@@ -126,22 +126,29 @@ def main() -> int:
     qlib.init(provider_uri=str(resolve(config["provider_uri"])), region=REG_CN)
     C.kernels = 1
     C.joblib_backend = "sequential"
+    calendar = pd.DatetimeIndex(D.calendar(start_time=config["start_date"], end_time=config["end_date"], freq="day"))
+    pit_keys = build_pit_key_grid(intervals, calendar)
     raw: pd.DataFrame | None = None
     batch_rows: list[dict[str, object]] = []
     failures: list[dict[str, object]] = []
     for batch_id in ["alpha158", "alpha360", "project_basic", "ta", "alpha101"]:
         names = sorted(by_source.get(batch_id, []))
         path = runtime / f"{batch_id}.parquet"
-        input_hash = canonical_hash({"batch": batch_id, "factors": names, "catalog": catalog_manifest["artifact_id"], "universe": universe_manifest["artifact_id"], "start": config["start_date"], "end": config["end_date"]})
+        legacy_payload = {"batch": batch_id, "factors": names, "catalog": catalog_manifest["artifact_id"], "universe": universe_manifest["artifact_id"], "start": config["start_date"], "end": config["end_date"]}
+        legacy_input_hash = canonical_hash(legacy_payload)
+        input_hash = canonical_hash({**legacy_payload, "key_schema_version": 2})
         prior = previous.get(batch_id, {})
         attempts = int(prior.get("attempts", 0))
         if resumable_batch_valid(prior, input_hash, path):
-            batch_rows.append({**prior, "cache_hit": True})
+            batch_rows.append({"batch_id": batch_id, **prior, "cache_hit": True})
             continue
         started = time.perf_counter()
         attempts += 1
         try:
-            if batch_id == "alpha158": frame = expression_batch(symbols, names, resolve(config["alpha158_inventory"]), config["start_date"], config["end_date"], D)
+            reindexed_from_cache = resumable_batch_valid(prior, legacy_input_hash, path)
+            if reindexed_from_cache:
+                frame = pd.read_parquet(path)
+            elif batch_id == "alpha158": frame = expression_batch(symbols, names, resolve(config["alpha158_inventory"]), config["start_date"], config["end_date"], D)
             elif batch_id == "alpha360": frame = expression_batch(symbols, names, resolve(config["alpha360_inventory"]), config["start_date"], config["end_date"], D)
             else:
                 if raw is None: raw = load_raw(config, symbols, runtime, D)
@@ -150,10 +157,11 @@ def main() -> int:
                 else: frame = alpha101_batch(raw, names, config, runtime)
             frame = frame.loc[pd.to_datetime(frame["datetime"]).between(pd.Timestamp(config["start_date"]), pd.Timestamp(config["end_date"]))]
             frame = filter_to_pit_intervals(frame, intervals)
+            frame = pit_keys.merge(frame, on=["datetime", "instrument"], how="left", validate="one_to_one")
             atomic_parquet(frame, path)
-            row = {"batch_id": batch_id, "status": "pass", "factor_count": len(names), "row_count": len(frame), "instrument_count": frame["instrument"].nunique(), "start_date": frame["datetime"].min(), "end_date": frame["datetime"].max(), "input_hash": input_hash, "output_path": path.as_posix(), "output_sha256": file_sha256(path), "attempts": attempts, "runtime_seconds": time.perf_counter() - started, "cache_hit": False, "error": ""}
+            row = {"batch_id": batch_id, "status": "pass", "factor_count": len(names), "row_count": len(frame), "instrument_count": frame["instrument"].nunique(), "start_date": frame["datetime"].min(), "end_date": frame["datetime"].max(), "input_hash": input_hash, "output_path": path.as_posix(), "output_sha256": file_sha256(path), "attempts": attempts, "runtime_seconds": time.perf_counter() - started, "cache_hit": False, "reindexed_from_cache": reindexed_from_cache, "key_schema_version": 2, "error": ""}
         except Exception as exc:
-            row = {"batch_id": batch_id, "status": "failed", "factor_count": len(names), "row_count": 0, "instrument_count": 0, "start_date": "", "end_date": "", "input_hash": input_hash, "output_path": path.as_posix(), "output_sha256": "", "attempts": attempts, "runtime_seconds": time.perf_counter() - started, "cache_hit": False, "error": f"{type(exc).__name__}: {exc}"}
+            row = {"batch_id": batch_id, "status": "failed", "factor_count": len(names), "row_count": 0, "instrument_count": 0, "start_date": "", "end_date": "", "input_hash": input_hash, "output_path": path.as_posix(), "output_sha256": "", "attempts": attempts, "runtime_seconds": time.perf_counter() - started, "cache_hit": False, "reindexed_from_cache": False, "key_schema_version": 2, "error": f"{type(exc).__name__}: {exc}"}
             failures.append(row.copy())
         batch_rows.append(row)
         pd.DataFrame(batch_rows).to_csv(state_path, index=False, encoding="utf-8-sig")
@@ -175,8 +183,9 @@ def main() -> int:
         contract_row("all_batches_pass", failures == [], len(failures), 0),
         contract_row("all_factors_materialized", factor_count == len(entries), factor_count, len(entries)),
         contract_row("pit_universe_applied", bool(not success.empty and success["row_count"].gt(0).all()), universe_manifest["universe_artifact_id"], "nonempty PIT-filtered batches"),
+        contract_row("complete_key_grid_aligned", bool(not success.empty and success["row_count"].eq(len(pit_keys)).all()), success["row_count"].tolist(), len(pit_keys)),
         contract_row("batch_output_hashes_present", bool(not success.empty and success["output_sha256"].astype(str).str.len().eq(64).all()), int(success["output_sha256"].astype(str).str.len().eq(64).sum()), len(success)),
-        contract_row("resume_metadata_present", set(["input_hash", "attempts", "cache_hit"]).issubset(batch.columns), list(batch.columns), "input_hash/attempts/cache_hit"),
+        contract_row("resume_metadata_present", set(["input_hash", "attempts", "cache_hit", "key_schema_version"]).issubset(batch.columns), list(batch.columns), "input_hash/attempts/cache_hit/key_schema_version"),
     ])
     ready = contracts["status"].eq("pass").all()
     output_dir = resolve(config["output_dir"])
