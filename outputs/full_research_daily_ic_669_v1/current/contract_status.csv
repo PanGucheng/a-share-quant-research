@@ -1,0 +1,6 @@
+﻿check_name,status,observed_value,required_value,severity,reason
+factor_count,pass,669,669,critical,
+daily_ic_unique,pass,0,0,critical,
+minimum_ic_days,pass,1228,1000,critical,
+minimum_cross_section_on_ic_days,pass,102,100,critical,
+factor_frame_lineage,pass,factor-frame:839242fe9d004216cf468a48cc44ad32584b9fe4a139c8e0644358c0f03d8d78,nonempty,critical,
