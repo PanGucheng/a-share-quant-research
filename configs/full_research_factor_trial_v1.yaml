@@ -1,0 +1,26 @@
+schema_version: 1
+profile: full_research
+profile_name: full_research
+profile_type: full_research
+research_run_family_id: full_research_factor_trial_v1
+target_factor_count: 80
+sources:
+  - source_name: alpha158
+    catalog: outputs/factor_catalog_alpha158_v1/alpha158_catalog_full158_runnable.yaml
+    quota: 30
+  - source_name: alpha360
+    catalog: outputs/factor_catalog_alpha360_v1/alpha360_catalog_promoted358.yaml
+    quota: 18
+  - source_name: ta
+    catalog: outputs/ta_factor_adapter_v1/smoke/ta_factor_catalog_promoted77.yaml
+    quota: 14
+  - source_name: alpha101
+    catalog: outputs/alpha101_factor_adapter_v1/batch82/alpha101_factor_catalog_promoted64.yaml
+    quota: 10
+  - source_name: project_basic
+    catalog: factor_research/factor_catalog.yaml
+    quota: 8
+    required_directions:
+      - positive
+      - negative
+output_dir: outputs/full_research_factor_trial_v1/catalog
