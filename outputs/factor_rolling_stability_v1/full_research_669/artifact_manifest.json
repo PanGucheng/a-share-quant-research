@@ -1,0 +1,40 @@
+{
+  "artifact_id": "factor_rolling_stability_v1:b1c28af58cd2feb36e3b7ceaa050a0f2619d37a250f668285c1976807a6780a3",
+  "artifact_status": "pass",
+  "blocked_reason": "",
+  "code_commit_sha": "b1bf6eb4423f4b2b92a3d0a20cc78693fd719049",
+  "code_diff_sha256": "",
+  "code_dirty": false,
+  "config_sha256": "8fd5248b6b565c0de7eef73bc34c632c5822a4733a85331fc735b9011f94acbc",
+  "created_at": "2026-07-20T13:18:47.730187+00:00",
+  "end_date": "2026-06-09",
+  "factor_catalog_id": "factor-catalog:8c031a09892fc915ac45201942f563925a9bab617e60fce5ecbbe274a51a02e1",
+  "factor_frame_id": "factor-frame:839242fe9d004216cf468a48cc44ad32584b9fe4a139c8e0644358c0f03d8d78",
+  "input_artifact_ids": [
+    "factor_multiple_testing_v1:33ed4935305ecfff600a4d1a3b35349f7f2732c4beb4e657b4ca75ab11e4eb46",
+    "full_research_daily_ic_v1:b73d32984d0a2204edc1d55b9b56e24d174f15ee90bb800caad2ea3561166e4a",
+    "purged_walk_forward_v1:c67bd55ece2e6972962f5687ca971cd3c1cf5379dd616402a92836fc1314a55e"
+  ],
+  "lineage_status": "complete",
+  "missing_lineage_fields": [],
+  "output_file_hashes": {
+    "contract_status.csv": "5c76dd7641bd240152f60d382d77346655390874a2c3a7e716b376e8fc0e5c0d",
+    "factor_direction_history.csv": "57f7300db5bcbf3cb4d51f272c4bbcb65a53c4e9d5f1eddb971855713c4986e9",
+    "factor_oos_degradation.csv": "ecedc181a36dc8d0acc0427efce16253fe2a4d543c62f5fae3775bcf27efd470",
+    "factor_selection_history.csv": "ae530a7387a8bdd1576ed1ded121acb3b4e2387b1d80f461bf59ceb1013a5fa2",
+    "factor_stability_board.csv": "24301749cdcb84a5201a3582efd43c4906bfb093fe64e463e6bfb0be510c0d60",
+    "factor_window_metrics.csv": "fc3b771aee3e14bc1457c58a56010e997f1eab038847f0932ce792b5f4164bba",
+    "stability_report.md": "dd420f6e6116dc5a1a389f0e721bc3b6863b8cd078f1acf87ff54f71b3676212",
+    "stability_role_summary.csv": "0e244873848d02f792052e079e58fe30f13a7d7b8e07ac794b9137a9358deb01"
+  },
+  "producer_run_id": "20260720T131847Z-7714acb1",
+  "profile_name": "full_research",
+  "profile_type": "full_research",
+  "research_run_family_id": "full_research_factor_669_v1",
+  "run_id": "20260720T131847Z-7714acb1",
+  "schema_version": 2,
+  "split_manifest_id": "split-manifest:75ccf0f37e85422729d54aef5a363f68d4f9b3daed3d42a87eb120e6b5aefe0e",
+  "stage_id": "factor_rolling_stability_v1",
+  "start_date": "2021-02-01",
+  "universe_artifact_id": "universe:10287ec42be03cb525de034b1bea1b53fa5da11cda5de4b5ed8f1f2ad1dcdad5"
+}
