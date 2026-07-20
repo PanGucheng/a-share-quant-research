@@ -74,15 +74,39 @@ def main() -> int:
             return 2
 
         factor_map = {factor: factor.split("|")[0] for factor in stability["factor"]}
-        frame = pd.read_pickle(PROJECT_ROOT / config["factor_frame"])
+        if config.get("factor_batch_manifest"):
+            batches = pd.read_csv(PROJECT_ROOT / config["factor_batch_manifest"])
+            frame = None
+            needed = set(factor_map.values())
+            for batch in batches.itertuples(index=False):
+                available = pd.read_parquet(PROJECT_ROOT / batch.output_path)
+                columns = sorted(needed & set(available.columns))
+                if not columns:
+                    continue
+                if frame is None:
+                    frame = available[["datetime", "instrument", *columns]].copy()
+                else:
+                    if not frame[["datetime", "instrument"]].equals(available[["datetime", "instrument"]]):
+                        raise ValueError(f"feature key mismatch in clustering batch: {batch.batch_id}")
+                    for column in columns:
+                        frame[column] = available[column].to_numpy()
+            if frame is None or not needed.issubset(frame.columns):
+                raise ValueError(f"missing clustering factor columns: {sorted(needed - set(frame.columns if frame is not None else []))}")
+        else:
+            frame = pd.read_pickle(PROJECT_ROOT / config["factor_frame"])
         exposure = daily_exposure_similarity(frame, factor_map, int(config["max_exposure_dates"]))
         series_map = {}
-        for path in PROJECT_ROOT.glob(config["daily_ic_glob"]):
-            match = re.search(r"label_(\d+d_t\d+)_", path.name)
-            key = f"{path.parent.name}|{match.group(1)}"
-            if key in factor_map:
-                data = pd.read_csv(path, parse_dates=["datetime"])
-                series_map[key] = data.set_index("datetime")["daily_rank_ic"]
+        if config.get("daily_ic_table"):
+            data = pd.read_csv(PROJECT_ROOT / config["daily_ic_table"], parse_dates=["datetime"])
+            for key, group in data.loc[data["factor"].isin(factor_map)].groupby("factor", sort=True):
+                series_map[str(key)] = group.set_index("datetime")[config.get("daily_ic_column", "rank_ic")]
+        else:
+            for path in PROJECT_ROOT.glob(config["daily_ic_glob"]):
+                match = re.search(r"label_(\d+d_t\d+)_", path.name)
+                key = f"{path.parent.name}|{match.group(1)}"
+                if key in factor_map:
+                    data = pd.read_csv(path, parse_dates=["datetime"])
+                    series_map[key] = data.set_index("datetime")["daily_rank_ic"]
         performance = performance_similarity(series_map)
         distance = combined_distance(exposure, performance, float(config["exposure_weight"]))
         clusters = hierarchical_clusters(distance, float(config["cluster_distance_threshold"]), config["linkage_method"])
@@ -108,7 +132,7 @@ def main() -> int:
             project_root=PROJECT_ROOT, stage_id="factor_clustering_v1", config=config,
             output_dir=publisher.staging_dir, output_files=output_files, code_state=code_state,
             input_manifest_paths=[PROJECT_ROOT / item for item in config.get("input_manifests", [])],
-            start_date=frame.datetime.min(), end_date=frame.datetime.max(), missing_lineage_fields=["universe_artifact_id"],
+            start_date=frame.datetime.min(), end_date=frame.datetime.max(), missing_lineage_fields=config.get("missing_lineage_fields", ["universe_artifact_id"]),
         )
         publisher.publish()
     print(contract.to_string(index=False))
