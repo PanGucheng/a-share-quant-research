@@ -13,13 +13,12 @@ Chinese documentation is available in [README.zh-CN.md](README.zh-CN.md).
 
 ## Current Direction
 
-> **Current milestone:** the frozen 669-factor full-research run is complete.
-> All 30 resumable matrix partitions, t+1 labels, purged/FDR/stability chain,
-> 16-representative frozen allowlist, transparent scores, and three-split Qlib
-> Exchange execution pass their critical contracts. Historical directional
-> tradability labels remain proxy-based. Model training has not started; the next
-> stage is the ordered Equal Weight / Stability Weight / Ridge / Elastic Net /
-> LightGBM comparison.
+> **Current milestone:** PR #4 completed the 669-factor engineering scale-up, including
+> all 30 resumable matrix partitions, t+1 labels, daily IC, outer purged splits, and
+> three-split Qlib Exchange execution. A post-merge audit found that the current
+> selection/stability and clustering outputs are influenced by outer-test data and
+> that raw/source provenance is incomplete. The 16 representatives are therefore
+> exploratory only, model readiness is paused, and model training has not started.
 
 The project keeps Qlib as the main data and model backbone while adding independent
 research modules around it:
@@ -37,8 +36,10 @@ research modules around it:
 - **Qlib execution layer**: pinned Exchange/Executor adapters, A-share constraints,
   normalized artifacts, exact synthetic reconciliation, and a local-reference run.
 
-The current development priority is model comparison on the frozen 16-factor
-allowlist, using the same purged folds, common period, and Qlib execution semantics.
+The current development priority is the mandatory selection-holdout integrity phase:
+complete raw/source provenance, build nested selection windows, consume split-scoped
+FDR artifacts, and regenerate development-date-bounded allowlists per outer split.
+Only after its anti-leakage gates pass can the project begin the ordered model series.
 
 ## Repository Layout
 
@@ -959,6 +960,7 @@ docs/_archive/03_factor_research_history/FACTOR_EXPANSION_V3_5_REFERENCE_SURVEY.
 ```text
 docs/DOC_INDEX.md
 docs/PROJECT_CONTEXT_SUMMARY.md
+docs/SELECTION_HOLDOUT_INTEGRITY_AND_MODEL_PLAN_V1.md
 docs/STEP_5_FACTOR_RESEARCH_AND_MODEL_PLAN.md
 docs/FACTOR_RESEARCH_TOOLCHAIN_READINESS_V1.md
 docs/LIQUIDITY_RESIDUALIZED_FACTOR_EVALUATION_V1_PLAN.md

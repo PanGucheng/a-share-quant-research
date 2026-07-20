@@ -1,21 +1,27 @@
 # 669 因子 Full-Research 全量运行 V1
 
+> **2026-07-20 合并后审计增补：**本文中的矩阵规模、批处理、IC、outer split 和 Qlib Exchange 数字仍是 PR #4 的历史工程证据；“16 个代表已冻结为模型 allowlist”和模型 readiness 结论已经撤回。当前代表读取了 outer-test 信息，聚类没有按 development dates 截断，Stability 没有真实消费上游 FDR artifact，raw/provider/source provenance 也不完整。当前 16 个代表只允许作为 `exploratory/test-influenced` 证据，`model_input_allowed=false`。下一步不是 PR #5，而是先执行 [Selection Holdout Integrity 与后续模型计划 V1](./SELECTION_HOLDOUT_INTEGRITY_AND_MODEL_PLAN_V1.md) 中的逻辑 PR #4.1。
+
 ## 状态与边界
 
 PR #4 已按 PR #3 冻结的研究语义完成全部 669 个 runnable 因子的规模化运行：
 
 ```text
 full_research_669_infrastructure_ready = true
-full_research_669_validation_chain_ready = true
+full_research_669_matrix_content_ready = true
 full_research_669_qlib_execution_operational = true
 full_research_authoritative_tradability_ready = false
-feature_allowlist_frozen = true
-core_model_ready = true
-pr5_model_training_ready = true
+feature_selection_holdout_clean = false
+clustering_holdout_clean = false
+fdr_artifact_consumed = false
+raw_input_provenance_complete = false
+feature_allowlist_frozen = false
+core_model_ready = false
+pr5_model_training_ready = false
 model_training_started = false
 ```
 
-本阶段只扩大因子规模、验证批处理和冻结模型输入，不调整筛选阈值、不训练模型。历史停牌和方向性涨跌停仍由代理字段推导，因此权威 tradability capability 保持 blocked。
+本阶段扩大因子规模并验证了批处理与执行链，没有训练模型。历史停牌和方向性涨跌停仍由代理字段推导，因此权威 tradability capability 保持 blocked。PR #4 当时报告的模型输入冻结结论已被合并后审计撤回，旧 artifact 不删除、不覆写，仅作为历史证据。
 
 ## 冻结因子家族
 
@@ -30,7 +36,7 @@ model_training_started = false
 | 项目基础因子 | 15 | 1 |
 | 合计 | 669 | 30 |
 
-目录无重复、无表现筛选；每批最多 25 个因子。最终模型特征 allowlist 是本轮稳定性和聚类产生的 16 个冻结代表，而不是全部 669 个原始因子。
+目录无重复、无表现筛选；每批最多 25 个因子。本轮稳定性和聚类产生的 16 个代表是历史探索结果，不是可用于模型的最终 allowlist；逻辑 PR #4.1 将按 outer split 分别重新生成 holdout-clean allowlist，数量由数据决定。
 
 ## 全量结果
 
@@ -40,9 +46,9 @@ Matrix runtime:    7,361,301,484 bytes；首轮 14,204.8 秒；缓存复跑约 3
 Label:             label_20d_t1，2,538,428 / 2,588,000 有效，覆盖率 98.0845%
 Daily Rank IC:     669 因子、865,686 factor-date rows；最少 1,228 个有效 IC 日
 Purged folds:      3 个 expanding walk-forward splits；泄漏/embargo violation = 0
-FDR family:        2,007 hypotheses；BH 通过 1,600，BY 通过 1,277，null FDR = 0
+FDR families:      3 个独立 split family × 669 hypotheses；合计 BH 通过 1,600，BY 通过 1,277，null FDR = 0
 Stability:         65 stable_core、518 conditional_signal、86 monitor
-Clustering:        65 eligible → 16 clusters → 16 frozen representatives
+Clustering:        65 eligible → 16 clusters → 16 exploratory representatives
 Transparent score: 3 methods × 736,000 rows = 2,208,000 rows
 Qlib execution:    3 splits、34,906 orders、34,898 fills、365 accounting days
 ```
@@ -52,11 +58,12 @@ Qlib execution:    3 splits、34,906 orders、34,898 fills、365 accounting days
 ## 研究与执行语义
 
 - 标签固定为观察日 `t`、`t+1` 入场、持有 20 个交易日。
-- FDR family 固定为 669 因子 × 3 个 purged 训练窗口，不按结果缩小 family。
-- 稳定性选择只读取 train/validation 字段，测试指标不进入筛选函数。
-- 聚类联合使用最多 60 个历史截面暴露相关性和日度 IC 相关性。
+- FDR 输出实际包含 3 个独立 split family，每个 family 固定 669 个 hypotheses，不是单一 2,007-hypothesis family。
+- 当前 Stability 虽把 FDR artifact 声明为上游，实际内部重新 bootstrap/FDR；两套结果的 2,007 个 q-value 全部不一致，必须在 PR #4.1 改为逐行消费上游结果。
+- 当前稳定性角色和 eligibility 读取 outer-test IC、test coverage 与 degradation；因此“测试指标不参与选择”的历史表述不成立。
+- 当前聚类联合使用最多 60 个截面 exposure 和日度 IC 相关性，但没有按每个 outer split 的 development dates 过滤，必须重做。
 - Qlib 执行复用 PR #2 的统一 Exchange 语义与 PR #3 的配置，不因全量因子结果修改交易假设。
-- 最终 16 个代表冻结为 PR #5 的 feature allowlist；PR #5 必须按 Equal Weight、Stability Weight、Ridge、Elastic Net、LightGBM 顺序推进。
+- 当前 16 个代表及相应透明 score/Qlib execution 仅作探索性历史证据；不得进入 PR #5。
 
 ## 复现顺序
 
@@ -77,4 +84,6 @@ E:\anaconda_envs\qlib_env\python.exe scripts\validate_full_research_669_v1.py
 
 ## 下一阶段
 
-PR #5 只使用冻结的 16 因子 allowlist 和相同的 purged folds、common period 与 Qlib Exchange。先运行等权和稳定性加权透明基线，再运行 Ridge、Elastic Net，最后才运行 LightGBM。测试集只用于最终评价，不用于特征选择或调参。
+先完成逻辑 PR #4.1：撤回 false-positive readiness，补齐 raw/provider/source provenance 与 cache key v3，受控重跑 30 批矩阵，建立 nested selection dates，让 Stability 真实消费三个 split-scoped FDR artifacts，并按 development dates 生成 split-specific clustering、allowlists、透明 score 和 Qlib execution。Outer-test mutation 必须不能改变任何选择产物。
+
+只有逻辑 PR #4.1 全部门禁通过后，才进入 PR #5A—#5D：先冻结共同输入协议并重跑 Equal Weight / Stability Weight，再依次运行 Ridge、Elastic Net、LightGBM，最后在相同 outer test、common period 和 Qlib Exchange 上统一比较。

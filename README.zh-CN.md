@@ -7,11 +7,10 @@ A 股量化研究工程。它最初用于复现官方 LightGBM + Alpha158 baseli
 
 ## 当前方向
 
-> **当前里程碑：**冻结的 669 因子 full-research 全量运行已经完成。30 个可恢复
-> 特征分区、t+1 标签、purged/FDR/稳定性链、16 个代表的冻结 allowlist、透明 score
-> 和三段 Qlib Exchange 执行均通过关键门禁；历史方向性可交易标签仍是代理数据。
-> 模型训练尚未启动；下一阶段按等权、稳定性加权、Ridge、Elastic Net、LightGBM
-> 的固定顺序比较模型。
+> **当前里程碑：**PR #4 已完成 669 因子的工程规模化，包括 30 个可恢复特征分区、
+> t+1 标签、daily IC、outer purged splits 和三段 Qlib Exchange。合并后审计发现当前
+> selection/stability 与 clustering 受到 outer-test 数据影响，raw/source provenance
+> 也不完整。因此 16 个代表只作为探索证据，模型 readiness 已暂停，模型训练尚未启动。
 
 项目坚持一个原则：不替换 Qlib 主线，而是在 Qlib 外围补齐研究工程能力。
 
@@ -24,7 +23,7 @@ A 股量化研究工程。它最初用于复现官方 LightGBM + Alpha158 baseli
 - **因子筛选模块**：把因子研究输出转成可解释的候选看板，再交给后续组合测试。
 - **Qlib execution 层**：固定版本的 Exchange/Executor adapter、A 股约束、标准化 artifact、合成精确对账和本地真实小样本均已落地。
 
-当前优先级是在冻结的 16 因子 allowlist 上，使用相同 purged folds、common period 和 Qlib execution 语义完成模型比较。
+当前优先级是强制完成 Selection Holdout Integrity：补齐 raw/source provenance，建立 nested selection windows，真实消费 split-scoped FDR，并按 outer split 的 development dates 重建 allowlist。只有 anti-leakage 门禁通过后，才按透明基线、Ridge、Elastic Net、LightGBM 顺序进入模型阶段。
 
 ## 目录结构
 
@@ -912,6 +911,7 @@ docs/_archive/03_factor_research_history/FACTOR_EXPANSION_V3_5_REFERENCE_SURVEY.
 ```text
 docs/DOC_INDEX.md
 docs/PROJECT_CONTEXT_SUMMARY.md
+docs/SELECTION_HOLDOUT_INTEGRITY_AND_MODEL_PLAN_V1.md
 docs/STEP_5_FACTOR_RESEARCH_AND_MODEL_PLAN.md
 docs/FACTOR_RESEARCH_TOOLCHAIN_READINESS_V1.md
 docs/LIQUIDITY_RESIDUALIZED_FACTOR_EVALUATION_V1_PLAN.md
