@@ -26,6 +26,19 @@ def test_capped_normalization_respects_limit() -> None:
     assert weights.max() <= 0.6 + 1e-12
 
 
+def test_construct_daily_scores_honors_precomputed_capped_weights() -> None:
+    frame = pd.DataFrame({"datetime": ["2026-01-02"] * 3, "instrument": list("ABC"), "f1": [1, 2, 3], "f2": [3, 2, 1]})
+    weights = pd.DataFrame({
+        "factor_column": ["f1", "f2"],
+        "cluster_id": ["c1", "c2"],
+        "raw_weight": [1.0, 1.0],
+        "weight": [0.8, 0.2],
+        "direction": [1, 1],
+    })
+    scores, _ = construct_daily_scores(frame, weights, method="weighted", min_components=2, clip=3)
+    assert scores.sort_values("composite_score").instrument.tolist() == ["A", "B", "C"]
+
+
 def test_unselected_ineligible_and_zero_direction_factors_are_excluded() -> None:
     values = pd.DataFrame([
         {"factor": "ok", "selected": True, "selection_eligible": True, "eligible": True, "frozen_direction": -1},

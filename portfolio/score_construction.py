@@ -69,7 +69,10 @@ def construct_daily_scores(
     if component_weights["cluster_id"].duplicated().any():
         raise ValueError("component weights contain duplicate cluster votes")
     weights = component_weights.copy()
-    weights["weight"] = weights["raw_weight"] / weights["raw_weight"].sum()
+    if "weight" not in weights or not np.isfinite(weights["weight"]).all() or weights["weight"].sum() <= 0:
+        weights["weight"] = weights["raw_weight"] / weights["raw_weight"].sum()
+    else:
+        weights["weight"] = weights["weight"] / weights["weight"].sum()
     data = frame[["datetime", "instrument", *weights["factor_column"]]].copy()
     parts = []
     for row in weights.itertuples(index=False):

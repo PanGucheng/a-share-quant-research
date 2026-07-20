@@ -6,6 +6,7 @@ from multiprocessing import freeze_support
 from pathlib import Path
 
 import pandas as pd
+import pyarrow.parquet as pq
 import yaml
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -13,14 +14,15 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 from portfolio.score_construction import capped_normalize, construct_daily_scores, filter_eligible_representatives  # noqa: E402
-from research_validation.lineage import capture_code_state, write_stage_artifact_manifest  # noqa: E402
+from research_validation.lineage import capture_code_state, sha256_file, write_stage_artifact_manifest  # noqa: E402
 from research_validation.stage_output import StageOutputPublisher  # noqa: E402
 
 
 CONTROLLED_OUTPUTS = (
     "factor_weights_by_window.csv", "score_method_manifest.csv", "score_availability.csv",
     "excluded_score_factors.csv", "daily_factor_component_count.csv", "score_diagnostics.csv",
-    "contract_status.csv", "score_construction_report.md", "runtime/composite_scores.parquet",
+    "score_artifact.csv", "score_sample.csv", "contract_status.csv", "score_construction_report.md",
+    "runtime/composite_scores.parquet",
     "artifact_manifest.json",
 )
 WEIGHT_COLUMNS = ["split_id", "method", "factor", "factor_column", "cluster_id", "direction", "raw_weight", "weight"]
@@ -36,6 +38,46 @@ def _write_common(publisher: StageOutputPublisher, config: dict, weights: pd.Dat
     pd.DataFrame([{"method": method, "description": descriptions[method]} for method in config["methods"]]).to_csv(publisher.path("score_method_manifest.csv"), index=False, encoding="utf-8-sig")
     availability.reindex(columns=["split_id", "method", "valid_component_count", "status", "reason"]).to_csv(publisher.path("score_availability.csv"), index=False, encoding="utf-8-sig")
     excluded.reindex(columns=["split_id", "factor", "reason"]).to_csv(publisher.path("excluded_score_factors.csv"), index=False, encoding="utf-8-sig")
+
+
+def _load_factor_frame(config: dict, factor_columns: set[str]) -> pd.DataFrame:
+    if not config.get("factor_batch_manifest"):
+        frame = pd.read_pickle(PROJECT_ROOT / config["factor_frame"])
+        frame["datetime"] = pd.to_datetime(frame["datetime"])
+        return frame
+    batches = pd.read_csv(PROJECT_ROOT / config["factor_batch_manifest"])
+    frame: pd.DataFrame | None = None
+    remaining = set(factor_columns)
+    for batch in batches.itertuples(index=False):
+        path = Path(batch.output_path)
+        path = path if path.is_absolute() else PROJECT_ROOT / path
+        available_columns = set(pq.ParquetFile(path).schema.names)
+        columns = sorted(remaining & available_columns)
+        if not columns:
+            continue
+        part = pd.read_parquet(path, columns=["datetime", "instrument", *columns])
+        part["datetime"] = pd.to_datetime(part["datetime"])
+        if frame is None:
+            frame = part
+        else:
+            if not frame[["datetime", "instrument"]].equals(part[["datetime", "instrument"]]):
+                raise ValueError(f"feature key mismatch in score batch: {batch.batch_id}")
+            for column in columns:
+                frame[column] = part[column].to_numpy()
+        remaining.difference_update(columns)
+    if frame is None or remaining:
+        raise ValueError(f"missing score factor columns: {sorted(remaining)}")
+    return frame
+
+
+def _manifest_output_files(publisher: StageOutputPublisher, include_runtime: bool) -> list[Path]:
+    return [
+        publisher.staging_dir / item
+        for item in CONTROLLED_OUTPUTS
+        if item != "artifact_manifest.json"
+        and (include_runtime or not item.startswith("runtime/"))
+        and (publisher.staging_dir / item).is_file()
+    ]
 
 
 def main() -> int:
@@ -72,8 +114,7 @@ def main() -> int:
                 availability_rows.append({"split_id": split.split_id, "method": method, "valid_component_count": len(current), "status": "blocked", "reason": "blocked_insufficient_selected_components"})
                 continue
             if frame is None:
-                frame = pd.read_pickle(PROJECT_ROOT / config["factor_frame"])
-                frame["datetime"] = pd.to_datetime(frame["datetime"])
+                frame = _load_factor_frame(config, set(representatives["factor_column"]))
             historical_ids = set(splits.loc[splits.test_start <= split.test_start, "split_id"])
             eligible_history = history.loc[
                 history.split_id.isin(historical_ids)
@@ -109,13 +150,15 @@ def main() -> int:
         if not all_scores:
             pd.DataFrame(columns=["method", "datetime", "rows", "minimum_components", "median_components", "split_id"]).to_csv(publisher.path("daily_factor_component_count.csv"), index=False, encoding="utf-8-sig")
             pd.DataFrame(columns=["method", "rows", "coverage", "score_std"]).to_csv(publisher.path("score_diagnostics.csv"), index=False, encoding="utf-8-sig")
+            pd.DataFrame(columns=["path", "rows", "sha256"]).to_csv(publisher.path("score_artifact.csv"), index=False, encoding="utf-8-sig")
+            pd.DataFrame(columns=["datetime", "instrument", "method", "composite_score", "component_count", "split_id"]).to_csv(publisher.path("score_sample.csv"), index=False, encoding="utf-8-sig")
             contract = pd.DataFrame([
                 {"check_name": "score_construction_status", "status": "blocked", "observed_value": "blocked_insufficient_selected_components", "required_value": "pass", "severity": "critical", "reason": "No split has enough selected eligible representatives."},
                 {"check_name": "valid_score_window_count", "status": "blocked", "observed_value": 0, "required_value": ">0", "severity": "critical", "reason": "blocked_insufficient_selected_components"},
             ])
             contract.to_csv(publisher.path("contract_status.csv"), index=False, encoding="utf-8-sig")
             publisher.path("score_construction_report.md").write_text("# Factor Score Construction V1\n\n- Status: `blocked_insufficient_selected_components`\n- Active runtime score parquet: `absent`\n", encoding="utf-8")
-            output_files = [publisher.staging_dir / item for item in CONTROLLED_OUTPUTS if item != "artifact_manifest.json" and (publisher.staging_dir / item).is_file()]
+            output_files = _manifest_output_files(publisher, bool(config.get("commit_runtime", True)))
             write_stage_artifact_manifest(
                 project_root=PROJECT_ROOT, stage_id="factor_score_construction_v1", config=config,
                 output_dir=publisher.staging_dir, output_files=output_files, code_state=code_state,
@@ -130,7 +173,10 @@ def main() -> int:
         scores_frame = pd.concat(all_scores, ignore_index=True)
         diagnostics_frame = pd.concat(all_diagnostics, ignore_index=True)
         diagnostics_frame.to_csv(publisher.path("daily_factor_component_count.csv"), index=False, encoding="utf-8-sig")
-        scores_frame.to_parquet(publisher.path("runtime/composite_scores.parquet"), index=False)
+        runtime_path = publisher.path("runtime/composite_scores.parquet")
+        scores_frame.to_parquet(runtime_path, index=False)
+        pd.DataFrame([{"path": (output / "runtime/composite_scores.parquet").as_posix(), "rows": len(scores_frame), "sha256": sha256_file(runtime_path)}]).to_csv(publisher.path("score_artifact.csv"), index=False, encoding="utf-8-sig")
+        scores_frame.sort_values(["method", "datetime", "instrument"]).groupby("method", sort=True).head(10).to_csv(publisher.path("score_sample.csv"), index=False, encoding="utf-8-sig")
         scores_frame.groupby("method").agg(rows=("composite_score", "size"), coverage=("composite_score", lambda values: values.notna().mean()), score_std=("composite_score", "std")).reset_index().to_csv(publisher.path("score_diagnostics.csv"), index=False, encoding="utf-8-sig")
         contract = pd.DataFrame([
             {"check_name": "score_construction_status", "status": "pass", "observed_value": "pass", "required_value": "pass", "severity": "critical", "reason": "Current selected eligible representatives produced scores."},
@@ -139,12 +185,12 @@ def main() -> int:
         ])
         contract.to_csv(publisher.path("contract_status.csv"), index=False, encoding="utf-8-sig")
         publisher.path("score_construction_report.md").write_text(f"# Factor Score Construction V1\n\n- Status: `pass`\n- Score rows: `{len(scores_frame)}`\n", encoding="utf-8")
-        output_files = [publisher.staging_dir / item for item in CONTROLLED_OUTPUTS if item != "artifact_manifest.json" and (publisher.staging_dir / item).is_file()]
+        output_files = _manifest_output_files(publisher, bool(config.get("commit_runtime", True)))
         write_stage_artifact_manifest(
             project_root=PROJECT_ROOT, stage_id="factor_score_construction_v1", config=config,
             output_dir=publisher.staging_dir, output_files=output_files, code_state=code_state,
             input_manifest_paths=[PROJECT_ROOT / item for item in config.get("input_manifests", [])],
-            start_date=scores_frame.datetime.min(), end_date=scores_frame.datetime.max(), missing_lineage_fields=["universe_artifact_id"],
+            start_date=scores_frame.datetime.min(), end_date=scores_frame.datetime.max(), missing_lineage_fields=config.get("missing_lineage_fields", ["universe_artifact_id"]),
         )
         publisher.publish()
     print(contract.to_string(index=False))
