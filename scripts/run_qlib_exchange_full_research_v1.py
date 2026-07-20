@@ -89,10 +89,17 @@ def main() -> int:
             current["research_run_family_id"] = config["research_run_family_id"]
             signal = validate_signal_frame(current)
             instruments = sorted(signal["instrument"].unique())
-            features = D.features(instruments, QLIB_FIELDS, start_time=calendar.min(), end_time=calendar.max(), freq="day")
-            market = validate_market_frame(build_market_frame(
-                features, calendar, instruments, limit_threshold=float(config["limit_threshold_approximation"])
-            ))
+            cached_signal_path = output_dir / f"runtime/{split.split_id}_signal.parquet"
+            cached_market_path = output_dir / f"runtime/{split.split_id}_market.parquet"
+            cached_signal = validate_signal_frame(pd.read_parquet(cached_signal_path)) if bool(config.get("reuse_runtime_inputs")) and cached_signal_path.is_file() else None
+            cache_matches = cached_signal is not None and cached_signal.equals(signal)
+            if cache_matches and cached_market_path.is_file():
+                market = validate_market_frame(pd.read_parquet(cached_market_path))
+            else:
+                features = D.features(instruments, QLIB_FIELDS, start_time=calendar.min(), end_time=calendar.max(), freq="day")
+                market = validate_market_frame(build_market_frame(
+                    features, calendar, instruments, limit_threshold=float(config["limit_threshold_approximation"])
+                ))
             signal_runtime = publisher.path(f"runtime/{split.split_id}_signal.parquet")
             market_runtime = publisher.path(f"runtime/{split.split_id}_market.parquet")
             signal.to_parquet(signal_runtime, index=False)

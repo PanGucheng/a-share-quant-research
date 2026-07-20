@@ -9,6 +9,7 @@ score_manifest: outputs/factor_score_construction_v1/full_research/artifact_mani
 score_runtime: outputs/factor_score_construction_v1/full_research/runtime/composite_scores.parquet
 split_manifest: outputs/purged_walk_forward_v1/full_research/split_manifest.csv
 score_method: stability_weight
+reuse_runtime_inputs: true
 initial_cash: 10000000.0
 top_k: 50
 risk_degree: 0.95
