@@ -46,6 +46,7 @@ jobs:
           python scripts/validate_reference_pipeline_consistency_v1.py
           python scripts/validate_execution_reconciliation_v1.py
           python scripts/validate_qlib_exchange_v1.py
+          python scripts/validate_full_research_trial_v1.py
 
   qlib-exchange-runtime:
     runs-on: windows-latest
