@@ -4,7 +4,7 @@ import pandas as pd
 import pytest
 
 from qlib_integration.contracts import normalize_instrument, validate_market_frame, validate_signal_frame
-from qlib_integration.exchange_adapter import TPlusOneLedger, apply_slippage, component_costs
+from qlib_integration.exchange_adapter import TPlusOneLedger, apply_slippage, component_costs, to_qlib_quote
 from qlib_integration.reconciliation import semantic_difference, unknown_difference_count
 from qlib_integration.signal_adapter import to_qlib_signal
 
@@ -78,6 +78,14 @@ def test_market_contract_enforces_directional_limits() -> None:
     invalid = market_frame().assign(limit_up=True, can_buy=True)
     with pytest.raises(ValueError, match="limit-up"):
         validate_market_frame(invalid)
+
+
+def test_qlib_quote_converts_raw_units_at_adapter_boundary() -> None:
+    quote = to_qlib_quote(market_frame().assign(factor=2.0), 0.05)
+    row = quote.iloc[0]
+    assert row["$open"] == 20.0
+    assert row["$volume"] == 50_000
+    assert row["$participation_limit"] == 2_500
 
 
 def test_component_costs_do_not_apply_minimum_to_stamp_tax() -> None:

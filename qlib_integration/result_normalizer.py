@@ -30,6 +30,7 @@ def normalize_execution_results(
     events: list[dict[str, object]],
     account: object,
     calendar: pd.DatetimeIndex,
+    market: pd.DataFrame,
 ) -> dict[str, pd.DataFrame]:
     event_frame = pd.DataFrame(events, columns=EVENT_COLUMNS)
     orders = event_frame.copy()
@@ -55,15 +56,18 @@ def normalize_execution_results(
     daily = pd.DataFrame({"datetime": pd.DatetimeIndex(calendar).normalize()}).merge(metric, on="datetime", how="left")
     daily["calendar_complete"] = daily["nav"].notna()
 
+    factor_by_key = market.set_index(["datetime", "instrument"])["factor"]
     position_rows: list[dict[str, object]] = []
     for date, position in sorted(account.get_hist_positions().items()):
         nav = float(position.calculate_value())
         for instrument in position.get_stock_list():
-            shares = float(position.get_stock_amount(instrument))
-            price = float(position.get_stock_price(instrument))
+            normalized_date = pd.Timestamp(date).normalize()
+            factor = float(factor_by_key.loc[(normalized_date, instrument)])
+            shares = float(position.get_stock_amount(instrument)) * factor
+            price = float(position.get_stock_price(instrument)) / factor
             position_rows.append(
                 {
-                    "datetime": pd.Timestamp(date).normalize(),
+                    "datetime": normalized_date,
                     "instrument": instrument,
                     "shares": shares,
                     "close": price,

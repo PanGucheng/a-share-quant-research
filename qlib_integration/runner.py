@@ -66,4 +66,5 @@ def run_qlib_execution(signal: pd.DataFrame, market: pd.DataFrame, config: dict[
         events=executor.execution_events,
         account=account,
         calendar=calendar[1:],
+        market=markets,
     )

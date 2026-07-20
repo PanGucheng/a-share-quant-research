@@ -113,15 +113,17 @@ def cost_dict(cost: ExecutionCostBreakdown) -> dict[str, float]:
 def to_qlib_quote(market: pd.DataFrame, max_participation_rate: float) -> pd.DataFrame:
     frame = validate_market_frame(market)
     invalid_price = ~np.isfinite(frame["execution_price"]) | frame["execution_price"].le(0)
+    # The project boundary uses original prices and raw shares. Qlib internally
+    # trades split-adjusted prices and amounts, where raw_shares = amount * factor.
     quote = pd.DataFrame(
         {
-            "$open": frame["open"],
-            "$close": frame["close"],
-            "$volume": frame["volume"],
+            "$open": frame["open"] * frame["factor"],
+            "$close": frame["close"] * frame["factor"],
+            "$volume": frame["volume"] / frame["factor"],
             "$factor": frame["factor"],
             "$change": frame["change"],
-            "$execution_price": frame["execution_price"],
-            "$participation_limit": frame["volume"] * float(max_participation_rate),
+            "$execution_price": frame["execution_price"] * frame["factor"],
+            "$participation_limit": frame["volume"] * float(max_participation_rate) / frame["factor"],
             "limit_buy": (~frame["can_buy"]) | frame["limit_up"] | frame["suspended"] | invalid_price,
             "limit_sell": (~frame["can_sell"]) | frame["limit_down"] | frame["suspended"] | invalid_price,
             "audit_suspended": frame["suspended"],
