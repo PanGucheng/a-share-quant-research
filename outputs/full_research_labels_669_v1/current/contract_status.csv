@@ -1,0 +1,6 @@
+﻿check_name,status,observed_value,required_value,severity,reason
+label_key_grid_aligned,pass,2588000,2588000,critical,
+label_t_plus_one,pass,1,1,critical,
+label_horizon,pass,20,20,critical,
+label_coverage,pass,0.9808454404945904,>=0.90,critical,
+label_output_hash,pass,aeedd05d69debe8e8d4da6e997c19aa31bc84a349a8b988eed2019e900e5fa4b,sha256,critical,

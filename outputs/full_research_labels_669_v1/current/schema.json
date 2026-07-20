@@ -1,0 +1,8 @@
+{
+  "keys": [
+    "datetime",
+    "instrument"
+  ],
+  "label": "label_20d_t1",
+  "definition": "close[t+21]/close[t+1]-1"
+}
