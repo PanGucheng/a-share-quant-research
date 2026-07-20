@@ -44,7 +44,8 @@ def run_qlib_execution(signal: pd.DataFrame, market: pd.DataFrame, config: dict[
         volume_threshold=("current", "$participation_limit"),
         trade_unit=int(config["lot_size"]),
     )
-    account = create_account_instance(start_time, end_time, None, float(config["initial_cash"]))
+    zero_benchmark = pd.Series(0.0, index=calendar[1:])
+    account = create_account_instance(start_time, end_time, zero_benchmark, float(config["initial_cash"]))
     common = CommonInfrastructure(trade_account=account, trade_exchange=exchange)
     strategy = EqualWeightTargetStrategy(
         signal=to_qlib_signal(signals),

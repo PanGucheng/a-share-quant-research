@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 from pathlib import Path
 
 import pandas as pd
@@ -62,11 +63,28 @@ def _frames() -> tuple[pd.DataFrame, pd.DataFrame]:
     return pd.DataFrame(signal_rows), pd.DataFrame(market_rows)
 
 
-@pytest.mark.skipif(not PROVIDER.exists(), reason="local Qlib provider not available")
-def test_synthetic_score_to_account_chain() -> None:
-    qlib.init(provider_uri=str(PROVIDER), region=REG_CN)
+@pytest.fixture(scope="module")
+def qlib_provider(tmp_path_factory: pytest.TempPathFactory) -> Path:
+    configured = os.environ.get("QLIB_TEST_PROVIDER_URI")
+    if configured:
+        provider = Path(configured)
+    elif PROVIDER.exists():
+        provider = PROVIDER
+    else:
+        provider = tmp_path_factory.mktemp("qlib-provider")
+        calendar_dir = provider / "calendars"
+        calendar_dir.mkdir(parents=True)
+        (calendar_dir / "day.txt").write_text(
+            "\n".join(date.strftime("%Y-%m-%d") for date in pd.bdate_range("2026-05-25", periods=20)) + "\n",
+            encoding="utf-8",
+        )
+    qlib.init(provider_uri=str(provider), region=REG_CN)
     C.kernels = 1
     C.joblib_backend = "sequential"
+    return provider
+
+
+def test_synthetic_score_to_account_chain(qlib_provider: Path) -> None:
     signal, market = _frames()
     result = run_qlib_execution(
         signal,
@@ -124,11 +142,7 @@ def test_synthetic_score_to_account_chain() -> None:
     )
 
 
-@pytest.mark.skipif(not PROVIDER.exists(), reason="local Qlib provider not available")
-def test_strict_t_plus_one_blocks_same_day_sale() -> None:
-    qlib.init(provider_uri=str(PROVIDER), region=REG_CN)
-    C.kernels = 1
-    C.joblib_backend = "sequential"
+def test_strict_t_plus_one_blocks_same_day_sale(qlib_provider: Path) -> None:
     _, market = _frames()
     one_day = market.loc[market["datetime"] == market["datetime"].min()].copy()
     exchange = PreparedQuoteExchange(
@@ -148,7 +162,7 @@ def test_strict_t_plus_one_blocks_same_day_sale() -> None:
         trade_unit=100,
     )
     date = pd.Timestamp(one_day["datetime"].min())
-    account = create_account_instance(date, date, None, 100_000.0)
+    account = create_account_instance(date, date, pd.Series([0.0], index=[date]), 100_000.0)
     dealt = {}
     buy = Order("SH600000", 200, Order.BUY, date, date)
     exchange.deal_order(buy, trade_account=account, dealt_order_amount=dealt)
@@ -159,11 +173,7 @@ def test_strict_t_plus_one_blocks_same_day_sale() -> None:
     assert exchange.audit_events[-1]["reason"] == "t_plus_one"
 
 
-@pytest.mark.skipif(not PROVIDER.exists(), reason="local Qlib provider not available")
-def test_volume_limit_and_component_costs_are_audited() -> None:
-    qlib.init(provider_uri=str(PROVIDER), region=REG_CN)
-    C.kernels = 1
-    C.joblib_backend = "sequential"
+def test_volume_limit_and_component_costs_are_audited(qlib_provider: Path) -> None:
     _, market = _frames()
     one_day = market.loc[market["datetime"] == market["datetime"].min()].copy()
     one_day.loc[one_day["instrument"] == "SH600000", "volume"] = 100
@@ -184,7 +194,7 @@ def test_volume_limit_and_component_costs_are_audited() -> None:
         trade_unit=None,
     )
     date = pd.Timestamp(one_day["datetime"].min())
-    account = create_account_instance(date, date, None, 100_000.0)
+    account = create_account_instance(date, date, pd.Series([0.0], index=[date]), 100_000.0)
     order = Order("SH600000", 100, Order.BUY, date, date)
     exchange.deal_order(order, trade_account=account, dealt_order_amount={})
     event = exchange.audit_events[-1]
