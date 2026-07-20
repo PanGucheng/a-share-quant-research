@@ -1,8 +1,11 @@
 from __future__ import annotations
 
+from pathlib import Path
+
 import pandas as pd
 
 from research_validation.feature_matrix import atomic_parquet, build_pit_key_grid, canonical_hash, file_sha256, filter_to_pit_intervals, forward_return_label, resumable_batch_valid
+from scripts.run_full_research_feature_matrix_v1 import ta_batch
 
 
 def test_pit_filter_uses_effective_intervals_without_static_membership() -> None:
@@ -39,3 +42,16 @@ def test_forward_label_enters_t_plus_one_and_holds_exact_horizon() -> None:
     label = forward_return_label(frame, "close", 1, 2)
     assert label.iloc[0] == 13.0 / 11.0 - 1.0
     assert label.iloc[1:].isna().all()
+
+
+def test_selected_ta_categories_materialize_without_all_feature_wrapper() -> None:
+    dates = pd.date_range("2024-01-01", periods=60)
+    raw = pd.DataFrame({
+        "datetime": dates, "instrument": "SH600000", "$open": range(100, 160), "$high": range(102, 162),
+        "$low": range(98, 158), "$close": range(101, 161), "$volume": range(1000, 1060), "$amount": range(10000, 10060),
+    })
+    names = ["ta_volume_adi", "ta_volatility_bbm", "ta_trend_macd", "ta_momentum_rsi"]
+    result = ta_batch(raw, names, Path("tmp/reference_repos/ta"))
+    assert result.columns.tolist() == ["datetime", "instrument", *names]
+    assert len(result) == len(raw)
+    assert result["ta_volume_adi"].notna().all()
