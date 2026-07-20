@@ -1,0 +1,22 @@
+schema_version: 1
+profile: full_research
+profile_name: full_research
+profile_type: full_research
+research_run_family_id: full_research_factor_669_v1
+factor_batch_manifest: outputs/full_research_feature_matrix_669_v1/current/batch_manifest.csv
+representatives: outputs/factor_clustering_v1/full_research_669/cluster_representatives.csv
+selection_history: outputs/factor_rolling_stability_v1/full_research_669/factor_selection_history.csv
+split_manifest: outputs/purged_walk_forward_v1/full_research_669/split_manifest.csv
+input_manifests:
+  - outputs/full_research_feature_matrix_669_v1/current/artifact_manifest.json
+  - outputs/purged_walk_forward_v1/full_research_669/artifact_manifest.json
+  - outputs/factor_rolling_stability_v1/full_research_669/artifact_manifest.json
+  - outputs/factor_clustering_v1/full_research_669/artifact_manifest.json
+methods: [equal_directional_zscore, cluster_equal, stability_weight]
+minimum_components: 2
+score_clip: 3.0
+maximum_factor_weight: 0.60
+maximum_cluster_weight: 0.60
+commit_runtime: false
+missing_lineage_fields: []
+output_dir: outputs/factor_score_construction_v1/full_research_669
