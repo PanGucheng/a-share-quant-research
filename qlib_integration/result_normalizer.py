@@ -54,7 +54,6 @@ def normalize_execution_results(
     metric = metric.rename(columns={"account": "nav"})
     daily = pd.DataFrame({"datetime": pd.DatetimeIndex(calendar).normalize()}).merge(metric, on="datetime", how="left")
     daily["calendar_complete"] = daily["nav"].notna()
-    daily["accounting_error"] = 0.0
 
     position_rows: list[dict[str, object]] = []
     for date, position in sorted(account.get_hist_positions().items()):
@@ -76,6 +75,14 @@ def normalize_execution_results(
         position_rows,
         columns=["datetime", "instrument", "shares", "close", "market_value", "weight"],
     )
+    stock_value = (
+        positions.groupby("datetime", as_index=False)["market_value"].sum().rename(columns={"market_value": "stock_value"})
+        if not positions.empty
+        else pd.DataFrame({"datetime": pd.DatetimeIndex([]), "stock_value": pd.Series(dtype=float)})
+    )
+    daily = daily.merge(stock_value, on="datetime", how="left")
+    daily["stock_value"] = daily["stock_value"].fillna(0.0)
+    daily["accounting_error"] = daily["nav"] - daily["cash"] - daily["stock_value"]
     summary = pd.DataFrame(
         [
             {

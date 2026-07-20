@@ -124,6 +124,13 @@ def to_qlib_quote(market: pd.DataFrame, max_participation_rate: float) -> pd.Dat
             "$participation_limit": frame["volume"] * float(max_participation_rate),
             "limit_buy": (~frame["can_buy"]) | frame["limit_up"] | frame["suspended"] | invalid_price,
             "limit_sell": (~frame["can_sell"]) | frame["limit_down"] | frame["suspended"] | invalid_price,
+            "audit_suspended": frame["suspended"],
+            "audit_limit_up": frame["limit_up"],
+            "audit_limit_down": frame["limit_down"],
+            "audit_can_buy": frame["can_buy"],
+            "audit_can_sell": frame["can_sell"],
+            "audit_invalid_execution_price": invalid_price,
+            "audit_no_volume": frame["volume"].fillna(0).le(0),
         }
     )
     quote.index = pd.MultiIndex.from_arrays(
@@ -224,10 +231,25 @@ class PreparedQuoteExchange(Exchange):  # type: ignore[misc]
         return fill_adjusted_price, gross_value, costs.cash_fee
 
     def _blocked_reason(self, order: object) -> str:
+        key = (order.stock_id, pd.Timestamp(order.start_time).normalize())
+        if key in self._prepared_quote.index:
+            row = self._prepared_quote.loc[key]
+            if bool(row["audit_invalid_execution_price"]):
+                return "missing_execution_price"
+            if bool(row["audit_suspended"]):
+                return "suspended"
+            if bool(row["audit_no_volume"]):
+                return "no_volume"
+            if order.direction == Order.BUY and bool(row["audit_limit_up"]):
+                return "limit_up"
+            if order.direction == Order.SELL and bool(row["audit_limit_down"]):
+                return "limit_down"
+            if order.direction == Order.BUY and not bool(row["audit_can_buy"]):
+                return "cannot_buy"
+            if order.direction == Order.SELL and not bool(row["audit_can_sell"]):
+                return "cannot_sell"
         if self.check_stock_suspended(order.stock_id, order.start_time, order.end_time):
-            return "suspended_or_missing_price"
-        if self.check_stock_limit(order.stock_id, order.start_time, order.end_time, order.direction):
-            return "limit_up" if order.direction == Order.BUY else "limit_down"
+            return "suspended"
         return ""
 
     def deal_order(self, order: object, trade_account: object = None, position: object = None, dealt_order_amount: dict = None) -> tuple[float, float, float]:
