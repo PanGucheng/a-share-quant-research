@@ -44,6 +44,10 @@ def resolve(value: str | Path) -> Path:
 
 
 def load_raw(config: dict[str, object], symbols: list[str], runtime: Path, D: object) -> pd.DataFrame:
+    if config.get("raw_cache_path"):
+        external = resolve(config["raw_cache_path"])
+        if external.is_file():
+            return pd.read_parquet(external)
     path = runtime / "raw_ohlcva.parquet"
     sidecar = runtime / "raw_ohlcva.json"
     input_hash = canonical_hash({"provider": str(config["provider_uri"]), "symbols": symbols, "start": config["warmup_start_date"], "end": config["end_date"], "fields": BASE_FIELDS})
@@ -71,14 +75,31 @@ def expression_batch(symbols: list[str], names: list[str], inventory_path: Path,
 
 
 def ta_batch(raw: pd.DataFrame, names: list[str], source_path: Path) -> pd.DataFrame:
-    wrapper = import_ta_wrapper(source_path)
+    import_ta_wrapper(source_path)
+    from ta.wrapper import add_momentum_ta, add_trend_ta, add_volatility_ta, add_volume_ta
+
+    functions = []
+    if any(name.startswith("ta_volume_") for name in names): functions.append(add_volume_ta)
+    if any(name.startswith("ta_volatility_") for name in names): functions.append(add_volatility_ta)
+    if any(name.startswith("ta_trend_") for name in names): functions.append(add_trend_ta)
+    if any(name.startswith("ta_momentum_") for name in names): functions.append(add_momentum_ta)
     renamed = raw.rename(columns={"$open": "open", "$high": "high", "$low": "low", "$close": "close", "$volume": "volume"})
     rows = []
     for instrument, group in renamed.groupby("instrument", sort=True):
         source = group[["datetime", "instrument", "open", "high", "low", "close", "volume"]].sort_values("datetime").copy()
         with warnings.catch_warnings():
             warnings.simplefilter("ignore")
-            computed = wrapper(source, open="open", high="high", low="low", close="close", volume="volume", fillna=False, colprefix="ta_", vectorized=False)
+            computed = source
+            for function in functions:
+                kwargs = {"fillna": False, "colprefix": "ta_", "vectorized": False}
+                if function is add_volume_ta:
+                    computed = function(computed, high="high", low="low", close="close", volume="volume", **kwargs)
+                elif function is add_volatility_ta:
+                    computed = function(computed, high="high", low="low", close="close", **kwargs)
+                elif function is add_trend_ta:
+                    computed = function(computed, high="high", low="low", close="close", **kwargs)
+                else:
+                    computed = function(computed, high="high", low="low", close="close", volume="volume", **kwargs)
         missing = sorted(set(names) - set(computed.columns))
         if missing:
             raise ValueError(f"TA wrapper missing selected factors: {missing}")
@@ -113,6 +134,15 @@ def main() -> int:
         elif entry.source_project == "qlib_baseline_basic": source = "project_basic"
         else: raise ValueError(f"unsupported trial factor source: {entry.source_project}")
         by_source.setdefault(source, []).append(entry.name)
+    if config.get("batch_plan") and config.get("factor_inventory"):
+        plan = pd.read_csv(resolve(config["batch_plan"]))
+        inventory = pd.read_csv(resolve(config["factor_inventory"]))
+        batch_specs = []
+        for row in plan.itertuples(index=False):
+            names = sorted(inventory.loc[inventory["batch_id"].eq(row.batch_id), "name"].astype(str))
+            batch_specs.append((str(row.batch_id), str(row.source), names))
+    else:
+        batch_specs = [(source, source, sorted(by_source.get(source, []))) for source in ["alpha158", "alpha360", "project_basic", "ta", "alpha101"]]
     intervals = pd.read_csv(resolve(config["universe_intervals"]))
     symbols = sorted(intervals["instrument"].astype(str).str.upper().unique())
     runtime = resolve(config["runtime_dir"])
@@ -131,10 +161,9 @@ def main() -> int:
     raw: pd.DataFrame | None = None
     batch_rows: list[dict[str, object]] = []
     failures: list[dict[str, object]] = []
-    for batch_id in ["alpha158", "alpha360", "project_basic", "ta", "alpha101"]:
-        names = sorted(by_source.get(batch_id, []))
+    for batch_id, source, names in batch_specs:
         path = runtime / f"{batch_id}.parquet"
-        legacy_payload = {"batch": batch_id, "factors": names, "catalog": catalog_manifest["artifact_id"], "universe": universe_manifest["artifact_id"], "start": config["start_date"], "end": config["end_date"]}
+        legacy_payload = {"batch": batch_id, "source": source, "factors": names, "catalog": catalog_manifest["artifact_id"], "universe": universe_manifest["artifact_id"], "start": config["start_date"], "end": config["end_date"]}
         legacy_input_hash = canonical_hash(legacy_payload)
         input_hash = canonical_hash({**legacy_payload, "key_schema_version": 2})
         prior = previous.get(batch_id, {})
@@ -148,20 +177,20 @@ def main() -> int:
             reindexed_from_cache = resumable_batch_valid(prior, legacy_input_hash, path)
             if reindexed_from_cache:
                 frame = pd.read_parquet(path)
-            elif batch_id == "alpha158": frame = expression_batch(symbols, names, resolve(config["alpha158_inventory"]), config["start_date"], config["end_date"], D)
-            elif batch_id == "alpha360": frame = expression_batch(symbols, names, resolve(config["alpha360_inventory"]), config["start_date"], config["end_date"], D)
+            elif source == "alpha158": frame = expression_batch(symbols, names, resolve(config["alpha158_inventory"]), config["start_date"], config["end_date"], D)
+            elif source == "alpha360": frame = expression_batch(symbols, names, resolve(config["alpha360_inventory"]), config["start_date"], config["end_date"], D)
             else:
                 if raw is None: raw = load_raw(config, symbols, runtime, D)
-                if batch_id == "project_basic": frame = add_basic_factors(raw.copy())[["datetime", "instrument", *names]]
-                elif batch_id == "ta": frame = ta_batch(raw, names, resolve(config["ta_source_path"]))
+                if source == "project_basic": frame = add_basic_factors(raw.copy())[["datetime", "instrument", *names]]
+                elif source == "ta": frame = ta_batch(raw, names, resolve(config["ta_source_path"]))
                 else: frame = alpha101_batch(raw, names, config, runtime)
             frame = frame.loc[pd.to_datetime(frame["datetime"]).between(pd.Timestamp(config["start_date"]), pd.Timestamp(config["end_date"]))]
             frame = filter_to_pit_intervals(frame, intervals)
             frame = pit_keys.merge(frame, on=["datetime", "instrument"], how="left", validate="one_to_one")
             atomic_parquet(frame, path)
-            row = {"batch_id": batch_id, "status": "pass", "factor_count": len(names), "row_count": len(frame), "instrument_count": frame["instrument"].nunique(), "start_date": frame["datetime"].min(), "end_date": frame["datetime"].max(), "input_hash": input_hash, "output_path": path.as_posix(), "output_sha256": file_sha256(path), "attempts": attempts, "runtime_seconds": time.perf_counter() - started, "cache_hit": False, "reindexed_from_cache": reindexed_from_cache, "key_schema_version": 2, "error": ""}
+            row = {"batch_id": batch_id, "source": source, "status": "pass", "factor_count": len(names), "row_count": len(frame), "instrument_count": frame["instrument"].nunique(), "start_date": frame["datetime"].min(), "end_date": frame["datetime"].max(), "input_hash": input_hash, "output_path": path.as_posix(), "output_sha256": file_sha256(path), "output_size_bytes": path.stat().st_size, "attempts": attempts, "runtime_seconds": time.perf_counter() - started, "cache_hit": False, "reindexed_from_cache": reindexed_from_cache, "key_schema_version": 2, "error": ""}
         except Exception as exc:
-            row = {"batch_id": batch_id, "status": "failed", "factor_count": len(names), "row_count": 0, "instrument_count": 0, "start_date": "", "end_date": "", "input_hash": input_hash, "output_path": path.as_posix(), "output_sha256": "", "attempts": attempts, "runtime_seconds": time.perf_counter() - started, "cache_hit": False, "reindexed_from_cache": False, "key_schema_version": 2, "error": f"{type(exc).__name__}: {exc}"}
+            row = {"batch_id": batch_id, "source": source, "status": "failed", "factor_count": len(names), "row_count": 0, "instrument_count": 0, "start_date": "", "end_date": "", "input_hash": input_hash, "output_path": path.as_posix(), "output_sha256": "", "output_size_bytes": 0, "attempts": attempts, "runtime_seconds": time.perf_counter() - started, "cache_hit": False, "reindexed_from_cache": False, "key_schema_version": 2, "error": f"{type(exc).__name__}: {exc}"}
             failures.append(row.copy())
         batch_rows.append(row)
         pd.DataFrame(batch_rows).to_csv(state_path, index=False, encoding="utf-8-sig")
@@ -179,7 +208,7 @@ def main() -> int:
     coverage = pd.DataFrame(coverage_rows)
     factor_count = int(success["factor_count"].sum()) if not success.empty else 0
     contracts = pd.DataFrame([
-        contract_row("factor_catalog_count", len(entries) == 80, len(entries), 80),
+        contract_row("factor_catalog_count", len(entries) == int(config.get("expected_factor_count", 80)), len(entries), int(config.get("expected_factor_count", 80))),
         contract_row("all_batches_pass", failures == [], len(failures), 0),
         contract_row("all_factors_materialized", factor_count == len(entries), factor_count, len(entries)),
         contract_row("pit_universe_applied", bool(not success.empty and success["row_count"].gt(0).all()), universe_manifest["universe_artifact_id"], "nonempty PIT-filtered batches"),
@@ -196,7 +225,7 @@ def main() -> int:
         coverage.to_csv(publisher.path("factor_coverage.csv"), index=False, encoding="utf-8-sig")
         (sample if sample is not None else pd.DataFrame()).to_csv(publisher.path("factor_matrix_sample.csv"), index=False, encoding="utf-8-sig")
         pd.DataFrame(failures, columns=batch.columns).to_csv(publisher.path("failure_inventory.csv"), index=False, encoding="utf-8-sig")
-        publisher.path("schema.json").write_text(json.dumps({"keys": ["datetime", "instrument"], "factors": sorted(entry.name for entry in entries), "partitioning": "source adapter", "runtime_committed": False}, indent=2) + "\n", encoding="utf-8")
+        publisher.path("schema.json").write_text(json.dumps({"keys": ["datetime", "instrument"], "factors": sorted(entry.name for entry in entries), "partitioning": "bounded source batches" if config.get("batch_plan") else "source adapter", "runtime_committed": False}, indent=2) + "\n", encoding="utf-8")
         publisher.path("factor_matrix_report.md").write_text(f"# Full-Research Feature Matrix V1\n\n- Status: `{'pass' if ready else 'blocked'}`\n- Factors: `{factor_count}` / `{len(entries)}`\n- PIT instruments in source intervals: `{len(symbols)}`\n- Passed batches: `{len(success)}` / `{len(batch)}`\n- Runtime partitions are hash-addressed and intentionally excluded from Git.\n", encoding="utf-8")
         files = [publisher.path(name) for name in CONTROLLED if name != "artifact_manifest.json"]
         factor_frame_id = "factor-frame:" + canonical_hash(success[["batch_id", "output_sha256"]].to_dict("records"))

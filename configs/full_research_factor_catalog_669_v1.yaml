@@ -1,0 +1,24 @@
+schema_version: 1
+profile: full_research
+profile_name: full_research
+profile_type: full_research
+research_run_family_id: full_research_factor_669_v1
+target_factor_count: 669
+maximum_partition_factor_count: 25
+sources:
+  - source_name: alpha158
+    catalog: outputs/factor_catalog_alpha158_v1/alpha158_catalog_full158_runnable.yaml
+    expected_count: 155
+  - source_name: alpha360
+    catalog: outputs/factor_catalog_alpha360_v1/alpha360_catalog_promoted358.yaml
+    expected_count: 358
+  - source_name: ta
+    catalog: outputs/ta_factor_adapter_v1/smoke/ta_factor_catalog_promoted77.yaml
+    expected_count: 77
+  - source_name: alpha101
+    catalog: outputs/alpha101_factor_adapter_v1/batch82/alpha101_factor_catalog_promoted64.yaml
+    expected_count: 64
+  - source_name: project_basic
+    catalog: factor_research/factor_catalog.yaml
+    expected_count: 15
+output_dir: outputs/full_research_factor_catalog_669_v1/current

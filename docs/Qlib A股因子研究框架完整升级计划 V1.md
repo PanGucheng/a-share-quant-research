@@ -4,7 +4,7 @@
 >
 > 2026-07-13 增补：[V1.1 门禁、Profile 与 Lineage 硬化计划](./FACTOR_VALIDATION_HARDENING_V1_1.md) 修正阶段 5、8、10、11 的收尾语义。涉及 pre/post-model diagnostics、能力门禁、Profile 和 lineage 时，以 V1.1 为准。
 >
-> 2026-07-20 进度：PR #1 已合并并标记 `v0.1-factor-validation-foundation`；PR #2 Qlib Exchange integration 已完成实现与本地验收。三个核心 execution readiness 为 true，完整 reference readiness 因 PIT universe/权威历史 tradability 缺口保持 false。下一步严格进入 50–100 因子 full-research 试运行；仍不得跳到 669 因子或模型训练。实施证据见 [Qlib Exchange Integration V1](./QLIB_EXCHANGE_INTEGRATION_V1.md)。
+> 2026-07-20 进度：PR #1–#3 已合并；PR #4 的 669 因子全量运行已完成本地实施与证据门禁。30/30 矩阵分区、669 因子验证链、16 因子冻结 allowlist 和统一 Qlib Exchange 均通过关键 contract，`core_model_ready=true`、`pr5_model_training_ready=true`、`model_training_started=false`。权威历史 tradability capability 仍保持 false。实施证据见 [669 因子 Full-Research 全量运行 V1](./FULL_RESEARCH_669_RUN_V1.md)；下一步严格按透明基线、Ridge、Elastic Net、LightGBM 顺序进入 PR #5。
 
 ## 一、项目背景
 

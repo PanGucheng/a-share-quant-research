@@ -1,0 +1,35 @@
+{
+  "artifact_id": "full_research_daily_ic_v1:b73d32984d0a2204edc1d55b9b56e24d174f15ee90bb800caad2ea3561166e4a",
+  "artifact_status": "pass",
+  "blocked_reason": "",
+  "code_commit_sha": "300a1dfe86c7f33568aa972508762f6912f5fd79",
+  "code_diff_sha256": "",
+  "code_dirty": false,
+  "config_sha256": "7005e08ec3688210f0ce0a85fcd330e6c767aa8353bc485eec6a93761af54228",
+  "created_at": "2026-07-20T13:12:24.986969+00:00",
+  "end_date": "2026-06-09",
+  "factor_catalog_id": "factor-catalog:8c031a09892fc915ac45201942f563925a9bab617e60fce5ecbbe274a51a02e1",
+  "factor_frame_id": "factor-frame:839242fe9d004216cf468a48cc44ad32584b9fe4a139c8e0644358c0f03d8d78",
+  "input_artifact_ids": [
+    "full_research_feature_matrix_v1:b7cde3ebe279b91a2863147312128240a22677568648433db683b767825ef384",
+    "full_research_labels_v1:eb21e11cd5a7e3b99722fbcc4c67b012680b7e9ba09bd0d885c984fc60b4fb3e"
+  ],
+  "lineage_status": "complete",
+  "missing_lineage_fields": [],
+  "output_file_hashes": {
+    "contract_status.csv": "6315c90b106ed69f6d4f87b5c914aadb987e6c229f5677b8f5d48645040cbd6e",
+    "daily_ic_report.md": "a8edef96987b94a9267eb6167353de8b00ed64a4b1d2e37ba58cc9be3a748ed5",
+    "daily_rank_ic.csv": "5aacdda000574f423c5b230732d06d4adf123ca80c54c699972c9b83073b8803",
+    "factor_ic_summary.csv": "c9d055582d4fa28cc2c827aca12f57eaeee4ac0fac638144e8941dea8571da23"
+  },
+  "producer_run_id": "20260720T131224Z-b89869d0",
+  "profile_name": "full_research",
+  "profile_type": "full_research",
+  "research_run_family_id": "full_research_factor_669_v1",
+  "run_id": "20260720T131224Z-b89869d0",
+  "schema_version": 2,
+  "split_manifest_id": null,
+  "stage_id": "full_research_daily_ic_v1",
+  "start_date": "2021-02-01",
+  "universe_artifact_id": "universe:10287ec42be03cb525de034b1bea1b53fa5da11cda5de4b5ed8f1f2ad1dcdad5"
+}

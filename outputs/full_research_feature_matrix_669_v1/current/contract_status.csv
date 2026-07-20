@@ -1,0 +1,8 @@
+﻿check_name,status,observed_value,required_value,severity,reason
+factor_catalog_count,pass,669,669,critical,
+all_batches_pass,pass,0,0,critical,
+all_factors_materialized,pass,669,669,critical,
+pit_universe_applied,pass,universe:10287ec42be03cb525de034b1bea1b53fa5da11cda5de4b5ed8f1f2ad1dcdad5,nonempty PIT-filtered batches,critical,
+complete_key_grid_aligned,pass,"[2588000, 2588000, 2588000, 2588000, 2588000, 2588000, 2588000, 2588000, 2588000, 2588000, 2588000, 2588000, 2588000, 2588000, 2588000, 2588000, 2588000, 2588000, 2588000, 2588000, 2588000, 2588000, 2588000, 2588000, 2588000, 2588000, 2588000, 2588000, 2588000, 2588000]",2588000,critical,
+batch_output_hashes_present,pass,30,30,critical,
+resume_metadata_present,pass,"['batch_id', 'source', 'status', 'factor_count', 'row_count', 'instrument_count', 'start_date', 'end_date', 'input_hash', 'output_path', 'output_sha256', 'output_size_bytes', 'attempts', 'runtime_seconds', 'cache_hit', 'reindexed_from_cache', 'key_schema_version', 'error']",input_hash/attempts/cache_hit/key_schema_version,critical,

@@ -126,6 +126,8 @@ tmp/reference_repos/techfactor
 
 ## Next Work
 
+> 2026-07-20 PR #4 实施完成：669 runnable 因子按 Alpha158 155、Alpha360 358、TA 77、Alpha101 64、基础因子 15 冻结为 30 批；7.36 GB PIT 矩阵首轮完整物化并以 30/30 cache hit 完成约 32 秒复跑。669 因子 daily Rank IC、3 段 purged folds、2,007 hypotheses FDR、稳定性 65 stable_core / 518 conditional / 86 monitor、65→16 聚类代表、三类透明 score 和 Qlib Exchange 均已完成。11 个 evidence stages 的输出哈希、clean-code、lineage 和关键 contract 通过，lineage issues=0。当前 `feature_allowlist_frozen=true`、`core_model_ready=true`、`pr5_model_training_ready=true`、`model_training_started=false`；权威历史 tradability capability 保持 false。下一步使用冻结的 16 因子按 Equal Weight、Stability Weight、Ridge、Elastic Net、LightGBM 顺序训练与比较。
+
 > 2026-07-20 PR #3 实施完成：在计算 IC/收益前按来源和类别冻结 80 因子，完成 65 月 PIT Top2000 universe、5 个分区各 2,588,000 PIT keys 的可恢复矩阵、`label_20d_t1`、80 因子 daily Rank IC、3 段 purged walk-forward、240 hypotheses FDR、滚动稳定性、12→9 聚类代表、三类透明 score 和三段 Qlib Exchange。11 个 evidence stages 的配置/输出哈希、clean-code、lineage 和关键合同均通过，lineage issues=0。当前 `full_research_trial_ready=true`、`pr4_scale_up_ready=true`、`model_training_started=false`；历史停牌/方向性涨跌停仍由代理字段推导，所以 authoritative tradability capability 保持 false。下一步只扩大到 669 因子，不在同一 PR 训练模型。
 
 > 2026-07-20 PR #2 实施完成：固定 Qlib commit `d5379c5` 的 Exchange/Executor 链、signal/market adapter、原始与复权单位边界、A 股整手/费用/停牌/方向性涨跌停/T+1/参与率、target-delta、标准化输出、Manifest v2 和独立 CI 已落地。合成 Qlib/reference 对账 unknown difference=0；30 股票、80 交易日真实样本关键执行 contract 全部通过。当前 `qlib_exchange_infrastructure_ready=true`、`qlib_exchange_synthetic_ready=true`、`execution_reconciliation_ready=true`、`qlib_exchange_reference_ready=false`、`model_training_started=false`。reference blocker 为非 PIT 样本 universe 和非权威历史方向性可交易标签。下一阶段为 PR #3 的 50–100 因子 full-research 特征矩阵试运行，不运行 669 因子、不训练模型。

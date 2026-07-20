@@ -1,0 +1,10 @@
+﻿split_id,fold,sample_dates
+split_001,test,120
+split_001,train,688
+split_001,validation,77
+split_002,test,124
+split_002,train,808
+split_002,validation,77
+split_003,test,124
+split_003,train,926
+split_003,validation,83

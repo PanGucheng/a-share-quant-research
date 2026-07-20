@@ -1,0 +1,5 @@
+﻿check_name,status,observed_value,required_value,severity,reason
+eligible_factor_count,pass,65,>0,critical,Current eligible stability inputs.
+every_selected_factor_has_cluster,pass,65,65,critical,Every eligible factor requires a cluster.
+every_cluster_has_representative,pass,16,16,critical,Every cluster requires one representative.
+default_combination_duplicate_cluster_votes,pass,0,0,critical,One default vote per cluster.

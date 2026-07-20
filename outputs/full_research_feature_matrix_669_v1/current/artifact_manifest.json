@@ -1,0 +1,38 @@
+{
+  "artifact_id": "full_research_feature_matrix_v1:b7cde3ebe279b91a2863147312128240a22677568648433db683b767825ef384",
+  "artifact_status": "pass",
+  "blocked_reason": "",
+  "code_commit_sha": "cae3197cc4b1ae2dc8b9252e1b36ac3b03104ae7",
+  "code_diff_sha256": "",
+  "code_dirty": false,
+  "config_sha256": "8dc5fea5e18982d6b52e4847c5d73e32dc42873f8d014d797e8f03762cd42fea",
+  "created_at": "2026-07-20T12:56:57.899865+00:00",
+  "end_date": "2026-06-09",
+  "factor_catalog_id": "factor-catalog:8c031a09892fc915ac45201942f563925a9bab617e60fce5ecbbe274a51a02e1",
+  "factor_frame_id": "factor-frame:839242fe9d004216cf468a48cc44ad32584b9fe4a139c8e0644358c0f03d8d78",
+  "input_artifact_ids": [
+    "full_research_factor_catalog_669_v1:4916ff89ed2853a2f69d05ede489d9ad44036c3424ddd384801061968b7efc44",
+    "point_in_time_universe_v1:fd474dd597b3a967d9af3d8ae4dd47e086da0d30e8387e2ac2df622aa481d07f"
+  ],
+  "lineage_status": "complete",
+  "missing_lineage_fields": [],
+  "output_file_hashes": {
+    "batch_manifest.csv": "6b92ab5b63b73366f827d23d9aa5827bc3a0d6962f32e44674fd35109cc19cc0",
+    "contract_status.csv": "471e85d5715ea93b4908b242166705fa3e26e91d8b27df316ac7cc0577950c73",
+    "factor_coverage.csv": "9dc1ef0b8c1de199e562edb2029f19a031459f980a41034b2a379f5aafbe361a",
+    "factor_matrix_report.md": "c39730f9db96e0348bc924e331888c565a376ceac5479e937d52176fbbc3388b",
+    "factor_matrix_sample.csv": "1182b60651c8794c1871547b56daa1b368aaa104a2f73c6ec091be3acdf1141e",
+    "failure_inventory.csv": "08ccf5d457ce20ae6ec94fd8411f24e0b211a6cb2d514d4b6dbf7686259dad96",
+    "schema.json": "30b31800b6c953c93a945256607b57d136e9e596f4f61fc27ef656eb5e7df1d0"
+  },
+  "producer_run_id": "20260720T125657Z-e3273999",
+  "profile_name": "full_research",
+  "profile_type": "full_research",
+  "research_run_family_id": "full_research_factor_669_v1",
+  "run_id": "20260720T125657Z-e3273999",
+  "schema_version": 2,
+  "split_manifest_id": null,
+  "stage_id": "full_research_feature_matrix_v1",
+  "start_date": "2021-02-01",
+  "universe_artifact_id": "universe:10287ec42be03cb525de034b1bea1b53fa5da11cda5de4b5ed8f1f2ad1dcdad5"
+}

@@ -33,6 +33,7 @@ def main() -> int:
     labels = pd.read_parquet(resolve(config["label_runtime"]))
     label_name = str(config["label_name"])
     batches = pd.read_csv(resolve(config["feature_batch_manifest"]))
+    expected_factor_count = int(config.get("expected_factor_count", 80))
     rows: list[dict[str, object]] = []
     for batch in batches.itertuples(index=False):
         frame = pd.read_parquet(resolve(batch.output_path))
@@ -42,11 +43,14 @@ def main() -> int:
         work = frame.copy()
         work[label_name] = labels[label_name].to_numpy()
         for date, group in work.groupby("datetime", sort=True):
+            label_valid = group[label_name].notna()
             label_rank = group[label_name].rank(method="average")
+            factor_ranks = group[factors].where(label_valid, axis=0).rank(method="average")
+            counts = group[factors].notna().mul(label_valid, axis=0).sum().astype(int)
+            correlations = factor_ranks.corrwith(label_rank)
             for factor in factors:
-                valid = group[factor].notna() & group[label_name].notna()
-                count = int(valid.sum())
-                ic = group.loc[valid, factor].rank(method="average").corr(label_rank.loc[valid]) if count >= int(config["minimum_cross_section"]) else np.nan
+                count = int(counts[factor])
+                ic = float(correlations[factor]) if count >= int(config["minimum_cross_section"]) else np.nan
                 rows.append({"datetime": date, "batch_id": batch.batch_id, "factor": factor, "rank_ic": ic, "cross_section_count": count})
     daily = pd.DataFrame(rows)
     summary = daily.groupby(["batch_id", "factor"], as_index=False).agg(ic_days=("rank_ic", "count"), mean_rank_ic=("rank_ic", "mean"), std_rank_ic=("rank_ic", "std"), min_cross_section=("cross_section_count", "min"), median_cross_section=("cross_section_count", "median"))
@@ -54,7 +58,7 @@ def main() -> int:
     valid_daily = daily.loc[daily["rank_ic"].notna()]
     minimum_valid_cross_section = int(valid_daily["cross_section_count"].min()) if not valid_daily.empty else 0
     contract = pd.DataFrame([
-        contract_row("factor_count", summary["factor"].nunique() == 80, summary["factor"].nunique(), 80),
+        contract_row("factor_count", summary["factor"].nunique() == expected_factor_count, summary["factor"].nunique(), expected_factor_count),
         contract_row("daily_ic_unique", not daily.duplicated(["datetime", "factor"]).any(), int(daily.duplicated(["datetime", "factor"]).sum()), 0),
         contract_row("minimum_ic_days", bool(summary["ic_days"].ge(int(config["minimum_ic_days"])).all()), int(summary["ic_days"].min()), config["minimum_ic_days"]),
         contract_row("minimum_cross_section_on_ic_days", minimum_valid_cross_section >= int(config["minimum_cross_section"]), minimum_valid_cross_section, config["minimum_cross_section"]),
