@@ -21,10 +21,12 @@ from research_validation.stage_output import StageOutputPublisher  # noqa: E402
 
 BASE_OUTPUTS = [
     "artifact_manifest.json", "contract_status.csv", "daily_accounting.csv", "execution_report.md",
-    "execution_summary.csv", "fills.csv", "input_artifacts.csv", "orders.csv", "partial_fills.csv",
-    "positions.csv", "rejected_orders.csv", "resolved_config.json", "signal_sample.csv",
-    "tradability_diagnostics.csv", "transaction_costs.csv",
+    "execution_summary.csv", "execution_artifacts.csv", "fills_sample.csv", "input_artifacts.csv",
+    "orders_sample.csv", "partial_fills_sample.csv", "positions_sample.csv", "rejected_orders.csv",
+    "resolved_config.json", "signal_sample.csv", "tradability_diagnostics.csv", "transaction_costs_sample.csv",
 ]
+DETAIL_TABLES = ["orders", "fills", "partial_fills", "positions", "transaction_costs"]
+LEGACY_ROOT_OUTPUTS = [f"{name}.csv" for name in DETAIL_TABLES]
 
 
 def resolve(value: str | Path) -> Path:
@@ -60,7 +62,7 @@ def main() -> int:
     C.kernels = 1
     C.joblib_backend = "sequential"
 
-    controlled = list(BASE_OUTPUTS)
+    controlled = list(BASE_OUTPUTS) + LEGACY_ROOT_OUTPUTS + [f"runtime/{name}.parquet" for name in DETAIL_TABLES]
     for split_id in splits["split_id"]:
         controlled.extend([f"runtime/{split_id}_signal.parquet", f"runtime/{split_id}_market.parquet"])
     output_dir = resolve(config["output_dir"])
@@ -157,8 +159,16 @@ def main() -> int:
             contract_row("tradability_source_complete", bool(config["tradability_source_complete"]), config["tradability_source_complete"], True, "volume/change proxies are not authoritative historical suspension and directional limit labels", "capability"),
         ])
         operational_ready = not contract.loc[contract["severity"].eq("critical"), "status"].eq("blocked").any()
-        for name in ["orders", "fills", "rejected_orders", "partial_fills", "transaction_costs", "daily_accounting", "positions", "execution_summary"]:
-            combined[name].to_csv(publisher.path(f"{name}.csv"), index=False, encoding="utf-8-sig")
+        artifact_rows: list[dict[str, object]] = []
+        for name in DETAIL_TABLES:
+            runtime = publisher.path(f"runtime/{name}.parquet")
+            combined[name].to_parquet(runtime, index=False)
+            artifact_rows.append({"table": name, "rows": len(combined[name]), "sha256": sha256_file(runtime)})
+            combined[name].head(100).to_csv(publisher.path(f"{name}_sample.csv"), index=False, encoding="utf-8-sig")
+        combined["rejected_orders"].to_csv(publisher.path("rejected_orders.csv"), index=False, encoding="utf-8-sig")
+        combined["daily_accounting"].to_csv(publisher.path("daily_accounting.csv"), index=False, encoding="utf-8-sig")
+        combined["execution_summary"].to_csv(publisher.path("execution_summary.csv"), index=False, encoding="utf-8-sig")
+        pd.DataFrame(artifact_rows).to_csv(publisher.path("execution_artifacts.csv"), index=False, encoding="utf-8-sig")
         pd.DataFrame(input_rows).to_csv(publisher.path("input_artifacts.csv"), index=False, encoding="utf-8-sig")
         pd.concat(signal_samples, ignore_index=True).to_csv(publisher.path("signal_sample.csv"), index=False, encoding="utf-8-sig")
         pd.concat(tradability_rows, ignore_index=True).to_csv(publisher.path("tradability_diagnostics.csv"), index=False, encoding="utf-8-sig")
