@@ -7,11 +7,10 @@ A 股量化研究工程。它最初用于复现官方 LightGBM + Alpha158 baseli
 
 ## 当前方向
 
-> **当前里程碑：**Qlib Exchange 基础设施、合成执行和 reference engine 对账已经
-> 就绪。30 只股票、80 个交易日的本地真实小样本通过全部执行关键门禁；由于仍缺
-> 权威 PIT universe 和历史方向性可交易标签，完整 reference readiness 按事实保持
-> blocked。尚未运行 669 因子、也未启动模型训练；下一阶段是 50–100 因子
-> full-research 特征矩阵试运行。
+> **当前里程碑：**分层冻结的 80 因子 full-research 试运行已经完成。真实 PIT
+> universe、分区特征矩阵、t+1 标签、purged/FDR/稳定性链、透明 score 和三段 Qlib
+> Exchange 执行均通过关键门禁；历史方向性可交易标签仍是代理数据。尚未运行
+> 669 因子、也未启动模型训练；下一阶段是只做规模化的 669 因子全量运行。
 
 项目坚持一个原则：不替换 Qlib 主线，而是在 Qlib 外围补齐研究工程能力。
 
@@ -24,7 +23,7 @@ A 股量化研究工程。它最初用于复现官方 LightGBM + Alpha158 baseli
 - **因子筛选模块**：把因子研究输出转成可解释的候选看板，再交给后续组合测试。
 - **Qlib execution 层**：固定版本的 Exchange/Executor adapter、A 股约束、标准化 artifact、合成精确对账和本地真实小样本均已落地。
 
-当前优先级是先完成 50–100 因子的 full-research 特征矩阵试运行；必须复用已验证的 Qlib 执行语义，再扩大到 669 因子，最后才训练模型。
+当前优先级是把已经验证的试运行语义扩大到 669 个 runnable 因子；只有全量运行完成并冻结 feature allowlist 后，才进入模型训练。
 
 ## 目录结构
 
