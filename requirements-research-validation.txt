@@ -8,3 +8,4 @@ statsmodels>=0.14,<0.15
 pandera[pandas]>=0.32,<0.33
 PyYAML>=6,<7
 pytest>=9,<10
+pyarrow>=18,<24

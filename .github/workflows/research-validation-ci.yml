@@ -27,6 +27,7 @@ jobs:
           "pandera[pandas]>=0.32,<0.33"
           "PyYAML>=6,<7"
           "pytest>=9,<10"
+          "pyarrow>=18,<24"
       - name: Run complete research validation test suite
         shell: pwsh
         run: python -m pytest -q
