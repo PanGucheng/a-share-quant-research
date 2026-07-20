@@ -13,6 +13,12 @@ Chinese documentation is available in [README.zh-CN.md](README.zh-CN.md).
 
 ## Current Direction
 
+> **Current milestone:** research-validation infrastructure is ready, while the
+> real-data reference pipeline is intentionally blocked because no factor currently
+> passes the hardened eligibility gate. Qlib Exchange integration, the 669-factor
+> full run, and model training have not started. The next isolated PR integrates
+> Qlib Exchange and reconciles it with the reference execution engine.
+
 The project keeps Qlib as the main data and model backbone while adding independent
 research modules around it:
 
@@ -26,11 +32,12 @@ research modules around it:
   correlation, monotonicity, slices, and neutralization diagnostics.
 - **Factor screening**: converts factor research outputs into an explainable
   candidate board before portfolio testing.
-- **Future portfolio backtest layer**: planned downstream consumer of screened
-  factor candidates.
+- **Reference execution layer**: a contract-tested prototype that propagates the
+  current blocked state honestly; formal Qlib Exchange execution is the next stage.
 
-The current development priority is to improve the factor research and screening
-toolchain before adding more models or strategy tuning.
+The current development priority is to make execution semantics trustworthy through
+Qlib Exchange integration before expanding the full-research factor matrix or
+training models.
 
 ## Repository Layout
 

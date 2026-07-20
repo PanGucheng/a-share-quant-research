@@ -27,29 +27,9 @@ jobs:
           "pandera[pandas]>=0.32,<0.33"
           "PyYAML>=6,<7"
           "pytest>=9,<10"
-      - name: Run schema and configuration tests
+      - name: Run complete research validation test suite
         shell: pwsh
-        run: >-
-          python -m pytest
-          tests/test_output_schemas.py
-          tests/test_config_parsing.py
-          tests/test_imports.py
-          tests/test_point_in_time_universe.py
-          tests/test_no_future_leakage.py
-          tests/test_purged_split.py
-          tests/test_multiple_testing.py
-          tests/test_rolling_evaluation.py
-          tests/test_factor_clustering.py
-          tests/test_score_construction.py
-          tests/test_portfolio_accounting.py
-          tests/test_trade_constraints.py
-          tests/test_point_in_time_fields.py
-          tests/test_method_comparison_contract.py
-          tests/test_model_selection_leakage.py
-          tests/test_profile_gates.py
-          tests/test_artifact_lineage.py
-          tests/test_model_readiness.py
-          -q
+        run: python -m pytest -q
       - name: Run synthetic contract validator
         shell: pwsh
         run: |

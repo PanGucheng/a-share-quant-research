@@ -5,10 +5,10 @@ profile_type: reference
 output_dir: outputs/factor_validation_baseline_v1/current
 
 environment:
-  project_root: E:/qlib_prj/qlib_baseline
-  python: E:/anaconda_envs/qlib_env/python.exe
-  qlib_source: E:/qlib_prj/qlib_clone
-  qlib_provider: E:/qlib_prj/qlib_data/cn_data_community_20260609_derived
+  project_root: .
+  python: ../../anaconda_envs/qlib_env/python.exe
+  qlib_source: ../qlib_clone
+  qlib_provider: ../qlib_data/cn_data_community_20260609_derived
 
 artifacts:
   - id: toolchain_catalog_summary

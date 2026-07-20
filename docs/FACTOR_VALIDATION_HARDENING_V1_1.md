@@ -38,18 +38,18 @@
 
 | 能力 | 预期 | 含义 |
 | --- | --- | --- |
-| `reference_ready` | `true` | reference 流水线模块可运行，结果只用于接口和 contract 验证 |
+| `reference_ready` | `true`（V1.1 历史目标，已废止） | 该结论已被 V1.1.1 一致性审计推翻；当前兼容字段为 `false` |
 | `full_research_ready` | `false` | 尚无全链路、同 Profile、完整 lineage 的 full-research 产物 |
 | `core_model_ready` | `false` | 尚未满足正式执行与 full-research 核心门禁 |
 | `liquidity_residualized_model_ready` | `false` | V3.39 coverage contract 仍为 `0.1495 < 0.80` |
 | `historical_exposure_model_ready` | `false` | 真实历史行业/市值 PIT 数据仍不可用 |
 | `model_training_started` | `false` | 本轮禁止训练 |
 
-`reference_ready=true` 不得被描述成“完整研究完成”或“允许模型训练”。`blocked` 是有效、可验收的结果，不得通过降低阈值、伪造 lineage 或混用 Profile 消除。
+本节的 `reference_ready=true` 仅保留为 V1.1 修复前历史目标，不是当前状态。当前为 `reference_infrastructure_ready=true`、`reference_pipeline_ready=false`、`reference_ready=false`。`blocked` 是有效、可验收的结果，不得通过降低阈值、伪造 lineage 或混用 Profile 消除。
 
 ### 2.1 实施结果（2026-07-13）
 
-V1.1 已按冻结边界实施，实际 readiness 与目标状态一致：
+以下是 V1.1 当时记录、后来被 V1.1.1 审计推翻的历史 readiness，不得作为当前门禁证据：
 
 ```text
 reference_ready = true

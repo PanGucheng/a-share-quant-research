@@ -145,7 +145,7 @@ V1.1 冻结审计：
 - 当前稳定性仍读取旧 `liquid2000_open_source_eval`；4 个 `stable_core` 的 `coverage_min` 均约为 `0.074074`，不能代表 full-research 稳定性。
 - 当前方法日历为 821 日与 486 日两组，公共有效日期为 486 日、差异日期为 335 日；V1.1 后排名只使用 common-period。
 - AKShare 历史行业/市值缺口只应阻塞 `historical_exposure_model_ready`，不得作为所有 core model 的全局阻塞。
-- V1.1 目标状态为 `reference_ready=true`，其余 full/core/可选模型能力和 `model_training_started` 均为 false。
+- V1.1 当时的历史目标状态为 `reference_ready=true`，该结论已被 V1.1.1 审计推翻；当前字段为 `reference_infrastructure_ready=true`、`reference_pipeline_ready=false`、`reference_ready=false`，其余 full/core/可选模型能力和 `model_training_started` 均为 false。
 
 - 升级阶段 0 已完成：冻结 669 runnable / 499 new-source runnable、679 screening/judgement rows、342 research candidates、328 probes 和 V3.39 `0.1495 < 0.80` blocker；现有核心依赖与轻量命令检查通过。
 - 升级阶段 1 已完成实现：Pandera DataFrame contracts 覆盖 factor、label、tradability、universe interval、screening 和 judgement；真实 compact output audit 4/4 pass，旧 label/universe 两项兼容缺口显式 warning，新输出不得继承例外。
