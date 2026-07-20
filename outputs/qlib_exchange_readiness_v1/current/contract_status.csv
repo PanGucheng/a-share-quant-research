@@ -1,0 +1,6 @@
+﻿check_name,status,observed_value,required_value,severity,reason
+qlib_exchange_infrastructure_ready,pass,True,True,critical,"Pinned environment and all four evidence manifests are present, current and hash-valid."
+qlib_exchange_synthetic_ready,pass,True,True,critical,Synthetic Qlib execution critical contracts pass.
+execution_reconciliation_ready,pass,True,True,critical,Reference/Qlib exact-parity scenario passes with zero unknown differences.
+qlib_exchange_reference_ready,blocked,False,True,capability,Requires authoritative PIT universe and historical directional tradability labels; current local sample uses disclosed proxies.
+model_training_started,pass,False,False,critical,Model training remains outside PR #2.

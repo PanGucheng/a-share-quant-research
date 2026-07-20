@@ -153,6 +153,10 @@ can_buy, can_sell, limit_up, limit_down, suspended,
 factor, change, execution_price
 ```
 
+项目 schema 中 price 为原始价格、volume/订单/持仓为原始股数；进入 Qlib 时按
+`adjusted_price = original_price * factor`、`adjusted_amount = raw_shares / factor`
+转换，离开 Qlib 后还原。参与率始终以原始股数复核，避免把复权数量与原始成交量混用。
+
 规则固定为：
 
 - 日期为无时区的中国交易日；
@@ -196,17 +200,17 @@ unknown
 
 ## 8. Readiness 结论
 
-本审计后的初始状态：
+审计完成时的初始状态已由后续实现提升为：
 
 ```text
 qlib_environment_resolved = true
-qlib_exchange_infrastructure_ready = false
-qlib_exchange_synthetic_ready = false
-execution_reconciliation_ready = false
+qlib_exchange_infrastructure_ready = true
+qlib_exchange_synthetic_ready = true
+execution_reconciliation_ready = true
 qlib_exchange_reference_ready = false
 ```
 
-前三个 execution readiness 只有在代码、合成场景和对账 contract 完成后才能提升。真实 reference readiness 还要求小规模真实数据具备完整的方向性 tradability 证据。
+前三个 execution readiness 已由代码、合成场景和零 unknown 对账 contract 证明。30 股票真实小样本的执行关键契约已通过；完整 reference readiness 仍要求 PIT universe 和权威历史方向性 tradability 证据。
 
 ## 9. 实施约束
 

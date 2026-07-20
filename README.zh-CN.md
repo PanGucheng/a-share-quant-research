@@ -7,10 +7,11 @@ A 股量化研究工程。它最初用于复现官方 LightGBM + Alpha158 baseli
 
 ## 当前方向
 
-> **当前里程碑：**研究验证基础设施已经就绪；由于目前没有因子通过硬化后的
-> eligibility 门禁，真实 reference pipeline 按设计保持 blocked。项目尚未接入
-> 正式 Qlib Exchange、尚未运行 669 因子全量任务、也未启动模型训练。下一独立
-> PR 只负责 Qlib Exchange 集成及其与 reference execution engine 的语义对账。
+> **当前里程碑：**Qlib Exchange 基础设施、合成执行和 reference engine 对账已经
+> 就绪。30 只股票、80 个交易日的本地真实小样本通过全部执行关键门禁；由于仍缺
+> 权威 PIT universe 和历史方向性可交易标签，完整 reference readiness 按事实保持
+> blocked。尚未运行 669 因子、也未启动模型训练；下一阶段是 50–100 因子
+> full-research 特征矩阵试运行。
 
 项目坚持一个原则：不替换 Qlib 主线，而是在 Qlib 外围补齐研究工程能力。
 
@@ -21,9 +22,9 @@ A 股量化研究工程。它最初用于复现官方 LightGBM + Alpha158 baseli
 - **可交易性标签层**：把流动性、数据质量和交易约束转成统一标签。
 - **因子研究模块**：在数据质量和可交易性过滤之后，评价 IC、Rank IC、ICIR、分组收益、换手率、覆盖率、缺失率、相关性、单调性、切片稳定性和中性化效果。
 - **因子筛选模块**：把因子研究输出转成可解释的候选看板，再交给后续组合测试。
-- **Reference execution 层**：已有经过契约测试的原型，并能真实传播当前 blocked 状态；正式 Qlib Exchange execution 是下一阶段。
+- **Qlib execution 层**：固定版本的 Exchange/Executor adapter、A 股约束、标准化 artifact、合成精确对账和本地真实小样本均已落地。
 
-当前优先级是先通过 Qlib Exchange 集成让执行语义可信，再扩大 full-research 因子矩阵，最后才训练模型。
+当前优先级是先完成 50–100 因子的 full-research 特征矩阵试运行；必须复用已验证的 Qlib 执行语义，再扩大到 669 因子，最后才训练模型。
 
 ## 目录结构
 

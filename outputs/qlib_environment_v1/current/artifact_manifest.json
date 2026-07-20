@@ -1,0 +1,33 @@
+{
+  "artifact_id": "qlib_environment_v1:9fb963c45740b9a1eef36f32d703494eb446513f7857eec3d7ca9acbb3711983",
+  "artifact_status": "pass",
+  "blocked_reason": "",
+  "code_commit_sha": "a6f719166e136c3b15107ed530776a5d272bcb64",
+  "code_diff_sha256": "",
+  "code_dirty": false,
+  "config_sha256": "c49c7ba9bd7068b37547af2fcf05ef49be00d3119f8cc525235140b6f4963509",
+  "created_at": "2026-07-20T06:32:35.981860+00:00",
+  "end_date": null,
+  "factor_catalog_id": null,
+  "factor_frame_id": null,
+  "input_artifact_ids": [],
+  "lineage_status": "reference_only",
+  "missing_lineage_fields": [],
+  "output_file_hashes": {
+    "contract_status.csv": "8539d48645727ac84cbd09db823a10f93d1b9fc81bc919e7306b0125f48584cb",
+    "environment_audit.json": "d13419b4d0b9ff05e79c86cdfe8a9269df4497d4eb87805dc0156fadab8c2a87",
+    "environment_report.md": "0d8cc37ff45e28706740361ffbeeaeda602248991ddfb26b093ed69f1ec20c9c",
+    "environment_status.csv": "bbeb9ef259428b0ac8b728fa5dd806989ef148a41e8836e66c09b66f8e0e6eb6",
+    "resolved_config.json": "ea464ef460c332f37840e6222293d74cbc0bf6bf243c27bc9cb8462203af35a4"
+  },
+  "producer_run_id": "20260720T063235Z-9b2dab65",
+  "profile_name": "synthetic",
+  "profile_type": "smoke",
+  "research_run_family_id": "qlib_exchange_v1",
+  "run_id": "20260720T063235Z-9b2dab65",
+  "schema_version": 2,
+  "split_manifest_id": null,
+  "stage_id": "qlib_environment_v1",
+  "start_date": null,
+  "universe_artifact_id": null
+}

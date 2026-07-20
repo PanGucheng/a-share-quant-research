@@ -126,6 +126,8 @@ tmp/reference_repos/techfactor
 
 ## Next Work
 
+> 2026-07-20 PR #2 实施完成：固定 Qlib commit `d5379c5` 的 Exchange/Executor 链、signal/market adapter、原始与复权单位边界、A 股整手/费用/停牌/方向性涨跌停/T+1/参与率、target-delta、标准化输出、Manifest v2 和独立 CI 已落地。合成 Qlib/reference 对账 unknown difference=0；30 股票、80 交易日真实样本关键执行 contract 全部通过。当前 `qlib_exchange_infrastructure_ready=true`、`qlib_exchange_synthetic_ready=true`、`execution_reconciliation_ready=true`、`qlib_exchange_reference_ready=false`、`model_training_started=false`。reference blocker 为非 PIT 样本 universe 和非权威历史方向性可交易标签。下一阶段为 PR #3 的 50–100 因子 full-research 特征矩阵试运行，不运行 669 因子、不训练模型。
+
 > 2026-07-13 V1.1.1 实施完成：manifest v2、output freshness、真实 lineage gate、受控 staging 发布、空选择阻断、semantic consistency、readiness 拆分、common-period NAV 归一化和路径配置化均已落地。活动 representatives/weights 均为 0，score parquet 已移除，execution/pre-model 已预期 blocked；stale stage count=0。当前 `reference_infrastructure_ready=true`、`reference_pipeline_ready=false`、`reference_ready=false`，74 tests 与 11 validators 通过。
 
 > 2026-07-13 V1.1.1 一致性审计：当前最高优先级改为 `REFERENCE_PIPELINE_CONSISTENCY_V1_1_1.md`。复核确认 hardened stability 为 10 个 holdout、0 eligible windows、120 条 selection 全部 false，但活动 clustering 仍有 3 个旧 representatives，score 仍有对应权重和 2,819,616 行 runtime，execution/diagnostics 继续消费旧结果；当前 model gate 也未实际调用 `validate_lineage_chain()`。因此旧 `reference_ready=true` 是假阳性。

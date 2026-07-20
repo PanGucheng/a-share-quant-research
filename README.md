@@ -13,11 +13,12 @@ Chinese documentation is available in [README.zh-CN.md](README.zh-CN.md).
 
 ## Current Direction
 
-> **Current milestone:** research-validation infrastructure is ready, while the
-> real-data reference pipeline is intentionally blocked because no factor currently
-> passes the hardened eligibility gate. Qlib Exchange integration, the 669-factor
-> full run, and model training have not started. The next isolated PR integrates
-> Qlib Exchange and reconciles it with the reference execution engine.
+> **Current milestone:** Qlib Exchange infrastructure, synthetic execution, and
+> reference-engine reconciliation are ready. A 30-stock/80-day local-reference run
+> passes all critical execution contracts, while full reference readiness remains
+> honestly blocked by the lack of an authoritative PIT universe and historical
+> directional tradability labels. The 669-factor run and model training have not
+> started; the next stage is a 50–100 factor full-research matrix trial.
 
 The project keeps Qlib as the main data and model backbone while adding independent
 research modules around it:
@@ -32,12 +33,12 @@ research modules around it:
   correlation, monotonicity, slices, and neutralization diagnostics.
 - **Factor screening**: converts factor research outputs into an explainable
   candidate board before portfolio testing.
-- **Reference execution layer**: a contract-tested prototype that propagates the
-  current blocked state honestly; formal Qlib Exchange execution is the next stage.
+- **Qlib execution layer**: pinned Exchange/Executor adapters, A-share constraints,
+  normalized artifacts, exact synthetic reconciliation, and a local-reference run.
 
-The current development priority is to make execution semantics trustworthy through
-Qlib Exchange integration before expanding the full-research factor matrix or
-training models.
+The current development priority is the 50–100 factor full-research matrix trial.
+It must reuse the validated Qlib execution semantics before any 669-factor run or
+model training.
 
 ## Repository Layout
 

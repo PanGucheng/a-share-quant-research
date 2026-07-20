@@ -1,0 +1,40 @@
+{
+  "artifact_id": "qlib_exchange_readiness_v1:125f8b467d45ef044f9d9e4d250d71faeea0793a470ad8d19d729fd17cde1647",
+  "artifact_status": "pass",
+  "blocked_reason": "",
+  "code_commit_sha": "a6f719166e136c3b15107ed530776a5d272bcb64",
+  "code_diff_sha256": "",
+  "code_dirty": false,
+  "config_sha256": "0d5c34e7b1a8f3b0b3b46ff2fe09973c2cc8da9c7e0a4d434c71b2aeeea84102",
+  "created_at": "2026-07-20T06:33:13.930444+00:00",
+  "end_date": null,
+  "factor_catalog_id": null,
+  "factor_frame_id": "execution-readiness:mixed-evidence",
+  "input_artifact_ids": [
+    "execution_reconciliation_v1:556445b0b70aaab5a4800c8e0a99d49469bd8c863e17e97861dd9395949d363b",
+    "qlib_environment_v1:9fb963c45740b9a1eef36f32d703494eb446513f7857eec3d7ca9acbb3711983",
+    "qlib_exchange_reference_v1:f7d037c3dba1d662e1e6ebb87cc3b2815aea23a88ef81b3ae979a56c41ac1c59",
+    "qlib_exchange_v1:27cf3a4da7d444b0ca67f8135200a42ff3b4ebe3ac62475c7bfd6ecf6ee6fdec"
+  ],
+  "lineage_status": "reference_only",
+  "missing_lineage_fields": [
+    "authoritative_historical_tradability",
+    "pit_universe_artifact"
+  ],
+  "output_file_hashes": {
+    "contract_status.csv": "189036497530497982a4450443b15da55e4a1404736e2036d77ababf6f7935a4",
+    "lineage_issues.csv": "900b3a2e06b62c505ea82e8068c57643f09ea9b0b7767de8be5fd9be03b4643c",
+    "qlib_exchange_readiness_report.md": "7c093f28de1f5e893651d7a1fa838ccdcbe836b7b4795d9506c3b187105149fb",
+    "readiness_summary.csv": "2e552c546a3da4cb13b73876f4f37cfa643edc989eb03e7d0b965050f89deff0"
+  },
+  "producer_run_id": "20260720T063313Z-631a10b2",
+  "profile_name": "local_reference",
+  "profile_type": "reference",
+  "research_run_family_id": "qlib_exchange_v1",
+  "run_id": "20260720T063313Z-631a10b2",
+  "schema_version": 2,
+  "split_manifest_id": null,
+  "stage_id": "qlib_exchange_readiness_v1",
+  "start_date": null,
+  "universe_artifact_id": null
+}

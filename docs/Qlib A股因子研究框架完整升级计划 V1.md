@@ -3,6 +3,8 @@
 > 本文件是升级目标与阶段门禁总纲。可直接执行的任务编号、依赖关系、预计文件、验证顺序和失败停止条件见 [Qlib A股因子研究框架详细实施路线图 V1](./FACTOR_VALIDATION_ROADMAP_V1.md)。
 >
 > 2026-07-13 增补：[V1.1 门禁、Profile 与 Lineage 硬化计划](./FACTOR_VALIDATION_HARDENING_V1_1.md) 修正阶段 5、8、10、11 的收尾语义。涉及 pre/post-model diagnostics、能力门禁、Profile 和 lineage 时，以 V1.1 为准。
+>
+> 2026-07-20 进度：PR #1 已合并并标记 `v0.1-factor-validation-foundation`；PR #2 Qlib Exchange integration 已完成实现与本地验收。三个核心 execution readiness 为 true，完整 reference readiness 因 PIT universe/权威历史 tradability 缺口保持 false。下一步严格进入 50–100 因子 full-research 试运行；仍不得跳到 669 因子或模型训练。实施证据见 [Qlib Exchange Integration V1](./QLIB_EXCHANGE_INTEGRATION_V1.md)。
 
 ## 一、项目背景
 

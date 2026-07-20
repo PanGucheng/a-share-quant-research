@@ -1,0 +1,48 @@
+{
+  "artifact_id": "qlib_exchange_reference_v1:f7d037c3dba1d662e1e6ebb87cc3b2815aea23a88ef81b3ae979a56c41ac1c59",
+  "artifact_status": "pass",
+  "blocked_reason": "",
+  "code_commit_sha": "a6f719166e136c3b15107ed530776a5d272bcb64",
+  "code_diff_sha256": "",
+  "code_dirty": false,
+  "config_sha256": "f61965c3bbccd3556ad7a054f5828e57d194fe00f001a1d817ef3caaec7e89cd",
+  "created_at": "2026-07-20T06:33:09.762624+00:00",
+  "end_date": "2026-06-09",
+  "factor_catalog_id": null,
+  "factor_frame_id": "execution-input:26f4dff30d161d2743b91fb5a8574510182ae98eec20537bc0dc7079b72ca77a",
+  "input_artifact_ids": [
+    "qlib_environment_v1:9fb963c45740b9a1eef36f32d703494eb446513f7857eec3d7ca9acbb3711983"
+  ],
+  "lineage_status": "reference_only",
+  "missing_lineage_fields": [
+    "authoritative_historical_tradability",
+    "pit_universe_artifact"
+  ],
+  "output_file_hashes": {
+    "contract_status.csv": "ffb1222762b1551e9c556a8d34e18fd57889ae7bcbecb09623a3e5eb4f0fd80a",
+    "daily_accounting.csv": "57bf58c0af81a476e9fe7f495c810b68b182ed85f7feaa4b5d7d8fce66e67149",
+    "execution_report.md": "b29a581af4a75e40f5ead06cfc5c470fa2e0ae302c3e12f8e0ebe3a5a338116d",
+    "execution_summary.csv": "68b2ad60ce9041123c9ecdaabc70802501797de0c989ebe68fbecb9153ea1d17",
+    "fills.csv": "d7c3861f201d6b7a272d29573343b53220b3981dac7ae740e26a3d7023370c6a",
+    "market_input.csv": "b0fd6a79ad78b378d24544d71265a256b5b04fc471575e6b4179a0eddf8c098d",
+    "orders.csv": "cb64231e4c7ccd96121cff82356e7dc6a76d20e81712229c338adcc827445867",
+    "partial_fills.csv": "51d51e96b6dc756b984283c72faf544af0f305b04e334509e61fd16618ab7751",
+    "positions.csv": "1ac4235dd645ca62b79d4c41728693ab9f140c4618fbac7efb8f685ba3f0e08b",
+    "rejected_orders.csv": "419ef82f34d314c947bc517b744a2a6e6f5586ddbcc650b6e66fc238e79ad512",
+    "resolved_config.json": "809abd7cf838e9813588275e1a8eeb756591bfa94ba478f9326a6822ac9e8102",
+    "selected_instruments.csv": "64b0125519691ac31ad94e14da95ae335d4c19816e25ba2cae4e800f20e7287f",
+    "signal_input.csv": "24c0b3528eeaf814499ccfef66d7c50475788c4ae366b658c8fe64d06de89604",
+    "tradability_diagnostics.csv": "32e7a5e5c808c98d67eac1d1ab975ecc7f18e1dca162b63dee0f646678b51649",
+    "transaction_costs.csv": "7cf546d00da448dc4a79b4fbf305b4a9e47517f11c850136a56db289422af386"
+  },
+  "producer_run_id": "20260720T063309Z-c76aa3b5",
+  "profile_name": "local_reference",
+  "profile_type": "reference",
+  "research_run_family_id": "qlib_exchange_v1",
+  "run_id": "20260720T063309Z-c76aa3b5",
+  "schema_version": 2,
+  "split_manifest_id": null,
+  "stage_id": "qlib_exchange_reference_v1",
+  "start_date": "2026-02-04",
+  "universe_artifact_id": null
+}
