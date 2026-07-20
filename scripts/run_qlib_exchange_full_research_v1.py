@@ -72,6 +72,8 @@ def main() -> int:
     input_rows: list[dict[str, object]] = []
     tradability_rows: list[pd.DataFrame] = []
     signal_samples: list[pd.DataFrame] = []
+    participation_excess_max = 0.0
+    invalid_fill_count = 0
 
     with StageOutputPublisher(output_dir, controlled) as publisher:
         for split in splits.itertuples(index=False):
@@ -104,6 +106,20 @@ def main() -> int:
                 limit_up_count=("limit_up", "sum"), limit_down_count=("limit_down", "sum"),
             ).assign(split_id=split.split_id))
             result = run_qlib_execution(signal, market, config)
+            fill_market = result["fills"].merge(
+                market[["datetime", "instrument", "volume", "can_buy", "can_sell", "suspended"]],
+                on=["datetime", "instrument"], how="left",
+            )
+            if not fill_market.empty:
+                participation_excess_max = max(
+                    participation_excess_max,
+                    float((fill_market["executed_shares"] - fill_market["volume"] * float(config["max_participation_rate"])).max()),
+                )
+                invalid_fill_count += int((
+                    fill_market["suspended"]
+                    | (fill_market["side"].eq("buy") & ~fill_market["can_buy"])
+                    | (fill_market["side"].eq("sell") & ~fill_market["can_sell"])
+                ).sum())
             for name in results:
                 results[name].append(_add_split(result[name], split.split_id))
 
@@ -113,6 +129,12 @@ def main() -> int:
         }
         fills = combined["fills"]
         daily = combined["daily_accounting"]
+        buy_remainder = fills.loc[fills["side"].eq("buy"), "executed_shares"].mod(int(config["lot_size"]))
+        buy_lot_distance = (
+            pd.concat([buy_remainder, int(config["lot_size"]) - buy_remainder], axis=1).min(axis=1)
+            if not buy_remainder.empty else pd.Series(dtype=float)
+        )
+        maximum_lot_error = float(buy_lot_distance.max()) if not buy_lot_distance.empty else 0.0
         contract = pd.DataFrame([
             contract_row("qlib_environment_resolved", True, environment["artifact_id"], "passing environment artifact"),
             contract_row("signal_schema_valid", True, sum(row["rows"] for row in input_rows if row["kind"] == "signal"), ">0"),
@@ -121,10 +143,14 @@ def main() -> int:
             contract_row("input_artifact_fresh", score_manifest["artifact_status"] == "pass", score_manifest["artifact_status"], "pass"),
             contract_row("complete_trading_calendar", bool(daily["calendar_complete"].all()), int(daily["calendar_complete"].sum()), len(daily)),
             contract_row("no_future_price_execution", int(config["signal_lag_trading_days"]) == 1, config["signal_lag_trading_days"], 1),
-            contract_row("lot_size_valid", fills.empty or bool(fills.loc[fills["side"].eq("buy"), "executed_shares"].mod(int(config["lot_size"])).round(8).eq(0).all()), True, True),
+            contract_row("lot_size_valid", maximum_lot_error <= 1e-6, maximum_lot_error, "<=1e-6 shares"),
             contract_row("cash_non_negative", float(daily["cash"].min()) >= -1e-8, float(daily["cash"].min()), ">=0"),
             contract_row("accounting_conservation", float(daily["accounting_error"].abs().max()) <= 1e-8, float(daily["accounting_error"].abs().max()), "<=1e-8"),
+            contract_row("commission_and_tax_reported", {"commission", "stamp_tax", "slippage_cost"}.issubset(combined["transaction_costs"].columns), sorted(combined["transaction_costs"].columns), "component columns"),
+            contract_row("tradability_constraints_applied", invalid_fill_count == 0, invalid_fill_count, 0),
             contract_row("t_plus_one_applied_or_explicitly_limited", bool(config["strict_t_plus_one"]), config["strict_t_plus_one"], True),
+            contract_row("volume_participation_respected", participation_excess_max <= 0.1, participation_excess_max, "<=0.1 shares"),
+            contract_row("unfilled_quantities_reported", "unfilled_shares" in combined["orders"].columns, "unfilled_shares" in combined["orders"].columns, True),
             contract_row("target_delta_orders_supported", {"buy", "sell"}.issubset(set(fills["side"])), sorted(set(fills["side"])), ["buy", "sell"]),
             contract_row("unknown_semantic_difference_count", True, 0, 0),
             contract_row("pit_universe_complete", bool(config["pit_universe_complete"]), config["pit_universe_complete"], True),
