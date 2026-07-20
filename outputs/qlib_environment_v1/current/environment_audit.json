@@ -1,0 +1,21 @@
+{
+  "python_version": "3.10.19",
+  "python_3_10": true,
+  "pyqlib_version": "0.1.dev6",
+  "qlib_source_commit": "d5379c520f66a39953bad76234a7019a72796fd0",
+  "expected_qlib_commit": "d5379c520f66a39953bad76234a7019a72796fd0",
+  "qlib_commit_matches": true,
+  "qlib_source_exists": true,
+  "qlib_provider_exists": true,
+  "provider_calendar_exists": true,
+  "provider_instruments_exists": true,
+  "provider_features_exists": true,
+  "source_worktree_dirty": true,
+  "source_dirty_files": [
+    "M examples/benchmarks/LightGBM/workflow_config_lightgbm_Alpha158_csi500.yaml"
+  ],
+  "runtime_code_dirty": false,
+  "runtime_dirty_files": [],
+  "source_path_fingerprint": "9e3ad54910439eac1efde81a5c049338270517dfb57024f586ca86f4ab43260e",
+  "provider_path_fingerprint": "6d42df1b085236c81a955e645cce3680f72ba4097aba1224e787da4f360ef89f"
+}

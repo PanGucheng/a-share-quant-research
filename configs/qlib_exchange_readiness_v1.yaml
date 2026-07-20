@@ -1,0 +1,23 @@
+schema_version: 1
+profile: local_reference
+profile_name: local_reference
+profile_type: reference
+research_run_family_id: qlib_exchange_v1
+evidence:
+  environment:
+    config: configs/qlib_environment_v1.yaml
+    manifest: outputs/qlib_environment_v1/current/artifact_manifest.json
+    contract: outputs/qlib_environment_v1/current/contract_status.csv
+  synthetic:
+    config: configs/qlib_exchange_synthetic_v1.yaml
+    manifest: outputs/qlib_exchange_v1/synthetic/artifact_manifest.json
+    contract: outputs/qlib_exchange_v1/synthetic/contract_status.csv
+  reconciliation:
+    config: configs/execution_reconciliation_v1.yaml
+    manifest: outputs/execution_reconciliation_v1/current/artifact_manifest.json
+    contract: outputs/execution_reconciliation_v1/current/contract_status.csv
+  reference:
+    config: configs/qlib_exchange_reference_v1.yaml
+    manifest: outputs/qlib_exchange_v1/local_reference/artifact_manifest.json
+    contract: outputs/qlib_exchange_v1/local_reference/contract_status.csv
+output_dir: outputs/qlib_exchange_readiness_v1/current

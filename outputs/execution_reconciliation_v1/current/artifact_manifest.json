@@ -1,0 +1,39 @@
+{
+  "artifact_id": "execution_reconciliation_v1:556445b0b70aaab5a4800c8e0a99d49469bd8c863e17e97861dd9395949d363b",
+  "artifact_status": "pass",
+  "blocked_reason": "",
+  "code_commit_sha": "a6f719166e136c3b15107ed530776a5d272bcb64",
+  "code_diff_sha256": "",
+  "code_dirty": false,
+  "config_sha256": "c4b89adb62a9c41cc4eb9740a8c9ef8bf0db5b69b131fe90560bffeaec27a118",
+  "created_at": "2026-07-20T06:32:47.141982+00:00",
+  "end_date": "2026-06-05",
+  "factor_catalog_id": null,
+  "factor_frame_id": "execution-input:b4596a3ae2e16b049b2130744f9a88d661987a4fb44cc0ad0e478ef95b86e83e",
+  "input_artifact_ids": [
+    "qlib_exchange_v1:27cf3a4da7d444b0ca67f8135200a42ff3b4ebe3ac62475c7bfd6ecf6ee6fdec"
+  ],
+  "lineage_status": "reference_only",
+  "missing_lineage_fields": [
+    "synthetic_universe_no_pit_artifact"
+  ],
+  "output_file_hashes": {
+    "accounting_differences.csv": "667ddb71a7c197548b41050e093700e2eca0b7e304377198c3dacff2c89ead40",
+    "contract_status.csv": "bc15b99b8cc1ac13d7f379ba6ea1251f55019c9dac5e5fd671aa00786d266ee4",
+    "order_differences.csv": "9eecf19b98abdeffa745e62ca23ab68c65b4307cfcd04acd491c010898a16647",
+    "position_differences.csv": "d7a034418ffa3eff596fa48bcea62ad34f149f1ca8152dd8ef06005f3969c400",
+    "reconciliation_report.md": "974b9c2dbbe8223a6dd5b7b6e3bd427d1ac7668fb1594f64d58f26792c2f6385",
+    "scenario_summary.csv": "005ca7fec2c6434d83c8762120d4dc1eb15d710e1e3b743821b82df9b87b7136",
+    "semantic_difference_inventory.csv": "4a3f2de223bd512c8d256ff55f73bb1193580879c1d81d24fec5e84d09890cf1"
+  },
+  "producer_run_id": "20260720T063247Z-82fb13df",
+  "profile_name": "synthetic",
+  "profile_type": "smoke",
+  "research_run_family_id": "qlib_exchange_v1",
+  "run_id": "20260720T063247Z-82fb13df",
+  "schema_version": 2,
+  "split_manifest_id": null,
+  "stage_id": "execution_reconciliation_v1",
+  "start_date": "2026-05-25",
+  "universe_artifact_id": null
+}

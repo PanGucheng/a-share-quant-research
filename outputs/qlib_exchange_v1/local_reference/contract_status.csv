@@ -1,0 +1,14 @@
+﻿check_name,status,observed_value,required_value,severity,reason
+signal_schema_valid,pass,2370,>0,critical,
+market_schema_valid,pass,2400,>0,critical,
+instrument_count,pass,30,30,critical,
+complete_trading_calendar,pass,79,79,critical,
+no_future_price_execution,pass,1,1,critical,
+lot_size_valid,pass,True,True,critical,
+cash_non_negative,pass,0.14460793804505556,>=0,critical,
+accounting_conservation,pass,1.862645149230957e-09,<=1e-8,critical,
+volume_participation_respected,pass,True,True,critical,
+target_delta_orders_supported,pass,"['buy', 'sell']","['buy', 'sell']",critical,
+reference_execution_operational,pass,981,>0,critical,
+tradability_source_complete,blocked,False,True,capability,provider lacks authoritative historical suspension and directional limit labels; change/volume proxies are disclosed
+pit_universe_complete,blocked,False,True,capability,"coverage-selected sample is execution evidence, not a PIT research universe"

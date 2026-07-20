@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "profile": "synthetic",
+  "profile_name": "synthetic",
+  "profile_type": "smoke",
+  "research_run_family_id": "qlib_exchange_v1",
+  "qlib_source": "../qlib_clone",
+  "qlib_provider": "../qlib_data/cn_data_community_20260609_derived",
+  "expected_qlib_commit": "d5379c520f66a39953bad76234a7019a72796fd0",
+  "expected_python_major_minor": "3.10",
+  "output_dir": "outputs/qlib_environment_v1/current"
+}

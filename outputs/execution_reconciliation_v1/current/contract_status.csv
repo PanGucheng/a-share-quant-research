@@ -1,0 +1,6 @@
+﻿check_name,status,observed_value,required_value,severity,reason
+synthetic_parity_pass,pass,True,True,critical,
+unknown_semantic_difference_count,pass,0,0,critical,
+order_direction_and_quantity_match,pass,0,0,critical,
+accounting_conservation_match,pass,0,0,critical,
+position_conservation_match,pass,0,0,critical,

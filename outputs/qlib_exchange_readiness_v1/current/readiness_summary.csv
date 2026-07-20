@@ -1,0 +1,2 @@
+﻿qlib_exchange_infrastructure_ready,qlib_exchange_synthetic_ready,execution_reconciliation_ready,qlib_exchange_reference_ready,model_training_started
+True,True,True,False,False

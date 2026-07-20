@@ -1,0 +1,11 @@
+schema_version: 1
+profile: synthetic
+profile_name: synthetic
+profile_type: smoke
+research_run_family_id: qlib_exchange_v1
+qlib_execution_manifest: outputs/qlib_exchange_v1/synthetic/artifact_manifest.json
+qlib_execution_dir: outputs/qlib_exchange_v1/synthetic
+execution_config: configs/qlib_exchange_synthetic_v1.yaml
+absolute_tolerance: 1.0e-8
+relative_tolerance: 1.0e-10
+output_dir: outputs/execution_reconciliation_v1/current

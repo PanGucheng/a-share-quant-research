@@ -1,0 +1,8 @@
+﻿check_name,status,observed_value,required_value,severity,reason
+python_3_10,pass,3.10.19,3.10.x,critical,
+qlib_commit_matches,pass,d5379c520f66a39953bad76234a7019a72796fd0,d5379c520f66a39953bad76234a7019a72796fd0,critical,
+qlib_runtime_code_clean,pass,[],[],critical,
+provider_calendar_present,pass,True,True,critical,
+provider_instruments_present,pass,True,True,critical,
+provider_features_present,pass,True,True,critical,
+qlib_environment_resolved,pass,True,True,critical,

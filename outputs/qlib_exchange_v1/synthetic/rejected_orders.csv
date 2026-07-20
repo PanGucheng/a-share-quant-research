@@ -1,0 +1,1 @@
+﻿event_id,datetime,instrument,side,requested_shares,executed_shares,unfilled_shares,base_price,fill_price,gross_value,status,reason,commission,stamp_tax,slippage_cost,cash_fee,implementation_cost

@@ -44,3 +44,21 @@ jobs:
           python scripts/validate_external_exposure_data_v1.py
           python scripts/validate_final_portfolio_diagnostics_v1.py
           python scripts/validate_reference_pipeline_consistency_v1.py
+          python scripts/validate_execution_reconciliation_v1.py
+          python scripts/validate_qlib_exchange_v1.py
+
+  qlib-exchange-runtime:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.10"
+      - name: Install pinned Qlib runtime
+        shell: pwsh
+        run: |
+          python -m pip install "pytest>=9,<10" "PyYAML>=6,<7"
+          python -m pip install "git+https://github.com/microsoft/qlib.git@d5379c520f66a39953bad76234a7019a72796fd0"
+      - name: Run Qlib Exchange integration tests
+        shell: pwsh
+        run: python -m pytest tests/test_qlib_exchange_runtime.py -q

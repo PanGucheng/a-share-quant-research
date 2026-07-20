@@ -4,6 +4,10 @@
 
 ## Current Working Documents
 
+- `QLIB_EXCHANGE_INTEGRATION_V1.md`
+  PR #2 已实施范围、单位/约束语义、合成精确对账、30 股票真实小样本、readiness 和复现命令。
+- `QLIB_EXCHANGE_SEMANTIC_AUDIT_V1.md`
+  固定 Qlib commit 的 Exchange、Executor、Signal、成本、成交量、T+1 和输出语义源码审计。
 - `REFERENCE_PIPELINE_CONSISTENCY_V1_1_1.md`
   V1.1.1 已实施计划与验收结果；已修复全 holdout 与旧下游混用、stale artifact、未生效 lineage gate 和 readiness 假阳性。
 - `FACTOR_VALIDATION_HARDENING_V1_1.md`
@@ -70,7 +74,7 @@ docs/_archive/README.md
 
 ## Current Stage
 
-V1.1.1 一致性修复已实施：新版稳定性仍为 10 个 holdout、0 eligible windows；活动下游已原子替换为规范 blocked 输出，不再保留旧 representatives、weights 或 score runtime。未训练模型、未运行 669 因子全量结果、未接入 Qlib Exchange。
+PR #2 Qlib Exchange integration 已实施：环境、合成执行和 execution reconciliation readiness 为 true；30 股票/80 日真实样本的执行关键契约通过，但因 PIT universe 和权威历史可交易性标签缺失，reference readiness 保持 false。未训练模型、未运行 669 因子全量结果。
 
 ```text
 docs/Qlib A股因子研究框架完整升级计划 V1.md
@@ -79,4 +83,4 @@ docs/FACTOR_VALIDATION_HARDENING_V1_1.md
 docs/REFERENCE_PIPELINE_CONSISTENCY_V1_1_1.md
 ```
 
-当前状态为 `reference_infrastructure_ready=true`、`reference_pipeline_ready=false`、兼容字段 `reference_ready=false`；full/core/扩展能力和 `model_training_started` 均为 false。74 项测试和 11 个 validators 已通过。下一 PR 仍为 Qlib Exchange integration。
+当前执行状态为 `qlib_exchange_infrastructure_ready=true`、`qlib_exchange_synthetic_ready=true`、`execution_reconciliation_ready=true`、`qlib_exchange_reference_ready=false`、`model_training_started=false`。本地 85 项测试和 13 个 validators 已通过。下一阶段为 50–100 因子 full-research 特征矩阵试运行。
