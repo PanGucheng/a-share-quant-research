@@ -1,0 +1,38 @@
+{
+  "artifact_id": "factor_multiple_testing_v1:2075e16671d59bfb2fa87e783d138163c6507640840d4b33be32e43ae8ec951f",
+  "artifact_status": "pass",
+  "blocked_reason": "",
+  "code_commit_sha": "944f668cff3c7d5992a1e094f7c82a78c1f6ed0b",
+  "code_diff_sha256": "",
+  "code_dirty": false,
+  "config_sha256": "6513f3be8f2a0b8e091a2af0d428cb8284b512faa3549920da4671b2faf28196",
+  "created_at": "2026-07-20T08:01:37.183341+00:00",
+  "end_date": "2026-06-09",
+  "factor_catalog_id": "factor-catalog:486118555dbf8e2f48ed79cc31ea4fe5a13633bfaedadeb582b6f9f00dabeaef",
+  "factor_frame_id": "factor-frame:9f0992901ea23d4452b1f9b98f8891c21a61db576286576e621d9e816c34f028",
+  "input_artifact_ids": [
+    "full_research_daily_ic_v1:1ce6399aa2ce61dce4678f89ab96eb0efebd5bcde38d5c4d8909ccb4fd55f041",
+    "purged_walk_forward_v1:a0ea6f203056c0be3260e560661a5f6e7d1213d4106527127ece1c3323cf39aa"
+  ],
+  "lineage_status": "complete",
+  "missing_lineage_fields": [],
+  "output_file_hashes": {
+    "contract_status.csv": "27120008eaa1521c1415da4e9b85c781b0edfda1d1cbe95864eaf68e38106633",
+    "factor_hypothesis_tests.csv": "4957569d2eac54a793302e21018427083cc01046265e589c5d910e7a6ce6816b",
+    "fdr_results.csv": "4957569d2eac54a793302e21018427083cc01046265e589c5d910e7a6ce6816b",
+    "multiple_testing_report.md": "6272d1db2a7fe8726364e19bc0bf1516b3f921c2529b9d97fee8dfa9b334bd57",
+    "null_simulation_results.csv": "3e3d1a32bf7b68f551fe3f6539cf6f037d6fb89bae375bd8c306cd8be9965229",
+    "rejected_hypotheses.csv": "de80e2e0bcbd4bf6d41220bbd9a4a877c0620dfe047f57303c5b8cd7ce0b9985",
+    "test_family_summary.csv": "9b6dc32c6b21cf401baf78256d3b97ba334b6164dbb9624ffd2483c54bd82ee1"
+  },
+  "producer_run_id": "20260720T080137Z-694a5a17",
+  "profile_name": "full_research",
+  "profile_type": "full_research",
+  "research_run_family_id": "full_research_factor_trial_v1",
+  "run_id": "20260720T080137Z-694a5a17",
+  "schema_version": 2,
+  "split_manifest_id": "split-manifest:75ccf0f37e85422729d54aef5a363f68d4f9b3daed3d42a87eb120e6b5aefe0e",
+  "stage_id": "factor_multiple_testing_v1",
+  "start_date": "2021-02-01",
+  "universe_artifact_id": "universe:10287ec42be03cb525de034b1bea1b53fa5da11cda5de4b5ed8f1f2ad1dcdad5"
+}
