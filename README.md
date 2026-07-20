@@ -13,12 +13,13 @@ Chinese documentation is available in [README.zh-CN.md](README.zh-CN.md).
 
 ## Current Direction
 
-> **Current milestone:** the stratified 80-factor full-research trial is complete.
-> The real PIT universe, partitioned feature matrix, t+1 labels, purged/FDR/stability
-> chain, transparent scores, and three-split Qlib Exchange execution all pass their
-> critical contracts. Historical directional tradability labels remain proxy-based.
-> The 669-factor run and model training have not started; the next stage is the
-> scale-only 669-factor run.
+> **Current milestone:** the frozen 669-factor full-research run is complete.
+> All 30 resumable matrix partitions, t+1 labels, purged/FDR/stability chain,
+> 16-representative frozen allowlist, transparent scores, and three-split Qlib
+> Exchange execution pass their critical contracts. Historical directional
+> tradability labels remain proxy-based. Model training has not started; the next
+> stage is the ordered Equal Weight / Stability Weight / Ridge / Elastic Net /
+> LightGBM comparison.
 
 The project keeps Qlib as the main data and model backbone while adding independent
 research modules around it:
@@ -36,9 +37,8 @@ research modules around it:
 - **Qlib execution layer**: pinned Exchange/Executor adapters, A-share constraints,
   normalized artifacts, exact synthetic reconciliation, and a local-reference run.
 
-The current development priority is scaling the validated trial semantics to all
-669 runnable factors. Model training remains gated until the full run freezes a
-feature allowlist.
+The current development priority is model comparison on the frozen 16-factor
+allowlist, using the same purged folds, common period, and Qlib execution semantics.
 
 ## Repository Layout
 
