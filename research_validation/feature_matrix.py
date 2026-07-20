@@ -70,3 +70,11 @@ def atomic_parquet(frame: pd.DataFrame, path: Path) -> None:
     temporary = path.with_suffix(path.suffix + ".tmp")
     frame.to_parquet(temporary, index=False, compression="zstd")
     temporary.replace(path)
+
+
+def forward_return_label(frame: pd.DataFrame, price_column: str, entry_lag: int, holding_days: int) -> pd.Series:
+    values = frame.sort_values(["instrument", "datetime"], kind="stable")
+    group = values.groupby("instrument", sort=False)[price_column]
+    entry = group.shift(-entry_lag)
+    exit_price = group.shift(-(entry_lag + holding_days))
+    return (exit_price / entry - 1.0).reindex(values.index)
