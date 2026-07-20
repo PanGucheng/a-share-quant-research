@@ -37,9 +37,11 @@ research modules around it:
   normalized artifacts, exact synthetic reconciliation, and a local-reference run.
 
 The current development priority is the mandatory selection-holdout integrity phase:
-complete raw/source provenance, build nested selection windows, consume split-scoped
-FDR artifacts, and regenerate development-date-bounded allowlists per outer split.
-Only after its anti-leakage gates pass can the project begin the ordered model series.
+first install a machine-level hard stop for the stale model-ready flags, then complete
+raw/source provenance, outer-train FDR eligibility, development robustness windows,
+and development-date-bounded allowlists per outer split. Any bulk rerun requires a
+review bundle and explicit user approval for the exact run. Only after anti-leakage
+and pre-test-freeze gates pass can the project begin the ordered model series.
 
 ## Repository Layout
 

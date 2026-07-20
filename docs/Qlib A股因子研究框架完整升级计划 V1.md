@@ -4,7 +4,7 @@
 >
 > 2026-07-13 增补：[V1.1 门禁、Profile 与 Lineage 硬化计划](./FACTOR_VALIDATION_HARDENING_V1_1.md) 修正阶段 5、8、10、11 的收尾语义。涉及 pre/post-model diagnostics、能力门禁、Profile 和 lineage 时，以 V1.1 为准。
 >
-> 2026-07-20 审计更正：PR #1–#4 已合并，PR #4 的 669 因子目录、30/30 矩阵分区、批处理、IC、Qlib Exchange 和工程 lineage 证据继续有效；但合并后审计确认当前选择链读取 outer test 信息、聚类未限制 development dates、Stability 未真实消费上游 FDR artifact，且 raw/provider/source provenance 未完整进入 cache key。当前 16 个代表因此只作为 `exploratory/test-influenced` 历史证据，不能作为模型输入；`core_model_ready=false`、`pr5_model_training_ready=false`、`model_training_started=false`。下一步必须先完成逻辑 PR #4.1，详见 [Selection Holdout Integrity 与后续模型计划 V1](./SELECTION_HOLDOUT_INTEGRITY_AND_MODEL_PLAN_V1.md)。
+> 2026-07-21 审计更正：PR #1–#4 已合并，PR #4 的 669 因子目录、30/30 矩阵分区、批处理、IC、Qlib Exchange 和工程 lineage 证据继续有效；但合并后审计确认当前选择链读取 outer test 信息、聚类未限制 development dates、Stability 未真实消费上游 FDR artifact，且 raw/provider/source provenance 未完整进入 cache key。当前 16 个代表因此只作为 `exploratory/test-influenced` 历史证据，不能作为模型输入。治理状态为 `core_model_ready=false`、`pr5_model_training_ready=false`、`model_training_started=false`，但已提交机器 readiness 尚未同步，当前 Draft PR 必须先实施 hard-stop。下一步详见 [Selection Holdout Integrity 与后续模型计划 V1](./SELECTION_HOLDOUT_INTEGRITY_AND_MODEL_PLAN_V1.md)。
 
 ## 一、项目背景
 
@@ -1543,20 +1543,26 @@ PR #4 合并后的选择链审计推翻了“当前 allowlist 已冻结、可以
 - 在逻辑 PR #4.1 完成前，`feature_allowlist_frozen`、`core_model_ready` 和 `pr5_model_training_ready` 均不得为 true；
 - 模型训练保持停止，任何 Ridge、Elastic Net 或 LightGBM artifact 都不得提前生成。
 
+当前机器产物仍把上述三个 readiness 写为 true，因此“政策上撤回”还不等于“机器已阻断”。当前 Draft GitHub PR #5 的首个实现提交必须修改 readiness 生成器、validator 和 model entry gate：输出 `selection_integrity_status=blocked`、模型 readiness=false，并使旧 `exploratory_global_representatives_v1` 触发非零退出。该 P0 hard-stop 通过前，不得开始其他实现或大批量运行。
+
 ## 逻辑 PR #4.1
 
 固定实施顺序：
 
 1. 撤回 false-positive readiness，并阻止模型 loader 消费探索性代表；
 2. 固化 raw market snapshot、Qlib/TA/KunQuant/project source provenance；
-3. 将 provider/source hashes 纳入 matrix cache key v3，完成 30 批受控重跑及 30/30 cache-hit 复跑；
-4. 为三个 outer split 分别生成 purged inner selection windows；
-5. 建立三个独立 FDR families，每个 family 固定 669 个假设；
-6. 让 Stability 按 `(outer_split_id, factor)` 真实消费上游 FDR artifact，禁止内部重算；
-7. 删除选择 API 中所有 `test_*` 输入，仅使用 train/validation evidence；
-8. 按 split 和精确 allowed development dates 重做聚类、代表和 allowlist；
-9. 按 split 冻结方向与权重，重跑透明 score、Qlib Exchange 和对账；
-10. 通过 outer-test mutation、lineage、freshness、hash 和模型入口拒绝测试。
+3. 将 provider/source hashes 纳入 matrix cache key v3，先运行受限 canary 并生成 bulk-run review bundle；
+4. 停止执行，把 commit、config/input hashes、因子/日期/FDR 语义、资源预算、canary 结果和 exact command 交给用户检查；
+5. 只有用户针对该 run ID 明确批准后，才完成 30 批受控重跑及 30/30 cache-hit 复跑；
+6. 为三个 outer split 分别生成 purged development robustness windows；
+7. 建立三个独立 outer-train FDR families，每个 family 固定 669 个假设；inner windows 只作开发期稳健性诊断，不宣称严格逐窗口 nested FDR；
+8. 让 Stability 按 `(outer_split_id, factor)` 真实消费上游 FDR artifact，禁止内部重算；
+9. 删除选择 API 中所有 `test_*` 输入，仅使用 train/validation evidence；
+10. 按 split 和精确 allowed development dates 重做聚类、代表和 allowlist；
+11. 对 test IC、exposure、labels、OHLCVA、row order 和极端缺失执行 mutation tests；
+12. 每个 split 生成不可变 pre-test freeze manifest 后，才允许重跑透明 score、Qlib Exchange 和对账。
+
+用户审批只适用于 review bundle 中完全一致的 commit、config、input inventory、命令、因子数量、日期和资源范围；任一变化都使 approval 失效并必须重新审查。Codex 不得根据历史“持续推进”授权自行越过该暂停点。
 
 只有三个 split-specific allowlists 都完成且 test mutation 不改变任何选择产物时，才能恢复：
 
@@ -1580,7 +1586,10 @@ PR #5 不再作为单次大提交，而是严格拆为：
 PR #5A 透明基线与统一模型输入协议
 PR #5B Ridge → Elastic Net
 PR #5C LightGBM
-PR #5D 统一 outer-test/common-period 比较
+PR #5D 历史 outer-test/common-period 科学比较
+PR #6  新未来数据 / forward paper confirmation
 ```
 
-所有方法必须逐 outer split 使用该 split 的 frozen allowlist、相同 PIT universe、label、signal lag、Qlib Exchange 与成本配置。预处理和超参数只在 train/validation 中拟合或选择，outer test 只能在决策冻结后评价一次。模型未优于透明基线不是失败，最终允许保留 Equal Weight 或 Stability Weight 作为默认研究方案。
+所有方法必须逐 outer split 使用该 split 的 frozen allowlist、相同 PIT universe、label、signal lag、Qlib Exchange 与成本配置。PR #5A 预先冻结 `primary_validation_metric=mean_daily_rank_ic`、ICIR/coverage/complexity/config-hash tie-break、搜索方法、候选上限和随机种子。搜索阶段只在 outer train fit、outer validation 选择；选定后统一在 outer train+validation 重新 fit preprocessing 和 final model，再生成包含模型、数据、配置和代码哈希的 `pre_test_freeze_manifest.json`，outer test 只能在 freeze 后评价一次。
+
+PR #5D 只允许设置 `historical_oos_comparison_complete=true`，必须保持 `production_model_selected=false`。历史 OOS winner 支持科研比较，但不能被称为对未来表现的无偏确认。最终策略确认需要 PR #5D 后的新未来时间段或 forward/paper execution；模型未优于透明基线不是失败，也不强制选择复杂模型。

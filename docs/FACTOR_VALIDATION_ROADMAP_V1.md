@@ -845,7 +845,7 @@ PR #4 的因子目录、30 分区矩阵、批处理恢复、daily IC、purged ou
 3. stability 虽声明 FDR artifact 为上游，却内部重新 bootstrap/FDR；
 4. raw market cache 和外部因子源码没有完整进入矩阵 input hash 与直接 lineage。
 
-量化复核显示，外部 FDR 与 stability 内部 FDR 的 2,007 个 q-value 全部不同，112 个 BH pass 标记不同；仅反转 test IC 即可使 `stable_core` 从 65 个变为 1 个。因此当前状态必须是：
+量化复核显示，外部 FDR 与 stability 内部 FDR 的 2,007 个 q-value 全部不同，112 个 BH pass 标记不同；仅反转 test IC 即可使 `stable_core` 从 65 个变为 1 个。治理结论必须是 blocked，但当前机器 readiness 产物仍为 true；当前 Draft GitHub PR #5 的首个实现提交必须先修改生成器、validator 和模型入口，使机器状态与以下目标一致：
 
 ```text
 feature_allowlist_frozen = false
@@ -856,20 +856,22 @@ raw_input_provenance_complete = false
 core_model_ready = false
 pr5_model_training_ready = false
 model_training_started = false
+selection_integrity_status = blocked
 ```
 
 ### 22.2 PR #4.1 工作包
 
 | 包 | 内容 | 必需结果 |
 | --- | --- | --- |
-| A | 撤回 readiness，登记历史探索输出 | 当前 16 因子 `model_input_allowed=false`；模型 loader 强制拒绝 |
-| B | raw/provider/source provenance 与 cache key v3 | raw snapshot、Qlib/TA/KunQuant/project commit/tree hash 进入 lineage；30 批重跑及 cache-hit 复跑通过 |
-| C | nested selection split | 每个 outer split 至少 3 个 purged inner windows；outer test overlap=0 |
+| A | 机器级撤回 readiness，登记历史探索输出 | 当前 16 因子 `model_input_allowed=false`；readiness=false/blocked；模型 loader 非零拒绝 |
+| B | raw/provider/source provenance、cache key v3 与人工放行 | 先提交 canary/review bundle；用户按 run ID 批准后才允许 30 批重跑及 cache-hit 复跑 |
+| C | development robustness windows | 每个 outer split 至少 3 个 purged inner windows；outer test overlap=0；不宣称严格 nested selection replay |
 | D | split-scoped FDR 数据流 | 3 个独立 family × 669 hypotheses；Stability 逐行消费上游 artifact，禁止内部重算 |
 | E | train/validation-only stability | API 不接收任何 `test_*` 选择字段；test 只进入冻结后的 OOS diagnostics |
 | F | date-bounded clustering 与 allowlist | 三个 split 各自按精确 development dates 生成 allowlist，不创建跨历史 test 的全局名单 |
 | G | split-specific score 与执行 | 方向、权重、score 均按 split 冻结，再用相同 Qlib Exchange 执行 |
-| H | anti-leakage 与 lineage 验证 | 修改 test IC/exposure 不改变 FDR、stability、cluster、allowlist 或 weights hash |
+| H | anti-leakage 与 lineage 验证 | 修改 test IC/exposure/labels/OHLCVA/row order/缺失不改变 development 与选择 payload hashes |
+| I | pre-test freeze | 每个 split 冻结 allowlist、预处理/权重或模型、配置、数据和代码 hashes 后才允许 test release |
 
 统计语义修复不能为通过门禁而降低 FDR、IC、稳定性、覆盖率或最小组件阈值。因旧矩阵缺少完整 generation provenance，`raw_input_provenance_complete=true` 必须建立在 cache key v3 的一次 30 批受控重跑上；事后证明和 `legacy_provenance_attested` 只能用于开发对照。
 
@@ -882,6 +884,8 @@ model_training_started = false
 - 三个 split-specific allowlists 都只引用自己的 development evidence；
 - clustering exposure 与 performance dates 都等于允许日期集合；
 - test mutation 不改变任何选择或权重 artifact hash；
+- 大批量运行的 review bundle 已推送，用户 approval 与实际 commit/config/input/command/scope 完全匹配；
+- 每个 split 的 `pre_test_freeze_manifest.json` 在首次 test read 前生成并通过 hash 校验；
 - raw/provider/source provenance 完整且 cache key v3 生效；
 - split-specific transparent score、Qlib execution、accounting 和 lineage contract 通过；
 - 测试、validator、PR CI、合并后 main CI 全部通过；
@@ -892,9 +896,10 @@ model_training_started = false
 | PR | 范围 | 开始条件 | 禁止项 |
 | --- | --- | --- | --- |
 | #5A | Equal Weight、Stability Weight、共同输入/预处理/prediction schema | PR #4.1 全部门禁通过 | Ridge、Elastic Net、LightGBM |
-| #5B | Ridge 后 Elastic Net；train/validation 搜索、split-specific test 一次评价 | #5A protocol 与透明基线通过 | test 调参、改变 allowlist |
-| #5C | 受限 LightGBM 搜索、固定 seed、validation early stopping | #5B 三个 split 全部通过 | test early stopping、test feature selection |
-| #5D | 五种方法相同 common period 和 Qlib execution 的统一 OOS 比较 | #5C contract 通过 | 为改善最终 test 结果回写特征或参数 |
+| #5B | Ridge 后 Elastic Net；validation 选参，train+validation final refit，split-specific test 一次评价 | #5A protocol 与透明基线通过 | test 调参、改变 allowlist |
+| #5C | 预注册最多 16 个 LightGBM candidates、固定 seed、validation early stopping、development final refit | #5B 三个 split 全部通过且用户批准搜索 | test early stopping、test feature selection |
+| #5D | 五种方法相同 common period 和 Qlib execution 的历史 OOS 科学比较 | #5C contract 通过 | 将历史 winner 直接声明为生产模型 |
+| #6 | 新未来数据 / forward paper confirmation | #5D 完成且候选、窗口、配置预注册 | 根据 forward 表现中途调参或切换候选 |
 
 PR #5 的统一顺序固定为：
 
@@ -902,19 +907,24 @@ PR #5 的统一顺序固定为：
 Equal Weight → Stability Weight → Ridge → Elastic Net → LightGBM
 ```
 
-每个方法都必须保存 split model/prediction manifest、超参数或权重、prediction artifact、execution summary、contract 和完整 lineage。模型只使用该 outer split 的 frozen allowlist；scaler、imputer 与跨日期统计只在 outer train fit；outer validation 用于选择；outer test 在参数冻结后只评价一次。最终可以得出“透明基线优于机器学习”的正式结论，不强制晋级复杂模型。
+每个方法都必须保存 split model/prediction manifest、超参数或权重、prediction artifact、execution summary、contract 和完整 lineage。模型只使用该 outer split 的 frozen allowlist。PR #5A 统一冻结 `mean_daily_rank_ic` 主指标以及 ICIR、coverage、complexity、config hash tie-break；搜索阶段 preprocessing 只在 outer train fit，outer validation 用于选择；选定后在 outer train+validation 重新 fit preprocessing/final model，再生成 pre-test freeze，outer test 只评价一次。PR #5D 只能完成 `historical_oos_comparison_complete=true`，必须保持 `production_model_selected=false`；最终可以得出“透明基线优于机器学习”的科研结论，不强制晋级复杂模型。
 
 ### 22.5 当前立即执行顺序
 
 ```text
-撤回 false-positive readiness
+同一 Draft PR 先实施机器级 hard-stop
 → 补齐 provenance 与 cache key v3
+→ 受限 canary + bulk-run review bundle
+→ 强制停止并等待用户明确批准
 → 30 批受控重跑和 cache-hit 复跑
-→ nested selection + split FDR
+→ development robustness windows + outer-split FDR gate
 → train/validation-only stability
 → split-specific clustering/allowlists
-→ transparent score + Qlib execution
-→ mutation/lineage/CI
+→ 扩展 test mutation
+→ transparent score + pre-test freeze + Qlib execution
+→ lineage/CI
 → 合并 PR #4.1 并在 main 复验
 → 才能创建 PR #5A
 ```
+
+人工批准只覆盖完全一致的 commit、resolved config、input inventory、exact command、日期、因子数和资源范围；任一变化都必须重新审查。没有用户明确回复时，Codex 必须停止，不得自动继续大批量运行。

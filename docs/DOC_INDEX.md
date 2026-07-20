@@ -5,7 +5,7 @@
 ## Current Working Documents
 
 - `SELECTION_HOLDOUT_INTEGRITY_AND_MODEL_PLAN_V1.md`
-  PR #4 合并后选择链审计形成的最高优先级计划：撤回 test-influenced allowlist/model readiness，实施逻辑 PR #4.1 的 provenance、nested selection、split-scoped FDR、date-bounded clustering 和 anti-leakage 门禁，并定义 PR #5A—#5D 的完整顺序。
+  PR #4 合并后选择链审计形成的最高优先级计划：先机器级阻断旧 readiness/model input，再实施 provenance、outer-train FDR gate、development robustness、date-bounded split allowlist、人工批量运行放行和 pre-test freeze，并定义 PR #5A—#5D 与后续 forward confirmation。
 - `FULL_RESEARCH_669_RUN_V1.md`
   PR #4 的 669 因子冻结目录、30 分区矩阵、FDR/稳定性/聚类历史结果、Qlib 执行、readiness 与复现说明；其中模型 readiness 和 16 因子 allowlist 结论已由合并后审计撤回。
 - `FULL_RESEARCH_FACTOR_TRIAL_V1.md`
@@ -90,4 +90,6 @@ docs/FACTOR_VALIDATION_HARDENING_V1_1.md
 docs/REFERENCE_PIPELINE_CONSISTENCY_V1_1_1.md
 ```
 
-当前状态为 `full_research_669_infrastructure_ready=true`、`full_research_669_matrix_content_ready=true`、`full_research_669_qlib_execution_operational=true`、`feature_selection_holdout_clean=false`、`clustering_holdout_clean=false`、`fdr_artifact_consumed=false`、`raw_input_provenance_complete=false`、`feature_allowlist_frozen=false`、`core_model_ready=false`、`pr5_model_training_ready=false`、`full_research_authoritative_tradability_ready=false`、`model_training_started=false`。下一阶段是逻辑 PR #4.1；完成前不得实施 PR #5。
+当前治理结论是模型启动 blocked，但已提交机器产物仍错误保留 `feature_allowlist_frozen=true`、`core_model_ready=true`、`pr5_model_training_ready=true`。当前 Draft GitHub PR #5 的第一项实现必须把它们改为 false，并增加 `selection_integrity_status=blocked` 与旧代表的模型入口拒绝。该 hard-stop 完成前不得开始其他实现。
+
+后续 30 批重跑前必须先推送 canary、配置/输入哈希、日期/FDR 语义、资源预算和 exact command，交由用户检查并针对 run ID 明确批准；没有有效 approval 不得启动。下一阶段是逻辑 PR #4.1，完成前不得实施模型 PR #5A。
