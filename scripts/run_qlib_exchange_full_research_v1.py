@@ -149,7 +149,7 @@ def main() -> int:
             contract_row("commission_and_tax_reported", {"commission", "stamp_tax", "slippage_cost"}.issubset(combined["transaction_costs"].columns), sorted(combined["transaction_costs"].columns), "component columns"),
             contract_row("tradability_constraints_applied", invalid_fill_count == 0, invalid_fill_count, 0),
             contract_row("t_plus_one_applied_or_explicitly_limited", bool(config["strict_t_plus_one"]), config["strict_t_plus_one"], True),
-            contract_row("volume_participation_respected", participation_excess_max <= 0.1, participation_excess_max, "<=0.1 shares"),
+            contract_row("volume_participation_respected", participation_excess_max <= float(config["participation_share_tolerance"]), participation_excess_max, f"<={config['participation_share_tolerance']} shares"),
             contract_row("unfilled_quantities_reported", "unfilled_shares" in combined["orders"].columns, "unfilled_shares" in combined["orders"].columns, True),
             contract_row("target_delta_orders_supported", {"buy", "sell"}.issubset(set(fills["side"])), sorted(set(fills["side"])), ["buy", "sell"]),
             contract_row("unknown_semantic_difference_count", True, 0, 0),

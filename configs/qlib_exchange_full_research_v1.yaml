@@ -19,6 +19,7 @@ sell_tax_rate: 0.001
 minimum_commission: 5.0
 slippage_bps: 10.0
 max_participation_rate: 0.05
+participation_share_tolerance: 1.0
 valuation_policy: last_valid_close
 maximum_stale_valuation_days: 20
 signal_lag_trading_days: 1
