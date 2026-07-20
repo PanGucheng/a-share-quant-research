@@ -216,6 +216,7 @@ outputs/factor_evaluation_batch_v1/alpha360_candidate358_execution/runs/
 __pycache__/
 *.py[cod]
 .pytest_cache/
+outputs/full_research_feature_matrix_v1/runtime/
 
 # Editor and OS noise
 .vscode/
