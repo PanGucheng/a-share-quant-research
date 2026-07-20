@@ -1,0 +1,21 @@
+schema_version: 1
+profile: local_reference
+profile_name: local_reference
+profile_type: reference
+research_run_family_id: reference_v1_1_1
+stability_board: outputs/factor_rolling_stability_v1/local_reference/factor_stability_board.csv
+selection_history: outputs/factor_rolling_stability_v1/local_reference/factor_selection_history.csv
+cluster_representatives: outputs/factor_clustering_v1/local_reference/cluster_representatives.csv
+factor_weights: outputs/factor_score_construction_v1/local_reference/factor_weights_by_window.csv
+scores: outputs/factor_score_construction_v1/local_reference/runtime/composite_scores.parquet
+execution_contract: outputs/a_share_execution_v1/local_reference/contract_status.csv
+execution_method: equal_directional_zscore
+diagnostic_comparison: outputs/pre_model_diagnostics_v1/local_reference/common_period_method_comparison.csv
+current_diagnostic_methods: [stable_equal, cluster_equal, stability_weight]
+input_manifests:
+  - outputs/factor_rolling_stability_v1/local_reference/artifact_manifest.json
+  - outputs/factor_clustering_v1/local_reference/artifact_manifest.json
+  - outputs/factor_score_construction_v1/local_reference/artifact_manifest.json
+  - outputs/a_share_execution_v1/local_reference/artifact_manifest.json
+  - outputs/pre_model_diagnostics_v1/local_reference/artifact_manifest.json
+output_dir: outputs/reference_pipeline_consistency_v1/current

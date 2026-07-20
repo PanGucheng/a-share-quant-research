@@ -1,0 +1,3 @@
+﻿check_name,status,observed_value,required_value,severity,reason
+execution_status,blocked,blocked_no_valid_current_score,pass,critical,score_artifact_blocked;score_contract_blocked;score_runtime_missing
+executed_order_count,blocked,0,>0,critical,No current valid score artifact.

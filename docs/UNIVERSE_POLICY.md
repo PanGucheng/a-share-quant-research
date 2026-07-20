@@ -113,4 +113,10 @@ E:\anaconda_envs\qlib_env\python.exe scripts\create_filtered_universe.py --sourc
 
 ## Next Implementation Step
 
-Create a provider-specific derived data directory or copy step that places reviewed generated universe files under `instruments/` without mutating the raw imported provider.
+The experimental point-in-time rolling universe is implemented under `universes/` and validated at:
+
+```text
+outputs/point_in_time_universe_v1/local_smoke/
+```
+
+It does not mutate the raw provider or replace baseline CSI/static universe defaults. The next integration step is to consume its intervals only through the purged walk-forward experimental profile.

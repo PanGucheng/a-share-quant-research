@@ -1,0 +1,6 @@
+﻿check_name,status,observed_value,required_value,severity,reason
+all_selected_factors_have_q_value,pass,True,True,critical,Multiple-testing control contract.
+missing_test_family_count,pass,0,0,critical,Multiple-testing control contract.
+nan_p_value_promoted_count,pass,0,0,critical,Multiple-testing control contract.
+null_simulation_false_discovery_rate,pass,0.0,<=0.05,critical,Multiple-testing control contract.
+stable_signal_detected,pass,True,True,critical,Multiple-testing control contract.

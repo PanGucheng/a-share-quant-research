@@ -1,0 +1,38 @@
+schema_version: 1
+profile: local_reference
+profile_name: local_reference
+profile_type: reference
+research_run_family_id: reference_v1_1_1
+diagnostic_stage: pre_model_diagnostics
+input_manifests:
+  - outputs/a_share_execution_v1/local_reference/artifact_manifest.json
+  - outputs/factor_score_construction_v1/local_reference/artifact_manifest.json
+scores: outputs/factor_score_construction_v1/local_reference/runtime/composite_scores.parquet
+factor_weights: outputs/factor_score_construction_v1/local_reference/factor_weights_by_window.csv
+score_contract: outputs/factor_score_construction_v1/local_reference/contract_status.csv
+execution_contract: outputs/a_share_execution_v1/local_reference/contract_status.csv
+score_config: configs/factor_score_construction_v1.yaml
+execution_config: configs/a_share_execution_v1.yaml
+additional_scores: outputs/legacy_common_scores_v1/local_reference/runtime/legacy_common_scores.parquet
+factor_frame: tmp/factor_frame_cache/basic_factors_0be49ade4d4ba8d3.pkl
+methods: [alpha158_equal, old_candidate_equal, equal_directional_zscore, cluster_equal, stability_weight]
+required_methods: [alpha158_equal, old_candidate_equal, stable_equal, cluster_equal, stability_weight]
+cost_scenarios_bps: [5, 10, 20, 30]
+base_cost_bps: 10
+capital_scenarios: [1000000, 10000000, 50000000, 100000000]
+regimes:
+  - {name: early_2022, start: 2022-01-01, end: 2022-06-30}
+  - {name: late_2022, start: 2022-07-01, end: 2022-12-31}
+  - {name: year_2023, start: 2023-01-01, end: 2023-12-31}
+execution:
+  lot_size: 100
+  buy_commission_rate: 0.0003
+  sell_commission_rate: 0.0003
+  sell_tax_rate: 0.001
+  minimum_commission: 5.0
+  slippage_bps: 10.0
+  max_participation_rate: 0.05
+  top_k: 50
+  rebalance_every: 20
+  initial_cash: 10000000
+output_dir: outputs/final_portfolio_diagnostics_v1/local_reference

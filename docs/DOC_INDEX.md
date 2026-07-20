@@ -4,6 +4,38 @@
 
 ## Current Working Documents
 
+- `REFERENCE_PIPELINE_CONSISTENCY_V1_1_1.md`
+  V1.1.1 已实施计划与验收结果；已修复全 holdout 与旧下游混用、stale artifact、未生效 lineage gate 和 readiness 假阳性。
+- `FACTOR_VALIDATION_HARDENING_V1_1.md`
+  V1.1 已实施计划与历史证据；其 `reference_ready=true` 结论已被 V1.1.1 一致性审计更正。
+- `Qlib A股因子研究框架完整升级计划 V1.md`
+  新一轮研究框架升级总纲，定义阶段目标、约束、输出和最终完成标准。
+- `FACTOR_VALIDATION_ROADMAP_V1.md`
+  上述升级总纲的详细执行路线图，包含工作包编号、依赖、预计文件、验证顺序、阶段门禁和失败停止条件。
+- `outputs/research_data_contracts_v1/current/schema_report.md`
+  阶段 1 DataFrame contract 对现有 factor、tradability、screening 与 judgement 输出的兼容审计。
+- `outputs/point_in_time_universe_v1/local_smoke/universe_report.md`
+  阶段 2 动态股票池真实 provider smoke、PIT 审计与 Qlib instruments 回读结果。
+- `outputs/purged_walk_forward_v1/local_reference/purged_walk_forward_report.md`
+  阶段 3 date-level Purged Walk-Forward manifest、泄漏审计与 mlfinpy 非依赖语义参考边界。
+- `outputs/factor_multiple_testing_v1/local_reference/multiple_testing_report.md`
+  阶段 4 block bootstrap、BH/BY FDR、null simulation 与 test-family 审计。
+- `outputs/factor_rolling_stability_v1/local_reference/stability_report.md`
+  阶段 5 严格窗口选择历史、冻结方向、OOS degradation 与稳定性角色看板。
+- `outputs/factor_clustering_v1/local_reference/clustering_report.md`
+  阶段 6 当前 blocked reference 输出；无 eligible factor，活动 representatives 为空。
+- `outputs/factor_score_construction_v1/local_reference/score_construction_report.md`
+  阶段 7 当前 blocked reference 输出；活动 weights 为空且 score parquet 不存在。
+- `outputs/a_share_execution_v1/local_reference/execution_report.md`
+  阶段 8 执行会计基础设施；当前因无有效 score 被预期阻断，没有沿用旧执行结果。
+- `outputs/external_exposure_data_v1/current/exposure_data_report.md`
+  阶段 9 AKShare forward-only 快照、PIT 字段契约和当前外部采集阻塞状态。
+- `outputs/pre_model_diagnostics_v1/local_reference/final_portfolio_report.md`
+  阶段 10 当前 blocked pre-model diagnostics；legacy baseline 仅独立展示，current methods 不再由旧 score 补齐。
+- `outputs/legacy_common_scores_v1/local_reference/legacy_common_scores_report.md`
+  Alpha158 与旧 V3.5 candidate pool 在相同 purged test windows 下的共同口径等权 score。
+- `outputs/factor_model_comparison_v1/gated/model_comparison_report.md`
+  阶段 11 V1.1.1 能力门禁；真实 lineage/freshness/semantic gate 已启用，pipeline/reference ready 均为 false，训练未启动。
 - `PROJECT_CONTEXT_SUMMARY.md`
   项目当前状态、最新阶段、关键路径和下一步入口。
 - `STEP_5_FACTOR_RESEARCH_AND_MODEL_PLAN.md`
@@ -38,10 +70,13 @@ docs/_archive/README.md
 
 ## Current Stage
 
-当前阶段是 V3.39：
+V1.1.1 一致性修复已实施：新版稳定性仍为 10 个 holdout、0 eligible windows；活动下游已原子替换为规范 blocked 输出，不再保留旧 representatives、weights 或 score runtime。未训练模型、未运行 669 因子全量结果、未接入 Qlib Exchange。
 
 ```text
-docs/LIQUIDITY_RESIDUALIZED_FACTOR_EVALUATION_V1_PLAN.md
+docs/Qlib A股因子研究框架完整升级计划 V1.md
+docs/FACTOR_VALIDATION_ROADMAP_V1.md
+docs/FACTOR_VALIDATION_HARDENING_V1_1.md
+docs/REFERENCE_PIPELINE_CONSISTENCY_V1_1_1.md
 ```
 
-目标是在不训练新模型、不调整策略、不引入实盘模块的前提下，对 V3.38 识别出的 19 个高流动性/可交易性暴露 probes 做残差化复核，判断信号是否仍具有独立 alpha，还是主要来自 liquidity/tradability proxy。
+当前状态为 `reference_infrastructure_ready=true`、`reference_pipeline_ready=false`、兼容字段 `reference_ready=false`；full/core/扩展能力和 `model_training_started` 均为 false。74 项测试和 11 个 validators 已通过。下一 PR 仍为 Qlib Exchange integration。

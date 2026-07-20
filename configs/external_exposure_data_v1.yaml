@@ -1,0 +1,10 @@
+schema_version: 1
+profile: current
+profile_name: current
+profile_type: reference
+research_run_family_id: reference_v1_1_1
+collector: akshare.stock_zh_a_spot_em
+akshare_version: 1.18.64
+usage_policy: forward_only
+historical_research_start: 2021-01-01
+output_dir: outputs/external_exposure_data_v1/current

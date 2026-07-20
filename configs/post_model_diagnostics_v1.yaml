@@ -1,0 +1,11 @@
+schema_version: 1
+profile: gated_reference
+profile_name: gated_reference
+profile_type: reference
+research_run_family_id: reference_v1_1_1
+diagnostic_stage: post_model_diagnostics
+input_manifests:
+  - outputs/factor_model_comparison_v1/gated/artifact_manifest.json
+model_scores: outputs/factor_model_comparison_v1/gated/runtime/model_scores.parquet
+required_methods: [regularized_linear, lightgbm]
+output_dir: outputs/post_model_diagnostics_v1/gated

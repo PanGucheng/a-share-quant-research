@@ -1,0 +1,4 @@
+﻿check_name,status,observed_value,required_value,severity,reason
+pre_model_diagnostics_status,blocked,blocked_no_current_reference_pipeline,pass,critical,execution_artifact_blocked;execution_contract_blocked;score_artifact_blocked;score_contract_blocked
+legacy_baselines_available,pass,True,reported,warning,Legacy baselines do not substitute for current methods.
+current_stability_pipeline_available,blocked,False,True,critical,Current score/execution chain is blocked.

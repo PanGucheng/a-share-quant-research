@@ -1,0 +1,17 @@
+schema_version: 1
+profile: local_reference
+profile_name: local_reference
+profile_type: reference
+research_run_family_id: reference_v1_1_1
+input_glob: outputs/factor_evaluation_v4/liquid2000_open_source_eval/qlib_eval/*/label_*_daily_rank_ic.csv
+source_family: baseline_basic
+research_window: main_2021_2023
+preprocessing_variant: raw
+metric: daily_rank_ic
+bootstrap_samples: 2000
+block_length: 20
+random_seed: 20260712
+fdr_alpha: 0.05
+null_simulation_factors: 200
+stable_signal_mean: 0.04
+output_dir: outputs/factor_multiple_testing_v1/local_reference

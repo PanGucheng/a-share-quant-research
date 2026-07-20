@@ -1,0 +1,9 @@
+﻿check_name,status,observed_value,required_value,severity,reason
+reference_infrastructure_ready,pass,True,True,critical,"Module, profile, manifest, and synthetic-contract infrastructure is available."
+reference_pipeline_ready,blocked,False,True,critical,"Requires current real-data contracts, lineage freshness, and semantic consistency."
+reference_ready,blocked,False,True,critical,Deprecated compatibility alias of reference_pipeline_ready.
+full_research_ready,blocked,False,True,capability,Requires homogeneous full_research artifacts and complete lineage.
+core_model_ready,blocked,False,True,capability,Core training inherits the full-research and complete-lineage requirements.
+liquidity_residualized_model_ready,blocked,False,True,capability,Adds the liquidity residualization capability contract.
+historical_exposure_model_ready,blocked,False,True,capability,Adds genuine historical PIT industry and market-cap exposure data.
+model_training_started,pass,False,False,critical,Training remains outside this infrastructure PR.

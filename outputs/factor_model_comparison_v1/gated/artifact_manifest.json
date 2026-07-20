@@ -1,0 +1,43 @@
+{
+  "artifact_id": "factor_model_comparison_v1:ae39f2da2d8a9b219698ef06176f26ae72db6f5abde24bfb9a4c63ff49873385",
+  "artifact_status": "pass",
+  "blocked_reason": "",
+  "code_commit_sha": "c31802b109db377ca517c2f6e20c687cedd9c948",
+  "code_diff_sha256": "",
+  "code_dirty": false,
+  "config_sha256": "1da0313e77a2512d82d2403641950afe2c0a50b01154a8b8b9226cd9616680df",
+  "created_at": "2026-07-13T12:22:07.446772+00:00",
+  "end_date": null,
+  "factor_catalog_id": "factor-catalog:61a60413f1fed6627fe3cb02e5afe11fe1189f142c6a2591a1075ad615516ff7",
+  "factor_frame_id": "factor-series:61a60413f1fed6627fe3cb02e5afe11fe1189f142c6a2591a1075ad615516ff7",
+  "input_artifact_ids": [
+    "a_share_execution_v1:331048530afbd956e14701acbab544fd7339e7343ec91ee5c610d017a6aaecb5",
+    "factor_clustering_v1:1ab9baa362ce0776edcb4222e41b8bb8afd25706ba9e789c25cb4327819cf689",
+    "factor_multiple_testing_v1:219db7cf4f232bea5315f5668d74a5fa565e5038f3106a5ef3e099e4fcb4da9a",
+    "factor_rolling_stability_v1:c06b58333e0d0eb2b70e0cdfb853fa49a0cd2523de8f24efc239c92460554c40",
+    "factor_score_construction_v1:fa75b2a57f8d20c6336538b8a11d171d5e6852a10b1fa2a697f6614f24324bb7",
+    "point_in_time_universe_v1:15164a74a7119b8bfdfc2060cf005f2da739545250dc45f163bbf068f7b9581b",
+    "pre_model_diagnostics_v1:41414e632b84767c312edd710b921baf01e4e0342a2a9fc9f227901703c3f2fe",
+    "purged_walk_forward_v1:fffc4e36ef8fce52cd5bb05f0ed1c38abe895e5dd05747f6d5a2f990fc28a5bf"
+  ],
+  "lineage_status": "reference_only",
+  "missing_lineage_fields": [],
+  "output_file_hashes": {
+    "contract_status.csv": "3051bbd007b539f79243a33ee4ac463863f178e0793d7233eec6659db6f08169",
+    "lineage_issues.csv": "21505663d401100784044cd2603655bbcdca63ba93edcb494b1db61f165a9456",
+    "lineage_validation_summary.csv": "3a7dece6f93dcdbfde46bd2059d79fcc534f133d9dc88c1585b2fbe77ea90cdb",
+    "model_comparison_report.md": "7740f65c2c2ffcf84410366025df6bafb404df4acecd4b5c35f4d8fef20ad79c",
+    "prerequisite_status.csv": "66189f72fd8dddbfdf2b38102477b71d561fd95627b0f515985e456347c25d0f",
+    "readiness_summary.csv": "b495fd71459acb624ee13a951940bc4a24b69616a3c647bdf339b6ffc63e7064"
+  },
+  "producer_run_id": "20260713T122207Z-1261864c",
+  "profile_name": "gated_reference",
+  "profile_type": "reference",
+  "research_run_family_id": "reference_v1_1_1",
+  "run_id": "20260713T122207Z-1261864c",
+  "schema_version": 2,
+  "split_manifest_id": "split-manifest:67887eac73a24cffed9bfcf7366726b771dcb899c6da67f5d872af25097ea66b",
+  "stage_id": "factor_model_comparison_v1",
+  "start_date": null,
+  "universe_artifact_id": "universe:f435d7b8d4a351ad9c155dadf61f767fd9d0272b3096c33d180b0f0eafc9cc6c"
+}

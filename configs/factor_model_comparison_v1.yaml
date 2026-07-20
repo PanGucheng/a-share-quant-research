@@ -1,0 +1,50 @@
+schema_version: 1
+profile: gated_reference
+profile_name: gated_reference
+profile_type: reference
+research_run_family_id: reference_v1_1_1
+prerequisites:
+  point_in_time_universe: outputs/point_in_time_universe_v1/local_smoke/contract_status.csv
+  purged_walk_forward: outputs/purged_walk_forward_v1/local_reference/contract_status.csv
+  multiple_testing: outputs/factor_multiple_testing_v1/local_reference/contract_status.csv
+  rolling_stability: outputs/factor_rolling_stability_v1/local_reference/contract_status.csv
+  factor_clustering: outputs/factor_clustering_v1/local_reference/contract_status.csv
+  score_construction: outputs/factor_score_construction_v1/local_reference/contract_status.csv
+  execution: outputs/a_share_execution_v1/local_reference/contract_status.csv
+  pre_model_diagnostics: outputs/pre_model_diagnostics_v1/local_reference/contract_status.csv
+input_manifests:
+  - outputs/point_in_time_universe_v1/local_smoke/artifact_manifest.json
+  - outputs/purged_walk_forward_v1/local_reference/artifact_manifest.json
+  - outputs/factor_multiple_testing_v1/local_reference/artifact_manifest.json
+  - outputs/factor_rolling_stability_v1/local_reference/artifact_manifest.json
+  - outputs/factor_clustering_v1/local_reference/artifact_manifest.json
+  - outputs/factor_score_construction_v1/local_reference/artifact_manifest.json
+  - outputs/a_share_execution_v1/local_reference/artifact_manifest.json
+  - outputs/pre_model_diagnostics_v1/local_reference/artifact_manifest.json
+manifest_configs:
+  point_in_time_universe_v1: configs/point_in_time_universe_smoke_v1.yaml
+  purged_walk_forward_v1: configs/purged_walk_forward_v1.yaml
+  factor_multiple_testing_v1: configs/factor_multiple_testing_v1.yaml
+  factor_rolling_stability_v1: configs/factor_rolling_stability_v1.yaml
+  factor_clustering_v1: configs/factor_clustering_v1.yaml
+  factor_score_construction_v1: configs/factor_score_construction_v1.yaml
+  a_share_execution_v1: configs/a_share_execution_v1.yaml
+  pre_model_diagnostics_v1: configs/pre_model_diagnostics_v1.yaml
+lineage_edges:
+  factor_rolling_stability_v1: [purged_walk_forward_v1, factor_multiple_testing_v1]
+  factor_clustering_v1: [factor_rolling_stability_v1]
+  factor_score_construction_v1: [purged_walk_forward_v1, factor_rolling_stability_v1, factor_clustering_v1]
+  a_share_execution_v1: [factor_score_construction_v1]
+  pre_model_diagnostics_v1: [a_share_execution_v1, factor_score_construction_v1]
+consistency_contract: outputs/reference_pipeline_consistency_v1/current/contract_status.csv
+full_research_prerequisites:
+  - outputs/point_in_time_universe_v1/full_research/contract_status.csv
+  - outputs/purged_walk_forward_v1/full_research/contract_status.csv
+  - outputs/pre_model_diagnostics_v1/full_research/contract_status.csv
+capability_prerequisites:
+  liquidity_residualized: outputs/liquidity_residualized_factor_evaluation_v1/contract_status.csv
+  historical_exposure: outputs/external_exposure_data_v1/current/contract_status.csv
+models: [equal_weight, stability_weight, ridge, elastic_net, lightgbm]
+stability_board: outputs/factor_rolling_stability_v1/local_reference/factor_stability_board.csv
+representatives: outputs/factor_clustering_v1/local_reference/cluster_representatives.csv
+output_dir: outputs/factor_model_comparison_v1/gated

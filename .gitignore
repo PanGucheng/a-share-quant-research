@@ -2,6 +2,8 @@
 tmp/
 *.tmp
 .delegate/
+outputs/*/runtime/
+outputs/*/*/runtime/
 
 # Earlier failed/interrupted experiment attempts.
 # The validated baseline result is kept under outputs/mlruns_validated/.

@@ -1,0 +1,13 @@
+schema_version: 1
+profile: local_reference
+profile_name: local_reference
+profile_type: reference
+research_run_family_id: reference_v1_1_1
+split_manifest: outputs/purged_walk_forward_v1/local_reference/split_manifest.csv
+alpha158_frame: outputs/alpha158_expression_frame_v1/full158_main_research/factor_frame.pkl
+alpha158_candidates: outputs/factor_candidate_pool_alpha158_v1/full158/alpha158_alpha_candidates.csv
+basic_frame: tmp/factor_frame_cache/basic_factors_0be49ade4d4ba8d3.pkl
+old_candidate_pool: outputs/factor_candidate_pool_v3/liquid2000_expanded/factor_candidate_pool.csv
+minimum_components: 2
+score_clip: 3.0
+output_dir: outputs/legacy_common_scores_v1/local_reference

@@ -1,0 +1,34 @@
+{
+  "artifact_id": "post_model_diagnostics_v1:27b826ce30234d004cdb738f843f7c130c3161c4a5b8b9918435e687f7984e25",
+  "artifact_status": "pass",
+  "blocked_reason": "",
+  "code_commit_sha": "c31802b109db377ca517c2f6e20c687cedd9c948",
+  "code_diff_sha256": "",
+  "code_dirty": false,
+  "config_sha256": "9315a35b215b9ec93a8547213ed990f53545d1cc5374f1b4da330949acc6d8e0",
+  "created_at": "2026-07-13T12:22:06.061219+00:00",
+  "end_date": null,
+  "factor_catalog_id": "factor-catalog:61a60413f1fed6627fe3cb02e5afe11fe1189f142c6a2591a1075ad615516ff7",
+  "factor_frame_id": "factor-series:61a60413f1fed6627fe3cb02e5afe11fe1189f142c6a2591a1075ad615516ff7",
+  "input_artifact_ids": [
+    "factor_model_comparison_v1:426e88ece300c29fa5b82bbceb35d93e6c6ec2bc99c671456bc76f0b5d820c57"
+  ],
+  "lineage_status": "reference_only",
+  "missing_lineage_fields": [
+    "trained_model_outputs"
+  ],
+  "output_file_hashes": {
+    "contract_status.csv": "6935001aea654377cb91a6f1c3da2e2b88075da8685e34b56d963c629dbba6a9",
+    "post_model_diagnostics_report.md": "c2395755f675037b78762a1e8674b86afab8bd02c31f42fa6f767fc43a3b318a"
+  },
+  "producer_run_id": "20260713T122206Z-e9e74906",
+  "profile_name": "gated_reference",
+  "profile_type": "reference",
+  "research_run_family_id": "reference_v1_1_1",
+  "run_id": "20260713T122206Z-e9e74906",
+  "schema_version": 2,
+  "split_manifest_id": "split-manifest:67887eac73a24cffed9bfcf7366726b771dcb899c6da67f5d872af25097ea66b",
+  "stage_id": "post_model_diagnostics_v1",
+  "start_date": null,
+  "universe_artifact_id": "universe:f435d7b8d4a351ad9c155dadf61f767fd9d0272b3096c33d180b0f0eafc9cc6c"
+}

@@ -1,0 +1,7 @@
+﻿check_name,status,observed_value,required_value,severity,reason
+historical_current_snapshot_backfill_count,pass,0,0,critical,External PIT exposure output audit.
+missing_effective_date_count,pass,0,0,critical,External PIT exposure output audit.
+untraceable_source_count,pass,0,0,critical,External PIT exposure output audit.
+invalid_interval_count,pass,0,0,critical,External PIT exposure output audit.
+forward_snapshot_collection,blocked,0,1,warning,External PIT exposure output audit.
+historical_neutralization_ready,blocked,0,1,downstream,External PIT exposure output audit.

@@ -1,0 +1,41 @@
+{
+  "artifact_id": "factor_clustering_v1:1ab9baa362ce0776edcb4222e41b8bb8afd25706ba9e789c25cb4327819cf689",
+  "artifact_status": "blocked",
+  "blocked_reason": "blocked_no_eligible_factors",
+  "code_commit_sha": "c31802b109db377ca517c2f6e20c687cedd9c948",
+  "code_diff_sha256": "",
+  "code_dirty": false,
+  "config_sha256": "2a84fd97b6397f9ee4395712a6bc38914cb9d003befe666ea71a1446c45c85d4",
+  "created_at": "2026-07-13T12:21:59.241410+00:00",
+  "end_date": null,
+  "factor_catalog_id": "factor-catalog:61a60413f1fed6627fe3cb02e5afe11fe1189f142c6a2591a1075ad615516ff7",
+  "factor_frame_id": "factor-series:61a60413f1fed6627fe3cb02e5afe11fe1189f142c6a2591a1075ad615516ff7",
+  "input_artifact_ids": [
+    "factor_rolling_stability_v1:c06b58333e0d0eb2b70e0cdfb853fa49a0cd2523de8f24efc239c92460554c40"
+  ],
+  "lineage_status": "reference_only",
+  "missing_lineage_fields": [
+    "universe_artifact_id"
+  ],
+  "output_file_hashes": {
+    "cluster_representatives.csv": "2fbb8f9db0ed315e4db2048323581411f90360209fe4ae65441b2a135c70bcbe",
+    "cluster_stability.csv": "5f57435b863e10bea9e87ecaa323f3678d89fd745a7c200321a8448a2fd57eeb",
+    "clustering_report.md": "ff7c568f1bfa2b1d878413fd91bad02f397e55eb2a329ab055808d6f5a5e3a4e",
+    "contract_status.csv": "7beb517a4612318d2cc7daa794c7d88f3af7b4137cafd3840d46335001bfad5d",
+    "excluded_redundant_factors.csv": "a8abb7b974cf641c964de28c0d47fb2263d55de71ff4dc5f86028898c27384de",
+    "exposure_correlation_matrix.csv": "5dfe57de221c160d973c61c350e7b83167204cc40937ba08f8606390602b7e95",
+    "factor_clusters.csv": "4307eb4507d30322cc650911abb55fd0d681ec8c9a4049b080d39a52d35a9aa2",
+    "factor_distance_matrix.csv": "5dfe57de221c160d973c61c350e7b83167204cc40937ba08f8606390602b7e95",
+    "performance_correlation_matrix.csv": "5dfe57de221c160d973c61c350e7b83167204cc40937ba08f8606390602b7e95"
+  },
+  "producer_run_id": "20260713T122159Z-5a652850",
+  "profile_name": "local_reference",
+  "profile_type": "reference",
+  "research_run_family_id": "reference_v1_1_1",
+  "run_id": "20260713T122159Z-5a652850",
+  "schema_version": 2,
+  "split_manifest_id": "split-manifest:67887eac73a24cffed9bfcf7366726b771dcb899c6da67f5d872af25097ea66b",
+  "stage_id": "factor_clustering_v1",
+  "start_date": null,
+  "universe_artifact_id": null
+}

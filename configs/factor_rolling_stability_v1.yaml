@@ -1,0 +1,29 @@
+schema_version: 1
+profile: local_reference
+profile_name: local_reference
+profile_type: reference
+research_run_family_id: reference_v1_1_1
+split_manifest: outputs/purged_walk_forward_v1/local_reference/split_manifest.csv
+input_manifests:
+  - outputs/purged_walk_forward_v1/local_reference/artifact_manifest.json
+  - outputs/factor_multiple_testing_v1/local_reference/artifact_manifest.json
+input_glob: outputs/factor_evaluation_v4/liquid2000_open_source_eval/qlib_eval/*/label_*_daily_rank_ic.csv
+metric_column: daily_rank_ic
+bootstrap_samples: 1000
+block_length: 20
+random_seed: 20260712
+fdr_alpha: 0.05
+min_abs_validation_ic: 0.01
+minimum_dates_per_fold: 40
+minimum_train_coverage: 0.80
+minimum_validation_coverage: 0.80
+minimum_test_coverage: 0.80
+minimum_train_valid_ic_count: 40
+minimum_validation_valid_ic_count: 40
+minimum_test_valid_ic_count: 40
+minimum_eligible_windows: 3
+minimum_selection_frequency: 0.60
+minimum_direction_agreement: 0.80
+minimum_direction_adjusted_positive_window_ratio: 0.60
+maximum_allowed_oos_degradation: 0.03
+output_dir: outputs/factor_rolling_stability_v1/local_reference

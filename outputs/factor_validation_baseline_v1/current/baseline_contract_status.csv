@@ -1,0 +1,9 @@
+﻿check_name,status,observed_value,required_value,severity,reason
+critical_artifacts,pass,0.0,0,critical,All baseline artifacts must exist and be non-empty.
+baseline_metric_drift,pass,0.0,0,critical,Frozen metrics must match the declared baseline.
+existing_core_dependencies,pass,0.0,0,critical,Existing Qlib runtime dependencies must remain available.
+research_validation_runtime,pass,0.0,0,critical,Statsmodels must be available for the validation layer.
+future_phase_dependency_warnings,warning,1.0,recorded,warning,Deferred phase-owned dependencies: Riskfolio-Lib.
+command_checks,pass,0.0,0,critical,Existing lightweight validation and audits must return their expected codes.
+v3_39_coverage_gate,blocked,0.1495,>=0.8,critical,Known blocker is preserved; do not lower the threshold or promote residualized factors.
+v3_39_downstream_default,pass,0.0,0,critical,Blocked residualized factors must remain outside downstream defaults.

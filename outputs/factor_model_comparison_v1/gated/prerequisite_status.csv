@@ -1,0 +1,9 @@
+﻿prerequisite,status,blocking_checks,blocking_count
+point_in_time_universe,pass,,0
+purged_walk_forward,pass,,0
+multiple_testing,pass,,0
+rolling_stability,pass,,0
+factor_clustering,blocked,eligible_factor_count;clustering_status,2
+score_construction,blocked,score_construction_status;valid_score_window_count,2
+execution,blocked,execution_status;executed_order_count,2
+pre_model_diagnostics,blocked,pre_model_diagnostics_status;current_stability_pipeline_available,2

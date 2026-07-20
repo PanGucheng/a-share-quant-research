@@ -1,0 +1,6 @@
+﻿check_name,status,observed_value,required_value,severity
+clustering_factors_subset_stability,pass,0,0,critical
+score_factors_subset_selected_representatives,pass,0,0,critical
+execution_methods_subset_score_methods,pass,0,0,critical
+diagnostic_methods_subset_execution_methods,pass,0,0,critical
+current_reference_pipeline,blocked,0,>=1,critical

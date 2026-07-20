@@ -1,0 +1,17 @@
+schema_version: 1
+profile: local_reference
+profile_name: local_reference
+profile_type: reference
+research_run_family_id: reference_v1_1_1
+input_manifests:
+  - outputs/factor_rolling_stability_v1/local_reference/artifact_manifest.json
+stability_board: outputs/factor_rolling_stability_v1/local_reference/factor_stability_board.csv
+factor_frame: tmp/factor_frame_cache/basic_factors_0be49ade4d4ba8d3.pkl
+daily_ic_glob: outputs/factor_evaluation_v4/liquid2000_open_source_eval/qlib_eval/*/label_*_daily_rank_ic.csv
+eligible_roles: [stable_core, conditional_signal]
+max_exposure_dates: 60
+exposure_weight: 0.5
+cluster_distance_threshold: 0.30
+linkage_method: average
+backend: scipy
+output_dir: outputs/factor_clustering_v1/local_reference
