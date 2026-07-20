@@ -14,6 +14,7 @@ from qlib.backtest.decision import Order  # noqa: E402
 
 from qlib_integration.runner import run_qlib_execution  # noqa: E402
 from qlib_integration.exchange_adapter import PreparedQuoteExchange, to_qlib_quote  # noqa: E402
+from qlib_integration.reference_engine import run_reference_target_execution  # noqa: E402
 
 
 PROVIDER = Path("E:/qlib_prj/qlib_data/cn_data_community_20260609_derived")
@@ -89,6 +90,38 @@ def test_synthetic_score_to_account_chain() -> None:
     assert (result["fills"]["executed_shares"] % 100 == 0).all()
     assert (result["daily_accounting"]["cash"] >= -1e-8).all()
     assert result["daily_accounting"]["accounting_error"].abs().max() < 1e-8
+    reference = run_reference_target_execution(
+        signal,
+        market,
+        {
+            "initial_cash": 1_000_000,
+            "top_k": 2,
+            "risk_degree": 0.95,
+            "lot_size": 100,
+            "buy_commission_rate": 0.0,
+            "sell_commission_rate": 0.0,
+            "sell_tax_rate": 0.0,
+            "minimum_commission": 0.0,
+            "slippage_bps": 0.0,
+            "max_participation_rate": 1.0,
+        },
+    )
+    pd.testing.assert_frame_equal(
+        result["orders"][["datetime", "instrument", "side", "requested_shares", "executed_shares"]]
+        .sort_values(["datetime", "instrument", "side"])
+        .reset_index(drop=True),
+        reference["orders"][["datetime", "instrument", "side", "requested_shares", "executed_shares"]]
+        .sort_values(["datetime", "instrument", "side"])
+        .reset_index(drop=True),
+        check_dtype=False,
+    )
+    pd.testing.assert_frame_equal(
+        result["daily_accounting"][["datetime", "cash", "nav", "stock_value"]].reset_index(drop=True),
+        reference["daily_accounting"][["datetime", "cash", "nav", "stock_value"]].reset_index(drop=True),
+        check_dtype=False,
+        atol=1e-8,
+        rtol=1e-10,
+    )
 
 
 @pytest.mark.skipif(not PROVIDER.exists(), reason="local Qlib provider not available")
