@@ -1,0 +1,8 @@
+﻿check_name,status,observed_value,required_value,severity,reason
+factor_count_exact,pass,669,669,critical,
+source_counts_exact,pass,"{'alpha158': 155, 'alpha360': 358, 'ta': 77, 'alpha101': 64, 'project_basic': 15}","{'alpha158': 155, 'alpha360': 358, 'ta': 77, 'alpha101': 64, 'project_basic': 15}",critical,
+factor_names_unique,pass,0,0,critical,
+all_entries_runnable,pass,True,True,critical,
+partition_size_bounded,pass,25,<=25,critical,
+partition_coverage_exact,pass,669,669,critical,
+performance_metrics_not_used,pass,all enabled+runnable catalog entries in deterministic category/name order,no IC/return/ranking inputs,critical,
