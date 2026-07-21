@@ -22,7 +22,7 @@ from factor_research.factor_library import BASE_FIELDS, add_basic_factors  # noq
 from factor_research.ta_source import import_ta_wrapper  # noqa: E402
 from qlib_integration.contracts import contract_row  # noqa: E402
 from research_validation.feature_matrix import atomic_parquet, build_pit_key_grid, canonical_hash, file_sha256, filter_to_pit_intervals, resumable_batch_valid  # noqa: E402
-from research_validation.lineage import capture_code_state, load_artifact_manifest, write_stage_artifact_manifest  # noqa: E402
+from research_validation.lineage import capture_code_state, load_artifact_manifest, validate_manifest_outputs, write_stage_artifact_manifest  # noqa: E402
 from research_validation.stage_output import StageOutputPublisher  # noqa: E402
 
 
@@ -61,6 +61,32 @@ def load_raw(config: dict[str, object], symbols: list[str], runtime: Path, D: ob
     atomic_parquet(frame, path)
     sidecar.write_text(json.dumps({"input_hash": input_hash, "output_sha256": file_sha256(path)}, indent=2) + "\n", encoding="utf-8")
     return frame
+
+
+def load_required_provenance(config: dict[str, object]) -> tuple[dict[str, object], dict[str, object], dict[str, object], dict[str, object]]:
+    if int(config.get("cache_key_schema_version", 0)) != 3:
+        raise ValueError("authoritative full-research matrix requires cache_key_schema_version=3")
+    raw_manifest_path = resolve(config["raw_market_data_snapshot_manifest"])
+    source_manifest_path = resolve(config["factor_source_provenance_manifest"])
+    raw_manifest = load_artifact_manifest(raw_manifest_path)
+    source_manifest = load_artifact_manifest(source_manifest_path)
+    issues = [
+        *validate_manifest_outputs(raw_manifest, raw_manifest_path.parent),
+        *validate_manifest_outputs(source_manifest, source_manifest_path.parent),
+    ]
+    for name, manifest in (("raw", raw_manifest), ("source", source_manifest)):
+        if manifest["artifact_status"] != "pass" or manifest["lineage_status"] != "complete" or bool(manifest["code_dirty"]):
+            raise ValueError(f"{name} provenance is not authoritative: {manifest['artifact_id']}")
+    if issues:
+        raise ValueError("provenance output freshness failed: " + "; ".join(item.reason for item in issues))
+    raw_detail = json.loads(resolve(config["raw_market_data_detail_manifest"]).read_text(encoding="utf-8"))
+    source_detail = json.loads(resolve(config["factor_source_detail_manifest"]).read_text(encoding="utf-8"))
+    raw_path = resolve(config["raw_cache_path"])
+    if file_sha256(raw_path) != str(raw_detail["raw_parquet"]["sha256"]):
+        raise ValueError("raw cache hash differs from raw market data snapshot")
+    if str(source_detail["qlib_commit"]) != str(raw_detail["qlib_commit"]):
+        raise ValueError("raw and source provenance use different Qlib commits")
+    return raw_manifest, source_manifest, raw_detail, source_detail
 
 
 def expression_batch(symbols: list[str], names: list[str], inventory_path: Path, start: object, end: object, D: object) -> pd.DataFrame:
@@ -107,10 +133,10 @@ def ta_batch(raw: pd.DataFrame, names: list[str], source_path: Path) -> pd.DataF
     return pd.concat(rows, ignore_index=True)
 
 
-def alpha101_batch(raw: pd.DataFrame, names: list[str], config: dict[str, object], output: Path) -> pd.DataFrame:
+def alpha101_batch(raw: pd.DataFrame, names: list[str], config: dict[str, object], output: Path, source_commit: str) -> pd.DataFrame:
     source_config = Alpha101SourceConfig(
         provider_uri=str(resolve(config["provider_uri"])), market="point_in_time", start=str(config["warmup_start_date"]), end=str(config["end_date"]), max_instruments=None,
-        source_local_path=resolve(config["alpha101_source_path"]), source_commit="d4b9e61f729df347730aa921b539b9df3c3fe36d", source_file="tests/KunTestUtil/ref_alpha101.py", source_module="KunTestUtil.ref_alpha101.Alphas", license="Apache-2.0",
+        source_local_path=resolve(config["alpha101_source_path"]), source_commit=source_commit, source_file="tests/KunTestUtil/ref_alpha101.py", source_module="KunTestUtil.ref_alpha101.Alphas", license="Apache-2.0",
         selected_smoke_factors=tuple(names), metadata_catalog=resolve(config["alpha101_metadata_catalog"]), catalog_stage="full_research_trial", catalog_enabled=True, catalog_runnable=True,
         labels=("label_10d_t1", "label_20d_t1"), output_dir=output,
     )
@@ -124,6 +150,7 @@ def main() -> int:
     config = yaml.safe_load(resolve(args.config).read_text(encoding="utf-8")) or {}
     catalog_manifest = load_artifact_manifest(resolve(config["factor_catalog_manifest"]))
     universe_manifest = load_artifact_manifest(resolve(config["universe_manifest"]))
+    raw_manifest, source_manifest, raw_detail, source_detail = load_required_provenance(config)
     entries = load_factor_catalog(resolve(config["factor_catalog"]))
     by_source: dict[str, list[str]] = {}
     for entry in entries:
@@ -143,6 +170,14 @@ def main() -> int:
             batch_specs.append((str(row.batch_id), str(row.source), names))
     else:
         batch_specs = [(source, source, sorted(by_source.get(source, []))) for source in ["alpha158", "alpha360", "project_basic", "ta", "alpha101"]]
+    selected_batch_ids = {str(item) for item in config.get("selected_batch_ids", [])}
+    if selected_batch_ids:
+        batch_specs = [item for item in batch_specs if item[0] in selected_batch_ids]
+        if {item[0] for item in batch_specs} != selected_batch_ids:
+            raise ValueError(f"unknown selected_batch_ids: {sorted(selected_batch_ids - {item[0] for item in batch_specs})}")
+    if config.get("maximum_factors_per_selected_batch") is not None:
+        limit = int(config["maximum_factors_per_selected_batch"])
+        batch_specs = [(batch_id, source, names[:limit]) for batch_id, source, names in batch_specs]
     intervals = pd.read_csv(resolve(config["universe_intervals"]))
     symbols = sorted(intervals["instrument"].astype(str).str.upper().unique())
     runtime = resolve(config["runtime_dir"])
@@ -163,9 +198,25 @@ def main() -> int:
     failures: list[dict[str, object]] = []
     for batch_id, source, names in batch_specs:
         path = runtime / f"{batch_id}.parquet"
-        legacy_payload = {"batch": batch_id, "source": source, "factors": names, "catalog": catalog_manifest["artifact_id"], "universe": universe_manifest["artifact_id"], "start": config["start_date"], "end": config["end_date"]}
-        legacy_input_hash = canonical_hash(legacy_payload)
-        input_hash = canonical_hash({**legacy_payload, "key_schema_version": 2})
+        source_key = source_detail["batch_key_material"][source]
+        key_payload = {
+            "batch": batch_id,
+            "source": source,
+            "factors": names,
+            "factor_catalog_artifact_id": catalog_manifest["artifact_id"],
+            "universe_artifact_id": universe_manifest["artifact_id"],
+            "market_data_snapshot_artifact_id": raw_manifest["artifact_id"],
+            "source_provenance_artifact_id": source_manifest["artifact_id"],
+            "source_specific_tree_hash": source_key["source_specific_tree_hash"],
+            "adapter_hash": source_key["adapter_hash"],
+            "formula_or_metadata_hash": source_key["formula_or_metadata_hash"],
+            "qlib_commit": source_key["qlib_commit"],
+            "warmup_start": config["warmup_start_date"],
+            "start": config["start_date"],
+            "end": config["end_date"],
+            "key_schema_version": 3,
+        }
+        input_hash = canonical_hash(key_payload)
         prior = previous.get(batch_id, {})
         attempts = int(prior.get("attempts", 0))
         if resumable_batch_valid(prior, input_hash, path):
@@ -174,23 +225,21 @@ def main() -> int:
         started = time.perf_counter()
         attempts += 1
         try:
-            reindexed_from_cache = resumable_batch_valid(prior, legacy_input_hash, path)
-            if reindexed_from_cache:
-                frame = pd.read_parquet(path)
-            elif source == "alpha158": frame = expression_batch(symbols, names, resolve(config["alpha158_inventory"]), config["start_date"], config["end_date"], D)
+            reindexed_from_cache = False
+            if source == "alpha158": frame = expression_batch(symbols, names, resolve(config["alpha158_inventory"]), config["start_date"], config["end_date"], D)
             elif source == "alpha360": frame = expression_batch(symbols, names, resolve(config["alpha360_inventory"]), config["start_date"], config["end_date"], D)
             else:
                 if raw is None: raw = load_raw(config, symbols, runtime, D)
                 if source == "project_basic": frame = add_basic_factors(raw.copy())[["datetime", "instrument", *names]]
                 elif source == "ta": frame = ta_batch(raw, names, resolve(config["ta_source_path"]))
-                else: frame = alpha101_batch(raw, names, config, runtime)
+                else: frame = alpha101_batch(raw, names, config, runtime, str(source_key["source_commit"]))
             frame = frame.loc[pd.to_datetime(frame["datetime"]).between(pd.Timestamp(config["start_date"]), pd.Timestamp(config["end_date"]))]
             frame = filter_to_pit_intervals(frame, intervals)
             frame = pit_keys.merge(frame, on=["datetime", "instrument"], how="left", validate="one_to_one")
             atomic_parquet(frame, path)
-            row = {"batch_id": batch_id, "source": source, "status": "pass", "factor_count": len(names), "row_count": len(frame), "instrument_count": frame["instrument"].nunique(), "start_date": frame["datetime"].min(), "end_date": frame["datetime"].max(), "input_hash": input_hash, "output_path": path.as_posix(), "output_sha256": file_sha256(path), "output_size_bytes": path.stat().st_size, "attempts": attempts, "runtime_seconds": time.perf_counter() - started, "cache_hit": False, "reindexed_from_cache": reindexed_from_cache, "key_schema_version": 2, "error": ""}
+            row = {"batch_id": batch_id, "source": source, "status": "pass", "factor_count": len(names), "row_count": len(frame), "instrument_count": frame["instrument"].nunique(), "start_date": frame["datetime"].min(), "end_date": frame["datetime"].max(), "input_hash": input_hash, "output_path": path.as_posix(), "output_sha256": file_sha256(path), "output_size_bytes": path.stat().st_size, "attempts": attempts, "runtime_seconds": time.perf_counter() - started, "cache_hit": False, "reindexed_from_cache": reindexed_from_cache, "key_schema_version": 3, "market_data_snapshot_artifact_id": raw_manifest["artifact_id"], "source_provenance_artifact_id": source_manifest["artifact_id"], "source_specific_tree_hash": source_key["source_specific_tree_hash"], "adapter_hash": source_key["adapter_hash"], "formula_or_metadata_hash": source_key["formula_or_metadata_hash"], "error": ""}
         except Exception as exc:
-            row = {"batch_id": batch_id, "source": source, "status": "failed", "factor_count": len(names), "row_count": 0, "instrument_count": 0, "start_date": "", "end_date": "", "input_hash": input_hash, "output_path": path.as_posix(), "output_sha256": "", "output_size_bytes": 0, "attempts": attempts, "runtime_seconds": time.perf_counter() - started, "cache_hit": False, "reindexed_from_cache": False, "key_schema_version": 2, "error": f"{type(exc).__name__}: {exc}"}
+            row = {"batch_id": batch_id, "source": source, "status": "failed", "factor_count": len(names), "row_count": 0, "instrument_count": 0, "start_date": "", "end_date": "", "input_hash": input_hash, "output_path": path.as_posix(), "output_sha256": "", "output_size_bytes": 0, "attempts": attempts, "runtime_seconds": time.perf_counter() - started, "cache_hit": False, "reindexed_from_cache": False, "key_schema_version": 3, "market_data_snapshot_artifact_id": raw_manifest["artifact_id"], "source_provenance_artifact_id": source_manifest["artifact_id"], "source_specific_tree_hash": source_key["source_specific_tree_hash"], "adapter_hash": source_key["adapter_hash"], "formula_or_metadata_hash": source_key["formula_or_metadata_hash"], "error": f"{type(exc).__name__}: {exc}"}
             failures.append(row.copy())
         batch_rows.append(row)
         pd.DataFrame(batch_rows).to_csv(state_path, index=False, encoding="utf-8-sig")
@@ -207,14 +256,19 @@ def main() -> int:
         sample = subset if sample is None else sample.merge(subset, on=["datetime", "instrument"], how="outer")
     coverage = pd.DataFrame(coverage_rows)
     factor_count = int(success["factor_count"].sum()) if not success.empty else 0
+    scoped_factor_count = sum(len(names) for _, _, names in batch_specs)
     contracts = pd.DataFrame([
         contract_row("factor_catalog_count", len(entries) == int(config.get("expected_factor_count", 80)), len(entries), int(config.get("expected_factor_count", 80))),
         contract_row("all_batches_pass", failures == [], len(failures), 0),
-        contract_row("all_factors_materialized", factor_count == len(entries), factor_count, len(entries)),
+        contract_row("all_factors_materialized", factor_count == scoped_factor_count, factor_count, scoped_factor_count),
         contract_row("pit_universe_applied", bool(not success.empty and success["row_count"].gt(0).all()), universe_manifest["universe_artifact_id"], "nonempty PIT-filtered batches"),
         contract_row("complete_key_grid_aligned", bool(not success.empty and success["row_count"].eq(len(pit_keys)).all()), success["row_count"].tolist(), len(pit_keys)),
         contract_row("batch_output_hashes_present", bool(not success.empty and success["output_sha256"].astype(str).str.len().eq(64).all()), int(success["output_sha256"].astype(str).str.len().eq(64).sum()), len(success)),
         contract_row("resume_metadata_present", set(["input_hash", "attempts", "cache_hit", "key_schema_version"]).issubset(batch.columns), list(batch.columns), "input_hash/attempts/cache_hit/key_schema_version"),
+        contract_row("cache_key_schema_v3", bool(not success.empty and success["key_schema_version"].eq(3).all()), success["key_schema_version"].tolist(), 3),
+        contract_row("legacy_cache_not_reindexed", bool(not success.empty and ~success["reindexed_from_cache"].astype(bool).any()), int(success["reindexed_from_cache"].astype(bool).sum()), 0),
+        contract_row("raw_provenance_bound", bool(not success.empty and success["market_data_snapshot_artifact_id"].eq(raw_manifest["artifact_id"]).all()), success["market_data_snapshot_artifact_id"].nunique(), 1),
+        contract_row("source_provenance_bound", bool(not success.empty and success["source_provenance_artifact_id"].eq(source_manifest["artifact_id"]).all()), success["source_provenance_artifact_id"].nunique(), 1),
     ])
     ready = contracts["status"].eq("pass").all()
     output_dir = resolve(config["output_dir"])
@@ -225,11 +279,12 @@ def main() -> int:
         coverage.to_csv(publisher.path("factor_coverage.csv"), index=False, encoding="utf-8-sig")
         (sample if sample is not None else pd.DataFrame()).to_csv(publisher.path("factor_matrix_sample.csv"), index=False, encoding="utf-8-sig")
         pd.DataFrame(failures, columns=batch.columns).to_csv(publisher.path("failure_inventory.csv"), index=False, encoding="utf-8-sig")
-        publisher.path("schema.json").write_text(json.dumps({"keys": ["datetime", "instrument"], "factors": sorted(entry.name for entry in entries), "partitioning": "bounded source batches" if config.get("batch_plan") else "source adapter", "runtime_committed": False}, indent=2) + "\n", encoding="utf-8")
+        materialized_factors = sorted({name for _, _, names in batch_specs for name in names})
+        publisher.path("schema.json").write_text(json.dumps({"keys": ["datetime", "instrument"], "factors": materialized_factors, "partitioning": "bounded source batches" if config.get("batch_plan") else "source adapter", "runtime_committed": False, "cache_key_schema_version": 3}, indent=2) + "\n", encoding="utf-8")
         publisher.path("factor_matrix_report.md").write_text(f"# Full-Research Feature Matrix V1\n\n- Status: `{'pass' if ready else 'blocked'}`\n- Factors: `{factor_count}` / `{len(entries)}`\n- PIT instruments in source intervals: `{len(symbols)}`\n- Passed batches: `{len(success)}` / `{len(batch)}`\n- Runtime partitions are hash-addressed and intentionally excluded from Git.\n", encoding="utf-8")
         files = [publisher.path(name) for name in CONTROLLED if name != "artifact_manifest.json"]
         factor_frame_id = "factor-frame:" + canonical_hash(success[["batch_id", "output_sha256"]].to_dict("records"))
-        write_stage_artifact_manifest(project_root=PROJECT_ROOT, stage_id="full_research_feature_matrix_v1", config=config, output_dir=publisher.staging_dir, output_files=files, code_state=code_state, input_manifest_paths=[resolve(config["factor_catalog_manifest"]), resolve(config["universe_manifest"])], factor_frame_id=factor_frame_id, start_date=config["start_date"], end_date=config["end_date"], lineage_status="complete", artifact_status="pass" if ready else "blocked", blocked_reason="" if ready else "blocked_feature_matrix_batch_failure")
+        write_stage_artifact_manifest(project_root=PROJECT_ROOT, stage_id="full_research_feature_matrix_v1", config=config, output_dir=publisher.staging_dir, output_files=files, code_state=code_state, input_manifest_paths=[resolve(config["factor_catalog_manifest"]), resolve(config["universe_manifest"]), resolve(config["raw_market_data_snapshot_manifest"]), resolve(config["factor_source_provenance_manifest"])], factor_frame_id=factor_frame_id, start_date=config["start_date"], end_date=config["end_date"], lineage_status="complete", artifact_status="pass" if ready else "blocked", blocked_reason="" if ready else "blocked_feature_matrix_batch_failure")
         publisher.publish()
     print(contracts.to_string(index=False))
     return 0 if ready else 2
