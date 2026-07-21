@@ -1,0 +1,65 @@
+{
+  "calendar_files": [
+    "calendars/day.txt"
+  ],
+  "factor_catalog_artifact_id": "full_research_factor_catalog_669_v1:4916ff89ed2853a2f69d05ede489d9ad44036c3424ddd384801061968b7efc44",
+  "instrument_files": [
+    "instruments/all.txt"
+  ],
+  "provider_file_count": 27883,
+  "provider_missing_file_count": 0,
+  "provider_resolved_path": "E:/qlib_prj/qlib_data/cn_data_community_20260609_derived",
+  "provider_snapshot_id": "provider-snapshot:0a3b1f3fe992eeb576c293d6c3cd02c3e41215ac6bfb142931f46f0117822a82",
+  "provider_tree_sha256": "0a3b1f3fe992eeb576c293d6c3cd02c3e41215ac6bfb142931f46f0117822a82",
+  "provider_uri": "../qlib_data/cn_data_community_20260609_derived",
+  "qlib_commit": "d5379c520f66a39953bad76234a7019a72796fd0",
+  "qlib_commit_tree": "35564fd8b72b26bc60bb4e4fc34324f0e34c1de6",
+  "qlib_dirty_paths": [
+    "xamples/benchmarks/LightGBM/workflow_config_lightgbm_Alpha158_csi500.yaml"
+  ],
+  "raw_market_data_id": "raw-market-data:36f85ef65e1ec5e66d8a206e122d8b2ee13149d46f4a1abadb78518c10124ced",
+  "raw_parquet": {
+    "columns": [
+      "instrument",
+      "datetime",
+      "$open",
+      "$high",
+      "$low",
+      "$close",
+      "$volume",
+      "$amount"
+    ],
+    "date_max": "2026-06-09 00:00:00",
+    "date_min": "2020-09-01 00:00:00",
+    "duplicate_key_count": 0,
+    "instrument_count": 3983,
+    "instrument_set_sha256": "979f81f93d4503ff54883ca3eb8e253b6bd3ec193f45dd7df792182be79b2deb",
+    "missing_required_columns": [],
+    "path": "E:/qlib_prj/qlib_baseline/outputs/full_research_feature_matrix_v1/runtime/raw_ohlcva.parquet",
+    "required_columns": [
+      "datetime",
+      "instrument",
+      "$open",
+      "$high",
+      "$low",
+      "$close",
+      "$volume",
+      "$amount"
+    ],
+    "row_count": 5208622,
+    "row_group_count": 5,
+    "sha256": "1da985efe1a361eb5b366bc958a8c68ac1e15c3c6054ae0b946e64ab40ee49e8",
+    "size_bytes": 128461794
+  },
+  "required_fields": [
+    "$amount",
+    "$close",
+    "$high",
+    "$low",
+    "$open",
+    "$volume",
+    "$vwap"
+  ],
+  "schema_version": 1,
+  "universe_artifact_id": "point_in_time_universe_v1:fd474dd597b3a967d9af3d8ae4dd47e086da0d30e8387e2ac2df622aa481d07f"
+}

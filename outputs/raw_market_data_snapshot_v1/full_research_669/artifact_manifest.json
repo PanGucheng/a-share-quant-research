@@ -1,0 +1,37 @@
+{
+  "artifact_id": "raw_market_data_snapshot_v1:e2f213da365ea6ba4d8375c830ff32e45f78fc847b814a11aaeb9e26b49d8cd9",
+  "artifact_status": "pass",
+  "blocked_reason": "",
+  "code_commit_sha": "02a1af108f4cbcbfaf9e2e2734ac4b7b70acd0e8",
+  "code_diff_sha256": "",
+  "code_dirty": false,
+  "config_sha256": "348bacbc3bd987a5de77ff0d2f4d56a375294fe1612c758766f2a83ab6caa149",
+  "created_at": "2026-07-21T01:56:19.159732+00:00",
+  "end_date": "2026-06-09",
+  "factor_catalog_id": "factor-catalog:8c031a09892fc915ac45201942f563925a9bab617e60fce5ecbbe274a51a02e1",
+  "factor_frame_id": null,
+  "input_artifact_ids": [
+    "full_research_factor_catalog_669_v1:4916ff89ed2853a2f69d05ede489d9ad44036c3424ddd384801061968b7efc44",
+    "point_in_time_universe_v1:fd474dd597b3a967d9af3d8ae4dd47e086da0d30e8387e2ac2df622aa481d07f"
+  ],
+  "lineage_status": "complete",
+  "missing_lineage_fields": [],
+  "output_file_hashes": {
+    "contract_status.csv": "811eb292bbdc18fdec78905fef27b5934634bc81cc0522f5ddb2c791d64f66c2",
+    "field_schema.json": "446487aaf238ef57d29186f4d46a0f51c990d8a9833f26903480fc7d545caf11",
+    "provider_file_inventory.csv": "e39d9ef758e8ee817570df17844dd8278aebbefbade7344ca463bad8e4e4b5a0",
+    "raw_market_data_manifest.json": "b1259f581423af060a99a184a15e3eb1351795668d282e8939b7d9f44b122291",
+    "raw_market_data_report.md": "7c1c90fc92d6166036bf647b8dc3450811218608a7755274f7c673c873e2cca1",
+    "resolved_config.json": "f8dc61ed7ec9c6e45f228677cc94d9a9ae9350c6ec98d703db96892119cbe8ce"
+  },
+  "producer_run_id": "20260721T015619Z-267667d0",
+  "profile_name": "full_research",
+  "profile_type": "full_research",
+  "research_run_family_id": "full_research_factor_669_v1",
+  "run_id": "20260721T015619Z-267667d0",
+  "schema_version": 2,
+  "split_manifest_id": null,
+  "stage_id": "raw_market_data_snapshot_v1",
+  "start_date": "2020-09-01",
+  "universe_artifact_id": "universe:10287ec42be03cb525de034b1bea1b53fa5da11cda5de4b5ed8f1f2ad1dcdad5"
+}

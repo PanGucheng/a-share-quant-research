@@ -1,0 +1,1 @@
+﻿batch_id,source,status,factor_count,row_count,instrument_count,start_date,end_date,input_hash,output_path,output_sha256,output_size_bytes,attempts,runtime_seconds,cache_hit,reindexed_from_cache,key_schema_version,market_data_snapshot_artifact_id,source_provenance_artifact_id,source_specific_tree_hash,adapter_hash,formula_or_metadata_hash,error

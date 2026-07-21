@@ -1,0 +1,33 @@
+{
+  "approval_mode": "user_session_waiver",
+  "approval_source": "2026-07-21 current conversation authorization for planned computations after full self-review",
+  "approval_timestamp": "2026-07-21T02:17:30.864956+00:00",
+  "approved_by": "user",
+  "approved_command_sha256": "f041cf5a45926217233e9646513bb3822f29f2464e23fe673440baa75fe338a9",
+  "approved_commit_sha": "b0c2f871c768c952e9270f008e6bd3a4ef29d2a9",
+  "approved_input_inventory_sha256": "84dd7305b3572cdc4409ad62961b9b5b3132d7b767f98f7df8508a74b763ff3d",
+  "approved_resolved_config_sha256": "61776418e7c3235618e0e50ac538baf6ff4936831b004672fe04a031ce70f6bb",
+  "approved_scope": {
+    "batch_count": 30,
+    "cache_key_schema_version": 3,
+    "end_date": "2026-06-09",
+    "factor_count": 669,
+    "operation": "materialize",
+    "output_dir": "outputs/full_research_feature_matrix_669_v1/current",
+    "runtime_dir": "outputs/full_research_feature_matrix_669_v1/runtime_v3",
+    "sources": [
+      "alpha101",
+      "alpha158",
+      "alpha360",
+      "project_basic",
+      "ta"
+    ],
+    "start_date": "2021-02-01",
+    "warmup_start_date": "2020-09-01"
+  },
+  "approved_scope_sha256": "976e7ea32a3d82aa883c193695a06d403e0b7e028cd10e3b543fbcd77bff561b",
+  "bulk_run_approval_id": "bulk-run-approval:4787c2645585a0322ab1bcb236d8cc8606d2dc6e25d009e0b83f425571641a83",
+  "run_id": "matrix-v3-full-20260721",
+  "single_use": true,
+  "status": "approved"
+}

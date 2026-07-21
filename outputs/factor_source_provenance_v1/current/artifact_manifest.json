@@ -1,0 +1,37 @@
+{
+  "artifact_id": "factor_source_provenance_v1:0d8c86c57c71b791866aa8e33f29ab49406f585d94cb166c2d65a51a8a908b96",
+  "artifact_status": "pass",
+  "blocked_reason": "",
+  "code_commit_sha": "b0c2f871c768c952e9270f008e6bd3a4ef29d2a9",
+  "code_diff_sha256": "",
+  "code_dirty": false,
+  "config_sha256": "b7da2cb137db1ea85949dde092b22a2803ecb8f9c1284715fac2debcd0589eae",
+  "created_at": "2026-07-21T02:14:19.870118+00:00",
+  "end_date": null,
+  "factor_catalog_id": "factor-catalog:8c031a09892fc915ac45201942f563925a9bab617e60fce5ecbbe274a51a02e1",
+  "factor_frame_id": null,
+  "input_artifact_ids": [
+    "full_research_factor_catalog_669_v1:4916ff89ed2853a2f69d05ede489d9ad44036c3424ddd384801061968b7efc44"
+  ],
+  "lineage_status": "complete",
+  "missing_lineage_fields": [],
+  "output_file_hashes": {
+    "contract_status.csv": "c1aa84d1967b002b12c2536ff2f690f13512ae9fe55b6fce72a24f2324b5d12b",
+    "factor_source_manifest.json": "7d356cc720bbe967a19c640a23ef5e90bf34b777bf743c59b3bdc45ecee11b4a",
+    "factor_source_provenance_report.md": "aa616c6a19034171968481986451cacc70336a549828a0e0e7ba83882538bdf5",
+    "repo_receipts.json": "42ac3c2aeb0f921d3b7bcf52cbebb71ae7bf493784a4fb7573d512c626cd4056",
+    "resolved_config.json": "62d6a44647e0d09079001bc3436aca7ce7ab3f8472b3695513c3414d74c731c0",
+    "source_file_inventory.csv": "ae8bb532416e31c77edd51697fc28c504d0dfacc975e26967343719a2704614d",
+    "source_summary.csv": "e33d3b29aae712927e860ee8c44f9d00835e9389f19fe61944f9a51528a69106"
+  },
+  "producer_run_id": "20260721T021419Z-13bab86b",
+  "profile_name": "full_research",
+  "profile_type": "full_research",
+  "research_run_family_id": "full_research_factor_669_v1",
+  "run_id": "20260721T021419Z-13bab86b",
+  "schema_version": 2,
+  "split_manifest_id": null,
+  "stage_id": "factor_source_provenance_v1",
+  "start_date": null,
+  "universe_artifact_id": null
+}

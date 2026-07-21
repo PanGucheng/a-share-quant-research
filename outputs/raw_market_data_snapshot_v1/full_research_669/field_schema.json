@@ -1,0 +1,54 @@
+{
+  "column_order": [
+    "instrument",
+    "datetime",
+    "$open",
+    "$high",
+    "$low",
+    "$close",
+    "$volume",
+    "$amount"
+  ],
+  "columns": [
+    {
+      "dtype": "string",
+      "name": "instrument",
+      "nullable": true
+    },
+    {
+      "dtype": "timestamp[ns]",
+      "name": "datetime",
+      "nullable": true
+    },
+    {
+      "dtype": "float",
+      "name": "$open",
+      "nullable": true
+    },
+    {
+      "dtype": "float",
+      "name": "$high",
+      "nullable": true
+    },
+    {
+      "dtype": "float",
+      "name": "$low",
+      "nullable": true
+    },
+    {
+      "dtype": "float",
+      "name": "$close",
+      "nullable": true
+    },
+    {
+      "dtype": "float",
+      "name": "$volume",
+      "nullable": true
+    },
+    {
+      "dtype": "float",
+      "name": "$amount",
+      "nullable": true
+    }
+  ]
+}

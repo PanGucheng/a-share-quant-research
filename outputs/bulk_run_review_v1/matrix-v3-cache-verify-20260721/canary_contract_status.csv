@@ -1,0 +1,11 @@
+﻿check_name,status,observed_value,required_value,severity,reason
+canary_contracts_pass,pass,0,0,critical,
+canary_cache_hit_verified,pass,1,1,critical,
+canary_key_schema_v3,pass,[3],3,critical,
+canary_legacy_reindex_zero,pass,0,0,critical,
+canary_key_grid_exact,pass,0,0,critical,
+canary_nan_pattern_exact,pass,0,0,critical,
+canary_values_exact,pass,0,0,critical,
+free_disk_sufficient,pass,423250313216,>=14722602968,critical,
+full_scope_factors,pass,669,669,critical,
+full_scope_batches,pass,30,30,critical,

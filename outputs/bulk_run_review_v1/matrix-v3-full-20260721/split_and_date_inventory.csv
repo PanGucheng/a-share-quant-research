@@ -1,0 +1,2 @@
+﻿run_id,operation,warmup_start_date,start_date,end_date,outer_test_read,pre_test_freeze_required,selection_semantics
+matrix-v3-full-20260721,materialize,2020-09-01,2021-02-01,2026-06-09,False,False,feature_materialization_only

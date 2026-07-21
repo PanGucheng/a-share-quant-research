@@ -1,0 +1,1 @@
+E:/anaconda_envs/qlib_env/python.exe scripts/run_full_research_feature_matrix_v1.py --config configs/full_research_feature_matrix_669_v1.yaml --approval outputs/bulk_run_review_v1/matrix-v3-full-20260721/user_approval.json --run-purpose materialize
