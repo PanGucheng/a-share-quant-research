@@ -26,6 +26,36 @@ PR #6：新未来数据 / forward paper confirmation
 
 “逻辑 PR #4.1”表示它属于 PR #4 的统计语义收尾；由于 GitHub PR #4 已合并，它使用当前 Draft GitHub PR #5 实施，但不得包含任何模型训练。本文中的 PR #5A—#5D 是后续逻辑模型阶段，不等同于当前 GitHub PR 编号。
 
+### 1.1 2026-07-21 实施授权与持续推进规则
+
+本轮允许在门禁满足后执行大规模因子计算，但资源授权不替代质量审查和 run-specific approval：
+
+- 每次大规模计算前必须完成全仓代码、配置、输入、lineage、统计语义、磁盘/内存和恢复路径审阅；
+- 必须先运行受限 canary、小规模 mutation 和相关 validator，验证结果进入 review bundle；
+- review bundle 必须交由用户检查；只有 exact run ID、commit、config、input inventory、command 和 scope 获得明确批准后才能启动；
+- 若用户没有打断，Codex 应持续推进所有不依赖该人工放行的审阅、实现、测试、提交、CI、合并和 main 复验，不得因任务复杂或耗时主动停止；
+- 人工放行是唯一例外：到达大规模运行门禁时必须等待，不能把“持续推进”解释为自动批准未知批次；
+- 每个大规模阶段都先小规模审阅和充分验证，canary 未通过时禁止扩大规模；
+- 当前计划全部完成后，必须先审计完成证据、制定下一阶段详细计划、落实到文档并提交，再按新文档执行；不得在没有新计划和门禁的情况下即兴扩展范围。
+
+任何 review 或 canary 发现的确定性问题都必须先修复并重新审阅；不能以已有耗时、缓存或历史通过结果为理由继续大规模运行。
+
+### 1.2 本次对话的临时人工审阅豁免
+
+用户在 2026-07-21 当前对话中明确授权：本次对话无需在大规模计算前再次停下等待用户审阅。该授权只豁免第 13.4 节的“交付后等待”动作，不豁免任何技术门禁。
+
+适用条件：
+
+- 仅适用于当前逻辑 PR #4.1 已定义的 30 批 provenance 重跑、669 因子选择链和相同 Qlib 透明基线复验；
+- 在 exact run 启动前仍必须生成完整 review bundle，并由 Codex 完成逐项自审；
+- hard-stop、clean worktree/commit、canary、mutation、validator、资源和磁盘检查必须全部通过；
+- `user_approval.json` 记录 `approval_mode=user_session_waiver`、本条授权引用、exact run ID 及最终 commit/config/input/command/scope hashes；
+- review bundle 生成后若代码、配置、输入、命令、日期、因子数、统计语义或资源范围变化，必须重新生成 bundle 和 approval artifact；
+- 发现 warning、unknown difference、hash mismatch、lineage issue、canary failure 或资源不足时立即停止并修复，不能以豁免为由继续；
+- 不适用于 PR #5A—#5D 的模型搜索、计划外数据源、实盘或当前对话结束后的任何批次。
+
+在上述条件全部成立时，runner 可以验证 `user_session_waiver` 后直接开始当前 run，无需再次等待用户回复。
+
 ## 2. 当前审计结论
 
 PR #4 的以下成果继续有效：
@@ -616,7 +646,7 @@ Review bundle 至少披露：
 - exact command、输出目录、resume/cache 行为、失败停止和清理方案；
 - 本次运行是否会读取 outer test，以及对应 pre-test freeze 状态。
 
-用户明确同意后才生成本次运行专用的 `user_approval.json`：
+通常由用户明确审阅同意后才生成本次运行专用的 `user_approval.json`。本次对话可按第 1.2 节记录 `user_session_waiver`，但 exact hashes 和 scope 仍必须在运行前物化：
 
 ```text
 bulk_run_user_review_status = approved
@@ -629,11 +659,12 @@ approved_input_inventory_sha256
 approved_command_sha256
 approved_scope
 approval_timestamp
+approval_mode
 ```
 
 Runner 启动时必须逐项复核 approval。代码 commit、配置、输入 inventory、命令、因子数量、日期范围、split/FDR 语义或资源范围任一变化，都将状态改为 `invalidated` 并重新请求用户检查。Approval 只适用于一个 `run_id`，不可跨运行复用；没有用户明确回复时必须停下等待，不得根据历史授权、超时或“继续推进”指令自动放行。
 
-状态机固定为 `not_requested → pending_review → approved → running → consumed`，任一哈希或 scope 变化可从未完成状态转为 `invalidated`。只有用户能执行 `pending_review → approved`；runner 只能验证、进入 `running` 并在结束后写为 `consumed`，已 consumed 的 approval 不可再次使用。
+状态机固定为 `not_requested → pending_review → approved → running → consumed`，任一哈希或 scope 变化可从未完成状态转为 `invalidated`。通常只有用户能执行 `pending_review → approved`；本次对话允许由用户预先授权的 `user_session_waiver` 在 review bundle 自审通过后物化为 exact approval。Runner 只能验证、进入 `running` 并在结束后写为 `consumed`，已 consumed 的 approval 不可再次使用。
 
 ## 14. PR #4.1 推荐提交拆分
 
