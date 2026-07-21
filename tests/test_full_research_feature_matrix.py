@@ -102,3 +102,12 @@ def test_matrix_canary_is_bounded_to_one_batch_and_five_factors() -> None:
     assert config["selected_batch_ids"] == ["alpha158_001"]
     assert config["maximum_factors_per_selected_batch"] == 5
     assert pd.Timestamp(config["end_date"]) - pd.Timestamp(config["start_date"]) <= pd.Timedelta(days=191)
+
+
+def test_large_matrix_runner_requires_exact_approval() -> None:
+    source = (Path(__file__).resolve().parents[1] / "scripts/run_full_research_feature_matrix_v1.py").read_text(
+        encoding="utf-8"
+    )
+    assert "large matrix run requires --approval" in source
+    assert "validate_bulk_run_approval(approval, binding)" in source
+    assert "approval_manifest_path" in source

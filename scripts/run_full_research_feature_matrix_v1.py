@@ -21,6 +21,11 @@ from factor_research.catalog import load_factor_catalog  # noqa: E402
 from factor_research.factor_library import BASE_FIELDS, add_basic_factors  # noqa: E402
 from factor_research.ta_source import import_ta_wrapper  # noqa: E402
 from qlib_integration.contracts import contract_row  # noqa: E402
+from research_validation.bulk_run_gate import (  # noqa: E402
+    build_bulk_run_binding,
+    relative_command_path,
+    validate_bulk_run_approval,
+)
 from research_validation.feature_matrix import atomic_parquet, build_pit_key_grid, canonical_hash, file_sha256, filter_to_pit_intervals, resumable_batch_valid  # noqa: E402
 from research_validation.lineage import capture_code_state, load_artifact_manifest, validate_manifest_outputs, write_stage_artifact_manifest  # noqa: E402
 from research_validation.stage_output import StageOutputPublisher  # noqa: E402
@@ -41,6 +46,61 @@ CONTROLLED = [
 def resolve(value: str | Path) -> Path:
     path = Path(value)
     return path if path.is_absolute() else (PROJECT_ROOT / path).resolve()
+
+
+def matrix_exact_command(config_path: Path, approval_path: Path, run_purpose: str) -> str:
+    python = Path(sys.executable).resolve().as_posix()
+    config_arg = relative_command_path(config_path, PROJECT_ROOT)
+    approval_arg = relative_command_path(approval_path, PROJECT_ROOT)
+    return (
+        f"{python} scripts/run_full_research_feature_matrix_v1.py "
+        f"--config {config_arg} --approval {approval_arg} --run-purpose {run_purpose}"
+    )
+
+
+def matrix_input_inventory(
+    config: dict[str, object],
+    manifests: list[dict[str, object]],
+    raw_detail: dict[str, object],
+    source_detail: dict[str, object],
+) -> list[dict[str, object]]:
+    rows = [
+        {
+            "input_type": "artifact",
+            "name": str(manifest["stage_id"]),
+            "artifact_id": str(manifest["artifact_id"]),
+            "config_sha256": str(manifest["config_sha256"]),
+        }
+        for manifest in manifests
+    ]
+    for name in ("factor_inventory", "batch_plan", "alpha158_inventory", "alpha360_inventory", "alpha101_metadata_catalog"):
+        path = resolve(config[name])
+        rows.append({"input_type": "file", "name": name, "path": relative_command_path(path, PROJECT_ROOT), "sha256": file_sha256(path)})
+    rows.extend(
+        [
+            {"input_type": "external", "name": "raw_parquet", "sha256": str(raw_detail["raw_parquet"]["sha256"])},
+            {"input_type": "external", "name": "provider_tree", "sha256": str(raw_detail["provider_tree_sha256"])},
+            {"input_type": "external", "name": "qlib_commit", "value": str(source_detail["qlib_commit"])},
+        ]
+    )
+    for source, material in sorted(source_detail["batch_key_material"].items()):
+        rows.append({"input_type": "source_key", "name": source, **material})
+    return rows
+
+
+def matrix_run_scope(config: dict[str, object], batch_specs: list[tuple[str, str, list[str]]], run_purpose: str) -> dict[str, object]:
+    return {
+        "operation": run_purpose,
+        "batch_count": len(batch_specs),
+        "factor_count": sum(len(names) for _, _, names in batch_specs),
+        "sources": sorted({source for _, source, _ in batch_specs}),
+        "start_date": str(config["start_date"]),
+        "end_date": str(config["end_date"]),
+        "warmup_start_date": str(config["warmup_start_date"]),
+        "cache_key_schema_version": int(config["cache_key_schema_version"]),
+        "runtime_dir": str(config["runtime_dir"]),
+        "output_dir": str(config["output_dir"]),
+    }
 
 
 def load_raw(config: dict[str, object], symbols: list[str], runtime: Path, D: object) -> pd.DataFrame:
@@ -146,8 +206,11 @@ def alpha101_batch(raw: pd.DataFrame, names: list[str], config: dict[str, object
 def main() -> int:
     parser = argparse.ArgumentParser(description="Build a resumable partitioned full-research factor matrix.")
     parser.add_argument("--config", type=Path, default=Path("configs/full_research_feature_matrix_v1.yaml"))
+    parser.add_argument("--approval", type=Path)
+    parser.add_argument("--run-purpose", choices=("materialize", "cache_verify"), default="materialize")
     args = parser.parse_args()
-    config = yaml.safe_load(resolve(args.config).read_text(encoding="utf-8")) or {}
+    config_path = resolve(args.config)
+    config = yaml.safe_load(config_path.read_text(encoding="utf-8")) or {}
     catalog_manifest = load_artifact_manifest(resolve(config["factor_catalog_manifest"]))
     universe_manifest = load_artifact_manifest(resolve(config["universe_manifest"]))
     raw_manifest, source_manifest, raw_detail, source_detail = load_required_provenance(config)
@@ -178,6 +241,40 @@ def main() -> int:
     if config.get("maximum_factors_per_selected_batch") is not None:
         limit = int(config["maximum_factors_per_selected_batch"])
         batch_specs = [(batch_id, source, names[:limit]) for batch_id, source, names in batch_specs]
+    scoped_factor_count = sum(len(names) for _, _, names in batch_specs)
+    bulk_run = len(batch_specs) > 5 or scoped_factor_count >= 100
+    approval: dict[str, object] | None = None
+    approval_manifest_path: Path | None = None
+    if bulk_run:
+        if args.approval is None:
+            raise ValueError("large matrix run requires --approval bound to the exact command and inputs")
+        approval_path = resolve(args.approval)
+        approval = json.loads(approval_path.read_text(encoding="utf-8"))
+        approval_manifest_path = approval_path.parent / "artifact_manifest.json"
+        approval_manifest = load_artifact_manifest(approval_manifest_path)
+        approval_issues = validate_manifest_outputs(approval_manifest, approval_manifest_path.parent)
+        if approval_issues or approval_manifest["artifact_status"] != "pass":
+            raise ValueError("bulk run review bundle is stale or blocked")
+        code_state_at_gate = capture_code_state(PROJECT_ROOT)
+        if code_state_at_gate.dirty:
+            raise ValueError("large matrix run requires a clean project worktree")
+        input_inventory = matrix_input_inventory(
+            config,
+            [catalog_manifest, universe_manifest, raw_manifest, source_manifest],
+            raw_detail,
+            source_detail,
+        )
+        scope = matrix_run_scope(config, batch_specs, args.run_purpose)
+        exact_command = matrix_exact_command(config_path, approval_path, args.run_purpose)
+        binding = build_bulk_run_binding(
+            run_id=str(approval["run_id"]),
+            commit_sha=code_state_at_gate.commit_sha,
+            config=config,
+            input_inventory=input_inventory,
+            exact_command=exact_command,
+            scope=scope,
+        )
+        validate_bulk_run_approval(approval, binding)
     intervals = pd.read_csv(resolve(config["universe_intervals"]))
     symbols = sorted(intervals["instrument"].astype(str).str.upper().unique())
     runtime = resolve(config["runtime_dir"])
@@ -256,7 +353,6 @@ def main() -> int:
         sample = subset if sample is None else sample.merge(subset, on=["datetime", "instrument"], how="outer")
     coverage = pd.DataFrame(coverage_rows)
     factor_count = int(success["factor_count"].sum()) if not success.empty else 0
-    scoped_factor_count = sum(len(names) for _, _, names in batch_specs)
     contracts = pd.DataFrame([
         contract_row("factor_catalog_count", len(entries) == int(config.get("expected_factor_count", 80)), len(entries), int(config.get("expected_factor_count", 80))),
         contract_row("all_batches_pass", failures == [], len(failures), 0),
@@ -269,6 +365,8 @@ def main() -> int:
         contract_row("legacy_cache_not_reindexed", bool(not success.empty and ~success["reindexed_from_cache"].astype(bool).any()), int(success["reindexed_from_cache"].astype(bool).sum()), 0),
         contract_row("raw_provenance_bound", bool(not success.empty and success["market_data_snapshot_artifact_id"].eq(raw_manifest["artifact_id"]).all()), success["market_data_snapshot_artifact_id"].nunique(), 1),
         contract_row("source_provenance_bound", bool(not success.empty and success["source_provenance_artifact_id"].eq(source_manifest["artifact_id"]).all()), success["source_provenance_artifact_id"].nunique(), 1),
+        contract_row("bulk_run_approval_valid", not bulk_run or approval is not None, approval.get("bulk_run_approval_id") if approval else "not_required", "valid approval or bounded canary"),
+        contract_row("cache_verify_all_batches_hit", args.run_purpose != "cache_verify" or bool(not success.empty and success["cache_hit"].astype(bool).all()), int(success["cache_hit"].astype(bool).sum()), len(success) if args.run_purpose == "cache_verify" else "not_required"),
     ])
     ready = contracts["status"].eq("pass").all()
     output_dir = resolve(config["output_dir"])
@@ -281,10 +379,13 @@ def main() -> int:
         pd.DataFrame(failures, columns=batch.columns).to_csv(publisher.path("failure_inventory.csv"), index=False, encoding="utf-8-sig")
         materialized_factors = sorted({name for _, _, names in batch_specs for name in names})
         publisher.path("schema.json").write_text(json.dumps({"keys": ["datetime", "instrument"], "factors": materialized_factors, "partitioning": "bounded source batches" if config.get("batch_plan") else "source adapter", "runtime_committed": False, "cache_key_schema_version": 3}, indent=2) + "\n", encoding="utf-8")
-        publisher.path("factor_matrix_report.md").write_text(f"# Full-Research Feature Matrix V1\n\n- Status: `{'pass' if ready else 'blocked'}`\n- Factors: `{factor_count}` / `{len(entries)}`\n- PIT instruments in source intervals: `{len(symbols)}`\n- Passed batches: `{len(success)}` / `{len(batch)}`\n- Runtime partitions are hash-addressed and intentionally excluded from Git.\n", encoding="utf-8")
+        publisher.path("factor_matrix_report.md").write_text(f"# Full-Research Feature Matrix V1\n\n- Status: `{'pass' if ready else 'blocked'}`\n- Factors: `{factor_count}` / `{scoped_factor_count}` in scope (`{len(entries)}` catalog total)\n- PIT instruments in source intervals: `{len(symbols)}`\n- Passed batches: `{len(success)}` / `{len(batch)}`\n- Run purpose: `{args.run_purpose}`\n- Bulk-run approval: `{approval.get('bulk_run_approval_id') if approval else 'not_required_bounded_canary'}`\n- Runtime partitions are hash-addressed and intentionally excluded from Git.\n", encoding="utf-8")
         files = [publisher.path(name) for name in CONTROLLED if name != "artifact_manifest.json"]
         factor_frame_id = "factor-frame:" + canonical_hash(success[["batch_id", "output_sha256"]].to_dict("records"))
-        write_stage_artifact_manifest(project_root=PROJECT_ROOT, stage_id="full_research_feature_matrix_v1", config=config, output_dir=publisher.staging_dir, output_files=files, code_state=code_state, input_manifest_paths=[resolve(config["factor_catalog_manifest"]), resolve(config["universe_manifest"]), resolve(config["raw_market_data_snapshot_manifest"]), resolve(config["factor_source_provenance_manifest"])], factor_frame_id=factor_frame_id, start_date=config["start_date"], end_date=config["end_date"], lineage_status="complete", artifact_status="pass" if ready else "blocked", blocked_reason="" if ready else "blocked_feature_matrix_batch_failure")
+        input_manifest_paths = [resolve(config["factor_catalog_manifest"]), resolve(config["universe_manifest"]), resolve(config["raw_market_data_snapshot_manifest"]), resolve(config["factor_source_provenance_manifest"])]
+        if approval_manifest_path is not None:
+            input_manifest_paths.append(approval_manifest_path)
+        write_stage_artifact_manifest(project_root=PROJECT_ROOT, stage_id="full_research_feature_matrix_v1", config=config, output_dir=publisher.staging_dir, output_files=files, code_state=code_state, input_manifest_paths=input_manifest_paths, factor_frame_id=factor_frame_id, start_date=config["start_date"], end_date=config["end_date"], lineage_status="complete", artifact_status="pass" if ready else "blocked", blocked_reason="" if ready else "blocked_feature_matrix_batch_failure")
         publisher.publish()
     print(contracts.to_string(index=False))
     return 0 if ready else 2
