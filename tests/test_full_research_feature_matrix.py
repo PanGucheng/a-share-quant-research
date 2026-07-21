@@ -111,3 +111,4 @@ def test_large_matrix_runner_requires_exact_approval() -> None:
     assert "large matrix run requires --approval" in source
     assert "validate_bulk_run_approval(approval, binding)" in source
     assert "approval_manifest_path" in source
+    assert "current project source differs from source provenance" in source

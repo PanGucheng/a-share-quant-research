@@ -141,6 +141,15 @@ def load_required_provenance(config: dict[str, object]) -> tuple[dict[str, objec
         raise ValueError("provenance output freshness failed: " + "; ".join(item.reason for item in issues))
     raw_detail = json.loads(resolve(config["raw_market_data_detail_manifest"]).read_text(encoding="utf-8"))
     source_detail = json.loads(resolve(config["factor_source_detail_manifest"]).read_text(encoding="utf-8"))
+    source_inventory = pd.read_csv(source_manifest_path.parent / "source_file_inventory.csv")
+    project_rows = source_inventory.loc[~source_inventory["file_role"].astype(str).str.startswith("repository:")]
+    source_mismatches = []
+    for row in project_rows.itertuples(index=False):
+        path = PROJECT_ROOT / str(row.relative_path)
+        if not path.is_file() or file_sha256(path) != str(row.sha256):
+            source_mismatches.append(str(row.relative_path))
+    if source_mismatches:
+        raise ValueError(f"current project source differs from source provenance: {sorted(set(source_mismatches))}")
     raw_path = resolve(config["raw_cache_path"])
     if file_sha256(raw_path) != str(raw_detail["raw_parquet"]["sha256"]):
         raise ValueError("raw cache hash differs from raw market data snapshot")
@@ -268,7 +277,7 @@ def main() -> int:
         exact_command = matrix_exact_command(config_path, approval_path, args.run_purpose)
         binding = build_bulk_run_binding(
             run_id=str(approval["run_id"]),
-            commit_sha=code_state_at_gate.commit_sha,
+            commit_sha=str(source_manifest["code_commit_sha"]),
             config=config,
             input_inventory=input_inventory,
             exact_command=exact_command,

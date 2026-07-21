@@ -123,7 +123,7 @@ def main() -> int:
     exact_command = matrix_exact_command(matrix_config_path, approval_path, args.run_purpose)
     binding = build_bulk_run_binding(
         run_id=args.run_id,
-        commit_sha=code_state.commit_sha,
+        commit_sha=str(source_manifest["code_commit_sha"]),
         config=matrix_config,
         input_inventory=inventory_rows,
         exact_command=exact_command,
@@ -203,7 +203,7 @@ def main() -> int:
             "# Matrix V3 Bulk-Run Review\n\n"
             + f"- Run ID / purpose: `{args.run_id}` / `{args.run_purpose}`\n"
             + f"- Status: `{'approved_by_session_waiver' if ready else 'blocked'}`\n"
-            + f"- Clean commit: `{code_state.commit_sha}`\n"
+            + f"- Approved business-code commit: `{source_manifest['code_commit_sha']}`; review generated from clean HEAD `{code_state.commit_sha}`\n"
             + f"- Scope: `{scope['batch_count']}` batches / `{scope['factor_count']}` factors / `{scope['start_date']}` to `{scope['end_date']}`\n"
             + f"- Canary: 1 batch / 5 factors / `{len(comparison)}` exact legacy comparisons; nonzero differences `{int(comparison['nonzero_difference_count'].sum())}`\n"
             + f"- Estimated PR #4 compute time: `{estimated_compute_seconds / 3600:.2f}` hours\n"
