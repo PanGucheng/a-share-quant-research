@@ -14,6 +14,7 @@ if str(PROJECT_ROOT) not in sys.path:
 
 from factor_research.evaluator import FactorResearchConfig, load_feature_frame
 from factor_research.factor_library import FACTOR_COLUMNS, add_basic_factors
+from research_validation.model_entry_gate import assert_model_entry_files
 
 
 def train_predict_by_date(frame: pd.DataFrame, label: str, train_end: str, test_start: str) -> pd.DataFrame:
@@ -89,7 +90,14 @@ def main():
     parser.add_argument("--train-end", default="2016-12-31")
     parser.add_argument("--test-start", default="2017-01-01")
     parser.add_argument("--output-dir", required=True)
+    parser.add_argument("--readiness-summary", type=Path, default=Path("outputs/full_research_669_readiness_v1/current/readiness_summary.csv"))
+    parser.add_argument("--selection-status", type=Path, default=Path("outputs/full_research_669_readiness_v1/current/selection_status.csv"))
+    parser.add_argument("--selection-name", default="exploratory_global_representatives_v1")
     args = parser.parse_args()
+
+    readiness_path = args.readiness_summary if args.readiness_summary.is_absolute() else PROJECT_ROOT / args.readiness_summary
+    selection_path = args.selection_status if args.selection_status.is_absolute() else PROJECT_ROOT / args.selection_status
+    assert_model_entry_files(readiness_path, selection_path, selection_name=args.selection_name)
 
     config = FactorResearchConfig(
         provider_uri=args.provider_uri,

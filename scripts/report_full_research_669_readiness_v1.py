@@ -27,6 +27,7 @@ CONTROLLED = [
     "evidence_inventory.csv",
     "lineage_issues.csv",
     "readiness_summary.csv",
+    "selection_status.csv",
     "full_research_669_readiness_report.md",
 ]
 
@@ -92,46 +93,98 @@ def main() -> int:
     )
     validation_ready = len(stability) == expected_factors and not representatives.empty and score_availability["status"].eq("pass").all()
     execution_ready = not execution_contract.loc[execution_contract["severity"].eq("critical"), "status"].isin(["blocked", "fail"]).any()
-    flags = {
+    historical_selection_evidence_valid = evidence_valid and validation_ready
+    flags: dict[str, object] = {
         "full_research_669_infrastructure_ready": evidence_valid and batch_ready,
-        "full_research_669_validation_chain_ready": evidence_valid and validation_ready,
+        "full_research_669_matrix_content_ready": evidence_valid and batch_ready,
+        "full_research_669_validation_chain_ready": False,
         "full_research_669_qlib_execution_operational": evidence_valid and execution_ready,
         "full_research_authoritative_tradability_ready": False,
-        "feature_allowlist_frozen": evidence_valid and not representatives.empty,
-        "core_model_ready": evidence_valid and batch_ready and validation_ready and execution_ready,
-        "pr5_model_training_ready": evidence_valid and batch_ready and validation_ready and execution_ready,
+        "historical_selection_evidence_valid": historical_selection_evidence_valid,
+        "feature_selection_holdout_clean": False,
+        "clustering_holdout_clean": False,
+        "fdr_family_semantics_valid": False,
+        "fdr_artifact_consumed": False,
+        "raw_input_provenance_complete": False,
+        "split_allowlists_frozen": False,
+        "feature_allowlist_frozen": False,
+        "selection_integrity_status": "blocked",
+        "model_entry_hard_stop_active": True,
+        "bulk_run_user_review_status": "not_requested",
+        "bulk_run_execution_authorized": False,
+        "core_model_ready": False,
+        "pr5_model_training_ready": False,
         "model_training_started": False,
     }
-    rows = [
-        contract_row(
-            name,
-            value if name != "model_training_started" else not value,
-            value,
-            False if name == "model_training_started" else True,
-            "Historical suspension and directional price-limit labels remain proxy-derived."
-            if name == "full_research_authoritative_tradability_ready"
-            else "Evidence-backed PR #4 gate.",
-            "capability" if name == "full_research_authoritative_tradability_ready" else "critical",
-        )
-        for name, value in flags.items()
-    ]
+    expected_false = {
+        "feature_allowlist_frozen",
+        "bulk_run_execution_authorized",
+        "core_model_ready",
+        "pr5_model_training_ready",
+        "model_training_started",
+    }
+    expected_values: dict[str, object] = {
+        **{name: False for name in expected_false},
+        "selection_integrity_status": "blocked",
+        "model_entry_hard_stop_active": True,
+        "bulk_run_user_review_status": "not_requested",
+    }
+    rows = []
+    for name, value in flags.items():
+        required = expected_values.get(name, True)
+        passed = value == required
+        reason = "Evidence-backed PR #4 engineering capability."
+        severity = "critical"
+        if name == "full_research_authoritative_tradability_ready":
+            reason = "Historical suspension and directional price-limit labels remain proxy-derived."
+            severity = "capability"
+        elif name in {"historical_selection_evidence_valid"}:
+            reason = "Historical PR #4 selection evidence is preserved but cannot authorize model input."
+            severity = "evidence"
+        elif name in expected_values:
+            reason = "Selection-integrity hard stop required before PR #4.1 revalidation."
+        elif not passed:
+            reason = "Selection-integrity capability has not been revalidated."
+        rows.append(contract_row(name, passed, value, required, reason, severity))
     contract = pd.DataFrame(rows)
+    selection_status = pd.DataFrame(
+        [
+            {
+                "selection_name": "exploratory_global_representatives_v1",
+                "selection_status": "test_influenced",
+                "model_input_allowed": False,
+                "representative_count": int(len(representatives)),
+                "source_artifact_id": str(loaded["clustering"]["artifact_id"]),
+                "superseded_by": "split_specific_holdout_clean_allowlists_v1",
+            }
+        ]
+    )
     output_dir = resolve(config["output_dir"])
     with StageOutputPublisher(output_dir, CONTROLLED) as publisher:
         contract.to_csv(publisher.path("contract_status.csv"), index=False, encoding="utf-8-sig")
         pd.DataFrame(inventory).to_csv(publisher.path("evidence_inventory.csv"), index=False, encoding="utf-8-sig")
         pd.DataFrame([item.__dict__ for item in issues], columns=["check_name", "artifact_id", "reason", "stage_id", "severity"]).to_csv(publisher.path("lineage_issues.csv"), index=False, encoding="utf-8-sig")
         pd.DataFrame([flags]).to_csv(publisher.path("readiness_summary.csv"), index=False, encoding="utf-8-sig")
+        selection_status.to_csv(publisher.path("selection_status.csv"), index=False, encoding="utf-8-sig")
         publisher.path("full_research_669_readiness_report.md").write_text(
             "# Full-Research 669-Factor Readiness V1\n\n"
             + "\n".join(f"- {name}: `{str(value).lower()}`" for name, value in flags.items())
             + f"\n\n- Evidence stages: `{len(loaded)}`\n- Lineage issues: `{len(issues)}`"
-            + f"\n- Stable core / frozen representatives: `{int(stability['stability_role'].eq('stable_core').sum())}` / `{len(representatives)}`"
-            + "\n- Scope: the full 669-factor research family is complete; model training has not started.\n",
+            + f"\n- Historical stable core / exploratory representatives: `{int(stability['stability_role'].eq('stable_core').sum())}` / `{len(representatives)}`"
+            + "\n- Selection integrity: blocked; historical representatives are test-influenced and forbidden as model input."
+            + "\n- Scope: PR #4 engineering evidence remains available; PR #4.1 selection revalidation and model training have not started.\n",
             encoding="utf-8",
         )
         files = [publisher.path(name) for name in CONTROLLED if name != "artifact_manifest.json"]
-        ready = flags["pr5_model_training_ready"] and not flags["model_training_started"]
+        safety_gate_pass = (
+            flags["selection_integrity_status"] == "blocked"
+            and bool(flags["model_entry_hard_stop_active"])
+            and not bool(flags["feature_allowlist_frozen"])
+            and not bool(flags["core_model_ready"])
+            and not bool(flags["pr5_model_training_ready"])
+            and not bool(flags["model_training_started"])
+            and not bool(selection_status["model_input_allowed"].iloc[0])
+        )
         write_stage_artifact_manifest(
             project_root=PROJECT_ROOT,
             stage_id="full_research_669_readiness_v1",
@@ -141,12 +194,12 @@ def main() -> int:
             code_state=capture_code_state(PROJECT_ROOT),
             input_manifest_paths=[resolve(spec["manifest"]) for spec in config["evidence"].values()],
             missing_lineage_fields=[],
-            artifact_status="pass" if ready else "blocked",
-            blocked_reason="" if ready else "blocked_full_research_669_readiness",
+            artifact_status="blocked",
+            blocked_reason="blocked_selection_integrity_not_revalidated",
         )
         publisher.publish()
     print(contract.to_string(index=False))
-    return 0 if ready else 2
+    return 0 if safety_gate_pass else 2
 
 
 if __name__ == "__main__":
