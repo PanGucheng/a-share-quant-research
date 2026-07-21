@@ -123,6 +123,7 @@ def leakage_audit(outputs: dict[str, pd.DataFrame]) -> pd.DataFrame:
     labels = outputs["label_intervals"].set_index("feature_time")
     overlap_count = 0
     train_validation_overlap = 0
+    validation_test_overlap = 0
     same_date_cross_fold = 0
     for _, group in assignments.groupby("split_id"):
         same_date_cross_fold += int((group.groupby("datetime")["fold"].nunique() > 1).sum())
@@ -135,13 +136,31 @@ def leakage_audit(outputs: dict[str, pd.DataFrame]) -> pd.DataFrame:
         if len(test_dates):
             train_labels = labels.loc[labels.index.intersection(train_dates)]
             overlap_count += int(((train_labels["label_start_time"] <= test_dates.max()) & (train_labels["label_end_time"] >= test_dates.min())).sum())
+            validation_labels = labels.loc[labels.index.intersection(validation_dates)]
+            validation_test_overlap += int(
+                (
+                    (validation_labels["label_start_time"] <= test_dates.max())
+                    & (validation_labels["label_end_time"] >= test_dates.min())
+                ).sum()
+            )
     embargo = outputs["embargoed_dates"]
     merged = assignments.merge(embargo[["split_id", "datetime"]], on=["split_id", "datetime"], how="inner")
     rows = [
         ("train_test_label_overlap", overlap_count, 0),
         ("train_validation_label_overlap", train_validation_overlap, 0),
+        ("validation_test_label_overlap", validation_test_overlap, 0),
         ("same_date_cross_fold_count", same_date_cross_fold, 0),
         ("embargo_violation_count", len(merged), 0),
-        ("split_contract", "pass" if overlap_count == 0 and train_validation_overlap == 0 and same_date_cross_fold == 0 and len(merged) == 0 else "fail", "pass"),
+        (
+            "split_contract",
+            "pass"
+            if overlap_count == 0
+            and train_validation_overlap == 0
+            and validation_test_overlap == 0
+            and same_date_cross_fold == 0
+            and len(merged) == 0
+            else "fail",
+            "pass",
+        ),
     ]
     return pd.DataFrame([{"check_name": name, "status": "pass" if observed == required else "fail", "observed_value": observed, "required_value": required, "severity": "critical", "reason": "Purged walk-forward leakage contract."} for name, observed, required in rows])

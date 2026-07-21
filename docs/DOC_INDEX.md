@@ -5,6 +5,7 @@
 ## Current Working Documents
 
 - `SELECTION_HOLDOUT_INTEGRITY_AND_MODEL_PLAN_V1.md`
+- `SELECTION_HOLDOUT_IMPLEMENTATION_AUDIT_V1.md`
   PR #4 合并后选择链审计形成的最高优先级计划：先机器级阻断旧 readiness/model input，再实施 provenance、outer-train FDR gate、development robustness、date-bounded split allowlist、人工批量运行放行和 pre-test freeze，并定义 PR #5A—#5D 与后续 forward confirmation。
 - `FULL_RESEARCH_669_RUN_V1.md`
   PR #4 的 669 因子冻结目录、30 分区矩阵、FDR/稳定性/聚类历史结果、Qlib 执行、readiness 与复现说明；其中模型 readiness 和 16 因子 allowlist 结论已由合并后审计撤回。

@@ -4,7 +4,7 @@ profile_name: full_research
 profile_type: full_research
 research_run_family_id: full_research_factor_669_v1
 input_table: outputs/full_research_daily_ic_669_v1/current/daily_rank_ic.csv
-date_assignments: outputs/purged_walk_forward_v1/full_research_669/runtime/date_assignments.csv
+date_assignments: outputs/purged_walk_forward_v1/full_research_669/date_assignments.csv
 included_folds:
   - train
 source_family: full_research_669_factor_family

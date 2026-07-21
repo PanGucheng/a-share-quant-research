@@ -19,12 +19,10 @@ def main() -> int:
     parser.add_argument("--output-dir", type=Path, default=Path("outputs/purged_walk_forward_v1/local_reference"))
     args = parser.parse_args()
     output = args.output_dir if args.output_dir.is_absolute() else PROJECT_ROOT / args.output_dir
-    assignments = pd.read_csv(output / "runtime/date_assignments.csv", parse_dates=["datetime"])
-    labels = pd.read_csv(output / "runtime/label_intervals.csv", parse_dates=["feature_time", "label_start_time", "label_end_time"])
+    assignments = pd.read_csv(output / "date_assignments.csv", parse_dates=["datetime"])
+    labels = pd.read_csv(output / "label_intervals.csv", parse_dates=["feature_time", "label_start_time", "label_end_time"])
     embargo = pd.read_csv(output / "embargoed_dates.csv", parse_dates=["datetime"])
     contract = leakage_audit({"date_assignments": assignments, "label_intervals": labels, "embargoed_dates": embargo})
-    contract.to_csv(output / "leakage_audit.csv", index=False, encoding="utf-8-sig")
-    contract.to_csv(output / "contract_status.csv", index=False, encoding="utf-8-sig")
     print(contract.to_string(index=False))
     return 1 if (contract["status"] == "fail").any() else 0
 
