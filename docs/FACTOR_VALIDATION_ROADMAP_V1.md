@@ -836,7 +836,7 @@ CI 只运行不依赖完整 Qlib provider 和网络的测试。需要真实数�
 
 本节是 2026-07-20 PR #4 合并后审计形成的强制修订，优先级高于第 16 节以及第 20 节中与当前阶段冲突的表述。详细字段、目录、配置、测试矩阵和提交拆分以 [Selection Holdout Integrity 与后续模型计划 V1](./SELECTION_HOLDOUT_INTEGRITY_AND_MODEL_PLAN_V1.md) 为唯一执行清单。
 
-2026-07-21 起，本轮获准在门禁通过后执行大规模因子计算。每次扩容前仍必须完成全仓审阅、受限 canary、mutation/validator 和 run-specific review bundle，并交由用户核对 exact commit/config/input/command/scope。未到人工门禁时持续实施、测试、提交、CI 与合并；到达门禁必须等待明确批准。当前路线全部完成后，先把下一阶段详细计划提交到文档，再开始后续实现。
+2026-07-21 起，本轮获准在门禁通过后执行大规模因子计算。每次扩容前仍必须完成全仓审阅、受限 canary、mutation/validator 和 run-specific review bundle。默认交由用户核对 exact commit/config/input/command/scope；本次持续对话可使用已明确授予的 `user_session_waiver`，无需再次等待。当前路线全部完成后，先把下一阶段详细计划提交到文档，再开始后续实现。
 
 本次持续对话另有计算推进授权：用户明确允许 review bundle 完成后无需再次等待人工审阅即可计算。授权覆盖当前 PR #4.1，并可延伸到“前一阶段验收完成后、先落实到文件并提交”的后续计划内计算；不豁免 hard-stop、全仓自审、canary、mutation、validator、资源检查和 exact approval artifact，也不覆盖尚未形成文档的新范围、实盘或未来独立对话。
 
@@ -849,7 +849,7 @@ PR #4 的因子目录、30 分区矩阵、批处理恢复、daily IC、purged ou
 3. stability 虽声明 FDR artifact 为上游，却内部重新 bootstrap/FDR；
 4. raw market cache 和外部因子源码没有完整进入矩阵 input hash 与直接 lineage。
 
-量化复核显示，外部 FDR 与 stability 内部 FDR 的 2,007 个 q-value 全部不同，112 个 BH pass 标记不同；仅反转 test IC 即可使 `stable_core` 从 65 个变为 1 个。治理结论必须是 blocked，但当前机器 readiness 产物仍为 true；当前 Draft GitHub PR #5 的首个实现提交必须先修改生成器、validator 和模型入口，使机器状态与以下目标一致：
+量化复核显示，外部 FDR 与 stability 内部 FDR 的 2,007 个 q-value 全部不同，112 个 BH pass 标记不同；仅反转 test IC 即可使 `stable_core` 从 65 个变为 1 个。治理结论必须是 blocked；当前 Draft GitHub PR #5 已修改生成器、validator 和模型入口，机器状态已与以下目标一致：
 
 ```text
 feature_allowlist_frozen = false
@@ -868,7 +868,7 @@ selection_integrity_status = blocked
 | 包 | 内容 | 必需结果 |
 | --- | --- | --- |
 | A | 机器级撤回 readiness，登记历史探索输出 | 当前 16 因子 `model_input_allowed=false`；readiness=false/blocked；模型 loader 非零拒绝 |
-| B | raw/provider/source provenance、cache key v3 与人工放行 | 先提交 canary/review bundle；用户按 run ID 批准后才允许 30 批重跑及 cache-hit 复跑 |
+| B | raw/provider/source provenance、cache key v3 与执行放行 | 先提交 canary/review bundle；exact user approval 或有效 session waiver 后才允许 30 批重跑及 cache-hit 复跑 |
 | C | development robustness windows | 每个 outer split 至少 3 个 purged inner windows；outer test overlap=0；不宣称严格 nested selection replay |
 | D | split-scoped FDR 数据流 | 3 个独立 family × 669 hypotheses；Stability 逐行消费上游 artifact，禁止内部重算 |
 | E | train/validation-only stability | API 不接收任何 `test_*` 选择字段；test 只进入冻结后的 OOS diagnostics |
@@ -919,7 +919,7 @@ Equal Weight → Stability Weight → Ridge → Elastic Net → LightGBM
 同一 Draft PR 先实施机器级 hard-stop
 → 补齐 provenance 与 cache key v3
 → 受限 canary + bulk-run review bundle
-→ 强制停止并等待用户明确批准
+→ review bundle 自审 + exact approval/session waiver
 → 30 批受控重跑和 cache-hit 复跑
 → development robustness windows + outer-split FDR gate
 → train/validation-only stability
@@ -931,4 +931,4 @@ Equal Weight → Stability Weight → Ridge → Elastic Net → LightGBM
 → 才能创建 PR #5A
 ```
 
-人工批准只覆盖完全一致的 commit、resolved config、input inventory、exact command、日期、因子数和资源范围；任一变化都必须重新审查。没有用户明确回复时，Codex 必须停止，不得自动继续大批量运行。
+Approval/waiver 只覆盖完全一致的 commit、resolved config、input inventory、exact command、日期、因子数和资源范围；任一变化都必须重新审查。默认没有用户明确回复时停止；本次持续对话可在完整自审通过后使用已授权的 exact `user_session_waiver` 继续。

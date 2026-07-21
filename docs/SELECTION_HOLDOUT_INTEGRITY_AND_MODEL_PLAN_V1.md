@@ -32,7 +32,7 @@ PR #6：新未来数据 / forward paper confirmation
 
 - 每次大规模计算前必须完成全仓代码、配置、输入、lineage、统计语义、磁盘/内存和恢复路径审阅；
 - 必须先运行受限 canary、小规模 mutation 和相关 validator，验证结果进入 review bundle；
-- review bundle 必须交由用户检查；只有 exact run ID、commit、config、input inventory、command 和 scope 获得明确批准后才能启动；
+- 默认情况下 review bundle 必须交由用户检查；只有 exact run approval 或第 1.2 节的有效持续对话授权才能启动；
 - 若用户没有打断，Codex 应持续推进所有不依赖该人工放行的审阅、实现、测试、提交、CI、合并和 main 复验，不得因任务复杂或耗时主动停止；
 - 人工放行是唯一例外：到达大规模运行门禁时必须等待，不能把“持续推进”解释为自动批准未知批次；
 - 每个大规模阶段都先小规模审阅和充分验证，canary 未通过时禁止扩大规模；
@@ -88,9 +88,9 @@ pr5_model_training_ready = true
 
 ## 3. 立即目标状态
 
-只读核对确认当前仓库的 `outputs/full_research_669_readiness_v1/current/` 和 `scripts/report_full_research_669_readiness_v1.py` 仍会把模型门禁写为 true。因此不能把撤回动作留给下一张 PR：当前 Draft GitHub PR #5 的第一个实现提交必须在 provenance、选择链和任何批量运行之前先完成机器级 hard-stop。
+只读核对曾确认仓库的 `outputs/full_research_669_readiness_v1/current/` 和 readiness runner 把模型门禁写为 true。当前 Draft GitHub PR #5 已用首个实现提交完成机器级 hard-stop；新的受控 readiness artifact 明确 blocked，并在 provenance、选择链和任何批量运行之前生效。
 
-该提交必须把机器状态恢复为：
+已落地机器状态为：
 
 ```text
 full_research_669_infrastructure_ready = true
@@ -123,7 +123,7 @@ model_input_allowed = false
 superseded_by = split_specific_holdout_clean_allowlists_v1
 ```
 
-P0 hard-stop 的验收规则：
+P0 hard-stop 的验收规则与当前结果：
 
 - 669 readiness runner 必须稳定生成上述 false/blocked 状态；
 - readiness validator 对“诚实 blocked”返回 exit 0，表示状态被正确识别；
@@ -131,6 +131,8 @@ P0 hard-stop 的验收规则：
 - 仅修改 CSV/Markdown 而不修改状态生成器、validator 和模型入口，不算完成；
 - `selection_integrity_status=blocked` 只能由 PR #4.1 的完整 validator 在所有 contract 通过后解除；
 - hard-stop 提交通过 CI 前，不得开始后续实现，也不得启动任何大批量任务。
+
+本地证据：100 项测试通过；669 compact validator 通过；旧 `exploratory_global_representatives_v1` 在数据读取前被 model entry gate 非零拒绝。远端 CI 必须基于包含新受控 artifact 的 head commit 再次通过。
 
 ## 4. 逻辑 PR #4.1 范围
 
@@ -609,7 +611,7 @@ factor weights
 
 ### 13.4 大批量运行的用户人工审查门禁
 
-后续任何大批量运行都必须在启动前交由用户检查并获得明确放行。Codex、CI、定时任务和 runner 均不得自行批准。满足任一条件即属于大批量运行：
+后续任何大批量运行都必须在启动前生成 review bundle。默认交由用户检查并获得明确放行；第 1.2 节的当前持续对话授权允许在完整自审通过后物化 exact waiver。Codex、CI、定时任务和 runner 均不得在没有明确批准或有效 waiver 时自行启动。满足任一条件即属于大批量运行：
 
 - 100 个及以上因子；
 - 超过 5 个 matrix batches；
@@ -680,7 +682,7 @@ Runner 启动时必须逐项复核 approval。代码 commit、配置、输入 in
 9. generate split-specific transparent scores and Qlib execution after freeze
 10. finalize readiness, validators, and documentation
 
-不得把 readiness 撤回延迟到最后一个提交。第 3 步完成后必须停下，把 review bundle 交给用户；没有第 4 步的明确批准不得启动 30 批重跑。
+不得把 readiness 撤回延迟到最后一个提交。默认在第 3 步完成后停下交付 review bundle；本次持续对话按第 1.2 节完成自审并物化 exact waiver 后可直接进入第 4 步。
 
 ## 15. PR #4.1 Definition of Done
 
@@ -1083,8 +1085,8 @@ production_model_selected = false
 3. 升级 cache key v3，但不启动 30 批重跑；
 4. 运行受限 canary、资源估算和 preflight contracts；
 5. 生成并推送 bulk-run review bundle；
-6. **停止执行，把 review bundle 交给用户检查并等待明确批准；**
-7. 只有 approval artifact 与 commit/config/input/command 全部匹配后，才运行 30 批 provenance-complete 重跑和 cache-hit 复跑；
+6. **完成 review bundle 全量自审；默认等待用户批准，本次持续对话则物化 exact `user_session_waiver`；**
+7. 只有 approval/waiver artifact 与 commit/config/input/command 全部匹配后，才运行 30 批 provenance-complete 重跑和 cache-hit 复跑；
 8. 构建 development robustness dates；
 9. 生成 outer-split FDR gate，并修复 FDR→Stability 真实消费；
 10. 生成 split-specific date-bounded clustering/allowlists；
@@ -1092,6 +1094,6 @@ production_model_selected = false
 12. 生成 split-specific transparent baseline 和 pre-test freeze manifests；
 13. pre-test freeze 通过后才执行 Qlib outer-test evaluation；
 14. 运行全部测试、validator 和 CI，合并逻辑 PR #4.1 并在 main 复验；
-15. 只有此时才创建 PR #5A；后续任何达到第 13.4 节阈值的模型搜索仍需单独提交 review bundle 并等待用户批准。
+15. 只有此时才创建 PR #5A；后续任何达到第 13.4 节阈值的模型搜索仍需单独提交 review bundle，并使用明确 approval 或本次持续对话授权形成的 exact waiver。
 
-第 6 步是强制人工暂停点，不得自动越过。在第 14 步完成前，不得创建模型训练 artifact 或把 `model_training_started` 改为 true。
+第 6 步是强制审阅点，技术门禁不得越过；本次持续对话已豁免等待动作，但没有完整自审和 exact waiver 仍不得继续。在第 14 步完成前，不得创建模型训练 artifact 或把 `model_training_started` 改为 true。

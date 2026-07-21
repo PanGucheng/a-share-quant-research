@@ -1,9 +1,21 @@
 ﻿check_name,status,observed_value,required_value,severity,reason
-full_research_669_infrastructure_ready,pass,True,True,critical,Evidence-backed PR #4 gate.
-full_research_669_validation_chain_ready,pass,True,True,critical,Evidence-backed PR #4 gate.
-full_research_669_qlib_execution_operational,pass,True,True,critical,Evidence-backed PR #4 gate.
+full_research_669_infrastructure_ready,pass,True,True,critical,Evidence-backed PR #4 engineering capability.
+full_research_669_matrix_content_ready,pass,True,True,critical,Evidence-backed PR #4 engineering capability.
+full_research_669_validation_chain_ready,blocked,False,True,critical,Selection-integrity capability has not been revalidated.
+full_research_669_qlib_execution_operational,pass,True,True,critical,Evidence-backed PR #4 engineering capability.
 full_research_authoritative_tradability_ready,blocked,False,True,capability,Historical suspension and directional price-limit labels remain proxy-derived.
-feature_allowlist_frozen,pass,True,True,critical,Evidence-backed PR #4 gate.
-core_model_ready,pass,True,True,critical,Evidence-backed PR #4 gate.
-pr5_model_training_ready,pass,True,True,critical,Evidence-backed PR #4 gate.
-model_training_started,pass,False,False,critical,Evidence-backed PR #4 gate.
+historical_selection_evidence_valid,pass,True,True,evidence,Historical PR #4 selection evidence is preserved but cannot authorize model input.
+feature_selection_holdout_clean,blocked,False,True,critical,Selection-integrity capability has not been revalidated.
+clustering_holdout_clean,blocked,False,True,critical,Selection-integrity capability has not been revalidated.
+fdr_family_semantics_valid,blocked,False,True,critical,Selection-integrity capability has not been revalidated.
+fdr_artifact_consumed,blocked,False,True,critical,Selection-integrity capability has not been revalidated.
+raw_input_provenance_complete,blocked,False,True,critical,Selection-integrity capability has not been revalidated.
+split_allowlists_frozen,blocked,False,True,critical,Selection-integrity capability has not been revalidated.
+feature_allowlist_frozen,pass,False,False,critical,Selection-integrity hard stop required before PR #4.1 revalidation.
+selection_integrity_status,pass,blocked,blocked,critical,Selection-integrity hard stop required before PR #4.1 revalidation.
+model_entry_hard_stop_active,pass,True,True,critical,Selection-integrity hard stop required before PR #4.1 revalidation.
+bulk_run_user_review_status,pass,not_requested,not_requested,critical,Selection-integrity hard stop required before PR #4.1 revalidation.
+bulk_run_execution_authorized,pass,False,False,critical,Selection-integrity hard stop required before PR #4.1 revalidation.
+core_model_ready,pass,False,False,critical,Selection-integrity hard stop required before PR #4.1 revalidation.
+pr5_model_training_ready,pass,False,False,critical,Selection-integrity hard stop required before PR #4.1 revalidation.
+model_training_started,pass,False,False,critical,Selection-integrity hard stop required before PR #4.1 revalidation.

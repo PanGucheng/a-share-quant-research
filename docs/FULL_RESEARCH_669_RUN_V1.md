@@ -1,10 +1,10 @@
 # 669 因子 Full-Research 全量运行 V1
 
-> **2026-07-21 合并后审计增补：**本文中的矩阵规模、批处理、IC、outer split 和 Qlib Exchange 数字仍是 PR #4 的历史工程证据；“16 个代表已冻结为模型 allowlist”和模型 readiness 结论已经撤回。当前代表读取了 outer-test 信息，聚类没有按 development dates 截断，Stability 没有真实消费上游 FDR artifact，raw/provider/source provenance 也不完整。当前 16 个代表只允许作为 `exploratory/test-influenced` 证据，`model_input_allowed=false`。已提交机器 readiness 仍错误显示三个模型门禁为 true，当前 Draft PR 必须先实施 hard-stop；下述状态是必须落地的安全目标，不是对当前机器 artifact 的描述。下一步不是模型 PR，而是先执行 [Selection Holdout Integrity 与后续模型计划 V1](./SELECTION_HOLDOUT_INTEGRITY_AND_MODEL_PLAN_V1.md) 中的逻辑 PR #4.1。
+> **2026-07-21 合并后审计增补：**本文中的矩阵规模、批处理、IC、outer split 和 Qlib Exchange 数字仍是 PR #4 的历史工程证据；“16 个代表已冻结为模型 allowlist”和模型 readiness 结论已经撤回。当前代表读取了 outer-test 信息，聚类没有按 development dates 截断，Stability 没有真实消费上游 FDR artifact，raw/provider/source provenance 也不完整。当前 16 个代表只允许作为 `exploratory/test-influenced` 证据，`model_input_allowed=false`。机器 hard-stop 已落地，下述安全状态已由受控 readiness artifact 生成并通过 compact validator。下一步不是模型 PR，而是先执行 [Selection Holdout Integrity 与后续模型计划 V1](./SELECTION_HOLDOUT_INTEGRITY_AND_MODEL_PLAN_V1.md) 中的逻辑 PR #4.1。
 
 ## 状态与边界
 
-PR #4 已按 PR #3 冻结的研究语义完成全部 669 个 runnable 因子的规模化运行。当前安全目标为：
+PR #4 已按 PR #3 冻结的研究语义完成全部 669 个 runnable 因子的规模化运行。当前机器安全状态为：
 
 ```text
 full_research_669_infrastructure_ready = true
@@ -86,6 +86,6 @@ E:\anaconda_envs\qlib_env\python.exe scripts\validate_full_research_669_v1.py
 
 先完成逻辑 PR #4.1：机器级撤回 false-positive readiness，补齐 raw/provider/source provenance 与 cache key v3，建立 outer-train FDR eligibility + development robustness 语义，让 Stability 真实消费三个 split-scoped FDR artifacts，并按 development dates 生成 split-specific clustering、allowlists、透明 score 和 Qlib execution。Outer-test IC、exposure、labels、OHLCVA、row order 和缺失 mutation 必须不能改变任何选择产物；test evaluation 前必须生成 pre-test freeze。
 
-30 批矩阵重跑前必须先完成受限 canary 并推送 bulk-run review bundle，由用户核对 commit/config/input hashes、日期/FDR 语义、资源预算和 exact command 后针对 run ID 明确批准。没有批准或批准范围发生变化时必须停止。
+30 批矩阵重跑前必须先完成受限 canary 并推送 bulk-run review bundle，核对 commit/config/input hashes、日期/FDR 语义、资源预算和 exact command。本次持续对话可在完整自审后使用 exact `user_session_waiver`，无需再次等待；没有有效 approval/waiver 或范围发生变化时必须停止。
 
 只有逻辑 PR #4.1 全部门禁通过后，才进入 PR #5A—#5D：先冻结共同输入协议并重跑 Equal Weight / Stability Weight，再依次运行 Ridge、Elastic Net、LightGBM，最后在相同 outer test、common period 和 Qlib Exchange 上统一比较。

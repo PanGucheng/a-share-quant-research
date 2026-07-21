@@ -4,7 +4,7 @@
 >
 > 2026-07-13 增补：[V1.1 门禁、Profile 与 Lineage 硬化计划](./FACTOR_VALIDATION_HARDENING_V1_1.md) 修正阶段 5、8、10、11 的收尾语义。涉及 pre/post-model diagnostics、能力门禁、Profile 和 lineage 时，以 V1.1 为准。
 >
-> 2026-07-21 审计更正：PR #1–#4 已合并，PR #4 的 669 因子目录、30/30 矩阵分区、批处理、IC、Qlib Exchange 和工程 lineage 证据继续有效；但合并后审计确认当前选择链读取 outer test 信息、聚类未限制 development dates、Stability 未真实消费上游 FDR artifact，且 raw/provider/source provenance 未完整进入 cache key。当前 16 个代表因此只作为 `exploratory/test-influenced` 历史证据，不能作为模型输入。治理状态为 `core_model_ready=false`、`pr5_model_training_ready=false`、`model_training_started=false`，但已提交机器 readiness 尚未同步，当前 Draft PR 必须先实施 hard-stop。下一步详见 [Selection Holdout Integrity 与后续模型计划 V1](./SELECTION_HOLDOUT_INTEGRITY_AND_MODEL_PLAN_V1.md)。
+> 2026-07-21 审计更正：PR #1–#4 已合并，PR #4 的 669 因子目录、30/30 矩阵分区、批处理、IC、Qlib Exchange 和工程 lineage 证据继续有效；但合并后审计确认当前选择链读取 outer test 信息、聚类未限制 development dates、Stability 未真实消费上游 FDR artifact，且 raw/provider/source provenance 未完整进入 cache key。当前 16 个代表因此只作为 `exploratory/test-influenced` 历史证据，不能作为模型输入。机器 hard-stop 已落地：`core_model_ready=false`、`pr5_model_training_ready=false`、`model_training_started=false`，旧代表由模型入口非零拒绝。下一步详见 [Selection Holdout Integrity 与后续模型计划 V1](./SELECTION_HOLDOUT_INTEGRITY_AND_MODEL_PLAN_V1.md)。
 
 ## 一、项目背景
 
@@ -1543,7 +1543,7 @@ PR #4 合并后的选择链审计推翻了“当前 allowlist 已冻结、可以
 - 在逻辑 PR #4.1 完成前，`feature_allowlist_frozen`、`core_model_ready` 和 `pr5_model_training_ready` 均不得为 true；
 - 模型训练保持停止，任何 Ridge、Elastic Net 或 LightGBM artifact 都不得提前生成。
 
-当前机器产物仍把上述三个 readiness 写为 true，因此“政策上撤回”还不等于“机器已阻断”。当前 Draft GitHub PR #5 的首个实现提交必须修改 readiness 生成器、validator 和 model entry gate：输出 `selection_integrity_status=blocked`、模型 readiness=false，并使旧 `exploratory_global_representatives_v1` 触发非零退出。该 P0 hard-stop 通过前，不得开始其他实现或大批量运行。
+当前 Draft GitHub PR #5 已完成首个 P0 实现提交：readiness 生成器输出 `selection_integrity_status=blocked`、模型 readiness=false，旧 `exploratory_global_representatives_v1` 在任何数据读取前触发 model entry gate 非零退出。P0 本地测试和 compact validator 已通过，后续仍须通过远端 CI。
 
 ## 逻辑 PR #4.1
 
@@ -1552,8 +1552,8 @@ PR #4 合并后的选择链审计推翻了“当前 allowlist 已冻结、可以
 1. 撤回 false-positive readiness，并阻止模型 loader 消费探索性代表；
 2. 固化 raw market snapshot、Qlib/TA/KunQuant/project source provenance；
 3. 将 provider/source hashes 纳入 matrix cache key v3，先运行受限 canary 并生成 bulk-run review bundle；
-4. 停止执行，把 commit、config/input hashes、因子/日期/FDR 语义、资源预算、canary 结果和 exact command 交给用户检查；
-5. 只有用户针对该 run ID 明确批准后，才完成 30 批受控重跑及 30/30 cache-hit 复跑；
+4. 完成 commit、config/input hashes、因子/日期/FDR 语义、资源预算、canary 结果和 exact command 的 review bundle 与完整自审；
+5. 取得 run-specific user approval；本次持续对话可按已授予授权物化 exact `user_session_waiver`，随后完成 30 批受控重跑及 30/30 cache-hit 复跑；
 6. 为三个 outer split 分别生成 purged development robustness windows；
 7. 建立三个独立 outer-train FDR families，每个 family 固定 669 个假设；inner windows 只作开发期稳健性诊断，不宣称严格逐窗口 nested FDR；
 8. 让 Stability 按 `(outer_split_id, factor)` 真实消费上游 FDR artifact，禁止内部重算；
@@ -1562,7 +1562,7 @@ PR #4 合并后的选择链审计推翻了“当前 allowlist 已冻结、可以
 11. 对 test IC、exposure、labels、OHLCVA、row order 和极端缺失执行 mutation tests；
 12. 每个 split 生成不可变 pre-test freeze manifest 后，才允许重跑透明 score、Qlib Exchange 和对账。
 
-用户审批只适用于 review bundle 中完全一致的 commit、config、input inventory、命令、因子数量、日期和资源范围；任一变化都使 approval 失效并必须重新审查。Codex 不得根据历史“持续推进”授权自行越过该暂停点。
+Approval/session waiver 只适用于 review bundle 中完全一致的 commit、config、input inventory、命令、因子数量、日期和资源范围；任一变化都使其失效并必须重新审查。本次持续对话的明确授权可以免除等待，但不能越过 review、canary、mutation、validator 或资源门禁。
 
 只有三个 split-specific allowlists 都完成且 test mutation 不改变任何选择产物时，才能恢复：
 

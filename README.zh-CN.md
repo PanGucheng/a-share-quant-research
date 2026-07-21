@@ -23,7 +23,7 @@ A 股量化研究工程。它最初用于复现官方 LightGBM + Alpha158 baseli
 - **因子筛选模块**：把因子研究输出转成可解释的候选看板，再交给后续组合测试。
 - **Qlib execution 层**：固定版本的 Exchange/Executor adapter、A 股约束、标准化 artifact、合成精确对账和本地真实小样本均已落地。
 
-当前优先级是强制完成 Selection Holdout Integrity：先机器级阻断残留的 model-ready 状态，再补齐 raw/source provenance，建立 outer-train FDR eligibility 与 development robustness windows，真实消费 split-scoped FDR，并按 outer split 的 development dates 重建 allowlist。任何大批量重跑都必须先提交 review bundle，由用户针对 exact run 明确批准；只有 anti-leakage 与 pre-test freeze 门禁通过后，才按透明基线、Ridge、Elastic Net、LightGBM 顺序进入模型阶段。
+当前优先级是强制完成 Selection Holdout Integrity：残留 model-ready 状态的机器 hard-stop 已生效；下一步先完成全仓审阅，再补齐 raw/source provenance，建立 outer-train FDR eligibility 与 development robustness windows，真实消费 split-scoped FDR，并按 outer split 的 development dates 重建 allowlist。任何大批量重跑都必须先生成 exact review bundle 并通过本轮授权约束；只有 anti-leakage 与 pre-test freeze 门禁通过后，才按透明基线、Ridge、Elastic Net、LightGBM 顺序进入模型阶段。
 
 ## 目录结构
 

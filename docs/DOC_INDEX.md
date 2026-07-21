@@ -90,6 +90,6 @@ docs/FACTOR_VALIDATION_HARDENING_V1_1.md
 docs/REFERENCE_PIPELINE_CONSISTENCY_V1_1_1.md
 ```
 
-当前治理结论是模型启动 blocked，但已提交机器产物仍错误保留 `feature_allowlist_frozen=true`、`core_model_ready=true`、`pr5_model_training_ready=true`。当前 Draft GitHub PR #5 的第一项实现必须把它们改为 false，并增加 `selection_integrity_status=blocked` 与旧代表的模型入口拒绝。该 hard-stop 完成前不得开始其他实现。
+模型启动 hard-stop 已在当前 Draft GitHub PR #5 落地：机器产物现在为 `feature_allowlist_frozen=false`、`core_model_ready=false`、`pr5_model_training_ready=false`、`selection_integrity_status=blocked`；旧 `exploratory_global_representatives_v1` 已登记为 `test_influenced/model_input_allowed=false`，模型入口会在读取数据前非零拒绝。
 
-后续 30 批重跑前必须先推送 canary、配置/输入哈希、日期/FDR 语义、资源预算和 exact command，交由用户检查并针对 run ID 明确批准；没有有效 approval 不得启动。下一阶段是逻辑 PR #4.1，完成前不得实施模型 PR #5A。
+后续 30 批重跑前必须先推送 canary、配置/输入哈希、日期/FDR 语义、资源预算和 exact command，并形成 exact approval artifact。本次持续对话已获等待豁免，可在完整自审后使用 `user_session_waiver` 继续；没有有效 approval/waiver 不得启动。下一阶段是逻辑 PR #4.1，完成前不得实施模型 PR #5A。
