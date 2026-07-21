@@ -30,11 +30,18 @@ def main() -> int:
     output = resolve(config["output_dir"])
     manifest = load_artifact_manifest(output / "artifact_manifest.json")
     issues = validate_manifest_outputs(manifest, output, config=config, controlled_outputs=CONTROLLED[1:])
+    failures: list[str] = []
+    for key in ("universe_manifest", "factor_catalog_manifest"):
+        parent_path = resolve(config[key])
+        parent = load_artifact_manifest(parent_path)
+        issues.extend(validate_manifest_outputs(parent, parent_path.parent))
+        if parent["artifact_id"] not in manifest["input_artifact_ids"]:
+            failures.append(f"missing_current_parent:{parent['artifact_id']}")
     inventory = pd.read_csv(output / "provider_file_inventory.csv")
     verified = verify_file_inventory(resolve(config["provider_uri"]), inventory, workers=int(config.get("hash_workers", 8)))
     custom = json.loads((output / "raw_market_data_manifest.json").read_text(encoding="utf-8"))
     contracts = pd.read_csv(output / "contract_status.csv")
-    failures = [f"{item.check_name}:{item.reason}" for item in issues]
+    failures.extend(f"{item.check_name}:{item.reason}" for item in issues)
     if not bool(verified["current_match"].all()):
         failures.append(f"provider_input_hash_mismatch:{int((~verified['current_match']).sum())}")
     if inventory_tree_hash(inventory) != custom["provider_tree_sha256"]:

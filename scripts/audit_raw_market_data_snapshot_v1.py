@@ -25,6 +25,7 @@ from research_validation.lineage import (  # noqa: E402
     capture_code_state,
     load_artifact_manifest,
     sha256_text,
+    validate_manifest_outputs,
     write_stage_artifact_manifest,
 )
 from research_validation.stage_output import StageOutputPublisher  # noqa: E402
@@ -58,6 +59,10 @@ def main() -> int:
     factor_inventory = pd.read_csv(resolve(config["factor_inventory"]))
     universe_manifest = load_artifact_manifest(resolve(config["universe_manifest"]))
     catalog_manifest = load_artifact_manifest(resolve(config["factor_catalog_manifest"]))
+    parent_issues = [
+        *validate_manifest_outputs(universe_manifest, resolve(config["universe_manifest"]).parent),
+        *validate_manifest_outputs(catalog_manifest, resolve(config["factor_catalog_manifest"]).parent),
+    ]
     symbols = sorted(intervals["instrument"].astype(str).str.upper().unique())
     fields = normalized_required_fields(factor_inventory["required_fields"])
     raw_fields = [str(item) for item in config["raw_required_columns"] if str(item).startswith("$")]
@@ -108,6 +113,7 @@ def main() -> int:
     }
 
     checks = [
+        contract_row("parent_artifacts_fresh", not parent_issues, len(parent_issues), 0),
         contract_row(
             "provider_files_complete",
             bool(provider_inventory["exists"].all()),

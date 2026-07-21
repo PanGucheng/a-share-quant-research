@@ -30,10 +30,15 @@ def main() -> int:
     output = resolve(config["output_dir"])
     manifest = load_artifact_manifest(output / "artifact_manifest.json")
     issues = validate_manifest_outputs(manifest, output, config=config, controlled_outputs=CONTROLLED[1:])
+    parent_path = resolve(config["factor_catalog_manifest"])
+    parent = load_artifact_manifest(parent_path)
+    issues.extend(validate_manifest_outputs(parent, parent_path.parent))
     recorded_receipts = json.loads((output / "repo_receipts.json").read_text(encoding="utf-8"))
     inventory = pd.read_csv(output / "source_file_inventory.csv")
     contracts = pd.read_csv(output / "contract_status.csv")
     failures = [f"{item.check_name}:{item.reason}" for item in issues]
+    if parent["artifact_id"] not in manifest["input_artifact_ids"]:
+        failures.append(f"missing_current_parent:{parent['artifact_id']}")
     for name, spec in config["repositories"].items():
         current = git_repo_receipt(resolve(spec["path"]), [str(item) for item in spec["dependency_files"]])
         recorded = recorded_receipts[name]

@@ -22,6 +22,7 @@ from research_validation.input_provenance import (  # noqa: E402
 from research_validation.lineage import (  # noqa: E402
     capture_code_state,
     load_artifact_manifest,
+    validate_manifest_outputs,
     write_stage_artifact_manifest,
 )
 from research_validation.stage_output import StageOutputPublisher  # noqa: E402
@@ -57,10 +58,12 @@ def main() -> int:
     config = yaml.safe_load(resolve(args.config).read_text(encoding="utf-8")) or {}
     code_state = capture_code_state(PROJECT_ROOT)
     catalog_manifest = load_artifact_manifest(resolve(config["factor_catalog_manifest"]))
+    catalog_issues = validate_manifest_outputs(catalog_manifest, resolve(config["factor_catalog_manifest"]).parent)
 
     repo_receipts: dict[str, dict[str, object]] = {}
     repository_inventories: dict[str, pd.DataFrame] = {}
     contract_rows: list[dict[str, object]] = []
+    contract_rows.append(contract_row("factor_catalog_artifact_fresh", not catalog_issues, len(catalog_issues), 0))
     for name, spec in config["repositories"].items():
         root = resolve(spec["path"])
         dependency_files = [str(item) for item in spec["dependency_files"]]
