@@ -10,6 +10,12 @@ import pandas as pd
 from .lineage import canonical_json, sha256_file, sha256_text
 
 
+def _normalized_bool(series: pd.Series) -> pd.Series:
+    if pd.api.types.is_bool_dtype(series):
+        return series.astype(bool)
+    return series.map(lambda value: str(value).strip().lower() in {"1", "true", "yes"})
+
+
 def normalized_required_fields(values: Iterable[object]) -> list[str]:
     fields: set[str] = set()
     for value in values:
@@ -71,7 +77,12 @@ def provider_file_inventory(
 
 def inventory_tree_hash(inventory: pd.DataFrame) -> str:
     columns = ["file_role", "instrument", "field", "relative_path", "exists", "size_bytes", "sha256"]
-    return sha256_text(canonical_json(inventory[columns].to_dict("records")))
+    normalized = inventory[columns].copy()
+    for column in ("file_role", "instrument", "field", "relative_path", "sha256"):
+        normalized[column] = normalized[column].fillna("").astype(str)
+    normalized["exists"] = _normalized_bool(normalized["exists"])
+    normalized["size_bytes"] = pd.to_numeric(normalized["size_bytes"], errors="raise").astype("int64")
+    return sha256_text(canonical_json(normalized.to_dict("records")))
 
 
 def git_output(repo: Path, *arguments: str) -> str:
@@ -130,7 +141,12 @@ def source_file_inventory(
 
 def source_tree_hash(inventory: pd.DataFrame) -> str:
     columns = ["source", "file_role", "relative_path", "exists", "size_bytes", "sha256"]
-    return sha256_text(canonical_json(inventory[columns].sort_values(columns[:3]).to_dict("records")))
+    normalized = inventory[columns].copy()
+    for column in ("source", "file_role", "relative_path", "sha256"):
+        normalized[column] = normalized[column].fillna("").astype(str)
+    normalized["exists"] = _normalized_bool(normalized["exists"])
+    normalized["size_bytes"] = pd.to_numeric(normalized["size_bytes"], errors="raise").astype("int64")
+    return sha256_text(canonical_json(normalized.sort_values(columns[:3]).to_dict("records")))
 
 
 def verify_file_inventory(root: Path, inventory: pd.DataFrame, *, workers: int = 8) -> pd.DataFrame:

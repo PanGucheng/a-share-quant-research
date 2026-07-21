@@ -33,6 +33,9 @@ def test_provider_inventory_hash_detects_external_mutation(tmp_path: Path) -> No
     )
     assert inventory["exists"].all()
     assert len(inventory_tree_hash(inventory)) == 64
+    csv_path = tmp_path / "inventory.csv"
+    inventory.to_csv(csv_path, index=False)
+    assert inventory_tree_hash(pd.read_csv(csv_path)) == inventory_tree_hash(inventory)
     assert verify_file_inventory(provider, inventory, workers=1)["current_match"].all()
 
     (provider / "features/sh600000/close.day.bin").write_bytes(b"mutated")
