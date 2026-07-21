@@ -838,7 +838,7 @@ CI 只运行不依赖完整 Qlib provider 和网络的测试。需要真实数�
 
 2026-07-21 起，本轮获准在门禁通过后执行大规模因子计算。每次扩容前仍必须完成全仓审阅、受限 canary、mutation/validator 和 run-specific review bundle，并交由用户核对 exact commit/config/input/command/scope。未到人工门禁时持续实施、测试、提交、CI 与合并；到达门禁必须等待明确批准。当前路线全部完成后，先把下一阶段详细计划提交到文档，再开始后续实现。
 
-本次对话另有临时豁免：用户明确允许 review bundle 完成后无需再次等待人工审阅即可计算。该豁免只覆盖当前 PR #4.1 既定的 provenance 重跑、669 选择链和透明基线复验；不豁免 hard-stop、全仓自审、canary、mutation、validator、资源检查和 exact approval artifact，也不延伸到模型搜索或未来对话。
+本次持续对话另有计算推进授权：用户明确允许 review bundle 完成后无需再次等待人工审阅即可计算。授权覆盖当前 PR #4.1，并可延伸到“前一阶段验收完成后、先落实到文件并提交”的后续计划内计算；不豁免 hard-stop、全仓自审、canary、mutation、validator、资源检查和 exact approval artifact，也不覆盖尚未形成文档的新范围、实盘或未来独立对话。
 
 ### 22.1 审计结论与当前门禁
 

@@ -40,21 +40,22 @@ PR #6：新未来数据 / forward paper confirmation
 
 任何 review 或 canary 发现的确定性问题都必须先修复并重新审阅；不能以已有耗时、缓存或历史通过结果为理由继续大规模运行。
 
-### 1.2 本次对话的临时人工审阅豁免
+### 1.2 本次持续对话的计算推进授权
 
-用户在 2026-07-21 当前对话中明确授权：本次对话无需在大规模计算前再次停下等待用户审阅。该授权只豁免第 13.4 节的“交付后等待”动作，不豁免任何技术门禁。
+用户在 2026-07-21 当前对话中明确授权：当前计划以及之后先落实到文件的新计划所包含的计算任务，都无需在大规模计算前再次停下等待用户审阅。该授权只豁免第 13.4 节的“交付后等待”动作，不豁免任何技术门禁。
 
 适用条件：
 
-- 仅适用于当前逻辑 PR #4.1 已定义的 30 批 provenance 重跑、669 因子选择链和相同 Qlib 透明基线复验；
+- 当前逻辑 PR #4.1 的 30 批 provenance 重跑、669 因子选择链和相同 Qlib 透明基线复验均在授权范围内；
+- 后续阶段只有在前一计划完成证据通过、下一阶段详细计划已经落实到文件并提交后，计划内写明的计算才自动进入授权范围；
 - 在 exact run 启动前仍必须生成完整 review bundle，并由 Codex 完成逐项自审；
 - hard-stop、clean worktree/commit、canary、mutation、validator、资源和磁盘检查必须全部通过；
 - `user_approval.json` 记录 `approval_mode=user_session_waiver`、本条授权引用、exact run ID 及最终 commit/config/input/command/scope hashes；
 - review bundle 生成后若代码、配置、输入、命令、日期、因子数、统计语义或资源范围变化，必须重新生成 bundle 和 approval artifact；
 - 发现 warning、unknown difference、hash mismatch、lineage issue、canary failure 或资源不足时立即停止并修复，不能以豁免为由继续；
-- 不适用于 PR #5A—#5D 的模型搜索、计划外数据源、实盘或当前对话结束后的任何批次。
+- 不适用于尚未写入并提交的新范围、计划外数据源、实盘或当前持续对话结束后的批次。
 
-在上述条件全部成立时，runner 可以验证 `user_session_waiver` 后直接开始当前 run，无需再次等待用户回复。
+在上述条件全部成立时，runner 可以验证 `user_session_waiver` 后直接开始当前或后续已提交计划内的 run，无需再次等待用户回复。Codex 应持续推进，不以“等待审阅”作为主动停止理由。
 
 ## 2. 当前审计结论
 
