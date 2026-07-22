@@ -13,5 +13,4 @@ expected_outer_splits: 3
 input_manifests:
   - outputs/split_specific_allowlist_v1/full_research_669/artifact_manifest.json
   - outputs/factor_rolling_stability_v1/full_research_669/artifact_manifest.json
-  - outputs/selection_mutation_contract_v1/full_research_669/artifact_manifest.json
 output_dir: outputs/split_transparent_weights_v1/full_research_669
