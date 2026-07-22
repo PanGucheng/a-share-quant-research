@@ -5,6 +5,7 @@ profile_type: full_research
 research_run_family_id: full_research_factor_669_v1
 expected_factor_count: 669
 expected_batch_count: 30
+expected_outer_splits: 3
 evidence:
   catalog:
     config: configs/full_research_factor_catalog_669_v1.yaml
@@ -46,6 +47,14 @@ evidence:
     config: configs/purged_walk_forward_full_research_669_v1.yaml
     manifest: outputs/purged_walk_forward_v1/full_research_669/artifact_manifest.json
     contract: outputs/purged_walk_forward_v1/full_research_669/contract_status.csv
+  development_split:
+    config: configs/development_robustness_split_669_v1.yaml
+    manifest: outputs/development_robustness_split_v1/full_research_669/artifact_manifest.json
+    contract: outputs/development_robustness_split_v1/full_research_669/contract_status.csv
+  selection_projection:
+    config: configs/selection_input_projection_669_v1.yaml
+    manifest: outputs/selection_input_projection_v1/full_research_669/artifact_manifest.json
+    contract: outputs/selection_input_projection_v1/full_research_669/contract_status.csv
   fdr:
     config: configs/factor_multiple_testing_full_research_669_v1.yaml
     manifest: outputs/factor_multiple_testing_v1/full_research_669/artifact_manifest.json
@@ -54,18 +63,42 @@ evidence:
     config: configs/factor_rolling_stability_full_research_669_v1.yaml
     manifest: outputs/factor_rolling_stability_v1/full_research_669/artifact_manifest.json
     contract: outputs/factor_rolling_stability_v1/full_research_669/contract_status.csv
+  clustering_projection:
+    config: configs/clustering_input_projection_669_v1.yaml
+    manifest: outputs/clustering_input_projection_v1/full_research_669/artifact_manifest.json
+    contract: outputs/clustering_input_projection_v1/full_research_669/contract_status.csv
   clustering:
     config: configs/factor_clustering_full_research_669_v1.yaml
     manifest: outputs/factor_clustering_v1/full_research_669/artifact_manifest.json
     contract: outputs/factor_clustering_v1/full_research_669/contract_status.csv
+  allowlist:
+    config: configs/split_specific_allowlist_669_v1.yaml
+    manifest: outputs/split_specific_allowlist_v1/full_research_669/artifact_manifest.json
+    contract: outputs/split_specific_allowlist_v1/full_research_669/contract_status.csv
+  weights:
+    config: configs/split_transparent_weights_669_v1.yaml
+    manifest: outputs/split_transparent_weights_v1/full_research_669/artifact_manifest.json
+    contract: outputs/split_transparent_weights_v1/full_research_669/contract_status.csv
+  mutation:
+    config: configs/selection_mutation_contract_669_v1.yaml
+    manifest: outputs/selection_mutation_contract_v1/full_research_669/artifact_manifest.json
+    contract: outputs/selection_mutation_contract_v1/full_research_669/contract_status.csv
+  freeze:
+    config: configs/pre_test_freeze_transparent_669_v1.yaml
+    manifest: outputs/pre_test_freeze_v1/full_research_669/artifact_manifest.json
+    contract: outputs/pre_test_freeze_v1/full_research_669/contract_status.csv
   score:
-    config: configs/factor_score_construction_full_research_669_v1.yaml
-    manifest: outputs/factor_score_construction_v1/full_research_669/artifact_manifest.json
-    contract: outputs/factor_score_construction_v1/full_research_669/contract_status.csv
+    config: configs/split_transparent_score_669_v1.yaml
+    manifest: outputs/split_transparent_score_v1/full_research_669/artifact_manifest.json
+    contract: outputs/split_transparent_score_v1/full_research_669/contract_status.csv
+  qlib_environment:
+    config: configs/qlib_environment_v1.yaml
+    manifest: outputs/qlib_environment_v1/current/artifact_manifest.json
+    contract: outputs/qlib_environment_v1/current/contract_status.csv
   execution:
-    config: configs/qlib_exchange_full_research_669_v1.yaml
-    manifest: outputs/qlib_exchange_v1/full_research_669/artifact_manifest.json
-    contract: outputs/qlib_exchange_v1/full_research_669/contract_status.csv
+    config: configs/qlib_exchange_split_transparent_669_v1.yaml
+    manifest: outputs/qlib_exchange_split_transparent_v1/full_research_669/artifact_manifest.json
+    contract: outputs/qlib_exchange_split_transparent_v1/full_research_669/contract_status.csv
 expected_edges:
   raw_snapshot: [catalog, universe]
   source_provenance: [catalog]
@@ -75,9 +108,16 @@ expected_edges:
   labels: [matrix, universe, raw_snapshot]
   daily_ic: [matrix, labels]
   splits: [matrix, labels, universe]
-  fdr: [daily_ic, splits]
-  stability: [daily_ic, splits, fdr]
-  clustering: [matrix, daily_ic, stability]
-  score: [matrix, splits, stability, clustering]
-  execution: [score]
+  development_split: [splits]
+  selection_projection: [daily_ic, splits, development_split]
+  fdr: [selection_projection]
+  stability: [selection_projection, fdr]
+  clustering_projection: [matrix, daily_ic, splits, development_split, stability]
+  clustering: [development_split, stability, clustering_projection]
+  allowlist: [splits, development_split, stability, clustering]
+  weights: [stability, allowlist]
+  mutation: [raw_snapshot, matrix, labels, daily_ic, splits, development_split, selection_projection, fdr, stability, clustering_projection, clustering, allowlist, weights]
+  freeze: [matrix, splits, allowlist, weights, mutation]
+  score: [matrix, splits, allowlist, weights, mutation, freeze]
+  execution: [score, freeze, qlib_environment]
 output_dir: outputs/full_research_669_readiness_v1/current
