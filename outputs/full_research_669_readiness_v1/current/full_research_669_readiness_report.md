@@ -6,30 +6,37 @@
 - purged_exact_assignments_ready: `true`
 - labels_current_lineage: `true`
 - daily_ic_current_lineage: `true`
-- fdr_current_lineage: `false`
-- selection_chain_current: `false`
-- full_research_669_validation_chain_ready: `false`
+- fdr_current_lineage: `true`
+- selection_chain_current: `true`
+- full_research_669_validation_chain_ready: `true`
 - full_research_669_qlib_execution_operational: `true`
 - full_research_authoritative_tradability_ready: `false`
 - historical_selection_evidence_valid: `true`
-- feature_selection_holdout_clean: `false`
-- clustering_holdout_clean: `false`
-- fdr_family_semantics_valid: `false`
-- fdr_artifact_consumed: `false`
-- raw_input_provenance_complete: `false`
-- split_allowlists_frozen: `false`
-- feature_allowlist_frozen: `false`
-- selection_integrity_status: `blocked`
-- model_entry_hard_stop_active: `true`
-- bulk_run_user_review_status: `not_requested`
+- feature_selection_holdout_clean: `true`
+- clustering_holdout_clean: `true`
+- fdr_family_semantics_valid: `true`
+- fdr_artifact_consumed: `true`
+- raw_input_provenance_complete: `true`
+- split_allowlists_frozen: `true`
+- feature_allowlist_frozen: `true`
+- pre_test_freeze_contract_ready: `true`
+- transparent_score_ready: `true`
+- transparent_qlib_execution_ready: `true`
+- selection_integrity_status: `ready`
+- model_entry_hard_stop_active: `false`
+- bulk_run_user_review_status: `consumed`
 - bulk_run_execution_authorized: `false`
-- core_model_ready: `false`
-- pr5_model_training_ready: `false`
+- bulk_run_current_head_binding_satisfied: `false`
+- bulk_run_single_use_enforced_at_execution: `false`
+- core_model_ready: `true`
+- pr5_model_training_ready: `true`
+- historical_oos_comparison_complete: `false`
+- production_model_selected: `false`
 - model_training_started: `false`
 
-- Evidence stages: `15`
-- Lineage issues: `9`
-- Current-lineage stale edges: `8`
-- Historical stable core / exploratory representatives: `65` / `16`
-- Selection integrity: blocked; historical representatives are test-influenced and forbidden as model input.
-- Scope: PR #4 engineering evidence remains available; PR #4.1 selection revalidation and model training have not started.
+- Evidence stages: `23`
+- Lineage issues: `0`
+- Stable-core / split representatives: `914` / `148`
+- Selection integrity: holdout-clean and ready for the separately planned PR #5A protocol.
+- Model training: not started; historical OOS comparison and production selection remain false.
+- Authoritative historical tradability capability remains blocked and is not overstated.
