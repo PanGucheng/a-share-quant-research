@@ -1,0 +1,8 @@
+﻿event_id,datetime,instrument,side,requested_shares,executed_shares,unfilled_shares,base_price,fill_price,gross_value,status,reason,commission,stamp_tax,slippage_cost,cash_fee,implementation_cost,outer_split_id,method
+event_004923,2025-04-29,SH600696,buy,29800.0,0.0,29800.0,6.259999733154233,6.259999733154233,0.0,rejected,cash_volume_or_lot,0.0,0.0,0.0,0.0,0.0,split_002,equal_weight
+event_005095,2025-05-06,SH603721,sell,9802.164563073582,0.0,9802.164563073582,17.270000934950538,17.270000934950538,0.0,rejected,cash_volume_or_lot,0.0,0.0,0.0,0.0,0.0,split_002,equal_weight
+event_005229,2025-05-07,SH603398,buy,4600.0,0.0,4600.0,6.749999593725167,6.749999593725167,0.0,rejected,cash_volume_or_lot,0.0,0.0,0.0,0.0,0.0,split_002,equal_weight
+event_005149,2025-05-06,SH603721,sell,10402.353832533612,0.0,10402.353832533612,17.270000934950538,17.270000934950538,0.0,rejected,cash_volume_or_lot,0.0,0.0,0.0,0.0,0.0,split_002,stability_weight
+event_005300,2025-05-07,SH603398,buy,4600.0,0.0,4600.0,6.749999593725167,6.749999593725167,0.0,rejected,cash_volume_or_lot,0.0,0.0,0.0,0.0,0.0,split_002,stability_weight
+event_001405,2025-09-02,SH601607,buy,10200.0,0.0,10200.0,18.53999956638504,18.53999956638504,0.0,rejected,cash_volume_or_lot,0.0,0.0,0.0,0.0,0.0,split_003,equal_weight
+event_001409,2025-09-02,SZ000338,buy,12700.000000000002,0.0,12700.000000000002,14.880000514502802,14.880000514502802,0.0,rejected,cash_volume_or_lot,0.0,0.0,0.0,0.0,0.0,split_003,stability_weight

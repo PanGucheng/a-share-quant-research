@@ -1,0 +1,27 @@
+{
+  "allowlist_sha256": "a0ee01846f1f5887f0b23a72f8203cabc04a75b49342da7910eddd8b3fc04183",
+  "code_commit_sha": "4494fcb3ec7b83a69f996664113a2cef483187b3",
+  "factor_weights_sha256_by_method": {
+    "equal_weight": "7124b9bcfa30e94bdd01fbb1a2f4a667af0071a4e32a1688067c4f6ada896d02",
+    "stability_weight": "09fb3848a17c16c49364b9f3b26fc59af340c77351dde9fdb733a5b4cf41ad5a"
+  },
+  "feature_order_sha256": "a42dbdf293decad0b74a4935a50f69173fd421c2551233d50133fcaac4718fe5",
+  "final_fit_scope": "not_applicable_stateless_transparent_baseline",
+  "fitted_preprocessing_artifact_id": "not_applicable_stateless_daily_cross_section",
+  "freeze_id": "pre_test_freeze_v1:2bba08169aa873cf22c68c68ffa8bd83d202a45091822fba0d8019d81b1a5b36",
+  "freeze_timestamp": "2026-07-22T13:03:46.761016+00:00",
+  "model_binary_sha256": "not_applicable_transparent_baseline",
+  "model_config_sha256": "381388bd28391b7b02ce6ec504902d25328e511458bbc91b633a72479918b4d5",
+  "outer_split_id": "split_002",
+  "preprocessing_config_sha256": "ee5251342f023e3dcd0ac2a00f29e5131e01f6b6b13fe2554c920934367fe620",
+  "qlib_exchange_config_sha256": "6897f329f8caf13ae4a4ff9b81913dfd6689f8fbee14977f4369bb832555e9db",
+  "schema_version": 1,
+  "selected_hyperparameters": {
+    "equal_weight": "fixed_equal_weight",
+    "stability_weight": "fixed_development_stability_weight"
+  },
+  "test_dates_sha256": "54a4d2fb53151e1ed4af423ab06b7102e5157290c7416231fe8cded533b05afe",
+  "training_data_sha256": "0e5b6c4f9c50ca6d072d647e62d3d264d059579386145a17cba017a03fbda488",
+  "validation_search_sha256": "not_applicable_no_hyperparameter_search",
+  "validation_selection_metric": "not_applicable_transparent_baseline"
+}

@@ -1,0 +1,7 @@
+﻿outer_split_id,method,rows,coverage,score_std
+split_001,equal_weight,240000,1.0,0.4461474300358105
+split_001,stability_weight,240000,1.0,0.45504305834342695
+split_002,equal_weight,248000,1.0,0.4625972997767131
+split_002,stability_weight,248000,1.0,0.4685056993421952
+split_003,equal_weight,248000,1.0,0.4449308901361154
+split_003,stability_weight,248000,1.0,0.4610541989666532

@@ -1,0 +1,4 @@
+﻿outer_split_id,method,kind,rows,sha256
+split_001,all,market,269400,79e3c64bbe95bcae76fadeda0a580417fd56b4fc980372e6c5cac14a9a15f257
+split_001,equal_weight,signal,240000,ab0a4c8fc912475d72a3581d8ad5d2990a3cbd398fa554d30f41d0f75bd78f42
+split_001,stability_weight,signal,240000,1c2f15070aec13635fc467eb758ac778ab2f70239265a5ce7c96d056a11af82e

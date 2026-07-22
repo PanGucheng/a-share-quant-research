@@ -1,0 +1,53 @@
+{
+  "execution_commit_sha": "4494fcb3ec7b83a69f996664113a2cef483187b3",
+  "factor_matrix_artifact_id": "full_research_feature_matrix_v1:c7a37c0c6031ac99b3260ab6141e4a2353eb115b1653d8fb23a5e0cc0924b0bf",
+  "freeze_artifact_id": "pre_test_freeze_v1:87ad590b1c82c5a31d8d9b51b0377fd1e2d797954e0a4fb6d2882537d1d0ecd5",
+  "freeze_id": "pre_test_freeze_v1:2bba08169aa873cf22c68c68ffa8bd83d202a45091822fba0d8019d81b1a5b36",
+  "freeze_sha256": "ed722404f301bb1d9799eb3299973d80325bfc88f2c78ec85beecb4870255dcd",
+  "outer_split_id": "split_002",
+  "receipt_id": "test_release_v1:b63c2eb06479541b64f3d6f98e77c9c779a15ffd36be25acec6d994c7d009c40",
+  "release_timestamp": "2026-07-22T13:04:45.893994+00:00",
+  "schema_version": 1,
+  "score_artifact_sha256": "7a2c37beb932e464b6b6d7f210c2faa3c7e24d298eef107d6f9c17446a5d82dc",
+  "score_methods": [
+    "equal_weight",
+    "stability_weight"
+  ],
+  "split_artifact_id": "purged_walk_forward_v1:78568e0fe2387fce3d1defda1e777e6ae58746fb8c9aba0ebf36f55129bdc718",
+  "status": "consumed",
+  "test_dates_sha256": "54a4d2fb53151e1ed4af423ab06b7102e5157290c7416231fe8cded533b05afe",
+  "test_feature_partition_hashes": {
+    "alpha101_001": "e1d6f31f8ff47c9f5af76b4fea2bc44908a5630cac44d62e2a0dd9fae2607b8e",
+    "alpha101_002": "36e1e56b7ddb8a5def35cd503bfd12382f8d9ad800ffe2cb7a12d0b85e042cba",
+    "alpha101_003": "513f5b02b69bbd9668227ec1dfb52d5635d9b4a1c198a2b0aa697e318179c49f",
+    "alpha158_001": "87e3074b28f9271351a7850a23ad59ac78f182c082310494b37885baa57d3438",
+    "alpha158_002": "4893fcd7d0334b070be8f94398e6f3ab2a10da2c03dbc2319eb286089ae8ed61",
+    "alpha158_003": "d4d7ae83607990b322814076111e5f68432315c64ab78ed88a8a2eaf188be2ba",
+    "alpha158_004": "4ee3994b6a0220c963033a0f329dd513de2479cb53c0beef1fa8f0423d98f770",
+    "alpha158_005": "85bdb5ee13ad9c5d7e2670a422a94f4c3d9b125648fc4413c9821e16a1debdeb",
+    "alpha158_006": "158368fed0aa60d19b627ef22a1b6b4f89579c1ddca0bf77992361b11ee1e7a6",
+    "alpha360_004": "f6b886aa422b8165a30e4e8b80a3cbb87793bc1a0936b5ef5f2a5573fb77c95f",
+    "project_basic_001": "2c21162be11835d0084115230509d9dc9b71aa088e1274da15bd7248be0963cf",
+    "ta_001": "4bbb378f700654d935e8b148725ab6637b49a90814afd4986ba813e46f799558",
+    "ta_002": "c9933bcc3c446bdaeb63a5e5a2eaf9060fd615f94fa954760fe08ffe22a1b318",
+    "ta_003": "422a496ae7c73cb8a216ee723ddab8d016b176d75de356b32086ff5938f194ec",
+    "ta_004": "195d0a48f0175a409ec96322d077dae868c57edbd5ab3210911275f9e47b9605"
+  },
+  "test_feature_partition_ids": [
+    "alpha101_001",
+    "alpha101_002",
+    "alpha101_003",
+    "alpha158_001",
+    "alpha158_002",
+    "alpha158_003",
+    "alpha158_004",
+    "alpha158_005",
+    "alpha158_006",
+    "alpha360_004",
+    "project_basic_001",
+    "ta_001",
+    "ta_002",
+    "ta_003",
+    "ta_004"
+  ]
+}
