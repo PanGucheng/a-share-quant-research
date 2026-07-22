@@ -1,0 +1,36 @@
+{
+  "allowed_dates": "outputs/development_robustness_split_v1/full_research_669/outer_development_allowed_dates.csv",
+  "daily_ic": "outputs/full_research_daily_ic_669_v1/current/daily_rank_ic.csv",
+  "factor_exposure": "outputs/full_research_feature_matrix_669_v1/runtime_v3/alpha158_001.parquet",
+  "input_manifests": [
+    "outputs/raw_market_data_snapshot_v1/full_research_669/artifact_manifest.json",
+    "outputs/full_research_feature_matrix_669_v1/current/artifact_manifest.json",
+    "outputs/full_research_labels_669_v1/current/artifact_manifest.json",
+    "outputs/full_research_daily_ic_669_v1/current/artifact_manifest.json",
+    "outputs/purged_walk_forward_v1/full_research_669/artifact_manifest.json",
+    "outputs/selection_input_projection_v1/full_research_669/artifact_manifest.json",
+    "outputs/factor_multiple_testing_v1/full_research_669/artifact_manifest.json",
+    "outputs/factor_rolling_stability_v1/full_research_669/artifact_manifest.json",
+    "outputs/clustering_input_projection_v1/full_research_669/artifact_manifest.json",
+    "outputs/development_robustness_split_v1/full_research_669/artifact_manifest.json",
+    "outputs/factor_clustering_v1/full_research_669/artifact_manifest.json",
+    "outputs/split_specific_allowlist_v1/full_research_669/artifact_manifest.json"
+  ],
+  "labels": "outputs/full_research_feature_matrix_669_v1/runtime_v3/labels.parquet",
+  "outer_date_assignments": "outputs/purged_walk_forward_v1/full_research_669/date_assignments.csv",
+  "output_dir": "outputs/selection_mutation_contract_v1/full_research_669",
+  "profile": "full_research",
+  "profile_name": "full_research",
+  "profile_type": "full_research",
+  "raw_ohlcva": "outputs/full_research_feature_matrix_v1/runtime/raw_ohlcva.parquet",
+  "research_run_family_id": "full_research_factor_669_v1",
+  "sample_exposure_factors": 5,
+  "sample_instruments": 200,
+  "schema_version": 1,
+  "selection_artifacts": {
+    "allowlist": "outputs/split_specific_allowlist_v1/full_research_669/split_allowlist.csv",
+    "clustering": "outputs/factor_clustering_v1/full_research_669/representatives_by_split.csv",
+    "fdr": "outputs/factor_multiple_testing_v1/full_research_669/fdr_results.csv",
+    "stability": "outputs/factor_rolling_stability_v1/full_research_669/factor_stability_board.csv"
+  }
+}
