@@ -1,0 +1,8 @@
+﻿check_name,status,observed_value,required_value,severity,reason
+mutation_case_count,pass,12,12,critical,
+development_projection_hash_unchanged,pass,12,12,critical,
+selection_payload_hashes_unchanged,pass,12,12,critical,
+selection_parent_chain_valid,pass,[],[],critical,
+all_mutations_touch_test_rows,pass,12,12,critical,
+mutation_effective,pass,12,12,critical,
+row_order_canonicalized,pass,4,4,critical,
