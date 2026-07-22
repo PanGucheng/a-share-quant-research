@@ -83,7 +83,7 @@ def main() -> int:
     for row in merged.to_dict("records"):
         decision_input = pd.Series({column: row[column] for column in DEVELOPMENT_SELECTION_COLUMNS})
         decision = select_development_factor_window(decision_input, min_abs_validation_ic=float(config["min_abs_validation_ic"]), min_dates=int(config["minimum_dates_per_fold"]))
-        decision_rows.append({**row, **decision, "eligible": bool(row["selection_eligible"]), "test_metrics_used_in_selection": False, "internally_recomputed_fdr": False})
+        decision_rows.append({**row, **decision, "eligible": bool(row["selection_eligible"]), "internally_recomputed_fdr": False})
     metrics = pd.DataFrame(decision_rows)
     board = development_stability_board(metrics, config)
     expected_outer = int(config["expected_outer_splits"])
@@ -100,7 +100,7 @@ def main() -> int:
         contract_row("fdr_join_extra", extra_count == 0, extra_count, 0),
         contract_row("fdr_q_value_mismatch", mismatch == 0, mismatch, 0),
         contract_row("internally_recomputed_fdr", not metrics["internally_recomputed_fdr"].any(), bool(metrics["internally_recomputed_fdr"].any()), False),
-        contract_row("test_metrics_used_in_selection", not metrics["test_metrics_used_in_selection"].any(), bool(metrics["test_metrics_used_in_selection"].any()), False),
+        contract_row("test_metrics_used_in_selection", not any(str(column).startswith("test_") or "oos" in str(column).lower() for column in metrics.columns), False, False),
         contract_row("selection_schema_has_no_test_fields", not any(str(column).startswith("test_") or "oos" in str(column).lower() for column in metrics.columns), [column for column in metrics.columns if str(column).startswith("test_") or "oos" in str(column).lower()], []),
         contract_row("all_selected_factors_have_fdr_result", metrics.loc[metrics["selected"], "fdr_bh_q_value"].notna().all(), int(metrics.loc[metrics["selected"], "fdr_bh_q_value"].isna().sum()), 0),
     ])
