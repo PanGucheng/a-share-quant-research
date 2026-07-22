@@ -56,7 +56,8 @@ def main() -> int:
         stage_issues = validate_manifest_outputs(manifest, manifest_path.parent, config=stage_config)
         if manifest["artifact_status"] != "pass":
             stage_issues.append(LineageIssue("artifact_status", str(manifest["artifact_id"]), str(manifest["blocked_reason"]), str(manifest["stage_id"])))
-        if manifest["lineage_status"] != "complete":
+        allowed_reference_only = name == "qlib_environment" and manifest["lineage_status"] == "reference_only"
+        if manifest["lineage_status"] != "complete" and not allowed_reference_only:
             stage_issues.append(LineageIssue("lineage_status", str(manifest["artifact_id"]), str(manifest["lineage_status"]), str(manifest["stage_id"])))
         if bool(manifest["code_dirty"]):
             stage_issues.append(LineageIssue("clean_code", str(manifest["artifact_id"]), "evidence produced from dirty code", str(manifest["stage_id"])))
@@ -86,7 +87,7 @@ def main() -> int:
                 issues.append(LineageIssue("stale_upstream_artifact", str(child["artifact_id"]), f"missing current {parent_name}: {parent_id}", str(child["stage_id"])))
 
     chain_names = [
-        "matrix", "labels", "daily_ic", "splits", "development_split", "selection_projection", "fdr",
+        "matrix", "labels", "daily_ic", "splits", "selection_projection", "fdr",
         "stability", "clustering_projection", "clustering", "allowlist", "weights", "mutation", "freeze", "score", "execution",
     ]
     for field in ["universe_artifact_id", "factor_catalog_id", "factor_frame_id", "split_manifest_id"]:

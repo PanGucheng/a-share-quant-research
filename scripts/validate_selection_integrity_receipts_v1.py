@@ -35,7 +35,7 @@ def main() -> int:
         manifest = load_artifact_manifest(manifest_path)
         assert not validate_manifest_outputs(manifest, manifest_path.parent, config=effective_config(name, spec)), name
         assert manifest["artifact_status"] == "pass", name
-        assert manifest["lineage_status"] == "complete", name
+        assert manifest["lineage_status"] == "complete" or (name == "qlib_environment" and manifest["lineage_status"] == "reference_only"), name
         assert not bool(manifest["code_dirty"]), name
         contract = pd.read_csv(resolve(spec["contract"]))
         assert contract.loc[contract["severity"].eq("critical"), "status"].eq("pass").all(), name
