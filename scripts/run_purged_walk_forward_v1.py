@@ -14,7 +14,7 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 from research_validation.purged_split import WalkForwardConfig, build_purged_walk_forward, leakage_audit  # noqa: E402
-from research_validation.lineage import capture_code_state, content_reference_id, write_stage_artifact_manifest  # noqa: E402
+from research_validation.lineage import capture_code_state, content_reference_id, load_artifact_manifest, validate_manifest_outputs, write_stage_artifact_manifest  # noqa: E402
 from research_validation.stage_output import StageOutputPublisher  # noqa: E402
 
 
@@ -40,6 +40,20 @@ def main() -> int:
     args = parser.parse_args()
     config_path = args.config if args.config.is_absolute() else PROJECT_ROOT / args.config
     config = yaml.safe_load(config_path.read_text(encoding="utf-8")) or {}
+    input_manifest_paths = [PROJECT_ROOT / item for item in config.get("input_manifests", [])]
+    input_manifests = [load_artifact_manifest(path) for path in input_manifest_paths]
+    input_issues = [
+        issue
+        for manifest, path in zip(input_manifests, input_manifest_paths)
+        for issue in validate_manifest_outputs(manifest, path.parent)
+    ]
+    if input_issues or any(manifest["artifact_status"] != "pass" for manifest in input_manifests):
+        raise ValueError("purged split input manifest is stale or blocked")
+    by_stage = {str(manifest["stage_id"]): manifest for manifest in input_manifests}
+    matrix = by_stage.get("full_research_feature_matrix_v1")
+    labels = by_stage.get("full_research_labels_v1")
+    if matrix is not None and labels is not None and str(matrix["artifact_id"]) not in set(map(str, labels["input_artifact_ids"])):
+        raise ValueError("purged split label input does not reference the current matrix")
     code_state = capture_code_state(PROJECT_ROOT)
     import qlib
     from qlib.config import REG_CN
@@ -50,7 +64,6 @@ def main() -> int:
     outputs = build_purged_walk_forward(calendar, WalkForwardConfig(**fields))
     contract = leakage_audit(outputs)
     output = PROJECT_ROOT / config["output_dir"]
-    input_manifest_paths = [PROJECT_ROOT / item for item in config.get("input_manifests", [])]
     with StageOutputPublisher(output, CONTROLLED_OUTPUTS) as publisher:
         outputs["split_manifest"].to_csv(publisher.path("split_manifest.csv"), index=False, encoding="utf-8-sig")
         outputs["split_manifest"].to_csv(publisher.path("split_date_ranges.csv"), index=False, encoding="utf-8-sig")

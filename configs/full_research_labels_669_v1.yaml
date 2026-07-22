@@ -4,10 +4,13 @@ profile_name: full_research
 profile_type: full_research
 research_run_family_id: full_research_factor_669_v1
 feature_matrix_manifest: outputs/full_research_feature_matrix_669_v1/current/artifact_manifest.json
+feature_batch_manifest: outputs/full_research_feature_matrix_669_v1/current/batch_manifest.csv
 universe_manifest: outputs/point_in_time_universe_v1/full_research/artifact_manifest.json
+raw_market_data_snapshot_manifest: outputs/raw_market_data_snapshot_v1/full_research_669/artifact_manifest.json
+raw_market_data_detail_manifest: outputs/raw_market_data_snapshot_v1/full_research_669/raw_market_data_manifest.json
 raw_cache: outputs/full_research_feature_matrix_v1/runtime/raw_ohlcva.parquet
-key_partition: outputs/full_research_feature_matrix_669_v1/runtime/alpha158_001.parquet
-runtime_label: outputs/full_research_feature_matrix_669_v1/runtime/labels.parquet
+key_partition: outputs/full_research_feature_matrix_669_v1/runtime_v3/alpha158_001.parquet
+runtime_label: outputs/full_research_feature_matrix_669_v1/runtime_v3/labels.parquet
 label_name: label_20d_t1
 entry_lag: 1
 holding_days: 20

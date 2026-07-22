@@ -8,7 +8,8 @@ feature_batch_manifest: outputs/full_research_feature_matrix_669_v1/current/batc
 label_manifest: outputs/full_research_labels_669_v1/current/artifact_manifest.json
 label_runtime: outputs/full_research_feature_matrix_669_v1/runtime_v3/labels.parquet
 label_name: label_20d_t1
-expected_factor_count: 669
+selected_batch_ids: [alpha158_001]
+expected_factor_count: 25
 minimum_cross_section: 100
 minimum_ic_days: 1000
-output_dir: outputs/full_research_daily_ic_669_v1/current
+output_dir: outputs/full_research_daily_ic_669_v1/canary
