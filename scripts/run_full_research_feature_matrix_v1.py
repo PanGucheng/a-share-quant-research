@@ -23,7 +23,9 @@ from factor_research.ta_source import import_ta_wrapper  # noqa: E402
 from qlib_integration.contracts import contract_row  # noqa: E402
 from research_validation.bulk_run_gate import (  # noqa: E402
     build_bulk_run_binding,
+    finalize_bulk_run_consumption,
     relative_command_path,
+    reserve_bulk_run_approval,
     validate_bulk_run_approval,
 )
 from research_validation.feature_matrix import atomic_parquet, build_pit_key_grid, canonical_hash, file_sha256, filter_to_pit_intervals, resumable_batch_valid  # noqa: E402
@@ -254,6 +256,8 @@ def main() -> int:
     bulk_run = len(batch_specs) > 5 or scoped_factor_count >= 100
     approval: dict[str, object] | None = None
     approval_manifest_path: Path | None = None
+    approval_consumption_path: Path | None = None
+    code_state_at_gate = capture_code_state(PROJECT_ROOT)
     if bulk_run:
         if args.approval is None:
             raise ValueError("large matrix run requires --approval bound to the exact command and inputs")
@@ -264,7 +268,6 @@ def main() -> int:
         approval_issues = validate_manifest_outputs(approval_manifest, approval_manifest_path.parent)
         if approval_issues or approval_manifest["artifact_status"] != "pass":
             raise ValueError("bulk run review bundle is stale or blocked")
-        code_state_at_gate = capture_code_state(PROJECT_ROOT)
         if code_state_at_gate.dirty:
             raise ValueError("large matrix run requires a clean project worktree")
         input_inventory = matrix_input_inventory(
@@ -277,13 +280,18 @@ def main() -> int:
         exact_command = matrix_exact_command(config_path, approval_path, args.run_purpose)
         binding = build_bulk_run_binding(
             run_id=str(approval["run_id"]),
-            commit_sha=str(source_manifest["code_commit_sha"]),
+            commit_sha=code_state_at_gate.commit_sha,
             config=config,
             input_inventory=input_inventory,
             exact_command=exact_command,
             scope=scope,
         )
         validate_bulk_run_approval(approval, binding)
+        approval_consumption_path = reserve_bulk_run_approval(
+            approval,
+            binding,
+            receipt_dir=resolve(config["runtime_dir"]) / "bulk_run_consumptions",
+        )
     intervals = pd.read_csv(resolve(config["universe_intervals"]))
     symbols = sorted(intervals["instrument"].astype(str).str.upper().unique())
     runtime = resolve(config["runtime_dir"])
@@ -375,11 +383,12 @@ def main() -> int:
         contract_row("raw_provenance_bound", bool(not success.empty and success["market_data_snapshot_artifact_id"].eq(raw_manifest["artifact_id"]).all()), success["market_data_snapshot_artifact_id"].nunique(), 1),
         contract_row("source_provenance_bound", bool(not success.empty and success["source_provenance_artifact_id"].eq(source_manifest["artifact_id"]).all()), success["source_provenance_artifact_id"].nunique(), 1),
         contract_row("bulk_run_approval_valid", not bulk_run or approval is not None, approval.get("bulk_run_approval_id") if approval else "not_required", "valid approval or bounded canary"),
+        contract_row("bulk_run_approval_single_use_reserved", not bulk_run or approval_consumption_path is not None, str(approval_consumption_path) if approval_consumption_path else "not_required", "reserved receipt or bounded canary"),
         contract_row("cache_verify_all_batches_hit", args.run_purpose != "cache_verify" or bool(not success.empty and success["cache_hit"].astype(bool).all()), int(success["cache_hit"].astype(bool).sum()), len(success) if args.run_purpose == "cache_verify" else "not_required"),
     ])
     ready = contracts["status"].eq("pass").all()
     output_dir = resolve(config["output_dir"])
-    code_state = capture_code_state(PROJECT_ROOT)
+    code_state = code_state_at_gate if bulk_run else capture_code_state(PROJECT_ROOT)
     with StageOutputPublisher(output_dir, CONTROLLED) as publisher:
         batch.to_csv(publisher.path("batch_manifest.csv"), index=False, encoding="utf-8-sig")
         contracts.to_csv(publisher.path("contract_status.csv"), index=False, encoding="utf-8-sig")
@@ -396,6 +405,12 @@ def main() -> int:
             input_manifest_paths.append(approval_manifest_path)
         write_stage_artifact_manifest(project_root=PROJECT_ROOT, stage_id="full_research_feature_matrix_v1", config=config, output_dir=publisher.staging_dir, output_files=files, code_state=code_state, input_manifest_paths=input_manifest_paths, factor_frame_id=factor_frame_id, start_date=config["start_date"], end_date=config["end_date"], lineage_status="complete", artifact_status="pass" if ready else "blocked", blocked_reason="" if ready else "blocked_feature_matrix_batch_failure")
         publisher.publish()
+    if approval_consumption_path is not None:
+        result_manifest = load_artifact_manifest(output_dir / "artifact_manifest.json")
+        finalize_bulk_run_consumption(
+            approval_consumption_path,
+            result_artifact_id=str(result_manifest["artifact_id"]),
+        )
     print(contracts.to_string(index=False))
     return 0 if ready else 2
 

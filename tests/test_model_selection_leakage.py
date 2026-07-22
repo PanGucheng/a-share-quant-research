@@ -25,6 +25,7 @@ def ready_row(**overrides: object) -> pd.DataFrame:
         "model_entry_hard_stop_active": False,
         "feature_selection_holdout_clean": True,
         "clustering_holdout_clean": True,
+        "fdr_family_semantics_valid": True,
         "fdr_artifact_consumed": True,
         "raw_input_provenance_complete": True,
         "split_allowlists_frozen": True,
@@ -68,6 +69,15 @@ def test_model_entry_rejects_machine_hard_stop() -> None:
                 core_model_ready=False,
                 pr5_model_training_ready=False,
             ),
+            selection_row(),
+            selection_name="split_specific_holdout_clean_allowlists_v1",
+        )
+
+
+def test_model_entry_rejects_invalid_fdr_family_semantics() -> None:
+    with pytest.raises(ModelEntryBlockedError, match="fdr_family_semantics_valid=false"):
+        assert_model_entry_allowed(
+            ready_row(fdr_family_semantics_valid=False),
             selection_row(),
             selection_name="split_specific_holdout_clean_allowlists_v1",
         )

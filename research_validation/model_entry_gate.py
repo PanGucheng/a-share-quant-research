@@ -34,6 +34,7 @@ def model_entry_blockers(
         "model_entry_hard_stop_active",
         "feature_selection_holdout_clean",
         "clustering_holdout_clean",
+        "fdr_family_semantics_valid",
         "fdr_artifact_consumed",
         "raw_input_provenance_complete",
         "split_allowlists_frozen",
@@ -54,6 +55,7 @@ def model_entry_blockers(
     for field in [
         "feature_selection_holdout_clean",
         "clustering_holdout_clean",
+        "fdr_family_semantics_valid",
         "fdr_artifact_consumed",
         "raw_input_provenance_complete",
         "split_allowlists_frozen",
