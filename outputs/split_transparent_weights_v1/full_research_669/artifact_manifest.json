@@ -1,0 +1,37 @@
+{
+  "artifact_id": "split_transparent_weights_v1:87721e9d936aed56e5e144213074f77b7ef131c77a0862f297dc9e82d16a14c1",
+  "artifact_status": "pass",
+  "blocked_reason": "",
+  "code_commit_sha": "85860c57c8bc0f4b9d6af5e7c5ca2fe853a525c1",
+  "code_diff_sha256": "",
+  "code_dirty": false,
+  "config_sha256": "1bba38cc20b0d1cf9e3d265d707f154968035c5af88044aedcf6c55c3acfd7d7",
+  "created_at": "2026-07-22T12:47:30.462550+00:00",
+  "end_date": null,
+  "factor_catalog_id": "factor-catalog:8c031a09892fc915ac45201942f563925a9bab617e60fce5ecbbe274a51a02e1",
+  "factor_frame_id": "factor-frame:839242fe9d004216cf468a48cc44ad32584b9fe4a139c8e0644358c0f03d8d78",
+  "input_artifact_ids": [
+    "factor_rolling_stability_v1:287ba56893bed56f32e0bd11b8dc2624bb11b236e33b44bde7a834462823ccdb",
+    "split_specific_allowlist_v1:82dc8e41976ce8da225d46573971ed73b21432262b4c2726df2e89423dd10236"
+  ],
+  "lineage_status": "complete",
+  "missing_lineage_fields": [],
+  "output_file_hashes": {
+    "contract_status.csv": "a4611df8c5461d78fee05bfa55d814efae592ddb0792327a15ed63589219619d",
+    "factor_weights_by_split.csv": "821b8c066519b7dd99da64c8818cfc464b7f32827c699d1ac1c37ae34f0f580f",
+    "input_receipts.csv": "7ad68989c65160d94d23f96af4c5c716ce6b9bf09640b11b5bd80cb5732e9ed0",
+    "resolved_config.json": "1073b608ef82578ce9da4fc96390613662d24ce5f2e225636397a9655e21c2cd",
+    "transparent_weights_report.md": "87aa103e87dcf05c493811ad5b066e46d94af990a28f91f359df9e7aa7b0d45d",
+    "weight_manifest.csv": "f1566b1cd8139a3341ca722f1f516548ed6e685270f126fa80e8414e3f020605"
+  },
+  "producer_run_id": "20260722T124730Z-6eb28d8f",
+  "profile_name": "full_research",
+  "profile_type": "full_research",
+  "research_run_family_id": "full_research_factor_669_v1",
+  "run_id": "20260722T124730Z-6eb28d8f",
+  "schema_version": 2,
+  "split_manifest_id": "split-manifest:75ccf0f37e85422729d54aef5a363f68d4f9b3daed3d42a87eb120e6b5aefe0e",
+  "stage_id": "split_transparent_weights_v1",
+  "start_date": null,
+  "universe_artifact_id": "universe:10287ec42be03cb525de034b1bea1b53fa5da11cda5de4b5ed8f1f2ad1dcdad5"
+}
