@@ -1,0 +1,9 @@
+﻿outer_split_id,stability_role,factor_count
+split_001,holdout,12
+split_001,stable_core,13
+split_002,conditional_signal,7
+split_002,holdout,9
+split_002,stable_core,9
+split_003,conditional_signal,11
+split_003,holdout,8
+split_003,stable_core,6
