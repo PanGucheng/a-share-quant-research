@@ -32,6 +32,8 @@ def main() -> int:
     assert bool(flags["full_research_669_matrix_content_ready"])
     assert bool(flags["matrix_v3_provenance_ready"])
     assert bool(flags["purged_exact_assignments_ready"])
+    assert bool(flags["labels_current_lineage"])
+    assert bool(flags["daily_ic_current_lineage"])
     assert not bool(flags["full_research_669_validation_chain_ready"])
     assert bool(flags["full_research_669_qlib_execution_operational"])
     assert not bool(flags["full_research_authoritative_tradability_ready"])
@@ -47,8 +49,6 @@ def main() -> int:
         "bulk_run_execution_authorized",
         "core_model_ready",
         "pr5_model_training_ready",
-        "labels_current_lineage",
-        "daily_ic_current_lineage",
         "fdr_current_lineage",
         "selection_chain_current",
     ]:

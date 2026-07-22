@@ -90,7 +90,9 @@ def main() -> int:
     flags = pd.read_csv(readiness_path.parent / "readiness_summary.csv").iloc[0]
     assert bool(flags["matrix_v3_provenance_ready"])
     assert bool(flags["purged_exact_assignments_ready"])
-    for field in ("labels_current_lineage", "fdr_current_lineage", "selection_chain_current", "core_model_ready", "pr5_model_training_ready", "model_training_started"):
+    assert bool(flags["labels_current_lineage"])
+    assert bool(flags["daily_ic_current_lineage"])
+    for field in ("fdr_current_lineage", "selection_chain_current", "core_model_ready", "pr5_model_training_ready", "model_training_started"):
         assert not bool(flags[field])
     assert flags["selection_integrity_status"] == "blocked"
     assert bool(flags["model_entry_hard_stop_active"])

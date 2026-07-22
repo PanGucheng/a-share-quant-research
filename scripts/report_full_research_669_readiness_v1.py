@@ -146,8 +146,6 @@ def main() -> int:
         "model_training_started": False,
     }
     expected_false = {
-        "labels_current_lineage",
-        "daily_ic_current_lineage",
         "fdr_current_lineage",
         "selection_chain_current",
         "feature_allowlist_frozen",
