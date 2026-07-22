@@ -1,0 +1,8 @@
+{
+  "artifact_id": "full_research_feature_matrix_v1:b7cde3ebe279b91a2863147312128240a22677568648433db683b767825ef384",
+  "batch_count": 30,
+  "batch_manifest_path": "outputs/full_research_feature_matrix_669_v1/current/batch_manifest.csv",
+  "code_commit_sha": "cae3197cc4b1ae2dc8b9252e1b36ac3b03104ae7",
+  "factor_frame_id": "factor-frame:839242fe9d004216cf468a48cc44ad32584b9fe4a139c8e0644358c0f03d8d78",
+  "git_ref": "v0.4-full-research-669"
+}

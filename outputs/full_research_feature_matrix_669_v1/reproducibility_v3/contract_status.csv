@@ -1,0 +1,11 @@
+﻿check_name,status,observed_value,required_value,severity,reason
+current_matrix_fresh,pass,0.0,0.0,critical,
+batch_count,pass,30.0,30.0,critical,
+factor_count,pass,669.0,669.0,critical,
+columns_exact,pass,0.0,0.0,critical,
+keys_exact,pass,0.0,0.0,critical,
+nan_patterns_exact,pass,0.0,0.0,critical,
+values_within_tolerance,pass,0.0,0.0,critical,
+coverage_exact,pass,0.0,0.0,critical,
+legacy_runtime_hashes_match_pr4,pass,0.0,0.0,critical,
+v3_runtime_hashes_match_manifest,pass,0.0,0.0,critical,
