@@ -23,7 +23,10 @@ def main() -> int:
     assert manifest["blocked_reason"] == "blocked_selection_integrity_not_revalidated"
     lineage_issues = pd.read_csv(output_dir / "lineage_issues.csv")
     assert not lineage_issues.empty
-    assert set(lineage_issues["check_name"]) == {"stale_upstream_artifact"}
+    assert set(lineage_issues["check_name"]) == {"config_sha256", "stale_upstream_artifact"}
+    config_issues = lineage_issues.loc[lineage_issues["check_name"].eq("config_sha256")]
+    assert len(config_issues) == 1
+    assert config_issues.iloc[0]["stage_id"] == "factor_multiple_testing_v1"
     flags = pd.read_csv(output_dir / "readiness_summary.csv").iloc[0]
     assert bool(flags["full_research_669_infrastructure_ready"])
     assert bool(flags["full_research_669_matrix_content_ready"])

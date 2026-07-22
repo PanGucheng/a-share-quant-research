@@ -2,6 +2,12 @@
 
 - full_research_669_infrastructure_ready: `true`
 - full_research_669_matrix_content_ready: `true`
+- matrix_v3_provenance_ready: `true`
+- purged_exact_assignments_ready: `true`
+- labels_current_lineage: `false`
+- daily_ic_current_lineage: `false`
+- fdr_current_lineage: `false`
+- selection_chain_current: `false`
 - full_research_669_validation_chain_ready: `false`
 - full_research_669_qlib_execution_operational: `true`
 - full_research_authoritative_tradability_ready: `false`
@@ -21,8 +27,9 @@
 - pr5_model_training_ready: `false`
 - model_training_started: `false`
 
-- Evidence stages: `11`
-- Lineage issues: `0`
+- Evidence stages: `15`
+- Lineage issues: `10`
+- Current-lineage stale edges: `9`
 - Historical stable core / exploratory representatives: `65` / `16`
 - Selection integrity: blocked; historical representatives are test-influenced and forbidden as model input.
 - Scope: PR #4 engineering evidence remains available; PR #4.1 selection revalidation and model training have not started.

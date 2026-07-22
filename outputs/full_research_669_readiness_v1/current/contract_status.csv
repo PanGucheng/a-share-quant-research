@@ -1,6 +1,12 @@
 ﻿check_name,status,observed_value,required_value,severity,reason
 full_research_669_infrastructure_ready,pass,True,True,critical,Evidence-backed PR #4 engineering capability.
 full_research_669_matrix_content_ready,pass,True,True,critical,Evidence-backed PR #4 engineering capability.
+matrix_v3_provenance_ready,pass,True,True,critical,Evidence-backed PR #4 engineering capability.
+purged_exact_assignments_ready,pass,True,True,critical,Evidence-backed PR #4 engineering capability.
+labels_current_lineage,pass,False,False,critical,Selection-integrity hard stop required before PR #4.1 revalidation.
+daily_ic_current_lineage,pass,False,False,critical,Selection-integrity hard stop required before PR #4.1 revalidation.
+fdr_current_lineage,pass,False,False,critical,Selection-integrity hard stop required before PR #4.1 revalidation.
+selection_chain_current,pass,False,False,critical,Selection-integrity hard stop required before PR #4.1 revalidation.
 full_research_669_validation_chain_ready,blocked,False,True,critical,Selection-integrity capability has not been revalidated.
 full_research_669_qlib_execution_operational,pass,True,True,critical,Evidence-backed PR #4 engineering capability.
 full_research_authoritative_tradability_ready,blocked,False,True,capability,Historical suspension and directional price-limit labels remain proxy-derived.
