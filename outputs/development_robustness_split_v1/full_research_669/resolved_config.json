@@ -1,0 +1,24 @@
+{
+  "embargo_trading_days": 20,
+  "input_manifests": [
+    "outputs/purged_walk_forward_v1/full_research_669/artifact_manifest.json"
+  ],
+  "label_intervals": "outputs/purged_walk_forward_v1/full_research_669/label_intervals.csv",
+  "minimum_inner_windows": 3,
+  "minimum_train_dates": 252,
+  "minimum_validation_dates": 40,
+  "outer_date_assignments": "outputs/purged_walk_forward_v1/full_research_669/date_assignments.csv",
+  "outer_split_manifest": "outputs/purged_walk_forward_v1/full_research_669/split_manifest.csv",
+  "output_dir": "outputs/development_robustness_split_v1/full_research_669",
+  "profile": "full_research",
+  "profile_name": "full_research",
+  "profile_type": "full_research",
+  "research_run_family_id": "full_research_factor_669_v1",
+  "schema_version": 1,
+  "validation_dates": 60,
+  "validation_end_fractions": [
+    0.65,
+    0.82,
+    1.0
+  ]
+}

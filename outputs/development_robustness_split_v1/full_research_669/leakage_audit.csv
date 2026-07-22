@@ -1,0 +1,8 @@
+﻿check_name,status,observed_value,required_value,severity,reason
+inner_train_outer_test_overlap,pass,0,0,critical,Development robustness dates must remain outside outer test.
+inner_validation_outer_test_overlap,pass,0,0,critical,Development robustness dates must remain outside outer test.
+inner_label_outer_test_overlap,pass,0,0,critical,Development robustness dates must remain outside outer test.
+development_date_outside_outer_train_validation,pass,0,0,critical,Development robustness dates must remain outside outer test.
+minimum_inner_window_count,pass,3,>=3,critical,Development robustness dates must remain outside outer test.
+same_date_cross_inner_fold,pass,0,0,critical,Development robustness dates must remain outside outer test.
+semantic_role,pass,True,True,critical,Development robustness dates must remain outside outer test.

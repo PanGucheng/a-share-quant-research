@@ -1,0 +1,10 @@
+﻿outer_split_id,inner_split_id,sequence,validation_end_fraction,train_start,train_end,validation_start,validation_end,train_dates,validation_dates,purged_dates,embargoed_dates,outer_test_start,outer_test_end,semantic_role
+split_001,split_001_inner_001,1,0.65,2021-02-01,2022-09-19,2022-11-23,2023-01-18,396,40,21,40,2024-08-01,2025-01-27,development_robustness_not_nested_selection_replay
+split_001,split_001_inner_002,2,0.82,2021-02-01,2023-04-04,2023-06-07,2023-08-03,526,40,21,40,2024-08-01,2025-01-27,development_robustness_not_nested_selection_replay
+split_001,split_001_inner_003,3,1.0,2021-02-01,2023-11-06,2024-03-05,2024-05-06,668,40,17,40,2024-08-01,2025-01-27,development_robustness_not_nested_selection_replay
+split_002,split_002_inner_001,1,0.65,2021-02-01,2023-01-13,2023-03-21,2023-05-19,474,40,21,40,2025-02-05,2025-08-04,development_robustness_not_nested_selection_replay
+split_002,split_002_inner_002,2,0.82,2021-02-01,2023-08-29,2023-11-03,2023-12-28,625,40,21,40,2025-02-05,2025-08-04,development_robustness_not_nested_selection_replay
+split_002,split_002_inner_003,3,1.0,2021-02-01,2024-05-08,2024-08-28,2024-10-31,788,40,17,40,2025-02-05,2025-08-04,development_robustness_not_nested_selection_replay
+split_003,split_003_inner_001,1,0.65,2021-02-01,2023-05-19,2023-07-20,2023-09-13,555,40,21,40,2025-08-05,2026-02-04,development_robustness_not_nested_selection_replay
+split_003,split_003_inner_002,2,0.82,2021-02-01,2024-01-26,2024-04-03,2024-06-04,726,40,21,40,2025-08-05,2026-02-04,development_robustness_not_nested_selection_replay
+split_003,split_003_inner_003,3,1.0,2021-02-01,2024-11-04,2025-03-10,2025-05-08,908,40,21,40,2025-08-05,2026-02-04,development_robustness_not_nested_selection_replay

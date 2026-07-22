@@ -1,0 +1,40 @@
+{
+  "artifact_id": "development_robustness_split_v1:2cb5b7a7286450235c1215b8f3c4876dec02f27a44ea4a3d7b9674df5191586b",
+  "artifact_status": "pass",
+  "blocked_reason": "",
+  "code_commit_sha": "c748ad751e95b9ec8ebc541857b60a50f81ef3ab",
+  "code_diff_sha256": "",
+  "code_dirty": false,
+  "config_sha256": "0a0cf13f13c10f62fb3e225e4422b140b465d5f6d4d1f9686e0af834cbf6834a",
+  "created_at": "2026-07-22T11:33:10.894994+00:00",
+  "end_date": "2025-05-08",
+  "factor_catalog_id": "factor-catalog:8c031a09892fc915ac45201942f563925a9bab617e60fce5ecbbe274a51a02e1",
+  "factor_frame_id": "factor-frame:839242fe9d004216cf468a48cc44ad32584b9fe4a139c8e0644358c0f03d8d78",
+  "input_artifact_ids": [
+    "purged_walk_forward_v1:78568e0fe2387fce3d1defda1e777e6ae58746fb8c9aba0ebf36f55129bdc718"
+  ],
+  "lineage_status": "complete",
+  "missing_lineage_fields": [],
+  "output_file_hashes": {
+    "contract_status.csv": "7ef4c4fd3a6f7dbe4261ba493ef4019ee878d8120475afe2fe93f53d08da393e",
+    "development_date_assignments.csv": "505cdfb6ef4118386dd8c90374a8032ea2bfc513fd6faa8297e6159eddaeca68",
+    "development_robustness_split_report.md": "5f7c5011942dd6543b07a7a1f2d58ca883a1b3fe8b8ac2e11a1d9244641704f5",
+    "embargoed_dates.csv": "e53b705df9ba9c1e884d9accd7206a34e81e52acec0d20acf0d5ecfbe30f22ad",
+    "inner_split_manifest.csv": "e72d3971d8a2453fe2f1aac912993e3751039bb42bbf313895f7796fab5156f6",
+    "leakage_audit.csv": "7ef4c4fd3a6f7dbe4261ba493ef4019ee878d8120475afe2fe93f53d08da393e",
+    "outer_development_allowed_dates.csv": "d8e9d2e558044862be1b404fbb69155f560b78bac92f7279474cf2f20493d244",
+    "outer_split_manifest.csv": "6e6a108d38ed9d0d6b92a120fd390ddfa5886c211bf0c74195ccd70394a824d4",
+    "purged_dates.csv": "0390599f201c01d4863c65dc69fd1860e6fa998dfbf1fdac56aa7492c3f8e0dd",
+    "resolved_config.json": "8f18bbb7bd7a851235e3fd9b3dbb335fefeb96889a677c73cf9ea5804f7e5610"
+  },
+  "producer_run_id": "20260722T113310Z-22252830",
+  "profile_name": "full_research",
+  "profile_type": "full_research",
+  "research_run_family_id": "full_research_factor_669_v1",
+  "run_id": "20260722T113310Z-22252830",
+  "schema_version": 2,
+  "split_manifest_id": "development-split-manifest:ebc9da7fb3d17c4d89989fc86cdda8358d94f0499548257f457aa121ef49e7ae",
+  "stage_id": "development_robustness_split_v1",
+  "start_date": "2021-02-01",
+  "universe_artifact_id": "universe:10287ec42be03cb525de034b1bea1b53fa5da11cda5de4b5ed8f1f2ad1dcdad5"
+}
