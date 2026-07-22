@@ -72,8 +72,13 @@ def main() -> int:
             if parent_id not in inputs:
                 issues.append(LineageIssue("stale_upstream_artifact", str(child["artifact_id"]), f"missing current {parent_name}: {parent_id}", str(child["stage_id"])))
 
+    chain_evidence = {
+        name: value
+        for name, value in loaded.items()
+        if name not in {"raw_snapshot", "source_provenance", "matrix_reproducibility", "matrix_run_history"}
+    }
     for field in ["universe_artifact_id", "factor_catalog_id", "factor_frame_id", "split_manifest_id"]:
-        values = {str(value[field]) for value in loaded.values() if value.get(field)}
+        values = {str(value[field]) for value in chain_evidence.values() if value.get(field)}
         if len(values) > 1:
             issues.append(LineageIssue("inconsistent_lineage_id", "", f"{field}: {sorted(values)}", "full_research_669_readiness_v1"))
 
@@ -84,7 +89,12 @@ def main() -> int:
     representatives = pd.read_csv(resolve(config["evidence"]["clustering"]["manifest"]).parent / "cluster_representatives.csv")
     score_availability = pd.read_csv(resolve(config["evidence"]["score"]["manifest"]).parent / "score_availability.csv")
     execution_contract = pd.read_csv(resolve(config["evidence"]["execution"]["contract"]))
-    evidence_valid = not issues
+    issue_names_by_stage = {}
+    for issue in issues:
+        issue_names_by_stage.setdefault(issue.stage_id, set()).add(issue.check_name)
+    matrix_support_names = {"catalog", "universe", "raw_snapshot", "source_provenance", "matrix", "matrix_reproducibility", "matrix_run_history"}
+    matrix_support_stages = {str(loaded[name]["stage_id"]) for name in matrix_support_names}
+    matrix_support_valid = not any(issue.stage_id in matrix_support_stages for issue in issues)
     batch_ready = (
         len(matrix_batches) == expected_batches
         and matrix_batches["status"].eq("pass").all()
@@ -93,12 +103,31 @@ def main() -> int:
     )
     validation_ready = len(stability) == expected_factors and not representatives.empty and score_availability["status"].eq("pass").all()
     execution_ready = not execution_contract.loc[execution_contract["severity"].eq("critical"), "status"].isin(["blocked", "fail"]).any()
-    historical_selection_evidence_valid = evidence_valid and validation_ready
+    historical_selection_evidence_valid = validation_ready
+    matrix_v3_provenance_ready = matrix_support_valid and batch_ready
+    split_output_dir = resolve(config["evidence"]["splits"]["manifest"]).parent
+    purged_exact_assignments_ready = (
+        not issue_names_by_stage.get(str(loaded["splits"]["stage_id"]), set()).difference({"stale_upstream_artifact"})
+        and (split_output_dir / "date_assignments.csv").is_file()
+        and (split_output_dir / "label_intervals.csv").is_file()
+    )
+    current_edge_issues = [item for item in issues if item.check_name == "stale_upstream_artifact"]
+    stale_stages = {item.stage_id for item in current_edge_issues}
+    labels_current_lineage = str(loaded["labels"]["stage_id"]) not in stale_stages
+    daily_ic_current_lineage = labels_current_lineage and str(loaded["daily_ic"]["stage_id"]) not in stale_stages
+    fdr_current_lineage = daily_ic_current_lineage and str(loaded["fdr"]["stage_id"]) not in stale_stages
+    selection_chain_current = not current_edge_issues
     flags: dict[str, object] = {
-        "full_research_669_infrastructure_ready": evidence_valid and batch_ready,
-        "full_research_669_matrix_content_ready": evidence_valid and batch_ready,
+        "full_research_669_infrastructure_ready": matrix_v3_provenance_ready,
+        "full_research_669_matrix_content_ready": matrix_v3_provenance_ready,
+        "matrix_v3_provenance_ready": matrix_v3_provenance_ready,
+        "purged_exact_assignments_ready": purged_exact_assignments_ready,
+        "labels_current_lineage": labels_current_lineage,
+        "daily_ic_current_lineage": daily_ic_current_lineage,
+        "fdr_current_lineage": fdr_current_lineage,
+        "selection_chain_current": selection_chain_current,
         "full_research_669_validation_chain_ready": False,
-        "full_research_669_qlib_execution_operational": evidence_valid and execution_ready,
+        "full_research_669_qlib_execution_operational": execution_ready,
         "full_research_authoritative_tradability_ready": False,
         "historical_selection_evidence_valid": historical_selection_evidence_valid,
         "feature_selection_holdout_clean": False,
@@ -117,6 +146,10 @@ def main() -> int:
         "model_training_started": False,
     }
     expected_false = {
+        "labels_current_lineage",
+        "daily_ic_current_lineage",
+        "fdr_current_lineage",
+        "selection_chain_current",
         "feature_allowlist_frozen",
         "bulk_run_execution_authorized",
         "core_model_ready",
@@ -170,6 +203,7 @@ def main() -> int:
             "# Full-Research 669-Factor Readiness V1\n\n"
             + "\n".join(f"- {name}: `{str(value).lower()}`" for name, value in flags.items())
             + f"\n\n- Evidence stages: `{len(loaded)}`\n- Lineage issues: `{len(issues)}`"
+            + f"\n- Current-lineage stale edges: `{len(current_edge_issues)}`"
             + f"\n- Historical stable core / exploratory representatives: `{int(stability['stability_role'].eq('stable_core').sum())}` / `{len(representatives)}`"
             + "\n- Selection integrity: blocked; historical representatives are test-influenced and forbidden as model input."
             + "\n- Scope: PR #4 engineering evidence remains available; PR #4.1 selection revalidation and model training have not started.\n",

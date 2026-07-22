@@ -21,10 +21,14 @@ def main() -> int:
     assert not validate_manifest_outputs(manifest, output_dir, config=config)
     assert manifest["artifact_status"] == "blocked"
     assert manifest["blocked_reason"] == "blocked_selection_integrity_not_revalidated"
-    assert pd.read_csv(output_dir / "lineage_issues.csv").empty
+    lineage_issues = pd.read_csv(output_dir / "lineage_issues.csv")
+    assert not lineage_issues.empty
+    assert set(lineage_issues["check_name"]) == {"stale_upstream_artifact"}
     flags = pd.read_csv(output_dir / "readiness_summary.csv").iloc[0]
     assert bool(flags["full_research_669_infrastructure_ready"])
     assert bool(flags["full_research_669_matrix_content_ready"])
+    assert bool(flags["matrix_v3_provenance_ready"])
+    assert bool(flags["purged_exact_assignments_ready"])
     assert not bool(flags["full_research_669_validation_chain_ready"])
     assert bool(flags["full_research_669_qlib_execution_operational"])
     assert not bool(flags["full_research_authoritative_tradability_ready"])
@@ -40,6 +44,10 @@ def main() -> int:
         "bulk_run_execution_authorized",
         "core_model_ready",
         "pr5_model_training_ready",
+        "labels_current_lineage",
+        "daily_ic_current_lineage",
+        "fdr_current_lineage",
+        "selection_chain_current",
     ]:
         assert not bool(flags[name])
     assert flags["selection_integrity_status"] == "blocked"
