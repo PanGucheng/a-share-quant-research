@@ -1,0 +1,10 @@
+﻿check_name,status,observed_value,required_value,severity,reason
+all_evidence_outputs_fresh,pass,0,0,critical,
+materialize_and_cache_verify_recorded,pass,"['cache_verify', 'materialize']","['cache_verify', 'materialize']",critical,
+approval_ids_valid,pass,True,True,critical,
+single_use_declaration_recorded,pass,2,2,critical,
+historical_enforcement_limit_disclosed,pass,0,0,evidence,Future runs are atomically consumed; these two runs predate that gate.
+historical_head_binding_limit_disclosed,pass,0,0,evidence,Future approvals bind clean execution HEAD; these runs used source hashes plus the older provenance commit binding.
+cache_review_is_direct_matrix_parent,pass,bulk_run_review_v1:4d23903763a7a1427fe57ccdcc734f3e2d148961508944b4b134f59a264fd552,direct matrix parent,critical,
+materialize_review_preserved_by_history,pass,bulk_run_review_v1:a4e43c3a61a4f21edfd595c3e5535234bddf9b3a29a17b572ba1ebc68a2cfcc2,nonempty approval artifact,critical,
+reproducibility_targets_current_matrix,pass,['full_research_feature_matrix_v1:c7a37c0c6031ac99b3260ab6141e4a2353eb115b1653d8fb23a5e0cc0924b0bf'],full_research_feature_matrix_v1:c7a37c0c6031ac99b3260ab6141e4a2353eb115b1653d8fb23a5e0cc0924b0bf,critical,
