@@ -7,11 +7,11 @@ A 股量化研究工程。它最初用于复现官方 LightGBM + Alpha158 baseli
 
 ## 当前方向
 
-> **当前里程碑：**冻结的 669 因子 full-research 全量运行已经完成。30 个可恢复
-> 特征分区、t+1 标签、purged/FDR/稳定性链、16 个代表的冻结 allowlist、透明 score
-> 和三段 Qlib Exchange 执行均通过关键门禁；历史方向性可交易标签仍是代理数据。
-> 模型训练尚未启动；下一阶段按等权、稳定性加权、Ridge、Elastic Net、LightGBM
-> 的固定顺序比较模型。
+> **当前里程碑：**逻辑 PR #4.1 已完成 669 因子选择链的 holdout 修复。Provenance/cache
+> key v3、三个 outer-train FDR family、development-only stability、精确日期 split
+> clustering、48/46/54 个 split allowlist、36 组 test mutation、不可变 pre-test freeze、
+> 两种透明 score 与统一 Qlib execution 均已通过。旧全局 16 因子仍永久禁止；模型输入
+> 已具备进入独立 PR #5A 的条件，但模型训练尚未启动。
 
 项目坚持一个原则：不替换 Qlib 主线，而是在 Qlib 外围补齐研究工程能力。
 
@@ -24,7 +24,7 @@ A 股量化研究工程。它最初用于复现官方 LightGBM + Alpha158 baseli
 - **因子筛选模块**：把因子研究输出转成可解释的候选看板，再交给后续组合测试。
 - **Qlib execution 层**：固定版本的 Exchange/Executor adapter、A 股约束、标准化 artifact、合成精确对账和本地真实小样本均已落地。
 
-当前优先级是在冻结的 16 因子 allowlist 上，使用相同 purged folds、common period 和 Qlib execution 语义完成模型比较。
+下一优先级是 PR #5A 的模型输入与比较协议冻结。当前仍保持 `model_training_started=false`、`historical_oos_comparison_complete=false`、`production_model_selected=false`。PR #5A 先把现有 Equal Weight 与 Stability Weight 预测纳入统一 schema 和 common-period 协议，不重新打开 development 决策；Ridge、Elastic Net、LightGBM 继续按计划分阶段实施，本次尚未开始。
 
 ## 目录结构
 
@@ -912,6 +912,7 @@ docs/_archive/03_factor_research_history/FACTOR_EXPANSION_V3_5_REFERENCE_SURVEY.
 ```text
 docs/DOC_INDEX.md
 docs/PROJECT_CONTEXT_SUMMARY.md
+docs/SELECTION_HOLDOUT_INTEGRITY_AND_MODEL_PLAN_V1.md
 docs/STEP_5_FACTOR_RESEARCH_AND_MODEL_PLAN.md
 docs/FACTOR_RESEARCH_TOOLCHAIN_READINESS_V1.md
 docs/LIQUIDITY_RESIDUALIZED_FACTOR_EVALUATION_V1_PLAN.md

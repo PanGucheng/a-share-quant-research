@@ -1,15 +1,42 @@
 # Full-Research 669-Factor Readiness V1
 
 - full_research_669_infrastructure_ready: `true`
+- full_research_669_matrix_content_ready: `true`
+- matrix_v3_provenance_ready: `true`
+- purged_exact_assignments_ready: `true`
+- labels_current_lineage: `true`
+- daily_ic_current_lineage: `true`
+- fdr_current_lineage: `true`
+- selection_chain_current: `true`
 - full_research_669_validation_chain_ready: `true`
 - full_research_669_qlib_execution_operational: `true`
 - full_research_authoritative_tradability_ready: `false`
+- historical_selection_evidence_valid: `true`
+- feature_selection_holdout_clean: `true`
+- clustering_holdout_clean: `true`
+- fdr_family_semantics_valid: `true`
+- fdr_artifact_consumed: `true`
+- raw_input_provenance_complete: `true`
+- split_allowlists_frozen: `true`
 - feature_allowlist_frozen: `true`
+- pre_test_freeze_contract_ready: `true`
+- transparent_score_ready: `true`
+- transparent_qlib_execution_ready: `true`
+- selection_integrity_status: `ready`
+- model_entry_hard_stop_active: `false`
+- bulk_run_user_review_status: `consumed`
+- bulk_run_execution_authorized: `false`
+- bulk_run_current_head_binding_satisfied: `false`
+- bulk_run_single_use_enforced_at_execution: `false`
 - core_model_ready: `true`
 - pr5_model_training_ready: `true`
+- historical_oos_comparison_complete: `false`
+- production_model_selected: `false`
 - model_training_started: `false`
 
-- Evidence stages: `11`
+- Evidence stages: `23`
 - Lineage issues: `0`
-- Stable core / frozen representatives: `65` / `16`
-- Scope: the full 669-factor research family is complete; model training has not started.
+- Stable-core / split representatives: `914` / `148`
+- Selection integrity: holdout-clean and ready for the separately planned PR #5A protocol.
+- Model training: not started; historical OOS comparison and production selection remain false.
+- Authoritative historical tradability capability remains blocked and is not overstated.

@@ -1,0 +1,10 @@
+﻿check_name,status,observed_value,required_value,severity,reason
+outer_split_count,pass,1,1,critical,
+every_selected_factor_has_cluster,pass,[25],[25],critical,
+every_cluster_has_representative,pass,[14],[14],critical,
+duplicate_cluster_votes,pass,0,0,critical,
+minimum_components,pass,[14],>=3,critical,
+insufficient_pair_overlap_count,pass,0,0,critical,
+exposure_dates_exactly_allowed,pass,0,0,critical,
+performance_dates_exactly_allowed,pass,0,0,critical,
+allowed_dates_hash_match,pass,1,1,critical,

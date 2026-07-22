@@ -1,0 +1,4 @@
+﻿outer_split_id,test_family,hypotheses,unique_factors,bh_pass,by_pass
+split_001,full_research_669_factor_family|label_20d_t1|split_001|train|raw,25,25,13,0
+split_002,full_research_669_factor_family|label_20d_t1|split_002|train|raw,25,25,16,0
+split_003,full_research_669_factor_family|label_20d_t1|split_003|train|raw,25,25,17,0

@@ -6,7 +6,7 @@ research_run_family_id: full_research_factor_669_v1
 feature_matrix_manifest: outputs/full_research_feature_matrix_669_v1/current/artifact_manifest.json
 feature_batch_manifest: outputs/full_research_feature_matrix_669_v1/current/batch_manifest.csv
 label_manifest: outputs/full_research_labels_669_v1/current/artifact_manifest.json
-label_runtime: outputs/full_research_feature_matrix_669_v1/runtime/labels.parquet
+label_runtime: outputs/full_research_feature_matrix_669_v1/runtime_v3/labels.parquet
 label_name: label_20d_t1
 expected_factor_count: 669
 minimum_cross_section: 100

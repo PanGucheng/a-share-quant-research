@@ -1,0 +1,5 @@
+﻿check_name,status,observed_value,required_value,severity,reason
+pre_test_freeze_valid,pass,0,0,critical,
+factor_partition_schema_complete,pass,48,48,critical,
+test_data_read_count,pass,0,0,critical,
+test_release_count,pass,0,0,critical,

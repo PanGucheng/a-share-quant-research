@@ -5,6 +5,7 @@ import pandas as pd
 
 
 SELECTION_COLUMNS = frozenset({"factor", "split_id", "train_mean_ic", "validation_mean_ic", "train_count", "validation_count", "train_coverage", "validation_coverage", "selection_eligible", "fdr_bh_pass", "fdr_bh_q_value"})
+DEVELOPMENT_SELECTION_COLUMNS = frozenset({"outer_split_id", "inner_split_id", "factor", "train_mean_ic", "validation_mean_ic", "train_count", "validation_count", "train_coverage", "validation_coverage", "selection_eligible", "fdr_bh_pass", "fdr_bh_q_value"})
 
 
 def select_factor_window(row: pd.Series, *, min_abs_validation_ic: float, min_dates: int) -> dict:
@@ -27,6 +28,70 @@ def select_factor_window(row: pd.Series, *, min_abs_validation_ic: float, min_da
     if not validation_strong: reasons.append("weak_validation_ic")
     if not bool(row["fdr_bh_pass"]): reasons.append("fdr_not_passed")
     return {"selected": selected, "frozen_direction": direction, "selection_reason": "selected" if selected else ";".join(reasons)}
+
+
+def select_development_factor_window(row: pd.Series, *, min_abs_validation_ic: float, min_dates: int) -> dict:
+    unexpected = sorted(set(map(str, row.index)) - DEVELOPMENT_SELECTION_COLUMNS)
+    missing = sorted(DEVELOPMENT_SELECTION_COLUMNS - set(map(str, row.index)))
+    if unexpected or missing:
+        raise ValueError(f"development selection schema mismatch: unexpected={unexpected}; missing={missing}")
+    return select_factor_window(row, min_abs_validation_ic=min_abs_validation_ic, min_dates=min_dates)
+
+
+def development_stability_board(window_metrics: pd.DataFrame, thresholds: dict | None = None) -> pd.DataFrame:
+    forbidden = sorted(column for column in window_metrics.columns if str(column).startswith("test_") or "oos" in str(column).lower())
+    if forbidden:
+        raise ValueError(f"development stability input contains holdout metrics: {forbidden}")
+    thresholds = thresholds or {}
+    minimum_eligible_windows = int(thresholds.get("minimum_eligible_windows", 3))
+    minimum_selection_frequency = float(thresholds.get("minimum_selection_frequency", 0.60))
+    minimum_direction_agreement = float(thresholds.get("minimum_direction_agreement", 0.80))
+    minimum_positive_ratio = float(thresholds.get("minimum_direction_adjusted_positive_window_ratio", 0.60))
+    maximum_allowed_degradation = float(thresholds.get("maximum_allowed_development_degradation", 0.03))
+    rows = []
+    for (outer_split_id, factor), group in window_metrics.groupby(["outer_split_id", "factor"], sort=True):
+        eligible = group.loc[group["eligible"]].copy()
+        selected = eligible.loc[eligible["selected"]]
+        directions = eligible.loc[eligible["frozen_direction"].ne(0), "frozen_direction"]
+        direction = int(directions.mode().iloc[0]) if len(directions) else 0
+        direction_agreement = float(directions.eq(direction).mean()) if len(directions) else 0.0
+        frequency = float(eligible["selected"].mean()) if len(eligible) else 0.0
+        positive_ratio = float((eligible["validation_mean_ic"] * eligible["frozen_direction"] > 0).mean()) if len(eligible) else 0.0
+        degradation = selected["validation_mean_ic"].abs() - selected["train_mean_ic"].abs()
+        worst_degradation = float(degradation.min()) if len(degradation) else np.nan
+        degradation_ok = bool(len(degradation) and worst_degradation >= -maximum_allowed_degradation)
+        upstream_fdr_pass = bool(group["fdr_bh_pass"].all())
+        stable = (
+            upstream_fdr_pass and len(eligible) >= minimum_eligible_windows
+            and frequency >= minimum_selection_frequency and direction_agreement >= minimum_direction_agreement
+            and positive_ratio >= minimum_positive_ratio and degradation_ok
+        )
+        if stable:
+            role = "stable_core"
+        elif len(eligible) >= minimum_eligible_windows and frequency >= 0.30 and upstream_fdr_pass:
+            role = "conditional_signal"
+        elif len(eligible) == 0 or not upstream_fdr_pass:
+            role = "holdout"
+        else:
+            role = "monitor"
+        coverage_values = eligible[["train_coverage", "validation_coverage"]]
+        rows.append({
+            "outer_split_id": outer_split_id, "factor": factor, "window_count": len(group),
+            "eligible_window_count": int(group["eligible"].sum()), "selected_window_count": int(group["selected"].sum()),
+            "selection_frequency": frequency, "frozen_direction": direction,
+            "direction_agreement_ratio": direction_agreement,
+            "direction_adjusted_positive_window_ratio": positive_ratio,
+            "median_train_ic": group["train_mean_ic"].median(), "median_validation_ic": group["validation_mean_ic"].median(),
+            "median_development_degradation": degradation.median() if len(degradation) else np.nan,
+            "worst_development_degradation": worst_degradation,
+            "upstream_fdr_pass": upstream_fdr_pass,
+            "upstream_fdr_q_value": group["fdr_bh_q_value"].iloc[0],
+            "coverage_min": coverage_values.min(axis=1).min() if len(coverage_values) else 0.0,
+            "coverage_median": coverage_values.stack().median() if len(coverage_values) else 0.0,
+            "stability_role": role,
+            "role_reason": f"eligible_windows={len(eligible)};selection_frequency={frequency:.3f};direction_agreement={direction_agreement:.3f};direction_adjusted_validation_positive_ratio={positive_ratio:.3f};worst_development_degradation={worst_degradation};upstream_fdr_pass={upstream_fdr_pass}",
+        })
+    return pd.DataFrame(rows)
 
 
 def stability_board(window_metrics: pd.DataFrame, thresholds: dict | None = None) -> pd.DataFrame:

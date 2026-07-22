@@ -3,7 +3,9 @@ from __future__ import annotations
 import pandas as pd
 
 from factor_research.factor_clustering import hierarchical_clusters
+from factor_research.factor_similarity import daily_exposure_similarity, performance_similarity
 from factor_research.representative_selection import select_representatives
+from scripts.run_split_specific_clustering_v1 import matrix_to_long
 
 
 def test_similar_factors_share_cluster_and_one_representative() -> None:
@@ -15,3 +17,27 @@ def test_similar_factors_share_cluster_and_one_representative() -> None:
     assert not representatives.cluster_id.duplicated().any()
     assert "a" in set(representatives.factor)
     assert "b" in set(excluded.factor)
+
+
+def test_similarity_requires_and_applies_exact_allowed_dates() -> None:
+    dates = pd.to_datetime(["2024-01-02", "2024-01-03"])
+    frame = pd.DataFrame([
+        {"datetime": date, "instrument": f"s{i}", "a": float(i), "b": float(i)}
+        for date in dates for i in range(25)
+    ])
+    exposure = daily_exposure_similarity(
+        frame, {"a": "a", "b": "b"}, allowed_dates=[dates[0]], minimum_pair_observations=20
+    )
+    series = {"a": pd.Series([1.0, -1.0], index=dates), "b": pd.Series([1.0, 1.0], index=dates)}
+    performance = performance_similarity(series, allowed_dates=[dates[0]], minimum_pair_dates=1)
+
+    assert exposure.loc["a", "b"] == 1.0
+    assert pd.isna(performance.loc["a", "b"])
+
+
+def test_similarity_matrix_long_form_keeps_split_identity() -> None:
+    matrix = pd.DataFrame([[1.0, 0.5], [0.5, 1.0]], index=["a", "b"], columns=["a", "b"])
+    result = matrix_to_long(matrix, "split_001", "distance")
+
+    assert len(result) == 4
+    assert result["outer_split_id"].eq("split_001").all()

@@ -5,6 +5,7 @@ from types import ModuleType
 from pathlib import Path
 
 import pandas as pd
+import yaml
 
 from research_validation.feature_matrix import atomic_parquet, build_pit_key_grid, canonical_hash, file_sha256, filter_to_pit_intervals, forward_return_label, resumable_batch_valid
 from scripts import run_full_research_feature_matrix_v1 as matrix_script
@@ -76,3 +77,38 @@ def test_selected_ta_categories_materialize_without_all_feature_wrapper(monkeypa
     assert result.columns.tolist() == ["datetime", "instrument", *names]
     assert len(result) == len(raw)
     assert result["ta_volume_adi"].notna().all()
+
+
+def test_authoritative_matrix_uses_provenance_bound_cache_key_v3() -> None:
+    root = Path(__file__).resolve().parents[1]
+    config = yaml.safe_load((root / "configs/full_research_feature_matrix_669_v1.yaml").read_text(encoding="utf-8"))
+    source = (root / "scripts/run_full_research_feature_matrix_v1.py").read_text(encoding="utf-8")
+
+    assert config["cache_key_schema_version"] == 3
+    assert "raw_market_data_snapshot_manifest" in config
+    assert "factor_source_provenance_manifest" in config
+    assert "legacy_input_hash" not in source
+    assert '"key_schema_version": 3' in source
+    assert 'source_specific_tree_hash' in source
+    assert 'formula_or_metadata_hash' in source
+
+
+def test_matrix_canary_is_bounded_to_one_batch_and_five_factors() -> None:
+    root = Path(__file__).resolve().parents[1]
+    config = yaml.safe_load(
+        (root / "configs/full_research_feature_matrix_669_canary_v3.yaml").read_text(encoding="utf-8")
+    )
+
+    assert config["selected_batch_ids"] == ["alpha158_001"]
+    assert config["maximum_factors_per_selected_batch"] == 5
+    assert pd.Timestamp(config["end_date"]) - pd.Timestamp(config["start_date"]) <= pd.Timedelta(days=191)
+
+
+def test_large_matrix_runner_requires_exact_approval() -> None:
+    source = (Path(__file__).resolve().parents[1] / "scripts/run_full_research_feature_matrix_v1.py").read_text(
+        encoding="utf-8"
+    )
+    assert "large matrix run requires --approval" in source
+    assert "validate_bulk_run_approval(approval, binding)" in source
+    assert "approval_manifest_path" in source
+    assert "current project source differs from source provenance" in source

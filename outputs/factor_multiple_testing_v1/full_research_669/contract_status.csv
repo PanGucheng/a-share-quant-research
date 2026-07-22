@@ -1,6 +1,11 @@
 ﻿check_name,status,observed_value,required_value,severity,reason
-all_selected_factors_have_q_value,pass,True,True,critical,Multiple-testing control contract.
-missing_test_family_count,pass,0,0,critical,Multiple-testing control contract.
-nan_p_value_promoted_count,pass,0,0,critical,Multiple-testing control contract.
-null_simulation_false_discovery_rate,pass,0.0,<=0.05,critical,Multiple-testing control contract.
-stable_signal_detected,pass,True,True,critical,Multiple-testing control contract.
+family_count,pass,3,3,critical,
+unique_factor_count_per_family,pass,"[669, 669, 669]",669,critical,
+hypotheses_per_family,pass,"[669, 669, 669]",669,critical,
+duplicate_outer_split_factor_count,pass,0,0,critical,
+unexpected_fold_count,pass,0,0,critical,
+test_date_in_fdr_input_count,pass,0,0,critical,
+all_hypotheses_have_q_value,pass,0,0,critical,
+projection_hash_bound,pass,5c4fa03a19584205c4a498bbcd9e6fa6fd9db21cd344e0167cdb07ab25867543,5c4fa03a19584205c4a498bbcd9e6fa6fd9db21cd344e0167cdb07ab25867543,critical,
+null_simulation_false_discovery_rate,pass,0.0,<=0.05,critical,
+stable_signal_detected,pass,0.000999000999000999,<=0.05,critical,

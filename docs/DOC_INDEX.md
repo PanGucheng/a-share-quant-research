@@ -4,8 +4,13 @@
 
 ## Current Working Documents
 
+- `PR5A_MODEL_INPUT_PROTOCOL_HANDOFF_V1.md`
+  逻辑 PR #4.1 完成证据与 PR #5A 的唯一启动清单；冻结现有透明基线、统一 prediction/metric/common-period 协议，并明确本轮在模型实现前停止。
+- `SELECTION_HOLDOUT_INTEGRITY_AND_MODEL_PLAN_V1.md`
+- `SELECTION_HOLDOUT_IMPLEMENTATION_AUDIT_V1.md`
+  PR #4 合并后选择链审计形成的主计划；逻辑 PR #4.1 已于 2026-07-22 完成本地实施，后续按 PR #5A—#5D 与 forward confirmation 顺序推进。
 - `FULL_RESEARCH_669_RUN_V1.md`
-  PR #4 的 669 因子冻结目录、30 分区矩阵、全家族 FDR、稳定性/聚类 allowlist、Qlib 执行、readiness 与复现说明。
+  PR #4 的 669 因子工程证据与 PR #4.1 的完成增补；旧 16 因子资格已撤回，当前有效输入是 48/46/54 split allowlist。
 - `FULL_RESEARCH_FACTOR_TRIAL_V1.md`
   PR #3 的 80 因子真实 PIT 特征矩阵、purged/FDR/稳定性/聚类/score、Qlib 执行、readiness 与复现说明。
 - `QLIB_EXCHANGE_INTEGRATION_V1.md`
@@ -78,13 +83,16 @@ docs/_archive/README.md
 
 ## Current Stage
 
-PR #4 的 669 因子 full-research 全量运行已实施：30 个可恢复分区全部通过，2,007 个 FDR hypotheses 完成，65 个 stable_core 聚为 16 个冻结代表，并通过统一 Qlib execution。`core_model_ready=true`、`pr5_model_training_ready=true`；权威历史可交易性仍为 capability blocked，模型训练尚未启动。
+PR #4 的工程规模化部分已经完成：669 因子目录、30 个可恢复矩阵分区、daily IC、purged outer split 和统一 Qlib execution 均保留为有效证据。合并后审计确认 selection/stability 使用 outer test 信息、clustering 未限制 development dates、Stability 未真实消费上游 FDR，且 raw/provider/source provenance 不完整。当前 16 个代表只作为 `exploratory/test-influenced` 历史证据，不得用于模型。
 
 ```text
+docs/SELECTION_HOLDOUT_INTEGRITY_AND_MODEL_PLAN_V1.md
 docs/Qlib A股因子研究框架完整升级计划 V1.md
 docs/FACTOR_VALIDATION_ROADMAP_V1.md
 docs/FACTOR_VALIDATION_HARDENING_V1_1.md
 docs/REFERENCE_PIPELINE_CONSISTENCY_V1_1_1.md
 ```
 
-当前状态为 `full_research_669_infrastructure_ready=true`、`full_research_669_validation_chain_ready=true`、`full_research_669_qlib_execution_operational=true`、`feature_allowlist_frozen=true`、`core_model_ready=true`、`pr5_model_training_ready=true`、`full_research_authoritative_tradability_ready=false`、`model_training_started=false`。下一阶段为 PR #5 的有序模型比较。
+模型启动 hard-stop 已在当前 Draft GitHub PR #5 落地：机器产物现在为 `feature_allowlist_frozen=false`、`core_model_ready=false`、`pr5_model_training_ready=false`、`selection_integrity_status=blocked`；旧 `exploratory_global_representatives_v1` 已登记为 `test_influenced/model_input_allowed=false`，模型入口会在读取数据前非零拒绝。
+
+后续 30 批重跑前必须先推送 canary、配置/输入哈希、日期/FDR 语义、资源预算和 exact command，并形成 exact approval artifact。本次持续对话已获等待豁免，可在完整自审后使用 `user_session_waiver` 继续；没有有效 approval/waiver 不得启动。下一阶段是逻辑 PR #4.1，完成前不得实施模型 PR #5A。

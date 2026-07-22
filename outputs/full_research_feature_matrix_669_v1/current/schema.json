@@ -675,5 +675,6 @@
     "volume_ratio_5_20"
   ],
   "partitioning": "bounded source batches",
-  "runtime_committed": false
+  "runtime_committed": false,
+  "cache_key_schema_version": 3
 }

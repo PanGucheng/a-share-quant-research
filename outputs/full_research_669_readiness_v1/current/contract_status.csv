@@ -1,9 +1,34 @@
 ﻿check_name,status,observed_value,required_value,severity,reason
-full_research_669_infrastructure_ready,pass,True,True,critical,Evidence-backed PR #4 gate.
-full_research_669_validation_chain_ready,pass,True,True,critical,Evidence-backed PR #4 gate.
-full_research_669_qlib_execution_operational,pass,True,True,critical,Evidence-backed PR #4 gate.
-full_research_authoritative_tradability_ready,blocked,False,True,capability,Historical suspension and directional price-limit labels remain proxy-derived.
-feature_allowlist_frozen,pass,True,True,critical,Evidence-backed PR #4 gate.
-core_model_ready,pass,True,True,critical,Evidence-backed PR #4 gate.
-pr5_model_training_ready,pass,True,True,critical,Evidence-backed PR #4 gate.
-model_training_started,pass,False,False,critical,Evidence-backed PR #4 gate.
+full_research_669_infrastructure_ready,pass,True,True,critical,Current holdout-clean PR #4.1 evidence.
+full_research_669_matrix_content_ready,pass,True,True,critical,Current holdout-clean PR #4.1 evidence.
+matrix_v3_provenance_ready,pass,True,True,critical,Current holdout-clean PR #4.1 evidence.
+purged_exact_assignments_ready,pass,True,True,critical,Current holdout-clean PR #4.1 evidence.
+labels_current_lineage,pass,True,True,critical,Current holdout-clean PR #4.1 evidence.
+daily_ic_current_lineage,pass,True,True,critical,Current holdout-clean PR #4.1 evidence.
+fdr_current_lineage,pass,True,True,critical,Current holdout-clean PR #4.1 evidence.
+selection_chain_current,pass,True,True,critical,Current holdout-clean PR #4.1 evidence.
+full_research_669_validation_chain_ready,pass,True,True,critical,Current holdout-clean PR #4.1 evidence.
+full_research_669_qlib_execution_operational,pass,True,True,critical,Current holdout-clean PR #4.1 evidence.
+full_research_authoritative_tradability_ready,pass,False,False,capability,Historical suspension and directional price-limit labels remain proxy-derived.
+historical_selection_evidence_valid,pass,True,True,evidence,"Historical run limitation is disclosed; exact inputs and matrix equivalence passed, and future runs use the hardened gate."
+feature_selection_holdout_clean,pass,True,True,critical,Current holdout-clean PR #4.1 evidence.
+clustering_holdout_clean,pass,True,True,critical,Current holdout-clean PR #4.1 evidence.
+fdr_family_semantics_valid,pass,True,True,critical,Current holdout-clean PR #4.1 evidence.
+fdr_artifact_consumed,pass,True,True,critical,Current holdout-clean PR #4.1 evidence.
+raw_input_provenance_complete,pass,True,True,critical,Current holdout-clean PR #4.1 evidence.
+split_allowlists_frozen,pass,True,True,critical,Current holdout-clean PR #4.1 evidence.
+feature_allowlist_frozen,pass,True,True,critical,Current holdout-clean PR #4.1 evidence.
+pre_test_freeze_contract_ready,pass,True,True,critical,Current holdout-clean PR #4.1 evidence.
+transparent_score_ready,pass,True,True,critical,Current holdout-clean PR #4.1 evidence.
+transparent_qlib_execution_ready,pass,True,True,critical,Current holdout-clean PR #4.1 evidence.
+selection_integrity_status,pass,ready,ready,critical,Current holdout-clean PR #4.1 evidence.
+model_entry_hard_stop_active,pass,False,False,critical,Current holdout-clean PR #4.1 evidence.
+bulk_run_user_review_status,pass,consumed,consumed,critical,Current holdout-clean PR #4.1 evidence.
+bulk_run_execution_authorized,pass,False,False,evidence,"Historical run limitation is disclosed; exact inputs and matrix equivalence passed, and future runs use the hardened gate."
+bulk_run_current_head_binding_satisfied,pass,False,False,evidence,"Historical run limitation is disclosed; exact inputs and matrix equivalence passed, and future runs use the hardened gate."
+bulk_run_single_use_enforced_at_execution,pass,False,False,evidence,"Historical run limitation is disclosed; exact inputs and matrix equivalence passed, and future runs use the hardened gate."
+core_model_ready,pass,True,True,critical,Current holdout-clean PR #4.1 evidence.
+pr5_model_training_ready,pass,True,True,critical,Current holdout-clean PR #4.1 evidence.
+historical_oos_comparison_complete,pass,False,False,evidence,"Historical run limitation is disclosed; exact inputs and matrix equivalence passed, and future runs use the hardened gate."
+production_model_selected,pass,False,False,evidence,"Historical run limitation is disclosed; exact inputs and matrix equivalence passed, and future runs use the hardened gate."
+model_training_started,pass,False,False,critical,Current holdout-clean PR #4.1 evidence.

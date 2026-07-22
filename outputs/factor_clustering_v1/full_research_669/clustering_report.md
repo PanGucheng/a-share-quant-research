@@ -1,5 +1,5 @@
-# Factor Clustering V1
+# Split-Specific Factor Clustering V1
 
-- Eligible factors: `65`
-- Clusters: `16`
-- Representatives: `16`
+- Status: `pass`
+- Outer splits / stable factors / representatives: `3` / `914` / `148`
+- Exposure and performance similarities use exact development allowed dates only.

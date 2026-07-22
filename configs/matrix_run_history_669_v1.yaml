@@ -1,0 +1,15 @@
+schema_version: 1
+profile: full_research
+profile_name: full_research
+profile_type: full_research
+research_run_family_id: full_research_factor_669_v1
+matrix_manifest: outputs/full_research_feature_matrix_669_v1/current/artifact_manifest.json
+reproducibility_manifest: outputs/full_research_feature_matrix_669_v1/reproducibility_v3/artifact_manifest.json
+reviews:
+  materialize:
+    manifest: outputs/bulk_run_review_v1/matrix-v3-full-20260721/artifact_manifest.json
+    approval: outputs/bulk_run_review_v1/matrix-v3-full-20260721/user_approval.json
+  cache_verify:
+    manifest: outputs/bulk_run_review_v1/matrix-v3-cache-verify-20260721/artifact_manifest.json
+    approval: outputs/bulk_run_review_v1/matrix-v3-cache-verify-20260721/user_approval.json
+output_dir: outputs/full_research_feature_matrix_669_v1/run_history_v1

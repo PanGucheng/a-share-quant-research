@@ -1,0 +1,8 @@
+﻿check_name,status,observed_value,required_value,severity,reason
+pre_test_freeze_valid,pass,0,0,critical,
+test_release_count,pass,3,3,critical,
+factor_partition_hashes_valid,pass,43,43,critical,
+score_test_dates_complete,pass,"[120, 124, 124]","[120, 124, 124]",critical,
+score_methods_complete,pass,"[2, 2, 2]",2,critical,
+score_has_no_labels_or_test_metrics,pass,"['datetime', 'instrument', 'method', 'composite_score', 'component_count', 'outer_split_id']",prediction-only schema,critical,
+score_non_null,pass,1472000,>0,critical,

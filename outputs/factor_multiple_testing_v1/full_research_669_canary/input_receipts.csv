@@ -1,0 +1,2 @@
+﻿input_name,artifact_id,path,sha256,join_keys,input_rows,consumed_rows,missing_rows
+outer_train_daily_ic,selection_input_projection_v1:76d7f06cb7a19053bb058f7da4e4874c9c5e16229a1b094fa0dfa8d4a1c1ff38,E:/qlib_prj/qlib_baseline/outputs/selection_input_projection_v1/runtime/outer_train_daily_ic.parquet,5c4fa03a19584205c4a498bbcd9e6fa6fd9db21cd344e0167cdb07ab25867543,"outer_split_id,datetime,factor",1620318,60550,0

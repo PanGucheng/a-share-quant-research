@@ -1,0 +1,37 @@
+{
+  "kunquant": {
+    "commit": "d4b9e61f729df347730aa921b539b9df3c3fe36d",
+    "commit_tree": "877bd9a52e2db537f70adbf30b34b26d594da9fd",
+    "dependency_dirty_paths": [],
+    "dirty_paths": [],
+    "expected_commit": "d4b9e61f729df347730aa921b539b9df3c3fe36d",
+    "remote_url": "https://github.com/Menooker/KunQuant.git",
+    "repo_clean": true,
+    "repo_path": "E:/qlib_prj/qlib_baseline/tmp/reference_repos/KunQuant",
+    "require_clean": true
+  },
+  "qlib": {
+    "commit": "d5379c520f66a39953bad76234a7019a72796fd0",
+    "commit_tree": "35564fd8b72b26bc60bb4e4fc34324f0e34c1de6",
+    "dependency_dirty_paths": [],
+    "dirty_paths": [
+      "xamples/benchmarks/LightGBM/workflow_config_lightgbm_Alpha158_csi500.yaml"
+    ],
+    "expected_commit": "d5379c520f66a39953bad76234a7019a72796fd0",
+    "remote_url": "https://github.com/microsoft/qlib.git",
+    "repo_clean": false,
+    "repo_path": "E:/qlib_prj/qlib_clone",
+    "require_clean": false
+  },
+  "ta": {
+    "commit": "a890410710a6e483c9ba08da7f3dd5089e4b9dff",
+    "commit_tree": "7900c3a7eedd525f0b5d6e4fbb84c1be766db810",
+    "dependency_dirty_paths": [],
+    "dirty_paths": [],
+    "expected_commit": "a890410710a6e483c9ba08da7f3dd5089e4b9dff",
+    "remote_url": "https://github.com/bukosabino/ta.git",
+    "repo_clean": true,
+    "repo_path": "E:/qlib_prj/qlib_baseline/tmp/reference_repos/ta",
+    "require_clean": true
+  }
+}

@@ -1,0 +1,90 @@
+{
+  "factor_catalog_manifest": "outputs/full_research_factor_catalog_669_v1/current/artifact_manifest.json",
+  "output_dir": "outputs/factor_source_provenance_v1/current",
+  "profile": "full_research",
+  "profile_name": "full_research",
+  "profile_type": "full_research",
+  "repositories": {
+    "kunquant": {
+      "dependency_files": [
+        "LICENSE",
+        "tests/KunTestUtil/ref_alpha101.py"
+      ],
+      "expected_commit": "d4b9e61f729df347730aa921b539b9df3c3fe36d",
+      "path": "tmp/reference_repos/KunQuant",
+      "require_clean": true
+    },
+    "qlib": {
+      "dependency_files": [
+        "LICENSE",
+        "qlib/contrib/data/loader.py",
+        "qlib/data/base.py",
+        "qlib/data/cache.py",
+        "qlib/data/data.py",
+        "qlib/data/ops.py",
+        "qlib/data/storage/file_storage.py"
+      ],
+      "expected_commit": "d5379c520f66a39953bad76234a7019a72796fd0",
+      "path": "../qlib_clone",
+      "require_clean": false
+    },
+    "ta": {
+      "dependency_files": [
+        "LICENSE",
+        "ta/wrapper.py",
+        "ta/utils.py",
+        "ta/momentum.py",
+        "ta/trend.py",
+        "ta/volatility.py",
+        "ta/volume.py"
+      ],
+      "expected_commit": "a890410710a6e483c9ba08da7f3dd5089e4b9dff",
+      "path": "tmp/reference_repos/ta",
+      "require_clean": true
+    }
+  },
+  "research_run_family_id": "full_research_factor_669_v1",
+  "schema_version": 1,
+  "sources": {
+    "alpha101": {
+      "project_files": {
+        "adapter": "factor_research/alpha101_source.py",
+        "matrix_adapter": "scripts/run_full_research_feature_matrix_v1.py",
+        "metadata": "outputs/factor_catalog_alpha101_v1/kunquant_alpha101_catalog_metadata.yaml"
+      },
+      "repository": "kunquant"
+    },
+    "alpha158": {
+      "project_files": {
+        "expression_adapter": "scripts/run_full_research_feature_matrix_v1.py",
+        "formula_inventory": "outputs/factor_catalog_alpha158_v1/alpha158_formula_inventory.csv",
+        "matrix_contract": "research_validation/feature_matrix.py"
+      },
+      "repository": "qlib"
+    },
+    "alpha360": {
+      "project_files": {
+        "expression_adapter": "scripts/run_full_research_feature_matrix_v1.py",
+        "formula_inventory": "outputs/factor_catalog_alpha360_v1/alpha360_formula_inventory.csv",
+        "matrix_contract": "research_validation/feature_matrix.py"
+      },
+      "repository": "qlib"
+    },
+    "project_basic": {
+      "project_files": {
+        "factor_catalog": "factor_research/factor_catalog.yaml",
+        "factor_library": "factor_research/factor_library.py",
+        "matrix_adapter": "scripts/run_full_research_feature_matrix_v1.py"
+      },
+      "repository": null
+    },
+    "ta": {
+      "project_files": {
+        "adapter": "factor_research/ta_source.py",
+        "matrix_adapter": "scripts/run_full_research_feature_matrix_v1.py",
+        "promoted_catalog": "outputs/ta_factor_adapter_v1/smoke/ta_factor_catalog_promoted77.yaml"
+      },
+      "repository": "ta"
+    }
+  }
+}

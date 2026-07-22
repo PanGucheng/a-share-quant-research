@@ -1,0 +1,11 @@
+{
+  "cache_policy": "v2 and legacy hashes are never accepted as v3 hits",
+  "estimated_compute_seconds_from_pr4": 14204.805112500035,
+  "estimated_peak_memory_bytes": 12884901888,
+  "estimated_read_bytes": 7489763278,
+  "estimated_write_bytes": 0,
+  "failure_policy": "stop, retain valid v3 partitions, repair, regenerate review binding if code/config/input/scope changes",
+  "free_disk_bytes": 423250313216,
+  "required_free_disk_bytes": 14722602968,
+  "resume_policy": "per-batch v3 input/output hash; failed batch blocks publication"
+}

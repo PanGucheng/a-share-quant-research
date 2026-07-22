@@ -1,0 +1,6 @@
+﻿check_name,status,observed_value,required_value,severity,reason
+outer_split_count,pass,3,3,critical,
+clean_committed_code,pass,False,False,critical,
+model_binary_explicitly_not_applicable,pass,True,True,critical,
+test_data_read_count,pass,0,0,critical,
+freeze_ids_unique,pass,3,3,critical,

@@ -13,13 +13,12 @@ Chinese documentation is available in [README.zh-CN.md](README.zh-CN.md).
 
 ## Current Direction
 
-> **Current milestone:** the frozen 669-factor full-research run is complete.
-> All 30 resumable matrix partitions, t+1 labels, purged/FDR/stability chain,
-> 16-representative frozen allowlist, transparent scores, and three-split Qlib
-> Exchange execution pass their critical contracts. Historical directional
-> tradability labels remain proxy-based. Model training has not started; the next
-> stage is the ordered Equal Weight / Stability Weight / Ridge / Elastic Net /
-> LightGBM comparison.
+> **Current milestone:** logical PR #4.1 completed the selection-holdout repair on top
+> of the 669-factor scale-up. Provenance/cache-key v3, three outer-train FDR families,
+> development-only stability, exact-date split clustering, 48/46/54 split allowlists,
+> 36 test-mutation cases, immutable pre-test freezes, transparent scores, and common
+> Qlib execution now pass. The former global 16-factor set remains forbidden. Model
+> inputs are ready for the separately planned PR #5A, but model training has not started.
 
 The project keeps Qlib as the main data and model backbone while adding independent
 research modules around it:
@@ -37,8 +36,12 @@ research modules around it:
 - **Qlib execution layer**: pinned Exchange/Executor adapters, A-share constraints,
   normalized artifacts, exact synthetic reconciliation, and a local-reference run.
 
-The current development priority is model comparison on the frozen 16-factor
-allowlist, using the same purged folds, common period, and Qlib execution semantics.
+The next development stage is PR #5A's frozen model-input and comparison protocol.
+Selection integrity is ready, while `model_training_started=false`, historical OOS
+comparison is incomplete, and no production model is selected. PR #5A must first
+standardize the existing Equal Weight and Stability Weight predictions without
+reopening development decisions. Ridge, Elastic Net, and LightGBM remain outside the
+current implementation and must follow their documented order and separate gates.
 
 ## Repository Layout
 
@@ -959,6 +962,7 @@ docs/_archive/03_factor_research_history/FACTOR_EXPANSION_V3_5_REFERENCE_SURVEY.
 ```text
 docs/DOC_INDEX.md
 docs/PROJECT_CONTEXT_SUMMARY.md
+docs/SELECTION_HOLDOUT_INTEGRITY_AND_MODEL_PLAN_V1.md
 docs/STEP_5_FACTOR_RESEARCH_AND_MODEL_PLAN.md
 docs/FACTOR_RESEARCH_TOOLCHAIN_READINESS_V1.md
 docs/LIQUIDITY_RESIDUALIZED_FACTOR_EVALUATION_V1_PLAN.md

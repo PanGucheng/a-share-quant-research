@@ -1,0 +1,8 @@
+﻿check_name,status,observed_value,required_value,severity,reason
+outer_split_count,pass,1,1,critical,
+minimum_components,pass,[25],>=3,critical,
+exposure_outside_allowed_dates,pass,0,0,critical,
+performance_outside_allowed_dates,pass,0,0,critical,
+outer_test_in_exposure,pass,0,0,critical,
+outer_test_in_performance,pass,0,0,critical,
+projection_hashes_present,pass,2,2,critical,

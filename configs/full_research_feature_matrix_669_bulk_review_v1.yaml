@@ -1,0 +1,16 @@
+schema_version: 1
+profile: full_research
+profile_name: full_research
+profile_type: full_research
+research_run_family_id: full_research_factor_669_v1
+matrix_config: configs/full_research_feature_matrix_669_v1.yaml
+canary_output_dir: outputs/full_research_feature_matrix_669_v1/canary_v3
+canary_partition: outputs/full_research_feature_matrix_669_v1/runtime_v3_canary/alpha158_001.parquet
+legacy_partition: outputs/full_research_feature_matrix_669_v1/runtime/alpha158_001.parquet
+legacy_batch_manifest: outputs/full_research_feature_matrix_669_v1/current/batch_manifest.csv
+output_root: outputs/bulk_run_review_v1
+minimum_free_disk_multiplier: 2.0
+estimated_peak_memory_bytes: 12884901888
+approval_mode: user_session_waiver
+approved_by: user
+approval_source: 2026-07-21 current conversation authorization for planned computations after full self-review

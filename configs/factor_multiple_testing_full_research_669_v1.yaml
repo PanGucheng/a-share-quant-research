@@ -3,10 +3,12 @@ profile: full_research
 profile_name: full_research
 profile_type: full_research
 research_run_family_id: full_research_factor_669_v1
-input_table: outputs/full_research_daily_ic_669_v1/current/daily_rank_ic.csv
-date_assignments: outputs/purged_walk_forward_v1/full_research_669/runtime/date_assignments.csv
-included_folds:
-  - train
+input_projection: outputs/selection_input_projection_v1/runtime/outer_train_daily_ic.parquet
+projection_inventory: outputs/selection_input_projection_v1/full_research_669/projection_inventory.csv
+family_scope: outer_split
+expected_family_count: 3
+expected_hypotheses_per_family: 669
+included_folds: [train]
 source_family: full_research_669_factor_family
 label_name: label_20d_t1
 research_window: purged_expanding_train
@@ -19,7 +21,6 @@ fdr_alpha: 0.05
 null_simulation_factors: 200
 stable_signal_mean: 0.04
 input_manifests:
-  - outputs/full_research_daily_ic_669_v1/current/artifact_manifest.json
-  - outputs/purged_walk_forward_v1/full_research_669/artifact_manifest.json
+  - outputs/selection_input_projection_v1/full_research_669/artifact_manifest.json
 missing_lineage_fields: []
 output_dir: outputs/factor_multiple_testing_v1/full_research_669

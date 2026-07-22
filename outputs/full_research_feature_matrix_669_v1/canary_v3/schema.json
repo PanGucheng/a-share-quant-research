@@ -1,0 +1,16 @@
+{
+  "keys": [
+    "datetime",
+    "instrument"
+  ],
+  "factors": [
+    "alpha158_CNTD10",
+    "alpha158_CNTD20",
+    "alpha158_CNTD30",
+    "alpha158_CNTD5",
+    "alpha158_CNTD60"
+  ],
+  "partitioning": "bounded source batches",
+  "runtime_committed": false,
+  "cache_key_schema_version": 3
+}

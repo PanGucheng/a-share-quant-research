@@ -1,0 +1,22 @@
+{
+  "allowed_dates": "outputs/development_robustness_split_v1/full_research_669/outer_development_allowed_dates.csv",
+  "clustering_contract": "outputs/factor_clustering_v1/full_research_669/contract_status.csv",
+  "expected_outer_splits": 3,
+  "input_manifests": [
+    "outputs/factor_clustering_v1/full_research_669/artifact_manifest.json",
+    "outputs/factor_rolling_stability_v1/full_research_669/artifact_manifest.json",
+    "outputs/development_robustness_split_v1/full_research_669/artifact_manifest.json",
+    "outputs/purged_walk_forward_v1/full_research_669/artifact_manifest.json"
+  ],
+  "minimum_components": 3,
+  "outer_split_manifest": "outputs/purged_walk_forward_v1/full_research_669/split_manifest.csv",
+  "output_dir": "outputs/split_specific_allowlist_v1/full_research_669",
+  "profile": "full_research",
+  "profile_name": "full_research",
+  "profile_type": "full_research",
+  "representatives": "outputs/factor_clustering_v1/full_research_669/representatives_by_split.csv",
+  "research_run_family_id": "full_research_factor_669_v1",
+  "schema_version": 1,
+  "selection_date_audit": "outputs/factor_clustering_v1/full_research_669/selection_date_audit.csv",
+  "stability_board": "outputs/factor_rolling_stability_v1/full_research_669/factor_stability_board.csv"
+}

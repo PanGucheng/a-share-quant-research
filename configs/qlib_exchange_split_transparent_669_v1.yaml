@@ -1,0 +1,29 @@
+schema_version: 1
+profile: full_research
+profile_name: full_research
+profile_type: full_research
+research_run_family_id: full_research_factor_669_v1
+execution_semantics: configs/qlib_exchange_semantics_669_v1.yaml
+qlib_provider: ../qlib_data/cn_data_community_20260609_derived
+environment_manifest: outputs/qlib_environment_v1/current/artifact_manifest.json
+score_manifest: outputs/split_transparent_score_v1/full_research_669/artifact_manifest.json
+score_runtime: outputs/split_transparent_score_v1/full_research_669/runtime/composite_scores.parquet
+score_artifact_receipt: outputs/split_transparent_score_v1/full_research_669/score_artifact.csv
+test_release_index: outputs/split_transparent_score_v1/full_research_669/test_release_index.csv
+test_release_dir: outputs/split_transparent_score_v1/full_research_669
+pre_test_freeze_manifest: outputs/pre_test_freeze_v1/full_research_669/artifact_manifest.json
+pre_test_freeze_index: outputs/pre_test_freeze_v1/full_research_669/pre_test_freeze_index.csv
+pre_test_freeze_dir: outputs/pre_test_freeze_v1/full_research_669
+outer_date_assignments: outputs/purged_walk_forward_v1/full_research_669/date_assignments.csv
+score_methods:
+  - equal_weight
+  - stability_weight
+reuse_runtime_market: true
+market_cache_roots:
+  - outputs/qlib_exchange_split_transparent_v1/full_research_669/runtime
+  - outputs/qlib_exchange_v1/full_research_669/runtime
+input_manifests:
+  - outputs/split_transparent_score_v1/full_research_669/artifact_manifest.json
+  - outputs/pre_test_freeze_v1/full_research_669/artifact_manifest.json
+  - outputs/qlib_environment_v1/current/artifact_manifest.json
+output_dir: outputs/qlib_exchange_split_transparent_v1/full_research_669

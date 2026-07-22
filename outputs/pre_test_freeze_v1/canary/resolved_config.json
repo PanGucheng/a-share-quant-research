@@ -1,0 +1,35 @@
+{
+  "allowed_dates": "outputs/development_robustness_split_v1/full_research_669/outer_development_allowed_dates.csv",
+  "allowlist_manifest": "outputs/split_specific_allowlist_v1/full_research_669/split_allowlist_manifest.csv",
+  "factor_weights": "outputs/split_transparent_weights_v1/full_research_669/factor_weights_by_split.csv",
+  "input_manifests": [
+    "outputs/split_transparent_weights_v1/full_research_669/artifact_manifest.json",
+    "outputs/split_specific_allowlist_v1/full_research_669/artifact_manifest.json",
+    "outputs/selection_mutation_contract_v1/full_research_669/artifact_manifest.json",
+    "outputs/full_research_feature_matrix_669_v1/current/artifact_manifest.json",
+    "outputs/purged_walk_forward_v1/full_research_669/artifact_manifest.json"
+  ],
+  "methods": [
+    "equal_weight",
+    "stability_weight"
+  ],
+  "outer_date_assignments": "outputs/purged_walk_forward_v1/full_research_669/date_assignments.csv",
+  "output_dir": "outputs/pre_test_freeze_v1/canary",
+  "preprocessing": {
+    "clip": 3.0,
+    "fit_scope": "stateless_current_day_cross_section",
+    "minimum_components": 2,
+    "name": "daily_robust_cross_sectional_zscore_v1"
+  },
+  "profile": "full_research",
+  "profile_name": "full_research",
+  "profile_type": "full_research",
+  "qlib_exchange_config": "configs/qlib_exchange_semantics_669_v1.yaml",
+  "research_run_family_id": "full_research_factor_669_v1",
+  "schema_version": 1,
+  "score_config": "configs/split_transparent_score_669_canary_v1.yaml",
+  "selected_outer_splits": [
+    "split_001"
+  ],
+  "weight_manifest": "outputs/split_transparent_weights_v1/full_research_669/weight_manifest.csv"
+}

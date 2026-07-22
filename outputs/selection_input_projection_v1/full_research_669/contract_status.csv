@@ -1,0 +1,8 @@
+﻿check_name,status,observed_value,required_value,severity,reason
+outer_split_count,pass,3,3,critical,
+inner_split_count,pass,9,9,critical,
+outer_factor_count,pass,669,669,critical,
+inner_factor_count,pass,669,669,critical,
+outer_test_date_in_projection_count,pass,0,0,critical,
+inner_test_date_in_projection_count,pass,0,0,critical,
+runtime_hashes_present,pass,2,2,critical,

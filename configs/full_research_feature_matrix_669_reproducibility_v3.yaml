@@ -1,0 +1,16 @@
+schema_version: 1
+profile: full_research
+profile_name: full_research
+profile_type: full_research
+research_run_family_id: full_research_factor_669_v1
+current_matrix_manifest: outputs/full_research_feature_matrix_669_v1/current/artifact_manifest.json
+current_batch_manifest: outputs/full_research_feature_matrix_669_v1/current/batch_manifest.csv
+legacy_git_ref: v0.4-full-research-669
+legacy_manifest_path: outputs/full_research_feature_matrix_669_v1/current/artifact_manifest.json
+legacy_batch_manifest_path: outputs/full_research_feature_matrix_669_v1/current/batch_manifest.csv
+legacy_runtime_dir: outputs/full_research_feature_matrix_669_v1/runtime
+current_runtime_dir: outputs/full_research_feature_matrix_669_v1/runtime_v3
+expected_batch_count: 30
+expected_factor_count: 669
+absolute_tolerance: 0.0
+output_dir: outputs/full_research_feature_matrix_669_v1/reproducibility_v3
