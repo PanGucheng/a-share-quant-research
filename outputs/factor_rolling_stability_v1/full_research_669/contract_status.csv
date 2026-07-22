@@ -1,5 +1,11 @@
 ﻿check_name,status,observed_value,required_value,severity,reason
-test_metrics_used_in_selection,pass,False,False,critical,Selection function accepts only train/validation columns.
-stable_core_eligibility,pass,0,0,critical,Stable-core factors must meet coverage and eligible-window thresholds.
-all_selected_factors_have_fdr_result,pass,0,0,critical,Every selection requires a q-value.
-existing_candidate_pool_changed,pass,False,False,critical,Reference stability output is experimental only.
+outer_split_count,pass,3,3,critical,
+factor_count_per_outer,pass,"[669, 669, 669]",669,critical,
+inner_window_count_per_outer,pass,"[3, 3, 3]",3,critical,
+fdr_join_missing,pass,0,0,critical,
+fdr_join_extra,pass,0,0,critical,
+fdr_q_value_mismatch,pass,0,0,critical,
+internally_recomputed_fdr,pass,False,False,critical,
+test_metrics_used_in_selection,pass,False,False,critical,
+selection_schema_has_no_test_fields,pass,[],[],critical,
+all_selected_factors_have_fdr_result,pass,0,0,critical,
