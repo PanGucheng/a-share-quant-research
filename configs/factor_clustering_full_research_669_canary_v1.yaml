@@ -5,21 +5,19 @@ profile_type: full_research
 research_run_family_id: full_research_factor_669_v1
 input_manifests:
   - outputs/factor_rolling_stability_v1/full_research_669/artifact_manifest.json
-  - outputs/clustering_input_projection_v1/full_research_669/artifact_manifest.json
+  - outputs/clustering_input_projection_v1/canary/artifact_manifest.json
   - outputs/development_robustness_split_v1/full_research_669/artifact_manifest.json
 stability_board: outputs/factor_rolling_stability_v1/full_research_669/factor_stability_board.csv
-projection_inventory: outputs/clustering_input_projection_v1/full_research_669/projection_inventory.csv
+projection_inventory: outputs/clustering_input_projection_v1/canary/projection_inventory.csv
 allowed_dates: outputs/development_robustness_split_v1/full_research_669/outer_development_allowed_dates.csv
 daily_ic_column: rank_ic
-eligible_roles:
-  - stable_core
+eligible_roles: [stable_core]
 exposure_weight: 0.5
 cluster_distance_threshold: 0.30
 linkage_method: average
 minimum_exposure_pair_observations: 100
-minimum_performance_pair_dates: 40
+minimum_performance_pair_dates: 5
 minimum_components: 3
-expected_outer_splits: 3
-backend: scipy
+expected_outer_splits: 1
 missing_lineage_fields: []
-output_dir: outputs/factor_clustering_v1/full_research_669
+output_dir: outputs/factor_clustering_v1/full_research_669_canary

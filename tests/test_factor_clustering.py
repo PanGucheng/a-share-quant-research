@@ -5,6 +5,7 @@ import pandas as pd
 from factor_research.factor_clustering import hierarchical_clusters
 from factor_research.factor_similarity import daily_exposure_similarity, performance_similarity
 from factor_research.representative_selection import select_representatives
+from scripts.run_split_specific_clustering_v1 import matrix_to_long
 
 
 def test_similar_factors_share_cluster_and_one_representative() -> None:
@@ -32,3 +33,11 @@ def test_similarity_requires_and_applies_exact_allowed_dates() -> None:
 
     assert exposure.loc["a", "b"] == 1.0
     assert pd.isna(performance.loc["a", "b"])
+
+
+def test_similarity_matrix_long_form_keeps_split_identity() -> None:
+    matrix = pd.DataFrame([[1.0, 0.5], [0.5, 1.0]], index=["a", "b"], columns=["a", "b"])
+    result = matrix_to_long(matrix, "split_001", "distance")
+
+    assert len(result) == 4
+    assert result["outer_split_id"].eq("split_001").all()
