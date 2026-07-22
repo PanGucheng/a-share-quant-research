@@ -19,6 +19,7 @@ selection_artifacts:
   stability: outputs/factor_rolling_stability_v1/full_research_669/factor_stability_board.csv
   clustering: outputs/factor_clustering_v1/full_research_669/representatives_by_split.csv
   allowlist: outputs/split_specific_allowlist_v1/full_research_669/split_allowlist.csv
+  weights: outputs/split_transparent_weights_v1/full_research_669/factor_weights_by_split.csv
 input_manifests:
   - outputs/raw_market_data_snapshot_v1/full_research_669/artifact_manifest.json
   - outputs/full_research_feature_matrix_669_v1/current/artifact_manifest.json
@@ -32,4 +33,5 @@ input_manifests:
   - outputs/development_robustness_split_v1/full_research_669/artifact_manifest.json
   - outputs/factor_clustering_v1/full_research_669/artifact_manifest.json
   - outputs/split_specific_allowlist_v1/full_research_669/artifact_manifest.json
+  - outputs/split_transparent_weights_v1/full_research_669/artifact_manifest.json
 output_dir: outputs/selection_mutation_contract_v1/canary

@@ -34,7 +34,11 @@ def selection_hashes(config: dict[str, object], outer_split_id: str) -> dict[str
     for name, value in config["selection_artifacts"].items():
         frame = pd.read_csv(resolve(value))
         scoped = frame.loc[frame["outer_split_id"].astype(str).eq(outer_split_id)].copy()
-        keys = [column for column in ["outer_split_id", "inner_split_id", "factor", "cluster_id"] if column in scoped]
+        keys = [
+            column
+            for column in ["outer_split_id", "inner_split_id", "method", "feature_order", "factor", "cluster_id"]
+            if column in scoped
+        ]
         hashes[name] = canonical_frame_hash(scoped, sort_keys=keys)
     return hashes
 
@@ -47,6 +51,7 @@ def validate_selection_parent_chain(manifests: list[dict[str, object]]) -> tuple
         "factor_rolling_stability_v1": {"selection_input_projection_v1", "factor_multiple_testing_v1"},
         "factor_clustering_v1": {"factor_rolling_stability_v1", "clustering_input_projection_v1", "development_robustness_split_v1"},
         "split_specific_allowlist_v1": {"factor_clustering_v1", "factor_rolling_stability_v1", "development_robustness_split_v1", "purged_walk_forward_v1"},
+        "split_transparent_weights_v1": {"split_specific_allowlist_v1", "factor_rolling_stability_v1"},
     }
     issues: list[str] = []
     for stage_id, required_parents in expected.items():
