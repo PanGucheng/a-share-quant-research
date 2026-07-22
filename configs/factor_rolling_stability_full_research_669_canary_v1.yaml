@@ -5,13 +5,14 @@ profile_type: full_research
 research_run_family_id: full_research_factor_669_v1
 input_projection: outputs/selection_input_projection_v1/runtime/inner_development_daily_ic.parquet
 projection_inventory: outputs/selection_input_projection_v1/full_research_669/projection_inventory.csv
-fdr_results: outputs/factor_multiple_testing_v1/full_research_669/fdr_results.csv
+fdr_results: outputs/factor_multiple_testing_v1/full_research_669_canary/fdr_results.csv
+maximum_factors: 25
 expected_outer_splits: 3
 expected_inner_splits_per_outer: 3
-expected_factor_count: 669
+expected_factor_count: 25
 input_manifests:
   - outputs/selection_input_projection_v1/full_research_669/artifact_manifest.json
-  - outputs/factor_multiple_testing_v1/full_research_669/artifact_manifest.json
+  - outputs/factor_multiple_testing_v1/full_research_669_canary/artifact_manifest.json
 metric_column: rank_ic
 min_abs_validation_ic: 0.01
 minimum_dates_per_fold: 40
@@ -25,4 +26,4 @@ minimum_direction_agreement: 0.80
 minimum_direction_adjusted_positive_window_ratio: 0.60
 maximum_allowed_development_degradation: 0.03
 missing_lineage_fields: []
-output_dir: outputs/factor_rolling_stability_v1/full_research_669
+output_dir: outputs/factor_rolling_stability_v1/full_research_669_canary
