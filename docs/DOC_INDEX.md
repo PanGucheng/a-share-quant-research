@@ -4,11 +4,13 @@
 
 ## Current Working Documents
 
+- `PR5A_MODEL_INPUT_PROTOCOL_HANDOFF_V1.md`
+  逻辑 PR #4.1 完成证据与 PR #5A 的唯一启动清单；冻结现有透明基线、统一 prediction/metric/common-period 协议，并明确本轮在模型实现前停止。
 - `SELECTION_HOLDOUT_INTEGRITY_AND_MODEL_PLAN_V1.md`
 - `SELECTION_HOLDOUT_IMPLEMENTATION_AUDIT_V1.md`
-  PR #4 合并后选择链审计形成的最高优先级计划：先机器级阻断旧 readiness/model input，再实施 provenance、outer-train FDR gate、development robustness、date-bounded split allowlist、人工批量运行放行和 pre-test freeze，并定义 PR #5A—#5D 与后续 forward confirmation。
+  PR #4 合并后选择链审计形成的主计划；逻辑 PR #4.1 已于 2026-07-22 完成本地实施，后续按 PR #5A—#5D 与 forward confirmation 顺序推进。
 - `FULL_RESEARCH_669_RUN_V1.md`
-  PR #4 的 669 因子冻结目录、30 分区矩阵、FDR/稳定性/聚类历史结果、Qlib 执行、readiness 与复现说明；其中模型 readiness 和 16 因子 allowlist 结论已由合并后审计撤回。
+  PR #4 的 669 因子工程证据与 PR #4.1 的完成增补；旧 16 因子资格已撤回，当前有效输入是 48/46/54 split allowlist。
 - `FULL_RESEARCH_FACTOR_TRIAL_V1.md`
   PR #3 的 80 因子真实 PIT 特征矩阵、purged/FDR/稳定性/聚类/score、Qlib 执行、readiness 与复现说明。
 - `QLIB_EXCHANGE_INTEGRATION_V1.md`

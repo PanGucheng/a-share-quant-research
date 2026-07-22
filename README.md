@@ -13,12 +13,12 @@ Chinese documentation is available in [README.zh-CN.md](README.zh-CN.md).
 
 ## Current Direction
 
-> **Current milestone:** PR #4 completed the 669-factor engineering scale-up, including
-> all 30 resumable matrix partitions, t+1 labels, daily IC, outer purged splits, and
-> three-split Qlib Exchange execution. A post-merge audit found that the current
-> selection/stability and clustering outputs are influenced by outer-test data and
-> that raw/source provenance is incomplete. The 16 representatives are therefore
-> exploratory only, model readiness is paused, and model training has not started.
+> **Current milestone:** logical PR #4.1 completed the selection-holdout repair on top
+> of the 669-factor scale-up. Provenance/cache-key v3, three outer-train FDR families,
+> development-only stability, exact-date split clustering, 48/46/54 split allowlists,
+> 36 test-mutation cases, immutable pre-test freezes, transparent scores, and common
+> Qlib execution now pass. The former global 16-factor set remains forbidden. Model
+> inputs are ready for the separately planned PR #5A, but model training has not started.
 
 The project keeps Qlib as the main data and model backbone while adding independent
 research modules around it:
@@ -36,12 +36,12 @@ research modules around it:
 - **Qlib execution layer**: pinned Exchange/Executor adapters, A-share constraints,
   normalized artifacts, exact synthetic reconciliation, and a local-reference run.
 
-The current development priority is the mandatory selection-holdout integrity phase.
-The machine-level hard stop for stale model-ready flags is now active; next, complete
-the full repository review, raw/source provenance, outer-train FDR eligibility, development robustness windows,
-and development-date-bounded allowlists per outer split. Any bulk rerun requires a
-review bundle and explicit user approval for the exact run. Only after anti-leakage
-and pre-test-freeze gates pass can the project begin the ordered model series.
+The next development stage is PR #5A's frozen model-input and comparison protocol.
+Selection integrity is ready, while `model_training_started=false`, historical OOS
+comparison is incomplete, and no production model is selected. PR #5A must first
+standardize the existing Equal Weight and Stability Weight predictions without
+reopening development decisions. Ridge, Elastic Net, and LightGBM remain outside the
+current implementation and must follow their documented order and separate gates.
 
 ## Repository Layout
 

@@ -7,10 +7,11 @@ A 股量化研究工程。它最初用于复现官方 LightGBM + Alpha158 baseli
 
 ## 当前方向
 
-> **当前里程碑：**PR #4 已完成 669 因子的工程规模化，包括 30 个可恢复特征分区、
-> t+1 标签、daily IC、outer purged splits 和三段 Qlib Exchange。合并后审计发现当前
-> selection/stability 与 clustering 受到 outer-test 数据影响，raw/source provenance
-> 也不完整。因此 16 个代表只作为探索证据，模型 readiness 已暂停，模型训练尚未启动。
+> **当前里程碑：**逻辑 PR #4.1 已完成 669 因子选择链的 holdout 修复。Provenance/cache
+> key v3、三个 outer-train FDR family、development-only stability、精确日期 split
+> clustering、48/46/54 个 split allowlist、36 组 test mutation、不可变 pre-test freeze、
+> 两种透明 score 与统一 Qlib execution 均已通过。旧全局 16 因子仍永久禁止；模型输入
+> 已具备进入独立 PR #5A 的条件，但模型训练尚未启动。
 
 项目坚持一个原则：不替换 Qlib 主线，而是在 Qlib 外围补齐研究工程能力。
 
@@ -23,7 +24,7 @@ A 股量化研究工程。它最初用于复现官方 LightGBM + Alpha158 baseli
 - **因子筛选模块**：把因子研究输出转成可解释的候选看板，再交给后续组合测试。
 - **Qlib execution 层**：固定版本的 Exchange/Executor adapter、A 股约束、标准化 artifact、合成精确对账和本地真实小样本均已落地。
 
-当前优先级是强制完成 Selection Holdout Integrity：残留 model-ready 状态的机器 hard-stop 已生效；下一步先完成全仓审阅，再补齐 raw/source provenance，建立 outer-train FDR eligibility 与 development robustness windows，真实消费 split-scoped FDR，并按 outer split 的 development dates 重建 allowlist。任何大批量重跑都必须先生成 exact review bundle 并通过本轮授权约束；只有 anti-leakage 与 pre-test freeze 门禁通过后，才按透明基线、Ridge、Elastic Net、LightGBM 顺序进入模型阶段。
+下一优先级是 PR #5A 的模型输入与比较协议冻结。当前仍保持 `model_training_started=false`、`historical_oos_comparison_complete=false`、`production_model_selected=false`。PR #5A 先把现有 Equal Weight 与 Stability Weight 预测纳入统一 schema 和 common-period 协议，不重新打开 development 决策；Ridge、Elastic Net、LightGBM 继续按计划分阶段实施，本次尚未开始。
 
 ## 目录结构
 

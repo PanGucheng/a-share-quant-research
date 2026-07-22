@@ -834,6 +834,8 @@ CI 只运行不依赖完整 Qlib provider 和网络的测试。需要真实数�
 
 ## 22. PR #4.1 Selection Holdout Integrity 与后续模型顺序
 
+> **2026-07-22 状态：本节 22.2–22.3 已完成本地实现与 compact validation。** 当前三个 split allowlist 为 48/46/54；36 组 mutation、3 份 pre-test freeze、3 份 consumed release receipt、两种透明 score 和统一 Qlib execution 均通过。Readiness 已恢复为 holdout-clean ready，但 `model_training_started=false`，PR #5A 尚未实施。下一步以 [PR #5A 模型输入协议交接计划 V1](./PR5A_MODEL_INPUT_PROTOCOL_HANDOFF_V1.md) 为入口。
+
 本节是 2026-07-20 PR #4 合并后审计形成的强制修订，优先级高于第 16 节以及第 20 节中与当前阶段冲突的表述。详细字段、目录、配置、测试矩阵和提交拆分以 [Selection Holdout Integrity 与后续模型计划 V1](./SELECTION_HOLDOUT_INTEGRITY_AND_MODEL_PLAN_V1.md) 为唯一执行清单。
 
 2026-07-21 起，本轮获准在门禁通过后执行大规模因子计算。每次扩容前仍必须完成全仓审阅、受限 canary、mutation/validator 和 run-specific review bundle。默认交由用户核对 exact commit/config/input/command/scope；本次持续对话可使用已明确授予的 `user_session_waiver`，无需再次等待。当前路线全部完成后，先把下一阶段详细计划提交到文档，再开始后续实现。

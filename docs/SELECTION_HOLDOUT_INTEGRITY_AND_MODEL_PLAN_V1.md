@@ -1,5 +1,7 @@
 # Selection Holdout Integrity 与后续模型计划 V1
 
+> **2026-07-22 实施状态：逻辑 PR #4.1 已完成本地工程验收。** 当前机器状态为 `selection_integrity_status=ready`、`model_entry_hard_stop_active=false`、`core_model_ready=true`、`pr5_model_training_ready=true`、`model_training_started=false`。三个 split 的 allowlist 分别为 48/46/54 个因子；36 组 outer-test mutation、3 份 pre-test freeze、3 份 consumed release receipt、两种透明 score 和 3 split × 2 method Qlib execution 全部通过 critical contract。旧全局 16 因子继续为 `test_influenced/model_input_allowed=false`。权威历史停牌/方向涨跌停能力仍为 false；历史 OOS 比较与生产模型选择均未完成。完整交接与下一步边界见 [PR #5A 模型输入协议交接计划 V1](./PR5A_MODEL_INPUT_PROTOCOL_HANDOFF_V1.md)。
+
 ## 1. 文档定位
 
 本文是 PR #4 合并后的强制增补计划，优先级高于此前所有“直接进入模型训练”的表述。
@@ -69,7 +71,7 @@ PR #4 的以下成果继续有效：
 - Qlib Exchange、A 股交易约束和会计契约；
 - 大型 runtime 隔离、batch resume、输出哈希和 Manifest v2 基础设施。
 
-以下结论撤回，等待 PR #4.1 重新生成：
+以下结论曾在审计时撤回；现已由 PR #4.1 的 split-specific 产物重新生成，但旧全局 16 因子本身永不恢复资格：
 
 ```text
 feature_allowlist_frozen = true
@@ -86,11 +88,11 @@ pr5_model_training_ready = true
 
 只读审计还确认：外部 FDR 与 stability 内部 FDR 的 2,007 个 q-value 全部不一致，112 个 BH pass 判断不一致；仅反转 test IC，`stable_core` 从 65 个变为 1 个。当前 16 个代表因此只能保留为历史探索证据。
 
-## 3. 立即目标状态
+## 3. 立即目标状态（历史 hard-stop 与当前完成态）
 
 只读核对曾确认仓库的 `outputs/full_research_669_readiness_v1/current/` 和 readiness runner 把模型门禁写为 true。当前 Draft GitHub PR #5 已用首个实现提交完成机器级 hard-stop；新的受控 readiness artifact 明确 blocked，并在 provenance、选择链和任何批量运行之前生效。
 
-已落地机器状态为：
+2026-07-21 hard-stop 阶段曾落地以下机器状态：
 
 ```text
 full_research_669_infrastructure_ready = true
@@ -112,6 +114,27 @@ bulk_run_execution_authorized = false
 core_model_ready = false
 pr5_model_training_ready = false
 model_training_started = false
+```
+
+2026-07-22 完成本计划后，当前机器状态已更新为：
+
+```text
+feature_selection_holdout_clean = true
+clustering_holdout_clean = true
+fdr_family_semantics_valid = true
+fdr_artifact_consumed = true
+raw_input_provenance_complete = true
+split_allowlists_frozen = true
+pre_test_freeze_contract_ready = true
+transparent_score_ready = true
+transparent_qlib_execution_ready = true
+selection_integrity_status = ready
+model_entry_hard_stop_active = false
+core_model_ready = true
+pr5_model_training_ready = true
+model_training_started = false
+historical_oos_comparison_complete = false
+production_model_selected = false
 ```
 
 当前输出不删除、不改写旧 manifest。新增状态清单将现有代表标记为：

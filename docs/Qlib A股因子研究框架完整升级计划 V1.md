@@ -1533,6 +1533,8 @@ fail
 
 # 二十二、PR #4.1 与 PR #5 强制增补
 
+> **2026-07-22 实施更新：逻辑 PR #4.1 已完成本地工程验收。** 旧全局 16 因子仍为 test-influenced；新链已生成 48/46/54 个 split allowlist，并通过 36 组 mutation、pre-test freeze、透明 score 与 3 split × 2 method Qlib execution。当前 `core_model_ready=true`、`pr5_model_training_ready=true`、`model_training_started=false`。下一步计划已经单独落实为 [PR #5A 模型输入协议交接计划 V1](./PR5A_MODEL_INPUT_PROTOCOL_HANDOFF_V1.md)，本轮不实现模型。
+
 PR #4 合并后的选择链审计推翻了“当前 allowlist 已冻结、可以直接开始 PR #5”的结论。本节优先级高于本文此前所有与模型启动条件冲突的表述；完整任务、产物、测试矩阵和 Definition of Done 见 [Selection Holdout Integrity 与后续模型计划 V1](./SELECTION_HOLDOUT_INTEGRITY_AND_MODEL_PLAN_V1.md)。
 
 ## 当前有效边界
