@@ -87,8 +87,9 @@ def main() -> int:
             else:
                 if not frame[["datetime", "instrument"]].equals(available[["datetime", "instrument"]]):
                     raise ValueError(f"clustering projection key mismatch: {outer_split_id}/{batch.batch_id}")
-                for column in selected_columns:
-                    frame[column] = available[column].to_numpy()
+                frame = pd.concat(
+                    [frame.reset_index(drop=True), available[selected_columns].reset_index(drop=True)], axis=1
+                )
         if frame is None or not needed.issubset(frame.columns):
             raise ValueError(f"missing clustering factors for {outer_split_id}: {sorted(needed - set(frame.columns if frame is not None else []))}")
         performance = daily.loc[daily["factor"].astype(str).isin(factors) & daily["datetime"].isin(allowed_dates)].copy()
