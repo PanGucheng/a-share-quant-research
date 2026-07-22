@@ -1,0 +1,32 @@
+{
+  "block_length": 20,
+  "bootstrap_samples": 100,
+  "expected_family_count": 3,
+  "expected_hypotheses_per_family": 25,
+  "family_scope": "outer_split",
+  "fdr_alpha": 0.05,
+  "included_folds": [
+    "train"
+  ],
+  "input_manifests": [
+    "outputs/selection_input_projection_v1/full_research_669/artifact_manifest.json"
+  ],
+  "input_projection": "outputs/selection_input_projection_v1/runtime/outer_train_daily_ic.parquet",
+  "label_name": "label_20d_t1",
+  "maximum_factors": 25,
+  "metric": "rank_ic",
+  "missing_lineage_fields": [],
+  "null_simulation_factors": 20,
+  "output_dir": "outputs/factor_multiple_testing_v1/full_research_669_canary",
+  "preprocessing_variant": "raw",
+  "profile": "full_research",
+  "profile_name": "full_research",
+  "profile_type": "full_research",
+  "projection_inventory": "outputs/selection_input_projection_v1/full_research_669/projection_inventory.csv",
+  "random_seed": 20260720,
+  "research_run_family_id": "full_research_factor_669_v1",
+  "research_window": "purged_expanding_train",
+  "schema_version": 1,
+  "source_family": "full_research_669_factor_family",
+  "stable_signal_mean": 0.08
+}

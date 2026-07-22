@@ -1,0 +1,39 @@
+{
+  "artifact_id": "factor_multiple_testing_v1:19540e95a9874499eaddc688a0e6c07d32760615135118249549e7af4c20a1b0",
+  "artifact_status": "pass",
+  "blocked_reason": "",
+  "code_commit_sha": "a3475d45fb1cdb3c54f8e936ffe01e091653ffba",
+  "code_diff_sha256": "",
+  "code_dirty": false,
+  "config_sha256": "cd9a59f53d6b0aa36be9793bc565f9fd18beaf145cf416c47d8e4fb8ed6875d4",
+  "created_at": "2026-07-22T11:39:03.365852+00:00",
+  "end_date": "2024-11-28",
+  "factor_catalog_id": "factor-catalog:8c031a09892fc915ac45201942f563925a9bab617e60fce5ecbbe274a51a02e1",
+  "factor_frame_id": "factor-frame:839242fe9d004216cf468a48cc44ad32584b9fe4a139c8e0644358c0f03d8d78",
+  "input_artifact_ids": [
+    "selection_input_projection_v1:76d7f06cb7a19053bb058f7da4e4874c9c5e16229a1b094fa0dfa8d4a1c1ff38"
+  ],
+  "lineage_status": "complete",
+  "missing_lineage_fields": [],
+  "output_file_hashes": {
+    "contract_status.csv": "5770de4b64a00c184f0873d0070c0eaf4d0dd54a488d470d15f8aa6c0ee8019e",
+    "factor_hypothesis_tests.csv": "552d5081bf97d16ef9a011d81a2ca9c6d0c5a9a0369e6d23fb4d54e915c944ab",
+    "fdr_results.csv": "552d5081bf97d16ef9a011d81a2ca9c6d0c5a9a0369e6d23fb4d54e915c944ab",
+    "input_receipts.csv": "f9724d5bb7fcd04f02ad4f552713d8c513901ac7bd4b9a3f01320c8e68259e52",
+    "multiple_testing_report.md": "a510731242058fc9bfe1054963081735f8ecc1aa5470e655b55798b11d52d46c",
+    "null_simulation_results.csv": "da253419e134fa2d288f7b83636c97b5af9345f19fc98fd14d85a1b1db9b44fd",
+    "rejected_hypotheses.csv": "c23f860e0df70a2482680d5a64c36c6bb3075b867be519f91be63881d8ed9300",
+    "resolved_config.json": "6327baee5554551de2da4f3900d6bf0f7db713ff3864b2a2622dd8539fb5cd01",
+    "test_family_summary.csv": "093672e15b48c023eae5f0f5ad1e6b5176c3780ec6c2e758185cc4b0ea368c6a"
+  },
+  "producer_run_id": "20260722T113903Z-da30c9c0",
+  "profile_name": "full_research",
+  "profile_type": "full_research",
+  "research_run_family_id": "full_research_factor_669_v1",
+  "run_id": "20260722T113903Z-da30c9c0",
+  "schema_version": 2,
+  "split_manifest_id": "split-manifest:75ccf0f37e85422729d54aef5a363f68d4f9b3daed3d42a87eb120e6b5aefe0e",
+  "stage_id": "factor_multiple_testing_v1",
+  "start_date": "2021-02-01",
+  "universe_artifact_id": "universe:10287ec42be03cb525de034b1bea1b53fa5da11cda5de4b5ed8f1f2ad1dcdad5"
+}
