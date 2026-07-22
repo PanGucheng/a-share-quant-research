@@ -1,5 +1,10 @@
 ﻿check_name,status,observed_value,required_value,severity,reason
-eligible_factor_count,pass,65,>0,critical,Current eligible stability inputs.
-every_selected_factor_has_cluster,pass,65,65,critical,Every eligible factor requires a cluster.
-every_cluster_has_representative,pass,16,16,critical,Every cluster requires one representative.
-default_combination_duplicate_cluster_votes,pass,0,0,critical,One default vote per cluster.
+outer_split_count,pass,3,3,critical,
+every_selected_factor_has_cluster,pass,"[461, 238, 215]","[461, 238, 215]",critical,
+every_cluster_has_representative,pass,"[48, 46, 54]","[48, 46, 54]",critical,
+duplicate_cluster_votes,pass,0,0,critical,
+minimum_components,pass,"[48, 46, 54]",>=3,critical,
+insufficient_pair_overlap_count,pass,0,0,critical,
+exposure_dates_exactly_allowed,pass,0,0,critical,
+performance_dates_exactly_allowed,pass,0,0,critical,
+allowed_dates_hash_match,pass,3,3,critical,
