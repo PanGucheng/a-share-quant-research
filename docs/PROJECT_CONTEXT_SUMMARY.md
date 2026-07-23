@@ -126,7 +126,7 @@ tmp/reference_repos/techfactor
 
 ## Next Work
 
-> **2026-07-23 Bootstrap、corrected FDR 与 stability 完成：**`bootstrap_gap_sensitivity_v1:e73494...` 将正式方法冻结为 `gap_aware_moving_block`。clean canary 后，`factor_multiple_testing_v2:bccfb0ee...` 完成 3×669 outer-train hypotheses，三个 split 的 BH pass 为 518/512/570、BY pass 为 390/385/475；相对 superseded v1，BH/BY 标记改变 31/122 个。`factor_rolling_stability_v2:8d49e0c1...` 随后只消费新 FDR 与 inner-development projection，stable-core 为 460/238/214，相对旧结果共有 36 个角色变化。所有 projection、policy、FDR 与 canary 均按 artifact/hash 绑定，test count=0，Manifest clean/complete/pass。尚未生成 corrected clustering 或 allowlist。
+> **2026-07-23 Corrected 研究链已推进至 clustering：**`bootstrap_gap_sensitivity_v1:e73494...` 将正式方法冻结为 `gap_aware_moving_block`；`factor_multiple_testing_v2:bccfb0ee...` 完成 3×669 outer-train hypotheses；`factor_rolling_stability_v2:8d49e0c1...` 得到 460/238/214 个 stable-core。clean 两层 canary 后，`clustering_input_projection_v2:c91e3129...` 逐文件验证 Matrix v4 runtime，并把 exposure/performance 投影到精确哈希 development dates；`factor_clustering_v2:11145476...` 得到 45/46/52 个代表（旧为 48/46/54），新旧代表交集 133 个。所有 test count、日期越界和 insufficient pair 均为 0，Manifest clean/complete/pass。尚未生成 corrected allowlist。
 
 > **2026-07-23 Pairwise Spearman IC v2 完成：**真实 5 因子 canary 后完成 30/30 分区、669/669 因子。每个 `(date,factor)` 在 factor-label 共同非空集合内独立 rank，记录 pair/missing/tie evidence；scipy 人工例误差 0、行序与缺失位置 mutation 通过。最少 1,228 个有效 IC 日，有效日最小 pair 102。相对 v1 有 621 个因子、598,072 个日 IC 被修正，最大绝对差异 0.380201；缺失状态无不对称转移。`full_research_daily_ic_v2:3e20d7...` clean/complete/pass，`pairwise_ic_ready=true`。其后的 bootstrap policy 结果以上方最新条目为准。
 
