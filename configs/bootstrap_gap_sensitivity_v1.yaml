@@ -1,0 +1,24 @@
+schema_version: 1
+profile: full_research
+profile_name: full_research
+profile_type: full_research
+research_run_family_id: full_research_factor_669_v1
+projection_manifest: outputs/selection_input_projection_v2/current/artifact_manifest.json
+projection_inventory: outputs/selection_input_projection_v2/current/projection_inventory.csv
+outer_train_projection: outputs/selection_input_projection_v2/runtime/outer_train_daily_ic.parquet
+metric: rank_ic
+bootstrap_samples: 500
+block_length: 20
+random_seed: 20260723
+fdr_alpha: 0.05
+expected_outer_splits: 3
+expected_factor_count: 669
+gap_injection_stride: 17
+gap_injection_factor_count: 12
+thresholds:
+  maximum_p_value_absolute_difference: 0.02
+  maximum_ci_endpoint_absolute_difference: 0.005
+  maximum_bh_pass_changes: 0
+  maximum_by_pass_changes: 0
+  maximum_injected_p_value_change: 0.03
+output_dir: outputs/bootstrap_gap_sensitivity_v1/current
