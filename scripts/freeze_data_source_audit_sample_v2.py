@@ -75,8 +75,8 @@ def main() -> int:
         board_coverage.extend(
             unique.loc[unique["board"].eq(board), "instrument"].sort_values().head(7).tolist()
         )
-    board_coverage.append("SZ302132")
-    add(board_coverage[:20], "board_and_code_change", "instrument_state_v1;SZ302132_board_audit")
+    board_coverage = board_coverage[:19] + ["SZ302132"]
+    add(board_coverage, "board_and_code_change", "instrument_state_v1;SZ302132_board_audit")
 
     cache_rows = pd.read_csv(resolve(config["market_cache_artifacts"]))
     market_parts = []
@@ -163,6 +163,7 @@ def main() -> int:
         len(sample) == target
         and sample["instrument"].nunique() == target
         and {"main", "chinext", "star"}.issubset(set(sample["board"]))
+        and sample["instrument"].eq("SZ302132").any()
         and sample["event_evidence"].astype(str).str.len().gt(0).all()
     )
     contract = pd.DataFrame(
@@ -170,6 +171,7 @@ def main() -> int:
             {"check_name": "sample_size", "status": "pass" if len(sample) == target else "blocked", "observed_value": len(sample), "required_value": target, "severity": "critical", "reason": ""},
             {"check_name": "duplicate_instrument_count", "status": "pass" if sample["instrument"].is_unique else "blocked", "observed_value": int(sample["instrument"].duplicated().sum()), "required_value": 0, "severity": "critical", "reason": ""},
             {"check_name": "board_strata_present", "status": "pass" if {"main", "chinext", "star"}.issubset(set(sample["board"])) else "blocked", "observed_value": "|".join(sorted(sample["board"].unique())), "required_value": "chinext|main|star", "severity": "critical", "reason": ""},
+            {"check_name": "code_change_security_present", "status": "pass" if sample["instrument"].eq("SZ302132").any() else "blocked", "observed_value": int(sample["instrument"].eq("SZ302132").sum()), "required_value": 1, "severity": "critical", "reason": ""},
             {"check_name": "selection_evidence_present", "status": "pass" if sample["event_evidence"].astype(str).str.len().gt(0).all() else "blocked", "observed_value": int(sample["event_evidence"].astype(str).str.len().gt(0).sum()), "required_value": target, "severity": "critical", "reason": ""},
         ]
     )
