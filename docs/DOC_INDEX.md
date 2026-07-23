@@ -34,6 +34,8 @@
   由 corrected clustering 冻结的 45/46/52 split-specific allowlist；各自包含独立 payload 与 feature-order hash，模型入口仍关闭。
 - `outputs/split_transparent_weights_v2/current/`
   corrected allowlist 的 Equal Weight / Stability Weight；六组权重分别归一化并冻结哈希，不消费 test 字段。
+- `outputs/transparent_score_policy_v1/current/`
+  约 532 万 development-only 日期—股票行的组件完整性审计；冻结 5 个且 10% 的共同门槛、拒绝/标记重归一化语义和政策哈希。
 - `PR5A_MODEL_INPUT_PROTOCOL_HANDOFF_V1.md`
   延后的模型输入协议参考。只能在 PR #6/#7 全部门禁通过后重新启用，不能直接采用当前已被替代的 allowlist、score 或 OOS execution。
 - `SELECTION_HOLDOUT_INTEGRITY_AND_MODEL_PLAN_V1.md`

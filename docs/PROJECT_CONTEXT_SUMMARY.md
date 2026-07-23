@@ -126,7 +126,7 @@ tmp/reference_repos/techfactor
 
 ## Next Work
 
-> **2026-07-23 Corrected 研究链已推进至 weights：**corrected FDR、stability 与 exact-date clustering 均已 clean/complete/pass；聚类得到 45/46/52 个代表。`split_specific_allowlist_v2:f58b3f13...` 冻结三份独立 payload/feature-order hash；`split_transparent_weights_v2:05286362...` 随后生成 Equal/Stability 六组权重，最大单因子权重 0.028021、归一化误差为 0，且不消费 test 字段。当前 `model_input_allowed=false`，下一步完成 selection mutation 与 transparent score quality policy。
+> **2026-07-23 Corrected 研究链已推进至 score policy：**45/46/52 三份 allowlist 及 Equal/Stability 六组权重均已冻结。`transparent_score_policy_v1:e6c42348...` 只使用 development dates 审计约 532 万日期—股票行，三个 split 最低可用组件为 8/11/9；预冻结政策为至少 5 个且至少 10%，低于门槛拒绝，否则允许重归一化但必须标记，两种方法共用同一政策。outer-test 使用为 0，Manifest clean/complete/pass。当前 `model_input_allowed=false`，下一步完成 corrected selection mutation。
 
 > **2026-07-23 Pairwise Spearman IC v2 完成：**真实 5 因子 canary 后完成 30/30 分区、669/669 因子。每个 `(date,factor)` 在 factor-label 共同非空集合内独立 rank，记录 pair/missing/tie evidence；scipy 人工例误差 0、行序与缺失位置 mutation 通过。最少 1,228 个有效 IC 日，有效日最小 pair 102。相对 v1 有 621 个因子、598,072 个日 IC 被修正，最大绝对差异 0.380201；缺失状态无不对称转移。`full_research_daily_ic_v2:3e20d7...` clean/complete/pass，`pairwise_ic_ready=true`。其后的 bootstrap policy 结果以上方最新条目为准。
 

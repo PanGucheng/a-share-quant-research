@@ -1,0 +1,9 @@
+﻿check_name,status,observed_value,required_value,severity,reason
+canary_gate_passed,pass,pass,pass_or_not_required,critical,
+outer_test_row_count,pass,0,0,critical,
+split_count,pass,3,3,critical,
+method_count_per_split,pass,"[2, 2, 2]",2,critical,
+policy_frozen,pass,frozen,frozen,critical,
+same_policy_for_all_methods,pass,True,True,critical,
+presence_and_completeness_distinct,pass,True,True,critical,
+runtime_audit_hash_present,pass,64,64,critical,
