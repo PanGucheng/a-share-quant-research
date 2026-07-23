@@ -50,6 +50,25 @@ def main() -> int:
     issues = [issue for manifest, path in zip(manifests, manifest_paths) for issue in validate_manifest_outputs(manifest, path.parent)]
     if issues or any(manifest["artifact_status"] != "pass" for manifest in manifests):
         raise ValueError("split clustering upstream is stale or blocked")
+    source_bindings = [
+        (0, resolve(config["stability_board"])),
+        (1, resolve(config["projection_inventory"])),
+        (2, resolve(config["allowed_dates"])),
+    ]
+    for manifest_index, source_path in source_bindings:
+        expected_hash = manifests[manifest_index]["output_file_hashes"].get(source_path.name)
+        if not expected_hash or file_sha256(source_path) != expected_hash:
+            raise ValueError(f"clustering source is not bound by manifest: {source_path}")
+    canary_manifest_path = config.get("canary_manifest")
+    canary_gate_observed = "not_required"
+    if canary_manifest_path:
+        canary_manifest_resolved = resolve(canary_manifest_path)
+        canary_manifest = load_artifact_manifest(canary_manifest_resolved)
+        canary_issues = validate_manifest_outputs(canary_manifest, canary_manifest_resolved.parent)
+        canary_contract = pd.read_csv(resolve(config["canary_contract"]))
+        if canary_issues or canary_manifest["artifact_status"] != "pass" or not canary_contract["status"].eq("pass").all():
+            raise ValueError("corrected clustering canary is stale, blocked, or incomplete")
+        canary_gate_observed = "pass"
     stability = pd.read_csv(resolve(config["stability_board"]))
     stability = stability.loc[stability["stability_role"].isin(config["eligible_roles"])].copy()
     inventory = pd.read_csv(resolve(config["projection_inventory"]))
@@ -123,6 +142,7 @@ def main() -> int:
     expected_factor_counts = inventory.set_index("outer_split_id")["factor_count"].astype(int)
     actual_factor_counts = clusters_all.groupby("outer_split_id")["factor"].nunique()
     contracts = pd.DataFrame([
+        contract_row("canary_gate_passed", canary_gate_observed in {"not_required", "pass"}, canary_gate_observed, "pass_or_not_required"),
         contract_row("outer_split_count", clusters_all["outer_split_id"].nunique() == expected_splits, clusters_all["outer_split_id"].nunique(), expected_splits),
         contract_row("every_selected_factor_has_cluster", actual_factor_counts.eq(expected_factor_counts).all(), actual_factor_counts.tolist(), expected_factor_counts.tolist()),
         contract_row("every_cluster_has_representative", representatives_all.groupby("outer_split_id")["cluster_id"].nunique().eq(clusters_all.groupby("outer_split_id")["cluster_id"].nunique()).all(), representatives_all.groupby("outer_split_id")["cluster_id"].nunique().tolist(), clusters_all.groupby("outer_split_id")["cluster_id"].nunique().tolist()),
@@ -132,6 +152,7 @@ def main() -> int:
         contract_row("exposure_dates_exactly_allowed", audit["exposure_outside_allowed_count"].sum() == 0, int(audit["exposure_outside_allowed_count"].sum()), 0),
         contract_row("performance_dates_exactly_allowed", audit["performance_outside_allowed_count"].sum() == 0, int(audit["performance_outside_allowed_count"].sum()), 0),
         contract_row("allowed_dates_hash_match", audit["allowed_dates_hash_match"].all(), int(audit["allowed_dates_hash_match"].sum()), len(audit)),
+        contract_row("source_manifests_hash_bound", True, len(source_bindings), len(source_bindings)),
     ])
     receipts = pd.DataFrame([
         {"input_name": "stability", "artifact_id": manifests[0]["artifact_id"], "path": resolve(config["stability_board"]).as_posix(), "sha256": file_sha256(resolve(config["stability_board"])), "join_keys": "outer_split_id,factor", "input_rows": len(stability), "consumed_rows": len(clusters_all), "missing_rows": 0},
@@ -151,7 +172,7 @@ def main() -> int:
             frame.to_csv(publisher.path(name), index=False, encoding="utf-8-sig")
         publisher.path("resolved_config.json").write_text(json.dumps(config, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
         publisher.path("clustering_report.md").write_text(
-            "# Split-Specific Factor Clustering V1\n\n"
+            "# Corrected Split-Specific Factor Clustering\n\n"
             + f"- Status: `{'pass' if ready else 'blocked'}`\n"
             + f"- Outer splits / stable factors / representatives: `{expected_splits}` / `{len(clusters_all)}` / `{len(representatives_all)}`\n"
             + "- Exposure and performance similarities use exact development allowed dates only.\n",
@@ -159,7 +180,7 @@ def main() -> int:
         )
         files = [publisher.path(name) for name in CONTROLLED if name != "artifact_manifest.json"]
         write_stage_artifact_manifest(
-            project_root=PROJECT_ROOT, stage_id="factor_clustering_v1", config=config,
+            project_root=PROJECT_ROOT, stage_id=str(config.get("stage_id", "factor_clustering_v1")), config=config,
             output_dir=publisher.staging_dir, output_files=files, code_state=capture_code_state(PROJECT_ROOT),
             input_manifest_paths=manifest_paths, factor_frame_id=manifests[0]["factor_frame_id"],
             split_manifest_id=manifests[0]["split_manifest_id"], start_date=allowed_table["datetime"].min(),
