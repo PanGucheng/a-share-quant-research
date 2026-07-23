@@ -320,12 +320,23 @@ class PreparedQuoteExchange(Exchange):  # type: ignore[misc]
 
         preblocked_reason = self._blocked_reason(order)
         self._last_cost = ExecutionCostBreakdown(0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
-        trade_val, trade_cost, trade_price = super().deal_order(
-            order,
-            trade_account=trade_account,
-            position=position,
-            dealt_order_amount=dealt_order_amount,
-        )
+        original_trade_unit = self.trade_unit
+        if self.dynamic_lot_rules:
+            row = self._prepared_quote.loc[(order.stock_id, trading_date)]
+            self.trade_unit = float(
+                row["audit_lot_increment_buy"]
+                if order.direction == Order.BUY
+                else row["audit_lot_increment_sell"]
+            )
+        try:
+            trade_val, trade_cost, trade_price = super().deal_order(
+                order,
+                trade_account=trade_account,
+                position=position,
+                dealt_order_amount=dealt_order_amount,
+            )
+        finally:
+            self.trade_unit = original_trade_unit
         executed_raw = float(order.deal_amount) * factor
         side = "buy" if order.direction == Order.BUY else "sell"
         if executed_raw > 0:
