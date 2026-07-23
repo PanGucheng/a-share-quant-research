@@ -1,0 +1,14 @@
+schema_version: 2
+profile: full_research
+profile_name: full_research
+profile_type: full_research
+research_run_family_id: full_research_v2
+provider_uri: ../qlib_data/cn_data_community_20260609_derived
+source_intervals: outputs/universes/community_20260609/all_stock_shsz.txt
+start_date: 2021-01-01
+end_date: 2026-06-09
+lookback_trading_days: 250
+minimum_valid_days: 180
+minimum_listing_trading_days: 120
+top_n: 2000
+output_dir: outputs/point_in_time_universe_v2/full_research
