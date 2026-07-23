@@ -22,6 +22,8 @@
   Pairwise Spearman IC v2：669 因子逐日先构造 factor-label 共同非空集合，再分别 rank；scipy、行序、最小 pair 与 lineage 门禁通过。相对 v1 有 621 个因子、598,072 个日因子 IC 值被修正。
 - `outputs/bootstrap_gap_sensitivity_v1/current/`
   Outer-train-only bootstrap gap audit：3×669 个假设比较 legacy dropna block 与真实日期连续 segment block；p-value、CI、BH、BY 和受控缺口均越过预冻结阈值，正式政策已冻结为 `gap_aware_moving_block`。
+- `outputs/factor_multiple_testing_v2/current/`
+  Matrix v4 / Labels v2 / pairwise IC v2 派生的 3×669 corrected outer-train FDR；强制绑定 gap-aware 冻结政策和 clean canary。
 - `PR5A_MODEL_INPUT_PROTOCOL_HANDOFF_V1.md`
   延后的模型输入协议参考。只能在 PR #6/#7 全部门禁通过后重新启用，不能直接采用当前已被替代的 allowlist、score 或 OOS execution。
 - `SELECTION_HOLDOUT_INTEGRITY_AND_MODEL_PLAN_V1.md`

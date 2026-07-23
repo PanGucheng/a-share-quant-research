@@ -8,6 +8,7 @@ matrix_v4_lifecycle_clean,pass,True,True,critical,Matrix v4 materialized 30 part
 labels_v2_ready,pass,True,True,critical,Labels v2 uses exact canonical t+1/t+21 dates on 2587671 lifecycle-clean keys with no physical-row shift or price fill.
 pairwise_ic_ready,pass,True,True,critical,Daily IC v2 ranks each factor and label on the same pairwise-valid date cross-section and matches scipy fixtures.
 bootstrap_gap_policy_ready,pass,True,True,critical,Outer-train-only sensitivity audit froze gap-aware moving-block bootstrap before corrected FDR.
+corrected_outer_fdr_ready,pass,True,True,critical,Three outer-train-only families each contain exactly 669 hypotheses and consume the frozen gap-aware bootstrap policy by hash.
 research_formula_accuracy_ready,pass,False,False,critical,Research formulas and lifecycle-clean materialization are not yet corrected.
 execution_semantics_accuracy_ready,pass,False,False,critical,Execution field timing fees and valuation are not yet corrected.
 model_research_ready,pass,False,False,critical,Research model inputs are not currently eligible.
