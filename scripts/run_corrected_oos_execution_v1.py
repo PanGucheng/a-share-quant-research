@@ -73,6 +73,7 @@ def main() -> int:
         "runner_source": file_sha256(PROJECT_ROOT / "scripts/run_corrected_oos_execution_v1.py"),
         "exchange_adapter_source": file_sha256(PROJECT_ROOT / "qlib_integration/exchange_adapter.py"),
         "market_semantics_source": file_sha256(PROJECT_ROOT / "qlib_integration/market_semantics.py"),
+        "contracts_source": file_sha256(PROJECT_ROOT / "qlib_integration/contracts.py"),
     })
     run_config = {
         **config["execution"],

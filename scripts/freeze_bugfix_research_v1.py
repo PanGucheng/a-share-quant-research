@@ -69,6 +69,7 @@ def main() -> int:
         "runner_source": file_sha256(PROJECT_ROOT / "scripts/run_corrected_oos_execution_v1.py"),
         "exchange_adapter_source": file_sha256(PROJECT_ROOT / "qlib_integration/exchange_adapter.py"),
         "market_semantics_source": file_sha256(PROJECT_ROOT / "qlib_integration/market_semantics.py"),
+        "contracts_source": file_sha256(PROJECT_ROOT / "qlib_integration/contracts.py"),
     }
     execution_config_sha = canonical_hash(execution_hashes)
     timestamp = datetime.now(timezone.utc).isoformat()
@@ -122,7 +123,7 @@ def main() -> int:
             {"check_name": "historical_test_already_observed", "status": "pass", "observed_value": True, "required_value": True, "severity": "critical", "reason": ""},
             {"check_name": "selection_uses_test_outcomes", "status": "pass", "observed_value": False, "required_value": False, "severity": "critical", "reason": ""},
             {"check_name": "unbiased_final_estimate", "status": "pass", "observed_value": False, "required_value": False, "severity": "critical", "reason": ""},
-            {"check_name": "all_semantic_and_source_hashes_bound", "status": "pass", "observed_value": len(execution_hashes), "required_value": 7, "severity": "critical", "reason": ""},
+            {"check_name": "all_semantic_and_source_hashes_bound", "status": "pass", "observed_value": len(execution_hashes), "required_value": 8, "severity": "critical", "reason": ""},
             {"check_name": "clean_committed_code", "status": "pass", "observed_value": False, "required_value": False, "severity": "critical", "reason": ""},
         ])
         pd.DataFrame(rows).to_csv(publisher.path("bugfix_freeze_index.csv"), index=False, encoding="utf-8-sig")

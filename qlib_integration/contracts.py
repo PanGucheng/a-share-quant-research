@@ -116,8 +116,12 @@ def validate_market_frame(frame: pd.DataFrame) -> pd.DataFrame:
 
     order_eligible = result["can_buy"] | result["can_sell"]
     valuation_eligible = ~result["suspended"]
+    terminal_settlement = result.get(
+        "terminal_event_approximation", pd.Series(False, index=result.index)
+    ).astype(bool)
     for column in ["open", "volume", "execution_price"]:
-        invalid = order_eligible & (~np.isfinite(result[column]) | result[column].le(0))
+        eligibility = order_eligible & (~terminal_settlement if column == "open" else True)
+        invalid = eligibility & (~np.isfinite(result[column]) | result[column].le(0))
         if invalid.any():
             raise ValueError(f"tradable market rows require positive finite {column}")
     for column in ["close", "factor"]:
