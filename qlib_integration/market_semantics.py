@@ -56,7 +56,7 @@ def infer_board(instrument: str) -> str:
     code = str(instrument).upper().replace("SH", "").replace("SZ", "")
     if code.startswith(("688", "689")):
         return "star"
-    if code.startswith(("300", "301")):
+    if code.startswith(("300", "301", "302")):
         return "chinext"
     if code.startswith(("600", "601", "603", "605", "000", "001", "002", "003")):
         return "main"

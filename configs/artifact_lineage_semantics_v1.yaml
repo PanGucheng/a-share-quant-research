@@ -1,0 +1,30 @@
+schema_version: 1
+status: frozen
+lineage_fields:
+  - universe_artifact_id
+  - split_manifest_id
+  - factor_catalog_id
+  - factor_frame_id
+stage_authority:
+  point_in_time_universe_v2:
+    authoritative_fields: [universe_artifact_id]
+  full_research_feature_matrix_v4:
+    authoritative_fields:
+      [universe_artifact_id, split_manifest_id, factor_catalog_id, factor_frame_id]
+  purged_walk_forward_v1:
+    authoritative_fields: [split_manifest_id]
+    ignored_fields:
+      universe_artifact_id:
+        reason: Date assignments are calendar-level and do not define the research universe.
+  raw_market_data_snapshot_v1:
+    authoritative_fields: []
+    ignored_fields:
+      universe_artifact_id:
+        reason: Snapshot coverage is source evidence and does not define the current research universe.
+  date_split_semantics_v1:
+    authoritative_fields: [split_manifest_id]
+  research_selection_lineage_closure_v1:
+    authoritative_fields:
+      [universe_artifact_id, split_manifest_id, factor_catalog_id, factor_frame_id]
+unknown_stage_policy: fail_closed
+unknown_field_policy: fail_closed

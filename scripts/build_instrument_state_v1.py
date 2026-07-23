@@ -23,6 +23,7 @@ COMPACT_OUTPUTS = [
     "contract_status.csv",
     "instrument_state_artifact.csv",
     "instrument_state_coverage.csv",
+    "board_resolution_audit.csv",
     "resolved_config.json",
     "instrument_state_report.md",
 ]
@@ -137,10 +138,43 @@ def main() -> int:
             {"check_name": "lifecycle_source_complete_for_score_keys", "status": "pass" if coverage.iloc[0]["lifecycle_coverage"] == 1 else "blocked", "observed_value": coverage.iloc[0]["lifecycle_coverage"], "required_value": 1.0, "severity": "critical", "reason": ""},
             {"check_name": "instrument_state_pit_valid", "status": "blocked", "observed_value": "historical_st_suspension_terminal_missing", "required_value": "authoritative complete", "severity": "capability", "reason": "Provider has listing intervals and OHLCVA but no authoritative historical ST, pre-open suspension, or terminal-event feed."},
             {"check_name": "price_limit_rule_resolved", "status": "blocked", "observed_value": "explicit_non_authoritative_st_false_approximation", "required_value": "historical ST state resolved", "severity": "capability", "reason": "No uniform 10% fallback is presented as authoritative."},
+            {"check_name": "unknown_board_row_count", "status": "pass" if state["board"].ne("unknown").all() else "blocked", "observed_value": int(state["board"].eq("unknown").sum()), "required_value": 0, "severity": "critical", "reason": "Unknown security-code ranges must be explicitly resolved or excluded."},
             {"check_name": "lot_rule_resolved", "status": "pass" if state["lot_rule_id"].str.startswith(("main_", "star_", "chinext_")).all() else "blocked", "observed_value": int(state["lot_rule_id"].nunique()), "required_value": "all score keys", "severity": "critical", "reason": ""},
         ])
+        board_audit = (
+            state.loc[
+                state["instrument"]
+                .astype(str)
+                .str.upper()
+                .str.replace(r"^(SH|SZ)", "", regex=True)
+                .str.startswith("302"),
+                [
+                    "datetime",
+                    "instrument",
+                    "outer_split_id",
+                    "list_date",
+                    "delist_date",
+                    "board",
+                    "lot_rule_id",
+                    "source_artifact_id",
+                ],
+            ]
+            .drop_duplicates()
+            .assign(
+                board_inference_reason="sz_302_code_range_chinext",
+                corporate_identity_note=(
+                    "SZ302132 changed from SZ300114 on 2025-02-17; "
+                    "this stage classifies board rules only and does not splice histories."
+                ),
+            )
+        )
         coverage.to_csv(publisher.path("instrument_state_coverage.csv"), index=False, encoding="utf-8-sig")
         contract.to_csv(publisher.path("contract_status.csv"), index=False, encoding="utf-8-sig")
+        board_audit.to_csv(
+            publisher.path("board_resolution_audit.csv"),
+            index=False,
+            encoding="utf-8-sig",
+        )
         pd.DataFrame([{"path": str(output_dir / "runtime/instrument_state.parquet"), "rows": len(state), "sha256": runtime_sha}]).to_csv(
             publisher.path("instrument_state_artifact.csv"), index=False, encoding="utf-8-sig"
         )
@@ -159,6 +193,9 @@ def main() -> int:
         code_state = capture_code_state(PROJECT_ROOT)
         input_manifests = [resolve(config["score_manifest"]), resolve(config["universe_manifest"])]
         score_manifest = load_artifact_manifest(input_manifests[0])
+        critical_ready = contract.loc[
+            contract["severity"].eq("critical"), "status"
+        ].eq("pass").all()
         write_stage_artifact_manifest(
             project_root=PROJECT_ROOT,
             stage_id="instrument_state_v1",
@@ -172,11 +209,12 @@ def main() -> int:
             start_date=state["datetime"].min(),
             end_date=state["datetime"].max(),
             lineage_status="complete",
-            artifact_status="pass",
+            artifact_status="pass" if critical_ready else "blocked",
+            blocked_reason="" if critical_ready else "blocked_instrument_state_contract",
         )
         publisher.publish()
     print(coverage.to_string(index=False))
-    return 0
+    return 0 if critical_ready else 2
 
 
 if __name__ == "__main__":

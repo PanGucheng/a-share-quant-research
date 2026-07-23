@@ -231,6 +231,57 @@ def inherited_lineage_id(input_manifests: Sequence[Mapping[str, Any]], field: st
     return None, len(values) > 1
 
 
+def critical_contract_failures(paths: Sequence[Path]) -> list[str]:
+    failures: list[str] = []
+    for path in paths:
+        if not path.is_file():
+            failures.append(f"missing_contract:{path.as_posix()}")
+            continue
+        try:
+            frame = pd.read_csv(path)
+        except Exception as exc:
+            failures.append(f"invalid_contract:{path.as_posix()}:{exc}")
+            continue
+        if "status" not in frame:
+            failures.append(f"contract_missing_status:{path.as_posix()}")
+            continue
+        severity = (
+            frame["severity"].astype(str).str.lower()
+            if "severity" in frame
+            else pd.Series("critical", index=frame.index)
+        )
+        blocked = frame.loc[
+            severity.eq("critical") & ~frame["status"].astype(str).str.lower().eq("pass")
+        ]
+        for row in blocked.itertuples(index=False):
+            name = getattr(row, "check_name", "unknown_check")
+            status = getattr(row, "status", "unknown")
+            failures.append(f"critical_contract:{path.name}:{name}:{status}")
+    return failures
+
+
+def direct_parent_gate_failures(
+    manifests: Sequence[Mapping[str, Any]],
+    *,
+    require_complete: bool = True,
+    require_clean_code: bool = True,
+) -> list[str]:
+    failures: list[str] = []
+    for manifest in manifests:
+        artifact_id = str(manifest.get("artifact_id", "unknown"))
+        if manifest.get("artifact_status") != "pass":
+            failures.append(
+                f"parent_artifact_status:{artifact_id}:{manifest.get('artifact_status')}"
+            )
+        if require_complete and manifest.get("lineage_status") != "complete":
+            failures.append(
+                f"parent_lineage_status:{artifact_id}:{manifest.get('lineage_status')}"
+            )
+        if require_clean_code and bool(manifest.get("code_dirty")):
+            failures.append(f"parent_code_dirty:{artifact_id}")
+    return failures
+
+
 def write_stage_artifact_manifest(
     *,
     project_root: Path,
@@ -250,28 +301,73 @@ def write_stage_artifact_manifest(
     lineage_status: str | None = None,
     artifact_status: str = "pass",
     blocked_reason: str = "",
+    contract_paths: Sequence[Path] | None = None,
+    require_complete_parents: bool | None = None,
+    inherit_lineage_fields: Sequence[str] | None = None,
 ) -> dict[str, Any]:
     del project_root
     inputs, missing_inputs = load_input_manifests(input_manifest_paths)
+    profile = resolve_profile(config)
+    strict_parents = (
+        profile.type == ProfileType.FULL_RESEARCH
+        if require_complete_parents is None
+        else bool(require_complete_parents)
+    )
     ids = {
         "universe_artifact_id": universe_artifact_id,
         "split_manifest_id": split_manifest_id,
         "factor_catalog_id": factor_catalog_id,
         "factor_frame_id": factor_frame_id,
     }
+    inherited_fields = (
+        set(LINEAGE_ID_FIELDS)
+        if inherit_lineage_fields is None
+        else {str(field) for field in inherit_lineage_fields}
+    )
+    unknown_inherited_fields = inherited_fields - set(LINEAGE_ID_FIELDS)
+    if unknown_inherited_fields:
+        raise ValueError(
+            f"unknown inherited lineage fields: {sorted(unknown_inherited_fields)}"
+        )
     missing = list(missing_lineage_fields)
     missing.extend(f"input_manifest:{value}" for value in missing_inputs)
     for field, value in list(ids.items()):
         if value is not None:
+            continue
+        if field not in inherited_fields:
             continue
         inherited, conflict = inherited_lineage_id(inputs, field)
         ids[field] = inherited
         if conflict:
             missing.append(f"inconsistent:{field}")
             lineage_status = "inconsistent"
+    inferred_contracts = [
+        path
+        for path in output_files
+        if path.suffix.lower() == ".csv" and "contract" in path.name.lower()
+    ]
+    gate_failures = critical_contract_failures(
+        list(contract_paths) if contract_paths is not None else inferred_contracts
+    )
+    if strict_parents:
+        gate_failures.extend(direct_parent_gate_failures(inputs))
+    effective_lineage_status = lineage_status
+    if effective_lineage_status is None:
+        effective_lineage_status = (
+            "reference_only"
+            if missing and profile.type != ProfileType.FULL_RESEARCH
+            else "incomplete"
+            if missing
+            else "complete"
+        )
+    if artifact_status == "pass" and effective_lineage_status != "complete":
+        gate_failures.append(f"child_lineage_status:{effective_lineage_status}")
+    if gate_failures and artifact_status == "pass":
+        artifact_status = "blocked"
+        blocked_reason = "artifact_gate:" + "|".join(sorted(set(gate_failures)))
     manifest = build_artifact_manifest(
         stage_id=stage_id,
-        profile=resolve_profile(config),
+        profile=profile,
         config=config,
         output_files=output_files,
         code_state=code_state,
