@@ -130,6 +130,8 @@ tmp/reference_repos/techfactor
 
 > **2026-07-23 PR #6 合并、PR #7 启动：**PR #6 已 squash merge 为 `3492200`，main 上 161 tests 与 hard-stop validator 通过。研究层现在可诚实标记 `model_research_ready=true`，但 `core_model_ready=false`、`pr5_model_training_ready=false`、`model_training_started=false`。PR #7 首先按 PR #6 冻结的 allowlist/weights/score policy 确定性物化 score，不能修改研究选择；随后才实施 fee/field timing/PIT state/cache/execution，且在 PR #5 前停止。
 
+> **2026-07-23 PR #7 score 输入冻结完成：**clean canary 后，`split_transparent_score_v2:fc2080f0...` 对 120/124/124 个 outer-test 日期和两种透明方法物化 1,471,764 行 score。46 个 Matrix v4 分区哈希、PR6 score policy 与 mutation proof 均验证一致；组件政策覆盖 1.0，最低组件 14/10/12，输出不含 label/return/IC/NAV。下一步仅实施 execution semantics。
+
 > **2026-07-23 Pairwise Spearman IC v2 完成：**真实 5 因子 canary 后完成 30/30 分区、669/669 因子。每个 `(date,factor)` 在 factor-label 共同非空集合内独立 rank，记录 pair/missing/tie evidence；scipy 人工例误差 0、行序与缺失位置 mutation 通过。最少 1,228 个有效 IC 日，有效日最小 pair 102。相对 v1 有 621 个因子、598,072 个日 IC 被修正，最大绝对差异 0.380201；缺失状态无不对称转移。`full_research_daily_ic_v2:3e20d7...` clean/complete/pass，`pairwise_ic_ready=true`。其后的 bootstrap policy 结果以上方最新条目为准。
 
 > **2026-07-23 Labels v2 完成：**`full_research_labels_v2:404fe4...` 在 Matrix v4 的 2,587,671 个 lifecycle-clean key 上按 canonical Qlib calendar 精确连接 t+1/t+21 close，不使用物理行 shift 或价格填充。1,294 个 feature date offset 全部精确；末端 21 个日期、42,000 key 全部按预期缺失；有效 2,538,428 行，coverage 0.980970。重复 key、非法 lifecycle residual、terminal nonmissing 均为 0，Matrix/Universe/raw/key hashes 全绑定，Manifest clean/complete/pass。`labels_v2_ready=true`，其后的 Pairwise IC v2 结果以上方最新条目为准。

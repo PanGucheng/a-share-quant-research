@@ -45,6 +45,7 @@ def main() -> int:
     assert bool(flags["corrected_weights_ready"])
     assert bool(flags["score_component_policy_ready"])
     assert bool(flags["selection_mutation_ready"])
+    assert bool(flags["corrected_score_ready"])
     assert bool(flags["research_formula_accuracy_ready"])
     assert bool(flags["model_research_ready"])
     for field in [

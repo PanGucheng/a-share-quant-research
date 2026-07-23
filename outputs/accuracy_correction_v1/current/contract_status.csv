@@ -15,6 +15,7 @@ corrected_allowlist_ready,pass,True,True,critical,Corrected 45/46/52 split-speci
 corrected_weights_ready,pass,True,True,critical,Equal and stability weights are split-scoped normalized hash-frozen and consume only corrected allowlists without test fields.
 score_component_policy_ready,pass,True,True,critical,Development-only audit froze a shared 5-component/10-percent policy with reject-below-threshold semantics and zero outer-test rows.
 selection_mutation_ready,pass,True,True,critical,All 36 outer-test mutations preserve development projections and five corrected selection payload hashes; metamorphic contracts pass.
+corrected_score_ready,pass,True,True,critical,1471764 prediction-only score rows are deterministically materialized from frozen PR6 inputs with complete policy coverage and no outcomes.
 research_formula_accuracy_ready,pass,True,True,critical,PR6 research formulas lifecycle materialization selection chain weights and score policy are corrected with clean lineage.
 execution_semantics_accuracy_ready,pass,False,False,critical,Execution field timing fees and valuation are not yet corrected.
 model_research_ready,pass,True,True,critical,Corrected research inputs satisfy research-only readiness; repository policy still blocks all model training until execution accuracy is complete.

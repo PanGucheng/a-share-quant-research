@@ -38,6 +38,8 @@
   约 532 万 development-only 日期—股票行的组件完整性审计；冻结 5 个且 10% 的共同门槛、拒绝/标记重归一化语义和政策哈希。
 - `outputs/selection_mutation_contract_v2/current/`
   corrected selection chain 的 36 个 outer-test mutations 与 Alpha101/lifecycle metamorphic contracts；五类 selection payload hash 全部不变。
+- `outputs/split_transparent_score_v2/current/`
+  仅按 PR #6 冻结的 Matrix v4、weights、score policy 与 mutation proof 物化的 1,471,764 行 prediction-only score。
 - `PR5A_MODEL_INPUT_PROTOCOL_HANDOFF_V1.md`
   延后的模型输入协议参考。只能在 PR #6/#7 全部门禁通过后重新启用，不能直接采用当前已被替代的 allowlist、score 或 OOS execution。
 - `SELECTION_HOLDOUT_INTEGRITY_AND_MODEL_PLAN_V1.md`

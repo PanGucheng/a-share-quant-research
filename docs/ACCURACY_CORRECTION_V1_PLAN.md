@@ -505,6 +505,8 @@ PR #7 只读取 PR #6 已冻结的 split-specific score、`transparent_score_pol
 
 实施澄清（2026-07-23）：PR #6 已冻结 allowlist、weights、score policy 与 mutation proof，但没有物化 outer-test score 文件。PR #7 的第一个信号步骤允许按这些已冻结输入确定性物化 score；该步骤必须逐哈希绑定 PR #6 产物，不得更改任何研究决策，并且必须在 Exchange、收益或 NAV 读取之前完成。它属于 frozen-input materialization，不属于重新选因子或修改信号政策。
 
+实施回执：`split_transparent_score_v2:fc2080f0...` 已按上述边界物化 1,471,764 行 prediction-only score，覆盖 120/124/124 个 test 日期与两种透明方法；46 个 Matrix v4 分区、score policy 与 mutation proof 的 hash 均通过，未读取或输出任何收益/NAV。
+
 ### 6.2 Date-aware fee schedule
 
 新增按证券类型和生效日期解析的费率表，至少分项记录佣金、最低佣金、卖出印花税、过户费和滑点。2024-08 之后的当前 OOS 不得再使用 0.001 印花税。费率解析结果进入 resolved config、订单成本明细和 cache key。
