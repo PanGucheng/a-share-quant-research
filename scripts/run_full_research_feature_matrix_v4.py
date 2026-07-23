@@ -654,6 +654,12 @@ def main() -> int:
                 *(resolve(config[key]) for key in manifest_keys),
                 approval_manifest_path,
             ],
+            universe_artifact_id=manifests["universe_manifest"][
+                "universe_artifact_id"
+            ],
+            factor_catalog_id=manifests["factor_catalog_manifest"][
+                "factor_catalog_id"
+            ],
             factor_frame_id=factor_frame_id,
             start_date=config["start_date"],
             end_date=config["end_date"],
