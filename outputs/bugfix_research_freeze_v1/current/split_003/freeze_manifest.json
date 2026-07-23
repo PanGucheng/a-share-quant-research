@@ -1,8 +1,8 @@
 {
   "allowlist_sha256": "85470aa9f42ddd4970f849b32208d3f0d0ee13587f5ab45aa55c88f509db1f5c",
-  "code_commit_sha": "f8e526a9581503c083d60ccfe5cb81de44a4c987",
+  "code_commit_sha": "5a364e1f725e923849d162f84daab958ef82a6e7",
   "execution_config_component_hashes": {
-    "exchange_adapter_source": "3cd767f31dfcf409dac56c91ed6a2e531dd02573934f0cf801612c410467bd5a",
+    "exchange_adapter_source": "260ff3a3b2a75d64cd84d38fe143075949bf921d1de1d66d923916c3c64f9f32",
     "execution_config": "4678e6b0e4cba3aa49f0ed5211db52a1215f64479e43ccaabafae536fa639542",
     "fee_schedule": "2744221fcf071ebf9306d74136e85ae1f00fde944b4711aed7f1ff7590ef431e",
     "field_timing": "054b8710317ef8836bef94b329243128731bbf4eb9b27d3747aabf400836a878",
@@ -10,10 +10,10 @@
     "runner_source": "18237969d2b4fdfc5de9f17db01197976cb926f7357610db03882c15baa74a06",
     "trading_rules": "c4a305cf2c85ec4b15c13338e24eb47ac87d4703aa688d3d72adb0fdfa042d2a"
   },
-  "execution_config_sha256": "71f8eae29741124b9fbb3749fd8eedff48d72fec156b7efff8b03d6b90b02cee",
-  "execution_source_sha256": "e21506f4e75f3fdd76bd84d8aa71b0ab3c2c90b920270fce9754fc6834aa98bd",
-  "freeze_id": "bugfix_research_freeze_v1:9f3b1aef952eeb94a7aaa1577fb4d8bda0f3f41836d67aa0b771a9497076ed1b",
-  "freeze_timestamp": "2026-07-23T06:55:16.908270+00:00",
+  "execution_config_sha256": "6d610437b5143bae52700cd6959f3ad8b8b848c4d5182b60888ac57066fcfe3b",
+  "execution_source_sha256": "846046c364af737761e3b2b9bdd1715daf32b3788aeb18f49b9cf19553ab9a3a",
+  "freeze_id": "bugfix_research_freeze_v1:ec101686ba97f83c7f84a5168011c7d95c3fbae0b30f06e6997c99f459cf4969",
+  "freeze_timestamp": "2026-07-23T06:57:10.807729+00:00",
   "freeze_type": "post_observation_bugfix",
   "historical_test_already_observed": true,
   "market_cache_sha256": "c9fc766fc201b267dfbdc0813f8f0fd421bcb6e9d25cb1859455760941b742bc",
