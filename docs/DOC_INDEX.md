@@ -32,6 +32,8 @@
   三个 split 的 corrected 聚类与 45/46/52 个代表；所有来源、runtime 投影及日期集合均按哈希验证。
 - `outputs/split_specific_allowlist_v2/current/`
   由 corrected clustering 冻结的 45/46/52 split-specific allowlist；各自包含独立 payload 与 feature-order hash，模型入口仍关闭。
+- `outputs/split_transparent_weights_v2/current/`
+  corrected allowlist 的 Equal Weight / Stability Weight；六组权重分别归一化并冻结哈希，不消费 test 字段。
 - `PR5A_MODEL_INPUT_PROTOCOL_HANDOFF_V1.md`
   延后的模型输入协议参考。只能在 PR #6/#7 全部门禁通过后重新启用，不能直接采用当前已被替代的 allowlist、score 或 OOS execution。
 - `SELECTION_HOLDOUT_INTEGRITY_AND_MODEL_PLAN_V1.md`

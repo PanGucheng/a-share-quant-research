@@ -12,6 +12,7 @@ corrected_outer_fdr_ready,pass,True,True,critical,Three outer-train-only familie
 corrected_stability_ready,pass,True,True,critical,Corrected stability consumes FDR v2 without recomputation and excludes every inner/outer test date and metric.
 corrected_clustering_ready,pass,True,True,critical,Corrected split clustering binds Matrix v4 and exact development-date hashes; 45/46/52 representatives are selected with zero test rows.
 corrected_allowlist_ready,pass,True,True,critical,Corrected 45/46/52 split-specific allowlists have independent payload and feature-order hashes; model use remains disabled.
+corrected_weights_ready,pass,True,True,critical,Equal and stability weights are split-scoped normalized hash-frozen and consume only corrected allowlists without test fields.
 research_formula_accuracy_ready,pass,False,False,critical,Research formulas and lifecycle-clean materialization are not yet corrected.
 execution_semantics_accuracy_ready,pass,False,False,critical,Execution field timing fees and valuation are not yet corrected.
 model_research_ready,pass,False,False,critical,Research model inputs are not currently eligible.
