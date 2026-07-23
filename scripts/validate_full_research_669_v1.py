@@ -85,8 +85,12 @@ def main() -> int:
     ).iloc[0]
     assert bool(correction["selection_holdout_integrity_ready"])
     assert bool(correction["model_entry_hard_stop_active"])
-    assert not bool(correction["research_formula_accuracy_ready"])
-    assert not bool(correction["execution_semantics_accuracy_ready"])
+    assert bool(correction["research_formula_accuracy_ready"])
+    assert bool(correction["execution_semantics_accuracy_ready"])
+    assert bool(correction["market_cache_v2_ready"])
+    assert int(correction["future_market_field_count"]) == 0
+    assert bool(correction["stale_policy_valid"])
+    assert not bool(correction["authoritative_oos_execution_ready"])
     assert not bool(correction["core_model_ready"])
     assert not bool(correction["pr5_model_training_ready"])
     print(

@@ -49,9 +49,6 @@ def main() -> int:
     assert bool(flags["research_formula_accuracy_ready"])
     assert bool(flags["model_research_ready"])
     for field in [
-        "execution_semantics_accuracy_ready",
-        "market_cache_v2_ready",
-        "stale_policy_valid",
         "authoritative_oos_execution_ready",
         "core_model_ready",
         "pr5_model_training_ready",
@@ -59,13 +56,19 @@ def main() -> int:
         "unbiased_final_estimate",
     ]:
         assert not bool(flags[field]), field
-    assert int(flags["future_market_field_count"]) > 0
+    for field in [
+        "execution_semantics_accuracy_ready",
+        "market_cache_v2_ready",
+        "stale_policy_valid",
+    ]:
+        assert bool(flags[field]), field
+    assert int(flags["future_market_field_count"]) == 0
     assert bool(flags["model_entry_hard_stop_active"])
     assert bool(flags["historical_test_already_observed"])
     assert flags["selection_integrity_status"] == "ready"
     assert (
         flags["accuracy_correction_status"]
-        == "research_ready_execution_correction_active"
+        == "research_and_execution_accuracy_implemented_authoritative_oos_blocked"
     )
 
     selections = pd.read_csv(resolve(config["selection_status"]))
@@ -82,7 +85,10 @@ def main() -> int:
             "split_specific_accuracy_corrected_allowlists_v2"
         )
     ].iloc[0]
-    assert corrected["selection_status"] == "research_accuracy_ready_execution_correction_active"
+    assert (
+        corrected["selection_status"]
+        == "research_and_execution_accuracy_ready_authoritative_oos_blocked"
+    )
     assert not bool(corrected["model_input_allowed"])
     assert int(corrected["representative_count"]) == 143
 

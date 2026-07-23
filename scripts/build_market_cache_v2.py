@@ -264,6 +264,7 @@ def main() -> int:
             resolve(config["raw_market_manifest"]),
         ]
         score_manifest = load_artifact_manifest(input_manifests[0])
+        state_manifest = load_artifact_manifest(input_manifests[1])
         write_stage_artifact_manifest(
             project_root=PROJECT_ROOT,
             stage_id="market_cache_v2",
@@ -272,6 +273,10 @@ def main() -> int:
             output_files=[publisher.path(name) for name in COMPACT_OUTPUTS if name != "artifact_manifest.json"],
             code_state=code_state,
             input_manifest_paths=input_manifests,
+            # The historical raw snapshot carries the superseded v1 universe
+            # identity.  Market Cache v2 is keyed by the PIT state artifact,
+            # whose v2 universe identity is the execution authority.
+            universe_artifact_id=state_manifest["universe_artifact_id"],
             factor_frame_id=score_manifest["factor_frame_id"],
             split_manifest_id=score_manifest["split_manifest_id"],
             start_date=state["datetime"].min(),
