@@ -45,7 +45,21 @@ def main() -> int:
     issues = [issue for manifest, path in zip(manifests, manifest_paths) for issue in validate_manifest_outputs(manifest, path.parent)]
     if issues or any(manifest["artifact_status"] != "pass" for manifest in manifests):
         raise ValueError(f"transparent-weight upstream is stale or blocked: {issues}")
-    allowlist = pd.read_csv(resolve(config["split_allowlist"]))
+    allowlist_path = resolve(config["split_allowlist"])
+    expected_allowlist_hash = manifests[0]["output_file_hashes"].get(allowlist_path.name)
+    if not expected_allowlist_hash or file_sha256(allowlist_path) != expected_allowlist_hash:
+        raise ValueError("split allowlist is not bound by its manifest")
+    canary_manifest_path = config.get("canary_manifest")
+    canary_gate_observed = "not_required"
+    if canary_manifest_path:
+        canary_manifest_resolved = resolve(canary_manifest_path)
+        canary_manifest = load_artifact_manifest(canary_manifest_resolved)
+        canary_issues = validate_manifest_outputs(canary_manifest, canary_manifest_resolved.parent)
+        canary_contract = pd.read_csv(resolve(config["canary_contract"]))
+        if canary_issues or canary_manifest["artifact_status"] != "pass" or not canary_contract["status"].eq("pass").all():
+            raise ValueError("corrected weight canary is stale, blocked, or incomplete")
+        canary_gate_observed = "pass"
+    allowlist = pd.read_csv(allowlist_path)
     selected_outer_splits = [str(value) for value in config.get("selected_outer_splits", [])]
     if selected_outer_splits:
         allowlist = allowlist.loc[allowlist["outer_split_id"].astype(str).isin(selected_outer_splits)].copy()
@@ -62,6 +76,7 @@ def main() -> int:
     maximum_weight = float(weight_manifest["maximum_weight"].max())
     contracts = pd.DataFrame(
         [
+            contract_row("canary_gate_passed", canary_gate_observed in {"not_required", "pass"}, canary_gate_observed, "pass_or_not_required"),
             contract_row("outer_split_count", weight_manifest["outer_split_id"].nunique() == expected_splits, weight_manifest["outer_split_id"].nunique(), expected_splits),
             contract_row("method_count_per_split", weight_manifest.groupby("outer_split_id")["method"].nunique().eq(expected_methods).all(), weight_manifest.groupby("outer_split_id")["method"].nunique().tolist(), expected_methods),
             contract_row("minimum_components", weight_manifest["factor_count"].ge(int(config["minimum_components"])).all(), weight_manifest["factor_count"].tolist(), f">={config['minimum_components']}"),
@@ -71,6 +86,7 @@ def main() -> int:
             contract_row("direction_frozen", weights["direction"].isin([-1, 1]).all(), sorted(weights["direction"].unique()), [-1, 1]),
             contract_row("holdout_clean", weight_manifest["holdout_clean"].all(), bool(weight_manifest["holdout_clean"].all()), True),
             contract_row("test_fields_consumed", not any(str(column).startswith("test_") or "oos" in str(column).lower() for column in allowlist), [], []),
+            contract_row("allowlist_hash_bound", file_sha256(allowlist_path) == expected_allowlist_hash, file_sha256(allowlist_path), expected_allowlist_hash),
         ]
     )
     receipts = pd.DataFrame(
@@ -93,7 +109,7 @@ def main() -> int:
         contracts.to_csv(publisher.path("contract_status.csv"), index=False, encoding="utf-8-sig")
         publisher.path("resolved_config.json").write_text(json.dumps(config, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
         publisher.path("transparent_weights_report.md").write_text(
-            "# Split-Specific Transparent Weights V1\n\n"
+            "# Corrected Split-Specific Transparent Weights\n\n"
             + f"- Status: `{'pass' if ready else 'blocked'}`\n"
             + f"- Outer splits / methods / weight rows: `{expected_splits}` / `{expected_methods}` / `{len(weights)}`\n"
             + "- Equal and stability weights consume only the split-specific holdout-clean allowlist and its development evidence.\n"
@@ -103,7 +119,7 @@ def main() -> int:
         files = [publisher.path(name) for name in CONTROLLED if name != "artifact_manifest.json"]
         write_stage_artifact_manifest(
             project_root=PROJECT_ROOT,
-            stage_id="split_transparent_weights_v1",
+            stage_id=str(config.get("stage_id", "split_transparent_weights_v1")),
             config=config,
             output_dir=publisher.staging_dir,
             output_files=files,

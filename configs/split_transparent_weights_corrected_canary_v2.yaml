@@ -1,0 +1,15 @@
+schema_version: 1
+stage_id: split_transparent_weights_v2
+profile: full_research
+profile_name: full_research
+profile_type: full_research
+research_run_family_id: full_research_factor_669_v1
+split_allowlist: outputs/split_specific_allowlist_v2/current/split_allowlist.csv
+selected_outer_splits: [split_001]
+methods: [equal_weight, stability_weight]
+minimum_components: 2
+maximum_factor_weight: 0.10
+expected_outer_splits: 3
+input_manifests:
+  - outputs/split_specific_allowlist_v2/current/artifact_manifest.json
+output_dir: outputs/split_transparent_weights_v2/canary
