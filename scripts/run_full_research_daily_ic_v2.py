@@ -257,6 +257,12 @@ def main() -> int:
     comparison["absolute_difference"] = (
         comparison["rank_ic_v1"] - comparison["rank_ic_v2"]
     ).abs()
+    comparison["v1_missing_v2_present"] = (
+        comparison["rank_ic_v1"].isna() & comparison["rank_ic_v2"].notna()
+    )
+    comparison["v1_present_v2_missing"] = (
+        comparison["rank_ic_v1"].notna() & comparison["rank_ic_v2"].isna()
+    )
     difference = (
         comparison.groupby("factor", as_index=False)
         .agg(
@@ -264,14 +270,16 @@ def main() -> int:
             changed_rows=("absolute_difference", lambda value: int(value.gt(1e-12).sum())),
             max_absolute_difference=("absolute_difference", "max"),
             mean_absolute_difference=("absolute_difference", "mean"),
-            v1_missing_v2_present=(
-                "rank_ic_v1",
-                lambda value: int(
-                    value.isna().sum()
-                ),
-            ),
+            v1_missing_v2_present=("v1_missing_v2_present", "sum"),
+            v1_present_v2_missing=("v1_present_v2_missing", "sum"),
         )
     )
+    difference["v1_missing_v2_present"] = difference[
+        "v1_missing_v2_present"
+    ].astype(int)
+    difference["v1_present_v2_missing"] = difference[
+        "v1_present_v2_missing"
+    ].astype(int)
     validation = formula_validation()
     valid_daily = daily.loc[daily["rank_ic"].notna()]
     min_pair = int(valid_daily["pair_count"].min()) if not valid_daily.empty else 0

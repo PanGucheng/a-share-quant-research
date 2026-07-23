@@ -56,3 +56,22 @@ def test_pairwise_ic_is_row_order_invariant() -> None:
         frame.iloc[::-1], ["factor"], label_column="label", minimum_cross_section=2
     )
     assert first.loc[0, "rank_ic"] == second.loc[0, "rank_ic"]
+
+
+def test_missing_transition_requires_opposite_side_present() -> None:
+    comparison = pd.DataFrame(
+        {
+            "rank_ic_v1": [np.nan, np.nan, 0.1],
+            "rank_ic_v2": [np.nan, 0.2, np.nan],
+        }
+    )
+    v1_missing_v2_present = (
+        comparison["rank_ic_v1"].isna()
+        & comparison["rank_ic_v2"].notna()
+    )
+    v1_present_v2_missing = (
+        comparison["rank_ic_v1"].notna()
+        & comparison["rank_ic_v2"].isna()
+    )
+    assert int(v1_missing_v2_present.sum()) == 1
+    assert int(v1_present_v2_missing.sum()) == 1
