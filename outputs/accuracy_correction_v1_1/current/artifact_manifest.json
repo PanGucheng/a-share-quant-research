@@ -1,0 +1,42 @@
+{
+  "artifact_id": "accuracy_correction_v1_1:f958d4c882f4e395a24e69cf910b2b77408803bbaae6a3f31b48883c3501b08f",
+  "artifact_status": "pass",
+  "blocked_reason": "",
+  "code_commit_sha": "2d367d90c931effb49bebaa348fd61f5fb15b867",
+  "code_diff_sha256": "",
+  "code_dirty": false,
+  "config_sha256": "108c1678b51b97d7a25225c474c46894fd76d19dbf51b513cc9b05edcd740d7f",
+  "created_at": "2026-07-23T16:51:32.624720+00:00",
+  "end_date": "2026-02-04",
+  "factor_catalog_id": "factor-catalog:8c031a09892fc915ac45201942f563925a9bab617e60fce5ecbbe274a51a02e1",
+  "factor_frame_id": "factor-frame-v4:f1e93a2428446673f5c873a01886a38ae9e654e5f863cf2b236040dbbf28dc3c",
+  "input_artifact_ids": [
+    "bugfix_research_freeze_v1:381253a7c9c2fedd913becee9786e128af8efa6c36a4b4464a63d5fada6e9737",
+    "execution_accuracy_correction_v1:74975242ff112dcb850de4946b0c5ab149e230bb4c4a12791fc6459177e51fb2",
+    "instrument_state_v1:0dcacd89dabf315043f3fb69ebea756370f8f489843346c5028927b78c51c9d7",
+    "market_cache_v2:43a4f4f175f07f8cd9a80d40e73a8f566ed98deb249fa083eccd7c3e87759e89",
+    "split_transparent_score_v2:82be8a32b7a84c401dcd27c630e93838a018949300c29f9fd405b70e1ec328c3"
+  ],
+  "lineage_status": "complete",
+  "missing_lineage_fields": [],
+  "output_file_hashes": {
+    "accuracy_correction_v1_1_report.md": "351e55cbbd7d5f58d55a63d4499c3bd3f39a7cb54e99345dad5fdb03ab589cb6",
+    "artifact_index.csv": "7b1c07d8477825bb4ef4a69009cd235b3094c2d4a6469c85f5ae9b568c755021",
+    "contract_status.csv": "7802e8af779ca628770c139fbc92ea01305da8656afe4c044d9ec139a65a60fd",
+    "lineage_edges.csv": "87552e46323d165c372dcbbedcf940dee8b15ce8fe642839f2f85712d8d1bb19",
+    "lineage_issues.csv": "720e68bcc1d6aab0b0efe1a510af114eeefe6f358d40c03367e7cf5f0e68877a",
+    "readiness_summary.csv": "cf037a5d7a123b544ab21ab2a8b9a61895c439f217fc281deb53b5e2b3efe221",
+    "resolved_config.json": "7a830dcdf3e99a05ab07545414d302d5902dd546409c27912c4bac35f6a04421",
+    "score_business_payload_check.csv": "92b5f93a069867cc23973cfd2029856a2d9537f2a9d0c23e8f17be650615066e"
+  },
+  "producer_run_id": "20260723T165132Z-b40473b5",
+  "profile_name": "full_research",
+  "profile_type": "full_research",
+  "research_run_family_id": "full_research_factor_669_v1",
+  "run_id": "20260723T165132Z-b40473b5",
+  "schema_version": 2,
+  "split_manifest_id": "split-manifest:75ccf0f37e85422729d54aef5a363f68d4f9b3daed3d42a87eb120e6b5aefe0e",
+  "stage_id": "accuracy_correction_v1_1",
+  "start_date": "2024-08-01",
+  "universe_artifact_id": "universe-v2:a7875d74d5119230ab5576cb245fe8b389e0dd3030606299dad6d1f0e147ccd2"
+}
