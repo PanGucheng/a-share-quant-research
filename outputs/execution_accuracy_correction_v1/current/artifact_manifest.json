@@ -1,0 +1,40 @@
+{
+  "artifact_id": "execution_accuracy_correction_v1:5ced42494e5bc1fbcda476fa0199268b799eba32e4f49003a486f5420073fe44",
+  "artifact_status": "pass",
+  "blocked_reason": "",
+  "code_commit_sha": "542b353fbb75b59894bd29dc274bbd4131e2fd7b",
+  "code_diff_sha256": "",
+  "code_dirty": false,
+  "config_sha256": "65a05f58ad9e91807a3e36faf381afeba896d04bc267c2d240c691b2584244e9",
+  "created_at": "2026-07-23T07:15:27.601694+00:00",
+  "end_date": "2026-02-04",
+  "factor_catalog_id": "factor-catalog:8c031a09892fc915ac45201942f563925a9bab617e60fce5ecbbe274a51a02e1",
+  "factor_frame_id": "factor-frame-v4:f1e93a2428446673f5c873a01886a38ae9e654e5f863cf2b236040dbbf28dc3c",
+  "input_artifact_ids": [
+    "bugfix_research_freeze_v1:92dd81660932d540f2d8eaa088c09f1becf41c69833feb755f7dd79b143a1a05",
+    "market_cache_v2:af5a003740513ef04a2eb42e8eed17e4263bafebcb0706f548a9391c853ce26c",
+    "split_transparent_score_v2:fc2080f082503c77e0f4f112430e77a5e385ce130a6e54a366baf73cde8d836b"
+  ],
+  "lineage_status": "complete",
+  "missing_lineage_fields": [],
+  "output_file_hashes": {
+    "contract_status.csv": "08721ea8620532e67aa4b64365235e94b83159765f2f28cebd38f67df3386f94",
+    "execution_accuracy_report.md": "8ead9cf81f8ab8624cfb42a9905e359112477fe5e83ec913cb5b88b30cfc4ebc",
+    "execution_artifacts.csv": "67ddbdb81afd3de9db023cc0834377602c88d1daa7ae07147645b5072db85c3d",
+    "execution_summary.csv": "566e1b4910a9ca340be3d6230587704eeeae7ffe76b27113c6024ff606513055",
+    "execution_summary_comparison.csv": "961474875733e2f1cf1773cfaf4ea5caa1d7279f0d3d1790f45d6d209f1199a2",
+    "fee_schedule_usage.csv": "55863b6e840495c72908a9d513987db21def590826a9be7c9041eb0056c81184",
+    "old_vs_new_attribution.csv": "a09417d0d1d9bbfa1c748f27c368dc2f7b61c2cc29147617de247e92de750f60",
+    "resolved_config.json": "0327158b0306a70c90d5d207bab69b3d4731c0371be12beed28af81c6fe04932"
+  },
+  "producer_run_id": "20260723T071527Z-b4ad098e",
+  "profile_name": "full_research",
+  "profile_type": "full_research",
+  "research_run_family_id": "full_research_factor_669_v1",
+  "run_id": "20260723T071527Z-b4ad098e",
+  "schema_version": 2,
+  "split_manifest_id": "split-manifest:75ccf0f37e85422729d54aef5a363f68d4f9b3daed3d42a87eb120e6b5aefe0e",
+  "stage_id": "execution_accuracy_correction_v1",
+  "start_date": "2024-08-01",
+  "universe_artifact_id": null
+}

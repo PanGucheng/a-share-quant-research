@@ -1,0 +1,22 @@
+﻿check_name,status,observed_value,required_value,severity,reason
+frozen_score_hash_valid,pass,beb4e4ad738e263e72bb75ead4d948f7a44e7c086bc56b310a56a823a6adecbf,beb4e4ad738e263e72bb75ead4d948f7a44e7c086bc56b310a56a823a6adecbf,critical,
+signal_policy_unchanged_in_execution_pr,pass,True,True,critical,
+bugfix_freeze_valid,pass,3,3,critical,
+date_aware_fee_schedule_applied,pass,1,>0 resolved schedules,critical,
+future_market_field_count,pass,0,0,critical,
+no_future_price_execution,pass,previous signal -> current open,lag=1,critical,
+no_valuation_bfill,pass,True,True,critical,
+stale_policy_valid,pass,20,20,critical,
+market_cache_v2_ready,pass,f9151b5d1bc7070e5d6a167df9fc5eb1d8683805f08de6fbee4bf1ea40d2b99a,semantic-bound cache key,critical,
+cash_non_negative,pass,17.36003841515776,>=0,critical,
+accounting_conservation,pass,5.587935447692871e-09,<=1e-6,critical,
+unknown_execution_difference_count,pass,0,0,critical,
+terminal_event_approximations_reported,pass,10,explicit count,critical,
+tradability_constraints_applied,pass,0,0,critical,
+valuation_fallback_never_filled_as_trade,pass,0,0,critical,
+dynamic_lot_rules_valid,pass,main_error=1.4551915228366852e-11;star_invalid=0,zero violations,critical,
+complete_trading_calendar,pass,730,730,critical,
+instrument_state_pit_valid,blocked,0,all market rows authoritative,capability,Historical state coverage is insufficient; corrected evidence remains non-authoritative.
+price_limit_rule_resolved,blocked,historical ST unavailable,authoritative PIT rules,capability,Historical state coverage is insufficient; corrected evidence remains non-authoritative.
+terminal_event_policy_valid,blocked,event feed unavailable,complete,capability,Historical state coverage is insufficient; corrected evidence remains non-authoritative.
+authoritative_oos_execution_ready,blocked,False,True,capability,Historical state coverage is insufficient; corrected evidence remains non-authoritative.

@@ -1,0 +1,9 @@
+﻿category,status,detail
+signal_change,classified,PR6 corrected split-specific scores replace test-influenced historical signals; numerical deltas are in execution_summary_comparison.csv.
+fee_schedule,classified,Date-aware 0.0005 sell stamp tax applies throughout corrected OOS.
+price_limit_semantics,classified_non_authoritative,Previous-close board rule replaces same-day change; historical ST state is unavailable.
+lot_rule,classified,Board-aware buy minimum and increments replace uniform 100-share assumption.
+stale_valuation,classified,No bfill; 898 cache rows exceed the 20-day policy.
+terminal_event,classified_non_authoritative,No authoritative terminal-event feed is available.
+calendar_or_cache,classified,Market Cache v2 key f9151b5d1bc7070e5d6a167df9fc5eb1d8683805f08de6fbee4bf1ea40d2b99a binds calendar and all semantic hashes.
+unknown,none,
