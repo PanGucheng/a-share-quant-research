@@ -224,7 +224,13 @@ def main() -> int:
         attribution.to_csv(publisher.path("old_vs_new_attribution.csv"), index=False, encoding="utf-8-sig")
         contract.to_csv(publisher.path("contract_status.csv"), index=False, encoding="utf-8-sig")
         publisher.path("resolved_config.json").write_text(
-            json.dumps({"config": config, "run_config": run_config, "market_cache_key": cache_doc["cache_key"]}, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
+            json.dumps(
+                {"config": config, "run_config": run_config, "market_cache_key": cache_doc["cache_key"]},
+                ensure_ascii=False,
+                indent=2,
+                sort_keys=True,
+                default=str,
+            ) + "\n",
             encoding="utf-8",
         )
         publisher.path("execution_accuracy_report.md").write_text(
