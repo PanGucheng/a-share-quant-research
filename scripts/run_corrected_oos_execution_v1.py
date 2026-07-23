@@ -58,7 +58,7 @@ def main() -> int:
         raise ValueError("corrected score runtime hash mismatch")
     score = pd.read_parquet(score_path)
     score["datetime"] = pd.to_datetime(score["datetime"]).dt.normalize()
-    market_dir = resolve(config["market_cache_output"] + ("/canary" if args.canary else ""))
+    market_dir = resolve(config["market_cache_output"])
     cache_rows = pd.read_csv(market_dir / "cache_artifacts.csv")
     cache_doc = json.loads((market_dir / "cache_key.json").read_text(encoding="utf-8"))
     freeze_dir = resolve(config["bugfix_freeze_output"])
@@ -128,6 +128,12 @@ def main() -> int:
         if file_sha256(market_path) != str(cache_row.iloc[0]["sha256"]):
             raise ValueError(f"market cache hash mismatch for {split_id}")
         market = validate_market_frame(pd.read_parquet(market_path))
+        if args.canary:
+            canary_dates = sorted(market["datetime"].unique())[: int(config["canary"]["trading_days"])]
+            canary_instruments = sorted(market["instrument"].unique())[: int(config["canary"]["instruments"])]
+            market = market.loc[
+                market["datetime"].isin(canary_dates) & market["instrument"].isin(canary_instruments)
+            ].copy()
         split_score = score.loc[score["outer_split_id"].astype(str).eq(split_id)].copy()
         if args.canary:
             dates = sorted(market["datetime"].unique())
