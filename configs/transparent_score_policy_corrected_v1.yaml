@@ -1,0 +1,27 @@
+schema_version: 1
+profile: full_research
+profile_name: full_research
+profile_type: full_research
+research_run_family_id: full_research_factor_669_v1
+factor_weights: outputs/split_transparent_weights_v2/current/factor_weights_by_split.csv
+weight_manifest: outputs/split_transparent_weights_v2/current/weight_manifest.csv
+factor_partition_status: outputs/full_research_feature_matrix_v4/current/partition_status.csv
+allowed_dates: outputs/development_robustness_split_v1/full_research_669/outer_development_allowed_dates.csv
+outer_date_assignments: outputs/purged_walk_forward_v1/full_research_669/date_assignments.csv
+expected_outer_splits: 3
+methods: [equal_weight, stability_weight]
+policy:
+  minimum_component_count: 5
+  minimum_component_fraction: 0.10
+  below_threshold_action: reject_score
+  above_threshold_missing_action: renormalize_and_flag
+runtime_audit: outputs/transparent_score_policy_v1/runtime/component_audit.parquet
+canary_manifest: outputs/transparent_score_policy_v1/canary/artifact_manifest.json
+canary_contract: outputs/transparent_score_policy_v1/canary/contract_status.csv
+input_manifests:
+  - outputs/split_transparent_weights_v2/current/artifact_manifest.json
+  - outputs/full_research_feature_matrix_v4/current/artifact_manifest.json
+  - outputs/development_robustness_split_v1/full_research_669/artifact_manifest.json
+  - outputs/purged_walk_forward_v1/full_research_669/artifact_manifest.json
+  - outputs/transparent_score_policy_v1/canary/artifact_manifest.json
+output_dir: outputs/transparent_score_policy_v1/current
