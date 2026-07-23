@@ -1,6 +1,6 @@
 {
   "allowlist_sha256": "6a3bcf128d2a791f9e2e741d1983597c4814810e533a9ca5107b2076a4d01434",
-  "code_commit_sha": "5232cbbeedf25f3d4fe97da12fcb52cafe444aed",
+  "code_commit_sha": "4bff04fb7089c112c7d5c706acc160335ce773a9",
   "execution_config_component_hashes": {
     "contracts_source": "49a18457c088d3ef41b785f44bebee6d11e6178ad900343b9a9802485da72c08",
     "exchange_adapter_source": "e47c5cf348f0c6ffac26de3dc057d50a5a172eca667b655090a36693b4a45df2",
@@ -13,11 +13,11 @@
   },
   "execution_config_sha256": "bbae61d90d1d3a439c3240272cf04a1fb66f76c2ce4618c20e48d3f213b897be",
   "execution_source_sha256": "1cf091bda317fb2bc9828d4037388ec0fcfb6e7f5564b59274152148ed62a7d3",
-  "freeze_id": "bugfix_research_freeze_v1:f1560c43ce96579395eb9614511a996407325b33619f356c27841fbbe25e8f99",
-  "freeze_timestamp": "2026-07-23T07:13:15.852062+00:00",
+  "freeze_id": "bugfix_research_freeze_v1:101c13c13b6d4f8da0ddeb92b93bb68b38ee496f1b1894eeb7c0caadde99bbdd",
+  "freeze_timestamp": "2026-07-23T07:22:19.088921+00:00",
   "freeze_type": "post_observation_bugfix",
   "historical_test_already_observed": true,
-  "market_cache_sha256": "f9151b5d1bc7070e5d6a167df9fc5eb1d8683805f08de6fbee4bf1ea40d2b99a",
+  "market_cache_sha256": "68864351e6fb50c7ab793619b31943dbac651469bc0750e8253c1a690dfbc0f4",
   "outer_split_id": "split_002",
   "schema_version": 1,
   "score_artifact_sha256": "beb4e4ad738e263e72bb75ead4d948f7a44e7c086bc56b310a56a823a6adecbf",
