@@ -1,0 +1,40 @@
+{
+  "artifact_id": "factor_multiple_testing_v2:11dfcbda796b5bd78b2b9fe26c3efd480aedf9e5b05c322793c22502974a25a8",
+  "artifact_status": "pass",
+  "blocked_reason": "",
+  "code_commit_sha": "81b7a31aaa6fc188de9aa9663e38a0b9b40380cc",
+  "code_diff_sha256": "",
+  "code_dirty": false,
+  "config_sha256": "fa8ab3279212cbef0de1ce2003045e2e172332889278b5ea1e92b9c1e16fd26c",
+  "created_at": "2026-07-23T05:04:07.252569+00:00",
+  "end_date": "2024-11-28",
+  "factor_catalog_id": "factor-catalog:8c031a09892fc915ac45201942f563925a9bab617e60fce5ecbbe274a51a02e1",
+  "factor_frame_id": "factor-frame-v4:f1e93a2428446673f5c873a01886a38ae9e654e5f863cf2b236040dbbf28dc3c",
+  "input_artifact_ids": [
+    "bootstrap_gap_sensitivity_v1:e73494f6dab4210a76a9315a5ac36e7d3b572095e7d9d4958b5f9a16d67bf0db",
+    "selection_input_projection_v2:4bec5868f5868f004da8c13357690776fcca0d59dee72235c0e63b4e65b4b3d1"
+  ],
+  "lineage_status": "complete",
+  "missing_lineage_fields": [],
+  "output_file_hashes": {
+    "contract_status.csv": "79afe92c9bc2aefafaf61f0418de84bb92661df4bc2bc73c99e61fc8407839a1",
+    "factor_hypothesis_tests.csv": "c5666f1d2c4eff629a38a20c3fbdf5c0c0c5824eaa3623b3596e4612158d710e",
+    "fdr_results.csv": "c5666f1d2c4eff629a38a20c3fbdf5c0c0c5824eaa3623b3596e4612158d710e",
+    "input_receipts.csv": "4a19bd54ced5d221f4ef01c29b21bdc9da2703ce2d21c83084878c03662096f8",
+    "multiple_testing_report.md": "be6d1e94634b660686fbf0f9c656aa5043d2c16271ac11a3dfaedb187a7bd10b",
+    "null_simulation_results.csv": "06209df2296be69583b4b401a513ba907b40f67ab6223e48d93732317e7aae81",
+    "rejected_hypotheses.csv": "cdee2cd8cf4261c823efc042b2defabdff684a443485333a394a0594b04754df",
+    "resolved_config.json": "dce78a9944e68735b9688dee41b24f7f2b087cfcb7bcad571f182d60aae38ea5",
+    "test_family_summary.csv": "61b5afd9eacdd2a8d7c0c8c64746cd6322da6359737efeae5ca59f2756e89879"
+  },
+  "producer_run_id": "20260723T050407Z-3b5cc16a",
+  "profile_name": "full_research",
+  "profile_type": "full_research",
+  "research_run_family_id": "full_research_factor_669_v1",
+  "run_id": "20260723T050407Z-3b5cc16a",
+  "schema_version": 2,
+  "split_manifest_id": "split-manifest:75ccf0f37e85422729d54aef5a363f68d4f9b3daed3d42a87eb120e6b5aefe0e",
+  "stage_id": "factor_multiple_testing_v2",
+  "start_date": "2021-02-01",
+  "universe_artifact_id": "universe-v2:a7875d74d5119230ab5576cb245fe8b389e0dd3030606299dad6d1f0e147ccd2"
+}
