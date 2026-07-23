@@ -1,0 +1,5 @@
+﻿check_name,status,observed_value,required_value,finding
+community_price_factor_reconstruction,pass,1.0,>=0.99,Core raw close agrees after dividing provider price by factor.
+community_vwap_reconstruction,pass,1.52587890625e-05,<=0.02 CNY,amount*1000/(volume*factor*100) reconstructs raw VWAP.
+community_volume_unit,p0_correction_required,provider_volume*factor*100=shares,explicit shares,"Market Cache v2 currently omits *100, under-scaling participation capacity by 100x."
+community_amount_unit,p1_correction_required,provider_amount*1000=CNY,explicit CNY,Market Cache v2 currently retains thousands-CNY values; execution does not consume amount.

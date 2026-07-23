@@ -1,0 +1,19 @@
+﻿check_name,status,observed_value,required_value,severity,reason
+sample_size,pass,150,150,critical,
+source_query_receipts_complete,pass,450,450,critical,
+external_endpoint_available,pass,153,>0 successful external queries,capability,reused_snapshot
+baostock_instrument_coverage,pass,1.0,1.0,critical,
+akshare_eastmoney_instrument_coverage,blocked,0.02,>=0.95,capability,Eastmoney historical endpoint was unstable behind the active network proxy.
+raw_snapshot_hashes_recorded,pass,8,8,critical,
+unit_normalization_fixtures,pass,community volume*factor*100;amount*1000;akshare volume*100,frozen fixtures,critical,
+duplicate_normalized_keys,pass,0,0,critical,
+missing_span_detection,pass,159,explicit source-vs-union inventory,critical,
+core_raw_ohlc_reconciliation,pass,1.0,>=0.99 close tolerance match,critical,
+historical_st_available_before_open,blocked,unknown,verified,capability,BaoStock isST publication timing is not proven before-open.
+verified_historical_st_sample_target,blocked,13,>=25 instruments,capability,The deterministic canary found fewer verified ST instruments than the target.
+tradability_available_before_open,blocked,unknown,verified,capability,Free-source fields do not prove before-open availability.
+nontrading_sample_target,pass,30,>=20 instruments,capability,
+adjustment_event_timing_verified,blocked,112,official corporate-action cross-check,capability,Factor-change candidates are inventoried but official event timing is not yet machine-resolved.
+provider_not_modified,pass,True,True,critical,
+matrix_v4_unchanged,pass,full_research_feature_matrix_v4:10f6e026d5c6c13eda166f702fb2bae2e7ca76c6747bd9e9482ee482e605df1d,full_research_feature_matrix_v4:10f6e026d5c6c13eda166f702fb2bae2e7ca76c6747bd9e9482ee482e605df1d,critical,
+factor_selection_unchanged,pass,research_selection_lineage_closure_v1:abe0d942b28dfbd6ca679a8a2aee0ee83890309922b5184f5efa28d1fb842e6b,research_selection_lineage_closure_v1:abe0d942b28dfbd6ca679a8a2aee0ee83890309922b5184f5efa28d1fb842e6b,critical,

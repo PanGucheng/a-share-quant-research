@@ -1,0 +1,4 @@
+﻿left_source,right_source,left_rows,right_rows,aligned_rows,left_only_rows,right_only_rows,close_tolerance_match_rate,volume_tolerance_match_rate,amount_tolerance_match_rate,maximum_close_relative_difference
+community,baostock,52224,52593,52224,0,369,1.0,1.0,1.0,1.5201782370616583e-07
+community,akshare_eastmoney,52224,1104,1104,51120,0,1.0,1.0,1.0,1.2603386011658884e-07
+baostock,akshare_eastmoney,52593,1104,1104,51489,0,1.0,1.0,1.0,0.0
