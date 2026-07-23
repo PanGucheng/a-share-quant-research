@@ -1,4 +1,4 @@
 ﻿outer_split_id,path,rows,sha256,date_count,instrument_count,authoritative_row_count,stale_blocked_count
-split_001,E:\qlib_prj\qlib_baseline\outputs\market_cache_v2\current\runtime\split_001_market.parquet,269400,7b9738a59255312b9594d4ce77000fde50571292a0e15535527cdcb8c39477b9,120,2245,0,174
-split_002,E:\qlib_prj\qlib_baseline\outputs\market_cache_v2\current\runtime\split_002_market.parquet,294376,b9b90ac2b54b0fb8501116a627d227d51d0a5a565e51b0cf5601f53577803344,124,2374,0,525
-split_003,E:\qlib_prj\qlib_baseline\outputs\market_cache_v2\current\runtime\split_003_market.parquet,290160,49ed4b426d82ae9a23671a523003cd08481fe9a25264bb782d1ac82380c56afe,124,2340,0,199
+split_001,E:\qlib_prj\qlib_baseline\outputs\market_cache_v2\current\runtime\split_001_market.parquet,269400,feb98b8ff964bfacad190b90fb92c77c53b59b70d0b58e5c824fa5274eaf7909,120,2245,0,174
+split_002,E:\qlib_prj\qlib_baseline\outputs\market_cache_v2\current\runtime\split_002_market.parquet,294376,37bdb625b0cc230ff109f0f300d93dfcda2cc08ae28fe0ed097b18896f2d8501,124,2374,0,525
+split_003,E:\qlib_prj\qlib_baseline\outputs\market_cache_v2\current\runtime\split_003_market.parquet,290160,2da039d322efc24ce27a3bc2f50c4bd7f978d0054d64061b9432cf0432754325,124,2340,0,199
