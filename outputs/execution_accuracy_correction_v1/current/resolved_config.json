@@ -48,7 +48,7 @@
     "weight_manifest": "outputs/split_transparent_weights_v2/current/weight_manifest.csv",
     "weights_artifact_manifest": "outputs/split_transparent_weights_v2/current/artifact_manifest.json"
   },
-  "market_cache_key": "f9151b5d1bc7070e5d6a167df9fc5eb1d8683805f08de6fbee4bf1ea40d2b99a",
+  "market_cache_key": "68864351e6fb50c7ab793619b31943dbac651469bc0750e8253c1a690dfbc0f4",
   "run_config": {
     "buy_commission_rate": 0.0,
     "dynamic_lot_rules": true,

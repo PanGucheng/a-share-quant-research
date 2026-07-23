@@ -126,6 +126,8 @@ tmp/reference_repos/techfactor
 
 ## Next Work
 
+> **2026-07-23 PR #7 Execution Accuracy Correction DoD 完成：**Market Cache v2 已显式绑定 Universe v2，三个 split 共 853,936 行，future field=0、禁止估值 bfill，陈旧阈值命中 174/525/199 行。三个 post-observation bugfix freeze 在执行前冻结；corrected OOS 产生 65,582 个订单、61,626 笔成交和 730 个会计日，现金非负、会计守恒、方向性涨跌停、动态整手、费用分项和完整日历关键合同全部通过，unknown semantic difference=0。机器状态为 `research_formula_accuracy_ready=true`、`execution_semantics_accuracy_ready=true`、`market_cache_v2_ready=true`，但历史 ST、盘前停牌和 terminal-event 权威源缺失，故 `authoritative_oos_execution_ready=false`、`core_model_ready=false`、`pr5_model_training_ready=false`、`model_training_started=false`、`unbiased_final_estimate=false`。按用户边界在 PR #5 前停止。
+
 > **2026-07-23 PR #6 Research Accuracy Correction 本地 DoD 完成：**45/46/52 三份 allowlist、六组 weights 与 development-only score policy 已冻结。`selection_mutation_contract_v2:bcfb086a...` 的 36 个 outer-test IC/exposure/labels/raw mutations 均有效，但 development projection 与 FDR/stability/clustering/allowlist/weights payload hash 全部不变；Alpha101 轴重排与 lifecycle impact metamorphic contracts 同时通过。当前 `research_formula_accuracy_ready=true`，但 `execution_semantics_accuracy_ready=false`、`model_research_ready=false`、`core_model_ready=false`；下一阶段只能是 PR #7 execution accuracy，不得进入 PR #5A。
 
 > **2026-07-23 PR #6 合并、PR #7 启动：**PR #6 已 squash merge 为 `3492200`，main 上 161 tests 与 hard-stop validator 通过。研究层现在可诚实标记 `model_research_ready=true`，但 `core_model_ready=false`、`pr5_model_training_ready=false`、`model_training_started=false`。PR #7 首先按 PR #6 冻结的 allowlist/weights/score policy 确定性物化 score，不能修改研究选择；随后才实施 fee/field timing/PIT state/cache/execution，且在 PR #5 前停止。
