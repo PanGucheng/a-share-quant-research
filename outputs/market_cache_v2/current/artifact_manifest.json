@@ -1,0 +1,41 @@
+{
+  "artifact_id": "market_cache_v2:e89f54282d5be80053bc120d6d4137b6089141e01b07cae4ae1dda70a079a53a",
+  "artifact_status": "pass",
+  "blocked_reason": "",
+  "code_commit_sha": "979ecf9b31cd276459236485bb46d33469a8552f",
+  "code_diff_sha256": "",
+  "code_dirty": false,
+  "config_sha256": "e8135b8476127f47f3ae598dfb3dd11e26cea8df82f92f0397bbeed1c5be27f5",
+  "created_at": "2026-07-23T06:50:02.390234+00:00",
+  "end_date": "2026-02-04",
+  "factor_catalog_id": "factor-catalog:8c031a09892fc915ac45201942f563925a9bab617e60fce5ecbbe274a51a02e1",
+  "factor_frame_id": "factor-frame-v4:f1e93a2428446673f5c873a01886a38ae9e654e5f863cf2b236040dbbf28dc3c",
+  "input_artifact_ids": [
+    "instrument_state_v1:2940ae16fc70e99a4e8447d30ce3b5b72b8876f230bad7dd3d980676b8f4f8ba",
+    "raw_market_data_snapshot_v1:e2f213da365ea6ba4d8375c830ff32e45f78fc847b814a11aaeb9e26b49d8cd9",
+    "split_transparent_score_v2:fc2080f082503c77e0f4f112430e77a5e385ce130a6e54a366baf73cde8d836b"
+  ],
+  "lineage_status": "inconsistent",
+  "missing_lineage_fields": [
+    "inconsistent:universe_artifact_id"
+  ],
+  "output_file_hashes": {
+    "cache_artifacts.csv": "96c7d972ede69c06b6964fdea93e2f38d99d8e6b32688d108452ee2bfa0d8c83",
+    "cache_key.json": "e637f7c7ffd7521c9eece4fe8f2dd6a90a2d098d296268ed100a39e98c6ada1e",
+    "contract_status.csv": "ceb54d1dc7a59b4460b6a325001f9d4048816847e29103dab350746fbaca2e6e",
+    "field_timing_audit.csv": "e92ba4d5469b1803e78e6dc2eac66bff03f26bd8a2e8db2a0f93b8e18ef644d7",
+    "market_cache_report.md": "e5e71c40cbf38cb59a39b25f2bb06996c02c699aa4e4bc6d78f916d5e096bf6c",
+    "resolved_config.json": "93b438ce9322f17144dea1c7c1717eb7c9977655524da1fe3938fd54da2d3cd4",
+    "semantic_input_hashes.csv": "85e530f2e3e5273beac312ddde62c897b6cd5cdbdbd7e538c252626760f77ed2"
+  },
+  "producer_run_id": "20260723T065002Z-6a2d13dc",
+  "profile_name": "full_research",
+  "profile_type": "full_research",
+  "research_run_family_id": "full_research_factor_669_v1",
+  "run_id": "20260723T065002Z-6a2d13dc",
+  "schema_version": 2,
+  "split_manifest_id": "split-manifest:75ccf0f37e85422729d54aef5a363f68d4f9b3daed3d42a87eb120e6b5aefe0e",
+  "stage_id": "market_cache_v2",
+  "start_date": "2024-08-01",
+  "universe_artifact_id": null
+}

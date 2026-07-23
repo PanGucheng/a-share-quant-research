@@ -29,6 +29,7 @@
   "profile_name": "full_research",
   "profile_type": "full_research",
   "qlib_provider": "../qlib_data/cn_data_community_20260609_derived",
+  "raw_market_manifest": "outputs/raw_market_data_snapshot_v1/full_research_669/artifact_manifest.json",
   "research_run_family_id": "full_research_factor_669_v1",
   "schema_version": 1,
   "score_manifest": "outputs/split_transparent_score_v2/current/artifact_manifest.json",

@@ -1,0 +1,16 @@
+{
+  "cache_key": "5a75d49bb356bf0b163c376c932698cd19306c8bb5f50ddbf67d389bd65c9d86",
+  "payload": {
+    "calendar_hash": "441f54a46c89405392de9185b94955aadb0f041384d54001750c94eaa9b0128b",
+    "code_commit_sha": "979ecf9b31cd276459236485bb46d33469a8552f",
+    "execution_config": "4678e6b0e4cba3aa49f0ed5211db52a1215f64479e43ccaabafae536fa639542",
+    "fee_schedule": "2744221fcf071ebf9306d74136e85ae1f00fde944b4711aed7f1ff7590ef431e",
+    "field_timing_schema": "054b8710317ef8836bef94b329243128731bbf4eb9b27d3747aabf400836a878",
+    "instrument_state_receipt": "8e8a0e722cb71e7a8e9e9c4556920aaca32550127733def091a4cb2f90a5328c",
+    "instrument_state_runtime_sha256": "4a52621cb4b3619ca1036d0c3ffb25b0b7e285984bd84b5eaed038f347a54d61",
+    "raw_market_manifest": "15e5635ae52a517ab8e4a686ec297ab3e0d04ee37d4cc56c082b6c0bccb1abed",
+    "score_artifact_sha256": "beb4e4ad738e263e72bb75ead4d948f7a44e7c086bc56b310a56a823a6adecbf",
+    "score_receipt": "80f89a6e05b1056ea6393752e3b935c90008623a96cd386aaefc22eade78bd36",
+    "trading_rules": "c4a305cf2c85ec4b15c13338e24eb47ac87d4703aa688d3d72adb0fdfa042d2a"
+  }
+}
