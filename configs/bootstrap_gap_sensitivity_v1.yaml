@@ -4,6 +4,8 @@ profile_name: full_research
 profile_type: full_research
 research_run_family_id: full_research_factor_669_v1
 projection_manifest: outputs/selection_input_projection_v2/current/artifact_manifest.json
+canary_manifest: outputs/bootstrap_gap_sensitivity_v1/canary/artifact_manifest.json
+canary_contract: outputs/bootstrap_gap_sensitivity_v1/canary/contract_status.csv
 projection_inventory: outputs/selection_input_projection_v2/current/projection_inventory.csv
 outer_train_projection: outputs/selection_input_projection_v2/runtime/outer_train_daily_ic.parquet
 metric: rank_ic

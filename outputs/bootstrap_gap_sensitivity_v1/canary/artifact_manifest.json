@@ -1,0 +1,38 @@
+{
+  "artifact_id": "bootstrap_gap_sensitivity_v1:03987f1f30860dc3b71e238978806122e15ed0f551ef8448d3fa92bb10009492",
+  "artifact_status": "pass",
+  "blocked_reason": "",
+  "code_commit_sha": "7e9778193849641f249501ef49310227d5672ab5",
+  "code_diff_sha256": "",
+  "code_dirty": false,
+  "config_sha256": "6125e33c6913d1e9edc1547f152de35cdbd89cbf28b47b3e401a12b610251595",
+  "created_at": "2026-07-23T04:57:34.334667+00:00",
+  "end_date": "2024-11-28",
+  "factor_catalog_id": "factor-catalog:8c031a09892fc915ac45201942f563925a9bab617e60fce5ecbbe274a51a02e1",
+  "factor_frame_id": "factor-frame-v4:f1e93a2428446673f5c873a01886a38ae9e654e5f863cf2b236040dbbf28dc3c",
+  "input_artifact_ids": [
+    "selection_input_projection_v2:4bec5868f5868f004da8c13357690776fcca0d59dee72235c0e63b4e65b4b3d1"
+  ],
+  "lineage_status": "complete",
+  "missing_lineage_fields": [],
+  "output_file_hashes": {
+    "bootstrap_gap_report.md": "2aa446cfeeb9a6780ce071b79a8fd7cd6d41496e88529739ef3ff58dd54fea92",
+    "contract_status.csv": "8b5b80823f1063021e1f07918edf52dae25adb06b46cd43f5c7fbbfbc63a1f92",
+    "factor_method_comparison.csv": "1e29691b5ace74a1ed029d5c085d5cf97cf4500414961c79a7319052290f3962",
+    "fdr_method_comparison.csv": "6e0353713fb0d437aac823131d3af883af7ec0639ca007e62bf3e4da26abe230",
+    "frozen_bootstrap_policy.json": "de293fa1eaf4a6de543ac5c9bd25698c66cd6f84fbd7d57995d9d492a82325ef",
+    "gap_injection_results.csv": "912d04b04327052e288524f6248b418fe481bfacbd56ad07d925b4e608d5c269",
+    "resolved_config.json": "cdda53a522fe5694d001b7ef57f124a73a350b9c9852f9d24df1a44945d64b9c",
+    "sensitivity_summary.csv": "7420f396843dd1c995fbcb9261445f740df9a9b659385a3dc372e25a16928163"
+  },
+  "producer_run_id": "20260723T045734Z-2d8d3277",
+  "profile_name": "full_research",
+  "profile_type": "full_research",
+  "research_run_family_id": "full_research_factor_669_v1",
+  "run_id": "20260723T045734Z-2d8d3277",
+  "schema_version": 2,
+  "split_manifest_id": "split-manifest:75ccf0f37e85422729d54aef5a363f68d4f9b3daed3d42a87eb120e6b5aefe0e",
+  "stage_id": "bootstrap_gap_sensitivity_v1",
+  "start_date": "2021-02-01",
+  "universe_artifact_id": "universe-v2:a7875d74d5119230ab5576cb245fe8b389e0dd3030606299dad6d1f0e147ccd2"
+}

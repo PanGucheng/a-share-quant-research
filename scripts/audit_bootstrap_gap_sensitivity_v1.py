@@ -71,6 +71,20 @@ def main() -> int:
         or bool(manifest["code_dirty"])
     ):
         raise ValueError("selection projection v2 is stale, blocked, or non-authoritative")
+    input_manifest_paths = [manifest_path]
+    if config.get("canary_manifest"):
+        canary_path = resolve(config["canary_manifest"])
+        canary_manifest = load_artifact_manifest(canary_path)
+        canary_contract = pd.read_csv(resolve(config["canary_contract"]))
+        if (
+            validate_manifest_outputs(canary_manifest, canary_path.parent)
+            or canary_manifest["artifact_status"] != "pass"
+            or canary_manifest["lineage_status"] != "complete"
+            or bool(canary_manifest["code_dirty"])
+            or not canary_contract["status"].eq("pass").all()
+        ):
+            raise ValueError("bootstrap gap canary is stale, blocked, or non-authoritative")
+        input_manifest_paths.append(canary_path)
     inventory = pd.read_csv(resolve(config["projection_inventory"]))
     projection_contract = pd.read_csv(manifest_path.parent / "contract_status.csv")
     test_exclusion = projection_contract.loc[
@@ -343,7 +357,7 @@ def main() -> int:
             output_dir=publisher.staging_dir,
             output_files=files,
             code_state=capture_code_state(PROJECT_ROOT),
-            input_manifest_paths=[manifest_path],
+            input_manifest_paths=input_manifest_paths,
             universe_artifact_id=manifest["universe_artifact_id"],
             factor_catalog_id=manifest["factor_catalog_id"],
             factor_frame_id=manifest["factor_frame_id"],
