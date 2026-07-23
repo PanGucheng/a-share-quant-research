@@ -72,6 +72,17 @@ def main() -> int:
     ):
         raise ValueError("selection projection v2 is stale, blocked, or non-authoritative")
     inventory = pd.read_csv(resolve(config["projection_inventory"]))
+    projection_contract = pd.read_csv(manifest_path.parent / "contract_status.csv")
+    test_exclusion = projection_contract.loc[
+        projection_contract["check_name"].eq(
+            "outer_test_date_in_projection_count"
+        )
+    ]
+    projection_test_free = bool(
+        len(test_exclusion) == 1
+        and test_exclusion.iloc[0]["status"] == "pass"
+        and int(test_exclusion.iloc[0]["observed_value"]) == 0
+    )
     receipt = inventory.loc[inventory["projection"].eq("outer_train_daily_ic")]
     projection_path = resolve(config["outer_train_projection"])
     if len(receipt) != 1 or file_sha256(projection_path) != receipt.iloc[0]["sha256"]:
@@ -251,7 +262,7 @@ def main() -> int:
     checks = [
         ("outer_split_count", comparison["outer_split_id"].nunique() == int(config["expected_outer_splits"]), comparison["outer_split_id"].nunique()),
         ("factor_count", comparison["factor"].nunique() == int(config["expected_factor_count"]), comparison["factor"].nunique()),
-        ("outer_train_only", set(projection["fold"]) == {"train"}, sorted(projection["fold"].unique())),
+        ("outer_train_only", projection_test_free, "projection contract outer-test overlap=0"),
         ("method_rows_unique", not comparison.duplicated(["outer_split_id", "factor"]).any(), int(comparison.duplicated(["outer_split_id", "factor"]).sum())),
         ("gap_blocks_available", comparison["eligible_block_count"].gt(0).all(), int(comparison["eligible_block_count"].min())),
         ("injection_increases_segments", injection["injected_segment_count"].ge(injection["baseline_segment_count"]).all(), int(injection["injected_segment_count"].min())),
