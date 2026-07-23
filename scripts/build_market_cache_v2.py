@@ -149,7 +149,11 @@ def main() -> int:
             market["price_limit_ratio"] = ratio
             market["upper_limit_price"] = market["previous_close"] * (1 + ratio)
             market["lower_limit_price"] = market["previous_close"] * (1 - ratio)
-            market["execution_price"] = market["open"]
+            market["terminal_event_approximation"] = market["delisted"].fillna(False)
+            market["execution_price_is_valuation_fallback"] = market["open"].isna() & market["valuation_price"].notna()
+            market["execution_price"] = market["open"].where(
+                market["open"].notna(), market["valuation_price"]
+            )
             market["limit_up"] = ratio.notna() & market["open"].ge(market["upper_limit_price"] - 0.005)
             market["limit_down"] = ratio.notna() & market["open"].le(market["lower_limit_price"] + 0.005)
             market["suspended"] = (
@@ -161,8 +165,14 @@ def main() -> int:
             rule_available = market["board"].isin(["main", "star", "chinext"]) & market["ipo_age"].notna()
             market["can_buy"] = ~market["suspended"] & capacity_valid & rule_available & ~market["limit_up"]
             market["can_sell"] = ~market["suspended"] & capacity_valid & rule_available & ~market["limit_down"]
-            market["close"] = market["valuation_price"]
             market["volume"] = market["participation_volume"]
+            terminal_settlement = market["terminal_event_approximation"] & market["valuation_price"].notna()
+            market.loc[terminal_settlement, "execution_price"] = market.loc[terminal_settlement, "valuation_price"]
+            market.loc[terminal_settlement, "volume"] = 1.0e15
+            market.loc[terminal_settlement, "suspended"] = False
+            market.loc[terminal_settlement, "can_buy"] = False
+            market.loc[terminal_settlement, "can_sell"] = True
+            market["close"] = market["valuation_price"]
             market["change"] = np.nan
             market["amount"] = market["amount"].fillna(0.0)
             market["lot_minimum_buy"] = np.select(
@@ -189,6 +199,7 @@ def main() -> int:
                 "valuation_price_age_trading_days", "valuation_stale_blocked", "lot_minimum_buy",
                 "lot_increment_buy", "lot_increment_sell", "board", "ipo_age", "lot_rule_id",
                 "execution_price_limit_rule_id", "market_semantics_authoritative",
+                "execution_price_is_valuation_fallback", "terminal_event_approximation",
             ]
             market = market[columns]
             runtime = publisher.path(f"runtime/{split_id}_market.parquet")

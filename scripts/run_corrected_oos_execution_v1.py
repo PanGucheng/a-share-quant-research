@@ -172,6 +172,9 @@ def main() -> int:
     daily = combined["daily_accounting"]
     positions = combined["positions"]
     fills = combined["fills"]
+    terminal_fill_count = int(
+        fills["reason"].fillna("").str.contains("terminal_event_settlement_approximation").sum()
+    )
     market_authoritative = int(cache_rows["authoritative_row_count"].sum())
     stale_blocked = int(cache_rows["stale_blocked_count"].sum())
     attribution = pd.DataFrame([
@@ -197,6 +200,7 @@ def main() -> int:
         ("cash_non_negative", float(daily["cash"].min()) >= -1e-8, float(daily["cash"].min()), ">=0"),
         ("accounting_conservation", float(daily["accounting_error"].abs().max()) <= 1e-6, float(daily["accounting_error"].abs().max()), "<=1e-6"),
         ("unknown_execution_difference_count", True, 0, 0),
+        ("terminal_event_approximations_reported", True, terminal_fill_count, "explicit count"),
     ]
     capability_checks = [
         ("instrument_state_pit_valid", False, market_authoritative, "all market rows authoritative"),
@@ -239,6 +243,7 @@ def main() -> int:
             f"- Operational contracts: `{'pass' if operational_pass else 'blocked'}`\n"
             "- Evidence status: `non_authoritative_post_observation_bugfix`\n"
             f"- Orders / fills / accounting rows: `{len(combined['orders'])}` / `{len(fills)}` / `{len(daily)}`\n"
+            f"- Explicit terminal-event settlement approximations: `{terminal_fill_count}`\n"
             "- Unknown old-vs-new difference categories: `0`\n"
             "- Historical ST, pre-open suspension and terminal events are incomplete, so authoritative readiness remains false.\n",
             encoding="utf-8",

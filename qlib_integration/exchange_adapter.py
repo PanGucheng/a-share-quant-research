@@ -138,6 +138,12 @@ def to_qlib_quote(market: pd.DataFrame, max_participation_rate: float) -> pd.Dat
             "audit_can_sell": frame["can_sell"],
             "audit_invalid_execution_price": invalid_price,
             "audit_no_volume": frame["volume"].fillna(0).le(0),
+            "audit_execution_price_is_valuation_fallback": frame.get(
+                "execution_price_is_valuation_fallback", pd.Series(False, index=frame.index)
+            ),
+            "audit_terminal_event_approximation": frame.get(
+                "terminal_event_approximation", pd.Series(False, index=frame.index)
+            ),
             "audit_lot_minimum_buy": frame.get("lot_minimum_buy", pd.Series(100, index=frame.index)),
             "audit_lot_increment_buy": frame.get("lot_increment_buy", pd.Series(100, index=frame.index)),
             "audit_lot_increment_sell": frame.get("lot_increment_sell", pd.Series(100, index=frame.index)),
@@ -345,6 +351,9 @@ class PreparedQuoteExchange(Exchange):  # type: ignore[misc]
         reasons: list[str] = []
         if preblocked_reason:
             reasons.append(preblocked_reason)
+        audit_row = self._prepared_quote.loc[(order.stock_id, trading_date)]
+        if bool(audit_row["audit_terminal_event_approximation"]):
+            reasons.append("terminal_event_settlement_approximation")
         if t1_rejected > 1e-8:
             reasons.append("t_plus_one")
         if lot_rejected > 1e-8:
