@@ -52,6 +52,8 @@ jobs:
           python scripts/validate_full_research_669_v1.py
           python scripts/validate_selection_integrity_receipts_v1.py
           python scripts/validate_accuracy_correction_hard_stop_v1.py
+          python scripts/validate_data_source_audit_v2.py
+          python scripts/validate_execution_unit_semantics_v1_2.py
 
   qlib-exchange-runtime:
     runs-on: windows-latest

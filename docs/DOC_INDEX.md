@@ -5,13 +5,15 @@
 ## Current Working Documents
 
 - `EXECUTION_UNIT_SEMANTICS_CORRECTION_V1_2_PLAN.md`
-  当前唯一执行计划。Data Source Audit V2 已确认 Community 成交量需 `provider_volume × factor × 100` 才是 shares，Market Cache v2 漏乘 `×100`；先撤回 execution readiness，再按 unit fixture → cache canary/full → freeze → execution canary/full 修复，不进入 PR #5A。
+  已完成的单位语义修正与实施回执。Market Cache v3 已显式执行 volume `factor × 100` 和 amount `×1000`，全量 cache/execution、单票归因、transitive lineage 与治理门禁通过；旧 Market Cache v2 永久 superseded。
+- `DATA_SOURCE_AUDIT_V2.md`
+  Phase B 数据源决策报告。150 股 Community/BaoStock/AKShare canary 支持 Decision B：核心 raw OHLC 可靠、无需 Matrix v5；AKShare Eastmoney 不稳定，BaoStock ST/tradestatus 的 before-open 权威性未获证明。
 - `ACCURACY_CORRECTION_V1_1_AND_DATA_SOURCE_AUDIT_V2_PLAN.md`
   已完成的 lineage/gate closure 与数据源 canary 基线。Phase A 的 22 节点/61 边传递 lineage 为 0 issue；Phase B 形成 Decision B，并将单位错误移交 V1.2。
 - `ACCURACY_CORRECTION_V1_PLAN.md`
   已完成的 Accuracy Correction V1 实施基线。PR #6 修复研究计算，PR #7 修复执行语义；其后续 lineage/gate cleanup 以上述 V1.1 计划为准。
 - `outputs/accuracy_correction_v1/current/`
-  当前机器治理状态：research/score 保持 ready；Data Source Audit V2 ready；execution unit semantics 与 Market Cache v2 readiness 已撤回。authoritative OOS、core model、PR5 training 和 training-started 均 false。
+  当前机器治理状态：research/score、Data Source Audit V2、Market Cache v3 与 execution unit semantics ready；Market Cache v2 永久 false。authoritative OOS、core model、PR5 training 和 training-started 均 false。
 - `outputs/accuracy_correction_v1_1/current/`
   Phase A 机器审计：corrected score lineage complete、业务 payload 不变、unknown board=0、22 节点/61 边传递 lineage 0 issue。
 - `outputs/data_source_audit_v2/current/`
@@ -20,6 +22,12 @@
   PIT instrument-state 与 board/lifecycle 证据；缺失的历史 ST、盘前停牌和 terminal event 源以 capability blocker 公开记录。
 - `outputs/market_cache_v2/current/`
   历史 Market Cache v2 证据；字段时点与禁止估值回填通过，但成交量单位漏乘 `×100`，已 superseded，不能再支持 execution readiness。
+- `outputs/market_cache_v3/current/`
+  单位修正后的当前 Market Cache：三个 split 共 853,936 行，volume/amount 分别以 shares/CNY 物化，future field=0，完整 unit audit 为 0 unknown。
+- `outputs/execution_unit_semantics_correction_v1_2/current/`
+  冻结研究信号上的 3 split × 2 method 修正执行；730 个会计日关键 contract 全通过，unknown semantic difference=0，仍是 post-observation / non-authoritative evidence。
+- `outputs/execution_unit_semantics_correction_v1_2/governance/`
+  V1.2 fail-closed 收口、旧新 artifact supersession、全市场及 SZ302132 单票归因与中央 readiness 回执。
 - `outputs/bugfix_research_freeze_v1/current/`
   三个 split 的 post-observation bug-fix freeze，明确历史 test 已观察且不能形成无偏最终估计。
 - `outputs/execution_accuracy_correction_v1/current/`
@@ -135,14 +143,15 @@ docs/_archive/README.md
 
 ## Current Stage
 
-逻辑 PR #4.1 的 outer-test 隔离继续有效；PR #6 已完成 lifecycle、Matrix v4、Labels v2、pairwise IC 与选择链修正，PR #7 已完成字段时点、日期费率、动态整手、方向性涨跌停、陈旧估值、Market Cache v2 和 corrected historical execution。
+逻辑 PR #4.1 的 outer-test 隔离继续有效；PR #6 已完成研究准确性修正，PR #7 已完成执行语义修正，PR #8 已完成 lineage/gate closure 与 Data Source Audit V2，V1.2 已完成 Market Cache v3 和执行单位修正。
 
 ```text
-docs/ACCURACY_CORRECTION_V1_PLAN.md
+docs/EXECUTION_UNIT_SEMANTICS_CORRECTION_V1_2_PLAN.md
+docs/DATA_SOURCE_AUDIT_V2.md
 docs/Qlib A股因子研究框架完整升级计划 V1.md
 docs/FACTOR_VALIDATION_ROADMAP_V1.md
 ```
 
-当前 corrected 45/46/52 allowlist、weights 与 score 可作为研究层冻结证据，但 `model_input_allowed=false`。机器状态为 `model_research_ready=true`、`execution_semantics_accuracy_ready=true`、`market_cache_v2_ready=true`；历史 ST、盘前停牌和 terminal-event 权威源缺失，所以 `authoritative_oos_execution_ready=false`、`core_model_ready=false`、`pr5_model_training_ready=false`、`model_training_started=false`。
+当前 corrected 45/46/52 allowlist、weights 与 score 可作为研究层冻结证据，但 `model_input_allowed=false`。机器状态为 `model_research_ready=true`、`execution_semantics_accuracy_ready=true`、`market_cache_v3_ready=true`，旧 `market_cache_v2_ready=false`；历史 ST、盘前停牌和 terminal-event 权威源缺失，所以 `authoritative_oos_execution_ready=false`、`core_model_ready=false`、`pr5_model_training_ready=false`、`model_training_started=false`。
 
-本轮在 PR #7 合并和 main 复验后停止，不进入 PR #5A。未来若重新授权模型阶段，仍须先解决或明确接受权威历史状态能力缺口，并按 `PR5A_MODEL_INPUT_PROTOCOL_HANDOFF_V1.md` 重新冻结模型输入、validation 指标和 pre-test release 边界。
+下一阶段只能制定并实施 Historical Instrument State V2；不进入 PR #5A。未来若重新授权模型阶段，仍须先解决或明确接受权威历史状态能力缺口，并按 `PR5A_MODEL_INPUT_PROTOCOL_HANDOFF_V1.md` 重新冻结模型输入、validation 指标和 pre-test release 边界。
