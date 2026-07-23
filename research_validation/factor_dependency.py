@@ -91,8 +91,10 @@ def classify_python_method(source: str, method_name: str) -> DependencyEvidence:
         "log",
         "max",
         "min",
+        "pow",
         "replace",
         "sign",
+        "where",
     }
     unknown_calls = calls - _CROSS_SECTIONAL_CALLS - _TIME_SERIES_CALLS - allowed_non_temporal
     if unknown_calls:

@@ -31,4 +31,4 @@ source_policies:
   alpha101:
     execution_scope: wide_pandas_cross_section
     fallback_sensitive: true
-    fallback_reason: positional_axis_relabel_when_lengths_match
+    fallback_reason: matrix_v3_positional_axis_relabel_when_lengths_match_v4_forbids_relabel

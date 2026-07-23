@@ -3,6 +3,7 @@ from __future__ import annotations
 import hashlib
 import json
 import sys
+import warnings
 from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Any
@@ -112,6 +113,35 @@ def to_wind_wide(frame: pd.DataFrame) -> dict[str, pd.DataFrame]:
     return result
 
 
+def mask_raw_to_pit_membership(
+    raw: pd.DataFrame,
+    membership_keys: pd.DataFrame,
+    *,
+    membership_start: object,
+) -> pd.DataFrame:
+    """Mask factor inputs outside the dated PIT universe.
+
+    Pre-universe warmup rows remain available. From ``membership_start`` onward,
+    every OHLCVA field is NaN outside the exact date-instrument membership so
+    pandas cross-sectional operators cannot see lifecycle-illegal or
+    out-of-universe instruments.
+    """
+
+    keys = membership_keys[["datetime", "instrument"]].copy()
+    keys["datetime"] = pd.to_datetime(keys["datetime"])
+    keys["instrument"] = keys["instrument"].astype(str).str.upper()
+    keys["_pit_member"] = True
+    if keys.duplicated(["datetime", "instrument"]).any():
+        raise ValueError("membership keys must be unique")
+    result = raw.copy()
+    result["datetime"] = pd.to_datetime(result["datetime"])
+    result["instrument"] = result["instrument"].astype(str).str.upper()
+    result = result.merge(keys, on=["datetime", "instrument"], how="left", validate="many_to_one")
+    mask = result["datetime"].ge(pd.Timestamp(membership_start)) & result["_pit_member"].ne(True)
+    result.loc[mask, BASE_FIELDS] = np.nan
+    return result.drop(columns="_pit_member")
+
+
 def load_metadata_catalog(path: Path) -> pd.DataFrame:
     payload = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
     rows = []
@@ -132,7 +162,17 @@ def compute_alpha101_features(config: Alpha101SourceConfig, raw: pd.DataFrame) -
     ref_alpha101 = import_ref_alpha101(config.source_local_path)
     wide = to_wind_wide(raw)
     reference = wide["S_DQ_CLOSE"]
-    stock = ref_alpha101.Alphas(wide)
+    with warnings.catch_warnings():
+        warnings.filterwarnings(
+            "ignore",
+            message="The default fill_method='pad' in DataFrame.pct_change is deprecated",
+            category=FutureWarning,
+        )
+        stock = ref_alpha101.Alphas(wide)
+    # The vendored pandas reference relies on the deprecated pct_change
+    # default (forward-fill). Override it so PIT membership gaps cannot carry
+    # stale closes into Alpha101 returns.
+    stock.returns = stock.close.pct_change(fill_method=None)
     metadata = load_metadata_catalog(config.metadata_catalog).set_index("factor")
     output_frames = []
     for factor in config.selected_smoke_factors:
@@ -145,10 +185,7 @@ def compute_alpha101_features(config: Alpha101SourceConfig, raw: pd.DataFrame) -
         if not isinstance(values, pd.DataFrame):
             raise TypeError(f"KunQuant reference method {method_name} returned {type(values).__name__}, expected DataFrame")
         values = values.copy()
-        if len(values.index) == len(reference.index) and not values.index.equals(reference.index):
-            values.index = reference.index
-        if len(values.columns) == len(reference.columns) and not values.columns.equals(reference.columns):
-            values.columns = reference.columns
+        assert_alpha101_axes(values, reference, method_name)
         values = values.sort_index().sort_index(axis=1)
         series = values.stack(future_stack=True).rename(factor)
         output_frames.append(series)
@@ -159,6 +196,23 @@ def compute_alpha101_features(config: Alpha101SourceConfig, raw: pd.DataFrame) -
     for factor in config.selected_smoke_factors:
         combined[factor] = pd.to_numeric(combined[factor], errors="coerce").replace([np.inf, -np.inf], np.nan)
     return combined.sort_values(["instrument", "datetime"]).reset_index(drop=True)
+
+
+def assert_alpha101_axes(
+    values: pd.DataFrame,
+    reference: pd.DataFrame,
+    method_name: str,
+) -> None:
+    """Reject positional relabeling even when axis lengths happen to match."""
+
+    if not values.index.equals(reference.index):
+        raise ValueError(
+            f"Alpha101 {method_name} index mismatch; positional relabel is forbidden"
+        )
+    if not values.columns.equals(reference.columns):
+        raise ValueError(
+            f"Alpha101 {method_name} columns mismatch; positional relabel is forbidden"
+        )
 
 
 def build_inventory(config: Alpha101SourceConfig, frame: pd.DataFrame) -> pd.DataFrame:
