@@ -47,6 +47,28 @@ def selection_row(**overrides: object) -> pd.DataFrame:
     return pd.DataFrame([values])
 
 
+def accuracy_ready_row(**overrides: object) -> pd.DataFrame:
+    values: dict[str, object] = {
+        "selection_holdout_integrity_ready": True,
+        "research_formula_accuracy_ready": True,
+        "matrix_v4_lifecycle_clean": True,
+        "pairwise_ic_ready": True,
+        "model_research_ready": True,
+        "execution_semantics_accuracy_ready": True,
+        "market_cache_v2_ready": True,
+        "future_market_field_count": 0,
+        "stale_policy_valid": True,
+        "authoritative_oos_execution_ready": True,
+        "core_model_ready": True,
+        "pr5_model_training_ready": True,
+        "model_training_started": False,
+        "model_entry_hard_stop_active": False,
+        "accuracy_correction_status": "complete",
+    }
+    values.update(overrides)
+    return pd.DataFrame([values])
+
+
 def test_model_entry_rejects_exploratory_selection_even_if_old_readiness_is_true() -> None:
     with pytest.raises(ModelEntryBlockedError, match="selection_status='test_influenced'"):
         assert_model_entry_allowed(
@@ -57,6 +79,7 @@ def test_model_entry_rejects_exploratory_selection_even_if_old_readiness_is_true
                 model_input_allowed=False,
             ),
             selection_name="exploratory_global_representatives_v1",
+            accuracy_correction=accuracy_ready_row(),
         )
 
 
@@ -71,6 +94,7 @@ def test_model_entry_rejects_machine_hard_stop() -> None:
             ),
             selection_row(),
             selection_name="split_specific_holdout_clean_allowlists_v1",
+            accuracy_correction=accuracy_ready_row(),
         )
 
 
@@ -80,6 +104,7 @@ def test_model_entry_rejects_invalid_fdr_family_semantics() -> None:
             ready_row(fdr_family_semantics_valid=False),
             selection_row(),
             selection_name="split_specific_holdout_clean_allowlists_v1",
+            accuracy_correction=accuracy_ready_row(),
         )
 
 
@@ -88,7 +113,38 @@ def test_model_entry_accepts_only_holdout_clean_ready_selection() -> None:
         ready_row(),
         selection_row(),
         selection_name="split_specific_holdout_clean_allowlists_v1",
+        accuracy_correction=accuracy_ready_row(),
     )
+
+
+def test_repository_accuracy_correction_policy_blocks_current_selection() -> None:
+    with pytest.raises(
+        ModelEntryBlockedError,
+        match="accuracy_correction_status='blocked_research_and_execution_accuracy'",
+    ):
+        assert_model_entry_allowed(
+            ready_row(),
+            selection_row(),
+            selection_name="split_specific_holdout_clean_allowlists_v1",
+        )
+
+
+def test_model_entry_requires_full_research_and_execution_accuracy() -> None:
+    with pytest.raises(ModelEntryBlockedError, match="pairwise_ic_ready=false"):
+        assert_model_entry_allowed(
+            ready_row(),
+            selection_row(),
+            selection_name="split_specific_holdout_clean_allowlists_v1",
+            accuracy_correction=accuracy_ready_row(
+                accuracy_correction_status="blocked_research_accuracy",
+                pairwise_ic_ready=False,
+                model_research_ready=False,
+                authoritative_oos_execution_ready=False,
+                core_model_ready=False,
+                pr5_model_training_ready=False,
+                model_entry_hard_stop_active=True,
+            ),
+        )
 
 
 def test_linear_model_runner_calls_machine_entry_gate() -> None:

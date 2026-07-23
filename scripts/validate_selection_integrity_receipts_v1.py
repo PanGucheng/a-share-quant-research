@@ -93,7 +93,7 @@ def main() -> int:
 
     readiness_path = resolve("outputs/full_research_669_readiness_v1/current/artifact_manifest.json")
     readiness = load_artifact_manifest(readiness_path)
-    assert not validate_manifest_outputs(readiness, readiness_path.parent, config=readiness_config)
+    assert not validate_manifest_outputs(readiness, readiness_path.parent)
     assert readiness["artifact_status"] == "pass"
     flags = pd.read_csv(readiness_path.parent / "readiness_summary.csv").iloc[0]
     for field in (
@@ -108,7 +108,21 @@ def main() -> int:
     assert not bool(flags["model_training_started"])
     assert not bool(flags["historical_oos_comparison_complete"])
     assert not bool(flags["production_model_selected"])
-    print("Compact selection lineage, mutation, freeze, score, Qlib, and ready-state receipts passed.")
+    correction = pd.read_csv(
+        resolve(
+            "outputs/accuracy_correction_v1/current/readiness_summary.csv"
+        )
+    ).iloc[0]
+    assert bool(correction["selection_holdout_integrity_ready"])
+    assert bool(correction["model_entry_hard_stop_active"])
+    assert not bool(correction["model_research_ready"])
+    assert not bool(correction["authoritative_oos_execution_ready"])
+    assert not bool(correction["core_model_ready"])
+    assert not bool(correction["pr5_model_training_ready"])
+    print(
+        "Historical selection lineage receipts passed; Accuracy Correction V1 "
+        "supersedes their model-input and OOS authority."
+    )
     return 0
 
 

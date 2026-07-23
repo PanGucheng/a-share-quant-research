@@ -6,6 +6,8 @@
 > 前置阶段：逻辑 PR #4.1 Selection Holdout Integrity 已完成
 > 后续阶段：PR #5A 模型输入协议（当前暂停）
 
+> 2026-07-23 实施回执：第 5.1 节机器级 hard-stop 与 supersession registry 已落地。当前权威治理状态位于 `outputs/accuracy_correction_v1/current/`；旧 PR4.1 readiness 仅保留历史证据，模型入口会优先读取 Accuracy Correction 状态并 fail-closed。此回执不代表 Universe v2、Matrix v4、IC v2 或任何后续研究修正已完成。
+
 ## 1. 文档权威性与当前结论
 
 本计划接管所有“直接进入 PR #5A”或“当前模型输入已经 ready”的旧表述。逻辑 PR #4.1 已证明选择链不读取 outer test 来决定 FDR、stability、cluster、allowlist 或 weights；这项 holdout 隔离成果继续有效。但是，2026-07-23 的实现级复核确认研究公式、PIT lifecycle 和历史执行语义仍有会改变结果准确性的缺陷，因此当前 48/46/54 split allowlist、透明 score 和历史 OOS NAV 全部降级为被替代证据，不得作为模型或权威收益结论的输入。

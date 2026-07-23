@@ -1,0 +1,15 @@
+check_name,status,observed_value,required_value,severity,reason
+accuracy_correction_status,pass,blocked_research_and_execution_accuracy,blocked_research_and_execution_accuracy,critical,Accuracy Correction V1 is active before any rematerialization.
+selection_holdout_integrity_ready,pass,True,True,critical,The PR4.1 outer-test isolation evidence remains valid.
+research_formula_accuracy_ready,pass,False,False,critical,Research formulas and lifecycle-clean materialization are not yet corrected.
+execution_semantics_accuracy_ready,pass,False,False,critical,Execution field timing fees and valuation are not yet corrected.
+model_research_ready,pass,False,False,critical,Research model inputs are not currently eligible.
+authoritative_oos_execution_ready,pass,False,False,critical,Historical execution is non-authoritative.
+core_model_ready,pass,False,False,critical,Core model entry must remain blocked.
+pr5_model_training_ready,pass,False,False,critical,PR5A remains paused.
+model_training_started,pass,False,False,critical,No model training has started.
+model_entry_hard_stop_active,pass,True,True,critical,Repository policy must override historical ready artifacts.
+current_allowlist_superseded,pass,True,True,critical,Current 48/46/54 allowlists are forbidden for model input.
+current_weights_superseded,pass,True,True,critical,Current transparent weights are superseded.
+current_scores_superseded,pass,True,True,critical,Current transparent scores are superseded.
+historical_oos_non_authoritative,pass,True,True,critical,Current historical OOS execution and NAV are non-authoritative.

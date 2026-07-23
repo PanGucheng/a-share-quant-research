@@ -1,0 +1,11 @@
+schema_version: 1
+profile: full_research
+profile_name: full_research
+profile_type: full_research
+research_run_family_id: full_research_factor_669_v1
+status: active
+readiness_summary: outputs/accuracy_correction_v1/current/readiness_summary.csv
+selection_status: outputs/accuracy_correction_v1/current/selection_status.csv
+artifact_supersession: outputs/accuracy_correction_v1/current/artifact_supersession.csv
+contract_status: outputs/accuracy_correction_v1/current/contract_status.csv
+implementation_plan: docs/ACCURACY_CORRECTION_V1_PLAN.md
