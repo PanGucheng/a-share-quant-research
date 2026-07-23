@@ -1,0 +1,21 @@
+schema_version: 1
+stage_id: split_specific_allowlist_v2
+selection_name: split_specific_accuracy_corrected_allowlists_v2
+profile: full_research
+profile_name: full_research
+profile_type: full_research
+research_run_family_id: full_research_factor_669_v1
+representatives: outputs/factor_clustering_v2/canary/representatives_by_split.csv
+clustering_contract: outputs/factor_clustering_v2/canary/contract_status.csv
+selection_date_audit: outputs/factor_clustering_v2/canary/selection_date_audit.csv
+stability_board: outputs/factor_rolling_stability_v2/current/factor_stability_board.csv
+allowed_dates: outputs/development_robustness_split_v1/full_research_669/outer_development_allowed_dates.csv
+outer_split_manifest: outputs/purged_walk_forward_v1/full_research_669/split_manifest.csv
+minimum_components: 3
+expected_outer_splits: 1
+input_manifests:
+  - outputs/factor_clustering_v2/canary/artifact_manifest.json
+  - outputs/factor_rolling_stability_v2/current/artifact_manifest.json
+  - outputs/development_robustness_split_v1/full_research_669/artifact_manifest.json
+  - outputs/purged_walk_forward_v1/full_research_669/artifact_manifest.json
+output_dir: outputs/split_specific_allowlist_v2/canary

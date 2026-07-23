@@ -44,6 +44,28 @@ def main() -> int:
     issues = [issue for manifest, path in zip(manifests, manifest_paths) for issue in validate_manifest_outputs(manifest, path.parent)]
     if issues or any(manifest["artifact_status"] != "pass" for manifest in manifests):
         raise ValueError("split allowlist upstream is stale or blocked")
+    source_bindings = [
+        (0, resolve(config["representatives"])),
+        (0, resolve(config["clustering_contract"])),
+        (0, resolve(config["selection_date_audit"])),
+        (1, resolve(config["stability_board"])),
+        (2, resolve(config["allowed_dates"])),
+        (3, resolve(config["outer_split_manifest"])),
+    ]
+    for manifest_index, source_path in source_bindings:
+        expected_hash = manifests[manifest_index]["output_file_hashes"].get(source_path.name)
+        if not expected_hash or file_sha256(source_path) != expected_hash:
+            raise ValueError(f"allowlist source is not bound by manifest: {source_path}")
+    canary_manifest_path = config.get("canary_manifest")
+    canary_gate_observed = "not_required"
+    if canary_manifest_path:
+        canary_manifest_resolved = resolve(canary_manifest_path)
+        canary_manifest = load_artifact_manifest(canary_manifest_resolved)
+        canary_issues = validate_manifest_outputs(canary_manifest, canary_manifest_resolved.parent)
+        canary_contract = pd.read_csv(resolve(config["canary_contract"]))
+        if canary_issues or canary_manifest["artifact_status"] != "pass" or not canary_contract["status"].eq("pass").all():
+            raise ValueError("corrected allowlist canary is stale, blocked, or incomplete")
+        canary_gate_observed = "pass"
     clustering_contract = pd.read_csv(resolve(config["clustering_contract"]))
     if not clustering_contract["status"].eq("pass").all():
         raise ValueError("split clustering contract is not fully passing")
@@ -89,6 +111,7 @@ def main() -> int:
     expected_splits = int(config["expected_outer_splits"])
     date_audit_ok = audit[[column for column in audit.columns if column.endswith("outside_allowed_count")]].sum().sum() == 0
     contracts = pd.DataFrame([
+        contract_row("canary_gate_passed", canary_gate_observed in {"not_required", "pass"}, canary_gate_observed, "pass_or_not_required"),
         contract_row("outer_split_count", len(allowlist_manifest) == expected_splits, len(allowlist_manifest), expected_splits),
         contract_row("split_allowlist_unique", not allowlist.duplicated(["outer_split_id", "factor"]).any(), int(allowlist.duplicated(["outer_split_id", "factor"]).sum()), 0),
         contract_row("minimum_components", allowlist_manifest["factor_count"].ge(int(config["minimum_components"])).all(), allowlist_manifest["factor_count"].tolist(), f">={config['minimum_components']}"),
@@ -96,9 +119,10 @@ def main() -> int:
         contract_row("clustering_holdout_clean", date_audit_ok and allowlist_manifest["holdout_clean"].all(), bool(date_audit_ok and allowlist_manifest["holdout_clean"].all()), True),
         contract_row("split_allowlists_frozen", allowlist_manifest["allowlist_sha256"].str.len().eq(64).all(), int(allowlist_manifest["allowlist_sha256"].str.len().eq(64).sum()), len(allowlist_manifest)),
         contract_row("single_global_allowlist_absent", "global" not in set(allowlist["outer_split_id"].str.lower()), sorted(allowlist["outer_split_id"].unique()), "split-specific only"),
+        contract_row("source_manifests_hash_bound", True, len(source_bindings), len(source_bindings)),
     ])
     selection_status = pd.DataFrame([{
-        "selection_name": "split_specific_holdout_clean_allowlists_v1",
+        "selection_name": str(config.get("selection_name", "split_specific_holdout_clean_allowlists_v1")),
         "selection_status": "holdout_clean",
         "model_input_allowed": False,
         "outer_split_count": len(allowlist_manifest),
@@ -124,7 +148,7 @@ def main() -> int:
         contracts.to_csv(publisher.path("contract_status.csv"), index=False, encoding="utf-8-sig")
         publisher.path("resolved_config.json").write_text(json.dumps(config, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
         publisher.path("split_allowlist_report.md").write_text(
-            "# Split-Specific Allowlist V1\n\n"
+            "# Corrected Split-Specific Allowlist\n\n"
             + f"- Status: `{'pass' if ready else 'blocked'}`\n"
             + f"- Outer splits / total representatives: `{len(allowlist_manifest)}` / `{len(allowlist)}`\n"
             + "- Each allowlist is independently hash-frozen and bound to exact development dates.\n"
@@ -133,7 +157,7 @@ def main() -> int:
         )
         files = [publisher.path(name) for name in CONTROLLED if name != "artifact_manifest.json"]
         write_stage_artifact_manifest(
-            project_root=PROJECT_ROOT, stage_id="split_specific_allowlist_v1", config=config,
+            project_root=PROJECT_ROOT, stage_id=str(config.get("stage_id", "split_specific_allowlist_v1")), config=config,
             output_dir=publisher.staging_dir, output_files=files, code_state=capture_code_state(PROJECT_ROOT),
             input_manifest_paths=manifest_paths, factor_frame_id=manifests[0]["factor_frame_id"],
             split_manifest_id=manifests[3]["split_manifest_id"], start_date=allowlist_manifest["development_start"].min(),
