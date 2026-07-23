@@ -52,6 +52,15 @@ def main() -> int:
         dates = sorted(score["datetime"].unique())[: int(canary["trading_days"])]
         instruments = sorted(score["instrument"].unique())[: int(canary["instruments"])]
         score = score.loc[score["datetime"].isin(dates) & score["instrument"].isin(instruments)]
+    products = []
+    for split_id, group in score.groupby("outer_split_id", sort=True):
+        products.append(
+            pd.MultiIndex.from_product(
+                [sorted(group["datetime"].unique()), sorted(group["instrument"].unique())],
+                names=["datetime", "instrument"],
+            ).to_frame(index=False).assign(outer_split_id=split_id)
+        )
+    score = pd.concat(products, ignore_index=True)
 
     intervals = pd.read_csv(
         resolve(config["instrument_lifecycle_source"]),
@@ -63,7 +72,17 @@ def main() -> int:
     state["board"] = state["instrument"].map(infer_board)
     state["listed"] = state["list_date"].notna() & state["datetime"].ge(state["list_date"])
     state["delisted"] = state["delist_date"].notna() & state["datetime"].gt(state["delist_date"])
-    state["ipo_age"] = (state["datetime"] - state["list_date"]).dt.days
+    import qlib
+    from qlib.config import REG_CN
+    from qlib.data import D
+
+    qlib.init(provider_uri=str(resolve(config["qlib_provider"])), region=REG_CN)
+    trading_calendar = pd.DatetimeIndex(
+        D.calendar(start_time=state["list_date"].min(), end_time=state["datetime"].max(), freq="day")
+    ).normalize()
+    list_positions = trading_calendar.searchsorted(pd.DatetimeIndex(state["list_date"]), side="left")
+    date_positions = trading_calendar.searchsorted(pd.DatetimeIndex(state["datetime"]), side="right")
+    state["ipo_age"] = date_positions - list_positions
     state["st_flag"] = pd.Series(pd.NA, index=state.index, dtype="boolean")
     state["suspended"] = pd.Series(pd.NA, index=state.index, dtype="boolean")
     state["previous_close"] = float("nan")
@@ -122,7 +141,7 @@ def main() -> int:
         ])
         coverage.to_csv(publisher.path("instrument_state_coverage.csv"), index=False, encoding="utf-8-sig")
         contract.to_csv(publisher.path("contract_status.csv"), index=False, encoding="utf-8-sig")
-        pd.DataFrame([{"path": str(runtime), "rows": len(state), "sha256": runtime_sha}]).to_csv(
+        pd.DataFrame([{"path": str(output_dir / "runtime/instrument_state.parquet"), "rows": len(state), "sha256": runtime_sha}]).to_csv(
             publisher.path("instrument_state_artifact.csv"), index=False, encoding="utf-8-sig"
         )
         publisher.path("resolved_config.json").write_text(
