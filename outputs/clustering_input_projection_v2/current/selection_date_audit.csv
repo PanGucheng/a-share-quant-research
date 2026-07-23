@@ -1,0 +1,4 @@
+﻿outer_split_id,allowed_date_count,exposure_date_count,performance_date_count,exposure_outside_allowed_count,performance_outside_allowed_count,outer_test_in_exposure_count,outer_test_in_performance_count
+split_001,765,60,765,0,0,0,0
+split_002,885,60,885,0,0,0,0
+split_003,1009,60,1009,0,0,0,0

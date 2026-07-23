@@ -1,0 +1,31 @@
+{
+  "allowed_dates": "outputs/development_robustness_split_v1/full_research_669/outer_development_allowed_dates.csv",
+  "canary_contract": "outputs/clustering_input_projection_v2/canary/contract_status.csv",
+  "canary_manifest": "outputs/clustering_input_projection_v2/canary/artifact_manifest.json",
+  "daily_ic_table": "outputs/full_research_daily_ic_v2/current/daily_rank_ic.csv",
+  "eligible_roles": [
+    "stable_core"
+  ],
+  "expected_outer_splits": 3,
+  "factor_batch_manifest": "outputs/full_research_feature_matrix_v4/current/partition_status.csv",
+  "input_manifests": [
+    "outputs/factor_rolling_stability_v2/current/artifact_manifest.json",
+    "outputs/full_research_feature_matrix_v4/current/artifact_manifest.json",
+    "outputs/full_research_daily_ic_v2/current/artifact_manifest.json",
+    "outputs/development_robustness_split_v1/full_research_669/artifact_manifest.json",
+    "outputs/purged_walk_forward_v1/full_research_669/artifact_manifest.json",
+    "outputs/clustering_input_projection_v2/canary/artifact_manifest.json"
+  ],
+  "max_exposure_dates": 60,
+  "minimum_components": 3,
+  "outer_date_assignments": "outputs/purged_walk_forward_v1/full_research_669/date_assignments.csv",
+  "output_dir": "outputs/clustering_input_projection_v2/current",
+  "profile": "full_research",
+  "profile_name": "full_research",
+  "profile_type": "full_research",
+  "research_run_family_id": "full_research_factor_669_v1",
+  "runtime_dir": "outputs/clustering_input_projection_v2/runtime",
+  "schema_version": 1,
+  "stability_board": "outputs/factor_rolling_stability_v2/current/factor_stability_board.csv",
+  "stage_id": "clustering_input_projection_v2"
+}
