@@ -1,6 +1,7 @@
 check_name,status,observed_value,required_value,severity,reason
 accuracy_correction_status,pass,blocked_research_and_execution_accuracy,blocked_research_and_execution_accuracy,critical,Accuracy Correction V1 is active before any rematerialization.
 selection_holdout_integrity_ready,pass,True,True,critical,The PR4.1 outer-test isolation evidence remains valid.
+universe_lifecycle_v2_ready,pass,True,True,critical,Universe v2 intersects rolling membership with exact source lifecycle and resolves all 29 intervals and 329 illegal keys.
 research_formula_accuracy_ready,pass,False,False,critical,Research formulas and lifecycle-clean materialization are not yet corrected.
 execution_semantics_accuracy_ready,pass,False,False,critical,Execution field timing fees and valuation are not yet corrected.
 model_research_ready,pass,False,False,critical,Research model inputs are not currently eligible.

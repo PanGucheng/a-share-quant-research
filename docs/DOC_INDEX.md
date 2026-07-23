@@ -8,6 +8,8 @@
   已冻结的正式实施基线与当前唯一执行计划。2026-07-23 实现复核确认 PIT lifecycle、横截面因子污染、pairwise IC、字段时点、税费和陈旧估值问题；先以 GitHub PR #6 修复研究计算且不生成 OOS NAV，再以 PR #7 修复执行语义，PR #5A 继续暂停。
 - `outputs/accuracy_correction_v1/current/`
   PR #6 第一个业务提交建立的当前机器治理状态：holdout integrity 保留为 true，研究/执行/model readiness 全部 false；旧 allowlist、weights、scores 已 superseded，历史 execution/NAV 为 non-authoritative。
+- `outputs/point_in_time_universe_v2/full_research/`
+  PR #6 lifecycle-clean Universe v2：29 个越界 interval 与 329 个非法 key 已修正，最终 lifecycle violation、interval overlap 和 removed-key residual 均为 0。
 - `PR5A_MODEL_INPUT_PROTOCOL_HANDOFF_V1.md`
   延后的模型输入协议参考。只能在 PR #6/#7 全部门禁通过后重新启用，不能直接采用当前已被替代的 allowlist、score 或 OOS execution。
 - `SELECTION_HOLDOUT_INTEGRITY_AND_MODEL_PLAN_V1.md`

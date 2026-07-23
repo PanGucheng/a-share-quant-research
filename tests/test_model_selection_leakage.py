@@ -50,6 +50,7 @@ def selection_row(**overrides: object) -> pd.DataFrame:
 def accuracy_ready_row(**overrides: object) -> pd.DataFrame:
     values: dict[str, object] = {
         "selection_holdout_integrity_ready": True,
+        "universe_lifecycle_v2_ready": True,
         "research_formula_accuracy_ready": True,
         "matrix_v4_lifecycle_clean": True,
         "pairwise_ic_ready": True,

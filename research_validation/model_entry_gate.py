@@ -48,6 +48,7 @@ def model_entry_blockers(
 
     required_accuracy_fields = {
         "selection_holdout_integrity_ready",
+        "universe_lifecycle_v2_ready",
         "research_formula_accuracy_ready",
         "matrix_v4_lifecycle_clean",
         "pairwise_ic_ready",
@@ -75,6 +76,7 @@ def model_entry_blockers(
         )
     for field in [
         "selection_holdout_integrity_ready",
+        "universe_lifecycle_v2_ready",
         "research_formula_accuracy_ready",
         "matrix_v4_lifecycle_clean",
         "pairwise_ic_ready",

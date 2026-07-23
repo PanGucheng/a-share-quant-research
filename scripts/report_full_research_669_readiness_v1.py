@@ -222,6 +222,9 @@ def main() -> int:
             accuracy_flags["selection_holdout_integrity_ready"]
         )
         and holdout_selection_ready,
+        "universe_lifecycle_v2_ready": bool(
+            accuracy_flags["universe_lifecycle_v2_ready"]
+        ),
         "research_formula_accuracy_ready": bool(
             accuracy_flags["research_formula_accuracy_ready"]
         ),
@@ -275,6 +278,7 @@ def main() -> int:
         "transparent_score_ready": False,
         "transparent_qlib_execution_ready": False,
         "selection_holdout_integrity_ready": True,
+        "universe_lifecycle_v2_ready": True,
         "research_formula_accuracy_ready": False,
         "matrix_v4_lifecycle_clean": False,
         "pairwise_ic_ready": False,

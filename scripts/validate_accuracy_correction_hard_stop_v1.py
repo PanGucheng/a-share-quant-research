@@ -31,6 +31,7 @@ def main() -> int:
     assert len(readiness) == 1
     flags = readiness.iloc[0]
     assert bool(flags["selection_holdout_integrity_ready"])
+    assert bool(flags["universe_lifecycle_v2_ready"])
     for field in [
         "research_formula_accuracy_ready",
         "matrix_v4_lifecycle_clean",
@@ -67,6 +68,7 @@ def main() -> int:
 
     supersession = pd.read_csv(resolve(config["artifact_supersession"]))
     assert {
+        "universe",
         "matrix",
         "labels",
         "daily_ic",

@@ -6,7 +6,7 @@
 > 前置阶段：逻辑 PR #4.1 Selection Holdout Integrity 已完成
 > 后续阶段：PR #5A 模型输入协议（当前暂停）
 
-> 2026-07-23 实施回执：第 5.1 节机器级 hard-stop 与 supersession registry 已落地。当前权威治理状态位于 `outputs/accuracy_correction_v1/current/`；旧 PR4.1 readiness 仅保留历史证据，模型入口会优先读取 Accuracy Correction 状态并 fail-closed。此回执不代表 Universe v2、Matrix v4、IC v2 或任何后续研究修正已完成。
+> 2026-07-23 实施回执：第 5.1 节机器级 hard-stop 与 supersession registry 已落地；第 5.2 节 Universe lifecycle v2 已在 clean committed HEAD 上完成完整物化。旧 29 个越界 membership interval 已被截断，329 个非法 key 已全部移除，最终 lifecycle violation、interval overlap 和 removed-key residual 均为 0。当前权威治理状态位于 `outputs/accuracy_correction_v1/current/`，但 Matrix v4、IC v2 与后续研究修正仍未完成，模型 hard-stop 不变。
 
 ## 1. 文档权威性与当前结论
 
