@@ -13,7 +13,7 @@ random_seed: 20260723
 fdr_alpha: 0.05
 expected_outer_splits: 3
 expected_factor_count: 669
-gap_injection_stride: 17
+gap_injection_stride: 47
 gap_injection_factor_count: 12
 thresholds:
   maximum_p_value_absolute_difference: 0.02
