@@ -1,6 +1,8 @@
 # Selection Holdout Integrity 与后续模型计划 V1
 
-> **2026-07-22 实施状态：逻辑 PR #4.1 已完成本地工程验收。** 当前机器状态为 `selection_integrity_status=ready`、`model_entry_hard_stop_active=false`、`core_model_ready=true`、`pr5_model_training_ready=true`、`model_training_started=false`。三个 split 的 allowlist 分别为 48/46/54 个因子；36 组 outer-test mutation、3 份 pre-test freeze、3 份 consumed release receipt、两种透明 score 和 3 split × 2 method Qlib execution 全部通过 critical contract。旧全局 16 因子继续为 `test_influenced/model_input_allowed=false`。权威历史停牌/方向涨跌停能力仍为 false；历史 OOS 比较与生产模型选择均未完成。完整交接与下一步边界见 [PR #5A 模型输入协议交接计划 V1](./PR5A_MODEL_INPUT_PROTOCOL_HANDOFF_V1.md)。
+> **2026-07-23 Accuracy Correction 覆盖声明：**逻辑 PR #4.1 的 `selection_holdout_integrity_ready=true` 继续有效，但实现级复核确认 PIT lifecycle、横截面因子影响、pairwise IC、bootstrap 缺口语义、score completeness、市场字段时点、税费和陈旧估值问题。当前 48/46/54 allowlist 与透明 score 已被替代，历史 OOS NAV 不具权威性；`model_research_ready=false`、`authoritative_oos_execution_ready=false`、`core_model_ready=false`、`pr5_model_training_ready=false`、`model_training_started=false`。当前唯一执行计划改为 [Research / Execution Accuracy Correction V1](./ACCURACY_CORRECTION_V1_PLAN.md)：先 GitHub PR #6 研究正确性，再 PR #7 执行正确性，PR #5A 继续暂停。本文其余内容保留为已完成 holdout 修复的设计与历史证据，若与新计划冲突，以新计划为准。
+
+> **2026-07-22 历史实施状态：**逻辑 PR #4.1 曾完成三个 split 48/46/54 allowlist、36 组 outer-test mutation、3 份 freeze/release、两种透明 score 和 3 split × 2 method Qlib execution。该记录只证明选择链对 outer test 的隔离与工程 lineage；其中模型 readiness、当前 allowlist 和 OOS 数值资格已由上方 2026-07-23 声明撤回。
 
 ## 1. 文档定位
 
@@ -15,6 +17,10 @@ P0：同一 Draft PR 立即实施机器级模型 hard-stop
         ↓
 逻辑 PR #4.1：Selection Holdout Integrity + Provenance
         ↓
+GitHub PR #6：Research Accuracy Correction V1
+        ↓
+GitHub PR #7：Execution Accuracy Correction V1
+        ↓
 PR #5A：透明基线与模型输入协议
         ↓
 PR #5B：Ridge / Elastic Net
@@ -23,10 +29,10 @@ PR #5C：LightGBM
         ↓
 PR #5D：历史 OOS 科学比较
         ↓
-PR #6：新未来数据 / forward paper confirmation
+新未来数据 / forward paper confirmation
 ```
 
-“逻辑 PR #4.1”表示它属于 PR #4 的统计语义收尾；由于 GitHub PR #4 已合并，它使用当前 Draft GitHub PR #5 实施，但不得包含任何模型训练。本文中的 PR #5A—#5D 是后续逻辑模型阶段，不等同于当前 GitHub PR 编号。
+“逻辑 PR #4.1”表示它属于 PR #4 的统计语义收尾；由于 GitHub PR #4 已合并，它使用 GitHub PR #5 实施且未包含模型训练。本文中的 PR #5A—#5D 是后续逻辑模型阶段，不等同于实际 GitHub 编号。实际 GitHub PR #6/#7 已重新分配给 Accuracy Correction；旧“PR #6 = forward confirmation”编号废止。
 
 ### 1.1 2026-07-21 实施授权与持续推进规则
 
@@ -979,9 +985,9 @@ forward_confirmation_complete = false
 
 模型没有显著优于透明基线不是失败，允许科研结论为“Equal Weight 或 Stability Weight 在本组历史 OOS 中更优”。但不得把 `historical_oos_leader` 写成 `production_model`、`unbiased_expected_future_winner` 或已确认实盘策略。
 
-### 19.1 PR #6：新未来数据 / Forward Paper Confirmation
+### 19.1 后续待编号：新未来数据 / Forward Paper Confirmation
 
-PR #5D 后另建独立 PR #6。其目标是对一个 provisional forward candidate 使用 PR #5D 完成后才出现、此前完全不可见的新时间段进行确认；仍只做研究或 paper execution，不接入实盘。
+PR #5D 后另建独立 PR，实际编号届时确定。其目标是对一个 provisional forward candidate 使用 PR #5D 完成后才出现、此前完全不可见的新时间段进行确认；仍只做研究或 paper execution，不接入实盘。实际 GitHub PR #6/#7 已分配给 Accuracy Correction，不再用于 forward confirmation。
 
 规则：
 
@@ -992,7 +998,7 @@ PR #5D 后另建独立 PR #6。其目标是对一个 provisional forward candida
 - 任何策略变更都创建新 candidate/version，并从新的未来起点重新累计；
 - 历史 OOS 与 forward 结果分别报告，不能拼接后重新宣称历史 test 仍是未见数据。
 
-PR #6 完成后可以设置：
+该 forward-confirmation PR 完成后可以设置：
 
 ```text
 forward_confirmation_complete = true

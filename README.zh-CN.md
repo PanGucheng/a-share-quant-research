@@ -7,11 +7,10 @@ A 股量化研究工程。它最初用于复现官方 LightGBM + Alpha158 baseli
 
 ## 当前方向
 
-> **当前里程碑：**逻辑 PR #4.1 已完成 669 因子选择链的 holdout 修复。Provenance/cache
-> key v3、三个 outer-train FDR family、development-only stability、精确日期 split
-> clustering、48/46/54 个 split allowlist、36 组 test mutation、不可变 pre-test freeze、
-> 两种透明 score 与统一 Qlib execution 均已通过。旧全局 16 因子仍永久禁止；模型输入
-> 已具备进入独立 PR #5A 的条件，但模型训练尚未启动。
+> **当前里程碑：**逻辑 PR #4.1 已完成选择 holdout 隔离，但后续实现审计发现 PIT
+> lifecycle、横截面因子重算、pairwise IC、市场字段时点、历史费率和陈旧估值仍有
+> 准确性缺陷。当前 48/46/54 allowlist 与透明 score 已被替代，对应 OOS NAV 不具
+> 权威性；模型训练继续暂停。
 
 项目坚持一个原则：不替换 Qlib 主线，而是在 Qlib 外围补齐研究工程能力。
 
@@ -24,7 +23,7 @@ A 股量化研究工程。它最初用于复现官方 LightGBM + Alpha158 baseli
 - **因子筛选模块**：把因子研究输出转成可解释的候选看板，再交给后续组合测试。
 - **Qlib execution 层**：固定版本的 Exchange/Executor adapter、A 股约束、标准化 artifact、合成精确对账和本地真实小样本均已落地。
 
-下一优先级是 PR #5A 的模型输入与比较协议冻结。当前仍保持 `model_training_started=false`、`historical_oos_comparison_complete=false`、`production_model_selected=false`。PR #5A 先把现有 Equal Weight 与 Stability Weight 预测纳入统一 schema 和 common-period 协议，不重新打开 development 决策；Ridge、Elastic Net、LightGBM 继续按计划分阶段实施，本次尚未开始。
+下一优先级依次是 GitHub PR #6 `Research Accuracy Correction V1` 与 PR #7 `Execution Accuracy Correction V1`，详细计划见 [docs/ACCURACY_CORRECTION_V1_PLAN.md](docs/ACCURACY_CORRECTION_V1_PLAN.md)。在 `model_research_ready` 和 `authoritative_oos_execution_ready` 同时通过前，PR #5A 继续暂停；Ridge、Elastic Net、LightGBM 均未开始。
 
 ## 目录结构
 

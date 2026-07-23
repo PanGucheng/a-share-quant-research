@@ -13,12 +13,11 @@ Chinese documentation is available in [README.zh-CN.md](README.zh-CN.md).
 
 ## Current Direction
 
-> **Current milestone:** logical PR #4.1 completed the selection-holdout repair on top
-> of the 669-factor scale-up. Provenance/cache-key v3, three outer-train FDR families,
-> development-only stability, exact-date split clustering, 48/46/54 split allowlists,
-> 36 test-mutation cases, immutable pre-test freezes, transparent scores, and common
-> Qlib execution now pass. The former global 16-factor set remains forbidden. Model
-> inputs are ready for the separately planned PR #5A, but model training has not started.
+> **Current milestone:** logical PR #4.1 completed selection-holdout isolation, but a
+> subsequent implementation audit found accuracy defects in PIT lifecycle handling,
+> cross-sectional factor recomputation, pairwise IC, market-field timing, historical
+> fees, and stale valuation. The 48/46/54 allowlists and transparent scores are now
+> superseded, and their OOS NAV is non-authoritative. Model training remains paused.
 
 The project keeps Qlib as the main data and model backbone while adding independent
 research modules around it:
@@ -36,12 +35,11 @@ research modules around it:
 - **Qlib execution layer**: pinned Exchange/Executor adapters, A-share constraints,
   normalized artifacts, exact synthetic reconciliation, and a local-reference run.
 
-The next development stage is PR #5A's frozen model-input and comparison protocol.
-Selection integrity is ready, while `model_training_started=false`, historical OOS
-comparison is incomplete, and no production model is selected. PR #5A must first
-standardize the existing Equal Weight and Stability Weight predictions without
-reopening development decisions. Ridge, Elastic Net, and LightGBM remain outside the
-current implementation and must follow their documented order and separate gates.
+The next stages are GitHub PR #6, Research Accuracy Correction V1, followed by PR #7,
+Execution Accuracy Correction V1. The detailed plan is in
+[docs/ACCURACY_CORRECTION_V1_PLAN.md](docs/ACCURACY_CORRECTION_V1_PLAN.md). PR #5A is
+deferred until both `model_research_ready` and `authoritative_oos_execution_ready`
+pass. Ridge, Elastic Net, and LightGBM remain outside the current implementation.
 
 ## Repository Layout
 
