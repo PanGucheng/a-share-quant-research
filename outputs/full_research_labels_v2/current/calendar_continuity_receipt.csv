@@ -1,0 +1,2 @@
+﻿feature_date_count,canonical_calendar_start,canonical_calendar_end,entry_lag,holding_days,terminal_feature_date_count,terminal_key_count,terminal_nonmissing_label_count,exact_calendar_offsets,physical_row_shift_used,price_fill_used
+1294,2021-02-01,2026-06-09,1,20,21,42000,0,True,False,False

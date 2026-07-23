@@ -5,6 +5,7 @@ universe_lifecycle_v2_ready,pass,True,True,critical,Universe v2 intersects rolli
 factor_dependency_inventory_ready,pass,True,True,critical,All 669 factors have fail-closed dependency classifications; unknown and every Alpha101 factor require recomputation audit.
 matrix_v4_canary_ready,pass,True,True,critical,Five-source Top2000 PIT canary proved pure-factor common-key equivalence and mandatory Alpha101 recomputation with strict axis labels.
 matrix_v4_lifecycle_clean,pass,True,True,critical,Matrix v4 materialized 30 partitions and 669 factors on 2587671 Universe v2 keys with clean complete lineage.
+labels_v2_ready,pass,True,True,critical,Labels v2 uses exact canonical t+1/t+21 dates on 2587671 lifecycle-clean keys with no physical-row shift or price fill.
 research_formula_accuracy_ready,pass,False,False,critical,Research formulas and lifecycle-clean materialization are not yet corrected.
 execution_semantics_accuracy_ready,pass,False,False,critical,Execution field timing fees and valuation are not yet corrected.
 model_research_ready,pass,False,False,critical,Research model inputs are not currently eligible.

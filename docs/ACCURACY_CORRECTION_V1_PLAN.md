@@ -6,7 +6,7 @@
 > 前置阶段：逻辑 PR #4.1 Selection Holdout Integrity 已完成
 > 后续阶段：PR #5A 模型输入协议（当前暂停）
 
-> 2026-07-23 实施回执：机器级 hard-stop、Universe lifecycle v2、669 因子依赖审计和 Matrix v4 已完成。Universe v2 截断旧 29 个越界 membership interval、移除 329 个非法 key，最终 lifecycle violation、interval overlap 和 removed-key residual 均为 0。依赖审计证明 605 个非 Alpha101 因子为逐标的纯时间序列；Alpha101 中 2 个为纯横截面、46 个为 mixed、16 个公式为纯时间序列，但 64 个 Alpha101 因历史 positional-axis fallback 与 union-universe 宽表语义全部强制重算。五来源 Top2000 canary 通过后，全量 Matrix v4 在 30 个分区各物化 2,587,671 个 Universe v2 key：605 个复用因子合法共同 key 差异为 0，64 个 Alpha101 产生 107,066,948 个值级修正。最终 Manifest `full_research_feature_matrix_v4:10f6e0...` 与其 approval artifact 均为 clean/complete/pass，`matrix_v4_lifecycle_clean=true`。Labels v2、IC v2 与后续研究修正仍未完成，模型 hard-stop 不变。
+> 2026-07-23 实施回执：机器级 hard-stop、Universe lifecycle v2、669 因子依赖审计、Matrix v4 与 Labels v2 已完成。Universe v2 截断旧 29 个越界 membership interval、移除 329 个非法 key。Matrix v4 的 30 个分区各含 2,587,671 个 Universe v2 key：605 个复用因子合法共同 key 差异为 0，64 个 Alpha101 完整重算并产生 107,066,948 个值级修正；Matrix 与 approval Manifest 均 clean/complete/pass。Labels v2 在相同 2,587,671 key 上按 canonical calendar 精确连接 t+1/t+21 close，不使用物理行 shift 或价格填充；coverage 为 0.980970，末端 21 个 feature date / 42,000 key 全部按预期缺失，Manifest clean/complete/pass。`matrix_v4_lifecycle_clean=true`、`labels_v2_ready=true`，但 IC v2 与后续研究修正仍未完成，模型 hard-stop 不变。
 
 ## 1. 文档权威性与当前结论
 
@@ -303,6 +303,14 @@ label_terminal_missing_expected
 label_source_lifecycle_clean
 no_future_feature_in_label_inputs
 ```
+
+实施结果（2026-07-23）：
+
+- `full_research_labels_v2:404fe4...` 覆盖且只覆盖 Matrix v4 的 2,587,671 个 key，重复 key 与 lifecycle-illegal residual 均为 0；
+- 每个 feature date 先映射到 canonical calendar position，再显式连接 entry `t+1` 和 exit `t+21` 的原始 close；不使用 instrument 物理行 shift，不 forward/back fill；
+- 1,294 个 feature date 的 entry/exit offset 全部精确；末端 21 个 feature date、42,000 key 因没有完整 horizon 而全部缺失，未产生伪标签；
+- 有效标签 2,538,428 行，coverage 0.980970；输出哈希、Matrix v4 parent、Universe v2、raw snapshot 与 key partition 哈希全部绑定；
+- Manifest clean/complete/pass；标签阶段不读取 outer-test outcome 或任何选择结果。
 
 ### 5.6 Pairwise Spearman IC v2
 

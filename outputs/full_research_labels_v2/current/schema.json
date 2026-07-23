@@ -1,0 +1,12 @@
+{
+  "keys": [
+    "datetime",
+    "instrument"
+  ],
+  "label": "label_20d_t1",
+  "definition": "close[canonical_t+21]/close[canonical_t+1]-1",
+  "entry_lag": 1,
+  "holding_days": 20,
+  "price_fill": "none",
+  "physical_row_shift": false
+}
