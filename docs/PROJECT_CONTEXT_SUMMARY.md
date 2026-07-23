@@ -126,7 +126,7 @@ tmp/reference_repos/techfactor
 
 ## Next Work
 
-> **2026-07-23 Matrix v4 全量完成：**30/30 分区、669/669 因子，每分区 2,587,671 个 Universe v2 key。605 个 non-Alpha101 pure-time-series 因子在所有合法共同 key 上与 v3 位级一致；64 个 Alpha101 按 exact dynamic PIT membership 完整重算，61 个因子发生变化、累计 107,066,948 个值级修正，3 个无变化因子仍按 fallback 风险完成重算。首次 receipt 因同时继承 v1/v2 universe 被正确识别为 lineage inconsistent，未被接纳；runner 修正为显式权威 v2/catalog 绑定后以 30/30 cache-hit 重新核验，最终 artifact `full_research_feature_matrix_v4:bb578b...` clean/complete/pass。`matrix_v4_lifecycle_clean=true`；下一步是 Labels v2 与 calendar-continuity contract。
+> **2026-07-23 Matrix v4 全量完成：**30/30 分区、669/669 因子，每分区 2,587,671 个 Universe v2 key。605 个 non-Alpha101 pure-time-series 因子在所有合法共同 key 上与 v3 位级一致；64 个 Alpha101 按 exact dynamic PIT membership 完整重算，61 个因子发生变化、累计 107,066,948 个值级修正，3 个无变化因子仍按 fallback 风险完成重算。首次 receipt 因同时继承 v1/v2 universe 被正确识别为 lineage inconsistent，未被接纳；runner 与 approval 生成器均修正为显式权威 v2/catalog 绑定，并拒绝非 complete/dirty approval。最终以 30/30 cache-hit 重新核验，Matrix artifact `full_research_feature_matrix_v4:10f6e0...` 与 approval artifact 均 clean/complete/pass。`matrix_v4_lifecycle_clean=true`；下一步是 Labels v2 与 calendar-continuity contract。
 
 > **2026-07-23 Matrix v4 canary 完成：**五来源 canary 在完整动态 Top2000 PIT 横截面、2021-09 的 39,981 个合法 key 上运行。Alpha158、Alpha360、TA、project_basic 代表因子与 Matrix v3 逐位一致；Alpha101 mixed/cross-sectional 代表分别纠正 39,859/39,908 个共同 key，证明旧 union-universe 宽表污染不是“只删 329 行”可以修复。Alpha101 轴标签现在要求 exact equality，禁止同长度 positional relabel；returns 使用 `pct_change(fill_method=None)`，不跨 PIT 缺口前向填充。canary Manifest clean/complete/pass，后续全量结果以上方最新条目为准。
 

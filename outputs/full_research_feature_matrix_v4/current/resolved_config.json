@@ -1,0 +1,162 @@
+{
+  "schema_version": 1,
+  "profile": "full_research",
+  "profile_name": "full_research",
+  "profile_type": "full_research",
+  "research_run_family_id": "full_research_factor_669_v1",
+  "provider_uri": "../qlib_data/cn_data_community_20260609_derived",
+  "start_date": "2021-02-01",
+  "end_date": "2026-06-09",
+  "warmup_start_date": "2020-09-01",
+  "expected_factor_count": 669,
+  "expected_batch_count": 30,
+  "factor_inventory": "outputs/full_research_factor_catalog_669_v1/current/factor_inventory.csv",
+  "batch_plan": "outputs/full_research_factor_catalog_669_v1/current/batch_plan.csv",
+  "factor_catalog_manifest": "outputs/full_research_factor_catalog_669_v1/current/artifact_manifest.json",
+  "factor_dependency_inventory": "outputs/factor_dependency_v1/current/factor_dependency_inventory.csv",
+  "factor_dependency_manifest": "outputs/factor_dependency_v1/current/artifact_manifest.json",
+  "universe_intervals": "outputs/point_in_time_universe_v2/full_research/universe_intervals.csv",
+  "universe_manifest": "outputs/point_in_time_universe_v2/full_research/artifact_manifest.json",
+  "illegal_key_resolution": "outputs/point_in_time_universe_v2/full_research/illegal_key_resolution.csv",
+  "matrix_v3_batch_manifest": "outputs/full_research_feature_matrix_669_v1/current/batch_manifest.csv",
+  "matrix_v3_manifest": "outputs/full_research_feature_matrix_669_v1/current/artifact_manifest.json",
+  "matrix_v4_canary_manifest": "outputs/full_research_feature_matrix_v4_canary/current/artifact_manifest.json",
+  "matrix_v4_canary_contract": "outputs/full_research_feature_matrix_v4_canary/current/contract_status.csv",
+  "alpha101_source_path": "tmp/reference_repos/KunQuant",
+  "alpha101_metadata_catalog": "outputs/factor_catalog_alpha101_v1/kunquant_alpha101_catalog_metadata.yaml",
+  "raw_cache_path": "outputs/full_research_feature_matrix_v1/runtime/raw_ohlcva.parquet",
+  "raw_market_data_snapshot_manifest": "outputs/raw_market_data_snapshot_v1/full_research_669/artifact_manifest.json",
+  "raw_market_data_detail_manifest": "outputs/raw_market_data_snapshot_v1/full_research_669/raw_market_data_manifest.json",
+  "cache_key_schema_version": 4,
+  "runtime_dir": "outputs/full_research_feature_matrix_v4/runtime",
+  "output_dir": "outputs/full_research_feature_matrix_v4/current",
+  "alpha101_policy": {
+    "compute_universe": "exact_dynamic_pit_membership",
+    "pre_universe_warmup": "raw_instrument_history",
+    "returns_fill_method": null,
+    "axis_relabel": "forbidden"
+  },
+  "reuse_policy": {
+    "required_dependency_class": "pure_time_series",
+    "required_inventory_flag": "filter_only_reuse_allowed",
+    "common_key_equivalence": "bit_identical"
+  },
+  "config_file_sha256": "c7cda8d9c61b33f30ad65fb4230a4db362257438c5e250af7438d3c4ddc411ea",
+  "approval_id": "bulk-run-approval:45cb90e6a114dc54179269dffad667b777c1c603d14bedc6be2101cc3954d8c7",
+  "input_inventory": [
+    {
+      "input_type": "artifact",
+      "name": "factor_catalog_manifest",
+      "artifact_id": "full_research_factor_catalog_669_v1:4916ff89ed2853a2f69d05ede489d9ad44036c3424ddd384801061968b7efc44",
+      "config_sha256": "464bc0dc27bb7f5c5f8ec468c9245f3143efb38db63bd68a5b61e707b07d8084"
+    },
+    {
+      "input_type": "artifact",
+      "name": "factor_dependency_manifest",
+      "artifact_id": "factor_dependency_v1:a2bdf16d178f6e166e58ef26accbe23b7276a79fadf3baead4cadd5c1bb63492",
+      "config_sha256": "266ba3ffc1e331f5eaaf598ec41c171f7aa5c8d36ee9df23420d52068fca0ae2"
+    },
+    {
+      "input_type": "artifact",
+      "name": "universe_manifest",
+      "artifact_id": "point_in_time_universe_v2:325e39d7dd68afe0828154840b813287d0bf991487a42ed51a7d6476e85d7838",
+      "config_sha256": "e77e3fa86a703efe5064c17045e186eb803046831dfe1040be5824c66308e329"
+    },
+    {
+      "input_type": "artifact",
+      "name": "matrix_v3_manifest",
+      "artifact_id": "full_research_feature_matrix_v1:c7a37c0c6031ac99b3260ab6141e4a2353eb115b1653d8fb23a5e0cc0924b0bf",
+      "config_sha256": "61776418e7c3235618e0e50ac538baf6ff4936831b004672fe04a031ce70f6bb"
+    },
+    {
+      "input_type": "artifact",
+      "name": "matrix_v4_canary_manifest",
+      "artifact_id": "full_research_feature_matrix_v4_canary:0afddf7b4bdebeb183b2e8a178ddb072b7771b37cb6ebf5fa14d861505db1b8e",
+      "config_sha256": "0d0a71090e08e93871047deeb2eb646cf8bbf1499f7c015485334911bf0ede89"
+    },
+    {
+      "input_type": "artifact",
+      "name": "raw_market_data_snapshot_manifest",
+      "artifact_id": "raw_market_data_snapshot_v1:e2f213da365ea6ba4d8375c830ff32e45f78fc847b814a11aaeb9e26b49d8cd9",
+      "config_sha256": "348bacbc3bd987a5de77ff0d2f4d56a375294fe1612c758766f2a83ab6caa149"
+    },
+    {
+      "input_type": "file",
+      "name": "factor_inventory",
+      "path": "outputs/full_research_factor_catalog_669_v1/current/factor_inventory.csv",
+      "sha256": "e93bef1c7f3fdc7f4040fd70014aed9b7ea31c6e087bdd161d732cac3c0ea722"
+    },
+    {
+      "input_type": "file",
+      "name": "batch_plan",
+      "path": "outputs/full_research_factor_catalog_669_v1/current/batch_plan.csv",
+      "sha256": "cbfd56d4532e677ce6e09c8422ee94e20c942fce74b97933e0a1cdc471d3df87"
+    },
+    {
+      "input_type": "file",
+      "name": "factor_dependency_inventory",
+      "path": "outputs/factor_dependency_v1/current/factor_dependency_inventory.csv",
+      "sha256": "862c0251e5831672c98491bdcb1c67a8099edf06e1672dc2beb678c80da1eb5c"
+    },
+    {
+      "input_type": "file",
+      "name": "universe_intervals",
+      "path": "outputs/point_in_time_universe_v2/full_research/universe_intervals.csv",
+      "sha256": "08d4a3b083527fc2b06d2d946cc174a83f6a3d90821132ce88bc83d49c55ca0f"
+    },
+    {
+      "input_type": "file",
+      "name": "illegal_key_resolution",
+      "path": "outputs/point_in_time_universe_v2/full_research/illegal_key_resolution.csv",
+      "sha256": "1a2516a6840d2f4d39b7ec9a89c637887b7e8539230c32dca0def862d6a4757e"
+    },
+    {
+      "input_type": "file",
+      "name": "matrix_v3_batch_manifest",
+      "path": "outputs/full_research_feature_matrix_669_v1/current/batch_manifest.csv",
+      "sha256": "aa1076a758605295c1e5bbdfad437d7c8d469607d213c1dd036f318388f7b1ea"
+    },
+    {
+      "input_type": "file",
+      "name": "matrix_v4_canary_contract",
+      "path": "outputs/full_research_feature_matrix_v4_canary/current/contract_status.csv",
+      "sha256": "99659d805f99da4942392b48b92d5fb810e4d0c47d66f9100b1685fce7df1ff0"
+    },
+    {
+      "input_type": "file",
+      "name": "alpha101_metadata_catalog",
+      "path": "outputs/factor_catalog_alpha101_v1/kunquant_alpha101_catalog_metadata.yaml",
+      "sha256": "83e8b4948ef2ab7d178911e6ec92c503e6f10020d280c566798ed141a9e0ff0f"
+    },
+    {
+      "input_type": "implementation",
+      "name": "alpha101_source.py",
+      "path": "factor_research/alpha101_source.py",
+      "sha256": "25dace8c9fe1a7de685fb8e8a7efadb9a968f614db04b4bc3aa0a6e91f683c53"
+    },
+    {
+      "input_type": "implementation",
+      "name": "factor_dependency.py",
+      "path": "research_validation/factor_dependency.py",
+      "sha256": "ec8dbf5b7d1719e1020d5f9a72dec4f2e8feea15ad3609635a03be84285bd162"
+    },
+    {
+      "input_type": "implementation",
+      "name": "run_full_research_feature_matrix_v4.py",
+      "path": "scripts/run_full_research_feature_matrix_v4.py",
+      "sha256": "f49bbadfc7d1a00143f0f9105fa03f4b7420aa3e016d4395628f00681d910f56"
+    },
+    {
+      "input_type": "external",
+      "name": "raw_ohlcva",
+      "path": "outputs/full_research_feature_matrix_v1/runtime/raw_ohlcva.parquet",
+      "sha256": "1da985efe1a361eb5b366bc958a8c68ac1e15c3c6054ae0b946e64ab40ee49e8",
+      "size_bytes": 128461794
+    },
+    {
+      "input_type": "scope",
+      "name": "batch_factor_digest",
+      "sha256": "bf0274aa91c9903488198fc302df1657344ddf2724e0ab85c26e3889564d9adc"
+    }
+  ]
+}

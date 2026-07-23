@@ -1,0 +1,7 @@
+﻿check,status,severity,detail
+canary_all_pass,pass,critical,0
+factor_count_669,pass,critical,669
+batch_count_30,pass,critical,30
+filter_only_candidates_605,pass,critical,605
+alpha101_mandatory_64,pass,critical,64
+free_disk_sufficient,pass,critical,407673528320>=9201626855

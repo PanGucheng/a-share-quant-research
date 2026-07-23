@@ -1,0 +1,11 @@
+﻿check,status,severity,detail
+all_30_batches_pass,pass,critical,30
+all_669_factors_materialized,pass,critical,669
+complete_v2_key_grid,pass,critical,2587671
+pure_common_keys_bit_identical,pass,critical,0
+alpha101_all_recomputed,pass,critical,64
+alpha101_differences_attributed,pass,critical,107066948
+cache_key_schema_v4,pass,critical,[4]
+output_hashes_present,pass,critical,30
+bulk_run_approval_consumed,pass,critical,E:/qlib_prj/qlib_baseline/outputs/full_research_feature_matrix_v4/runtime/bulk_run_consumptions/0abb03435090b7fae9775004e47e601d7aca9572ecde6ca67d1ba63f5d1b178b.json
+outer_test_not_read,pass,critical,feature materialization only
