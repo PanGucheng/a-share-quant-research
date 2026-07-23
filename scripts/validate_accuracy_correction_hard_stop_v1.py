@@ -61,10 +61,12 @@ def main() -> int:
     for field in [
         "execution_unit_semantics_ready",
         "market_cache_volume_unit_ready",
+        "market_cache_amount_unit_ready",
         "execution_semantics_accuracy_ready",
-        "market_cache_v2_ready",
+        "market_cache_v3_ready",
     ]:
-        assert not bool(flags[field]), field
+        assert bool(flags[field]), field
+    assert not bool(flags["market_cache_v2_ready"])
     assert bool(flags["data_source_audit_v2_ready"])
     assert int(flags["future_market_field_count"]) == 0
     assert bool(flags["model_entry_hard_stop_active"])
@@ -72,7 +74,7 @@ def main() -> int:
     assert flags["selection_integrity_status"] == "ready"
     assert (
         flags["accuracy_correction_status"]
-        == "execution_unit_semantics_correction_required"
+        == "execution_unit_semantics_corrected_authoritative_state_blocked"
     )
 
     selections = pd.read_csv(resolve(config["selection_status"]))
@@ -91,7 +93,7 @@ def main() -> int:
     ].iloc[0]
     assert (
         corrected["selection_status"]
-        == "research_accuracy_ready_execution_unit_correction_required"
+        == "research_and_unit_accuracy_ready_authoritative_state_blocked"
     )
     assert not bool(corrected["model_input_allowed"])
     assert int(corrected["representative_count"]) == 143
@@ -139,8 +141,8 @@ def main() -> int:
         raise AssertionError("active Accuracy Correction hard-stop did not block model entry")
 
     print(
-        "Accuracy Correction V1 hard-stop is active; all current model inputs "
-        "and historical OOS evidence are superseded or non-authoritative."
+        "Accuracy Correction V1 hard-stop is active; research and unit semantics "
+        "are ready while authoritative state and all model entry remain blocked."
     )
     return 0
 

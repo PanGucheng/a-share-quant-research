@@ -53,11 +53,16 @@ def main() -> int:
     central = pd.read_csv(
         PROJECT_ROOT / "outputs/accuracy_correction_v1/current/readiness_summary.csv"
     ).iloc[0]
-    assert central["accuracy_correction_status"] == "execution_unit_semantics_correction_required"
-    assert not bool(central["execution_semantics_accuracy_ready"])
+    assert (
+        central["accuracy_correction_status"]
+        == "execution_unit_semantics_corrected_authoritative_state_blocked"
+    )
+    assert bool(central["execution_semantics_accuracy_ready"])
     assert not bool(central["market_cache_v2_ready"])
+    assert bool(central["market_cache_v3_ready"])
+    assert bool(central["execution_unit_semantics_ready"])
     assert bool(central["model_entry_hard_stop_active"])
-    print("Data Source Audit V2 Decision B receipts pass; execution unit readiness is retracted.")
+    print("Data Source Audit V2 Decision B receipts pass; V1.2 unit correction is current.")
     return 0
 
 
