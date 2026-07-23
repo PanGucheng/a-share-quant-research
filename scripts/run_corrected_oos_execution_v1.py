@@ -29,6 +29,7 @@ COMPACT_OUTPUTS = [
     "contract_status.csv",
     "execution_artifacts.csv",
     "execution_summary.csv",
+    "execution_summary_comparison.csv",
     "fee_schedule_usage.csv",
     "old_vs_new_attribution.csv",
     "resolved_config.json",
@@ -178,8 +179,57 @@ def main() -> int:
     )
     market_authoritative = int(cache_rows["authoritative_row_count"].sum())
     stale_blocked = int(cache_rows["stale_blocked_count"].sum())
+    old_summary = pd.read_csv(resolve(config["superseded_execution_summary"]))
+    comparison = old_summary.merge(
+        combined["execution_summary"],
+        on=["outer_split_id", "method"],
+        suffixes=("_old_superseded", "_new_corrected"),
+        validate="one_to_one",
+    )
+    for metric in [
+        "ending_nav", "total_cash_fee", "total_slippage_cost", "order_count",
+        "fill_count", "partial_count", "rejected_count",
+    ]:
+        comparison[f"{metric}_delta"] = (
+            comparison[f"{metric}_new_corrected"] - comparison[f"{metric}_old_superseded"]
+        )
+    market_frames = []
+    for _, row in cache_rows.iterrows():
+        frame = pd.read_parquet(Path(str(row["path"])), columns=[
+            "datetime", "instrument", "can_buy", "can_sell",
+            "execution_price_is_valuation_fallback", "terminal_event_approximation", "board",
+        ])
+        market_frames.append(frame.assign(outer_split_id=str(row["outer_split_id"])))
+    fill_audit = fills.merge(
+        pd.concat(market_frames, ignore_index=True),
+        on=["outer_split_id", "datetime", "instrument"],
+        how="left",
+        validate="many_to_one",
+    )
+    invalid_directional_fills = int(
+        (
+            (fill_audit["side"].eq("buy") & ~fill_audit["can_buy"])
+            | (fill_audit["side"].eq("sell") & ~fill_audit["can_sell"])
+        ).sum()
+    )
+    invalid_fallback_fills = int(
+        (
+            fill_audit["execution_price_is_valuation_fallback"]
+            & ~fill_audit["terminal_event_approximation"]
+        ).sum()
+    )
+    buy = fill_audit.loc[fill_audit["side"].eq("buy")].copy()
+    main_buy = buy.loc[buy["board"].isin(["main", "chinext"])]
+    main_remainder = main_buy["executed_shares"].mod(100)
+    maximum_main_lot_error = float(
+        pd.concat([main_remainder, 100 - main_remainder], axis=1).min(axis=1).max()
+    ) if not main_remainder.empty else 0.0
+    star_buy = buy.loc[buy["board"].eq("star")]
+    invalid_star_buy_count = int(
+        ((star_buy["executed_shares"] < 200 - 1e-8) | ((star_buy["executed_shares"] % 1).abs() > 1e-8)).sum()
+    )
     attribution = pd.DataFrame([
-        {"category": "signal_change", "status": "classified", "detail": "PR6 corrected split-specific scores replace test-influenced historical signals."},
+        {"category": "signal_change", "status": "classified", "detail": "PR6 corrected split-specific scores replace test-influenced historical signals; numerical deltas are in execution_summary_comparison.csv."},
         {"category": "fee_schedule", "status": "classified", "detail": "Date-aware 0.0005 sell stamp tax applies throughout corrected OOS."},
         {"category": "price_limit_semantics", "status": "classified_non_authoritative", "detail": "Previous-close board rule replaces same-day change; historical ST state is unavailable."},
         {"category": "lot_rule", "status": "classified", "detail": "Board-aware buy minimum and increments replace uniform 100-share assumption."},
@@ -202,6 +252,10 @@ def main() -> int:
         ("accounting_conservation", float(daily["accounting_error"].abs().max()) <= 1e-6, float(daily["accounting_error"].abs().max()), "<=1e-6"),
         ("unknown_execution_difference_count", True, 0, 0),
         ("terminal_event_approximations_reported", True, terminal_fill_count, "explicit count"),
+        ("tradability_constraints_applied", invalid_directional_fills == 0, invalid_directional_fills, 0),
+        ("valuation_fallback_never_filled_as_trade", invalid_fallback_fills == 0, invalid_fallback_fills, 0),
+        ("dynamic_lot_rules_valid", maximum_main_lot_error <= 1e-6 and invalid_star_buy_count == 0, f"main_error={maximum_main_lot_error};star_invalid={invalid_star_buy_count}", "zero violations"),
+        ("complete_trading_calendar", bool(daily["calendar_complete"].all()), int(daily["calendar_complete"].sum()), len(daily)),
     ]
     capability_checks = [
         ("instrument_state_pit_valid", False, market_authoritative, "all market rows authoritative"),
@@ -225,6 +279,7 @@ def main() -> int:
             artifact_rows.append({"table": name, "path": str(output_dir / f"runtime/{name}.parquet"), "rows": len(frame), "sha256": file_sha256(path)})
         pd.DataFrame(artifact_rows).to_csv(publisher.path("execution_artifacts.csv"), index=False, encoding="utf-8-sig")
         combined["execution_summary"].to_csv(publisher.path("execution_summary.csv"), index=False, encoding="utf-8-sig")
+        comparison.to_csv(publisher.path("execution_summary_comparison.csv"), index=False, encoding="utf-8-sig")
         pd.DataFrame(fee_rows).to_csv(publisher.path("fee_schedule_usage.csv"), index=False, encoding="utf-8-sig")
         attribution.to_csv(publisher.path("old_vs_new_attribution.csv"), index=False, encoding="utf-8-sig")
         contract.to_csv(publisher.path("contract_status.csv"), index=False, encoding="utf-8-sig")

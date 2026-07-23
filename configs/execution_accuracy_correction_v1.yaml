@@ -25,6 +25,7 @@ instrument_state_output: outputs/instrument_state_v1/current
 market_cache_output: outputs/market_cache_v2/current
 bugfix_freeze_output: outputs/bugfix_research_freeze_v1/current
 execution_output: outputs/execution_accuracy_correction_v1/current
+superseded_execution_summary: outputs/qlib_exchange_split_transparent_v1/full_research_669/execution_summary.csv
 canary:
   outer_splits: [split_001]
   trading_days: 10
