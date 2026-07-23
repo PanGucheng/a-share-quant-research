@@ -241,11 +241,19 @@ class PreparedQuoteExchange(Exchange):  # type: ignore[misc]
 
     def _calc_trade_info_by_order(self, order: object, position: object, dealt_order_amount: dict) -> tuple[float, float, float]:
         base_adjusted_price, _, _ = super()._calc_trade_info_by_order(order, position, dealt_order_amount)
+        factor = float(order.factor or 1.0)
+        if self.dynamic_lot_rules and order.direction == Order.BUY and order.deal_amount > 0:
+            trading_date = pd.Timestamp(order.start_time).normalize()
+            row = self._prepared_quote.loc[(order.stock_id, trading_date)]
+            minimum_raw = float(row["audit_lot_minimum_buy"])
+            if float(order.deal_amount) * factor + 1e-8 < minimum_raw:
+                order.deal_amount = 0.0
+                self._last_cost = ExecutionCostBreakdown(0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
+                return base_adjusted_price, 0.0, 0.0
         if order.deal_amount <= 0 or not np.isfinite(base_adjusted_price):
             self._last_cost = ExecutionCostBreakdown(0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
             return base_adjusted_price, 0.0, 0.0
 
-        factor = float(order.factor or 1.0)
         side = "buy" if order.direction == Order.BUY else "sell"
         fee = resolve_fee(self.fee_schedule, order.start_time) if self.fee_schedule else None
         self._last_fee_schedule_id = fee.schedule_id if fee else "legacy_static"

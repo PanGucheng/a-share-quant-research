@@ -225,8 +225,15 @@ def main() -> int:
         pd.concat([main_remainder, 100 - main_remainder], axis=1).min(axis=1).max()
     ) if not main_remainder.empty else 0.0
     star_buy = buy.loc[buy["board"].eq("star")]
+    star_remainder = star_buy["executed_shares"].mod(1)
+    star_integer_error = pd.concat(
+        [star_remainder, 1 - star_remainder], axis=1
+    ).min(axis=1) if not star_remainder.empty else pd.Series(dtype=float)
     invalid_star_buy_count = int(
-        ((star_buy["executed_shares"] < 200 - 1e-8) | ((star_buy["executed_shares"] % 1).abs() > 1e-8)).sum()
+        (
+            (star_buy["executed_shares"] < 200 - 1e-8)
+            | (star_integer_error > 1e-8)
+        ).sum()
     )
     attribution = pd.DataFrame([
         {"category": "signal_change", "status": "classified", "detail": "PR6 corrected split-specific scores replace test-influenced historical signals; numerical deltas are in execution_summary_comparison.csv."},

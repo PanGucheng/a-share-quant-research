@@ -233,6 +233,37 @@ def test_directionless_target_generation_keeps_one_way_tradability(qlib_provider
     assert exchange.is_stock_tradable("SH600000", date, date, Order.SELL)
 
 
+def test_star_minimum_buy_is_rechecked_after_volume_clip(qlib_provider: Path) -> None:
+    _, market = _frames()
+    one_day = market.loc[market["datetime"] == market["datetime"].min()].copy()
+    one_day.loc[one_day["instrument"] == "SH600000", "volume"] = 150
+    one_day["lot_minimum_buy"] = 200
+    one_day["lot_increment_buy"] = 1
+    one_day["lot_increment_sell"] = 1
+    exchange = PreparedQuoteExchange(
+        prepared_quote=to_qlib_quote(one_day, 1.0),
+        buy_commission_rate=0.0,
+        sell_commission_rate=0.0,
+        sell_tax_rate=0.0,
+        minimum_commission=0.0,
+        slippage_bps=0.0,
+        dynamic_lot_rules=True,
+        freq="day",
+        start_time=one_day["datetime"].min(),
+        end_time=one_day["datetime"].min(),
+        codes=sorted(one_day["instrument"].unique()),
+        deal_price="$execution_price",
+        limit_threshold=("limit_buy", "limit_sell"),
+        volume_threshold=("current", "$participation_limit"),
+        trade_unit=1,
+    )
+    date = pd.Timestamp(one_day["datetime"].min())
+    account = create_account_instance(date, date, pd.Series([0.0], index=[date]), 1_000_000.0)
+    order = Order("SH600000", 1_000, Order.BUY, date, date)
+    exchange.deal_order(order, trade_account=account, dealt_order_amount={})
+    assert order.deal_amount == 0
+
+
 def test_volume_limit_and_component_costs_are_audited(qlib_provider: Path) -> None:
     _, market = _frames()
     one_day = market.loc[market["datetime"] == market["datetime"].min()].copy()
