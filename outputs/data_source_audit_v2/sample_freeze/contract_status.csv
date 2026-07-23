@@ -1,0 +1,5 @@
+﻿check_name,status,observed_value,required_value,severity,reason
+sample_size,pass,150,150,critical,
+duplicate_instrument_count,pass,0,0,critical,
+board_strata_present,pass,chinext|main|star,chinext|main|star,critical,
+selection_evidence_present,pass,150,150,critical,
