@@ -293,10 +293,14 @@ def main() -> int:
         .abs()
     )
     adjustment = c.loc[
-        c["factor_change"].gt(1e-6),
+        c["factor_change"].gt(5e-3),
         ["instrument", "date", "$factor", "factor_change", "raw_close"],
     ].copy()
-    adjustment["event_window_status"] = "candidate_requires_corporate_action_cross_check"
+    adjustment["event_window_status"] = np.where(
+        adjustment["instrument"].eq("SZ302132"),
+        "code_change_not_ordinary_corporate_action",
+        "candidate_requires_corporate_action_cross_check",
+    )
     immutable = []
     for name in ["matrix_manifest", "selection_manifest"]:
         path = resolve(config[name])
@@ -336,6 +340,12 @@ def main() -> int:
         int(frame.duplicated(["instrument", "date"]).sum())
         for frame in frames.values()
     )
+    verified_st_instruments = int(
+        baostock.loc[baostock["is_st"].eq(True), "instrument"].nunique()
+    )
+    nontrading_instruments = int(
+        baostock.loc[~baostock["is_trading"].astype(bool), "instrument"].nunique()
+    )
     contracts = pd.DataFrame(
         [
             {"check_name": "sample_size", "status": "pass" if len(instruments) == int(config["sample_size"]) else "blocked", "observed_value": len(instruments), "required_value": int(config["sample_size"]), "severity": "critical", "reason": ""},
@@ -349,7 +359,9 @@ def main() -> int:
             {"check_name": "missing_span_detection", "status": "pass", "observed_value": len(missing), "required_value": "explicit source-vs-union inventory", "severity": "critical", "reason": ""},
             {"check_name": "core_raw_ohlc_reconciliation", "status": "pass" if core_reliable else "blocked", "observed_value": float(core_rates.max()) if len(core_rates) else 0.0, "required_value": ">=0.99 close tolerance match", "severity": "critical", "reason": ""},
             {"check_name": "historical_st_available_before_open", "status": "blocked", "observed_value": "unknown", "required_value": "verified", "severity": "capability", "reason": "BaoStock isST publication timing is not proven before-open."},
+            {"check_name": "verified_historical_st_sample_target", "status": "pass" if verified_st_instruments >= 25 else "blocked", "observed_value": verified_st_instruments, "required_value": ">=25 instruments", "severity": "capability", "reason": "The deterministic canary found fewer verified ST instruments than the target."},
             {"check_name": "tradability_available_before_open", "status": "blocked", "observed_value": "unknown", "required_value": "verified", "severity": "capability", "reason": "Free-source fields do not prove before-open availability."},
+            {"check_name": "nontrading_sample_target", "status": "pass" if nontrading_instruments >= 20 else "blocked", "observed_value": nontrading_instruments, "required_value": ">=20 instruments", "severity": "capability", "reason": ""},
             {"check_name": "adjustment_event_timing_verified", "status": "blocked", "observed_value": len(adjustment), "required_value": "official corporate-action cross-check", "severity": "capability", "reason": "Factor-change candidates are inventoried but official event timing is not yet machine-resolved."},
             {"check_name": "provider_not_modified", "status": "pass", "observed_value": True, "required_value": True, "severity": "critical", "reason": ""},
             {"check_name": "matrix_v4_unchanged", "status": "pass", "observed_value": immutable[0]["artifact_id"], "required_value": immutable[0]["artifact_id"], "severity": "critical", "reason": ""},
@@ -366,6 +378,8 @@ def main() -> int:
         "akshare_eastmoney_source_coverage": akshare_coverage,
         "akshare_endpoint_stable": akshare_coverage >= 0.95,
         "historical_instrument_state_v2_ready": False,
+        "verified_historical_st_instrument_count": verified_st_instruments,
+        "nontrading_instrument_count": nontrading_instruments,
         "execution_semantics_accuracy_ready": False,
         "authoritative_oos_execution_ready": False,
         "core_model_ready": False,
@@ -431,6 +445,7 @@ def main() -> int:
             "- P0: Market Cache v2 participation volume omitted the board-lot `×100` conversion and is under-scaled 100×.\n"
             "- P1: Community amount is CNY thousands and requires `×1000`; current execution does not consume amount.\n"
             "- BaoStock `isST` and `tradestatus` are useful candidates, but before-open availability remains unproven and fail-closed.\n"
+            f"- Observed historical ST / non-trading instruments: `{verified_st_instruments}` / `{nontrading_instruments}`.\n"
             "- AKShare Eastmoney history is not stable in the active proxy environment; failures are retained in query receipts.\n"
             "- No production provider, Matrix v4, factor selection, model, or authoritative historical OOS artifact was changed.\n",
             encoding="utf-8",

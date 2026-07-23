@@ -119,7 +119,7 @@ def main() -> int:
             factor_change=lambda frame: frame.groupby("instrument")["factor"]
             .pct_change(fill_method=None)
             .abs()
-            .gt(1e-6)
+            .gt(5e-3)
         )
         .groupby("instrument", as_index=False)["factor_change"]
         .sum()
