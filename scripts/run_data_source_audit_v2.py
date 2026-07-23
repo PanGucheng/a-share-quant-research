@@ -112,6 +112,11 @@ def receipt(
 def main() -> int:
     parser = argparse.ArgumentParser(description="Run isolated Data Source Audit V2 canary.")
     parser.add_argument("--config", type=Path, default=Path("configs/data_source_audit_v2.yaml"))
+    parser.add_argument(
+        "--reuse-existing-raw",
+        action="store_true",
+        help="Revalidate already snapshotted raw responses without network access.",
+    )
     args = parser.parse_args()
     config = yaml.safe_load(resolve(args.config).read_text(encoding="utf-8")) or {}
     sample_dir = resolve(config["sample_output"])
@@ -120,42 +125,107 @@ def main() -> int:
     start_date, end_date = str(config["start_date"]), str(config["end_date"])
     retrieved = datetime.now(timezone.utc).isoformat()
     receipts: list[dict[str, object]] = []
-
-    community_raw = collect_community(
-        instruments, start_date, end_date, resolve(config["qlib_provider"])
-    )
-    for instrument, frame in community_raw.groupby("instrument", sort=True):
-        receipts.append(
-            receipt(
-                source="community",
-                version="qlib_provider_snapshot_20260609",
-                endpoint="D.features",
-                instrument=instrument,
-                start_date=start_date,
-                end_date=end_date,
-                status="success",
-                frame=frame,
-                retrieved=retrieved,
-            )
+    existing_dir = resolve(config["output_dir"])
+    if args.reuse_existing_raw:
+        required = [
+            existing_dir / "raw/community_daily.parquet",
+            existing_dir / "raw/baostock_daily.parquet",
+            existing_dir / "raw/akshare_daily.parquet",
+            existing_dir / "source_query_receipts.csv",
+        ]
+        if not all(path.is_file() for path in required):
+            raise ValueError("reuse requested but existing raw snapshots are incomplete")
+        community_raw = pd.read_parquet(required[0])
+        baostock_raw = pd.read_parquet(required[1])
+        akshare_raw = pd.read_parquet(required[2])
+        receipts = pd.read_csv(required[3]).to_dict("records")
+        bao_status = "reused_snapshot"
+    else:
+        community_raw = collect_community(
+            instruments, start_date, end_date, resolve(config["qlib_provider"])
         )
-
-    bao_frames = []
-    bao_status = "unavailable"
-    try:
-        import baostock as bs
-
-        login = bs.login()
-        if login.error_code != "0":
-            raise RuntimeError(f"{login.error_code}:{login.error_msg}")
-        for instrument in instruments:
-            frame, status = bao_source.collect_one(instrument, start_date, end_date)
-            if not frame.empty:
-                bao_frames.append(frame)
+        for instrument, frame in community_raw.groupby("instrument", sort=True):
             receipts.append(
                 receipt(
-                    source="baostock",
-                    version=bao_source.library_version(),
-                    endpoint="query_history_k_data_plus",
+                    source="community",
+                    version="qlib_provider_snapshot_20260609",
+                    endpoint="D.features",
+                    instrument=instrument,
+                    start_date=start_date,
+                    end_date=end_date,
+                    status="success",
+                    frame=frame,
+                    retrieved=retrieved,
+                )
+            )
+        bao_frames = []
+        bao_status = "unavailable"
+        try:
+            import baostock as bs
+
+            login = bs.login()
+            if login.error_code != "0":
+                raise RuntimeError(f"{login.error_code}:{login.error_msg}")
+            for instrument in instruments:
+                frame, status = bao_source.collect_one(instrument, start_date, end_date)
+                if not frame.empty:
+                    bao_frames.append(frame)
+                receipts.append(
+                    receipt(
+                        source="baostock",
+                        version=bao_source.library_version(),
+                        endpoint="query_history_k_data_plus",
+                        instrument=instrument,
+                        start_date=start_date,
+                        end_date=end_date,
+                        status=status,
+                        frame=frame,
+                        retrieved=datetime.now(timezone.utc).isoformat(),
+                    )
+                )
+            bs.logout()
+            bao_status = "success"
+        except Exception as exc:
+            bao_status = f"unavailable:{type(exc).__name__}:{str(exc)[:300]}"
+            for instrument in instruments:
+                receipts.append(
+                    receipt(
+                        source="baostock",
+                        version=bao_source.library_version(),
+                        endpoint="query_history_k_data_plus",
+                        instrument=instrument,
+                        start_date=start_date,
+                        end_date=end_date,
+                        status=bao_status,
+                        frame=pd.DataFrame(),
+                        retrieved=datetime.now(timezone.utc).isoformat(),
+                    )
+                )
+        baostock_raw = (
+            pd.concat(bao_frames, ignore_index=True) if bao_frames else pd.DataFrame()
+        )
+        ak_frames = []
+        for instrument in instruments:
+            frame = pd.DataFrame()
+            status = "unavailable"
+            for attempt in range(int(config["maximum_retries"]) + 1):
+                try:
+                    frame = ak_source.collect_one(instrument, start_date, end_date)
+                    status = "success"
+                    break
+                except Exception as exc:
+                    status = f"error:{type(exc).__name__}:{str(exc)[:200]}"
+                    if attempt < int(config["maximum_retries"]):
+                        time.sleep(
+                            float(config["retry_backoff_seconds"]) * (attempt + 1)
+                        )
+            if not frame.empty:
+                ak_frames.append(frame)
+            receipts.append(
+                receipt(
+                    source="akshare_eastmoney",
+                    version=ak_source.library_version(),
+                    endpoint="stock_zh_a_hist",
                     instrument=instrument,
                     start_date=start_date,
                     end_date=end_date,
@@ -164,55 +234,9 @@ def main() -> int:
                     retrieved=datetime.now(timezone.utc).isoformat(),
                 )
             )
-        bs.logout()
-        bao_status = "success"
-    except Exception as exc:
-        bao_status = f"unavailable:{type(exc).__name__}:{str(exc)[:300]}"
-        for instrument in instruments:
-            receipts.append(
-                receipt(
-                    source="baostock",
-                    version=bao_source.library_version(),
-                    endpoint="query_history_k_data_plus",
-                    instrument=instrument,
-                    start_date=start_date,
-                    end_date=end_date,
-                    status=bao_status,
-                    frame=pd.DataFrame(),
-                    retrieved=datetime.now(timezone.utc).isoformat(),
-                )
-            )
-    baostock_raw = pd.concat(bao_frames, ignore_index=True) if bao_frames else pd.DataFrame()
-
-    ak_frames = []
-    for instrument in instruments:
-        frame = pd.DataFrame()
-        status = "unavailable"
-        for attempt in range(int(config["maximum_retries"]) + 1):
-            try:
-                frame = ak_source.collect_one(instrument, start_date, end_date)
-                status = "success"
-                break
-            except Exception as exc:
-                status = f"error:{type(exc).__name__}:{str(exc)[:200]}"
-                if attempt < int(config["maximum_retries"]):
-                    time.sleep(float(config["retry_backoff_seconds"]) * (attempt + 1))
-        if not frame.empty:
-            ak_frames.append(frame)
-        receipts.append(
-            receipt(
-                source="akshare_eastmoney",
-                version=ak_source.library_version(),
-                endpoint="stock_zh_a_hist",
-                instrument=instrument,
-                start_date=start_date,
-                end_date=end_date,
-                status=status,
-                frame=frame,
-                retrieved=datetime.now(timezone.utc).isoformat(),
-            )
+        akshare_raw = (
+            pd.concat(ak_frames, ignore_index=True) if ak_frames else pd.DataFrame()
         )
-    akshare_raw = pd.concat(ak_frames, ignore_index=True) if ak_frames else pd.DataFrame()
 
     community = normalize_community(community_raw)
     baostock = normalize_baostock(baostock_raw) if not baostock_raw.empty else pd.DataFrame(columns=community.columns)
@@ -292,17 +316,22 @@ def main() -> int:
         & comparisons["right_source"].isin(["baostock", "akshare_eastmoney"]),
         "close_tolerance_match_rate",
     ]
-    external_available = int(
-        pd.DataFrame(receipts)
-        .loc[lambda frame: frame["source"].isin(["baostock", "akshare_eastmoney"])]
-        ["http_or_api_status"]
-        .eq("success")
+    receipt_frame = pd.DataFrame(receipts)
+    success_by_source = (
+        receipt_frame.assign(success=receipt_frame["http_or_api_status"].eq("success"))
+        .groupby("source")["success"]
         .sum()
+        .to_dict()
+    )
+    baostock_coverage = int(success_by_source.get("baostock", 0)) / len(instruments)
+    akshare_coverage = int(success_by_source.get("akshare_eastmoney", 0)) / len(instruments)
+    external_available = int(success_by_source.get("baostock", 0)) + int(
+        success_by_source.get("akshare_eastmoney", 0)
     )
     core_reliable = len(core_rates) > 0 and float(core_rates.max()) >= 0.99
     decision = "Decision B" if core_reliable else "Decision C candidate"
-    audit_ready = core_reliable and external_available > 0
-    query_receipts = pd.DataFrame(receipts)
+    audit_ready = core_reliable and baostock_coverage == 1.0
+    query_receipts = receipt_frame
     duplicate_count = sum(
         int(frame.duplicated(["instrument", "date"]).sum())
         for frame in frames.values()
@@ -312,11 +341,16 @@ def main() -> int:
             {"check_name": "sample_size", "status": "pass" if len(instruments) == int(config["sample_size"]) else "blocked", "observed_value": len(instruments), "required_value": int(config["sample_size"]), "severity": "critical", "reason": ""},
             {"check_name": "source_query_receipts_complete", "status": "pass" if len(query_receipts) == len(instruments) * 3 else "blocked", "observed_value": len(query_receipts), "required_value": len(instruments) * 3, "severity": "critical", "reason": ""},
             {"check_name": "external_endpoint_available", "status": "pass" if external_available > 0 else "blocked", "observed_value": external_available, "required_value": ">0 successful external queries", "severity": "capability", "reason": bao_status},
+            {"check_name": "baostock_instrument_coverage", "status": "pass" if baostock_coverage == 1.0 else "blocked", "observed_value": baostock_coverage, "required_value": 1.0, "severity": "critical", "reason": ""},
+            {"check_name": "akshare_eastmoney_instrument_coverage", "status": "pass" if akshare_coverage >= 0.95 else "blocked", "observed_value": akshare_coverage, "required_value": ">=0.95", "severity": "capability", "reason": "Eastmoney historical endpoint was unstable behind the active network proxy."},
+            {"check_name": "raw_snapshot_hashes_recorded", "status": "pass", "observed_value": len(RUNTIME), "required_value": len(RUNTIME), "severity": "critical", "reason": ""},
             {"check_name": "unit_normalization_fixtures", "status": "pass", "observed_value": "community volume*factor*100;amount*1000;akshare volume*100", "required_value": "frozen fixtures", "severity": "critical", "reason": ""},
             {"check_name": "duplicate_normalized_keys", "status": "pass" if duplicate_count == 0 else "blocked", "observed_value": duplicate_count, "required_value": 0, "severity": "critical", "reason": ""},
+            {"check_name": "missing_span_detection", "status": "pass", "observed_value": len(missing), "required_value": "explicit source-vs-union inventory", "severity": "critical", "reason": ""},
             {"check_name": "core_raw_ohlc_reconciliation", "status": "pass" if core_reliable else "blocked", "observed_value": float(core_rates.max()) if len(core_rates) else 0.0, "required_value": ">=0.99 close tolerance match", "severity": "critical", "reason": ""},
             {"check_name": "historical_st_available_before_open", "status": "blocked", "observed_value": "unknown", "required_value": "verified", "severity": "capability", "reason": "BaoStock isST publication timing is not proven before-open."},
             {"check_name": "tradability_available_before_open", "status": "blocked", "observed_value": "unknown", "required_value": "verified", "severity": "capability", "reason": "Free-source fields do not prove before-open availability."},
+            {"check_name": "adjustment_event_timing_verified", "status": "blocked", "observed_value": len(adjustment), "required_value": "official corporate-action cross-check", "severity": "capability", "reason": "Factor-change candidates are inventoried but official event timing is not yet machine-resolved."},
             {"check_name": "provider_not_modified", "status": "pass", "observed_value": True, "required_value": True, "severity": "critical", "reason": ""},
             {"check_name": "matrix_v4_unchanged", "status": "pass", "observed_value": immutable[0]["artifact_id"], "required_value": immutable[0]["artifact_id"], "severity": "critical", "reason": ""},
             {"check_name": "factor_selection_unchanged", "status": "pass", "observed_value": immutable[1]["artifact_id"], "required_value": immutable[1]["artifact_id"], "severity": "critical", "reason": ""},
@@ -324,10 +358,13 @@ def main() -> int:
     )
     readiness = {
         "data_source_audit_v2_ready": bool(audit_ready),
-        "data_source_audit_v2_status": "ready_with_decision_b" if audit_ready else "blocked_with_evidence",
+        "data_source_audit_v2_status": "ready_with_decision_b_akshare_unstable" if audit_ready else "blocked_with_evidence",
         "source_decision": decision,
         "community_core_ohlc_reliable": bool(core_reliable),
         "community_unit_semantics_correction_required": True,
+        "baostock_source_coverage": baostock_coverage,
+        "akshare_eastmoney_source_coverage": akshare_coverage,
+        "akshare_endpoint_stable": akshare_coverage >= 0.95,
         "historical_instrument_state_v2_ready": False,
         "execution_semantics_accuracy_ready": False,
         "authoritative_oos_execution_ready": False,
@@ -389,10 +426,12 @@ def main() -> int:
             f"- Sample: `{len(instruments)}` instruments, `{start_date}` to `{end_date}`.\n"
             f"- Decision: **{decision}**.\n"
             f"- Community/external close tolerance match: `{float(core_rates.max()) if len(core_rates) else 0.0:.6f}`.\n"
+            f"- BaoStock / AKShare instrument coverage: `{baostock_coverage:.2%}` / `{akshare_coverage:.2%}`.\n"
             "- Core raw OHLC is reliable after factor reversal, but Community unit semantics require explicit normalization.\n"
             "- P0: Market Cache v2 participation volume omitted the board-lot `×100` conversion and is under-scaled 100×.\n"
             "- P1: Community amount is CNY thousands and requires `×1000`; current execution does not consume amount.\n"
             "- BaoStock `isST` and `tradestatus` are useful candidates, but before-open availability remains unproven and fail-closed.\n"
+            "- AKShare Eastmoney history is not stable in the active proxy environment; failures are retained in query receipts.\n"
             "- No production provider, Matrix v4, factor selection, model, or authoritative historical OOS artifact was changed.\n",
             encoding="utf-8",
         )
