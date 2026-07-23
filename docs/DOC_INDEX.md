@@ -14,6 +14,8 @@
   669 因子依赖清单：605 个逐标的因子仅为 bit-identical 复用候选；Alpha101 与 `unknown` 全部 fail-closed 到强制重算审计。
 - `outputs/full_research_feature_matrix_v4_canary/current/`
   Matrix v4 大规模计算前的五来源 Top2000 canary：四个纯时间序列代表在 39,981 个共同 key 上逐位一致；Alpha101 动态 PIT 横截面代表分别有 39,859 与 39,908 个值被纠正；严格轴标签和 unknown fixture 门禁通过。
+- `outputs/full_research_feature_matrix_v4/current/`
+  生命周期清洁的 669 因子矩阵权威 receipt：30 个分区各 2,587,671 个 Universe v2 key；605 个复用因子零差异，64 个 Alpha101 全量重算并产生 107,066,948 个值级修正；Manifest clean/complete/pass。
 - `PR5A_MODEL_INPUT_PROTOCOL_HANDOFF_V1.md`
   延后的模型输入协议参考。只能在 PR #6/#7 全部门禁通过后重新启用，不能直接采用当前已被替代的 allowlist、score 或 OOS execution。
 - `SELECTION_HOLDOUT_INTEGRITY_AND_MODEL_PLAN_V1.md`

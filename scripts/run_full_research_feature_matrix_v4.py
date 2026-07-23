@@ -318,6 +318,8 @@ def main() -> int:
     if (
         validate_manifest_outputs(approval_manifest, approval_manifest_path.parent)
         or approval_manifest["artifact_status"] != "pass"
+        or approval_manifest["lineage_status"] != "complete"
+        or bool(approval_manifest["code_dirty"])
     ):
         raise ValueError("bulk-run approval manifest is stale or blocked")
     inventory_rows = matrix_v4_input_inventory(config, specs)

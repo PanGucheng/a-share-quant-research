@@ -6,7 +6,7 @@
 > 前置阶段：逻辑 PR #4.1 Selection Holdout Integrity 已完成
 > 后续阶段：PR #5A 模型输入协议（当前暂停）
 
-> 2026-07-23 实施回执：第 5.1 节机器级 hard-stop 与 supersession registry 已落地；第 5.2 节 Universe lifecycle v2 已在 clean committed HEAD 上完成完整物化。旧 29 个越界 membership interval 已被截断，329 个非法 key 已全部移除，最终 lifecycle violation、interval overlap 和 removed-key residual 均为 0。第 5.3 节 669 因子依赖审计也已完成：605 个非 Alpha101 因子被证明为逐标的纯时间序列；Alpha101 中 2 个为纯横截面、46 个为 mixed、16 个公式为纯时间序列。所有 64 个 Alpha101 因历史 Matrix v3 positional-axis fallback 与宽表 universe 语义而强制进入 recomputation audit，`unknown` 分类继续由 fail-closed fixture 约束。Matrix v4 五来源 Top2000 canary 已在 39,981 个合法 key 上通过：四个纯时间序列代表共同 key 逐位一致；两个 Alpha101 横截面代表分别纠正 39,859 和 39,908 个值。当前权威治理状态位于 `outputs/accuracy_correction_v1/current/`，但 Matrix v4 全量、IC v2 与后续研究修正仍未完成，模型 hard-stop 不变。
+> 2026-07-23 实施回执：机器级 hard-stop、Universe lifecycle v2、669 因子依赖审计和 Matrix v4 已完成。Universe v2 截断旧 29 个越界 membership interval、移除 329 个非法 key，最终 lifecycle violation、interval overlap 和 removed-key residual 均为 0。依赖审计证明 605 个非 Alpha101 因子为逐标的纯时间序列；Alpha101 中 2 个为纯横截面、46 个为 mixed、16 个公式为纯时间序列，但 64 个 Alpha101 因历史 positional-axis fallback 与 union-universe 宽表语义全部强制重算。五来源 Top2000 canary 通过后，全量 Matrix v4 在 30 个分区各物化 2,587,671 个 Universe v2 key：605 个复用因子合法共同 key 差异为 0，64 个 Alpha101 产生 107,066,948 个值级修正。最终 Manifest `full_research_feature_matrix_v4:bb578b...` 为 clean/complete/pass，`matrix_v4_lifecycle_clean=true`。Labels v2、IC v2 与后续研究修正仍未完成，模型 hard-stop 不变。
 
 ## 1. 文档权威性与当前结论
 
@@ -19,7 +19,7 @@
 ```text
 selection_holdout_integrity_ready = true
 research_formula_accuracy_ready = false
-matrix_v4_lifecycle_clean = false
+matrix_v4_lifecycle_clean = true
 pairwise_ic_ready = false
 model_research_ready = false
 execution_semantics_accuracy_ready = false
@@ -265,6 +265,14 @@ review_status
 - Alpha101 mixed 与 cross-sectional 代表分别有 39,859 和 39,908 个共同 key 值变化，证明旧 Matrix v3 的 union-universe 宽表计算污染范围远大于被删除的 329 个非法 key，64 个 Alpha101 必须完整重算；
 - Alpha101 同长度错误轴标签已由运行时代码和 mutation test 双重拒绝；`pct_change(fill_method=None)` 阻止 PIT 缺口前向填充；
 - canary artifact 为 clean/complete/pass，但仅授权设计下一阶段 30 批 Matrix v4 运行，不把 `matrix_v4_lifecycle_clean` 提前置为 true。
+
+全量实施结果（2026-07-23）：
+
+- 30/30 分区、669/669 因子和每分区 2,587,671 个 Universe v2 key 全部通过；
+- 605 个 pure-time-series 因子从 Matrix v3 过滤到 Universe v2，所有合法共同 key 位级一致，差异数为 0；
+- 64 个 Alpha101 在 exact dynamic PIT membership 上完整重算，61 个因子发生变化，累计 107,066,948 个值级修正；其余 3 个虽数值不变，仍因历史 fallback 风险按政策完成重算；
+- 首次 materialization 后发现通用 lineage 继承器同时看到 v1/v2 universe 而标记 inconsistent；未接受该 receipt。runner 随即显式绑定权威 Universe v2 与 669 catalog，并通过 30/30 cache-hit 哈希复核重新发布，最终 Manifest clean/complete/pass；
+- 运行仅物化 feature matrix，未读取 labels、outer-test outcome、选择结果或 NAV。
 
 Matrix v4 最低产物：
 

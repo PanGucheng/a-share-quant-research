@@ -56,3 +56,11 @@ def test_exact_comparison_detects_nan_and_value_mutations() -> None:
     ).iloc[0]
     assert not bool(receipt["bit_identical"])
     assert receipt["difference_count"] == 2
+
+
+def test_runner_rejects_non_complete_approval_manifest() -> None:
+    source = (
+        ROOT / "scripts/run_full_research_feature_matrix_v4.py"
+    ).read_text(encoding="utf-8")
+    assert 'approval_manifest["lineage_status"] != "complete"' in source
+    assert 'bool(approval_manifest["code_dirty"])' in source

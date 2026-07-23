@@ -34,9 +34,9 @@ def main() -> int:
     assert bool(flags["universe_lifecycle_v2_ready"])
     assert bool(flags["factor_dependency_inventory_ready"])
     assert bool(flags["matrix_v4_canary_ready"])
+    assert bool(flags["matrix_v4_lifecycle_clean"])
     for field in [
         "research_formula_accuracy_ready",
-        "matrix_v4_lifecycle_clean",
         "pairwise_ic_ready",
         "model_research_ready",
         "execution_semantics_accuracy_ready",

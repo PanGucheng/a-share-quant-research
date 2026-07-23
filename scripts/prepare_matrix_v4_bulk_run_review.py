@@ -123,6 +123,10 @@ def main() -> int:
         "resume_policy": "per-batch hash-addressed partition and comparison sidecar",
         "failure_policy": "retain valid partitions; changed code/config/input requires a new single-use binding",
     }
+    universe_manifest = load_artifact_manifest(resolve(config["universe_manifest"]))
+    factor_catalog_manifest = load_artifact_manifest(
+        resolve(config["factor_catalog_manifest"])
+    )
     with StageOutputPublisher(output, CONTROLLED) as publisher:
         pd.DataFrame(inventory).to_csv(
             publisher.path("input_inventory.csv"), index=False, encoding="utf-8-sig"
@@ -182,6 +186,9 @@ def main() -> int:
                     "raw_market_data_snapshot_manifest",
                 )
             ],
+            universe_artifact_id=universe_manifest["universe_artifact_id"],
+            factor_catalog_id=factor_catalog_manifest["factor_catalog_id"],
+            lineage_status="complete",
             start_date=config["start_date"],
             end_date=config["end_date"],
             artifact_status="pass" if ready else "blocked",
