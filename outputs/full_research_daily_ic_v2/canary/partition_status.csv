@@ -1,0 +1,2 @@
+﻿batch_id,factor_count,daily_row_count,runtime_seconds,output_path,output_sha256,status
+alpha158_001,5,6470,11.283650600000328,E:/qlib_prj/qlib_baseline/outputs/full_research_feature_matrix_v4/runtime/daily_ic_v2_canary/alpha158_001.parquet,99fbe3326d2a39dd5e658d367f1257d59204b71eec089800f65097c4a9aaf273,pass

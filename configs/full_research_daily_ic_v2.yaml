@@ -9,6 +9,8 @@ label_manifest: outputs/full_research_labels_v2/current/artifact_manifest.json
 label_summary: outputs/full_research_labels_v2/current/label_summary.csv
 label_runtime: outputs/full_research_feature_matrix_v4/runtime/labels_v2.parquet
 label_name: label_20d_t1
+canary_manifest: outputs/full_research_daily_ic_v2/canary/artifact_manifest.json
+canary_contract: outputs/full_research_daily_ic_v2/canary/contract_status.csv
 expected_factor_count: 669
 expected_batch_count: 30
 minimum_cross_section: 100

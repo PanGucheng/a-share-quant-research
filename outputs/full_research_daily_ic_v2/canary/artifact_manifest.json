@@ -1,0 +1,39 @@
+{
+  "artifact_id": "full_research_daily_ic_v2:950b310fcfc380e1f25396f640828216c899940f51b639f731ab48954d9a6cbc",
+  "artifact_status": "pass",
+  "blocked_reason": "",
+  "code_commit_sha": "5c8fc6472aa56db13603b0c9414e36ef07b57973",
+  "code_diff_sha256": "",
+  "code_dirty": false,
+  "config_sha256": "c2a8c4fa5e0394f1b59ed852762905890cb6db84e610b4aa8079b3e30beacff5",
+  "created_at": "2026-07-23T04:29:50.760514+00:00",
+  "end_date": "2026-06-09",
+  "factor_catalog_id": "factor-catalog:8c031a09892fc915ac45201942f563925a9bab617e60fce5ecbbe274a51a02e1",
+  "factor_frame_id": "factor-frame-v4:f1e93a2428446673f5c873a01886a38ae9e654e5f863cf2b236040dbbf28dc3c",
+  "input_artifact_ids": [
+    "full_research_feature_matrix_v4:10f6e026d5c6c13eda166f702fb2bae2e7ca76c6747bd9e9482ee482e605df1d",
+    "full_research_labels_v2:404fe40807d674d4ec5fc7b7b0727c4e679bec6ddaa2c00d967eaeb08c80102b"
+  ],
+  "lineage_status": "complete",
+  "missing_lineage_fields": [],
+  "output_file_hashes": {
+    "contract_status.csv": "baa458d7629fb0ff4fe65573cac009acffe68a9a7efc5853ef3bbed1e8f3722e",
+    "daily_ic_report.md": "a419f9a101682bb1defc40a4b3d05f08e63942bd81baa94adb0a411f4f57f08d",
+    "daily_rank_ic.csv": "d09a7cb16421a0f4b1fb63f33a812740ab0ce538a88d8707f4dfc942659aa7a8",
+    "factor_ic_summary.csv": "e3b4cb070c042687fb7376c6dfa16e763bd9f2255c8ef234334dcd6038f3e1d6",
+    "formula_validation.csv": "cb97e6947f8aa571ae6d44380381480aa2fdf5383f98c6c3c45c0391260a1f7e",
+    "ic_v1_v2_difference_summary.csv": "be795e92a5a616359046152dda5f09d85abb8a4a32e95310f7886dd9c8130f86",
+    "partition_status.csv": "244d283e03156cad98e4c06225123c8f381acdf0dfdbeaa3f8e7d3d1492d043a",
+    "resolved_config.json": "e705597278c79219a5a92c9db85a701a9156b154d860ae15e5c1aa50ab29c24f"
+  },
+  "producer_run_id": "20260723T042950Z-9b7e8133",
+  "profile_name": "full_research",
+  "profile_type": "full_research",
+  "research_run_family_id": "full_research_factor_669_v1",
+  "run_id": "20260723T042950Z-9b7e8133",
+  "schema_version": 2,
+  "split_manifest_id": null,
+  "stage_id": "full_research_daily_ic_v2",
+  "start_date": "2021-02-01",
+  "universe_artifact_id": "universe-v2:a7875d74d5119230ab5576cb245fe8b389e0dd3030606299dad6d1f0e147ccd2"
+}

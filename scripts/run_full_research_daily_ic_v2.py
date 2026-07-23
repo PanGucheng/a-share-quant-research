@@ -136,6 +136,20 @@ def main() -> int:
         raise ValueError("Labels v2 does not directly reference Matrix v4")
     if matrix["factor_frame_id"] != label_manifest["factor_frame_id"]:
         raise ValueError("Matrix v4 and Labels v2 factor frame IDs differ")
+    input_manifest_paths = [matrix_path, label_path]
+    if config.get("canary_manifest"):
+        canary_path = resolve(config["canary_manifest"])
+        canary_manifest = load_artifact_manifest(canary_path)
+        canary_contract = pd.read_csv(resolve(config["canary_contract"]))
+        if (
+            validate_manifest_outputs(canary_manifest, canary_path.parent)
+            or canary_manifest["artifact_status"] != "pass"
+            or canary_manifest["lineage_status"] != "complete"
+            or bool(canary_manifest["code_dirty"])
+            or not canary_contract["status"].eq("pass").all()
+        ):
+            raise ValueError("Pairwise IC v2 canary is stale, blocked, or non-authoritative")
+        input_manifest_paths.append(canary_path)
     label_summary = pd.read_csv(resolve(config["label_summary"]))
     label_runtime = resolve(config["label_runtime"])
     if (
@@ -343,7 +357,7 @@ def main() -> int:
             output_dir=publisher.staging_dir,
             output_files=files,
             code_state=capture_code_state(PROJECT_ROOT),
-            input_manifest_paths=[matrix_path, label_path],
+            input_manifest_paths=input_manifest_paths,
             universe_artifact_id=matrix["universe_artifact_id"],
             factor_catalog_id=matrix["factor_catalog_id"],
             factor_frame_id=matrix["factor_frame_id"],
