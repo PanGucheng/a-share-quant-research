@@ -55,6 +55,7 @@
   "score_receipt": "outputs/split_transparent_score_v2/current/score_artifact.csv",
   "score_runtime": "outputs/split_transparent_score_v2/current/runtime/composite_scores.parquet",
   "selection_closure_manifest": "outputs/research_selection_lineage_closure_v1/current/artifact_manifest.json",
+  "superseded_execution_canary_summary": "outputs/execution_accuracy_correction_v1/current/canary/execution_summary.csv",
   "superseded_execution_summary": "outputs/execution_accuracy_correction_v1/current/execution_summary.csv",
   "superseded_market_cache_output": "outputs/market_cache_v2/current",
   "trading_rules": "configs/a_share_trading_rules_v1.yaml",
