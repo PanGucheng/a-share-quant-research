@@ -37,6 +37,7 @@ def main() -> int:
     assert bool(flags["matrix_v4_lifecycle_clean"])
     assert bool(flags["labels_v2_ready"])
     assert bool(flags["pairwise_ic_ready"])
+    assert bool(flags["bootstrap_gap_policy_ready"])
     for field in [
         "research_formula_accuracy_ready",
         "model_research_ready",

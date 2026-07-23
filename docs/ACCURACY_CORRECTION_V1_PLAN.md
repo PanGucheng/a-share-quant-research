@@ -6,7 +6,7 @@
 > 前置阶段：逻辑 PR #4.1 Selection Holdout Integrity 已完成
 > 后续阶段：PR #5A 模型输入协议（当前暂停）
 
-> 2026-07-23 实施回执：机器级 hard-stop、Universe lifecycle v2、669 因子依赖审计、Matrix v4、Labels v2 与 Pairwise IC v2 已完成。Matrix v4 的 30 个分区各含 2,587,671 个 Universe v2 key：605 个复用因子共同 key 差异为 0，64 个 Alpha101 完整重算并产生 107,066,948 个值级修正。Labels v2 按 canonical calendar 精确连接 t+1/t+21 close，不使用物理行 shift 或价格填充。IC v2 对每个 `(date,factor)` 先构造 factor-label 共同非空集合，再在同一集合内分别 rank；669 因子全部通过 scipy、行序、pair count、tie policy 与 lineage 门禁，相对 v1 有 621 个因子、598,072 个日因子 IC 值被修正。上述 Manifest 均 clean/complete/pass。`matrix_v4_lifecycle_clean=true`、`labels_v2_ready=true`、`pairwise_ic_ready=true`，但 bootstrap gap policy 与后续选择链仍未完成，模型 hard-stop 不变。
+> 2026-07-23 实施回执：机器级 hard-stop、Universe lifecycle v2、669 因子依赖审计、Matrix v4、Labels v2、Pairwise IC v2 与 bootstrap gap sensitivity audit 已完成。Matrix v4 的 64 个 Alpha101 完整重算并产生 107,066,948 个值级修正；IC v2 对每个 `(date,factor)` 使用同一 pairwise-valid 集合，相对 v1 有 621 个因子、598,072 个日因子 IC 值被修正。bootstrap audit 只使用 outer-train projection，比对 3×669 个假设：最大 p-value 差 0.047904、CI endpoint 差 0.005643、BH/BY pass 改变 1/2 个，受控缺口最大 p-value 变化 0.179641，五项均越过预冻结阈值，因此正式政策冻结为 `gap_aware_moving_block`。上述 Manifest 均 clean/complete/pass。后续必须用该政策重跑 corrected outer FDR，模型 hard-stop 不变。
 
 ## 1. 文档权威性与当前结论
 
@@ -343,6 +343,14 @@ rank_ic = corr(factor_rank, label_rank)
 3. 对内部缺口因子进行受控缺口注入。
 
 在配置中预先冻结差异阈值，至少覆盖 p-value、置信区间、BH/BY pass 和最终候选变化。若任何关键差异超阈值，则正式 bootstrap 必须切换 gap-aware 实现；否则保留现实现也必须附 sensitivity evidence。不得先生成 allowlist 再决定 bootstrap 语义。
+
+实施结果（2026-07-23）：
+
+- 使用 corrected IC v2 重建 outer-train / inner-development projection，3 个 outer split、9 个 inner split、669 因子完整，outer/inner test overlap 均为 0；
+- canary 的受控 gap 首先触发阈值；全量 2,007 个 outer-split-factor 比较随后确认最大 p-value 差 0.047904、CI endpoint 差 0.005643、BH pass 改变 1、BY pass 改变 2；
+- 12 个因子的受控缺口注入最大 p-value 变化 0.179641；全部五项预冻结阈值均被突破；
+- 正式政策在 corrected FDR 前冻结为 `gap_aware_moving_block`，block length 20、随机种子策略固定；任何后续 FDR/stability 不得回退到跨 gap 的 dropna block；
+- `bootstrap_gap_sensitivity_v1:e73494...` Manifest clean/complete/pass；审计未读取 outer test。
 
 ### 5.8 重新运行完整研究选择链
 

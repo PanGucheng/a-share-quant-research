@@ -1,0 +1,9 @@
+﻿check,status,severity,detail
+outer_split_count,pass,critical,3
+factor_count,pass,critical,669
+outer_train_only,pass,critical,projection contract outer-test overlap=0
+method_rows_unique,pass,critical,0
+gap_blocks_available,pass,critical,624
+injection_increases_segments,pass,critical,15
+policy_frozen_before_fdr,pass,critical,gap_aware_moving_block
+outer_test_not_used,pass,critical,outer_train_only

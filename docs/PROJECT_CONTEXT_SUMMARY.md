@@ -126,7 +126,9 @@ tmp/reference_repos/techfactor
 
 ## Next Work
 
-> **2026-07-23 Pairwise Spearman IC v2 完成：**真实 5 因子 canary 后完成 30/30 分区、669/669 因子。每个 `(date,factor)` 在 factor-label 共同非空集合内独立 rank，记录 pair/missing/tie evidence；scipy 人工例误差 0、行序与缺失位置 mutation 通过。最少 1,228 个有效 IC 日，有效日最小 pair 102。相对 v1 有 621 个因子、598,072 个日 IC 被修正，最大绝对差异 0.380201；缺失状态无不对称转移。`full_research_daily_ic_v2:3e20d7...` clean/complete/pass，`pairwise_ic_ready=true`。下一步是 bootstrap gap sensitivity audit，尚未执行 FDR 或筛选。
+> **2026-07-23 Bootstrap gap policy 冻结：**corrected IC v2 已重新投影到 test-free outer-train/inner-development dates，outer/inner test overlap 均为 0。`bootstrap_gap_sensitivity_v1:e73494...` 比较 3×669 个假设：legacy vs gap-aware 最大 p-value 差 0.047904、CI endpoint 差 0.005643、BH/BY pass 改变 1/2，受控缺口最大 p-value 变化 0.179641；五项预冻结阈值全突破。正式方法冻结为 `gap_aware_moving_block`，后续 corrected FDR/stability 不得回退；Manifest clean/complete/pass，`bootstrap_gap_policy_ready=true`。尚未运行 corrected FDR 或生成新 allowlist。
+
+> **2026-07-23 Pairwise Spearman IC v2 完成：**真实 5 因子 canary 后完成 30/30 分区、669/669 因子。每个 `(date,factor)` 在 factor-label 共同非空集合内独立 rank，记录 pair/missing/tie evidence；scipy 人工例误差 0、行序与缺失位置 mutation 通过。最少 1,228 个有效 IC 日，有效日最小 pair 102。相对 v1 有 621 个因子、598,072 个日 IC 被修正，最大绝对差异 0.380201；缺失状态无不对称转移。`full_research_daily_ic_v2:3e20d7...` clean/complete/pass，`pairwise_ic_ready=true`。其后的 bootstrap policy 结果以上方最新条目为准。
 
 > **2026-07-23 Labels v2 完成：**`full_research_labels_v2:404fe4...` 在 Matrix v4 的 2,587,671 个 lifecycle-clean key 上按 canonical Qlib calendar 精确连接 t+1/t+21 close，不使用物理行 shift 或价格填充。1,294 个 feature date offset 全部精确；末端 21 个日期、42,000 key 全部按预期缺失；有效 2,538,428 行，coverage 0.980970。重复 key、非法 lifecycle residual、terminal nonmissing 均为 0，Matrix/Universe/raw/key hashes 全绑定，Manifest clean/complete/pass。`labels_v2_ready=true`，其后的 Pairwise IC v2 结果以上方最新条目为准。
 

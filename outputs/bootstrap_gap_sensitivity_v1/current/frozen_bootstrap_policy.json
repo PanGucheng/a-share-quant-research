@@ -1,0 +1,32 @@
+{
+  "block_length": 20,
+  "bootstrap_samples_for_audit": 500,
+  "decision_rule": "select gap-aware if any pre-frozen sensitivity threshold is exceeded",
+  "observed": {
+    "maximum_bh_pass_changes": 1,
+    "maximum_by_pass_changes": 2,
+    "maximum_ci_endpoint_absolute_difference": 0.00564284815862447,
+    "maximum_injected_p_value_change": 0.17964071856287422,
+    "maximum_p_value_absolute_difference": 0.047904191616766456
+  },
+  "outer_test_used": false,
+  "random_seed": 20260723,
+  "schema_version": 1,
+  "selected_method": "gap_aware_moving_block",
+  "selection_data_scope": "outer_train_only",
+  "status": "frozen",
+  "threshold_breaches": {
+    "maximum_bh_pass_changes": true,
+    "maximum_by_pass_changes": true,
+    "maximum_ci_endpoint_absolute_difference": true,
+    "maximum_injected_p_value_change": true,
+    "maximum_p_value_absolute_difference": true
+  },
+  "thresholds": {
+    "maximum_bh_pass_changes": 0,
+    "maximum_by_pass_changes": 0,
+    "maximum_ci_endpoint_absolute_difference": 0.005,
+    "maximum_injected_p_value_change": 0.03,
+    "maximum_p_value_absolute_difference": 0.02
+  }
+}
