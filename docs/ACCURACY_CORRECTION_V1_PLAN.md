@@ -6,7 +6,7 @@
 > 前置阶段：逻辑 PR #4.1 Selection Holdout Integrity 已完成
 > 后续阶段：PR #5A 模型输入协议（当前暂停）
 
-> 2026-07-23 实施回执：第 5.1 节机器级 hard-stop 与 supersession registry 已落地；第 5.2 节 Universe lifecycle v2 已在 clean committed HEAD 上完成完整物化。旧 29 个越界 membership interval 已被截断，329 个非法 key 已全部移除，最终 lifecycle violation、interval overlap 和 removed-key residual 均为 0。当前权威治理状态位于 `outputs/accuracy_correction_v1/current/`，但 Matrix v4、IC v2 与后续研究修正仍未完成，模型 hard-stop 不变。
+> 2026-07-23 实施回执：第 5.1 节机器级 hard-stop 与 supersession registry 已落地；第 5.2 节 Universe lifecycle v2 已在 clean committed HEAD 上完成完整物化。旧 29 个越界 membership interval 已被截断，329 个非法 key 已全部移除，最终 lifecycle violation、interval overlap 和 removed-key residual 均为 0。第 5.3 节 669 因子依赖审计也已完成：605 个因子被证明为逐标的纯时间序列；Alpha101 中 2 个为纯横截面、36 个为 mixed、14 个公式虽为纯时间序列但仍受 positional-axis fallback 影响，另有 12 个因动态或未识别调用保守标为 `unknown`。所有 Alpha101、所有横截面/mixed/unknown 均强制进入 recomputation audit，只有 605 个已证明且非 fallback-sensitive 的因子可进入 common-key bit-identical 复用候选。当前权威治理状态位于 `outputs/accuracy_correction_v1/current/`，但 Matrix v4、IC v2 与后续研究修正仍未完成，模型 hard-stop 不变。
 
 ## 1. 文档权威性与当前结论
 
@@ -216,6 +216,14 @@ review_status
 - 不能可靠证明的因子为 `unknown`，按 `mixed` 重算；
 - `unknown` 必须 fail-closed：禁止 `filter-only reuse`，禁止进入“common-key 等价即视为正确”的快捷路径；
 - Alpha101 宽表实现必须逐函数检查，不可把整个 family 默认标记为纯时间序列。
+
+实施结果（2026-07-23）：
+
+- `outputs/factor_dependency_v1/current/factor_dependency_inventory.csv` 已覆盖且只覆盖 669 个目录因子，Manifest v2 为 clean/complete/pass；
+- Alpha158 155、Alpha360 358、TA 77、project_basic 15 共 605 个因子具有逐标的执行证据，列为 filter-only common-key bit-identical 候选，但尚未宣告 Matrix v4 可复用；
+- Alpha101 64 个因子全部强制重算，其中 2 个纯横截面、36 个 mixed、14 个公式纯时间序列、12 个 `unknown`；
+- Alpha101 即便公式属于纯时间序列，也因适配器存在“轴长度相同即按位置替换标签”的 fallback 而禁止旧矩阵复用；
+- canary 已覆盖纯时间序列、纯横截面、mixed、Alpha101 fallback-sensitive 以及 `unknown → fail-closed` fixture。
 
 ### 5.4 Matrix v4 生命周期清洁物化
 

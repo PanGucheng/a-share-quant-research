@@ -126,7 +126,9 @@ tmp/reference_repos/techfactor
 
 ## Next Work
 
-> **2026-07-23 Universe lifecycle v2 完成：**生成器现在从源头执行 `rolling_universe_interval ∩ source_lifecycle_interval`，缺失 lifecycle 时 fail-closed。完整 2021–2026、Top2000 物化在 clean commit `e971956` 上运行：准确识别并修正旧 29 个越界 interval、移除 329 个非法 date-instrument key；最终 lifecycle violation=0、overlap=0、removed-key residual=0，Manifest v2 为 clean/complete。`universe_lifecycle_v2_ready=true`，但 Matrix v4、pairwise IC 和 model readiness 仍为 false。下一步是 669 因子依赖分类，不得把 Universe 完成误解为现有矩阵可复用。
+> **2026-07-23 因子依赖审计完成：**`factor_dependency_ast_v1` 已覆盖 669 个因子并生成 clean/complete/pass Manifest。605 个 Alpha158/Alpha360/TA/project_basic 因子以逐标的执行证据列为 common-key bit-identical 复用候选；Alpha101 的 2 个 cross-sectional、36 个 mixed、14 个公式 pure-time-series 和 12 个 unknown 全部强制重算，原因同时包括横截面依赖、未解析调用及 pandas 适配器 positional-axis fallback。`unknown` canary 已证明 fail-closed。`factor_dependency_inventory_ready=true`，但这不等于 Matrix v4 ready；下一步必须先完成小规模 Matrix v4 canary 和共同 key 逐值一致性验证。
+
+> **2026-07-23 Universe lifecycle v2 完成：**生成器现在从源头执行 `rolling_universe_interval ∩ source_lifecycle_interval`，缺失 lifecycle 时 fail-closed。完整 2021–2026、Top2000 物化在 clean commit `e971956` 上运行：准确识别并修正旧 29 个越界 interval、移除 329 个非法 date-instrument key；最终 lifecycle violation=0、overlap=0、removed-key residual=0，Manifest v2 为 clean/complete。`universe_lifecycle_v2_ready=true`，但 Matrix v4、pairwise IC 和 model readiness 仍为 false。其后的 669 因子依赖分类结果以上方最新条目为准，不得把 Universe 或依赖清单完成误解为现有矩阵可直接复用。
 
 > **2026-07-23 PR #6 首个业务门禁实施记录：**`outputs/accuracy_correction_v1/current/` 已成为当前权威治理状态。`selection_holdout_integrity_ready=true`，但 research/execution/model readiness 全部为 false，`model_entry_hard_stop_active=true`；旧 48/46/54 allowlist、weights、scores 已登记为 superseded，历史 execution/NAV 为 non-authoritative。通用 model entry gate 会优先读取该状态，旧 PR4.1 ready receipt 即使被显式传入也不能启动训练。136 tests、历史 receipt validators 与新增 hard-stop validator 已通过；其后的 Universe v2 结果以上方最新条目为准。
 

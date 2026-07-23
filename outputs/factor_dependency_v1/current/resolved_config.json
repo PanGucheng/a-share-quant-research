@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "profile": "full_research",
+  "profile_name": "full_research",
+  "profile_type": "full_research",
+  "research_run_family_id": "full_research_factor_669_v1",
+  "classifier_version": "factor_dependency_ast_v1",
+  "factor_inventory": "outputs/full_research_factor_catalog_669_v1/current/factor_inventory.csv",
+  "factor_catalog_manifest": "outputs/full_research_factor_catalog_669_v1/current/artifact_manifest.json",
+  "alpha158_inventory": "outputs/factor_catalog_alpha158_v1/alpha158_formula_inventory.csv",
+  "alpha360_inventory": "outputs/factor_catalog_alpha360_v1/alpha360_formula_inventory.csv",
+  "alpha101_reference_source": "tmp/reference_repos/KunQuant/tests/KunTestUtil/ref_alpha101.py",
+  "alpha101_adapter_source": "factor_research/alpha101_source.py",
+  "universe_v2_manifest": "outputs/point_in_time_universe_v2/full_research/artifact_manifest.json",
+  "illegal_key_resolution": "outputs/point_in_time_universe_v2/full_research/illegal_key_resolution.csv",
+  "output_dir": "outputs/factor_dependency_v1/current",
+  "source_policies": {
+    "alpha158": {
+      "execution_scope": "qlib_per_instrument_expression",
+      "fallback_sensitive": false
+    },
+    "alpha360": {
+      "execution_scope": "qlib_per_instrument_expression",
+      "fallback_sensitive": false
+    },
+    "ta": {
+      "execution_scope": "adapter_groupby_instrument",
+      "conservative_max_lookback_trading_days": 252,
+      "fallback_sensitive": false
+    },
+    "project_basic": {
+      "execution_scope": "adapter_groupby_instrument",
+      "conservative_max_lookback_trading_days": 20,
+      "fallback_sensitive": false
+    },
+    "alpha101": {
+      "execution_scope": "wide_pandas_cross_section",
+      "fallback_sensitive": true,
+      "fallback_reason": "positional_axis_relabel_when_lengths_match"
+    }
+  },
+  "config_file_sha256": "a962316215ead87130a0418986ed20330550310d2991ce7f209436af71c2bf49",
+  "factor_inventory_sha256": "e93bef1c7f3fdc7f4040fd70014aed9b7ea31c6e087bdd161d732cac3c0ea722",
+  "alpha101_reference_source_sha256": "0767658a110940d6bb089fcaa3db659367bb34bbc3de7e5627825db7e781c430",
+  "alpha101_adapter_source_sha256": "da9e0b1d1331169caa3228264d33ec4f6fd98d307c3bf6efcbeac846c646a713"
+}

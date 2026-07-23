@@ -10,6 +10,8 @@
   PR #6 第一个业务提交建立的当前机器治理状态：holdout integrity 保留为 true，研究/执行/model readiness 全部 false；旧 allowlist、weights、scores 已 superseded，历史 execution/NAV 为 non-authoritative。
 - `outputs/point_in_time_universe_v2/full_research/`
   PR #6 lifecycle-clean Universe v2：29 个越界 interval 与 329 个非法 key 已修正，最终 lifecycle violation、interval overlap 和 removed-key residual 均为 0。
+- `outputs/factor_dependency_v1/current/`
+  669 因子依赖清单：605 个逐标的因子仅为 bit-identical 复用候选；Alpha101 与 `unknown` 全部 fail-closed 到强制重算审计。
 - `PR5A_MODEL_INPUT_PROTOCOL_HANDOFF_V1.md`
   延后的模型输入协议参考。只能在 PR #6/#7 全部门禁通过后重新启用，不能直接采用当前已被替代的 allowlist、score 或 OOS execution。
 - `SELECTION_HOLDOUT_INTEGRITY_AND_MODEL_PLAN_V1.md`

@@ -32,6 +32,7 @@ def main() -> int:
     flags = readiness.iloc[0]
     assert bool(flags["selection_holdout_integrity_ready"])
     assert bool(flags["universe_lifecycle_v2_ready"])
+    assert bool(flags["factor_dependency_inventory_ready"])
     for field in [
         "research_formula_accuracy_ready",
         "matrix_v4_lifecycle_clean",
