@@ -46,8 +46,8 @@ def main() -> int:
     assert bool(flags["score_component_policy_ready"])
     assert bool(flags["selection_mutation_ready"])
     assert bool(flags["research_formula_accuracy_ready"])
+    assert bool(flags["model_research_ready"])
     for field in [
-        "model_research_ready",
         "execution_semantics_accuracy_ready",
         "market_cache_v2_ready",
         "stale_policy_valid",
@@ -64,7 +64,7 @@ def main() -> int:
     assert flags["selection_integrity_status"] == "ready"
     assert (
         flags["accuracy_correction_status"]
-        == "research_ready_execution_blocked"
+        == "research_ready_execution_correction_active"
     )
 
     selections = pd.read_csv(resolve(config["selection_status"]))
@@ -81,7 +81,7 @@ def main() -> int:
             "split_specific_accuracy_corrected_allowlists_v2"
         )
     ].iloc[0]
-    assert corrected["selection_status"] == "research_accuracy_ready_execution_pending"
+    assert corrected["selection_status"] == "research_accuracy_ready_execution_correction_active"
     assert not bool(corrected["model_input_allowed"])
     assert int(corrected["representative_count"]) == 143
 

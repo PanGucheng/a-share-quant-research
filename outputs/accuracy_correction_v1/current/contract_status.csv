@@ -1,5 +1,5 @@
 check_name,status,observed_value,required_value,severity,reason
-accuracy_correction_status,pass,research_ready_execution_blocked,research_ready_execution_blocked,critical,PR6 research accuracy is ready while PR7 execution accuracy and all model entry remain blocked.
+accuracy_correction_status,pass,research_ready_execution_correction_active,research_ready_execution_correction_active,critical,PR6 research inputs are ready and frozen while PR7 execution correction is active; core model entry remains blocked.
 selection_holdout_integrity_ready,pass,True,True,critical,The PR4.1 outer-test isolation evidence remains valid.
 universe_lifecycle_v2_ready,pass,True,True,critical,Universe v2 intersects rolling membership with exact source lifecycle and resolves all 29 intervals and 329 illegal keys.
 factor_dependency_inventory_ready,pass,True,True,critical,All 669 factors have fail-closed dependency classifications; unknown and every Alpha101 factor require recomputation audit.
@@ -17,7 +17,7 @@ score_component_policy_ready,pass,True,True,critical,Development-only audit froz
 selection_mutation_ready,pass,True,True,critical,All 36 outer-test mutations preserve development projections and five corrected selection payload hashes; metamorphic contracts pass.
 research_formula_accuracy_ready,pass,True,True,critical,PR6 research formulas lifecycle materialization selection chain weights and score policy are corrected with clean lineage.
 execution_semantics_accuracy_ready,pass,False,False,critical,Execution field timing fees and valuation are not yet corrected.
-model_research_ready,pass,False,False,critical,Research model inputs are not currently eligible.
+model_research_ready,pass,True,True,critical,Corrected research inputs satisfy research-only readiness; repository policy still blocks all model training until execution accuracy is complete.
 authoritative_oos_execution_ready,pass,False,False,critical,Historical execution is non-authoritative.
 core_model_ready,pass,False,False,critical,Core model entry must remain blocked.
 pr5_model_training_ready,pass,False,False,critical,PR5A remains paused.
