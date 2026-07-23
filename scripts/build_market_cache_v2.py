@@ -257,16 +257,36 @@ def main() -> int:
             )
             old_market = pd.read_parquet(
                 old_dir / f"runtime/{split_id}_market.parquet",
-                columns=["datetime", "instrument", "volume", "amount"],
+                columns=[
+                    "datetime",
+                    "instrument",
+                    "volume",
+                    "amount",
+                    "terminal_event_approximation",
+                ],
             )
-            unit_pair = market[["datetime", "instrument", "volume", "amount"]].merge(
+            unit_pair = market[
+                [
+                    "datetime",
+                    "instrument",
+                    "volume",
+                    "amount",
+                    "terminal_event_approximation",
+                ]
+            ].merge(
                 old_market,
                 on=["datetime", "instrument"],
                 suffixes=("_v3", "_v2"),
                 validate="one_to_one",
             )
+            terminal_override = (
+                unit_pair["terminal_event_approximation_v2"].astype(bool)
+                | unit_pair["terminal_event_approximation_v3"].astype(bool)
+            )
             volume_pair = unit_pair.loc[
-                unit_pair["volume_v2"].gt(0) & unit_pair["volume_v3"].notna()
+                ~terminal_override
+                & unit_pair["volume_v2"].gt(0)
+                & unit_pair["volume_v3"].notna()
             ]
             amount_pair = unit_pair.loc[
                 unit_pair["amount_v2"].gt(0) & unit_pair["amount_v3"].notna()
@@ -277,6 +297,7 @@ def main() -> int:
                 {
                     "outer_split_id": split_id,
                     "compared_key_count": len(unit_pair),
+                    "terminal_volume_override_count": int(terminal_override.sum()),
                     "volume_compared_count": len(volume_ratio),
                     "volume_expected_ratio": volume_multiplier,
                     "volume_maximum_relative_ratio_error": float(
