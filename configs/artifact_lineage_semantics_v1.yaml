@@ -6,9 +6,27 @@ lineage_fields:
   - factor_catalog_id
   - factor_frame_id
 stage_authority:
+  execution_unit_semantics_governance_v1_2:
+    authoritative_fields:
+      [universe_artifact_id, split_manifest_id, factor_catalog_id, factor_frame_id]
   execution_accuracy_correction_v1:
     authoritative_fields:
       [universe_artifact_id, split_manifest_id, factor_catalog_id, factor_frame_id]
+  execution_unit_semantics_correction_v1_2:
+    authoritative_fields:
+      [universe_artifact_id, split_manifest_id, factor_catalog_id, factor_frame_id]
+  bugfix_research_freeze_v1_2:
+    authoritative_fields:
+      [universe_artifact_id, split_manifest_id, factor_catalog_id, factor_frame_id]
+  market_cache_v3:
+    authoritative_fields:
+      [universe_artifact_id, split_manifest_id, factor_catalog_id, factor_frame_id]
+  data_source_audit_v2:
+    authoritative_fields:
+      [universe_artifact_id, split_manifest_id]
+  data_source_audit_sample_v2:
+    authoritative_fields:
+      [universe_artifact_id, split_manifest_id]
   bugfix_research_freeze_v1:
     authoritative_fields:
       [universe_artifact_id, split_manifest_id, factor_catalog_id, factor_frame_id]
@@ -63,6 +81,34 @@ stage_authority:
     authoritative_fields:
       [universe_artifact_id, factor_catalog_id, factor_frame_id]
 edge_authority:
+  execution_unit_semantics_governance_v1_2:
+    execution_accuracy_correction_v1:
+      mode: evidence_only
+    data_source_audit_v2:
+      authoritative_fields: [universe_artifact_id, split_manifest_id]
+  market_cache_v3:
+    market_cache_v2:
+      mode: evidence_only
+    raw_market_data_snapshot_v1:
+      mode: evidence_only
+    data_source_audit_v2:
+      authoritative_fields: [universe_artifact_id, split_manifest_id]
+  data_source_audit_v2:
+    full_research_feature_matrix_v4:
+      mode: evidence_only
+    research_selection_lineage_closure_v1:
+      mode: evidence_only
+    market_cache_v2:
+      mode: evidence_only
+    data_source_audit_sample_v2:
+      authoritative_fields: [universe_artifact_id, split_manifest_id]
+  data_source_audit_sample_v2:
+    market_cache_v2:
+      mode: evidence_only
+    instrument_state_v1:
+      authoritative_fields: [universe_artifact_id, split_manifest_id]
+    point_in_time_universe_v2:
+      authoritative_fields: [universe_artifact_id]
   market_cache_v2:
     raw_market_data_snapshot_v1:
       mode: evidence_only

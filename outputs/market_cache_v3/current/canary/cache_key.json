@@ -1,0 +1,26 @@
+{
+  "cache_key": "b97c2c0c9e79c73d9cd089b23d8e5db17af31a23f2c92d12f4b7f6c58322ebdd",
+  "payload": {
+    "calendar_hash": "441f54a46c89405392de9185b94955aadb0f041384d54001750c94eaa9b0128b",
+    "code_commit_sha": "f12e1b905680fa28e1f8094d924cfc31ec561f68",
+    "community_units": {
+      "amount_storage_unit": "cny_thousands",
+      "amount_to_cny_multiplier": 1000.0,
+      "semantics_version": "community_units_v1",
+      "volume_lot_to_shares_multiplier": 100.0,
+      "volume_storage_unit": "adjusted_board_lots"
+    },
+    "data_source_audit_artifact_id": "data_source_audit_v2:022c6b3b2c3c0dd93bf718843689449e5c5e64177e660c16be7df6e02d4e2fb3",
+    "data_source_audit_manifest": "cc8495bbd3dafd5bbbeebacf728456bb5786c294f93dcef341f06ce7510ac0f3",
+    "data_source_audit_semantics": "afeb5225d3b909b3e5229cac14e3b9125d5443f195707e7cdbec0d988ee6bc97",
+    "execution_config": "d15a919d4fabafd61cfeea17c1ec933d02efdb558b4aedca20f06aecf3f564dd",
+    "fee_schedule": "bcc248295846bec1e270316c17e927a2fe1571c54edc4fe8720a22af99afe358",
+    "field_timing_schema": "fdc9d9f05ba712582c078a4c53767d50df7a2a1a2051dca1eeed5a1f1ea7c344",
+    "instrument_state_receipt": "8e8a0e722cb71e7a8e9e9c4556920aaca32550127733def091a4cb2f90a5328c",
+    "instrument_state_runtime_sha256": "4a52621cb4b3619ca1036d0c3ffb25b0b7e285984bd84b5eaed038f347a54d61",
+    "raw_market_manifest": "15e5635ae52a517ab8e4a686ec297ab3e0d04ee37d4cc56c082b6c0bccb1abed",
+    "score_artifact_sha256": "beb4e4ad738e263e72bb75ead4d948f7a44e7c086bc56b310a56a823a6adecbf",
+    "score_receipt": "80f89a6e05b1056ea6393752e3b935c90008623a96cd386aaefc22eade78bd36",
+    "trading_rules": "89f70e09d6600be8cd8818526848b5f4a3b2663c8df14b30850a6ea5d1665150"
+  }
+}

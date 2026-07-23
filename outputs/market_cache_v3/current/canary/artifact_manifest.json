@@ -1,0 +1,42 @@
+{
+  "artifact_id": "market_cache_v3:b884f773d46fbb95d5f5e5bea8f823876879e1f0ef9ea6a9fbba3884617982d2",
+  "artifact_status": "pass",
+  "blocked_reason": "",
+  "code_commit_sha": "f12e1b905680fa28e1f8094d924cfc31ec561f68",
+  "code_diff_sha256": "",
+  "code_dirty": false,
+  "config_sha256": "c52738a94284ee4292a082cca3f596e0cd5c03659e133a1634e7c91be836d5ff",
+  "created_at": "2026-07-23T17:34:48.137369+00:00",
+  "end_date": "2024-08-14",
+  "factor_catalog_id": "factor-catalog:8c031a09892fc915ac45201942f563925a9bab617e60fce5ecbbe274a51a02e1",
+  "factor_frame_id": "factor-frame-v4:f1e93a2428446673f5c873a01886a38ae9e654e5f863cf2b236040dbbf28dc3c",
+  "input_artifact_ids": [
+    "data_source_audit_v2:022c6b3b2c3c0dd93bf718843689449e5c5e64177e660c16be7df6e02d4e2fb3",
+    "instrument_state_v1:ce02b325fa3692dd0d9582924e92a43dfeb026774ec049a65e0592afb7ee4d88",
+    "market_cache_v2:43a4f4f175f07f8cd9a80d40e73a8f566ed98deb249fa083eccd7c3e87759e89",
+    "raw_market_data_snapshot_v1:e2f213da365ea6ba4d8375c830ff32e45f78fc847b814a11aaeb9e26b49d8cd9",
+    "split_transparent_score_v2:82be8a32b7a84c401dcd27c630e93838a018949300c29f9fd405b70e1ec328c3"
+  ],
+  "lineage_status": "complete",
+  "missing_lineage_fields": [],
+  "output_file_hashes": {
+    "cache_artifacts.csv": "f6765ca59775908d5eeee3d6b30556126f3ea520aacb756cb6dbcf2c22a5f1bd",
+    "cache_key.json": "af3c646a8701ead844aee0aceecca833023225ae43b7ffb7ef524bee6bd673d4",
+    "contract_status.csv": "6e94a48e1da35f839a120e6e5e2b1a58d68086c85779ef29f3a8991f8e4c9148",
+    "field_timing_audit.csv": "92488e551d80e6bdb1e6acacd169430089d0eaff5442e46c942c0114beec8908",
+    "market_cache_report.md": "cf509a56ff029e20ec22ac83900741bcc0ca26976093bf9a94a35722126966fd",
+    "resolved_config.json": "58c460f0172b9549b609b54df252c242d6ccbcb9c063a21ce7b5966f38de0117",
+    "semantic_input_hashes.csv": "9dc3ebfa63245c1f44e534f2451a59c8f8447eea9ff26d4a7ddc2491edf41b2e",
+    "unit_correction_audit.csv": "afb5320fbf9b3ab6b6d3ab6dd70a016ebf14478199d378a0644ee5f6285498c3"
+  },
+  "producer_run_id": "20260723T173448Z-6c5307a4",
+  "profile_name": "full_research",
+  "profile_type": "full_research",
+  "research_run_family_id": "full_research_factor_669_v1",
+  "run_id": "20260723T173448Z-6c5307a4",
+  "schema_version": 2,
+  "split_manifest_id": "split-manifest:75ccf0f37e85422729d54aef5a363f68d4f9b3daed3d42a87eb120e6b5aefe0e",
+  "stage_id": "market_cache_v3",
+  "start_date": "2024-08-01",
+  "universe_artifact_id": "universe-v2:a7875d74d5119230ab5576cb245fe8b389e0dd3030606299dad6d1f0e147ccd2"
+}

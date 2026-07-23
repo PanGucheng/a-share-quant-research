@@ -115,7 +115,10 @@ def main() -> int:
                 "code_commit_sha": code_state.commit_sha,
                 "freeze_timestamp": timestamp,
             }
-            payload["freeze_id"] = f"bugfix_research_freeze_v1:{canonical_hash(payload)}"
+            freeze_stage_id = str(
+                config.get("freeze_stage_id", "bugfix_research_freeze_v1")
+            )
+            payload["freeze_id"] = f"{freeze_stage_id}:{canonical_hash(payload)}"
             path = publisher.path(f"{split_id}/freeze_manifest.json")
             path.write_text(json.dumps(payload, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
             rows.append({
@@ -147,7 +150,7 @@ def main() -> int:
         )
         write_stage_artifact_manifest(
             project_root=PROJECT_ROOT,
-            stage_id="bugfix_research_freeze_v1",
+            stage_id=str(config.get("freeze_stage_id", "bugfix_research_freeze_v1")),
             config={**config, "execution_config_sha256": execution_config_sha},
             output_dir=publisher.staging_dir,
             output_files=[publisher.path(name) for name in controlled if name != "artifact_manifest.json"],

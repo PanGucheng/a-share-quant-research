@@ -1,0 +1,11 @@
+﻿category,status,detail
+signal_change,unchanged,Frozen score SHA is unchanged; V1.2 changes market capacity units only.
+fee_schedule,classified,Date-aware 0.0005 sell stamp tax applies throughout corrected OOS.
+price_limit_semantics,classified_non_authoritative,Previous-close board rule replaces same-day change; historical ST state is unavailable.
+lot_rule,classified,Board-aware buy minimum and increments replace uniform 100-share assumption.
+stale_valuation,classified,No bfill; 174 cache rows exceed the 20-day policy.
+terminal_event,classified_non_authoritative,No authoritative terminal-event feed is available.
+calendar_or_cache,classified,Semantic-bound market cache key 55d7a4f0a86e4bb095d6d63ea9180000c8152cde5aa6b328ed74dc54208ab4e9 is frozen.
+unknown,none,
+volume_unit_semantics,corrected,Participation volume is converted from adjusted board lots with factor*100 shares.
+amount_unit_semantics,corrected_not_execution_consumed,Community amount is converted from CNY thousands with *1000; order execution does not consume amount.

@@ -1,0 +1,39 @@
+{
+  "artifact_id": "bugfix_research_freeze_v1_2:0df630e00820ae28332f9dc4ab128e719f2c211550fc6bec1ac7ca665a69e2d7",
+  "artifact_status": "pass",
+  "blocked_reason": "",
+  "code_commit_sha": "1c3ec463336a57746be8efc1089c23bf39e8a1da",
+  "code_diff_sha256": "",
+  "code_dirty": false,
+  "config_sha256": "e6948cd500f1ababf77b5a86f718255e552b8ff42e75a8544ab39ce9a0a11a49",
+  "created_at": "2026-07-23T17:40:38.510114+00:00",
+  "end_date": null,
+  "factor_catalog_id": "factor-catalog:8c031a09892fc915ac45201942f563925a9bab617e60fce5ecbbe274a51a02e1",
+  "factor_frame_id": "factor-frame-v4:f1e93a2428446673f5c873a01886a38ae9e654e5f863cf2b236040dbbf28dc3c",
+  "input_artifact_ids": [
+    "market_cache_v3:2c8048cb24fa97c7dadc2202c8721ae144e2b24e57d46ba24f131149ade9b835",
+    "research_selection_lineage_closure_v1:abe0d942b28dfbd6ca679a8a2aee0ee83890309922b5184f5efa28d1fb842e6b",
+    "split_transparent_score_v2:82be8a32b7a84c401dcd27c630e93838a018949300c29f9fd405b70e1ec328c3"
+  ],
+  "lineage_status": "complete",
+  "missing_lineage_fields": [],
+  "output_file_hashes": {
+    "bugfix_freeze_index.csv": "3398ca46e3958d629a0df4ab31e2403630fa60d86cab77b177ea777ea98f8f8e",
+    "bugfix_freeze_report.md": "15342359250b431d84dbb40379aaceb7383b9228e6ff000695206dbf20e34fa6",
+    "contract_status.csv": "4d26e8f0ace26c2dc1b6e232035629b852316d2b8294ff5829c967543fb7746b",
+    "resolved_config.json": "4d7b59d8f8069974e819d033550a285c6b5e91b37641f7181ea62fec116ad4d1",
+    "split_001/freeze_manifest.json": "b65b864d74a3657ef797010e3d0fc611bcf3edfbf34b2e7d61c66a9ef0c4659d",
+    "split_002/freeze_manifest.json": "63de6d85f8746f8f82809fdc55826a2381a96d72286f6b34e9c4bc6820b9a033",
+    "split_003/freeze_manifest.json": "dad5dd0dce8c35b3903823248dac278a648d16aa73624379251c57bd118d7a6c"
+  },
+  "producer_run_id": "20260723T174038Z-e77702bf",
+  "profile_name": "full_research",
+  "profile_type": "full_research",
+  "research_run_family_id": "full_research_factor_669_v1",
+  "run_id": "20260723T174038Z-e77702bf",
+  "schema_version": 2,
+  "split_manifest_id": "split-manifest:75ccf0f37e85422729d54aef5a363f68d4f9b3daed3d42a87eb120e6b5aefe0e",
+  "stage_id": "bugfix_research_freeze_v1_2",
+  "start_date": null,
+  "universe_artifact_id": "universe-v2:a7875d74d5119230ab5576cb245fe8b389e0dd3030606299dad6d1f0e147ccd2"
+}

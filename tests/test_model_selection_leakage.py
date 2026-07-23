@@ -56,7 +56,7 @@ def accuracy_ready_row(**overrides: object) -> pd.DataFrame:
         "pairwise_ic_ready": True,
         "model_research_ready": True,
         "execution_semantics_accuracy_ready": True,
-        "market_cache_v2_ready": True,
+        "market_cache_v3_ready": True,
         "future_market_field_count": 0,
         "stale_policy_valid": True,
         "authoritative_oos_execution_ready": True,
@@ -123,7 +123,7 @@ def test_repository_accuracy_correction_policy_blocks_current_selection() -> Non
         ModelEntryBlockedError,
             match=(
                 "accuracy_correction_status="
-                "'execution_unit_semantics_correction_required'"
+                "'execution_unit_semantics_corrected_authoritative_state_blocked'"
             ),
     ):
         assert_model_entry_allowed(

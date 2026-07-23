@@ -1,0 +1,4 @@
+﻿outer_split_id,compared_key_count,terminal_volume_override_count,volume_compared_count,volume_expected_ratio,volume_maximum_relative_ratio_error,amount_compared_count,amount_expected_ratio,amount_maximum_relative_ratio_error
+split_001,269400,214,269174,100.0,5.923810908470273e-08,268827,1000.0,1.1920928955078125e-07
+split_002,294376,538,293695,100.0,5.8554437298852235e-08,293199,1000.0,1.1920928955078125e-07
+split_003,290160,245,289875,100.0,5.7363834904400335e-08,289413,1000.0,1.1920928955078125e-07

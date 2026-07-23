@@ -1,5 +1,5 @@
 ﻿check_name,status,observed_value,required_value,severity,reason
-accuracy_correction_status,pass,execution_unit_semantics_correction_required,execution_unit_semantics_correction_required,critical,Data Source Audit V2 found a 100x participation-volume unit error; execution readiness is retracted.
+accuracy_correction_status,pass,execution_unit_semantics_corrected_authoritative_state_blocked,execution_unit_semantics_corrected_authoritative_state_blocked,critical,V1.2 unit semantics are corrected; authoritative historical state remains unavailable.
 selection_holdout_integrity_ready,pass,True,True,critical,The PR4.1 outer-test isolation evidence remains valid.
 universe_lifecycle_v2_ready,pass,True,True,critical,Universe v2 intersects rolling membership with exact source lifecycle and resolves all 29 intervals and 329 illegal keys.
 factor_dependency_inventory_ready,pass,True,True,critical,All 669 factors have fail-closed dependency classifications; unknown and every Alpha101 factor require recomputation audit.
@@ -17,8 +17,8 @@ score_component_policy_ready,pass,True,True,critical,Development-only audit froz
 selection_mutation_ready,pass,True,True,critical,All 36 outer-test mutations preserve development projections and five corrected selection payload hashes; metamorphic contracts pass.
 corrected_score_ready,pass,True,True,critical,1471764 prediction-only score rows are deterministically materialized from frozen PR6 inputs with complete policy coverage and no outcomes.
 research_formula_accuracy_ready,pass,True,True,critical,PR6 research formulas lifecycle materialization selection chain weights and score policy are corrected with clean lineage.
-execution_semantics_accuracy_ready,pass,False,False,critical,Market Cache v2 omitted the board-lot to share multiplier.
-market_cache_v2_ready,pass,False,False,critical,Market Cache v2 is superseded pending unit-correct Market Cache v3.
+execution_semantics_accuracy_ready,pass,True,True,critical,Market Cache v3 and corrected execution pass all critical unit semantics contracts.
+market_cache_v2_ready,pass,False,False,critical,Market Cache v2 remains superseded and is never re-authorized.
 future_market_field_count,pass,0,0,critical,Opening execution consumes no same-day close-derived market field.
 stale_policy_valid,pass,True,True,critical,Valuation never backfills and explicitly blocks prices stale beyond 20 trading days.
 model_research_ready,pass,True,True,critical,Corrected research inputs satisfy research-only readiness; repository policy still blocks all model training until execution accuracy is complete.
@@ -32,5 +32,7 @@ current_weights_superseded,pass,True,True,critical,Current transparent weights a
 current_scores_superseded,pass,True,True,critical,Current transparent scores are superseded.
 historical_oos_non_authoritative,pass,True,True,critical,Current historical OOS execution and NAV are non-authoritative.
 data_source_audit_v2_ready,pass,True,True,critical,Decision B is supported by complete BaoStock and Community canary reconciliation.
-execution_unit_semantics_ready,pass,False,False,critical,Unit correction V1.2 has not yet rematerialized execution.
-market_cache_volume_unit_ready,pass,False,False,critical,Community volume requires provider_volume*factor*100 shares.
+execution_unit_semantics_ready,pass,True,True,critical,Volume and amount units are explicit and full corrected execution passed.
+market_cache_volume_unit_ready,pass,True,True,critical,Community volume is converted from adjusted board lots to shares with factor*100.
+market_cache_amount_unit_ready,pass,True,True,critical,Community amount is converted from CNY thousands to CNY with *1000.
+market_cache_v3_ready,pass,True,True,critical,Market Cache v3 passed full unit correction and lineage contracts.

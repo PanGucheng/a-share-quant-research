@@ -63,6 +63,24 @@ def infer_board(instrument: str) -> str:
     return "unknown"
 
 
+def convert_community_market_units(
+    raw_volume,
+    factor,
+    raw_amount,
+    *,
+    volume_lot_to_shares_multiplier: float,
+    amount_to_cny_multiplier: float,
+):
+    if float(volume_lot_to_shares_multiplier) != 100.0:
+        raise ValueError("Community volume conversion must explicitly use 100 shares per lot")
+    if float(amount_to_cny_multiplier) != 1000.0:
+        raise ValueError("Community amount conversion must explicitly use CNY thousands")
+    return (
+        raw_volume * factor * float(volume_lot_to_shares_multiplier),
+        raw_amount * float(amount_to_cny_multiplier),
+    )
+
+
 def resolve_price_limit_rule(
     rules: dict[str, Any],
     *,

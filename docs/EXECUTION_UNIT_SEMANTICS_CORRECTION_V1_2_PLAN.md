@@ -1,7 +1,7 @@
 # Execution Unit Semantics Correction V1.2
 
-> 状态：正式实施基线  
-> 前置证据：`data_source_audit_v2:500812e9...`  
+> 状态：已完成，等待 PR 合并
+> 前置证据：`data_source_audit_v2:022c6b3b...`
 > 硬边界：不进入 PR #5A，不训练模型，不修改 Matrix v4、labels、IC、FDR、stability、clustering、allowlist、weights 或 score。
 
 ## 1. 根因与影响
@@ -197,3 +197,87 @@ unbiased_final_estimate = false
 - 建立权威停复牌与 terminal event 证据；
 - AKShare Eastmoney 端点继续仅作为不稳定审计源，不成为生产依赖；
 - 在 authoritative state 未解决前，PR #5A 继续暂停。
+
+## 6. 实施回执
+
+### 6.1 产物与契约
+
+V1.2 已按固定顺序完成：
+
+```text
+unit fixtures/tests
+→ Market Cache v3 canary
+→ Market Cache v3 full
+→ bugfix_research_freeze_v1_2
+→ corrected execution canary
+→ corrected execution full
+→ governance / transitive lineage validation
+```
+
+关键产物：
+
+```text
+market_cache_v3:
+2c8048cb24fa97c7dadc2202c8721ae144e2b24e57d46ba24f131149ade9b835
+
+execution_unit_semantics_correction_v1_2:
+81b762882c4f99323e53d433c92163a1d1dbb1d8e0efe99782697fd390a4dcc8
+
+execution_unit_semantics_governance_v1_2:
+215f124e5f05b1bf3c50c7d50fdcfcace49a3c30910c1d088f94307dd06baff6
+```
+
+Market Cache v3 的三个 split 分别包含 269,400、294,376、290,160 行。排除显式 terminal settlement override 后：
+
+- volume 的 v3/v2 比值为 100，最大相对误差不超过 `5.93e-08`；
+- amount 的 v3/v2 比值为 1000，最大相对误差不超过 `1.20e-07`；
+- unknown unit difference 为 0；
+- 完整执行覆盖 3 split × 2 method、730 个会计日；
+- unknown execution difference 为 0；
+- frozen score SHA 仍为 `beb4e4ad...`；
+- Matrix v4 与 selection closure artifact ID 未变化。
+
+### 6.2 新旧执行差异
+
+六个场景的 corrected ending NAV 相对旧证据变化为：
+
+```text
+split_001 equal_weight      -254,403.73
+split_001 stability_weight  -204,455.64
+split_002 equal_weight      -216,836.13
+split_002 stability_weight  -190,767.17
+split_003 equal_weight      -211,087.11
+split_003 stability_weight  -265,592.34
+```
+
+这不是信号变化，而是 100× participation capacity 修正后真实成交、费用和滑点变化。`SZ302132` 的买入/卖出执行量分别减少 400 / 399.997686 股，gross value 变化 `-61,417.62` 元；单票与全市场归因见：
+
+```text
+outputs/execution_unit_semantics_correction_v1_2/governance/
+instrument_unit_attribution.csv
+```
+
+### 6.3 最终机器状态
+
+```text
+research_formula_accuracy_ready = true
+model_research_ready = true
+data_source_audit_v2_ready = true
+market_cache_volume_unit_ready = true
+market_cache_amount_unit_ready = true
+market_cache_v3_ready = true
+execution_unit_semantics_ready = true
+execution_semantics_accuracy_ready = true
+
+market_cache_v2_ready = false
+authoritative_oos_execution_ready = false
+core_model_ready = false
+pr5_model_training_ready = false
+model_training_started = false
+model_entry_hard_stop_active = true
+historical_oos_comparison_complete = false
+production_model_selected = false
+unbiased_final_estimate = false
+```
+
+完整回归为 `180 passed`；21 个本地 contract / lineage / readiness validators 全部通过。完成结论只解除 unit-semantics blocker，不解除 historical-state blocker，也不授权 PR #5A。
