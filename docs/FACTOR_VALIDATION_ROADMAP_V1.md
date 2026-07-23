@@ -834,7 +834,7 @@ CI 只运行不依赖完整 Qlib provider 和网络的测试。需要真实数�
 
 ## 22. PR #4.1 Selection Holdout Integrity 与后续模型顺序
 
-> **2026-07-22 状态：本节 22.2–22.3 已完成本地实现与 compact validation。** 当前三个 split allowlist 为 48/46/54；36 组 mutation、3 份 pre-test freeze、3 份 consumed release receipt、两种透明 score 和统一 Qlib execution 均通过。Readiness 已恢复为 holdout-clean ready，但 `model_training_started=false`，PR #5A 尚未实施。下一步以 [PR #5A 模型输入协议交接计划 V1](./PR5A_MODEL_INPUT_PROTOCOL_HANDOFF_V1.md) 为入口。
+> **2026-07-23 Accuracy Correction 覆盖状态：**本节 22.2–22.3 的 holdout 隔离工程继续有效，但后续实现复核撤回“直接进入 PR #5A”的结论。当前 48/46/54 allowlist 与透明 score 为 `superseded`，历史 OOS NAV 为 `non_authoritative`；研究/执行/model readiness 均为 false。当前入口改为 [Research / Execution Accuracy Correction V1](./ACCURACY_CORRECTION_V1_PLAN.md)，先实际 GitHub PR #6，再 PR #7，PR #5A 暂停。
 
 本节是 2026-07-20 PR #4 合并后审计形成的强制修订，优先级高于第 16 节以及第 20 节中与当前阶段冲突的表述。详细字段、目录、配置、测试矩阵和提交拆分以 [Selection Holdout Integrity 与后续模型计划 V1](./SELECTION_HOLDOUT_INTEGRITY_AND_MODEL_PLAN_V1.md) 为唯一执行清单。
 
@@ -905,7 +905,7 @@ selection_integrity_status = blocked
 | #5B | Ridge 后 Elastic Net；validation 选参，train+validation final refit，split-specific test 一次评价 | #5A protocol 与透明基线通过 | test 调参、改变 allowlist |
 | #5C | 预注册最多 16 个 LightGBM candidates、固定 seed、validation early stopping、development final refit | #5B 三个 split 全部通过且用户批准搜索 | test early stopping、test feature selection |
 | #5D | 五种方法相同 common period 和 Qlib execution 的历史 OOS 科学比较 | #5C contract 通过 | 将历史 winner 直接声明为生产模型 |
-| #6 | 新未来数据 / forward paper confirmation | #5D 完成且候选、窗口、配置预注册 | 根据 forward 表现中途调参或切换候选 |
+| 后续待编号 | 新未来数据 / forward paper confirmation | #5D 完成且候选、窗口、配置预注册 | 根据 forward 表现中途调参或切换候选 |
 
 PR #5 的统一顺序固定为：
 
@@ -934,3 +934,105 @@ Equal Weight → Stability Weight → Ridge → Elastic Net → LightGBM
 ```
 
 Approval/waiver 只覆盖完全一致的 commit、resolved config、input inventory、exact command、日期、因子数和资源范围；任一变化都必须重新审查。默认没有用户明确回复时停止；本次持续对话可在完整自审通过后使用已授权的 exact `user_session_waiver` 继续。
+
+## 23. Accuracy Correction V1：PR #6 / PR #7
+
+本节是 2026-07-23 实现级准确性审计形成的强制增补，优先级高于第 22 节中“模型输入 ready”或“下一步 PR #5A”的历史表述。完整字段、产物、测试矩阵、bulk-run 门禁和 Definition of Done 以 [Research / Execution Accuracy Correction V1](./ACCURACY_CORRECTION_V1_PLAN.md) 为唯一执行清单。
+
+### 23.1 当前状态
+
+```text
+selection_holdout_integrity_ready = true
+research_formula_accuracy_ready = false
+matrix_v4_lifecycle_clean = false
+pairwise_ic_ready = false
+model_research_ready = false
+execution_semantics_accuracy_ready = false
+market_cache_v2_ready = false
+authoritative_oos_execution_ready = false
+core_model_ready = false
+pr5_model_training_ready = false
+model_training_started = false
+```
+
+触发修正的已核实事实包括：29 个 PIT membership interval / 329 个 key 超出源 lifecycle；非法股票可能通过横截面因子影响其他股票；daily IC 未在 pairwise-valid 集合内同时重排 factor 与 label；开盘执行读取同日 `$change`；当前历史 OOS 印花税为 0.001；split 1/2 存在最长 110/76 个交易日的陈旧估值；score 非空率掩盖低组件完整性。
+
+### 23.2 GitHub PR #6：研究计算正确性
+
+固定顺序：
+
+```text
+readiness hard-stop / supersession
+→ Universe lifecycle v2
+→ 669 因子依赖分类
+→ Matrix v4（纯时间序列过滤；横截面/混合/unknown 按影响范围重算）
+→ Labels v2 与日历连续性证明
+→ Pairwise Spearman IC v2
+→ Bootstrap gap sensitivity / policy freeze
+→ Outer FDR → Stability → Clustering → Allowlist → Weights
+→ development-only score component audit / policy freeze
+→ selection mutation + metamorphic tests
+```
+
+Matrix v4 必须生成影响日期传播清单。不能把 329 个非法 key 等同于只影响 329 行；若滚动或滞后运算会传播，重算范围必须扩展到可证明的上界。只有已证明 universe-independent 的纯时间序列因子允许简单过滤并要求所有 common key bit-identical。
+
+依赖分类必须 fail-closed：`unknown` 禁止 filter-only reuse。正式 Matrix v4 前的 canary 除覆盖五个来源外，还必须至少覆盖一个已证明纯时间序列因子、一个横截面因子、一个 mixed/复杂因子、一个 Alpha101 fallback-sensitive 因子和一个验证 unknown 被拒绝复用的 fixture。
+
+Bootstrap 属于 FDR 上游，score completeness 属于信号构造，二者均必须在 PR #6 冻结，不得推迟到执行 PR。
+
+PR #6 可以冻结 corrected transparent score 作为研究信号证据，但不得调用 Exchange/Executor 或生成 orders、fills、accounting、returns、drawdown、Sharpe 和历史 OOS NAV。修正历史执行只允许在 PR #7 发生。
+
+### 23.3 GitHub PR #7：执行模拟正确性
+
+PR #7 只消费 PR #6 冻结 score：
+
+```text
+date-aware fee schedule
+→ market_field available_at contract
+→ PIT instrument state
+→ board/ST/IPO price-limit 与 lot rule
+→ stale valuation / terminal event policy
+→ market cache v2
+→ corrected historical execution
+→ difference attribution
+```
+
+任意执行字段必须满足 `available_at <= execution_timestamp`；不得在开盘使用同日 close、high/low、完整成交量或收盘后 `$change`。估值禁止 bfill，长期陈旧持仓或缺失 terminal-event 数据必须诚实阻断权威 readiness。
+
+历史 test 已经被观察。修正版本使用 `bugfix_research_freeze_v1`，固定：
+
+```text
+freeze_type = post_observation_bugfix
+historical_test_already_observed = true
+selection_uses_test_outcomes = false
+unbiased_final_estimate = false
+```
+
+不得再命名为暗示 untouched 的 `pre_test_freeze_v2`。
+
+### 23.4 Readiness 与晋级门禁
+
+```text
+model_research_ready
+= selection_holdout_integrity_ready
+  && research_formula_accuracy_ready
+  && matrix_v4_lifecycle_clean
+  && pairwise_ic_ready
+
+authoritative_oos_execution_ready
+= model_research_ready
+  && execution_semantics_accuracy_ready
+  && market_cache_v2_ready
+  && future_market_field_count == 0
+  && stale_policy_valid
+
+pr5_model_training_ready
+= model_research_ready
+  && authoritative_oos_execution_ready
+```
+
+PR #6 可在研究输入正确时设置 `model_research_ready=true`，但模型仍禁止启动。PR #7 若因历史状态数据不足只能 honest-block，则可以合并实现但不得设置 authoritative/model readiness；PR #5A 继续暂停。
+
+### 23.5 批量运行门禁
+
+PR #6/#7 每个大规模 run 都必须先完成 committed HEAD、全仓/统计语义审阅、依赖分类、受限 canary、mutation/metamorphic tests、资源与恢复路径审阅以及绑定 exact commit/config/input/command/scope 的 review bundle。本次持续对话的 `user_session_waiver` 只免除等待人工回复，不免除任何技术门禁；出现 unknown difference、hash/lineage mismatch 或 canary failure 必须停止。

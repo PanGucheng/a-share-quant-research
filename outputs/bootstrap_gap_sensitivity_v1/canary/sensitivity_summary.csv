@@ -1,0 +1,2 @@
+﻿selected_method,comparison_rows,outer_split_count,factor_count,maximum_p_value_absolute_difference,maximum_ci_endpoint_absolute_difference,maximum_bh_pass_changes,maximum_by_pass_changes,maximum_injected_p_value_change,threshold_breach_count
+gap_aware_moving_block,60,3,20,0.0,0.0,0,0,0.099009900990099,1

@@ -1,0 +1,42 @@
+{
+  "artifact_id": "clustering_input_projection_v2:2ae67ad8f78da480e5d32425d38693d79f1ad5e1f78c08e9ba153a04ca9a7b1a",
+  "artifact_status": "pass",
+  "blocked_reason": "",
+  "code_commit_sha": "0c55a0e6bb0cdc282a6b46959ce33629cfbc308a",
+  "code_diff_sha256": "",
+  "code_dirty": false,
+  "config_sha256": "9e2b1d223212812dec85a68c366c52c9cec6461ceab18963cdb06e9c7fa28019",
+  "created_at": "2026-07-23T05:14:06.859627+00:00",
+  "end_date": "2024-06-03",
+  "factor_catalog_id": "factor-catalog:8c031a09892fc915ac45201942f563925a9bab617e60fce5ecbbe274a51a02e1",
+  "factor_frame_id": "factor-frame-v4:f1e93a2428446673f5c873a01886a38ae9e654e5f863cf2b236040dbbf28dc3c",
+  "input_artifact_ids": [
+    "development_robustness_split_v1:2cb5b7a7286450235c1215b8f3c4876dec02f27a44ea4a3d7b9674df5191586b",
+    "factor_rolling_stability_v2:8d49e0c1e6c251848e739291bf4522fdb885a288d75589d24fa7743e9bf63608",
+    "full_research_daily_ic_v2:3e20d76d7473953d81408d5a229af27d84f9c4c93cad10f4a7b5d12eff35eea7",
+    "full_research_feature_matrix_v4:10f6e026d5c6c13eda166f702fb2bae2e7ca76c6747bd9e9482ee482e605df1d",
+    "purged_walk_forward_v1:78568e0fe2387fce3d1defda1e777e6ae58746fb8c9aba0ebf36f55129bdc718"
+  ],
+  "lineage_status": "inconsistent",
+  "missing_lineage_fields": [
+    "inconsistent:universe_artifact_id"
+  ],
+  "output_file_hashes": {
+    "clustering_input_projection_report.md": "33af9a108a324139e3ad36fc087edb389a3b90c144ac80fd3b0d1739a12e5985",
+    "contract_status.csv": "629703ed766219f16cb25a4609aa147503c5ee3668b1262273ed55da9a357ea5",
+    "input_receipts.csv": "2872671fd68ffaab810f80104c0cc4fe26cc3d3d49d2444d71438c48bfda1b7c",
+    "projection_inventory.csv": "6aab09d090ae88d8b8a509efdbabe7536574b710e351b3ec35fecc6fbe712c91",
+    "resolved_config.json": "9c8f44775239c344446396fdcee16f65707e73bae8eeb6f3bf69ea2da6caadd6",
+    "selection_date_audit.csv": "9a54a2f0e161231957f61cb8255b59e4fd43bec6fe74d7f63b89d28a8b6ab456"
+  },
+  "producer_run_id": "20260723T051406Z-f5b06512",
+  "profile_name": "full_research",
+  "profile_type": "full_research",
+  "research_run_family_id": "full_research_factor_669_v1",
+  "run_id": "20260723T051406Z-f5b06512",
+  "schema_version": 2,
+  "split_manifest_id": "split-manifest:75ccf0f37e85422729d54aef5a363f68d4f9b3daed3d42a87eb120e6b5aefe0e",
+  "stage_id": "clustering_input_projection_v2",
+  "start_date": "2021-02-01",
+  "universe_artifact_id": null
+}

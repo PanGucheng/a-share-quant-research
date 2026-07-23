@@ -92,7 +92,7 @@ def main():
     parser.add_argument("--output-dir", required=True)
     parser.add_argument("--readiness-summary", type=Path, default=Path("outputs/full_research_669_readiness_v1/current/readiness_summary.csv"))
     parser.add_argument("--selection-status", type=Path, default=Path("outputs/full_research_669_readiness_v1/current/selection_status.csv"))
-    parser.add_argument("--selection-name", default="exploratory_global_representatives_v1")
+    parser.add_argument("--selection-name", default="split_specific_holdout_clean_allowlists_v1")
     args = parser.parse_args()
 
     readiness_path = args.readiness_summary if args.readiness_summary.is_absolute() else PROJECT_ROOT / args.readiness_summary

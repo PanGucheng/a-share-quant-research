@@ -1,0 +1,33 @@
+{
+  "allowed_dates": "outputs/development_robustness_split_v1/full_research_669/outer_development_allowed_dates.csv",
+  "backend": "scipy",
+  "canary_contract": "outputs/factor_clustering_v2/canary/contract_status.csv",
+  "canary_manifest": "outputs/factor_clustering_v2/canary/artifact_manifest.json",
+  "cluster_distance_threshold": 0.3,
+  "daily_ic_column": "rank_ic",
+  "eligible_roles": [
+    "stable_core"
+  ],
+  "expected_outer_splits": 3,
+  "exposure_weight": 0.5,
+  "input_manifests": [
+    "outputs/factor_rolling_stability_v2/current/artifact_manifest.json",
+    "outputs/clustering_input_projection_v2/current/artifact_manifest.json",
+    "outputs/development_robustness_split_v1/full_research_669/artifact_manifest.json",
+    "outputs/factor_clustering_v2/canary/artifact_manifest.json"
+  ],
+  "linkage_method": "average",
+  "minimum_components": 3,
+  "minimum_exposure_pair_observations": 100,
+  "minimum_performance_pair_dates": 40,
+  "missing_lineage_fields": [],
+  "output_dir": "outputs/factor_clustering_v2/current",
+  "profile": "full_research",
+  "profile_name": "full_research",
+  "profile_type": "full_research",
+  "projection_inventory": "outputs/clustering_input_projection_v2/current/projection_inventory.csv",
+  "research_run_family_id": "full_research_factor_669_v1",
+  "schema_version": 1,
+  "stability_board": "outputs/factor_rolling_stability_v2/current/factor_stability_board.csv",
+  "stage_id": "factor_clustering_v2"
+}

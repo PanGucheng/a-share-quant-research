@@ -1,0 +1,16 @@
+{
+  "above_threshold_missing_action": "renormalize_and_flag",
+  "below_threshold_action": "reject_score",
+  "method_scope": [
+    "equal_weight",
+    "stability_weight"
+  ],
+  "minimum_component_count": 5,
+  "minimum_component_fraction": 0.1,
+  "outer_test_used": false,
+  "policy_sha256": "969d931bbd102ccecd084305bbf7fbf95780501249e6e569015c3b186c5b2e30",
+  "same_policy_for_all_methods": true,
+  "schema_version": 1,
+  "selection_data_scope": "outer_train_validation_only",
+  "status": "frozen"
+}

@@ -1,0 +1,4 @@
+﻿case,pair_count,observed_rank_ic,scipy_rank_ic,absolute_difference,status
+factor_a,3,-0.5,-0.5,0.0,pass
+factor_b,3,1.0,1.0,0.0,pass
+row_order_invariance,6,0.5,0.5,0.0,pass

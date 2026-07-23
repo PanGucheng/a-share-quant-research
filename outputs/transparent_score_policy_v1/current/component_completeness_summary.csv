@@ -1,0 +1,7 @@
+﻿outer_split_id,method,expected_component_count,rows,score_row_presence_coverage,component_completeness_coverage,minimum_available_components,median_component_fraction,renormalization_rate
+split_001,equal_weight,45,1529862,1.0,1.0,8,1.0,0.024634901710088884
+split_001,stability_weight,45,1529862,1.0,1.0,8,1.0,0.024634901710088884
+split_002,equal_weight,46,1769818,1.0,1.0,11,1.0,0.13308204572447563
+split_002,stability_weight,46,1769818,1.0,1.0,11,1.0,0.13308204572447563
+split_003,equal_weight,52,2017703,1.0,1.0,9,1.0,0.21622756173728244
+split_003,stability_weight,52,2017703,1.0,1.0,9,1.0,0.21622756173728244

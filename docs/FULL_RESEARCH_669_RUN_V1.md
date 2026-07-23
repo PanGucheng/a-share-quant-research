@@ -1,12 +1,14 @@
 # 669 因子 Full-Research 全量运行 V1
 
-> **2026-07-22 PR #4.1 完成增补：**本文件下方关于 PR #4 原始 16 因子与 blocked readiness 的说明保留为历史审计记录。当前有效选择链已经完成 outer-train FDR、development-only stability、精确日期 split clustering、48/46/54 split allowlist、36 组 mutation、pre-test freeze、透明 score 和统一 Qlib execution。机器状态现为 `selection_integrity_status=ready`、`core_model_ready=true`、`pr5_model_training_ready=true`、`model_training_started=false`；旧 16 因子仍不可用于模型。完整现状见 `outputs/full_research_669_readiness_v1/current/` 与 [PR #5A 交接计划](./PR5A_MODEL_INPUT_PROTOCOL_HANDOFF_V1.md)。
+> **2026-07-23 Accuracy Correction 覆盖增补：**PR #4.1 的 holdout 隔离证据继续有效，但 PIT lifecycle、横截面因子影响、pairwise IC 与历史执行准确性问题已经撤回模型 readiness。当前 48/46/54 allowlist 和透明 score 为 `superseded`，对应 OOS NAV 为 `non_authoritative`；`core_model_ready=false`、`pr5_model_training_ready=false`、`model_training_started=false`。当前唯一执行计划为 [Research / Execution Accuracy Correction V1](./ACCURACY_CORRECTION_V1_PLAN.md)，本文件其余 readiness 与“下一步 PR #5A”只作为历史记录。
+
+> **2026-07-22 PR #4.1 历史完成记录：**选择链曾完成 outer-train FDR、development-only stability、精确日期 split clustering、48/46/54 split allowlist、36 组 mutation、freeze、透明 score 和统一 Qlib execution。该记录证明 holdout 隔离，不再证明当前模型输入或 OOS 数值资格。
 
 > **2026-07-21 合并后审计增补：**本文中的矩阵规模、批处理、IC、outer split 和 Qlib Exchange 数字仍是 PR #4 的历史工程证据；“16 个代表已冻结为模型 allowlist”和模型 readiness 结论已经撤回。当前代表读取了 outer-test 信息，聚类没有按 development dates 截断，Stability 没有真实消费上游 FDR artifact，raw/provider/source provenance 也不完整。当前 16 个代表只允许作为 `exploratory/test-influenced` 证据，`model_input_allowed=false`。机器 hard-stop 已落地，下述安全状态已由受控 readiness artifact 生成并通过 compact validator。下一步不是模型 PR，而是先执行 [Selection Holdout Integrity 与后续模型计划 V1](./SELECTION_HOLDOUT_INTEGRITY_AND_MODEL_PLAN_V1.md) 中的逻辑 PR #4.1。
 
 ## 状态与边界
 
-PR #4 已按 PR #3 冻结的研究语义完成全部 669 个 runnable 因子的规模化运行。当前机器安全状态为：
+PR #4 已按 PR #3 当时冻结的研究语义完成全部 669 个 runnable 因子的规模化运行。以下为 PR #4 当时的机器安全状态，不代表 2026-07-23 当前状态：
 
 ```text
 full_research_669_infrastructure_ready = true

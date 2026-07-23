@@ -1,0 +1,8 @@
+﻿factor,common_key_count,comparable_value_count,bit_identical_count,difference_count,bit_identical,max_absolute_difference,source_family,dependency_class,filter_only_reuse_allowed
+alpha158_KLEN,39981,39916,39981,0,True,0.0,alpha158,pure_time_series,True
+alpha360_CLOSE59,39981,39787,39981,0,True,0.0,alpha360,pure_time_series,True
+ta_momentum_ao,39981,39588,39981,0,True,0.0,ta,pure_time_series,True
+ret_5,39981,39895,39981,0,True,0.0,project_basic,pure_time_series,True
+kunquant_alpha101_alpha002,39981,39981,122,39859,False,0.9670524856431585,alpha101,mixed,False
+kunquant_alpha101_alpha033,39981,39916,73,39908,False,0.06461502550555659,alpha101,cross_sectional,False
+kunquant_alpha101_alpha041,39981,39916,39981,0,True,0.0,alpha101,pure_time_series,False

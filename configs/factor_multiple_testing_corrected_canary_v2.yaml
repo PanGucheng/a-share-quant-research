@@ -1,0 +1,31 @@
+schema_version: 1
+stage_id: factor_multiple_testing_v2
+profile: full_research
+profile_name: full_research
+profile_type: full_research
+research_run_family_id: full_research_factor_669_v1
+input_projection: outputs/selection_input_projection_v2/runtime/outer_train_daily_ic.parquet
+projection_inventory: outputs/selection_input_projection_v2/current/projection_inventory.csv
+bootstrap_policy: outputs/bootstrap_gap_sensitivity_v1/current/frozen_bootstrap_policy.json
+bootstrap_method: gap_aware_moving_block
+family_scope: outer_split
+expected_family_count: 3
+expected_hypotheses_per_family: 25
+maximum_factors: 25
+included_folds: [train]
+source_family: full_research_669_factor_family_corrected_v2
+label_name: label_20d_t1_v2
+research_window: purged_expanding_train
+preprocessing_variant: raw_matrix_v4_pairwise_ic_v2
+metric: rank_ic
+bootstrap_samples: 100
+block_length: 20
+random_seed: 20260723
+fdr_alpha: 0.05
+null_simulation_factors: 20
+stable_signal_mean: 0.08
+input_manifests:
+  - outputs/selection_input_projection_v2/current/artifact_manifest.json
+  - outputs/bootstrap_gap_sensitivity_v1/current/artifact_manifest.json
+missing_lineage_fields: []
+output_dir: outputs/factor_multiple_testing_v2/canary

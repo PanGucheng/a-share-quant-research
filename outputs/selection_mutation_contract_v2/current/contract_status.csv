@@ -1,0 +1,11 @@
+﻿check_name,status,observed_value,required_value,severity,reason
+canary_gate_passed,pass,pass,pass_or_not_required,critical,
+mutation_case_count,pass,36,36,critical,
+development_projection_hash_unchanged,pass,36,36,critical,
+selection_payload_hashes_unchanged,pass,36,36,critical,
+selection_parent_chain_valid,pass,[],[],critical,
+all_mutations_touch_test_rows,pass,36,36,critical,
+mutation_effective,pass,36,36,critical,
+row_order_canonicalized,pass,12,12,critical,
+alpha101_axis_relabel_mutation_blocked,pass,pass,pass,critical,
+lifecycle_illegal_key_impact_covered,pass,True,True,critical,

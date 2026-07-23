@@ -40,6 +40,23 @@ def main() -> int:
     issues = [issue for manifest, path in zip(manifests, manifest_paths) for issue in validate_manifest_outputs(manifest, path.parent)]
     if issues or any(manifest["artifact_status"] != "pass" for manifest in manifests):
         raise ValueError("stability upstream is stale or blocked")
+    projection_contract = pd.read_csv(manifest_paths[0].parent / "contract_status.csv")
+    inner_test_check = projection_contract.loc[
+        projection_contract["check_name"].eq("inner_test_date_in_projection_count")
+    ]
+    if len(inner_test_check) != 1 or inner_test_check.iloc[0]["status"] != "pass":
+        raise ValueError("inner development projection does not prove test-date exclusion")
+    inner_test_count = int(inner_test_check.iloc[0]["observed_value"])
+    canary_manifest_path = config.get("canary_manifest")
+    canary_gate_observed = "not_required"
+    if canary_manifest_path:
+        canary_manifest_resolved = resolve(canary_manifest_path)
+        canary_manifest = load_artifact_manifest(canary_manifest_resolved)
+        canary_issues = validate_manifest_outputs(canary_manifest, canary_manifest_resolved.parent)
+        canary_contract = pd.read_csv(resolve(config["canary_contract"]))
+        if canary_issues or canary_manifest["artifact_status"] != "pass" or not canary_contract["status"].eq("pass").all():
+            raise ValueError("corrected stability canary is stale, blocked, or incomplete")
+        canary_gate_observed = "pass"
     projection_path = resolve(config["input_projection"])
     inventory = pd.read_csv(resolve(config["projection_inventory"]))
     projection_receipt = inventory.loc[inventory["projection"].eq("inner_development_daily_ic")]
@@ -47,7 +64,13 @@ def main() -> int:
         raise ValueError("inner development projection hash differs from compact receipt")
     projection = pd.read_parquet(projection_path)
     fdr_path = resolve(config["fdr_results"])
+    expected_fdr_hash = manifests[1]["output_file_hashes"].get(fdr_path.name)
+    if not expected_fdr_hash or file_sha256(fdr_path) != expected_fdr_hash:
+        raise ValueError("FDR result hash differs from its manifest")
     fdr = pd.read_csv(fdr_path)
+    expected_bootstrap_method = str(config["expected_bootstrap_method"])
+    if "bootstrap_method" not in fdr or not fdr["bootstrap_method"].eq(expected_bootstrap_method).all():
+        raise ValueError("FDR rows do not use the frozen bootstrap method")
     maximum_factors = config.get("maximum_factors")
     if maximum_factors is not None:
         factors = sorted(fdr["factor"].astype(str).unique())[: int(maximum_factors)]
@@ -93,13 +116,17 @@ def main() -> int:
     joined_q = metrics.set_index(["outer_split_id", "factor"])["fdr_bh_q_value"]
     mismatch = int((joined_q - joined_q.index.map(fdr_source)).abs().gt(0).sum())
     contracts = pd.DataFrame([
+        contract_row("canary_gate_passed", canary_gate_observed in {"not_required", "pass"}, canary_gate_observed, "pass_or_not_required"),
         contract_row("outer_split_count", board["outer_split_id"].nunique() == expected_outer, board["outer_split_id"].nunique(), expected_outer),
         contract_row("factor_count_per_outer", board.groupby("outer_split_id")["factor"].nunique().eq(expected_factors).all(), board.groupby("outer_split_id")["factor"].nunique().tolist(), expected_factors),
         contract_row("inner_window_count_per_outer", metrics.groupby("outer_split_id")["inner_split_id"].nunique().eq(expected_inner).all(), metrics.groupby("outer_split_id")["inner_split_id"].nunique().tolist(), expected_inner),
         contract_row("fdr_join_missing", missing_count == 0, missing_count, 0),
         contract_row("fdr_join_extra", extra_count == 0, extra_count, 0),
         contract_row("fdr_q_value_mismatch", mismatch == 0, mismatch, 0),
+        contract_row("fdr_output_hash_bound", file_sha256(fdr_path) == expected_fdr_hash, file_sha256(fdr_path), expected_fdr_hash),
+        contract_row("fdr_bootstrap_method_frozen", fdr["bootstrap_method"].eq(expected_bootstrap_method).all(), expected_bootstrap_method, expected_bootstrap_method),
         contract_row("internally_recomputed_fdr", not metrics["internally_recomputed_fdr"].any(), bool(metrics["internally_recomputed_fdr"].any()), False),
+        contract_row("inner_test_date_in_projection_count", inner_test_count == 0, inner_test_count, 0),
         contract_row("test_metrics_used_in_selection", not any(str(column).startswith("test_") or "oos" in str(column).lower() for column in metrics.columns), False, False),
         contract_row("selection_schema_has_no_test_fields", not any(str(column).startswith("test_") or "oos" in str(column).lower() for column in metrics.columns), [column for column in metrics.columns if str(column).startswith("test_") or "oos" in str(column).lower()], []),
         contract_row("all_selected_factors_have_fdr_result", metrics.loc[metrics["selected"], "fdr_bh_q_value"].notna().all(), int(metrics.loc[metrics["selected"], "fdr_bh_q_value"].isna().sum()), 0),
@@ -120,7 +147,7 @@ def main() -> int:
         contracts.to_csv(publisher.path("contract_status.csv"), index=False, encoding="utf-8-sig")
         publisher.path("resolved_config.json").write_text(json.dumps(config, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
         publisher.path("stability_report.md").write_text(
-            "# Holdout-Clean Stability V1\n\n"
+            "# Corrected Holdout-Clean Stability\n\n"
             + f"- Status: `{'pass' if ready else 'blocked'}`\n"
             + f"- Outer splits / factor rows: `{board['outer_split_id'].nunique()}` / `{len(board)}`\n"
             + f"- Stable-core rows: `{int(board['stability_role'].eq('stable_core').sum())}`\n"
@@ -130,7 +157,7 @@ def main() -> int:
         )
         files = [publisher.path(name) for name in CONTROLLED if name != "artifact_manifest.json"]
         write_stage_artifact_manifest(
-            project_root=PROJECT_ROOT, stage_id="factor_rolling_stability_v1", config=config,
+            project_root=PROJECT_ROOT, stage_id=str(config.get("stage_id", "factor_rolling_stability_v1")), config=config,
             output_dir=publisher.staging_dir, output_files=files, code_state=capture_code_state(PROJECT_ROOT),
             input_manifest_paths=manifest_paths, factor_frame_id=manifests[0]["factor_frame_id"],
             split_manifest_id=manifests[0]["split_manifest_id"], start_date=projection["datetime"].min(),

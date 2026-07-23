@@ -1,0 +1,39 @@
+{
+  "artifact_id": "full_research_labels_v2:404fe40807d674d4ec5fc7b7b0727c4e679bec6ddaa2c00d967eaeb08c80102b",
+  "artifact_status": "pass",
+  "blocked_reason": "",
+  "code_commit_sha": "4ba9c44b9d6635844f194d7f3b853dc119e9daaf",
+  "code_diff_sha256": "",
+  "code_dirty": false,
+  "config_sha256": "9ea0271adc4c393d9dc7c67cdff80c0a5a6f30e04f45129e742459d121ca1cdc",
+  "created_at": "2026-07-23T04:24:37.993025+00:00",
+  "end_date": "2026-06-09",
+  "factor_catalog_id": "factor-catalog:8c031a09892fc915ac45201942f563925a9bab617e60fce5ecbbe274a51a02e1",
+  "factor_frame_id": "factor-frame-v4:f1e93a2428446673f5c873a01886a38ae9e654e5f863cf2b236040dbbf28dc3c",
+  "input_artifact_ids": [
+    "full_research_feature_matrix_v4:10f6e026d5c6c13eda166f702fb2bae2e7ca76c6747bd9e9482ee482e605df1d",
+    "point_in_time_universe_v2:325e39d7dd68afe0828154840b813287d0bf991487a42ed51a7d6476e85d7838",
+    "raw_market_data_snapshot_v1:e2f213da365ea6ba4d8375c830ff32e45f78fc847b814a11aaeb9e26b49d8cd9"
+  ],
+  "lineage_status": "complete",
+  "missing_lineage_fields": [],
+  "output_file_hashes": {
+    "calendar_continuity_receipt.csv": "a3556412f12d6f38f09e563f4ccad4c9d30395441a17e68e15179f412c7bbca6",
+    "contract_status.csv": "9721eb0c3853442f6948add826336a4537badce801dcf78cfb8112ef61a401e4",
+    "label_report.md": "291fb450c3635209455811c2ed7d380ae792901bbff51b967842d338cd7edabe",
+    "label_sample.csv": "0493b85389bc004878d558f3c39c7389c1db5feb06d25765e1220f1f03381a87",
+    "label_summary.csv": "25eea768ce7cf426def474ecb6e048cba287a365ececfe7987d9c502050ff82a",
+    "resolved_config.json": "c96742a5bd0771efebf73d030ddb024f070274babfb145f6f1ba30c5f0fecaea",
+    "schema.json": "b7a95463758452bd51404de4a6d32038e3db6f0ac9406c239f110e9b2519d6d6"
+  },
+  "producer_run_id": "20260723T042437Z-dfda7eb3",
+  "profile_name": "full_research",
+  "profile_type": "full_research",
+  "research_run_family_id": "full_research_factor_669_v1",
+  "run_id": "20260723T042437Z-dfda7eb3",
+  "schema_version": 2,
+  "split_manifest_id": null,
+  "stage_id": "full_research_labels_v2",
+  "start_date": "2021-02-01",
+  "universe_artifact_id": "universe-v2:a7875d74d5119230ab5576cb245fe8b389e0dd3030606299dad6d1f0e147ccd2"
+}

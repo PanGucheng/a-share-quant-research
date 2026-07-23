@@ -1,0 +1,9 @@
+﻿check,status,severity,detail
+factor_count_669,pass,critical,actual=669
+factor_set_exact,pass,critical,
+factor_unique,pass,critical,
+dependency_class_valid,pass,critical,
+unknown_fail_closed,pass,critical,
+non_time_series_recompute,pass,critical,
+canary_coverage,pass,critical,passed=5/5
+all_source_families_present,pass,critical,actual=5

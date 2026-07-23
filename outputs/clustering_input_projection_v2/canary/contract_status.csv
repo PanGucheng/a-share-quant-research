@@ -1,0 +1,10 @@
+﻿check_name,status,observed_value,required_value,severity,reason
+canary_gate_passed,pass,not_required,pass_or_not_required,critical,
+outer_split_count,pass,1,1,critical,
+minimum_components,pass,[25],>=3,critical,
+exposure_outside_allowed_dates,pass,0,0,critical,
+performance_outside_allowed_dates,pass,0,0,critical,
+outer_test_in_exposure,pass,0,0,critical,
+outer_test_in_performance,pass,0,0,critical,
+projection_hashes_present,pass,2,2,critical,
+source_manifests_hash_bound,pass,5,5,critical,

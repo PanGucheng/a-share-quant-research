@@ -36,6 +36,7 @@ jobs:
         run: |
           python scripts/validate_research_data_contracts_v1.py
           python scripts/validate_point_in_time_universe_v1.py
+          python scripts/validate_point_in_time_universe_v2.py
           python scripts/validate_purged_walk_forward_v1.py
           python scripts/validate_factor_multiple_testing_v1.py
           python scripts/validate_factor_rolling_stability_v1.py
@@ -50,6 +51,7 @@ jobs:
           python scripts/validate_full_research_trial_v1.py
           python scripts/validate_full_research_669_v1.py
           python scripts/validate_selection_integrity_receipts_v1.py
+          python scripts/validate_accuracy_correction_hard_stop_v1.py
 
   qlib-exchange-runtime:
     runs-on: windows-latest

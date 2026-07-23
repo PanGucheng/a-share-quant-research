@@ -1,0 +1,8 @@
+﻿check,status,severity,detail
+five_source_families_covered,pass,critical,"['alpha101', 'alpha158', 'alpha360', 'project_basic', 'ta']"
+clean_key_grid_nonempty,pass,critical,39981
+pure_candidates_bit_identical,pass,critical,0
+mandatory_recompute_not_reused,pass,critical,3
+unknown_fixture_fail_closed,pass,critical,filter_only_reuse=False
+alpha101_axis_labels_strict,pass,critical,"['pass', 'pass']"
+all_partitions_pass,pass,critical,{'pass': 7}

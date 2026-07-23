@@ -1,0 +1,12 @@
+﻿check_name,status,observed_value,required_value,severity,reason
+canary_gate_passed,pass,pass,pass_or_not_required,critical,
+outer_split_count,pass,3,3,critical,
+method_count_per_split,pass,"[2, 2, 2]",2,critical,
+minimum_components,pass,"[45, 45, 46, 46, 52, 52]",>=2,critical,
+weight_sum_error,pass,2.220446049250313e-16,<=1e-12,critical,
+maximum_factor_weight,pass,0.0280211481340992,<=0.1,critical,
+unique_cluster_vote,pass,0,0,critical,
+direction_frozen,pass,"[np.int64(-1), np.int64(1)]","[-1, 1]",critical,
+holdout_clean,pass,True,True,critical,
+test_fields_consumed,pass,[],[],critical,
+allowlist_hash_bound,pass,14a35519d784465526017506ddd7cbca2c5d49437cee1673962c60718beebd66,14a35519d784465526017506ddd7cbca2c5d49437cee1673962c60718beebd66,critical,

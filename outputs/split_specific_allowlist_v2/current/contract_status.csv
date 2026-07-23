@@ -1,0 +1,10 @@
+﻿check_name,status,observed_value,required_value,severity,reason
+canary_gate_passed,pass,pass,pass_or_not_required,critical,
+outer_split_count,pass,3,3,critical,
+split_allowlist_unique,pass,0,0,critical,
+minimum_components,pass,"[45, 46, 52]",>=3,critical,
+all_factors_stable_core,pass,0,0,critical,
+clustering_holdout_clean,pass,True,True,critical,
+split_allowlists_frozen,pass,3,3,critical,
+single_global_allowlist_absent,pass,"['split_001', 'split_002', 'split_003']",split-specific only,critical,
+source_manifests_hash_bound,pass,6,6,critical,

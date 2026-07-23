@@ -1,0 +1,8 @@
+﻿source_family,factor,mode,status,recomputed,row_count
+alpha158,alpha158_KLEN,filter_only_candidate,pass,False,39981
+alpha360,alpha360_CLOSE59,filter_only_candidate,pass,False,39981
+ta,ta_momentum_ao,filter_only_candidate,pass,False,39981
+project_basic,ret_5,filter_only_candidate,pass,False,39981
+alpha101,kunquant_alpha101_alpha002,mandatory_recompute,pass,True,39981
+alpha101,kunquant_alpha101_alpha033,mandatory_recompute,pass,True,39981
+alpha101,kunquant_alpha101_alpha041,mandatory_recompute,pass,True,39981

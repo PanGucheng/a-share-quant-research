@@ -220,6 +220,8 @@ outputs/full_research_feature_matrix_v1/runtime/
 outputs/full_research_feature_matrix_669_v1/runtime/
 outputs/full_research_feature_matrix_669_v1/runtime_v3/
 outputs/full_research_feature_matrix_669_v1/runtime_v3_canary/
+outputs/full_research_feature_matrix_v4/runtime/
+outputs/selection_input_projection_v2/runtime/
 outputs/factor_score_construction_v1/full_research/runtime/
 outputs/qlib_exchange_v1/full_research/runtime/
 

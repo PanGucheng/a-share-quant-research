@@ -1,0 +1,37 @@
+{
+  "artifact_id": "split_transparent_weights_v2:0528636298ba857da231817187c848b0ee7ce36d3714a8382bf9758f9fb102df",
+  "artifact_status": "pass",
+  "blocked_reason": "",
+  "code_commit_sha": "be3b34127d4235d7aab06fba22ed27ee56328b80",
+  "code_diff_sha256": "",
+  "code_dirty": false,
+  "config_sha256": "9d4742921eaec312ca2d85680cc40765466e984f19d8af9fa4470479d8130db5",
+  "created_at": "2026-07-23T05:59:55.229610+00:00",
+  "end_date": null,
+  "factor_catalog_id": "factor-catalog:8c031a09892fc915ac45201942f563925a9bab617e60fce5ecbbe274a51a02e1",
+  "factor_frame_id": "factor-frame-v4:f1e93a2428446673f5c873a01886a38ae9e654e5f863cf2b236040dbbf28dc3c",
+  "input_artifact_ids": [
+    "split_specific_allowlist_v2:f58b3f13c061e3ead62ae862a071940242ccc4f1d151703da464784b7f46684d",
+    "split_transparent_weights_v2:40f44a8bf344421b4fe5a4a68fa32765df48154376316cddeeb356c32b85209b"
+  ],
+  "lineage_status": "complete",
+  "missing_lineage_fields": [],
+  "output_file_hashes": {
+    "contract_status.csv": "1ea71fb67055134933be225d50a621d54293ed072e5acad096779563889a735c",
+    "factor_weights_by_split.csv": "9d0a59afb607a3cd26b4b6f8f4f064aefe0bd024f4515542e23e985c4e553ed2",
+    "input_receipts.csv": "317c0d6a5bdf3570172f17282c760d966e4b2adbba9ec6ac0c0fbf08ef5abd8a",
+    "resolved_config.json": "966178a4426a71445c1e37cb82b8d993d536a789edc47922b417c88e9ee4a57d",
+    "transparent_weights_report.md": "d61cc40dbccd599bb2d2a4772698d18338611383c833494d21ec015a481eb3a4",
+    "weight_manifest.csv": "2ce3e9797811d4d14d575816714af72963958bb3303990769d89b1ded26342c3"
+  },
+  "producer_run_id": "20260723T055955Z-2c4b50d4",
+  "profile_name": "full_research",
+  "profile_type": "full_research",
+  "research_run_family_id": "full_research_factor_669_v1",
+  "run_id": "20260723T055955Z-2c4b50d4",
+  "schema_version": 2,
+  "split_manifest_id": "split-manifest:75ccf0f37e85422729d54aef5a363f68d4f9b3daed3d42a87eb120e6b5aefe0e",
+  "stage_id": "split_transparent_weights_v2",
+  "start_date": null,
+  "universe_artifact_id": null
+}

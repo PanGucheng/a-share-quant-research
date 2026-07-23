@@ -1,0 +1,12 @@
+﻿outer_split_id,stability_role,factor_count
+split_001,conditional_signal,58
+split_001,holdout,151
+split_001,stable_core,460
+split_002,conditional_signal,270
+split_002,holdout,157
+split_002,monitor,4
+split_002,stable_core,238
+split_003,conditional_signal,354
+split_003,holdout,99
+split_003,monitor,2
+split_003,stable_core,214

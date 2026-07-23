@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "profile": "full_research",
+  "profile_name": "full_research",
+  "profile_type": "full_research",
+  "research_run_family_id": "full_research_factor_669_v1",
+  "provider_uri": "../qlib_data/cn_data_community_20260609_derived",
+  "start_date": "2021-09-01",
+  "end_date": "2021-09-30",
+  "warmup_start_date": "2021-01-01",
+  "universe_v2_intervals": "outputs/point_in_time_universe_v2/full_research/universe_intervals.csv",
+  "universe_v2_manifest": "outputs/point_in_time_universe_v2/full_research/artifact_manifest.json",
+  "illegal_key_resolution": "outputs/point_in_time_universe_v2/full_research/illegal_key_resolution.csv",
+  "factor_dependency_inventory": "outputs/factor_dependency_v1/current/factor_dependency_inventory.csv",
+  "factor_dependency_manifest": "outputs/factor_dependency_v1/current/artifact_manifest.json",
+  "factor_inventory": "outputs/full_research_factor_catalog_669_v1/current/factor_inventory.csv",
+  "factor_catalog_manifest": "outputs/full_research_factor_catalog_669_v1/current/artifact_manifest.json",
+  "alpha158_inventory": "outputs/factor_catalog_alpha158_v1/alpha158_formula_inventory.csv",
+  "alpha360_inventory": "outputs/factor_catalog_alpha360_v1/alpha360_formula_inventory.csv",
+  "ta_source_path": "tmp/reference_repos/ta",
+  "alpha101_source_path": "tmp/reference_repos/KunQuant",
+  "alpha101_metadata_catalog": "outputs/factor_catalog_alpha101_v1/kunquant_alpha101_catalog_metadata.yaml",
+  "raw_cache_path": "outputs/full_research_feature_matrix_v1/runtime/raw_ohlcva.parquet",
+  "matrix_v3_batch_manifest": "outputs/full_research_feature_matrix_669_v1/current/batch_manifest.csv",
+  "output_dir": "outputs/full_research_feature_matrix_v4_canary/current",
+  "selected_factors": {
+    "alpha158": [
+      "alpha158_KLEN"
+    ],
+    "alpha360": [
+      "alpha360_CLOSE59"
+    ],
+    "ta": [
+      "ta_momentum_ao"
+    ],
+    "project_basic": [
+      "ret_5"
+    ],
+    "alpha101": [
+      "kunquant_alpha101_alpha002",
+      "kunquant_alpha101_alpha033",
+      "kunquant_alpha101_alpha041"
+    ]
+  },
+  "config_file_sha256": "f7e9022b29ec079d2a3fddc65ecd1005cd5e334283e8e7ed5657dd280c522fd6",
+  "raw_cache_sha256": "1da985efe1a361eb5b366bc958a8c68ac1e15c3c6054ae0b946e64ab40ee49e8",
+  "factor_dependency_inventory_sha256": "862c0251e5831672c98491bdcb1c67a8099edf06e1672dc2beb678c80da1eb5c",
+  "matrix_v3_batch_manifest_sha256": "aa1076a758605295c1e5bbdfad437d7c8d469607d213c1dd036f318388f7b1ea"
+}

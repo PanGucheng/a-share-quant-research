@@ -1,0 +1,11 @@
+﻿outer_split_id,datetime,rows,score_row_presence_coverage,component_completeness_coverage,minimum_available_components,median_component_fraction
+split_001,2021-02-01,141,1.0,1.0,38,1.0
+split_001,2021-06-10,145,1.0,1.0,11,1.0
+split_001,2021-10-19,148,1.0,1.0,14,1.0
+split_001,2022-02-23,145,1.0,1.0,41,1.0
+split_001,2022-06-30,145,1.0,1.0,32,1.0
+split_001,2022-11-04,148,1.0,1.0,37,1.0
+split_001,2023-03-13,145,1.0,1.0,43,1.0
+split_001,2023-07-18,132,1.0,1.0,45,1.0
+split_001,2023-11-22,133,1.0,1.0,45,1.0
+split_001,2024-06-03,126,1.0,1.0,16,1.0

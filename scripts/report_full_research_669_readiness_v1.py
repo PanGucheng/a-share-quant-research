@@ -45,6 +45,12 @@ def main() -> int:
     parser.add_argument("--config", type=Path, default=Path("configs/full_research_669_readiness_v1.yaml"))
     args = parser.parse_args()
     config = yaml.safe_load(resolve(args.config).read_text(encoding="utf-8")) or {}
+    accuracy_config = yaml.safe_load(
+        resolve(config["accuracy_correction_config"]).read_text(encoding="utf-8")
+    ) or {}
+    accuracy_flags = pd.read_csv(
+        resolve(accuracy_config["readiness_summary"])
+    ).iloc[0]
     loaded: dict[str, dict[str, object]] = {}
     contracts: dict[str, pd.DataFrame] = {}
     issues: list[LineageIssue] = []
@@ -173,7 +179,7 @@ def main() -> int:
     )
     no_lineage_issues = not issues
     raw_provenance_ready = batch_ready and not any(item.stage_id in {loaded["raw_snapshot"]["stage_id"], loaded["source_provenance"]["stage_id"], loaded["matrix"]["stage_id"]} for item in issues)
-    selection_ready = all(
+    holdout_selection_ready = all(
         [
             no_lineage_issues,
             raw_provenance_ready,
@@ -191,41 +197,99 @@ def main() -> int:
     )
     flags: dict[str, object] = {
         "full_research_669_infrastructure_ready": batch_ready,
-        "full_research_669_matrix_content_ready": batch_ready,
+        "full_research_669_matrix_content_ready": False,
         "matrix_v3_provenance_ready": raw_provenance_ready,
         "purged_exact_assignments_ready": contracts["splits"]["status"].eq("pass").all(),
-        "labels_current_lineage": no_lineage_issues,
-        "daily_ic_current_lineage": no_lineage_issues,
-        "fdr_current_lineage": no_lineage_issues and fdr_ready,
-        "selection_chain_current": no_lineage_issues,
-        "full_research_669_validation_chain_ready": selection_ready,
+        "labels_current_lineage": False,
+        "daily_ic_current_lineage": False,
+        "fdr_current_lineage": False,
+        "selection_chain_current": False,
+        "full_research_669_validation_chain_ready": False,
         "full_research_669_qlib_execution_operational": execution_ready,
         "full_research_authoritative_tradability_ready": False,
-        "historical_selection_evidence_valid": True,
+        "historical_selection_evidence_valid": False,
         "feature_selection_holdout_clean": stability_ready and mutation_ready,
         "clustering_holdout_clean": clustering_ready and mutation_ready,
         "fdr_family_semantics_valid": fdr_ready,
         "fdr_artifact_consumed": stability_ready,
         "raw_input_provenance_complete": raw_provenance_ready,
-        "split_allowlists_frozen": allowlists_ready,
-        "feature_allowlist_frozen": allowlists_ready,
-        "pre_test_freeze_contract_ready": freeze_ready,
-        "transparent_score_ready": score_ready,
-        "transparent_qlib_execution_ready": execution_ready,
-        "selection_integrity_status": "ready" if selection_ready else "blocked",
-        "model_entry_hard_stop_active": not selection_ready,
+        "split_allowlists_frozen": False,
+        "feature_allowlist_frozen": False,
+        "pre_test_freeze_contract_ready": False,
+        "transparent_score_ready": False,
+        "transparent_qlib_execution_ready": False,
+        "selection_holdout_integrity_ready": bool(
+            accuracy_flags["selection_holdout_integrity_ready"]
+        )
+        and holdout_selection_ready,
+        "universe_lifecycle_v2_ready": bool(
+            accuracy_flags["universe_lifecycle_v2_ready"]
+        ),
+        "research_formula_accuracy_ready": bool(
+            accuracy_flags["research_formula_accuracy_ready"]
+        ),
+        "matrix_v4_lifecycle_clean": bool(
+            accuracy_flags["matrix_v4_lifecycle_clean"]
+        ),
+        "pairwise_ic_ready": bool(accuracy_flags["pairwise_ic_ready"]),
+        "model_research_ready": bool(accuracy_flags["model_research_ready"]),
+        "execution_semantics_accuracy_ready": bool(
+            accuracy_flags["execution_semantics_accuracy_ready"]
+        ),
+        "market_cache_v2_ready": bool(accuracy_flags["market_cache_v2_ready"]),
+        "future_market_field_count": int(
+            accuracy_flags["future_market_field_count"]
+        ),
+        "stale_policy_valid": bool(accuracy_flags["stale_policy_valid"]),
+        "authoritative_oos_execution_ready": bool(
+            accuracy_flags["authoritative_oos_execution_ready"]
+        ),
+        "selection_integrity_status": str(
+            accuracy_flags["selection_integrity_status"]
+        ),
+        "accuracy_correction_status": str(
+            accuracy_flags["accuracy_correction_status"]
+        ),
+        "model_entry_hard_stop_active": bool(
+            accuracy_flags["model_entry_hard_stop_active"]
+        ),
         "bulk_run_user_review_status": "consumed" if approval_consumed else "blocked",
         "bulk_run_execution_authorized": False,
         "bulk_run_current_head_binding_satisfied": bool(run_history["current_head_binding_satisfied"].astype(bool).all()),
         "bulk_run_single_use_enforced_at_execution": bool(run_history["single_use_enforced_at_execution"].astype(bool).all()),
-        "core_model_ready": selection_ready,
-        "pr5_model_training_ready": selection_ready,
+        "core_model_ready": False,
+        "pr5_model_training_ready": False,
         "historical_oos_comparison_complete": False,
         "production_model_selected": False,
         "model_training_started": False,
     }
     expected_values: dict[str, object] = {
+        "full_research_669_matrix_content_ready": False,
+        "labels_current_lineage": False,
+        "daily_ic_current_lineage": False,
+        "fdr_current_lineage": False,
+        "selection_chain_current": False,
+        "full_research_669_validation_chain_ready": False,
         "full_research_authoritative_tradability_ready": False,
+        "historical_selection_evidence_valid": False,
+        "split_allowlists_frozen": False,
+        "feature_allowlist_frozen": False,
+        "pre_test_freeze_contract_ready": False,
+        "transparent_score_ready": False,
+        "transparent_qlib_execution_ready": False,
+        "selection_holdout_integrity_ready": True,
+        "universe_lifecycle_v2_ready": True,
+        "research_formula_accuracy_ready": False,
+        "matrix_v4_lifecycle_clean": False,
+        "pairwise_ic_ready": False,
+        "model_research_ready": False,
+        "execution_semantics_accuracy_ready": False,
+        "market_cache_v2_ready": False,
+        "future_market_field_count": 1,
+        "stale_policy_valid": False,
+        "authoritative_oos_execution_ready": False,
+        "accuracy_correction_status": "blocked_research_and_execution_accuracy",
+        "model_entry_hard_stop_active": True,
         "bulk_run_execution_authorized": False,
         "bulk_run_current_head_binding_satisfied": False,
         "bulk_run_single_use_enforced_at_execution": False,
@@ -233,14 +297,15 @@ def main() -> int:
         "production_model_selected": False,
         "model_training_started": False,
         "selection_integrity_status": "ready",
-        "model_entry_hard_stop_active": False,
         "bulk_run_user_review_status": "consumed",
+        "core_model_ready": False,
+        "pr5_model_training_ready": False,
     }
     rows = []
     for name, value in flags.items():
         required = expected_values.get(name, True)
         severity = "critical"
-        reason = "Current holdout-clean PR #4.1 evidence."
+        reason = "Accuracy Correction V1 current governance state."
         if name == "full_research_authoritative_tradability_ready":
             severity = "capability"
             reason = "Historical suspension and directional price-limit labels remain proxy-derived."
@@ -275,17 +340,19 @@ def main() -> int:
         [
             {
                 "selection_name": "split_specific_holdout_clean_allowlists_v1",
-                "selection_status": "holdout_clean",
-                "model_input_allowed": bool(selection_ready),
+                "selection_status": "superseded_accuracy_correction",
+                "model_input_allowed": False,
                 "representative_count": int(allowlist_manifest["factor_count"].sum()),
                 "source_artifact_id": str(loaded["allowlist"]["artifact_id"]),
-                "superseded_by": "",
+                "superseded_by": "pending_matrix_v4_split_allowlists",
                 "outer_split_factor_counts": "|".join(map(str, allowlist_manifest.sort_values("outer_split_id")["factor_count"].tolist())),
             }
         ]
     )
     selection_status = pd.concat([historical.reindex(columns=current_selection.columns), current_selection], ignore_index=True)
-    readiness_gate_pass = selection_ready and bool(contract.loc[contract["severity"].eq("critical"), "status"].eq("pass").all())
+    readiness_gate_pass = bool(
+        contract.loc[contract["severity"].eq("critical"), "status"].eq("pass").all()
+    )
     output_dir = resolve(config["output_dir"])
     with StageOutputPublisher(output_dir, CONTROLLED) as publisher:
         contract.to_csv(publisher.path("contract_status.csv"), index=False, encoding="utf-8-sig")
@@ -298,8 +365,8 @@ def main() -> int:
             + "\n".join(f"- {name}: `{str(value).lower()}`" for name, value in flags.items())
             + f"\n\n- Evidence stages: `{len(loaded)}`\n- Lineage issues: `{len(issues)}`"
             + f"\n- Stable-core / split representatives: `{int(stability['stability_role'].eq('stable_core').sum())}` / `{len(representatives)}`"
-            + "\n- Selection integrity: holdout-clean and ready for the separately planned PR #5A protocol."
-            + "\n- Model training: not started; historical OOS comparison and production selection remain false."
+            + "\n- Selection holdout integrity remains ready, but all current selections and scores are superseded."
+            + "\n- Accuracy Correction V1 hard-stop is active; PR #5A and all model training remain blocked."
             + "\n- Authoritative historical tradability capability remains blocked and is not overstated.\n",
             encoding="utf-8",
         )
@@ -314,7 +381,7 @@ def main() -> int:
             input_manifest_paths=[resolve(spec["manifest"]) for spec in config["evidence"].values()],
             missing_lineage_fields=[],
             artifact_status="pass" if readiness_gate_pass else "blocked",
-            blocked_reason="" if readiness_gate_pass else "blocked_selection_integrity_not_revalidated",
+            blocked_reason="" if readiness_gate_pass else "invalid_accuracy_correction_hard_stop_state",
         )
         publisher.publish()
     print(contract.to_string(index=False))

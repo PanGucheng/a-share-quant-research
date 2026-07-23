@@ -14,7 +14,7 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 from qlib_integration.contracts import contract_row  # noqa: E402
-from research_validation.bootstrap import moving_block_mean_test  # noqa: E402
+from research_validation.bootstrap import gap_aware_moving_block_mean_test, moving_block_mean_test  # noqa: E402
 from research_validation.feature_matrix import file_sha256  # noqa: E402
 from research_validation.lineage import capture_code_state, load_artifact_manifest, validate_manifest_outputs, write_stage_artifact_manifest  # noqa: E402
 from research_validation.multiple_testing import apply_fdr  # noqa: E402
@@ -45,6 +45,38 @@ def main() -> int:
     issues = [issue for manifest, path in zip(manifests, manifest_paths) for issue in validate_manifest_outputs(manifest, path.parent)]
     if issues or any(manifest["artifact_status"] != "pass" for manifest in manifests):
         raise ValueError("FDR projection manifest is stale or blocked")
+    canary_manifest_path = config.get("canary_manifest")
+    canary_gate_observed = "not_required"
+    if canary_manifest_path:
+        canary_manifest_resolved = resolve(canary_manifest_path)
+        canary_manifest = load_artifact_manifest(canary_manifest_resolved)
+        canary_issues = validate_manifest_outputs(canary_manifest, canary_manifest_resolved.parent)
+        canary_contract = pd.read_csv(resolve(config["canary_contract"]))
+        if (
+            canary_issues
+            or canary_manifest["artifact_status"] != "pass"
+            or not canary_contract["status"].eq("pass").all()
+        ):
+            raise ValueError("corrected FDR canary is stale, blocked, or incomplete")
+        canary_gate_observed = "pass"
+    bootstrap_method = str(config.get("bootstrap_method", "legacy_dropna_moving_block"))
+    bootstrap_functions = {
+        "legacy_dropna_moving_block": moving_block_mean_test,
+        "gap_aware_moving_block": gap_aware_moving_block_mean_test,
+    }
+    if bootstrap_method not in bootstrap_functions:
+        raise ValueError(f"unsupported bootstrap method: {bootstrap_method}")
+    bootstrap_test = bootstrap_functions[bootstrap_method]
+    policy_path = resolve(config["bootstrap_policy"])
+    policy = json.loads(policy_path.read_text(encoding="utf-8"))
+    if (
+        policy.get("status") != "frozen"
+        or policy.get("outer_test_used") is not False
+        or policy.get("selection_data_scope") != "outer_train_only"
+        or policy.get("selected_method") != bootstrap_method
+        or int(policy.get("block_length", -1)) != int(config["block_length"])
+    ):
+        raise ValueError("FDR bootstrap configuration differs from frozen outer-train policy")
     projection_contract = pd.read_csv(manifest_paths[0].parent / "contract_status.csv")
     test_projection_check = projection_contract.loc[
         projection_contract["check_name"].eq("outer_test_date_in_projection_count")
@@ -72,20 +104,22 @@ def main() -> int:
         source_family=str(config["source_family"]),
         label_name=str(config["label_name"]),
         preprocessing_variant=str(config["preprocessing_variant"]),
+        bootstrap_method=bootstrap_method,
     )
     rng = np.random.default_rng(int(config["random_seed"]))
     null_rows = []
     for index in range(int(config["null_simulation_factors"])):
-        stats = moving_block_mean_test(pd.Series(rng.normal(0, 1, 500)), samples=500, block_length=int(config["block_length"]), seed=int(config["random_seed"]) + index)
+        stats = bootstrap_test(pd.Series(rng.normal(0, 1, 500)), samples=500, block_length=int(config["block_length"]), seed=int(config["random_seed"]) + index)
         null_rows.append({"factor": f"null_{index:03d}", "test_family": "null_simulation", "metric": "daily_ic", **stats})
     null_results = apply_fdr(pd.DataFrame(null_rows), float(config["fdr_alpha"]))
-    stable_stats = moving_block_mean_test(pd.Series(rng.normal(float(config["stable_signal_mean"]), 0.1, 500)), samples=1000, block_length=int(config["block_length"]), seed=int(config["random_seed"]))
+    stable_stats = bootstrap_test(pd.Series(rng.normal(float(config["stable_signal_mean"]), 0.1, 500)), samples=1000, block_length=int(config["block_length"]), seed=int(config["random_seed"]))
     family_summary = tests.groupby(["outer_split_id", "test_family"], as_index=False).agg(hypotheses=("factor", "size"), unique_factors=("factor", "nunique"), bh_pass=("fdr_bh_pass", "sum"), by_pass=("fdr_by_pass", "sum"))
     duplicates = int(tests.duplicated(["outer_split_id", "factor"]).sum())
     expected_families = int(config["expected_family_count"])
     expected_hypotheses = int(config["expected_hypotheses_per_family"])
     false_discovery_rate = float(null_results["fdr_bh_pass"].mean())
     contracts = pd.DataFrame([
+        contract_row("canary_gate_passed", canary_gate_observed in {"not_required", "pass"}, canary_gate_observed, "pass_or_not_required"),
         contract_row("family_count", len(family_summary) == expected_families, len(family_summary), expected_families),
         contract_row("unique_factor_count_per_family", family_summary["unique_factors"].eq(expected_hypotheses).all(), family_summary["unique_factors"].tolist(), expected_hypotheses),
         contract_row("hypotheses_per_family", family_summary["hypotheses"].eq(expected_hypotheses).all(), family_summary["hypotheses"].tolist(), expected_hypotheses),
@@ -94,14 +128,25 @@ def main() -> int:
         contract_row("test_date_in_fdr_input_count", test_date_count == 0, test_date_count, 0),
         contract_row("all_hypotheses_have_q_value", tests["fdr_bh_q_value"].notna().all(), int(tests["fdr_bh_q_value"].isna().sum()), 0),
         contract_row("projection_hash_bound", file_sha256(projection_path) == str(receipt_row.iloc[0]["sha256"]), file_sha256(projection_path), receipt_row.iloc[0]["sha256"]),
+        contract_row("bootstrap_policy_frozen", policy.get("status") == "frozen", policy.get("status"), "frozen"),
+        contract_row("bootstrap_policy_outer_train_only", policy.get("outer_test_used") is False, policy.get("outer_test_used"), False),
+        contract_row("bootstrap_method_matches_policy", tests["bootstrap_method"].eq(policy["selected_method"]).all(), bootstrap_method, policy["selected_method"]),
+        contract_row("bootstrap_policy_hash_bound", file_sha256(policy_path) == manifests[1]["output_file_hashes"].get(policy_path.name), file_sha256(policy_path), manifests[1]["output_file_hashes"].get(policy_path.name)),
         contract_row("null_simulation_false_discovery_rate", false_discovery_rate <= float(config["fdr_alpha"]), false_discovery_rate, f"<={config['fdr_alpha']}"),
         contract_row("stable_signal_detected", stable_stats["raw_p_value"] <= float(config["fdr_alpha"]), stable_stats["raw_p_value"], f"<={config['fdr_alpha']}"),
     ])
-    receipts = pd.DataFrame([{
-        "input_name": "outer_train_daily_ic", "artifact_id": manifests[0]["artifact_id"], "path": projection_path.as_posix(),
-        "sha256": file_sha256(projection_path), "join_keys": "outer_split_id,datetime,factor", "input_rows": int(receipt_row.iloc[0]["row_count"]),
-        "consumed_rows": len(projection), "missing_rows": 0,
-    }])
+    receipts = pd.DataFrame([
+        {
+            "input_name": "outer_train_daily_ic", "artifact_id": manifests[0]["artifact_id"], "path": projection_path.as_posix(),
+            "sha256": file_sha256(projection_path), "join_keys": "outer_split_id,datetime,factor", "input_rows": int(receipt_row.iloc[0]["row_count"]),
+            "consumed_rows": len(projection), "missing_rows": 0,
+        },
+        {
+            "input_name": "frozen_bootstrap_policy", "artifact_id": manifests[1]["artifact_id"], "path": policy_path.as_posix(),
+            "sha256": file_sha256(policy_path), "join_keys": "", "input_rows": 1,
+            "consumed_rows": 1, "missing_rows": 0,
+        },
+    ])
     ready = bool(contracts["status"].eq("pass").all())
     output_dir = resolve(config["output_dir"])
     with StageOutputPublisher(output_dir, CONTROLLED) as publisher:
@@ -114,16 +159,17 @@ def main() -> int:
         contracts.to_csv(publisher.path("contract_status.csv"), index=False, encoding="utf-8-sig")
         publisher.path("resolved_config.json").write_text(json.dumps(config, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
         publisher.path("multiple_testing_report.md").write_text(
-            "# Outer-Split FDR Gate V1\n\n"
+            "# Corrected Outer-Split FDR Gate\n\n"
             + f"- Status: `{'pass' if ready else 'blocked'}`\n"
             + f"- Families / hypotheses per family: `{len(family_summary)}` / `{expected_hypotheses}`\n"
             + "- Input folds: `outer train only`; outer validation and test are absent.\n"
-            + "- Inner-window semantics: full outer-train eligibility gate, not nested pseudo-OOS FDR replay.\n",
+            + "- Inner-window semantics: full outer-train eligibility gate, not nested pseudo-OOS FDR replay.\n"
+            + f"- Frozen bootstrap method: `{bootstrap_method}`; policy artifact is bound by hash.\n",
             encoding="utf-8",
         )
         files = [publisher.path(name) for name in CONTROLLED if name != "artifact_manifest.json"]
         write_stage_artifact_manifest(
-            project_root=PROJECT_ROOT, stage_id="factor_multiple_testing_v1", config=config,
+            project_root=PROJECT_ROOT, stage_id=str(config.get("stage_id", "factor_multiple_testing_v1")), config=config,
             output_dir=publisher.staging_dir, output_files=files, code_state=capture_code_state(PROJECT_ROOT),
             input_manifest_paths=manifest_paths, factor_frame_id=manifests[0]["factor_frame_id"],
             split_manifest_id=manifests[0]["split_manifest_id"], start_date=projection["datetime"].min(),

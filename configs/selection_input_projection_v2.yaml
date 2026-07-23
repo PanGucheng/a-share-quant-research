@@ -1,0 +1,19 @@
+schema_version: 1
+stage_id: selection_input_projection_v2
+profile: full_research
+profile_name: full_research
+profile_type: full_research
+research_run_family_id: full_research_factor_669_v1
+daily_ic: outputs/full_research_daily_ic_v2/current/daily_rank_ic.csv
+outer_date_assignments: outputs/purged_walk_forward_v1/full_research_669/date_assignments.csv
+inner_date_assignments: outputs/development_robustness_split_v1/full_research_669/development_date_assignments.csv
+outer_train_runtime: outputs/selection_input_projection_v2/runtime/outer_train_daily_ic.parquet
+inner_development_runtime: outputs/selection_input_projection_v2/runtime/inner_development_daily_ic.parquet
+expected_outer_splits: 3
+expected_inner_splits: 9
+expected_factor_count: 669
+input_manifests:
+  - outputs/full_research_daily_ic_v2/current/artifact_manifest.json
+  - outputs/purged_walk_forward_v1/full_research_669/artifact_manifest.json
+  - outputs/development_robustness_split_v1/full_research_669/artifact_manifest.json
+output_dir: outputs/selection_input_projection_v2/current

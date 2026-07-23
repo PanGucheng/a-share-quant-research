@@ -48,6 +48,27 @@ def main() -> int:
     issues = [issue for manifest, path in zip(manifests, manifest_paths) for issue in validate_manifest_outputs(manifest, path.parent)]
     if issues or any(manifest["artifact_status"] != "pass" for manifest in manifests):
         raise ValueError("clustering projection upstream is stale or blocked")
+    source_bindings = [
+        (0, resolve(config["stability_board"])),
+        (1, resolve(config["factor_batch_manifest"])),
+        (2, resolve(config["daily_ic_table"])),
+        (3, resolve(config["allowed_dates"])),
+        (4, resolve(config["outer_date_assignments"])),
+    ]
+    for manifest_index, source_path in source_bindings:
+        expected_hash = manifests[manifest_index]["output_file_hashes"].get(source_path.name)
+        if not expected_hash or file_sha256(source_path) != expected_hash:
+            raise ValueError(f"clustering projection source is not bound by manifest: {source_path}")
+    canary_manifest_path = config.get("canary_manifest")
+    canary_gate_observed = "not_required"
+    if canary_manifest_path:
+        canary_manifest_resolved = resolve(canary_manifest_path)
+        canary_manifest = load_artifact_manifest(canary_manifest_resolved)
+        canary_issues = validate_manifest_outputs(canary_manifest, canary_manifest_resolved.parent)
+        canary_contract = pd.read_csv(resolve(config["canary_contract"]))
+        if canary_issues or canary_manifest["artifact_status"] != "pass" or not canary_contract["status"].eq("pass").all():
+            raise ValueError("clustering projection canary is stale, blocked, or incomplete")
+        canary_gate_observed = "pass"
     stability = pd.read_csv(resolve(config["stability_board"]))
     stability = stability.loc[stability["stability_role"].isin(config["eligible_roles"])].copy()
     allowed = pd.read_csv(resolve(config["allowed_dates"]), parse_dates=["datetime"])
@@ -75,6 +96,8 @@ def main() -> int:
         needed = set(factors)
         for batch in batches.itertuples(index=False):
             batch_path = resolve(str(batch.output_path))
+            if file_sha256(batch_path) != str(batch.output_sha256):
+                raise ValueError(f"matrix v4 runtime partition hash mismatch: {batch.batch_id}")
             columns = pq.ParquetFile(batch_path).schema.names
             selected_columns = sorted(needed & set(columns))
             if not selected_columns:
@@ -129,6 +152,7 @@ def main() -> int:
         )
     ])
     contracts = pd.DataFrame([
+        contract_row("canary_gate_passed", canary_gate_observed in {"not_required", "pass"}, canary_gate_observed, "pass_or_not_required"),
         contract_row("outer_split_count", len(inventory) == int(config["expected_outer_splits"]), len(inventory), config["expected_outer_splits"]),
         contract_row("minimum_components", inventory["factor_count"].ge(int(config["minimum_components"])).all(), inventory["factor_count"].tolist(), f">={config['minimum_components']}"),
         contract_row("exposure_outside_allowed_dates", audit["exposure_outside_allowed_count"].sum() == 0, int(audit["exposure_outside_allowed_count"].sum()), 0),
@@ -136,6 +160,7 @@ def main() -> int:
         contract_row("outer_test_in_exposure", audit["outer_test_in_exposure_count"].sum() == 0, int(audit["outer_test_in_exposure_count"].sum()), 0),
         contract_row("outer_test_in_performance", audit["outer_test_in_performance_count"].sum() == 0, int(audit["outer_test_in_performance_count"].sum()), 0),
         contract_row("projection_hashes_present", inventory[["exposure_sha256", "performance_sha256"]].apply(lambda column: column.str.len().eq(64)).all().all(), int(inventory[["exposure_sha256", "performance_sha256"]].apply(lambda column: column.str.len().eq(64)).sum().sum()), len(inventory) * 2),
+        contract_row("source_manifests_hash_bound", True, len(source_bindings), len(source_bindings)),
     ])
     ready = bool(contracts["status"].eq("pass").all())
     output_dir = resolve(config["output_dir"])
@@ -146,7 +171,7 @@ def main() -> int:
         contracts.to_csv(publisher.path("contract_status.csv"), index=False, encoding="utf-8-sig")
         publisher.path("resolved_config.json").write_text(json.dumps(config, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
         publisher.path("clustering_input_projection_report.md").write_text(
-            "# Clustering Input Projection V1\n\n"
+            "# Corrected Clustering Input Projection\n\n"
             + f"- Status: `{'pass' if ready else 'blocked'}`\n"
             + f"- Outer splits: `{len(inventory)}`\n"
             + "- Exposure and performance inputs are restricted to exact allowed development dates.\n"
@@ -155,7 +180,7 @@ def main() -> int:
         )
         files = [publisher.path(name) for name in CONTROLLED if name != "artifact_manifest.json"]
         write_stage_artifact_manifest(
-            project_root=PROJECT_ROOT, stage_id="clustering_input_projection_v1", config=config,
+            project_root=PROJECT_ROOT, stage_id=str(config.get("stage_id", "clustering_input_projection_v1")), config=config,
             output_dir=publisher.staging_dir, output_files=files, code_state=capture_code_state(PROJECT_ROOT),
             input_manifest_paths=manifest_paths, factor_frame_id=manifests[1]["factor_frame_id"],
             split_manifest_id=manifests[4]["split_manifest_id"], start_date=allowed["datetime"].min(),

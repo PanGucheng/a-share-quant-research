@@ -25,8 +25,62 @@ def moving_block_mean_test(series: pd.Series, *, samples: int, block_length: int
         "raw_statistic": observed,
         "bootstrap_standard_error": float(means.std(ddof=1)),
         "raw_p_value": p_value,
+        "mean_ci_lower": float(observed - np.quantile(means, 0.975)),
+        "mean_ci_upper": float(observed - np.quantile(means, 0.025)),
         "bootstrap_samples": samples,
         "block_length": block_length,
         "random_seed": seed,
         "observation_count": len(values),
+    }
+
+
+def gap_aware_moving_block_mean_test(
+    series: pd.Series,
+    *,
+    samples: int,
+    block_length: int,
+    seed: int,
+) -> dict[str, float | int]:
+    """Moving-block mean test whose sampled blocks never cross missing dates."""
+
+    numeric = pd.to_numeric(series, errors="coerce")
+    valid_positions = np.flatnonzero(numeric.notna().to_numpy())
+    values = numeric.dropna().to_numpy(dtype=float)
+    if len(values) < max(20, block_length * 2):
+        raise ValueError("insufficient observations for gap-aware block bootstrap")
+    if samples <= 0 or block_length <= 0:
+        raise ValueError("invalid bootstrap samples or block length")
+    breaks = np.flatnonzero(np.diff(valid_positions) != 1) + 1
+    segments = np.split(values, breaks)
+    eligible = [segment for segment in segments if len(segment) >= block_length]
+    block_pool = [
+        segment[start : start + block_length]
+        for segment in eligible
+        for start in range(0, len(segment) - block_length + 1)
+    ]
+    if not block_pool:
+        raise ValueError("no contiguous segment can supply one complete block")
+    observed = float(values.mean())
+    centered_pool = [block - observed for block in block_pool]
+    rng = np.random.default_rng(seed)
+    block_count = int(np.ceil(len(values) / block_length))
+    means = np.empty(samples, dtype=float)
+    for index in range(samples):
+        choices = rng.integers(0, len(centered_pool), size=block_count)
+        draw = np.concatenate([centered_pool[item] for item in choices])[: len(values)]
+        means[index] = draw.mean()
+    p_value = float((1 + np.sum(np.abs(means) >= abs(observed))) / (samples + 1))
+    return {
+        "raw_statistic": observed,
+        "bootstrap_standard_error": float(means.std(ddof=1)),
+        "raw_p_value": p_value,
+        "mean_ci_lower": float(observed - np.quantile(means, 0.975)),
+        "mean_ci_upper": float(observed - np.quantile(means, 0.025)),
+        "bootstrap_samples": samples,
+        "block_length": block_length,
+        "random_seed": seed,
+        "observation_count": len(values),
+        "contiguous_segment_count": len(segments),
+        "eligible_segment_count": len(eligible),
+        "eligible_block_count": len(block_pool),
     }

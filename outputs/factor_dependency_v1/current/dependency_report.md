@@ -1,0 +1,16 @@
+# Factor Dependency Audit V1
+
+- Factors audited: `669`
+- Classifier: `factor_dependency_ast_v1`
+- Contract ready: `true`
+- `unknown` and every universe-sensitive/fallback-sensitive factor are fail-closed to mandatory recomputation.
+
+| source_family   | dependency_class   | recompute_policy                                |   factor_count |
+|:----------------|:-------------------|:------------------------------------------------|---------------:|
+| alpha101        | cross_sectional    | mandatory_recompute_audit                       |              2 |
+| alpha101        | mixed              | mandatory_recompute_audit                       |             46 |
+| alpha101        | pure_time_series   | mandatory_recompute_audit                       |             16 |
+| alpha158        | pure_time_series   | filter_only_common_keys_bit_identical_candidate |            155 |
+| alpha360        | pure_time_series   | filter_only_common_keys_bit_identical_candidate |            358 |
+| project_basic   | pure_time_series   | filter_only_common_keys_bit_identical_candidate |             15 |
+| ta              | pure_time_series   | filter_only_common_keys_bit_identical_candidate |             77 |

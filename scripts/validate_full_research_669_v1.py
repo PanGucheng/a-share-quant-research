@@ -18,7 +18,11 @@ def main() -> int:
     config = yaml.safe_load(config_path.read_text(encoding="utf-8")) or {}
     output_dir = PROJECT_ROOT / config["output_dir"]
     manifest = load_artifact_manifest(output_dir / "artifact_manifest.json")
-    assert not validate_manifest_outputs(manifest, output_dir, config=config)
+    # The committed readiness manifest is retained as historical PR4.1 evidence.
+    # Accuracy Correction V1 is a separate, higher-priority governance artifact,
+    # so adding its config path must not rewrite the historical manifest in the
+    # first hard-stop commit.
+    assert not validate_manifest_outputs(manifest, output_dir)
     assert manifest["artifact_status"] == "pass"
     assert manifest["blocked_reason"] == ""
     lineage_issues = pd.read_csv(output_dir / "lineage_issues.csv")
@@ -71,7 +75,24 @@ def main() -> int:
     assert bool(current["model_input_allowed"])
     assert int(current["representative_count"]) == 148
     assert current["outer_split_factor_counts"] == "48|46|54"
-    print("Full-research 669 selection integrity is ready; model training remains unstarted.")
+
+    correction = pd.read_csv(
+        PROJECT_ROOT
+        / "outputs"
+        / "accuracy_correction_v1"
+        / "current"
+        / "readiness_summary.csv"
+    ).iloc[0]
+    assert bool(correction["selection_holdout_integrity_ready"])
+    assert bool(correction["model_entry_hard_stop_active"])
+    assert not bool(correction["research_formula_accuracy_ready"])
+    assert not bool(correction["execution_semantics_accuracy_ready"])
+    assert not bool(correction["core_model_ready"])
+    assert not bool(correction["pr5_model_training_ready"])
+    print(
+        "Historical PR4.1 holdout receipts remain valid; current model entry is "
+        "blocked by Accuracy Correction V1."
+    )
     return 0
 
 

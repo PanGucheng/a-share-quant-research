@@ -1,0 +1,29 @@
+check_name,status,observed_value,required_value,severity,reason
+accuracy_correction_status,pass,research_ready_execution_blocked,research_ready_execution_blocked,critical,PR6 research accuracy is ready while PR7 execution accuracy and all model entry remain blocked.
+selection_holdout_integrity_ready,pass,True,True,critical,The PR4.1 outer-test isolation evidence remains valid.
+universe_lifecycle_v2_ready,pass,True,True,critical,Universe v2 intersects rolling membership with exact source lifecycle and resolves all 29 intervals and 329 illegal keys.
+factor_dependency_inventory_ready,pass,True,True,critical,All 669 factors have fail-closed dependency classifications; unknown and every Alpha101 factor require recomputation audit.
+matrix_v4_canary_ready,pass,True,True,critical,Five-source Top2000 PIT canary proved pure-factor common-key equivalence and mandatory Alpha101 recomputation with strict axis labels.
+matrix_v4_lifecycle_clean,pass,True,True,critical,Matrix v4 materialized 30 partitions and 669 factors on 2587671 Universe v2 keys with clean complete lineage.
+labels_v2_ready,pass,True,True,critical,Labels v2 uses exact canonical t+1/t+21 dates on 2587671 lifecycle-clean keys with no physical-row shift or price fill.
+pairwise_ic_ready,pass,True,True,critical,Daily IC v2 ranks each factor and label on the same pairwise-valid date cross-section and matches scipy fixtures.
+bootstrap_gap_policy_ready,pass,True,True,critical,Outer-train-only sensitivity audit froze gap-aware moving-block bootstrap before corrected FDR.
+corrected_outer_fdr_ready,pass,True,True,critical,Three outer-train-only families each contain exactly 669 hypotheses and consume the frozen gap-aware bootstrap policy by hash.
+corrected_stability_ready,pass,True,True,critical,Corrected stability consumes FDR v2 without recomputation and excludes every inner/outer test date and metric.
+corrected_clustering_ready,pass,True,True,critical,Corrected split clustering binds Matrix v4 and exact development-date hashes; 45/46/52 representatives are selected with zero test rows.
+corrected_allowlist_ready,pass,True,True,critical,Corrected 45/46/52 split-specific allowlists have independent payload and feature-order hashes; model use remains disabled.
+corrected_weights_ready,pass,True,True,critical,Equal and stability weights are split-scoped normalized hash-frozen and consume only corrected allowlists without test fields.
+score_component_policy_ready,pass,True,True,critical,Development-only audit froze a shared 5-component/10-percent policy with reject-below-threshold semantics and zero outer-test rows.
+selection_mutation_ready,pass,True,True,critical,All 36 outer-test mutations preserve development projections and five corrected selection payload hashes; metamorphic contracts pass.
+research_formula_accuracy_ready,pass,True,True,critical,PR6 research formulas lifecycle materialization selection chain weights and score policy are corrected with clean lineage.
+execution_semantics_accuracy_ready,pass,False,False,critical,Execution field timing fees and valuation are not yet corrected.
+model_research_ready,pass,False,False,critical,Research model inputs are not currently eligible.
+authoritative_oos_execution_ready,pass,False,False,critical,Historical execution is non-authoritative.
+core_model_ready,pass,False,False,critical,Core model entry must remain blocked.
+pr5_model_training_ready,pass,False,False,critical,PR5A remains paused.
+model_training_started,pass,False,False,critical,No model training has started.
+model_entry_hard_stop_active,pass,True,True,critical,Repository policy must override historical ready artifacts.
+current_allowlist_superseded,pass,True,True,critical,Current 48/46/54 allowlists are forbidden for model input.
+current_weights_superseded,pass,True,True,critical,Current transparent weights are superseded.
+current_scores_superseded,pass,True,True,critical,Current transparent scores are superseded.
+historical_oos_non_authoritative,pass,True,True,critical,Current historical OOS execution and NAV are non-authoritative.

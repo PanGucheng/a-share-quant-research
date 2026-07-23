@@ -3,6 +3,7 @@ profile: full_research
 profile_name: full_research
 profile_type: full_research
 research_run_family_id: full_research_factor_669_v1
+accuracy_correction_config: configs/accuracy_correction_v1.yaml
 expected_factor_count: 669
 expected_batch_count: 30
 expected_outer_splits: 3

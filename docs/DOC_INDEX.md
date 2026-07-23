@@ -4,13 +4,47 @@
 
 ## Current Working Documents
 
+- `ACCURACY_CORRECTION_V1_PLAN.md`
+  已冻结的正式实施基线与当前唯一执行计划。2026-07-23 实现复核确认 PIT lifecycle、横截面因子污染、pairwise IC、字段时点、税费和陈旧估值问题；先以 GitHub PR #6 修复研究计算且不生成 OOS NAV，再以 PR #7 修复执行语义，PR #5A 继续暂停。
+- `outputs/accuracy_correction_v1/current/`
+  PR #6 第一个业务提交建立的当前机器治理状态：holdout integrity 保留为 true，研究/执行/model readiness 全部 false；旧 allowlist、weights、scores 已 superseded，历史 execution/NAV 为 non-authoritative。
+- `outputs/point_in_time_universe_v2/full_research/`
+  PR #6 lifecycle-clean Universe v2：29 个越界 interval 与 329 个非法 key 已修正，最终 lifecycle violation、interval overlap 和 removed-key residual 均为 0。
+- `outputs/factor_dependency_v1/current/`
+  669 因子依赖清单：605 个逐标的因子仅为 bit-identical 复用候选；Alpha101 与 `unknown` 全部 fail-closed 到强制重算审计。
+- `outputs/full_research_feature_matrix_v4_canary/current/`
+  Matrix v4 大规模计算前的五来源 Top2000 canary：四个纯时间序列代表在 39,981 个共同 key 上逐位一致；Alpha101 动态 PIT 横截面代表分别有 39,859 与 39,908 个值被纠正；严格轴标签和 unknown fixture 门禁通过。
+- `outputs/full_research_feature_matrix_v4/current/`
+  生命周期清洁的 669 因子矩阵权威 receipt：30 个分区各 2,587,671 个 Universe v2 key；605 个复用因子零差异，64 个 Alpha101 全量重算并产生 107,066,948 个值级修正；Manifest clean/complete/pass。
+- `outputs/full_research_labels_v2/current/`
+  精确日历 Labels v2：2,587,671 个生命周期清洁 key，按 canonical trading calendar 连接 t+1/t+21 close，不使用物理行 shift 或价格填充；coverage 0.980970，末端 21 个日期标签全部按预期缺失。
+- `outputs/full_research_daily_ic_v2/current/`
+  Pairwise Spearman IC v2：669 因子逐日先构造 factor-label 共同非空集合，再分别 rank；scipy、行序、最小 pair 与 lineage 门禁通过。相对 v1 有 621 个因子、598,072 个日因子 IC 值被修正。
+- `outputs/bootstrap_gap_sensitivity_v1/current/`
+  Outer-train-only bootstrap gap audit：3×669 个假设比较 legacy dropna block 与真实日期连续 segment block；p-value、CI、BH、BY 和受控缺口均越过预冻结阈值，正式政策已冻结为 `gap_aware_moving_block`。
+- `outputs/factor_multiple_testing_v2/current/`
+  Matrix v4 / Labels v2 / pairwise IC v2 派生的 3×669 corrected outer-train FDR；强制绑定 gap-aware 冻结政策和 clean canary。
+- `outputs/factor_rolling_stability_v2/current/`
+  只消费 corrected FDR v2 与 inner-development IC 的稳定性结果；不内部重算 FDR，不包含 test 字段或 test 日期。
+- `outputs/clustering_input_projection_v2/current/`
+  将 Matrix v4 stable-core exposure 与 IC v2 performance 严格投影到哈希绑定的 development allowed dates。
+- `outputs/factor_clustering_v2/current/`
+  三个 split 的 corrected 聚类与 45/46/52 个代表；所有来源、runtime 投影及日期集合均按哈希验证。
+- `outputs/split_specific_allowlist_v2/current/`
+  由 corrected clustering 冻结的 45/46/52 split-specific allowlist；各自包含独立 payload 与 feature-order hash，模型入口仍关闭。
+- `outputs/split_transparent_weights_v2/current/`
+  corrected allowlist 的 Equal Weight / Stability Weight；六组权重分别归一化并冻结哈希，不消费 test 字段。
+- `outputs/transparent_score_policy_v1/current/`
+  约 532 万 development-only 日期—股票行的组件完整性审计；冻结 5 个且 10% 的共同门槛、拒绝/标记重归一化语义和政策哈希。
+- `outputs/selection_mutation_contract_v2/current/`
+  corrected selection chain 的 36 个 outer-test mutations 与 Alpha101/lifecycle metamorphic contracts；五类 selection payload hash 全部不变。
 - `PR5A_MODEL_INPUT_PROTOCOL_HANDOFF_V1.md`
-  逻辑 PR #4.1 完成证据与 PR #5A 的唯一启动清单；冻结现有透明基线、统一 prediction/metric/common-period 协议，并明确本轮在模型实现前停止。
+  延后的模型输入协议参考。只能在 PR #6/#7 全部门禁通过后重新启用，不能直接采用当前已被替代的 allowlist、score 或 OOS execution。
 - `SELECTION_HOLDOUT_INTEGRITY_AND_MODEL_PLAN_V1.md`
 - `SELECTION_HOLDOUT_IMPLEMENTATION_AUDIT_V1.md`
-  PR #4 合并后选择链审计形成的主计划；逻辑 PR #4.1 已于 2026-07-22 完成本地实施，后续按 PR #5A—#5D 与 forward confirmation 顺序推进。
+  PR #4 合并后的 holdout 修复计划与实现审计。其 holdout 隔离结论继续有效，但“直接进入 PR #5A”的结论已由 Accuracy Correction 计划接管。
 - `FULL_RESEARCH_669_RUN_V1.md`
-  PR #4 的 669 因子工程证据与 PR #4.1 的完成增补；旧 16 因子资格已撤回，当前有效输入是 48/46/54 split allowlist。
+  PR #4 的 669 因子工程证据与 PR #4.1 的完成增补；旧 16 因子和当前 48/46/54 split allowlist 均只保留历史证据，后者等待 PR #6 重建。
 - `FULL_RESEARCH_FACTOR_TRIAL_V1.md`
   PR #3 的 80 因子真实 PIT 特征矩阵、purged/FDR/稳定性/聚类/score、Qlib 执行、readiness 与复现说明。
 - `QLIB_EXCHANGE_INTEGRATION_V1.md`
@@ -83,16 +117,14 @@ docs/_archive/README.md
 
 ## Current Stage
 
-PR #4 的工程规模化部分已经完成：669 因子目录、30 个可恢复矩阵分区、daily IC、purged outer split 和统一 Qlib execution 均保留为有效证据。合并后审计确认 selection/stability 使用 outer test 信息、clustering 未限制 development dates、Stability 未真实消费上游 FDR，且 raw/provider/source provenance 不完整。当前 16 个代表只作为 `exploratory/test-influenced` 历史证据，不得用于模型。
+逻辑 PR #4.1 已修复选择链的 outer-test 泄漏，`selection_holdout_integrity_ready=true` 继续有效。2026-07-23 的实现级准确性复核又确认：PIT membership 有 29 个越界 interval / 329 个非法 key，横截面或混合因子可能污染其他合法股票；Daily IC 不是严格 pairwise Spearman；开盘执行读取收盘后才能确定的同日 `$change`；历史印花税、陈旧估值和 market cache 语义也不正确或不完整。
 
 ```text
-docs/SELECTION_HOLDOUT_INTEGRITY_AND_MODEL_PLAN_V1.md
+docs/ACCURACY_CORRECTION_V1_PLAN.md
 docs/Qlib A股因子研究框架完整升级计划 V1.md
 docs/FACTOR_VALIDATION_ROADMAP_V1.md
-docs/FACTOR_VALIDATION_HARDENING_V1_1.md
-docs/REFERENCE_PIPELINE_CONSISTENCY_V1_1_1.md
 ```
 
-模型启动 hard-stop 已在当前 Draft GitHub PR #5 落地：机器产物现在为 `feature_allowlist_frozen=false`、`core_model_ready=false`、`pr5_model_training_ready=false`、`selection_integrity_status=blocked`；旧 `exploratory_global_representatives_v1` 已登记为 `test_influenced/model_input_allowed=false`，模型入口会在读取数据前非零拒绝。
+当前 48/46/54 allowlist、透明 score 和 OOS NAV 已分别标记为 `superseded` / `non_authoritative`。目标机器状态为 `model_research_ready=false`、`authoritative_oos_execution_ready=false`、`core_model_ready=false`、`pr5_model_training_ready=false`、`model_training_started=false`。
 
-后续 30 批重跑前必须先推送 canary、配置/输入哈希、日期/FDR 语义、资源预算和 exact command，并形成 exact approval artifact。本次持续对话已获等待豁免，可在完整自审后使用 `user_session_waiver` 继续；没有有效 approval/waiver 不得启动。下一阶段是逻辑 PR #4.1，完成前不得实施模型 PR #5A。
+下一步固定为 GitHub PR #6 `Research Accuracy Correction V1`，随后为 PR #7 `Execution Accuracy Correction V1`。任何大规模运行仍须先完成因子依赖分类、完整自审、受限 canary、mutation/metamorphic tests、资源审阅和 exact review bundle；本次持续对话的 `user_session_waiver` 只免除等待，不免除技术门禁。PR #6/#7 全部完成前不得实施模型 PR #5A。

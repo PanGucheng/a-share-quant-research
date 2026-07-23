@@ -1,0 +1,39 @@
+{
+  "artifact_id": "bootstrap_gap_sensitivity_v1:e73494f6dab4210a76a9315a5ac36e7d3b572095e7d9d4958b5f9a16d67bf0db",
+  "artifact_status": "pass",
+  "blocked_reason": "",
+  "code_commit_sha": "d3f92e2a47dc331d589a80573a2659e2e1dcc820",
+  "code_diff_sha256": "",
+  "code_dirty": false,
+  "config_sha256": "fb8021a5f35d1af6b83fac40496f0c5ac9f504b681c39aee9e13a6b3237df6e8",
+  "created_at": "2026-07-23T04:58:54.582450+00:00",
+  "end_date": "2024-11-28",
+  "factor_catalog_id": "factor-catalog:8c031a09892fc915ac45201942f563925a9bab617e60fce5ecbbe274a51a02e1",
+  "factor_frame_id": "factor-frame-v4:f1e93a2428446673f5c873a01886a38ae9e654e5f863cf2b236040dbbf28dc3c",
+  "input_artifact_ids": [
+    "bootstrap_gap_sensitivity_v1:03987f1f30860dc3b71e238978806122e15ed0f551ef8448d3fa92bb10009492",
+    "selection_input_projection_v2:4bec5868f5868f004da8c13357690776fcca0d59dee72235c0e63b4e65b4b3d1"
+  ],
+  "lineage_status": "complete",
+  "missing_lineage_fields": [],
+  "output_file_hashes": {
+    "bootstrap_gap_report.md": "73ea7e1ae04789cfa22bac05c69caf20f6aaf1b2d1a2da65ee2bb9651118fa9d",
+    "contract_status.csv": "c32dccfaccc71f7f3321c013d9df29088df8ff0ee82867ea4d8de88e8988f363",
+    "factor_method_comparison.csv": "54cd6952009e1476c46752fe616e28d773bada80e19a5f432de17b65205b4d1a",
+    "fdr_method_comparison.csv": "57cc334afa2b62f2b7c3316ca9b396679ce58faaa9e17748bed0f40f25a94b77",
+    "frozen_bootstrap_policy.json": "10283104cf65889701af130b57ef1032641d90fc00a926781aca84a8ff3fc9d7",
+    "gap_injection_results.csv": "116b20ccc313d41cab1cee8084fcbaa737dee0d5ed4d33ff0333764f42db2625",
+    "resolved_config.json": "88cd1d96afa97ab703eb470b8edfdc52346b1bf59916676d7dc5e6ae65eb47db",
+    "sensitivity_summary.csv": "c91aa5014a6b00eff1662124573515e797897cb1001b6d42f8b529f98d9e239c"
+  },
+  "producer_run_id": "20260723T045854Z-686cbc20",
+  "profile_name": "full_research",
+  "profile_type": "full_research",
+  "research_run_family_id": "full_research_factor_669_v1",
+  "run_id": "20260723T045854Z-686cbc20",
+  "schema_version": 2,
+  "split_manifest_id": "split-manifest:75ccf0f37e85422729d54aef5a363f68d4f9b3daed3d42a87eb120e6b5aefe0e",
+  "stage_id": "bootstrap_gap_sensitivity_v1",
+  "start_date": "2021-02-01",
+  "universe_artifact_id": "universe-v2:a7875d74d5119230ab5576cb245fe8b389e0dd3030606299dad6d1f0e147ccd2"
+}

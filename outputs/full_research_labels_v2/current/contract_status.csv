@@ -1,0 +1,14 @@
+﻿check,status,severity,detail
+label_key_unique,pass,critical,2587671
+label_key_grid_aligned,pass,critical,2587671
+label_calendar_continuity_proved,pass,critical,1294
+label_horizon_exact,pass,critical,1+20
+label_terminal_missing_expected,pass,critical,"dates=21,nonmissing=0"
+label_source_lifecycle_clean,pass,critical,0
+no_future_feature_in_label_inputs,pass,critical,only exact entry/exit $close joins; no feature columns
+no_price_forward_fill,pass,critical,missing exact-date price remains missing
+label_coverage,pass,critical,0.9809701465139888
+label_output_hash,pass,critical,4acdfd874c339cd094bf702619861714ec9c75eb27547240eaaa7b945a302ac8
+matrix_v4_parent_current,pass,critical,full_research_feature_matrix_v4:10f6e026d5c6c13eda166f702fb2bae2e7ca76c6747bd9e9482ee482e605df1d
+raw_cache_hash_bound,pass,critical,1da985efe1a361eb5b366bc958a8c68ac1e15c3c6054ae0b946e64ab40ee49e8
+key_partition_hash_bound,pass,critical,ebfe02588ebe3027938c44a5fb5fa799674930be4273dd0eb20d9926e1e76b74

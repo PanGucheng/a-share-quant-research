@@ -1,0 +1,2 @@
+﻿selection_name,selection_status,model_input_allowed,outer_split_count,reason
+split_specific_accuracy_corrected_allowlists_v2,holdout_clean,False,3,allowlists are frozen; model gate remains closed until mutation and pre-test contracts pass

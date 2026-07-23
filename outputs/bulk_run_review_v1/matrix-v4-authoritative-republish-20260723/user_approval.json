@@ -1,0 +1,28 @@
+{
+  "approval_mode": "user_session_waiver",
+  "approval_source": "2026-07-23 current conversation temporary authorization after full self-review and Top2000 five-source canary",
+  "approval_timestamp": "2026-07-23T04:18:28.905821+00:00",
+  "approved_by": "user",
+  "approved_command_sha256": "8b334c57ce4ab57d88dc3458e5ed392e50988873e0b2734fd69ca9cd69124e4f",
+  "approved_commit_sha": "e976141c2ea534100ea3a36dfd3c29a9e80dddf8",
+  "approved_input_inventory_sha256": "892496b95ad8b7790fb72af16fc170f0f36581703c92b257d7a0c565d7236ed0",
+  "approved_resolved_config_sha256": "1f1651b8ea85a6022b3f3b68a46c0aadd674865a9561b99502b32acb7165383d",
+  "approved_scope": {
+    "batch_count": 30,
+    "cache_key_schema_version": 4,
+    "end_date": "2026-06-09",
+    "factor_count": 669,
+    "operation": "matrix_v4_materialize",
+    "output_dir": "outputs/full_research_feature_matrix_v4/current",
+    "recomputed_factor_count": 64,
+    "reused_factor_count": 605,
+    "runtime_dir": "outputs/full_research_feature_matrix_v4/runtime",
+    "start_date": "2021-02-01",
+    "warmup_start_date": "2020-09-01"
+  },
+  "approved_scope_sha256": "0e24e789638ba9b73c4b80522af44ae52ae3e8ee361589e5c6784121240c77ac",
+  "bulk_run_approval_id": "bulk-run-approval:45cb90e6a114dc54179269dffad667b777c1c603d14bedc6be2101cc3954d8c7",
+  "run_id": "matrix-v4-authoritative-republish-20260723",
+  "single_use": true,
+  "status": "approved"
+}
