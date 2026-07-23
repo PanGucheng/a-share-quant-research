@@ -6,7 +6,7 @@
 > 前置阶段：逻辑 PR #4.1 Selection Holdout Integrity 已完成
 > 后续阶段：PR #5A 模型输入协议（当前暂停）
 
-> 2026-07-23 实施回执：机器级 hard-stop、Universe lifecycle v2、669 因子依赖审计、Matrix v4、Labels v2、Pairwise IC v2、bootstrap gap policy 与 corrected outer FDR 已完成。Matrix v4 的 64 个 Alpha101 完整重算并产生 107,066,948 个值级修正；IC v2 相对 v1 有 621 个因子、598,072 个日因子 IC 值被修正。bootstrap audit 的五项预冻结阈值均被突破，正式政策冻结为 `gap_aware_moving_block`。clean canary 后，corrected FDR 对 3 个 outer-train family 各运行 669 hypotheses，BH pass 为 518/512/570，BY pass 为 390/385/475；相对 superseded v1，BH/BY 标记改变 31/122 个。上述 Manifest 均 clean/complete/pass。后续进入 corrected stability，模型 hard-stop 不变。
+> 2026-07-23 实施回执：研究链已完成至 corrected stability。Matrix v4 的 64 个 Alpha101 完整重算并产生 107,066,948 个值级修正；IC v2 相对 v1 有 621 个因子、598,072 个日因子 IC 值被修正。bootstrap 政策冻结为 `gap_aware_moving_block`；corrected FDR 的 BH pass 为 518/512/570、BY pass 为 390/385/475。corrected stability 仅消费新 FDR 与 inner-development projection，stable-core 为 460/238/214，相对旧结果共有 36 个角色变化。上述 Manifest 均 clean/complete/pass。后续进入 exact-date clustering，模型 hard-stop 不变。
 
 ## 1. 文档权威性与当前结论
 
@@ -352,6 +352,7 @@ rank_ic = corr(factor_rank, label_rank)
 - 正式政策在 corrected FDR 前冻结为 `gap_aware_moving_block`，block length 20、随机种子策略固定；任何后续 FDR/stability 不得回退到跨 gap 的 dropna block；
 - `bootstrap_gap_sensitivity_v1:e73494...` Manifest clean/complete/pass；审计未读取 outer test。
 - `factor_multiple_testing_v2:bccfb0ee...` 已按冻结政策完成 3×669 corrected FDR；三个 family 的 BH pass 为 518/512/570，BY pass 为 390/385/475，且 outer-test count=0。
+- `factor_rolling_stability_v2:8d49e0c1...` 只消费 corrected FDR 和 inner-development projection；stable-core 为 460/238/214，FDR 内部重算与 test 使用均为 0。
 
 ### 5.8 重新运行完整研究选择链
 
