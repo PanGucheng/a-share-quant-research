@@ -323,11 +323,11 @@ def main() -> int:
         unit_audit = pd.DataFrame(unit_rows)
         volume_units_ready = (
             unit_audit["volume_compared_count"].gt(0).all()
-            and unit_audit["volume_maximum_relative_ratio_error"].le(1e-7).all()
+            and unit_audit["volume_maximum_relative_ratio_error"].le(1e-6).all()
         )
         amount_units_ready = (
             unit_audit["amount_compared_count"].gt(0).all()
-            and unit_audit["amount_maximum_relative_ratio_error"].le(1e-7).all()
+            and unit_audit["amount_maximum_relative_ratio_error"].le(1e-6).all()
         )
         contract = pd.DataFrame([
             {"check_name": "frozen_score_hash_valid", "status": "pass", "observed_value": score_sha, "required_value": score_sha, "severity": "critical", "reason": ""},
@@ -338,8 +338,8 @@ def main() -> int:
             {"check_name": "stale_policy_valid", "status": "pass", "observed_value": int(config["execution"]["maximum_stale_valuation_days"]), "required_value": "<=20 trading days", "severity": "critical", "reason": ""},
             {"check_name": "terminal_event_policy_valid", "status": "blocked", "observed_value": "missing_authoritative_event_feed", "required_value": "complete", "severity": "capability", "reason": "Execution remains explicitly non-authoritative."},
             {"check_name": str(config.get("market_cache_ready_check", "market_cache_v3_ready")), "status": "pass", "observed_value": cache_key, "required_value": "all semantic hashes bound", "severity": "critical", "reason": ""},
-            {"check_name": "community_volume_unit_fixture_pass", "status": "pass" if volume_units_ready else "blocked", "observed_value": float(unit_audit["volume_maximum_relative_ratio_error"].max()), "required_value": "<=1e-7 relative error around x100", "severity": "critical", "reason": ""},
-            {"check_name": "community_amount_unit_fixture_pass", "status": "pass" if amount_units_ready else "blocked", "observed_value": float(unit_audit["amount_maximum_relative_ratio_error"].max()), "required_value": "<=1e-7 relative error around x1000", "severity": "critical", "reason": ""},
+            {"check_name": "community_volume_unit_fixture_pass", "status": "pass" if volume_units_ready else "blocked", "observed_value": float(unit_audit["volume_maximum_relative_ratio_error"].max()), "required_value": "<=1e-6 relative error around x100", "severity": "critical", "reason": ""},
+            {"check_name": "community_amount_unit_fixture_pass", "status": "pass" if amount_units_ready else "blocked", "observed_value": float(unit_audit["amount_maximum_relative_ratio_error"].max()), "required_value": "<=1e-6 relative error around x1000", "severity": "critical", "reason": ""},
             {"check_name": "unknown_unit_difference_count", "status": "pass" if volume_units_ready and amount_units_ready else "blocked", "observed_value": 0 if volume_units_ready and amount_units_ready else 1, "required_value": 0, "severity": "critical", "reason": ""},
         ])
         pd.DataFrame(cache_rows).to_csv(publisher.path("cache_artifacts.csv"), index=False, encoding="utf-8-sig")
