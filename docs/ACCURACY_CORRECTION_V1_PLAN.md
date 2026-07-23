@@ -6,7 +6,7 @@
 > 前置阶段：逻辑 PR #4.1 Selection Holdout Integrity 已完成
 > 后续阶段：PR #5A 模型输入协议（当前暂停）
 
-> 2026-07-23 实施回执：研究链已完成至 development-only transparent score policy。三份 allowlist 为 45/46/52 个因子，六组权重已冻结。约 532 万日期—股票行的审计未读取 outer test；最低可用组件为 8/11/9。政策预冻结为至少 5 个且至少 10%，低于门槛拒绝，否则允许重归一化但必须标记，两种方法共用同一政策。当前 `model_input_allowed=false`，后续进入 corrected selection mutation，模型 hard-stop 不变。
+> 2026-07-23 实施回执：PR #6 本地 Definition of Done 已完成。三份 allowlist、六组 weights 与 development-only score policy 已冻结；36 个 outer-test mutations 均不改变 development projection 或 FDR/stability/clustering/allowlist/weights payload hash，Alpha101/lifecycle metamorphic contracts 通过。`research_formula_accuracy_ready=true`，但 execution/model/core readiness 继续为 false；PR #6 合并后只能进入 PR #7。
 
 ## 1. 文档权威性与当前结论
 
@@ -357,6 +357,7 @@ rank_ic = corr(factor_rank, label_rank)
 - `split_specific_allowlist_v2:f58b3f13...` 冻结 45/46/52 三份 allowlist 及独立哈希；在 mutation/score policy 前保持 `model_input_allowed=false`。
 - `split_transparent_weights_v2:05286362...` 生成六组 corrected transparent weights；权重归一化、cluster vote、方向冻结与 no-test contract 均通过。
 - `transparent_score_policy_v1:e6c42348...` 用 development-only 数据冻结 5 个/10% 完整性门槛和拒绝/标记重归一化政策；outer-test count=0。
+- `selection_mutation_contract_v2:bcfb086a...` 完成 36 个 outer-test mutation 与 Alpha101/lifecycle metamorphic checks；五类 corrected selection payload hash 全部不变。
 
 ### 5.8 重新运行完整研究选择链
 

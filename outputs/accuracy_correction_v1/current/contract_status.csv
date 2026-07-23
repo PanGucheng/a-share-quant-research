@@ -1,5 +1,5 @@
 check_name,status,observed_value,required_value,severity,reason
-accuracy_correction_status,pass,blocked_research_and_execution_accuracy,blocked_research_and_execution_accuracy,critical,Accuracy Correction V1 is active before any rematerialization.
+accuracy_correction_status,pass,research_ready_execution_blocked,research_ready_execution_blocked,critical,PR6 research accuracy is ready while PR7 execution accuracy and all model entry remain blocked.
 selection_holdout_integrity_ready,pass,True,True,critical,The PR4.1 outer-test isolation evidence remains valid.
 universe_lifecycle_v2_ready,pass,True,True,critical,Universe v2 intersects rolling membership with exact source lifecycle and resolves all 29 intervals and 329 illegal keys.
 factor_dependency_inventory_ready,pass,True,True,critical,All 669 factors have fail-closed dependency classifications; unknown and every Alpha101 factor require recomputation audit.
@@ -14,7 +14,8 @@ corrected_clustering_ready,pass,True,True,critical,Corrected split clustering bi
 corrected_allowlist_ready,pass,True,True,critical,Corrected 45/46/52 split-specific allowlists have independent payload and feature-order hashes; model use remains disabled.
 corrected_weights_ready,pass,True,True,critical,Equal and stability weights are split-scoped normalized hash-frozen and consume only corrected allowlists without test fields.
 score_component_policy_ready,pass,True,True,critical,Development-only audit froze a shared 5-component/10-percent policy with reject-below-threshold semantics and zero outer-test rows.
-research_formula_accuracy_ready,pass,False,False,critical,Research formulas and lifecycle-clean materialization are not yet corrected.
+selection_mutation_ready,pass,True,True,critical,All 36 outer-test mutations preserve development projections and five corrected selection payload hashes; metamorphic contracts pass.
+research_formula_accuracy_ready,pass,True,True,critical,PR6 research formulas lifecycle materialization selection chain weights and score policy are corrected with clean lineage.
 execution_semantics_accuracy_ready,pass,False,False,critical,Execution field timing fees and valuation are not yet corrected.
 model_research_ready,pass,False,False,critical,Research model inputs are not currently eligible.
 authoritative_oos_execution_ready,pass,False,False,critical,Historical execution is non-authoritative.
