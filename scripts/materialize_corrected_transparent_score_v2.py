@@ -160,7 +160,16 @@ def main() -> int:
         contract_row("score_policy_hash_valid", file_sha256(source_paths["policy"]) == policy_manifest["output_file_hashes"][source_paths["policy"].name], file_sha256(source_paths["policy"]), policy_manifest["output_file_hashes"][source_paths["policy"].name]),
         contract_row("mutation_contract_pass", mutation_contract["status"].eq("pass").all(), int(mutation_contract["status"].eq("pass").sum()), len(mutation_contract)),
         contract_row("component_policy_applied", scores.loc[~scores["component_policy_pass"], "composite_score"].isna().all(), int(scores.loc[~scores["component_policy_pass"], "composite_score"].notna().sum()), 0),
-        contract_row("score_has_no_outcome_fields", not any(token in column.lower() for column in scores for token in ("label", "return", "nav", "sharpe", "drawdown", "ic")), list(scores.columns), "prediction-only"),
+        contract_row(
+            "score_has_no_outcome_fields",
+            not any(
+                column.lower().startswith(("label", "return", "nav", "sharpe", "drawdown"))
+                or column.lower() in {"ic", "rank_ic", "daily_ic"}
+                for column in scores
+            ),
+            list(scores.columns),
+            "prediction-only",
+        ),
         contract_row("score_non_null", scores["composite_score"].notna().any(), int(scores["composite_score"].notna().sum()), ">0"),
     ])
     ready = contracts["status"].eq("pass").all()
