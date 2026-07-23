@@ -1,5 +1,5 @@
 check_name,status,observed_value,required_value,severity,reason
-accuracy_correction_status,pass,research_ready_execution_blocked,research_ready_execution_blocked,critical,PR6 research accuracy is ready while PR7 execution accuracy and all model entry remain blocked.
+accuracy_correction_status,pass,research_and_execution_accuracy_implemented_authoritative_oos_blocked,research_and_execution_accuracy_implemented_authoritative_oos_blocked,critical,PR6 research formulas and PR7 execution semantics are implemented; authoritative historical execution and all model entry remain blocked.
 selection_holdout_integrity_ready,pass,True,True,critical,The PR4.1 outer-test isolation evidence remains valid.
 universe_lifecycle_v2_ready,pass,True,True,critical,Universe v2 intersects rolling membership with exact source lifecycle and resolves all 29 intervals and 329 illegal keys.
 factor_dependency_inventory_ready,pass,True,True,critical,All 669 factors have fail-closed dependency classifications; unknown and every Alpha101 factor require recomputation audit.
@@ -15,10 +15,14 @@ corrected_allowlist_ready,pass,True,True,critical,Corrected 45/46/52 split-speci
 corrected_weights_ready,pass,True,True,critical,Equal and stability weights are split-scoped normalized hash-frozen and consume only corrected allowlists without test fields.
 score_component_policy_ready,pass,True,True,critical,Development-only audit froze a shared 5-component/10-percent policy with reject-below-threshold semantics and zero outer-test rows.
 selection_mutation_ready,pass,True,True,critical,All 36 outer-test mutations preserve development projections and five corrected selection payload hashes; metamorphic contracts pass.
+corrected_score_ready,pass,True,True,critical,1471764 prediction-only score rows are deterministically materialized from frozen PR6 inputs with complete policy coverage and no outcomes.
 research_formula_accuracy_ready,pass,True,True,critical,PR6 research formulas lifecycle materialization selection chain weights and score policy are corrected with clean lineage.
-execution_semantics_accuracy_ready,pass,False,False,critical,Execution field timing fees and valuation are not yet corrected.
-model_research_ready,pass,False,False,critical,Research model inputs are not currently eligible.
-authoritative_oos_execution_ready,pass,False,False,critical,Historical execution is non-authoritative.
+execution_semantics_accuracy_ready,pass,True,True,critical,PR7 corrects field timing date-aware fees board-aware lots directional limits stale valuation and complete-calendar accounting.
+market_cache_v2_ready,pass,True,True,critical,Market Cache v2 binds field timing fee trading-rule instrument-state calendar and source hashes.
+future_market_field_count,pass,0,0,critical,Opening execution consumes no same-day close-derived market field.
+stale_policy_valid,pass,True,True,critical,Valuation never backfills and explicitly blocks prices stale beyond 20 trading days.
+model_research_ready,pass,True,True,critical,Corrected research inputs satisfy research-only readiness; repository policy still blocks all model training until execution accuracy is complete.
+authoritative_oos_execution_ready,pass,False,False,critical,Historical ST pre-open suspension and terminal-event sources remain incomplete; corrected OOS is post-observation non-authoritative evidence.
 core_model_ready,pass,False,False,critical,Core model entry must remain blocked.
 pr5_model_training_ready,pass,False,False,critical,PR5A remains paused.
 model_training_started,pass,False,False,critical,No model training has started.

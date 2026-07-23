@@ -121,7 +121,10 @@ def test_model_entry_accepts_only_holdout_clean_ready_selection() -> None:
 def test_repository_accuracy_correction_policy_blocks_current_selection() -> None:
     with pytest.raises(
         ModelEntryBlockedError,
-        match="accuracy_correction_status='research_ready_execution_blocked'",
+        match=(
+            "accuracy_correction_status="
+            "'research_and_execution_accuracy_implemented_authoritative_oos_blocked'"
+        ),
     ):
         assert_model_entry_allowed(
             ready_row(),

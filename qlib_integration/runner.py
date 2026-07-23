@@ -35,6 +35,8 @@ def run_qlib_execution(signal: pd.DataFrame, market: pd.DataFrame, config: dict[
         sell_tax_rate=float(config["sell_tax_rate"]),
         minimum_commission=float(config["minimum_commission"]),
         slippage_bps=float(config["slippage_bps"]),
+        fee_schedule=config.get("fee_schedule"),
+        dynamic_lot_rules=bool(config.get("dynamic_lot_rules", False)),
         freq="day",
         start_time=start_time,
         end_time=end_time,
@@ -42,7 +44,7 @@ def run_qlib_execution(signal: pd.DataFrame, market: pd.DataFrame, config: dict[
         deal_price="$execution_price",
         limit_threshold=("limit_buy", "limit_sell"),
         volume_threshold=("current", "$participation_limit"),
-        trade_unit=int(config["lot_size"]),
+        trade_unit=1 if bool(config.get("dynamic_lot_rules", False)) else int(config["lot_size"]),
     )
     zero_benchmark = pd.Series(0.0, index=calendar[1:])
     account = create_account_instance(start_time, end_time, zero_benchmark, float(config["initial_cash"]))

@@ -126,7 +126,13 @@ tmp/reference_repos/techfactor
 
 ## Next Work
 
+> **2026-07-23 PR #7 Execution Accuracy Correction DoD 完成：**Market Cache v2 已显式绑定 Universe v2，三个 split 共 853,936 行，future field=0、禁止估值 bfill，陈旧阈值命中 174/525/199 行。三个 post-observation bugfix freeze 在执行前冻结；corrected OOS 产生 65,582 个订单、61,626 笔成交和 730 个会计日，现金非负、会计守恒、方向性涨跌停、动态整手、费用分项和完整日历关键合同全部通过，unknown semantic difference=0。机器状态为 `research_formula_accuracy_ready=true`、`execution_semantics_accuracy_ready=true`、`market_cache_v2_ready=true`，但历史 ST、盘前停牌和 terminal-event 权威源缺失，故 `authoritative_oos_execution_ready=false`、`core_model_ready=false`、`pr5_model_training_ready=false`、`model_training_started=false`、`unbiased_final_estimate=false`。按用户边界在 PR #5 前停止。
+
 > **2026-07-23 PR #6 Research Accuracy Correction 本地 DoD 完成：**45/46/52 三份 allowlist、六组 weights 与 development-only score policy 已冻结。`selection_mutation_contract_v2:bcfb086a...` 的 36 个 outer-test IC/exposure/labels/raw mutations 均有效，但 development projection 与 FDR/stability/clustering/allowlist/weights payload hash 全部不变；Alpha101 轴重排与 lifecycle impact metamorphic contracts 同时通过。当前 `research_formula_accuracy_ready=true`，但 `execution_semantics_accuracy_ready=false`、`model_research_ready=false`、`core_model_ready=false`；下一阶段只能是 PR #7 execution accuracy，不得进入 PR #5A。
+
+> **2026-07-23 PR #6 合并、PR #7 启动：**PR #6 已 squash merge 为 `3492200`，main 上 161 tests 与 hard-stop validator 通过。研究层现在可诚实标记 `model_research_ready=true`，但 `core_model_ready=false`、`pr5_model_training_ready=false`、`model_training_started=false`。PR #7 首先按 PR #6 冻结的 allowlist/weights/score policy 确定性物化 score，不能修改研究选择；随后才实施 fee/field timing/PIT state/cache/execution，且在 PR #5 前停止。
+
+> **2026-07-23 PR #7 score 输入冻结完成：**clean canary 后，`split_transparent_score_v2:fc2080f0...` 对 120/124/124 个 outer-test 日期和两种透明方法物化 1,471,764 行 score。46 个 Matrix v4 分区哈希、PR6 score policy 与 mutation proof 均验证一致；组件政策覆盖 1.0，最低组件 14/10/12，输出不含 label/return/IC/NAV。下一步仅实施 execution semantics。
 
 > **2026-07-23 Pairwise Spearman IC v2 完成：**真实 5 因子 canary 后完成 30/30 分区、669/669 因子。每个 `(date,factor)` 在 factor-label 共同非空集合内独立 rank，记录 pair/missing/tie evidence；scipy 人工例误差 0、行序与缺失位置 mutation 通过。最少 1,228 个有效 IC 日，有效日最小 pair 102。相对 v1 有 621 个因子、598,072 个日 IC 被修正，最大绝对差异 0.380201；缺失状态无不对称转移。`full_research_daily_ic_v2:3e20d7...` clean/complete/pass，`pairwise_ic_ready=true`。其后的 bootstrap policy 结果以上方最新条目为准。
 

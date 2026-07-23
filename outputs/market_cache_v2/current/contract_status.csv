@@ -1,0 +1,9 @@
+﻿check_name,status,observed_value,required_value,severity,reason
+frozen_score_hash_valid,pass,beb4e4ad738e263e72bb75ead4d948f7a44e7c086bc56b310a56a823a6adecbf,beb4e4ad738e263e72bb75ead4d948f7a44e7c086bc56b310a56a823a6adecbf,critical,
+future_market_field_count,pass,0,0,critical,
+same_day_change_not_used,pass,True,True,critical,
+full_day_volume_not_used_at_open,pass,lagged_20d_median,lagged_or_estimated,critical,
+no_valuation_bfill,pass,True,True,critical,
+stale_policy_valid,pass,20,<=20 trading days,critical,
+terminal_event_policy_valid,blocked,missing_authoritative_event_feed,complete,capability,Execution remains explicitly non-authoritative.
+market_cache_v2_ready,pass,68864351e6fb50c7ab793619b31943dbac651469bc0750e8253c1a690dfbc0f4,all semantic hashes bound,critical,

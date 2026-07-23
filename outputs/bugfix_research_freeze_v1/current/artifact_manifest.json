@@ -1,0 +1,41 @@
+{
+  "artifact_id": "bugfix_research_freeze_v1:e3a309afa9907c46119564844a842cffd65de23e73f2e0b47480fa3a6603616e",
+  "artifact_status": "pass",
+  "blocked_reason": "",
+  "code_commit_sha": "4bff04fb7089c112c7d5c706acc160335ce773a9",
+  "code_diff_sha256": "",
+  "code_dirty": false,
+  "config_sha256": "e08e1cee0a7f3bdc756ce5ed326b8f9bbe52770899ffd8b278b305c4fdcf28cd",
+  "created_at": "2026-07-23T07:22:19.134616+00:00",
+  "end_date": null,
+  "factor_catalog_id": "factor-catalog:8c031a09892fc915ac45201942f563925a9bab617e60fce5ecbbe274a51a02e1",
+  "factor_frame_id": "factor-frame-v4:f1e93a2428446673f5c873a01886a38ae9e654e5f863cf2b236040dbbf28dc3c",
+  "input_artifact_ids": [
+    "market_cache_v2:d6d3374b19fe335b698dca4076d701031788c421cfaff9c04e7ebfb3fb56bec7",
+    "split_specific_allowlist_v2:f58b3f13c061e3ead62ae862a071940242ccc4f1d151703da464784b7f46684d",
+    "split_transparent_score_v2:fc2080f082503c77e0f4f112430e77a5e385ce130a6e54a366baf73cde8d836b",
+    "split_transparent_weights_v2:0528636298ba857da231817187c848b0ee7ce36d3714a8382bf9758f9fb102df",
+    "transparent_score_policy_v1:e6c42348a11eba94d21552a161ad69564e81b055572a46af238cbe4a84dc6c88"
+  ],
+  "lineage_status": "complete",
+  "missing_lineage_fields": [],
+  "output_file_hashes": {
+    "bugfix_freeze_index.csv": "0256c6905dcd01923d4b7433803532ee61ab847cef850a2c8151e486e5c3da02",
+    "bugfix_freeze_report.md": "15342359250b431d84dbb40379aaceb7383b9228e6ff000695206dbf20e34fa6",
+    "contract_status.csv": "4d26e8f0ace26c2dc1b6e232035629b852316d2b8294ff5829c967543fb7746b",
+    "resolved_config.json": "cf29cecaea4801aa386fa5a935e6f04fd3636595e3f174c47bb2bfb48743a0e9",
+    "split_001/freeze_manifest.json": "fae0dca8b77b5b1f6eee32636616710489379811d93889b965a5d97f528f7e28",
+    "split_002/freeze_manifest.json": "8ad05cb82059d05ed3378cbc38760d3d26daf8ad938fa2672250eb3000714779",
+    "split_003/freeze_manifest.json": "a0d76ea5af1a202039a4fb5857e3440d799c59731a5260fcc6cf85f4c5e7023c"
+  },
+  "producer_run_id": "20260723T072219Z-88d3c81a",
+  "profile_name": "full_research",
+  "profile_type": "full_research",
+  "research_run_family_id": "full_research_factor_669_v1",
+  "run_id": "20260723T072219Z-88d3c81a",
+  "schema_version": 2,
+  "split_manifest_id": "split-manifest:75ccf0f37e85422729d54aef5a363f68d4f9b3daed3d42a87eb120e6b5aefe0e",
+  "stage_id": "bugfix_research_freeze_v1",
+  "start_date": null,
+  "universe_artifact_id": "universe-v2:a7875d74d5119230ab5576cb245fe8b389e0dd3030606299dad6d1f0e147ccd2"
+}

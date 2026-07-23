@@ -125,6 +125,7 @@ def test_component_costs_do_not_apply_minimum_to_stamp_tax() -> None:
     )
     assert costs.commission == 5.0
     assert costs.stamp_tax == pytest.approx(0.999)
+    assert costs.transfer_fee == 0
     assert costs.cash_fee == pytest.approx(5.999)
     assert costs.slippage_cost == pytest.approx(1.0)
 

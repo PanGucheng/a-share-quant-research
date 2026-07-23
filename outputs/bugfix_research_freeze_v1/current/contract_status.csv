@@ -1,0 +1,7 @@
+﻿check_name,status,observed_value,required_value,severity,reason
+freeze_type_post_observation_bugfix,pass,post_observation_bugfix,post_observation_bugfix,critical,
+historical_test_already_observed,pass,True,True,critical,
+selection_uses_test_outcomes,pass,False,False,critical,
+unbiased_final_estimate,pass,False,False,critical,
+all_semantic_and_source_hashes_bound,pass,8,8,critical,
+clean_committed_code,pass,False,False,critical,

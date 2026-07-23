@@ -1,0 +1,37 @@
+schema_version: 1
+execution_phase: market_open
+fields:
+  previous_close:
+    observation_phase: previous_close
+    available_phase: before_open
+    permitted: true
+  open:
+    observation_phase: opening_auction
+    available_phase: market_open
+    permitted: true
+  pit_instrument_state:
+    observation_phase: prior_disclosure
+    available_phase: before_open
+    permitted: true
+  close:
+    observation_phase: market_close
+    available_phase: after_close
+    permitted: false
+  high:
+    observation_phase: intraday
+    available_phase: after_open
+    permitted: false
+  low:
+    observation_phase: intraday
+    available_phase: after_open
+    permitted: false
+  change:
+    observation_phase: market_close
+    available_phase: after_close
+    permitted: false
+  full_day_volume:
+    observation_phase: market_close
+    available_phase: after_close
+    permitted: false
+participation_volume_field: previous_20d_median_volume
+participation_volume_lag_trading_days: 1

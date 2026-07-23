@@ -1,0 +1,16 @@
+﻿outer_split_id,field_name,observation_timestamp,available_at,execution_timestamp,source_artifact_id,usage,future_field
+split_001,previous_close,2024-07-31 15:00:00,2024-07-31 15:05:00,2024-08-01 09:30:00,raw_market_snapshot:full_research_669,price_limit,False
+split_001,open,2024-08-01 09:25:00,2024-08-01 09:30:00,2024-08-01 09:30:00,raw_market_snapshot:full_research_669,execution_price,False
+split_001,previous_20d_median_volume,2024-07-31 15:00:00,2024-07-31 15:05:00,2024-08-01 09:30:00,raw_market_snapshot:full_research_669,participation_limit,False
+split_001,pit_instrument_state,2024-08-01 09:00:00,2024-08-01 09:00:00,2024-08-01 09:30:00,raw_market_snapshot:full_research_669,tradability_and_rules,False
+split_001,close,2024-08-01 15:00:00,2024-08-01 15:05:00,2024-08-01 15:05:00,raw_market_snapshot:full_research_669,end_of_day_valuation,False
+split_002,previous_close,2025-02-04 15:00:00,2025-02-04 15:05:00,2025-02-05 09:30:00,raw_market_snapshot:full_research_669,price_limit,False
+split_002,open,2025-02-05 09:25:00,2025-02-05 09:30:00,2025-02-05 09:30:00,raw_market_snapshot:full_research_669,execution_price,False
+split_002,previous_20d_median_volume,2025-02-04 15:00:00,2025-02-04 15:05:00,2025-02-05 09:30:00,raw_market_snapshot:full_research_669,participation_limit,False
+split_002,pit_instrument_state,2025-02-05 09:00:00,2025-02-05 09:00:00,2025-02-05 09:30:00,raw_market_snapshot:full_research_669,tradability_and_rules,False
+split_002,close,2025-02-05 15:00:00,2025-02-05 15:05:00,2025-02-05 15:05:00,raw_market_snapshot:full_research_669,end_of_day_valuation,False
+split_003,previous_close,2025-08-04 15:00:00,2025-08-04 15:05:00,2025-08-05 09:30:00,raw_market_snapshot:full_research_669,price_limit,False
+split_003,open,2025-08-05 09:25:00,2025-08-05 09:30:00,2025-08-05 09:30:00,raw_market_snapshot:full_research_669,execution_price,False
+split_003,previous_20d_median_volume,2025-08-04 15:00:00,2025-08-04 15:05:00,2025-08-05 09:30:00,raw_market_snapshot:full_research_669,participation_limit,False
+split_003,pit_instrument_state,2025-08-05 09:00:00,2025-08-05 09:00:00,2025-08-05 09:30:00,raw_market_snapshot:full_research_669,tradability_and_rules,False
+split_003,close,2025-08-05 15:00:00,2025-08-05 15:05:00,2025-08-05 15:05:00,raw_market_snapshot:full_research_669,end_of_day_valuation,False

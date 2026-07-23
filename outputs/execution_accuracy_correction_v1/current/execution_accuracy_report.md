@@ -1,0 +1,9 @@
+# Corrected Historical OOS Execution V1
+
+- Scope: `full`
+- Operational contracts: `pass`
+- Evidence status: `non_authoritative_post_observation_bugfix`
+- Orders / fills / accounting rows: `65582` / `61626` / `730`
+- Explicit terminal-event settlement approximations: `10`
+- Unknown old-vs-new difference categories: `0`
+- Historical ST, pre-open suspension and terminal events are incomplete, so authoritative readiness remains false.

@@ -96,7 +96,7 @@ def validate_signal_frame(frame: pd.DataFrame) -> pd.DataFrame:
 
 def validate_market_frame(frame: pd.DataFrame) -> pd.DataFrame:
     _require_columns(frame, MARKET_COLUMNS, "market")
-    result = _normalize_common(frame[MARKET_COLUMNS], "market")
+    result = _normalize_common(frame, "market")
     if result.duplicated(["datetime", "instrument"]).any():
         raise ValueError("market has duplicate datetime/instrument rows")
 
@@ -114,10 +114,18 @@ def validate_market_frame(frame: pd.DataFrame) -> pd.DataFrame:
     if (result["factor"].dropna() <= 0).any():
         raise ValueError("market factor must be positive")
 
-    tradable = ~result["suspended"]
-    required_positive = ["open", "close", "volume", "factor", "execution_price"]
-    for column in required_positive:
-        invalid = tradable & (~np.isfinite(result[column]) | result[column].le(0))
+    order_eligible = result["can_buy"] | result["can_sell"]
+    valuation_eligible = ~result["suspended"]
+    terminal_settlement = result.get(
+        "terminal_event_approximation", pd.Series(False, index=result.index)
+    ).astype(bool)
+    for column in ["open", "volume", "execution_price"]:
+        eligibility = order_eligible & (~terminal_settlement if column == "open" else True)
+        invalid = eligibility & (~np.isfinite(result[column]) | result[column].le(0))
+        if invalid.any():
+            raise ValueError(f"tradable market rows require positive finite {column}")
+    for column in ["close", "factor"]:
+        invalid = valuation_eligible & (~np.isfinite(result[column]) | result[column].le(0))
         if invalid.any():
             raise ValueError(f"tradable market rows require positive finite {column}")
 

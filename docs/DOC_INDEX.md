@@ -5,9 +5,17 @@
 ## Current Working Documents
 
 - `ACCURACY_CORRECTION_V1_PLAN.md`
-  已冻结的正式实施基线与当前唯一执行计划。2026-07-23 实现复核确认 PIT lifecycle、横截面因子污染、pairwise IC、字段时点、税费和陈旧估值问题；先以 GitHub PR #6 修复研究计算且不生成 OOS NAV，再以 PR #7 修复执行语义，PR #5A 继续暂停。
+  已完成的 Accuracy Correction V1 实施基线。PR #6 修复研究计算，PR #7 修复执行语义；权威历史状态能力仍诚实阻断，PR #5A 继续暂停。
 - `outputs/accuracy_correction_v1/current/`
-  PR #6 第一个业务提交建立的当前机器治理状态：holdout integrity 保留为 true，研究/执行/model readiness 全部 false；旧 allowlist、weights、scores 已 superseded，历史 execution/NAV 为 non-authoritative。
+  当前机器治理状态：research/execution accuracy 与 Market Cache v2 ready；authoritative OOS、core model、PR5 training 和 training-started 均 false。
+- `outputs/instrument_state_v1/current/`
+  PIT instrument-state 与 board/lifecycle 证据；缺失的历史 ST、盘前停牌和 terminal event 源以 capability blocker 公开记录。
+- `outputs/market_cache_v2/current/`
+  Universe v2 lineage 下的字段时点、动态交易规则和禁止估值回填缓存，未来字段计数为 0。
+- `outputs/bugfix_research_freeze_v1/current/`
+  三个 split 的 post-observation bug-fix freeze，明确历史 test 已观察且不能形成无偏最终估计。
+- `outputs/execution_accuracy_correction_v1/current/`
+  PR #7 corrected historical OOS evidence、旧新差异归因与关键合同；操作语义通过但证据仍为 non-authoritative。
 - `outputs/point_in_time_universe_v2/full_research/`
   PR #6 lifecycle-clean Universe v2：29 个越界 interval 与 329 个非法 key 已修正，最终 lifecycle violation、interval overlap 和 removed-key residual 均为 0。
 - `outputs/factor_dependency_v1/current/`
@@ -38,6 +46,8 @@
   约 532 万 development-only 日期—股票行的组件完整性审计；冻结 5 个且 10% 的共同门槛、拒绝/标记重归一化语义和政策哈希。
 - `outputs/selection_mutation_contract_v2/current/`
   corrected selection chain 的 36 个 outer-test mutations 与 Alpha101/lifecycle metamorphic contracts；五类 selection payload hash 全部不变。
+- `outputs/split_transparent_score_v2/current/`
+  仅按 PR #6 冻结的 Matrix v4、weights、score policy 与 mutation proof 物化的 1,471,764 行 prediction-only score。
 - `PR5A_MODEL_INPUT_PROTOCOL_HANDOFF_V1.md`
   延后的模型输入协议参考。只能在 PR #6/#7 全部门禁通过后重新启用，不能直接采用当前已被替代的 allowlist、score 或 OOS execution。
 - `SELECTION_HOLDOUT_INTEGRITY_AND_MODEL_PLAN_V1.md`
@@ -117,7 +127,7 @@ docs/_archive/README.md
 
 ## Current Stage
 
-逻辑 PR #4.1 已修复选择链的 outer-test 泄漏，`selection_holdout_integrity_ready=true` 继续有效。2026-07-23 的实现级准确性复核又确认：PIT membership 有 29 个越界 interval / 329 个非法 key，横截面或混合因子可能污染其他合法股票；Daily IC 不是严格 pairwise Spearman；开盘执行读取收盘后才能确定的同日 `$change`；历史印花税、陈旧估值和 market cache 语义也不正确或不完整。
+逻辑 PR #4.1 的 outer-test 隔离继续有效；PR #6 已完成 lifecycle、Matrix v4、Labels v2、pairwise IC 与选择链修正，PR #7 已完成字段时点、日期费率、动态整手、方向性涨跌停、陈旧估值、Market Cache v2 和 corrected historical execution。
 
 ```text
 docs/ACCURACY_CORRECTION_V1_PLAN.md
@@ -125,6 +135,6 @@ docs/Qlib A股因子研究框架完整升级计划 V1.md
 docs/FACTOR_VALIDATION_ROADMAP_V1.md
 ```
 
-当前 48/46/54 allowlist、透明 score 和 OOS NAV 已分别标记为 `superseded` / `non_authoritative`。目标机器状态为 `model_research_ready=false`、`authoritative_oos_execution_ready=false`、`core_model_ready=false`、`pr5_model_training_ready=false`、`model_training_started=false`。
+当前 corrected 45/46/52 allowlist、weights 与 score 可作为研究层冻结证据，但 `model_input_allowed=false`。机器状态为 `model_research_ready=true`、`execution_semantics_accuracy_ready=true`、`market_cache_v2_ready=true`；历史 ST、盘前停牌和 terminal-event 权威源缺失，所以 `authoritative_oos_execution_ready=false`、`core_model_ready=false`、`pr5_model_training_ready=false`、`model_training_started=false`。
 
-下一步固定为 GitHub PR #6 `Research Accuracy Correction V1`，随后为 PR #7 `Execution Accuracy Correction V1`。任何大规模运行仍须先完成因子依赖分类、完整自审、受限 canary、mutation/metamorphic tests、资源审阅和 exact review bundle；本次持续对话的 `user_session_waiver` 只免除等待，不免除技术门禁。PR #6/#7 全部完成前不得实施模型 PR #5A。
+本轮在 PR #7 合并和 main 复验后停止，不进入 PR #5A。未来若重新授权模型阶段，仍须先解决或明确接受权威历史状态能力缺口，并按 `PR5A_MODEL_INPUT_PROTOCOL_HANDOFF_V1.md` 重新冻结模型输入、validation 指标和 pre-test release 边界。

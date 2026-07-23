@@ -1,0 +1,11 @@
+﻿check_name,status,observed_value,required_value,severity,reason
+canary_gate_passed,pass,not_required,pass_or_not_required,critical,
+outer_split_count,pass,1,1,critical,
+method_count_per_split,pass,[2],2,critical,
+score_test_dates_complete,pass,[10],[10],critical,
+factor_partition_hashes_valid,pass,15,15,critical,
+score_policy_hash_valid,pass,4e2369e489c95abf91145c3f130b36e98d11b9be1368fa300d67b47936b57f89,4e2369e489c95abf91145c3f130b36e98d11b9be1368fa300d67b47936b57f89,critical,
+mutation_contract_pass,pass,10,10,critical,
+component_policy_applied,pass,0,0,critical,
+score_has_no_outcome_fields,pass,"['datetime', 'instrument', 'method', 'composite_score', 'component_count', 'outer_split_id', 'expected_component_count', 'component_fraction', 'component_policy_pass', 'renormalization_applied']",prediction-only,critical,
+score_non_null,pass,4000,>0,critical,

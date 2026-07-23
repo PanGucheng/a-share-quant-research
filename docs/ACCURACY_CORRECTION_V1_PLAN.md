@@ -6,7 +6,7 @@
 > 前置阶段：逻辑 PR #4.1 Selection Holdout Integrity 已完成
 > 后续阶段：PR #5A 模型输入协议（当前暂停）
 
-> 2026-07-23 实施回执：PR #6 本地 Definition of Done 已完成。三份 allowlist、六组 weights 与 development-only score policy 已冻结；36 个 outer-test mutations 均不改变 development projection 或 FDR/stability/clustering/allowlist/weights payload hash，Alpha101/lifecycle metamorphic contracts 通过。`research_formula_accuracy_ready=true`，但 execution/model/core readiness 继续为 false；PR #6 合并后只能进入 PR #7。
+> 2026-07-23 实施回执：PR #6 已合并，PR #7 Definition of Done 已完成。三份 45/46/52 allowlist、六组 weights 与 development-only score policy 已冻结；36 个 outer-test mutations 均不改变选择链 payload。Market Cache v2 在 Universe v2 lineage 下 clean/complete，未来字段为 0；corrected execution 覆盖 730 个会计日、65,582 个订单与 61,626 笔成交，关键合同全部通过且 unknown difference 为 0。历史 ST、盘前停牌与 terminal-event 权威源仍缺失，因此 `authoritative_oos_execution_ready=false`，模型入口继续关闭。
 
 ## 1. 文档权威性与当前结论
 
@@ -18,12 +18,14 @@
 
 ```text
 selection_holdout_integrity_ready = true
-research_formula_accuracy_ready = false
+research_formula_accuracy_ready = true
 matrix_v4_lifecycle_clean = true
-pairwise_ic_ready = false
-model_research_ready = false
-execution_semantics_accuracy_ready = false
-market_cache_v2_ready = false
+pairwise_ic_ready = true
+model_research_ready = true
+execution_semantics_accuracy_ready = true
+market_cache_v2_ready = true
+future_market_field_count = 0
+stale_policy_valid = true
 authoritative_oos_execution_ready = false
 core_model_ready = false
 pr5_model_training_ready = false
@@ -33,14 +35,23 @@ model_training_started = false
 当前证据的语义为：
 
 ```text
-current_split_allowlists = superseded
-current_transparent_scores = superseded
-current_transparent_oos_nav = non_authoritative
+corrected_split_allowlists = research_ready_model_input_blocked
+corrected_transparent_scores = research_ready_model_input_blocked
+corrected_historical_oos_nav = non_authoritative_post_observation_bugfix
 historical_test_already_observed = true
+unbiased_final_estimate = false
 production_model_selected = false
 ```
 
-在 PR #6 与 PR #7 的 Definition of Done 全部满足前，不得实现或训练 Ridge、Elastic Net、LightGBM。
+PR #6 与 PR #7 的实现型 Definition of Done 已满足，但缺失的权威历史状态源没有被伪造为 ready。按本轮明确边界，到此停止；不得在本 PR 实现或训练 Ridge、Elastic Net、LightGBM。
+
+### 1.1 PR #7 最终实施证据
+
+- `instrument_state_v1`：853,936 行、2,827 只股票、368 个日期；lifecycle 与 board 覆盖已审计，ST、盘前停牌与 terminal event 权威覆盖保持 capability-blocked。
+- `market_cache_v2:d6d3374b...`：split 行数 269,400 / 294,376 / 290,160；绑定 fee、field timing、trading rules、instrument state、calendar 与 Universe v2，禁止 valuation bfill，20 日陈旧阈值命中 174 / 525 / 199 行。
+- `bugfix_research_freeze_v1`：三个 outer split 均为 `post_observation_bugfix`，明确 `historical_test_already_observed=true`、`unbiased_final_estimate=false`。
+- `execution_accuracy_correction_v1:e51a6700...`：现金最小值 17.360038、会计误差不超过 5.59e-9、动态整手违规 0、非法方向成交 0、估值 fallback 成交 0、未知差异 0；10 次 terminal settlement approximation 单独披露。
+- 2024+ 卖出印花税按 0.0005 执行，并单列佣金、印花税与过户费。旧/新六组 split-method 结果逐项输出差异和语义归因，不据此选择生产模型。
 
 ## 2. 已核实问题与优先级
 
@@ -502,6 +513,10 @@ model_training_started = false
 ### 6.1 输入冻结与职责边界
 
 PR #7 只读取 PR #6 已冻结的 split-specific score、`transparent_score_policy.json` 和对应 lineage。不得在本 PR 改因子、FDR、allowlist、weights、score component 规则或选股参数。PR #6 没有生成任何 NAV；首次修正后的历史 bug-fix execution 必须只在本 PR 发生。
+
+实施澄清（2026-07-23）：PR #6 已冻结 allowlist、weights、score policy 与 mutation proof，但没有物化 outer-test score 文件。PR #7 的第一个信号步骤允许按这些已冻结输入确定性物化 score；该步骤必须逐哈希绑定 PR #6 产物，不得更改任何研究决策，并且必须在 Exchange、收益或 NAV 读取之前完成。它属于 frozen-input materialization，不属于重新选因子或修改信号政策。
+
+实施回执：`split_transparent_score_v2:fc2080f0...` 已按上述边界物化 1,471,764 行 prediction-only score，覆盖 120/124/124 个 test 日期与两种透明方法；46 个 Matrix v4 分区、score policy 与 mutation proof 的 hash 均通过，未读取或输出任何收益/NAV。
 
 ### 6.2 Date-aware fee schedule
 

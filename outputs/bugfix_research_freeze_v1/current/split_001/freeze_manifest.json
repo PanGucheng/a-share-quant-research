@@ -1,0 +1,32 @@
+{
+  "allowlist_sha256": "b33e0cb90f8d90be2486d432f39a00bdbbbe3c94d4ee18b1b60ea350dd7fe74b",
+  "code_commit_sha": "4bff04fb7089c112c7d5c706acc160335ce773a9",
+  "execution_config_component_hashes": {
+    "contracts_source": "49a18457c088d3ef41b785f44bebee6d11e6178ad900343b9a9802485da72c08",
+    "exchange_adapter_source": "e47c5cf348f0c6ffac26de3dc057d50a5a172eca667b655090a36693b4a45df2",
+    "execution_config": "db10ef6c6c9d8ed177418012cef7c2e5e50ff5bcbe97a9a0a8c53d9fcfe8f9de",
+    "fee_schedule": "2744221fcf071ebf9306d74136e85ae1f00fde944b4711aed7f1ff7590ef431e",
+    "field_timing": "054b8710317ef8836bef94b329243128731bbf4eb9b27d3747aabf400836a878",
+    "market_semantics_source": "35ea4a4ea64e243ac4fd71d35baf3fcabc399755bf381297b59074162eb26eaa",
+    "runner_source": "e5dddb816ea69da5560be0bb705367e482948b1beeaea890ca3746c7b6e88b1b",
+    "trading_rules": "c4a305cf2c85ec4b15c13338e24eb47ac87d4703aa688d3d72adb0fdfa042d2a"
+  },
+  "execution_config_sha256": "bbae61d90d1d3a439c3240272cf04a1fb66f76c2ce4618c20e48d3f213b897be",
+  "execution_source_sha256": "1cf091bda317fb2bc9828d4037388ec0fcfb6e7f5564b59274152148ed62a7d3",
+  "freeze_id": "bugfix_research_freeze_v1:ebded9095cd2263fc3e753a5b2c5fe6f00ae0f1b80b586fed665505e61acab89",
+  "freeze_timestamp": "2026-07-23T07:22:19.088921+00:00",
+  "freeze_type": "post_observation_bugfix",
+  "historical_test_already_observed": true,
+  "market_cache_sha256": "68864351e6fb50c7ab793619b31943dbac651469bc0750e8253c1a690dfbc0f4",
+  "outer_split_id": "split_001",
+  "schema_version": 1,
+  "score_artifact_sha256": "beb4e4ad738e263e72bb75ead4d948f7a44e7c086bc56b310a56a823a6adecbf",
+  "score_policy_sha256": "4e2369e489c95abf91145c3f130b36e98d11b9be1368fa300d67b47936b57f89",
+  "selection_uses_test_outcomes": false,
+  "unbiased_final_estimate": false,
+  "weights_by_method": {
+    "equal_weight": "11e5f40e17fef8b2727079001b2cbad4bcbfa07cedbdb04c20a359f18d8f1a84",
+    "stability_weight": "6dbc9eda097cab6bd5a3d08eb93141282d686f6d39f0aaf1a3753e20ab25208d"
+  },
+  "weights_sha256": "33bca0897291d8bff73fb87294716c4151c634c9ef8ceaeaf3b74f2f8f265138"
+}
