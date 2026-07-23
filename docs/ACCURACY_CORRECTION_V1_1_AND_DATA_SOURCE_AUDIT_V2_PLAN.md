@@ -5,6 +5,8 @@
 > 基线提交：`a7e6e6c453ef0e3ce989885c090b0829b268af16`  
 > 固定边界：不进入 PR #5A，不训练模型，不改变因子选择，不重算 Matrix v4
 
+> 2026-07-24 实施回执：Phase A 已完成，当前链 22 个 artifact / 61 条 edge 的传递校验问题数为 0；score 1,471,764 行 runtime SHA 保持 `beb4e4ad...` 不变，Universe 已闭合到 v2，`SZ302132` 的 124 行 unknown board 已清零。Phase B 已完成 150 股 canary：Community 与 BaoStock 在 52,224 个共同 key 上 price/volume/amount 容差匹配率均为 100%，形成 Decision B；AKShare Eastmoney 仅 3/150 成功、147 次为 ProxyError。审计确认 Market Cache v2 漏乘成交量整手单位 `×100`，故 execution/market-cache readiness 已立即撤回，下一阶段改为 `EXECUTION_UNIT_SEMANTICS_CORRECTION_V1_2_PLAN.md`。
+
 ## 1. 阶段目标与不可突破边界
 
 本阶段连续完成两个任务：
@@ -643,4 +645,3 @@ unbiased_final_estimate = false
 - core OHLC/复权是否存在系统性问题；
 - 是否需要 Matrix v5；
 - 当前 readiness 和下一步建议。
-
