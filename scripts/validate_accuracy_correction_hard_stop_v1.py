@@ -72,7 +72,15 @@ def main() -> int:
         )
     ].iloc[0]
     assert current["selection_status"] == "superseded_accuracy_correction"
-    assert current["superseded_by"] == "pending_matrix_v4_split_allowlists"
+    assert str(current["superseded_by"]).startswith("split_specific_allowlist_v2:")
+    corrected = selections.loc[
+        selections["selection_name"].eq(
+            "split_specific_accuracy_corrected_allowlists_v2"
+        )
+    ].iloc[0]
+    assert corrected["selection_status"] == "holdout_clean_pending_mutation_and_score_policy"
+    assert not bool(corrected["model_input_allowed"])
+    assert int(corrected["representative_count"]) == 143
 
     supersession = pd.read_csv(resolve(config["artifact_supersession"]))
     assert {
