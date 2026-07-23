@@ -1,4 +1,6 @@
 {
+  "allowlist_artifact_manifest": "outputs/split_specific_allowlist_v2/current/artifact_manifest.json",
+  "allowlist_manifest": "outputs/split_specific_allowlist_v2/current/split_allowlist_manifest.csv",
   "bugfix_freeze_output": "outputs/bugfix_research_freeze_v1/current",
   "canary": {
     "instruments": 200,
@@ -8,6 +10,7 @@
     "trading_days": 10
   },
   "execution": {
+    "dynamic_lot_rules": true,
     "initial_cash": 10000000.0,
     "max_participation_rate": 0.05,
     "maximum_stale_valuation_days": 20,
@@ -19,6 +22,7 @@
     "top_k": 50
   },
   "execution_output": "outputs/execution_accuracy_correction_v1/current",
+  "factor_weights": "outputs/split_transparent_weights_v2/current/factor_weights_by_split.csv",
   "fee_schedule": "configs/a_share_fee_schedule_v1.yaml",
   "field_timing": "configs/a_share_market_field_timing_v1.yaml",
   "instrument_lifecycle_source": "outputs/universes/community_20260609/all_stock_shsz.txt",
@@ -33,8 +37,13 @@
   "research_run_family_id": "full_research_factor_669_v1",
   "schema_version": 1,
   "score_manifest": "outputs/split_transparent_score_v2/current/artifact_manifest.json",
+  "score_policy": "outputs/transparent_score_policy_v1/current/transparent_score_policy.json",
+  "score_policy_manifest": "outputs/transparent_score_policy_v1/current/artifact_manifest.json",
   "score_receipt": "outputs/split_transparent_score_v2/current/score_artifact.csv",
   "score_runtime": "outputs/split_transparent_score_v2/current/runtime/composite_scores.parquet",
+  "superseded_execution_summary": "outputs/qlib_exchange_split_transparent_v1/full_research_669/execution_summary.csv",
   "trading_rules": "configs/a_share_trading_rules_v1.yaml",
-  "universe_manifest": "outputs/point_in_time_universe_v2/full_research/artifact_manifest.json"
+  "universe_manifest": "outputs/point_in_time_universe_v2/full_research/artifact_manifest.json",
+  "weight_manifest": "outputs/split_transparent_weights_v2/current/weight_manifest.csv",
+  "weights_artifact_manifest": "outputs/split_transparent_weights_v2/current/artifact_manifest.json"
 }
