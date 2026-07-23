@@ -4,8 +4,10 @@
 
 ## Current Working Documents
 
+- `ACCURACY_CORRECTION_V1_1_AND_DATA_SOURCE_AUDIT_V2_PLAN.md`
+  当前唯一执行计划。先关闭 corrected-score lineage、统一 fail-closed artifact/parent gate、修复 `SZ302132` 创业板识别并最小重发执行链；随后只做 Community/BaoStock/AKShare 数据源 canary 与决策，不进入 PR #5A。
 - `ACCURACY_CORRECTION_V1_PLAN.md`
-  已完成的 Accuracy Correction V1 实施基线。PR #6 修复研究计算，PR #7 修复执行语义；权威历史状态能力仍诚实阻断，PR #5A 继续暂停。
+  已完成的 Accuracy Correction V1 实施基线。PR #6 修复研究计算，PR #7 修复执行语义；其后续 lineage/gate cleanup 以上述 V1.1 计划为准。
 - `outputs/accuracy_correction_v1/current/`
   当前机器治理状态：research/execution accuracy 与 Market Cache v2 ready；authoritative OOS、core model、PR5 training 和 training-started 均 false。
 - `outputs/instrument_state_v1/current/`
