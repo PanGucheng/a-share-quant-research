@@ -1,0 +1,3 @@
+﻿trading_day_count,accounting_day_count,order_count,fill_count,partial_count,rejected_count,ending_nav,total_cash_fee,total_slippage_cost,outer_split_id,method
+9,9,107,107,89,0,9959186.43559641,5708.501893186414,11289.19163935429,split_001,equal_weight
+9,9,109,109,93,0,9926102.802439088,6768.246877753632,13085.088313192755,split_001,stability_weight
