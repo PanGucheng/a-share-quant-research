@@ -1,0 +1,46 @@
+{
+  "artifact_id": "factor_clustering_v2:860674aac01d69918eee6b3044107d499a09db8e0ca9f23ffac88bbd2453289b",
+  "artifact_status": "pass",
+  "blocked_reason": "",
+  "code_commit_sha": "d983ae5d4114120c008b89f3755c168e091ef18b",
+  "code_diff_sha256": "",
+  "code_dirty": false,
+  "config_sha256": "8e45e88d513197f797c5d5b4695602469ab91e7b629487b5ef5309b7c34df876",
+  "created_at": "2026-07-23T05:14:20.352045+00:00",
+  "end_date": "2025-06-06",
+  "factor_catalog_id": "factor-catalog:8c031a09892fc915ac45201942f563925a9bab617e60fce5ecbbe274a51a02e1",
+  "factor_frame_id": "factor-frame-v4:f1e93a2428446673f5c873a01886a38ae9e654e5f863cf2b236040dbbf28dc3c",
+  "input_artifact_ids": [
+    "clustering_input_projection_v2:2ae67ad8f78da480e5d32425d38693d79f1ad5e1f78c08e9ba153a04ca9a7b1a",
+    "development_robustness_split_v1:2cb5b7a7286450235c1215b8f3c4876dec02f27a44ea4a3d7b9674df5191586b",
+    "factor_rolling_stability_v2:8d49e0c1e6c251848e739291bf4522fdb885a288d75589d24fa7743e9bf63608"
+  ],
+  "lineage_status": "inconsistent",
+  "missing_lineage_fields": [
+    "inconsistent:universe_artifact_id"
+  ],
+  "output_file_hashes": {
+    "cluster_stability_by_split.csv": "0a0c0c32a966a424fe90f44ea49a04ac7b41bd0bc852e1514c79c4a81bd89839",
+    "clustering_report.md": "cc77dfa3a761902b8ba4011de1953f9870f73b51562d103d933e7c106d12933d",
+    "contract_status.csv": "7514cdcba6e2a426548ce12139c76ba68c9bdf6d477837598ba9f1489c5c2dc7",
+    "excluded_redundant_factors_by_split.csv": "996492bdd29aca527a129014fcc8727e0e5d6fe7efaa8c862ee29c87ad47212e",
+    "exposure_similarity_by_split.csv": "d6960c8445eee4ddbb26a437def6f50533a8ea2e27abccedb53b9b8c1dce0bbc",
+    "factor_clusters_by_split.csv": "3b5bd19e003ce53d7def764f5f485c6aa1a47e4d9a225f133b71346a8a133829",
+    "factor_distance_by_split.csv": "33e4db73b1061657cfb6e0f04018a6be2290c60cbbc2ded285766193184b6374",
+    "input_receipts.csv": "265b03cfa4570f682a1e4c62fafada56ae8f45ce905929aacccb6842aaf081ff",
+    "performance_similarity_by_split.csv": "4da11998120872b34c00f0438d457692cbf714c8e5bd9ca6d023131db77def22",
+    "representatives_by_split.csv": "63b117ae7ac48716c5544f593ebfe52ad0e234d73983309a495f76b21e6dd442",
+    "resolved_config.json": "416c8cb7c8a7dd9755cdbd8c79bb54e86bc35314837f9162f05e1afabd942a6d",
+    "selection_date_audit.csv": "a420ff6b6c1f4faad925b6f2adcffb3e2eb27a04916ba543b0adaf8a6b3495c5"
+  },
+  "producer_run_id": "20260723T051420Z-0ffbf769",
+  "profile_name": "full_research",
+  "profile_type": "full_research",
+  "research_run_family_id": "full_research_factor_669_v1",
+  "run_id": "20260723T051420Z-0ffbf769",
+  "schema_version": 2,
+  "split_manifest_id": "split-manifest:75ccf0f37e85422729d54aef5a363f68d4f9b3daed3d42a87eb120e6b5aefe0e",
+  "stage_id": "factor_clustering_v2",
+  "start_date": "2021-02-01",
+  "universe_artifact_id": null
+}
