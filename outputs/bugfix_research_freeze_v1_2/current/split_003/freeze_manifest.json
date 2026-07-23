@@ -1,0 +1,32 @@
+{
+  "allowlist_sha256": "85470aa9f42ddd4970f849b32208d3f0d0ee13587f5ab45aa55c88f509db1f5c",
+  "code_commit_sha": "f9c4f312b1c513c39014c58e6e53e9454156e534",
+  "execution_config_component_hashes": {
+    "contracts_source": "17895ed9e85f1e22d2c52f6f7ca72f04bdacb5819f4da9b50ae242dd6a26625f",
+    "exchange_adapter_source": "c55b58f079820d25371dc22e74ca27cb2ffb650b2909dfe3338dc40e3f701eb6",
+    "execution_config": "d15a919d4fabafd61cfeea17c1ec933d02efdb558b4aedca20f06aecf3f564dd",
+    "fee_schedule": "bcc248295846bec1e270316c17e927a2fe1571c54edc4fe8720a22af99afe358",
+    "field_timing": "fdc9d9f05ba712582c078a4c53767d50df7a2a1a2051dca1eeed5a1f1ea7c344",
+    "market_semantics_source": "9c957e3633f44a3cd3b74a06767d883455e2bed98f4ece042d42c47a0647da4f",
+    "runner_source": "63779f2fe210e6687db076cf3d8d6e470abef5b0cf05de27d81933793f3d8e77",
+    "trading_rules": "89f70e09d6600be8cd8818526848b5f4a3b2663c8df14b30850a6ea5d1665150"
+  },
+  "execution_config_sha256": "7da4df2c945364e36de85781b99cc6b61ef0ed58a9069440531c4f7d4294a8b4",
+  "execution_source_sha256": "6dc3e0da153652eb54c146553d864349a8620eedcbc13963e6e35be3c194cb0f",
+  "freeze_id": "bugfix_research_freeze_v1_2:851d01e5906f582e61cdc0ba20a43643861f6c2715bb507773bf5ef6afbc018d",
+  "freeze_timestamp": "2026-07-23T17:39:18.279120+00:00",
+  "freeze_type": "post_observation_bugfix",
+  "historical_test_already_observed": true,
+  "market_cache_sha256": "55d7a4f0a86e4bb095d6d63ea9180000c8152cde5aa6b328ed74dc54208ab4e9",
+  "outer_split_id": "split_003",
+  "schema_version": 1,
+  "score_artifact_sha256": "beb4e4ad738e263e72bb75ead4d948f7a44e7c086bc56b310a56a823a6adecbf",
+  "score_policy_sha256": "4e2369e489c95abf91145c3f130b36e98d11b9be1368fa300d67b47936b57f89",
+  "selection_uses_test_outcomes": false,
+  "unbiased_final_estimate": false,
+  "weights_by_method": {
+    "equal_weight": "0e48dc30270489c4a5b8ef197b1cc5c37c7f8eb25799feeb68880d797fc962b6",
+    "stability_weight": "719358bf90fd0ffa38332c142e92c96744124ec0c74a670114d187c50717235d"
+  },
+  "weights_sha256": "8b8fca43f29a83b4e9cf40616128812ce44489aed1ad109136d821cd991d617e"
+}
