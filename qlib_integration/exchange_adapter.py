@@ -206,6 +206,27 @@ class PreparedQuoteExchange(Exchange):  # type: ignore[misc]
         )
         self._update_limit(self.limit_threshold)
 
+    def is_stock_tradable(
+        self,
+        stock_id: str,
+        start_time: pd.Timestamp,
+        end_time: pd.Timestamp,
+        direction: int | None = None,
+    ) -> bool:
+        """Treat direction-less target generation as tradable in either direction.
+
+        Qlib's base implementation requires both buy and sell to be available
+        when ``direction`` is omitted. That suppresses valid sells at limit-up
+        and valid buys at limit-down before a directional order even exists.
+        """
+        if direction is not None:
+            return super().is_stock_tradable(stock_id, start_time, end_time, direction)
+        if self.check_stock_suspended(stock_id, start_time, end_time):
+            return False
+        buy_limited = self.check_stock_limit(stock_id, start_time, end_time, Order.BUY)
+        sell_limited = self.check_stock_limit(stock_id, start_time, end_time, Order.SELL)
+        return not (buy_limited and sell_limited)
+
     def _opening_raw_shares(self, position: object, trading_date: pd.Timestamp) -> dict[str, float]:
         if position is None:
             return {}
