@@ -1,0 +1,39 @@
+{
+  "bugfix_freeze_output": "outputs/bugfix_research_freeze_v1/current",
+  "canary": {
+    "instruments": 200,
+    "outer_splits": [
+      "split_001"
+    ],
+    "trading_days": 10
+  },
+  "execution": {
+    "initial_cash": 10000000.0,
+    "max_participation_rate": 0.05,
+    "maximum_stale_valuation_days": 20,
+    "participation_share_tolerance": 1.0,
+    "participation_volume_lookback_days": 20,
+    "risk_degree": 0.95,
+    "signal_lag_trading_days": 1,
+    "strict_t_plus_one": true,
+    "top_k": 50
+  },
+  "execution_output": "outputs/execution_accuracy_correction_v1/current",
+  "fee_schedule": "configs/a_share_fee_schedule_v1.yaml",
+  "field_timing": "configs/a_share_market_field_timing_v1.yaml",
+  "instrument_lifecycle_source": "outputs/universes/community_20260609/all_stock_shsz.txt",
+  "instrument_state_output": "outputs/instrument_state_v1/current",
+  "market_cache_output": "outputs/market_cache_v2/current",
+  "outer_date_assignments": "outputs/purged_walk_forward_v1/full_research_669/date_assignments.csv",
+  "profile": "full_research",
+  "profile_name": "full_research",
+  "profile_type": "full_research",
+  "qlib_provider": "../qlib_data/cn_data_community_20260609_derived",
+  "research_run_family_id": "full_research_factor_669_v1",
+  "schema_version": 1,
+  "score_manifest": "outputs/split_transparent_score_v2/current/artifact_manifest.json",
+  "score_receipt": "outputs/split_transparent_score_v2/current/score_artifact.csv",
+  "score_runtime": "outputs/split_transparent_score_v2/current/runtime/composite_scores.parquet",
+  "trading_rules": "configs/a_share_trading_rules_v1.yaml",
+  "universe_manifest": "outputs/point_in_time_universe_v2/full_research/artifact_manifest.json"
+}
