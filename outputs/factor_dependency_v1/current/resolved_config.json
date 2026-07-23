@@ -36,11 +36,11 @@
     "alpha101": {
       "execution_scope": "wide_pandas_cross_section",
       "fallback_sensitive": true,
-      "fallback_reason": "positional_axis_relabel_when_lengths_match"
+      "fallback_reason": "matrix_v3_positional_axis_relabel_when_lengths_match_v4_forbids_relabel"
     }
   },
-  "config_file_sha256": "a962316215ead87130a0418986ed20330550310d2991ce7f209436af71c2bf49",
+  "config_file_sha256": "7522277e102827a08e86cb32f24039c1355387c992256e973ff04d6c0421cd3e",
   "factor_inventory_sha256": "e93bef1c7f3fdc7f4040fd70014aed9b7ea31c6e087bdd161d732cac3c0ea722",
   "alpha101_reference_source_sha256": "0767658a110940d6bb089fcaa3db659367bb34bbc3de7e5627825db7e781c430",
-  "alpha101_adapter_source_sha256": "da9e0b1d1331169caa3228264d33ec4f6fd98d307c3bf6efcbeac846c646a713"
+  "alpha101_adapter_source_sha256": "25dace8c9fe1a7de685fb8e8a7efadb9a968f614db04b4bc3aa0a6e91f683c53"
 }

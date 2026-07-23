@@ -1,8 +1,7 @@
 ﻿source_family,dependency_class,recompute_policy,factor_count
 alpha101,cross_sectional,mandatory_recompute_audit,2
-alpha101,mixed,mandatory_recompute_audit,36
-alpha101,pure_time_series,mandatory_recompute_audit,14
-alpha101,unknown,mandatory_recompute_audit,12
+alpha101,mixed,mandatory_recompute_audit,46
+alpha101,pure_time_series,mandatory_recompute_audit,16
 alpha158,pure_time_series,filter_only_common_keys_bit_identical_candidate,155
 alpha360,pure_time_series,filter_only_common_keys_bit_identical_candidate,358
 project_basic,pure_time_series,filter_only_common_keys_bit_identical_candidate,15

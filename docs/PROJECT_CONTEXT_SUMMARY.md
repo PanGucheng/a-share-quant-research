@@ -126,7 +126,9 @@ tmp/reference_repos/techfactor
 
 ## Next Work
 
-> **2026-07-23 因子依赖审计完成：**`factor_dependency_ast_v1` 已覆盖 669 个因子并生成 clean/complete/pass Manifest。605 个 Alpha158/Alpha360/TA/project_basic 因子以逐标的执行证据列为 common-key bit-identical 复用候选；Alpha101 的 2 个 cross-sectional、36 个 mixed、14 个公式 pure-time-series 和 12 个 unknown 全部强制重算，原因同时包括横截面依赖、未解析调用及 pandas 适配器 positional-axis fallback。`unknown` canary 已证明 fail-closed。`factor_dependency_inventory_ready=true`，但这不等于 Matrix v4 ready；下一步必须先完成小规模 Matrix v4 canary 和共同 key 逐值一致性验证。
+> **2026-07-23 Matrix v4 canary 完成：**五来源 canary 在完整动态 Top2000 PIT 横截面、2021-09 的 39,981 个合法 key 上运行。Alpha158、Alpha360、TA、project_basic 代表因子与 Matrix v3 逐位一致；Alpha101 mixed/cross-sectional 代表分别纠正 39,859/39,908 个共同 key，证明旧 union-universe 宽表污染不是“只删 329 行”可以修复。Alpha101 轴标签现在要求 exact equality，禁止同长度 positional relabel；returns 使用 `pct_change(fill_method=None)`，不跨 PIT 缺口前向填充。canary Manifest clean/complete/pass，`matrix_v4_canary_ready=true`，但 Matrix v4 全量尚未运行。
+
+> **2026-07-23 因子依赖审计完成：**`factor_dependency_ast_v1` 已覆盖 669 个因子并生成 clean/complete/pass Manifest。605 个 Alpha158/Alpha360/TA/project_basic 因子以逐标的执行证据列为 common-key bit-identical 复用候选；Alpha101 的 2 个 cross-sectional、46 个 mixed、16 个公式 pure-time-series 全部强制重算，原因包括宽表 universe 依赖和历史 pandas 适配器 positional-axis fallback。当前目录无 `unknown`，但 unknown fixture 已证明 fail-closed。`factor_dependency_inventory_ready=true`，其后的 Matrix v4 canary 结果以上方最新条目为准。
 
 > **2026-07-23 Universe lifecycle v2 完成：**生成器现在从源头执行 `rolling_universe_interval ∩ source_lifecycle_interval`，缺失 lifecycle 时 fail-closed。完整 2021–2026、Top2000 物化在 clean commit `e971956` 上运行：准确识别并修正旧 29 个越界 interval、移除 329 个非法 date-instrument key；最终 lifecycle violation=0、overlap=0、removed-key residual=0，Manifest v2 为 clean/complete。`universe_lifecycle_v2_ready=true`，但 Matrix v4、pairwise IC 和 model readiness 仍为 false。其后的 669 因子依赖分类结果以上方最新条目为准，不得把 Universe 或依赖清单完成误解为现有矩阵可直接复用。
 

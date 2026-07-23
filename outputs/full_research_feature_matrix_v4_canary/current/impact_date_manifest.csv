@@ -1,0 +1,8 @@
+﻿factor,source_family,dependency_class,illegal_input_date_count,affected_instrument_count,max_lookback_trading_days,recompute_start,recompute_end
+alpha158_KLEN,alpha158,pure_time_series,19,1,0,2021-09-01,2021-09-30
+alpha360_CLOSE59,alpha360,pure_time_series,19,1,59,2021-09-01,2021-09-30
+ta_momentum_ao,ta,pure_time_series,19,1,252,2021-09-01,2021-09-30
+ret_5,project_basic,pure_time_series,19,1,20,2021-09-01,2021-09-30
+kunquant_alpha101_alpha002,alpha101,mixed,19,1,6,2021-01-01,2021-09-30
+kunquant_alpha101_alpha033,alpha101,cross_sectional,19,1,0,2021-01-01,2021-09-30
+kunquant_alpha101_alpha041,alpha101,pure_time_series,19,1,0,2021-01-01,2021-09-30

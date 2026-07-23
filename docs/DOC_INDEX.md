@@ -12,6 +12,8 @@
   PR #6 lifecycle-clean Universe v2：29 个越界 interval 与 329 个非法 key 已修正，最终 lifecycle violation、interval overlap 和 removed-key residual 均为 0。
 - `outputs/factor_dependency_v1/current/`
   669 因子依赖清单：605 个逐标的因子仅为 bit-identical 复用候选；Alpha101 与 `unknown` 全部 fail-closed 到强制重算审计。
+- `outputs/full_research_feature_matrix_v4_canary/current/`
+  Matrix v4 大规模计算前的五来源 Top2000 canary：四个纯时间序列代表在 39,981 个共同 key 上逐位一致；Alpha101 动态 PIT 横截面代表分别有 39,859 与 39,908 个值被纠正；严格轴标签和 unknown fixture 门禁通过。
 - `PR5A_MODEL_INPUT_PROTOCOL_HANDOFF_V1.md`
   延后的模型输入协议参考。只能在 PR #6/#7 全部门禁通过后重新启用，不能直接采用当前已被替代的 allowlist、score 或 OOS execution。
 - `SELECTION_HOLDOUT_INTEGRITY_AND_MODEL_PLAN_V1.md`

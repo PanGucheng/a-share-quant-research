@@ -6,7 +6,7 @@
 > 前置阶段：逻辑 PR #4.1 Selection Holdout Integrity 已完成
 > 后续阶段：PR #5A 模型输入协议（当前暂停）
 
-> 2026-07-23 实施回执：第 5.1 节机器级 hard-stop 与 supersession registry 已落地；第 5.2 节 Universe lifecycle v2 已在 clean committed HEAD 上完成完整物化。旧 29 个越界 membership interval 已被截断，329 个非法 key 已全部移除，最终 lifecycle violation、interval overlap 和 removed-key residual 均为 0。第 5.3 节 669 因子依赖审计也已完成：605 个因子被证明为逐标的纯时间序列；Alpha101 中 2 个为纯横截面、36 个为 mixed、14 个公式虽为纯时间序列但仍受 positional-axis fallback 影响，另有 12 个因动态或未识别调用保守标为 `unknown`。所有 Alpha101、所有横截面/mixed/unknown 均强制进入 recomputation audit，只有 605 个已证明且非 fallback-sensitive 的因子可进入 common-key bit-identical 复用候选。当前权威治理状态位于 `outputs/accuracy_correction_v1/current/`，但 Matrix v4、IC v2 与后续研究修正仍未完成，模型 hard-stop 不变。
+> 2026-07-23 实施回执：第 5.1 节机器级 hard-stop 与 supersession registry 已落地；第 5.2 节 Universe lifecycle v2 已在 clean committed HEAD 上完成完整物化。旧 29 个越界 membership interval 已被截断，329 个非法 key 已全部移除，最终 lifecycle violation、interval overlap 和 removed-key residual 均为 0。第 5.3 节 669 因子依赖审计也已完成：605 个非 Alpha101 因子被证明为逐标的纯时间序列；Alpha101 中 2 个为纯横截面、46 个为 mixed、16 个公式为纯时间序列。所有 64 个 Alpha101 因历史 Matrix v3 positional-axis fallback 与宽表 universe 语义而强制进入 recomputation audit，`unknown` 分类继续由 fail-closed fixture 约束。Matrix v4 五来源 Top2000 canary 已在 39,981 个合法 key 上通过：四个纯时间序列代表共同 key 逐位一致；两个 Alpha101 横截面代表分别纠正 39,859 和 39,908 个值。当前权威治理状态位于 `outputs/accuracy_correction_v1/current/`，但 Matrix v4 全量、IC v2 与后续研究修正仍未完成，模型 hard-stop 不变。
 
 ## 1. 文档权威性与当前结论
 
@@ -221,7 +221,7 @@ review_status
 
 - `outputs/factor_dependency_v1/current/factor_dependency_inventory.csv` 已覆盖且只覆盖 669 个目录因子，Manifest v2 为 clean/complete/pass；
 - Alpha158 155、Alpha360 358、TA 77、project_basic 15 共 605 个因子具有逐标的执行证据，列为 filter-only common-key bit-identical 候选，但尚未宣告 Matrix v4 可复用；
-- Alpha101 64 个因子全部强制重算，其中 2 个纯横截面、36 个 mixed、14 个公式纯时间序列、12 个 `unknown`；
+- Alpha101 64 个因子全部强制重算，其中 2 个纯横截面、46 个 mixed、16 个公式纯时间序列；当前无实际目录因子停留在 `unknown`，但 unknown fixture 继续强制 fail-closed；
 - Alpha101 即便公式属于纯时间序列，也因适配器存在“轴长度相同即按位置替换标签”的 fallback 而禁止旧矩阵复用；
 - canary 已覆盖纯时间序列、纯横截面、mixed、Alpha101 fallback-sensitive 以及 `unknown → fail-closed` fixture。
 
@@ -257,6 +257,14 @@ review_status
 ```
 
 同一因子可以同时覆盖一个来源和一个依赖类别，但 review bundle 必须逐项列出覆盖关系。canary 必须证明分类器、clean universe 输入、影响日期传播、common-key 一致性、Alpha101 positional relabel 安全性和差异归因可用。完成分类前不得承诺只重跑 Alpha101，也不得默认重跑全部 7.36 GB；最终范围由 inventory 与 impact manifest 决定。
+
+实施结果（2026-07-23）：
+
+- canary 使用完整动态 Top2000 PIT 横截面覆盖 2021-09 的 39,981 个合法 key，并覆盖五个 source family；
+- Alpha158、Alpha360、TA、project_basic 四个纯时间序列代表与 Matrix v3 在所有共同 key 上逐位一致，证明 filter-only 路径可作为候选；
+- Alpha101 mixed 与 cross-sectional 代表分别有 39,859 和 39,908 个共同 key 值变化，证明旧 Matrix v3 的 union-universe 宽表计算污染范围远大于被删除的 329 个非法 key，64 个 Alpha101 必须完整重算；
+- Alpha101 同长度错误轴标签已由运行时代码和 mutation test 双重拒绝；`pct_change(fill_method=None)` 阻止 PIT 缺口前向填充；
+- canary artifact 为 clean/complete/pass，但仅授权设计下一阶段 30 批 Matrix v4 运行，不把 `matrix_v4_lifecycle_clean` 提前置为 true。
 
 Matrix v4 最低产物：
 

@@ -1,0 +1,3 @@
+﻿case,status,detail
+actual_alpha101_exact_axes,pass,all selected Alpha101 methods passed exact index/column equality
+same_length_wrong_label_rejected,pass,positional relabel fallback is forbidden
