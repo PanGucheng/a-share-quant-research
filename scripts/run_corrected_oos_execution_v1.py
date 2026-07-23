@@ -84,6 +84,13 @@ def main() -> int:
         "slippage_bps": 0.0,
         "lot_size": 1,
     }
+    import qlib
+    from qlib.config import C, REG_CN
+
+    qlib.init(provider_uri=str(resolve(config["qlib_provider"])), region=REG_CN)
+    C.kernels = 1
+    C.joblib_backend = "sequential"
+    C.trade_unit = 1
     input_manifest_paths = [
         resolve(config["score_manifest"]),
         market_dir / "artifact_manifest.json",
