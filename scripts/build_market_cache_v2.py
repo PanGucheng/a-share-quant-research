@@ -15,7 +15,13 @@ if str(PROJECT_ROOT) not in sys.path:
 
 from qlib_integration.market_semantics import load_yaml, stale_valuation, validate_field_timing  # noqa: E402
 from research_validation.feature_matrix import canonical_hash, file_sha256  # noqa: E402
-from research_validation.lineage import capture_code_state, load_artifact_manifest, write_stage_artifact_manifest  # noqa: E402
+from research_validation.lineage import (  # noqa: E402
+    capture_code_state,
+    direct_parent_gate_failures,
+    load_artifact_manifest,
+    validate_manifest_outputs,
+    write_stage_artifact_manifest,
+)
 from research_validation.stage_output import StageOutputPublisher  # noqa: E402
 
 
@@ -75,6 +81,24 @@ def main() -> int:
     }
     semantic_hashes = {name: file_sha256(path) for name, path in semantics_paths.items()}
     code_state = capture_code_state(PROJECT_ROOT)
+    input_manifests = [
+        resolve(config["score_manifest"]),
+        state_dir / "artifact_manifest.json",
+        resolve(config["raw_market_manifest"]),
+    ]
+    manifests = [load_artifact_manifest(path) for path in input_manifests]
+    issues = [
+        issue
+        for manifest, path in zip(manifests, input_manifests)
+        for issue in validate_manifest_outputs(manifest, path.parent)
+    ]
+    gate_failures = direct_parent_gate_failures(manifests)
+    if issues or gate_failures:
+        raise ValueError(
+            "market cache upstream stale or blocked: "
+            f"freshness={[issue.check_name for issue in issues]} "
+            f"gates={gate_failures}"
+        )
 
     import qlib
     from qlib.config import C, REG_CN
@@ -258,11 +282,6 @@ def main() -> int:
             "- Missing historical ST/suspension/terminal-event sources keep authoritative execution blocked.\n",
             encoding="utf-8",
         )
-        input_manifests = [
-            resolve(config["score_manifest"]),
-            state_dir / "artifact_manifest.json",
-            resolve(config["raw_market_manifest"]),
-        ]
         score_manifest = load_artifact_manifest(input_manifests[0])
         state_manifest = load_artifact_manifest(input_manifests[1])
         write_stage_artifact_manifest(

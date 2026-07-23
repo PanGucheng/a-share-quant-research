@@ -1,16 +1,16 @@
 {
-  "cache_key": "68864351e6fb50c7ab793619b31943dbac651469bc0750e8253c1a690dfbc0f4",
+  "cache_key": "f48d995e00738928cb219bdf0a038e23dd29b4718b3093c8d1e0ab81d564229e",
   "payload": {
     "calendar_hash": "dc1bf1d4d2c2cdce7d0dcd8131c738b7b5ac9849cab756600b5551d8c70c90e2",
-    "code_commit_sha": "0725f0f28c3e1ffd6141b35fe30d15b4128db424",
-    "execution_config": "db10ef6c6c9d8ed177418012cef7c2e5e50ff5bcbe97a9a0a8c53d9fcfe8f9de",
-    "fee_schedule": "2744221fcf071ebf9306d74136e85ae1f00fde944b4711aed7f1ff7590ef431e",
-    "field_timing_schema": "054b8710317ef8836bef94b329243128731bbf4eb9b27d3747aabf400836a878",
-    "instrument_state_receipt": "78d6a3130906249409129436cc0ec4357024af0e785509c55c221e012f0b69d1",
-    "instrument_state_runtime_sha256": "771bf083ced381cf0088b54963fc3f0f33b86571894652afc2fd4a19f5dba390",
+    "code_commit_sha": "370ade23e9f1a86908fa7e728a60ee573e317247",
+    "execution_config": "68a268541bd9658e7e3da5bdcf37b14e1280c71ed256cb3859f9a4ca09e9961e",
+    "fee_schedule": "bcc248295846bec1e270316c17e927a2fe1571c54edc4fe8720a22af99afe358",
+    "field_timing_schema": "fdc9d9f05ba712582c078a4c53767d50df7a2a1a2051dca1eeed5a1f1ea7c344",
+    "instrument_state_receipt": "4771c729befdf43d15856e2d56df766aea39b22398ed636fcb63178e4286a77b",
+    "instrument_state_runtime_sha256": "5603e2e442b5eb21c955a0777b713ab0d563883dc83b495bce2638de83ed5f8d",
     "raw_market_manifest": "15e5635ae52a517ab8e4a686ec297ab3e0d04ee37d4cc56c082b6c0bccb1abed",
     "score_artifact_sha256": "beb4e4ad738e263e72bb75ead4d948f7a44e7c086bc56b310a56a823a6adecbf",
     "score_receipt": "80f89a6e05b1056ea6393752e3b935c90008623a96cd386aaefc22eade78bd36",
-    "trading_rules": "c4a305cf2c85ec4b15c13338e24eb47ac87d4703aa688d3d72adb0fdfa042d2a"
+    "trading_rules": "89f70e09d6600be8cd8818526848b5f4a3b2663c8df14b30850a6ea5d1665150"
   }
 }

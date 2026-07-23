@@ -14,7 +14,13 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 from research_validation.feature_matrix import canonical_hash, file_sha256  # noqa: E402
-from research_validation.lineage import capture_code_state, load_artifact_manifest, validate_manifest_outputs, write_stage_artifact_manifest  # noqa: E402
+from research_validation.lineage import (  # noqa: E402
+    capture_code_state,
+    direct_parent_gate_failures,
+    load_artifact_manifest,
+    validate_manifest_outputs,
+    write_stage_artifact_manifest,
+)
 from research_validation.stage_output import StageOutputPublisher  # noqa: E402
 
 
@@ -43,9 +49,7 @@ def main() -> int:
         raise ValueError("bug-fix freeze requires a clean committed worktree")
     manifest_paths = [
         resolve(config["score_manifest"]),
-        resolve(config["allowlist_artifact_manifest"]),
-        resolve(config["weights_artifact_manifest"]),
-        resolve(config["score_policy_manifest"]),
+        resolve(config["selection_closure_manifest"]),
         resolve(config["market_cache_output"]) / "artifact_manifest.json",
     ]
     manifests = [load_artifact_manifest(path) for path in manifest_paths]
@@ -54,8 +58,13 @@ def main() -> int:
         for manifest, path in zip(manifests, manifest_paths)
         for issue in validate_manifest_outputs(manifest, path.parent)
     ]
-    if issues or any(manifest["artifact_status"] != "pass" for manifest in manifests):
-        raise ValueError(f"bug-fix freeze upstream stale or blocked: {issues}")
+    gate_failures = direct_parent_gate_failures(manifests)
+    if issues or gate_failures:
+        raise ValueError(
+            "bug-fix freeze upstream stale or blocked: "
+            f"freshness={[issue.check_name for issue in issues]} "
+            f"gates={gate_failures}"
+        )
     score_receipt = pd.read_csv(resolve(config["score_receipt"]))
     cache_key_doc = json.loads((resolve(config["market_cache_output"]) / "cache_key.json").read_text(encoding="utf-8"))
     allowlists = pd.read_csv(resolve(config["allowlist_manifest"]))

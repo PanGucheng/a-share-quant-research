@@ -1,0 +1,15 @@
+﻿instrument,date,old_is_st,new_is_st,available_before_open
+SH600811,2025-03-18,False,True,unknown
+SH600811,2025-04-30,True,False,unknown
+SH603003,2025-06-10,True,False,unknown
+SZ000627,2025-07-08,False,True,unknown
+SZ002308,2024-09-27,True,False,unknown
+SZ002336,2025-06-13,True,False,unknown
+SZ002750,2025-06-06,True,False,unknown
+SZ300280,2025-05-20,False,True,unknown
+SZ300280,2025-09-15,True,False,unknown
+SZ300366,2025-09-23,False,True,unknown
+SZ300379,2025-05-06,False,True,unknown
+SZ300379,2025-12-30,True,False,unknown
+SZ300630,2025-01-07,False,True,unknown
+SZ300630,2025-04-28,True,False,unknown

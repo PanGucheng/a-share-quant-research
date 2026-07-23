@@ -1,0 +1,3 @@
+# Optional, isolated Data Source Audit V2 clients; not production providers.
+akshare==1.18.64
+baostock==0.9.3

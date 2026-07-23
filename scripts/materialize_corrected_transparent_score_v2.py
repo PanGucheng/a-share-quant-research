@@ -16,7 +16,7 @@ if str(PROJECT_ROOT) not in sys.path:
 from portfolio.score_construction import construct_daily_scores  # noqa: E402
 from qlib_integration.contracts import contract_row  # noqa: E402
 from research_validation.feature_matrix import canonical_hash, file_sha256  # noqa: E402
-from research_validation.lineage import capture_code_state, load_artifact_manifest, validate_manifest_outputs, write_stage_artifact_manifest  # noqa: E402
+from research_validation.lineage import capture_code_state, direct_parent_gate_failures, load_artifact_manifest, validate_manifest_outputs, write_stage_artifact_manifest  # noqa: E402
 from research_validation.stage_output import StageOutputPublisher  # noqa: E402
 from scripts.run_split_transparent_score_v1 import load_test_factor_frame, selected_partition_inventory  # noqa: E402
 
@@ -40,14 +40,15 @@ def main() -> int:
     manifest_paths = [resolve(path) for path in config["input_manifests"]]
     manifests = [load_artifact_manifest(path) for path in manifest_paths]
     issues = [issue for manifest, path in zip(manifests, manifest_paths) for issue in validate_manifest_outputs(manifest, path.parent)]
-    if issues or any(manifest["artifact_status"] != "pass" for manifest in manifests):
+    if issues or direct_parent_gate_failures(manifests):
         raise ValueError("corrected score upstream is stale or blocked")
     by_stage = {manifest["stage_id"]: manifest for manifest in manifests}
-    weights_manifest = by_stage["split_transparent_weights_v2"]
+    closure_manifest = by_stage["research_selection_lineage_closure_v1"]
+    weights_manifest = closure_manifest
     matrix_manifest = by_stage["full_research_feature_matrix_v4"]
-    split_manifest = by_stage["purged_walk_forward_v1"]
-    policy_manifest = by_stage["transparent_score_policy_v1"]
-    mutation_manifest = by_stage["selection_mutation_contract_v2"]
+    split_manifest = closure_manifest
+    policy_manifest = closure_manifest
+    mutation_manifest = closure_manifest
     source_paths = {
         "weights": resolve(config["factor_weights"]),
         "weight_manifest": resolve(config["weight_manifest"]),
@@ -70,7 +71,7 @@ def main() -> int:
     if canary_manifest_path:
         canary_path = resolve(canary_manifest_path)
         canary = load_artifact_manifest(canary_path)
-        if validate_manifest_outputs(canary, canary_path.parent) or canary["artifact_status"] != "pass":
+        if validate_manifest_outputs(canary, canary_path.parent) or direct_parent_gate_failures([canary]):
             raise ValueError("corrected score canary is stale or blocked")
         if not pd.read_csv(resolve(config["canary_contract"]))["status"].eq("pass").all():
             raise ValueError("corrected score canary contract is incomplete")

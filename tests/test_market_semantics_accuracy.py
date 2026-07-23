@@ -46,6 +46,9 @@ def test_field_timing_detects_future_market_field() -> None:
 def test_board_price_limit_and_lot_rules_resolve() -> None:
     rules = load_yaml(ROOT / "configs/a_share_trading_rules_v1.yaml")
     assert infer_board("SH688001") == "star"
+    assert infer_board("SZ302132") == "chinext"
+    assert infer_board("SZ200002") == "unknown"
+    assert infer_board("SH510300") == "unknown"
     limit = resolve_price_limit_rule(
         rules, board="star", st_flag=False, ipo_age=6, trading_date="2025-01-02"
     )

@@ -1,0 +1,10 @@
+﻿check_name,status,observed_value,required_value,severity,reason
+corrected_score_lineage_complete,pass,True,True,critical,
+corrected_score_business_payload_unchanged,pass,beb4e4ad738e263e72bb75ead4d948f7a44e7c086bc56b310a56a823a6adecbf,beb4e4ad738e263e72bb75ead4d948f7a44e7c086bc56b310a56a823a6adecbf,critical,
+unknown_board_row_count,pass,0,0,critical,
+instrument_state_critical_contracts_pass,pass,True,True,critical,
+all_consumed_direct_parent_lineage_complete,pass,True,True,critical,
+transitive_lineage_validation_ready,pass,True,True,critical,
+execution_semantics_accuracy_ready,pass,True,True,critical,
+market_cache_v2_ready,pass,True,True,critical,
+future_market_field_count,pass,0,0,critical,

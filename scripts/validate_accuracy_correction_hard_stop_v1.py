@@ -56,19 +56,23 @@ def main() -> int:
         "unbiased_final_estimate",
     ]:
         assert not bool(flags[field]), field
+    for field in ["stale_policy_valid"]:
+        assert bool(flags[field]), field
     for field in [
+        "execution_unit_semantics_ready",
+        "market_cache_volume_unit_ready",
         "execution_semantics_accuracy_ready",
         "market_cache_v2_ready",
-        "stale_policy_valid",
     ]:
-        assert bool(flags[field]), field
+        assert not bool(flags[field]), field
+    assert bool(flags["data_source_audit_v2_ready"])
     assert int(flags["future_market_field_count"]) == 0
     assert bool(flags["model_entry_hard_stop_active"])
     assert bool(flags["historical_test_already_observed"])
     assert flags["selection_integrity_status"] == "ready"
     assert (
         flags["accuracy_correction_status"]
-        == "research_and_execution_accuracy_implemented_authoritative_oos_blocked"
+        == "execution_unit_semantics_correction_required"
     )
 
     selections = pd.read_csv(resolve(config["selection_status"]))
@@ -87,7 +91,7 @@ def main() -> int:
     ].iloc[0]
     assert (
         corrected["selection_status"]
-        == "research_and_execution_accuracy_ready_authoritative_oos_blocked"
+        == "research_accuracy_ready_execution_unit_correction_required"
     )
     assert not bool(corrected["model_input_allowed"])
     assert int(corrected["representative_count"]) == 143

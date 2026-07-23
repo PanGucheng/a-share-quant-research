@@ -1,0 +1,24 @@
+{
+  "accuracy_readiness": "outputs/accuracy_correction_v1/current/readiness_summary.csv",
+  "execution_contract": "outputs/execution_accuracy_correction_v1/current/contract_status.csv",
+  "expected_score_runtime_sha256": "beb4e4ad738e263e72bb75ead4d948f7a44e7c086bc56b310a56a823a6adecbf",
+  "instrument_state_contract": "outputs/instrument_state_v1/current/contract_status.csv",
+  "instrument_state_coverage": "outputs/instrument_state_v1/current/instrument_state_coverage.csv",
+  "lineage_semantics": "configs/artifact_lineage_semantics_v1.yaml",
+  "market_cache_contract": "outputs/market_cache_v2/current/contract_status.csv",
+  "output_dir": "outputs/accuracy_correction_v1_1/current",
+  "profile_name": "full_research",
+  "profile_type": "full_research",
+  "research_run_family_id": "full_research_factor_669_v1",
+  "schema_version": 1,
+  "score_manifest": "outputs/split_transparent_score_v2/current/artifact_manifest.json",
+  "score_receipt": "outputs/split_transparent_score_v2/current/score_artifact.csv",
+  "start_manifests": [
+    "outputs/split_transparent_score_v2/current/artifact_manifest.json",
+    "outputs/instrument_state_v1/current/artifact_manifest.json",
+    "outputs/market_cache_v2/current/artifact_manifest.json",
+    "outputs/bugfix_research_freeze_v1/current/artifact_manifest.json",
+    "outputs/execution_accuracy_correction_v1/current/artifact_manifest.json"
+  ],
+  "universe_manifest": "outputs/point_in_time_universe_v2/full_research/artifact_manifest.json"
+}

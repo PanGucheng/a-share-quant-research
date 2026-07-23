@@ -1,33 +1,34 @@
 {
-  "artifact_id": "instrument_state_v1:cbbf41f16967d9482300b3928b6c76faa96f7aacc8c504089daa5a933e36e2ac",
+  "artifact_id": "instrument_state_v1:ce02b325fa3692dd0d9582924e92a43dfeb026774ec049a65e0592afb7ee4d88",
   "artifact_status": "pass",
   "blocked_reason": "",
-  "code_commit_sha": "2a67e9b0766d9ef484ee4fd8947d973ff64ac13a",
+  "code_commit_sha": "798ce8863ffeb146efa97db0d528e77b8e4ecd71",
   "code_diff_sha256": "",
   "code_dirty": false,
-  "config_sha256": "6df16c28ce43b09ea2641cc3a1c8f058b230c0d2412f454567e9cbd8dd877a79",
-  "created_at": "2026-07-23T06:40:00.031975+00:00",
+  "config_sha256": "c3a2a9d1e48b60856c59f353791538069731cd7be94d1334599743b9ea1f9f55",
+  "created_at": "2026-07-23T16:36:29.585475+00:00",
   "end_date": "2024-08-14",
   "factor_catalog_id": "factor-catalog:8c031a09892fc915ac45201942f563925a9bab617e60fce5ecbbe274a51a02e1",
   "factor_frame_id": "factor-frame-v4:f1e93a2428446673f5c873a01886a38ae9e654e5f863cf2b236040dbbf28dc3c",
   "input_artifact_ids": [
     "point_in_time_universe_v2:325e39d7dd68afe0828154840b813287d0bf991487a42ed51a7d6476e85d7838",
-    "split_transparent_score_v2:fc2080f082503c77e0f4f112430e77a5e385ce130a6e54a366baf73cde8d836b"
+    "split_transparent_score_v2:82be8a32b7a84c401dcd27c630e93838a018949300c29f9fd405b70e1ec328c3"
   ],
   "lineage_status": "complete",
   "missing_lineage_fields": [],
   "output_file_hashes": {
-    "contract_status.csv": "cb8cfe419bd9de10eeebb9e2091285cacffcc3ac523035fb3c7e268a78a43937",
+    "board_resolution_audit.csv": "a5795208523b2b979b92f19abfcc04021466a74b500c01d119a5a79020ea416e",
+    "contract_status.csv": "1395e617714e5e54b5ae8d5389fe2e0efaed87d1fd4c273e84769072288bf28f",
     "instrument_state_artifact.csv": "8e8a0e722cb71e7a8e9e9c4556920aaca32550127733def091a4cb2f90a5328c",
     "instrument_state_coverage.csv": "c5ccd440b0a45b0634447d9e1a5b1836e54c97fff68f3b73b277d3fee5973282",
     "instrument_state_report.md": "fab7b4359b4e0bf8cbdd24255b74eecb98b4a0308e913957d8e4df542213a60b",
-    "resolved_config.json": "a3fb556b168613463204d393b3248364a1f8c4e2a5b235da944b1a54d894028b"
+    "resolved_config.json": "cf29cecaea4801aa386fa5a935e6f04fd3636595e3f174c47bb2bfb48743a0e9"
   },
-  "producer_run_id": "20260723T064000Z-f3a3aa6a",
+  "producer_run_id": "20260723T163629Z-0fcce835",
   "profile_name": "full_research",
   "profile_type": "full_research",
   "research_run_family_id": "full_research_factor_669_v1",
-  "run_id": "20260723T064000Z-f3a3aa6a",
+  "run_id": "20260723T163629Z-0fcce835",
   "schema_version": 2,
   "split_manifest_id": "split-manifest:75ccf0f37e85422729d54aef5a363f68d4f9b3daed3d42a87eb120e6b5aefe0e",
   "stage_id": "instrument_state_v1",

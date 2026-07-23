@@ -44,6 +44,8 @@ E:/qlib_prj/qlib_data/cn_data_community_20260609_derived
 
 ## Current Factor Research Status
 
+> **2026-07-24 Data Source Audit V2 与 readiness 撤回：**Phase A 的 corrected-score lineage closure 已完成：score runtime 1,471,764 行 SHA 保持 `beb4e4ad...`，Universe v2、split、catalog、frame lineage complete；`SZ302132` 的 124 行现全部为 chinext，board coverage=1；当前链 22 个 artifact / 61 条 edge 的 transitive validator 为 0 issue。Phase B 冻结 150 股（main 67 / chinext 53 / star 30）并采集 2024-08-01 至 2026-02-04：Community 52,224 行、BaoStock 52,593 行，52,224 个共同 key 的 close/volume/amount 容差匹配率均为 1.0；AKShare Eastmoney 仅 3/150 成功，147 个 ProxyError，不能作为稳定 provider。确定性 P0 是 Community volume 必须 `provider_volume × factor × 100` 才是 shares，而 Market Cache v2 只乘 factor，participation capacity 缩小 100 倍；amount 还需 `×1000` 变为 CNY。结论为 Decision B（core raw OHLC 可靠，不需要 Matrix v5），但 execution/market-cache readiness 已机器级撤回，状态为 `execution_unit_semantics_correction_required`。下一步严格按 `EXECUTION_UNIT_SEMANTICS_CORRECTION_V1_2_PLAN.md` 修正 cache/freeze/execution；PR #5A、模型训练、因子选择变更仍禁止。
+
 V2 / V3 早期：
 
 - 已实现因子注册、IC/Rank IC、分组收益、换手率、覆盖率、相关性、候选筛选。
@@ -125,6 +127,8 @@ tmp/reference_repos/techfactor
 - 不绕过现有 data_quality/tradability。
 
 ## Next Work
+
+> **2026-07-24 Accuracy Correction V1.1 / Data Source Audit V2 接管主线：**实现前核验确认 `split_transparent_score_v2` 为 pass 但 lineage inconsistent，根因是 date-only `purged_walk_forward_v1` 仍携带旧 Universe v1，并与 Matrix v4/Universe v2 一起被 policy、mutation、canary 和 score 的无维度 lineage 聚合传播；下游又未统一检查 parent lineage/critical contracts。`instrument_state_v1` 的 124 个 unknown-board 行全部属于合法创业板代码 `SZ302132`（中航成飞由 300114 变更代码），当前推断器漏掉 302 号段；这导致 critical `lot_rule_resolved=blocked`，但 manifest 仍错误为 pass。当前计划先实施维度化 lineage 语义、通用 fail-closed publication/parent/transitive gate、score 数值无损重发和最小执行链；再做 Community/BaoStock/AKShare 100–200 股 canary。不得进入 PR #5A、训练模型、改变选择链或声称 authoritative historical OOS。
 
 > **2026-07-23 PR #7 Execution Accuracy Correction DoD 完成：**Market Cache v2 已显式绑定 Universe v2，三个 split 共 853,936 行，future field=0、禁止估值 bfill，陈旧阈值命中 174/525/199 行。三个 post-observation bugfix freeze 在执行前冻结；corrected OOS 产生 65,582 个订单、61,626 笔成交和 730 个会计日，现金非负、会计守恒、方向性涨跌停、动态整手、费用分项和完整日历关键合同全部通过，unknown semantic difference=0。机器状态为 `research_formula_accuracy_ready=true`、`execution_semantics_accuracy_ready=true`、`market_cache_v2_ready=true`，但历史 ST、盘前停牌和 terminal-event 权威源缺失，故 `authoritative_oos_execution_ready=false`、`core_model_ready=false`、`pr5_model_training_ready=false`、`model_training_started=false`、`unbiased_final_estimate=false`。按用户边界在 PR #5 前停止。
 

@@ -3,4 +3,5 @@ score_runtime_hash_valid,pass,True,True,critical,
 lifecycle_source_complete_for_score_keys,pass,1.0,1.0,critical,
 instrument_state_pit_valid,blocked,historical_st_suspension_terminal_missing,authoritative complete,capability,"Provider has listing intervals and OHLCVA but no authoritative historical ST, pre-open suspension, or terminal-event feed."
 price_limit_rule_resolved,blocked,explicit_non_authoritative_st_false_approximation,historical ST state resolved,capability,No uniform 10% fallback is presented as authoritative.
+unknown_board_row_count,pass,0,0,critical,Unknown security-code ranges must be explicitly resolved or excluded.
 lot_rule_resolved,pass,1,all score keys,critical,

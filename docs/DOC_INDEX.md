@@ -4,18 +4,26 @@
 
 ## Current Working Documents
 
+- `EXECUTION_UNIT_SEMANTICS_CORRECTION_V1_2_PLAN.md`
+  当前唯一执行计划。Data Source Audit V2 已确认 Community 成交量需 `provider_volume × factor × 100` 才是 shares，Market Cache v2 漏乘 `×100`；先撤回 execution readiness，再按 unit fixture → cache canary/full → freeze → execution canary/full 修复，不进入 PR #5A。
+- `ACCURACY_CORRECTION_V1_1_AND_DATA_SOURCE_AUDIT_V2_PLAN.md`
+  已完成的 lineage/gate closure 与数据源 canary 基线。Phase A 的 22 节点/61 边传递 lineage 为 0 issue；Phase B 形成 Decision B，并将单位错误移交 V1.2。
 - `ACCURACY_CORRECTION_V1_PLAN.md`
-  已完成的 Accuracy Correction V1 实施基线。PR #6 修复研究计算，PR #7 修复执行语义；权威历史状态能力仍诚实阻断，PR #5A 继续暂停。
+  已完成的 Accuracy Correction V1 实施基线。PR #6 修复研究计算，PR #7 修复执行语义；其后续 lineage/gate cleanup 以上述 V1.1 计划为准。
 - `outputs/accuracy_correction_v1/current/`
-  当前机器治理状态：research/execution accuracy 与 Market Cache v2 ready；authoritative OOS、core model、PR5 training 和 training-started 均 false。
+  当前机器治理状态：research/score 保持 ready；Data Source Audit V2 ready；execution unit semantics 与 Market Cache v2 readiness 已撤回。authoritative OOS、core model、PR5 training 和 training-started 均 false。
+- `outputs/accuracy_correction_v1_1/current/`
+  Phase A 机器审计：corrected score lineage complete、业务 payload 不变、unknown board=0、22 节点/61 边传递 lineage 0 issue。
+- `outputs/data_source_audit_v2/current/`
+  150 股 Community/BaoStock/AKShare 隔离 canary。BaoStock 覆盖 100%、AKShare Eastmoney 覆盖 2%；核心 raw OHLC 可靠，Market Cache v2 的 volume `×100` 与 amount `×1000` 单位修正待 V1.2 实施。
 - `outputs/instrument_state_v1/current/`
   PIT instrument-state 与 board/lifecycle 证据；缺失的历史 ST、盘前停牌和 terminal event 源以 capability blocker 公开记录。
 - `outputs/market_cache_v2/current/`
-  Universe v2 lineage 下的字段时点、动态交易规则和禁止估值回填缓存，未来字段计数为 0。
+  历史 Market Cache v2 证据；字段时点与禁止估值回填通过，但成交量单位漏乘 `×100`，已 superseded，不能再支持 execution readiness。
 - `outputs/bugfix_research_freeze_v1/current/`
   三个 split 的 post-observation bug-fix freeze，明确历史 test 已观察且不能形成无偏最终估计。
 - `outputs/execution_accuracy_correction_v1/current/`
-  PR #7 corrected historical OOS evidence、旧新差异归因与关键合同；操作语义通过但证据仍为 non-authoritative。
+  已 superseded 的 post-observation corrected historical OOS evidence；因 Market Cache v2 participation volume 缩小 100 倍，等待 V1.2 重发，且始终 non-authoritative。
 - `outputs/point_in_time_universe_v2/full_research/`
   PR #6 lifecycle-clean Universe v2：29 个越界 interval 与 329 个非法 key 已修正，最终 lifecycle violation、interval overlap 和 removed-key residual 均为 0。
 - `outputs/factor_dependency_v1/current/`

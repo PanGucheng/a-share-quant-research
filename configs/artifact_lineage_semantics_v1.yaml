@@ -1,0 +1,108 @@
+schema_version: 1
+status: frozen
+lineage_fields:
+  - universe_artifact_id
+  - split_manifest_id
+  - factor_catalog_id
+  - factor_frame_id
+stage_authority:
+  execution_accuracy_correction_v1:
+    authoritative_fields:
+      [universe_artifact_id, split_manifest_id, factor_catalog_id, factor_frame_id]
+  bugfix_research_freeze_v1:
+    authoritative_fields:
+      [universe_artifact_id, split_manifest_id, factor_catalog_id, factor_frame_id]
+  market_cache_v2:
+    authoritative_fields:
+      [universe_artifact_id, split_manifest_id, factor_catalog_id, factor_frame_id]
+  instrument_state_v1:
+    authoritative_fields:
+      [universe_artifact_id, split_manifest_id, factor_catalog_id, factor_frame_id]
+  split_transparent_score_v2:
+    authoritative_fields:
+      [universe_artifact_id, split_manifest_id, factor_catalog_id, factor_frame_id]
+  point_in_time_universe_v2:
+    authoritative_fields: [universe_artifact_id]
+  full_research_feature_matrix_v4:
+    authoritative_fields:
+      [universe_artifact_id, factor_catalog_id, factor_frame_id]
+  purged_walk_forward_v1:
+    authoritative_fields: [split_manifest_id]
+    ignored_fields:
+      universe_artifact_id:
+        reason: Date assignments are calendar-level and do not define the research universe.
+  raw_market_data_snapshot_v1:
+    authoritative_fields: []
+    ignored_fields:
+      universe_artifact_id:
+        reason: Snapshot coverage is source evidence and does not define the current research universe.
+  date_split_semantics_v1:
+    authoritative_fields: [split_manifest_id]
+  research_selection_lineage_closure_v1:
+    authoritative_fields:
+      [universe_artifact_id, split_manifest_id, factor_catalog_id, factor_frame_id]
+  factor_dependency_v1:
+    authoritative_fields: [universe_artifact_id]
+  full_research_factor_catalog_669_v1:
+    authoritative_fields: [factor_catalog_id]
+  full_research_feature_matrix_v4_canary:
+    authoritative_fields: []
+  matrix_v4_bulk_run_review:
+    authoritative_fields: []
+  full_research_feature_matrix_v1:
+    authoritative_fields:
+      [universe_artifact_id, factor_catalog_id, factor_frame_id]
+  bulk_run_review_v1:
+    authoritative_fields:
+      [universe_artifact_id, factor_catalog_id, factor_frame_id]
+  factor_source_provenance_v1:
+    authoritative_fields: [factor_catalog_id]
+  point_in_time_universe_v1:
+    authoritative_fields: [universe_artifact_id]
+  full_research_labels_v1:
+    authoritative_fields:
+      [universe_artifact_id, factor_catalog_id, factor_frame_id]
+edge_authority:
+  market_cache_v2:
+    raw_market_data_snapshot_v1:
+      mode: evidence_only
+  date_split_semantics_v1:
+    purged_walk_forward_v1:
+      authoritative_fields: [split_manifest_id]
+  full_research_feature_matrix_v4:
+    factor_dependency_v1:
+      authoritative_fields: [universe_artifact_id]
+    full_research_feature_matrix_v1:
+      mode: evidence_only
+    full_research_feature_matrix_v4_canary:
+      mode: evidence_only
+    matrix_v4_bulk_run_review:
+      mode: evidence_only
+    raw_market_data_snapshot_v1:
+      mode: evidence_only
+  full_research_feature_matrix_v4_canary:
+    factor_dependency_v1:
+      authoritative_fields: [factor_catalog_id]
+    full_research_factor_catalog_669_v1:
+      mode: evidence_only
+    point_in_time_universe_v2:
+      mode: evidence_only
+  matrix_v4_bulk_run_review:
+    factor_dependency_v1:
+      authoritative_fields: [universe_artifact_id]
+    full_research_feature_matrix_v1:
+      authoritative_fields: [factor_catalog_id, factor_frame_id]
+    full_research_feature_matrix_v4_canary:
+      mode: evidence_only
+    point_in_time_universe_v2:
+      authoritative_fields: [universe_artifact_id]
+    raw_market_data_snapshot_v1:
+      mode: evidence_only
+  factor_dependency_v1:
+    full_research_factor_catalog_669_v1:
+      mode: evidence_only
+  full_research_feature_matrix_v1:
+    bulk_run_review_v1:
+      mode: evidence_only
+unknown_stage_policy: fail_closed
+unknown_field_policy: fail_closed

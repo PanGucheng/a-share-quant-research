@@ -2,13 +2,10 @@
   "clip": 3.0,
   "expected_outer_splits": 1,
   "factor_partition_status": "outputs/full_research_feature_matrix_v4/current/partition_status.csv",
-  "factor_weights": "outputs/split_transparent_weights_v2/current/factor_weights_by_split.csv",
+  "factor_weights": "outputs/research_selection_lineage_closure_v1/current/factor_weights_by_split.csv",
   "input_manifests": [
-    "outputs/split_transparent_weights_v2/current/artifact_manifest.json",
     "outputs/full_research_feature_matrix_v4/current/artifact_manifest.json",
-    "outputs/purged_walk_forward_v1/full_research_669/artifact_manifest.json",
-    "outputs/transparent_score_policy_v1/current/artifact_manifest.json",
-    "outputs/selection_mutation_contract_v2/current/artifact_manifest.json"
+    "outputs/research_selection_lineage_closure_v1/current/artifact_manifest.json"
   ],
   "maximum_instruments": 200,
   "maximum_test_dates": 10,
@@ -16,17 +13,17 @@
     "equal_weight",
     "stability_weight"
   ],
-  "mutation_contract": "outputs/selection_mutation_contract_v2/current/contract_status.csv",
-  "outer_date_assignments": "outputs/purged_walk_forward_v1/full_research_669/date_assignments.csv",
+  "mutation_contract": "outputs/research_selection_lineage_closure_v1/current/mutation_contract_status.csv",
+  "outer_date_assignments": "outputs/research_selection_lineage_closure_v1/current/date_assignments.csv",
   "output_dir": "outputs/split_transparent_score_v2/canary",
   "profile": "full_research",
   "profile_name": "full_research",
   "profile_type": "full_research",
   "research_run_family_id": "full_research_factor_669_v1",
   "schema_version": 1,
-  "score_policy": "outputs/transparent_score_policy_v1/current/transparent_score_policy.json",
+  "score_policy": "outputs/research_selection_lineage_closure_v1/current/transparent_score_policy.json",
   "selected_outer_splits": [
     "split_001"
   ],
-  "weight_manifest": "outputs/split_transparent_weights_v2/current/weight_manifest.csv"
+  "weight_manifest": "outputs/research_selection_lineage_closure_v1/current/weight_manifest.csv"
 }

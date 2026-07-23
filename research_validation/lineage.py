@@ -231,6 +231,57 @@ def inherited_lineage_id(input_manifests: Sequence[Mapping[str, Any]], field: st
     return None, len(values) > 1
 
 
+def critical_contract_failures(paths: Sequence[Path]) -> list[str]:
+    failures: list[str] = []
+    for path in paths:
+        if not path.is_file():
+            failures.append(f"missing_contract:{path.as_posix()}")
+            continue
+        try:
+            frame = pd.read_csv(path)
+        except Exception as exc:
+            failures.append(f"invalid_contract:{path.as_posix()}:{exc}")
+            continue
+        if "status" not in frame:
+            failures.append(f"contract_missing_status:{path.as_posix()}")
+            continue
+        severity = (
+            frame["severity"].astype(str).str.lower()
+            if "severity" in frame
+            else pd.Series("critical", index=frame.index)
+        )
+        blocked = frame.loc[
+            severity.eq("critical") & ~frame["status"].astype(str).str.lower().eq("pass")
+        ]
+        for row in blocked.itertuples(index=False):
+            name = getattr(row, "check_name", "unknown_check")
+            status = getattr(row, "status", "unknown")
+            failures.append(f"critical_contract:{path.name}:{name}:{status}")
+    return failures
+
+
+def direct_parent_gate_failures(
+    manifests: Sequence[Mapping[str, Any]],
+    *,
+    require_complete: bool = True,
+    require_clean_code: bool = True,
+) -> list[str]:
+    failures: list[str] = []
+    for manifest in manifests:
+        artifact_id = str(manifest.get("artifact_id", "unknown"))
+        if manifest.get("artifact_status") != "pass":
+            failures.append(
+                f"parent_artifact_status:{artifact_id}:{manifest.get('artifact_status')}"
+            )
+        if require_complete and manifest.get("lineage_status") != "complete":
+            failures.append(
+                f"parent_lineage_status:{artifact_id}:{manifest.get('lineage_status')}"
+            )
+        if require_clean_code and bool(manifest.get("code_dirty")):
+            failures.append(f"parent_code_dirty:{artifact_id}")
+    return failures
+
+
 def write_stage_artifact_manifest(
     *,
     project_root: Path,
@@ -250,28 +301,73 @@ def write_stage_artifact_manifest(
     lineage_status: str | None = None,
     artifact_status: str = "pass",
     blocked_reason: str = "",
+    contract_paths: Sequence[Path] | None = None,
+    require_complete_parents: bool | None = None,
+    inherit_lineage_fields: Sequence[str] | None = None,
 ) -> dict[str, Any]:
     del project_root
     inputs, missing_inputs = load_input_manifests(input_manifest_paths)
+    profile = resolve_profile(config)
+    strict_parents = (
+        profile.type == ProfileType.FULL_RESEARCH
+        if require_complete_parents is None
+        else bool(require_complete_parents)
+    )
     ids = {
         "universe_artifact_id": universe_artifact_id,
         "split_manifest_id": split_manifest_id,
         "factor_catalog_id": factor_catalog_id,
         "factor_frame_id": factor_frame_id,
     }
+    inherited_fields = (
+        set(LINEAGE_ID_FIELDS)
+        if inherit_lineage_fields is None
+        else {str(field) for field in inherit_lineage_fields}
+    )
+    unknown_inherited_fields = inherited_fields - set(LINEAGE_ID_FIELDS)
+    if unknown_inherited_fields:
+        raise ValueError(
+            f"unknown inherited lineage fields: {sorted(unknown_inherited_fields)}"
+        )
     missing = list(missing_lineage_fields)
     missing.extend(f"input_manifest:{value}" for value in missing_inputs)
     for field, value in list(ids.items()):
         if value is not None:
+            continue
+        if field not in inherited_fields:
             continue
         inherited, conflict = inherited_lineage_id(inputs, field)
         ids[field] = inherited
         if conflict:
             missing.append(f"inconsistent:{field}")
             lineage_status = "inconsistent"
+    inferred_contracts = [
+        path
+        for path in output_files
+        if path.suffix.lower() == ".csv" and "contract" in path.name.lower()
+    ]
+    gate_failures = critical_contract_failures(
+        list(contract_paths) if contract_paths is not None else inferred_contracts
+    )
+    if strict_parents:
+        gate_failures.extend(direct_parent_gate_failures(inputs))
+    effective_lineage_status = lineage_status
+    if effective_lineage_status is None:
+        effective_lineage_status = (
+            "reference_only"
+            if missing and profile.type != ProfileType.FULL_RESEARCH
+            else "incomplete"
+            if missing
+            else "complete"
+        )
+    if artifact_status == "pass" and effective_lineage_status != "complete":
+        gate_failures.append(f"child_lineage_status:{effective_lineage_status}")
+    if gate_failures and artifact_status == "pass":
+        artifact_status = "blocked"
+        blocked_reason = "artifact_gate:" + "|".join(sorted(set(gate_failures)))
     manifest = build_artifact_manifest(
         stage_id=stage_id,
-        profile=resolve_profile(config),
+        profile=profile,
         config=config,
         output_files=output_files,
         code_state=code_state,
@@ -484,3 +580,210 @@ def validate_lineage_chain(
             if parent_end is not None and child_end > parent_end:
                 issues.append(LineageIssue("date_range_compatibility", str(child["artifact_id"]), f"ends after input {parent_id}"))
     return issues
+
+
+def build_artifact_index(outputs_root: Path) -> tuple[
+    dict[str, tuple[dict[str, Any], Path]], list[LineageIssue]
+]:
+    index: dict[str, tuple[dict[str, Any], Path]] = {}
+    issues: list[LineageIssue] = []
+    for path in sorted(outputs_root.rglob("artifact_manifest.json")):
+        try:
+            manifest = load_artifact_manifest(path)
+        except (OSError, ValueError, json.JSONDecodeError) as exc:
+            issues.append(
+                LineageIssue("artifact_index_manifest_invalid", "", f"{path}:{exc}")
+            )
+            continue
+        artifact_id = str(manifest["artifact_id"])
+        if artifact_id in index:
+            issues.append(
+                LineageIssue(
+                    "artifact_index_duplicate_id",
+                    artifact_id,
+                    f"{index[artifact_id][1]}|{path}",
+                    str(manifest["stage_id"]),
+                )
+            )
+            continue
+        index[artifact_id] = (manifest, path)
+    return index, issues
+
+
+def validate_transitive_lineage(
+    *,
+    outputs_root: Path,
+    start_manifest_paths: Sequence[Path],
+    semantics: Mapping[str, Any],
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]], list[LineageIssue]]:
+    index, issues = build_artifact_index(outputs_root)
+    stage_rules = dict(semantics.get("stage_authority", {}))
+    edge_rules = dict(semantics.get("edge_authority", {}))
+    queue: list[str] = []
+    nodes: list[dict[str, Any]] = []
+    edges: list[dict[str, Any]] = []
+    for path in start_manifest_paths:
+        if not path.is_file():
+            issues.append(LineageIssue("start_manifest_missing", "", path.as_posix()))
+            continue
+        try:
+            queue.append(str(load_artifact_manifest(path)["artifact_id"]))
+        except (OSError, ValueError, json.JSONDecodeError) as exc:
+            issues.append(LineageIssue("start_manifest_invalid", "", f"{path}:{exc}"))
+    visited: set[str] = set()
+    while queue:
+        artifact_id = queue.pop(0)
+        if artifact_id in visited:
+            continue
+        visited.add(artifact_id)
+        resolved = index.get(artifact_id)
+        if resolved is None:
+            issues.append(
+                LineageIssue(
+                    "unknown_input_artifact_id",
+                    artifact_id,
+                    "artifact ID cannot be uniquely resolved in repository index",
+                )
+            )
+            continue
+        manifest, path = resolved
+        stage_id = str(manifest["stage_id"])
+        nodes.append(
+            {
+                "artifact_id": artifact_id,
+                "stage_id": stage_id,
+                "manifest_path": path.as_posix(),
+                "artifact_status": manifest["artifact_status"],
+                "lineage_status": manifest["lineage_status"],
+                "code_dirty": bool(manifest["code_dirty"]),
+            }
+        )
+        issues.extend(validate_manifest_outputs(manifest, path.parent))
+        for failure in direct_parent_gate_failures([manifest]):
+            issues.append(
+                LineageIssue("transitive_artifact_gate", artifact_id, failure, stage_id)
+            )
+        if stage_id not in stage_rules:
+            issues.append(
+                LineageIssue(
+                    "unknown_stage_semantics",
+                    artifact_id,
+                    f"stage has no authority rule: {stage_id}",
+                    stage_id,
+                )
+            )
+        parent_values: dict[str, set[str]] = {
+            field: set() for field in LINEAGE_ID_FIELDS
+        }
+        for parent_id in manifest["input_artifact_ids"]:
+            parent_resolved = index.get(str(parent_id))
+            if parent_resolved is None:
+                issues.append(
+                    LineageIssue(
+                        "unknown_input_artifact_id",
+                        artifact_id,
+                        f"unknown parent: {parent_id}",
+                        stage_id,
+                    )
+                )
+                edges.append(
+                    {
+                        "child_artifact_id": artifact_id,
+                        "child_stage_id": stage_id,
+                        "parent_artifact_id": parent_id,
+                        "parent_stage_id": "",
+                        "authority_fields": "",
+                        "status": "blocked_unknown_parent",
+                    }
+                )
+                continue
+            parent, _ = parent_resolved
+            parent_stage = str(parent["stage_id"])
+            override = dict(edge_rules.get(stage_id, {})).get(parent_stage)
+            if override is None:
+                parent_rule = stage_rules.get(parent_stage)
+                authority_fields = (
+                    list(parent_rule.get("authoritative_fields", []))
+                    if parent_rule is not None
+                    else []
+                )
+                mode = "authority"
+            else:
+                override = dict(override)
+                mode = str(override.get("mode", "authority"))
+                authority_fields = list(override.get("authoritative_fields", []))
+            unknown_fields = set(authority_fields) - set(LINEAGE_ID_FIELDS)
+            edge_status = "pass"
+            if unknown_fields:
+                issues.append(
+                    LineageIssue(
+                        "unknown_edge_authority_field",
+                        artifact_id,
+                        f"{parent_stage}:{sorted(unknown_fields)}",
+                        stage_id,
+                    )
+                )
+                edge_status = "blocked"
+            if mode not in {"authority", "evidence_only"}:
+                issues.append(
+                    LineageIssue(
+                        "unknown_edge_authority_mode",
+                        artifact_id,
+                        f"{parent_stage}:{mode}",
+                        stage_id,
+                    )
+                )
+                edge_status = "blocked"
+            for field in authority_fields:
+                parent_value = parent.get(field)
+                if not parent_value:
+                    issues.append(
+                        LineageIssue(
+                            "parent_authority_field_missing",
+                            artifact_id,
+                            f"{parent_stage}.{field}",
+                            stage_id,
+                        )
+                    )
+                    edge_status = "blocked"
+                    continue
+                parent_values[field].add(str(parent_value))
+                if manifest.get(field) != parent_value:
+                    issues.append(
+                        LineageIssue(
+                            "lineage_edge_incompatible",
+                            artifact_id,
+                            (
+                                f"{field}:child={manifest.get(field)};"
+                                f"parent={parent_value};parent_stage={parent_stage}"
+                            ),
+                            stage_id,
+                        )
+                    )
+                    edge_status = "blocked"
+            edges.append(
+                {
+                    "child_artifact_id": artifact_id,
+                    "child_stage_id": stage_id,
+                    "parent_artifact_id": parent_id,
+                    "parent_stage_id": parent_stage,
+                    "authority_fields": "|".join(authority_fields),
+                    "status": edge_status,
+                }
+            )
+            queue.append(str(parent_id))
+        for field, values in parent_values.items():
+            if len(values) > 1:
+                issues.append(
+                    LineageIssue(
+                        "conflicting_authoritative_parent_ids",
+                        artifact_id,
+                        f"{field}:{sorted(values)}",
+                        stage_id,
+                    )
+                )
+    for cycle in _detect_cycles(
+        [index[item][0] for item in visited if item in index]
+    ):
+        issues.append(LineageIssue("artifact_dag_cycle", cycle, "cycle detected"))
+    return nodes, edges, issues
