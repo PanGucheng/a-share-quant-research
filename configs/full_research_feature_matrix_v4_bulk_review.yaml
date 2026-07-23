@@ -1,0 +1,12 @@
+schema_version: 1
+profile: full_research
+profile_name: full_research
+profile_type: full_research
+research_run_family_id: full_research_factor_669_v1
+matrix_config: configs/full_research_feature_matrix_v4.yaml
+output_root: outputs/bulk_run_review_v1
+minimum_free_disk_multiplier: 1.25
+estimated_peak_memory_bytes: 12884901888
+approval_mode: user_session_waiver
+approved_by: user
+approval_source: 2026-07-23 current conversation temporary authorization after full self-review and Top2000 five-source canary
