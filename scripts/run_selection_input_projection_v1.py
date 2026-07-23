@@ -97,8 +97,10 @@ def main() -> int:
         )
         files = [publisher.path(name) for name in CONTROLLED if name != "artifact_manifest.json"]
         write_stage_artifact_manifest(
-            project_root=PROJECT_ROOT, stage_id="selection_input_projection_v1", config=config,
+            project_root=PROJECT_ROOT, stage_id=str(config.get("stage_id", "selection_input_projection_v1")), config=config,
             output_dir=publisher.staging_dir, output_files=files, code_state=capture_code_state(PROJECT_ROOT),
+            universe_artifact_id=manifests[0]["universe_artifact_id"],
+            factor_catalog_id=manifests[0]["factor_catalog_id"],
             input_manifest_paths=manifest_paths, factor_frame_id=manifests[0]["factor_frame_id"],
             split_manifest_id=manifests[1]["split_manifest_id"], start_date=outer_train["datetime"].min(),
             end_date=inner_development["datetime"].max(), lineage_status="complete",
