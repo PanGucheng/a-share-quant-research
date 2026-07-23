@@ -1,0 +1,31 @@
+{
+  "allowlist_sha256": "6a3bcf128d2a791f9e2e741d1983597c4814810e533a9ca5107b2076a4d01434",
+  "code_commit_sha": "970cd45a352985291ace09bc7d019ee8274402d3",
+  "execution_config_component_hashes": {
+    "exchange_adapter_source": "3cd767f31dfcf409dac56c91ed6a2e531dd02573934f0cf801612c410467bd5a",
+    "execution_config": "4678e6b0e4cba3aa49f0ed5211db52a1215f64479e43ccaabafae536fa639542",
+    "fee_schedule": "2744221fcf071ebf9306d74136e85ae1f00fde944b4711aed7f1ff7590ef431e",
+    "field_timing": "054b8710317ef8836bef94b329243128731bbf4eb9b27d3747aabf400836a878",
+    "market_semantics_source": "35ea4a4ea64e243ac4fd71d35baf3fcabc399755bf381297b59074162eb26eaa",
+    "runner_source": "68c2bc74845df0fefa9325e501887b6137dfe6e3b7408dd35f68f3b35cc4a718",
+    "trading_rules": "c4a305cf2c85ec4b15c13338e24eb47ac87d4703aa688d3d72adb0fdfa042d2a"
+  },
+  "execution_config_sha256": "32d24ffb5908a522f359e290db2122e76e322a0019261118edb538659d263211",
+  "execution_source_sha256": "f309afbcdb858e9c94cb366889d8d1c22b8926c314c7cb0e6d8c6e5057417b23",
+  "freeze_id": "bugfix_research_freeze_v1:13ac9e644ed09733055854f49a365622e9a3a052eb4f3e888c365e9971439d94",
+  "freeze_timestamp": "2026-07-23T06:50:25.233484+00:00",
+  "freeze_type": "post_observation_bugfix",
+  "historical_test_already_observed": true,
+  "market_cache_sha256": "2f7b1507e4231e71d344ae2a2ddcdfce82b924df66a2609d9722fa460517da1e",
+  "outer_split_id": "split_002",
+  "schema_version": 1,
+  "score_artifact_sha256": "beb4e4ad738e263e72bb75ead4d948f7a44e7c086bc56b310a56a823a6adecbf",
+  "score_policy_sha256": "4e2369e489c95abf91145c3f130b36e98d11b9be1368fa300d67b47936b57f89",
+  "selection_uses_test_outcomes": false,
+  "unbiased_final_estimate": false,
+  "weights_by_method": {
+    "equal_weight": "af2c9848013be1fcb4b1060389c5890b18aa1f78b5220751eba9c011a404ae26",
+    "stability_weight": "fc6e9e3203ef4bef7e1835bc59cec8ffadcc4d9e4dad65a7e6ad61cf2593d291"
+  },
+  "weights_sha256": "973efabc5b31532fd04532213bf5841c5a2c8eb5d1c522b386969f26a629f666"
+}
