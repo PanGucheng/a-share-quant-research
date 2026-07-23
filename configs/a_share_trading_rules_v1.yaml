@@ -1,0 +1,71 @@
+schema_version: 1
+price_limit_rules:
+  - rule_id: main_normal_10pct
+    board: main
+    st_flag: false
+    effective_from: 1996-12-16
+    limit_ratio: 0.10
+    ipo_no_limit_trading_days: 5
+  - rule_id: main_st_5pct
+    board: main
+    st_flag: true
+    effective_from: 1998-04-22
+    limit_ratio: 0.05
+    ipo_no_limit_trading_days: 0
+  - rule_id: star_20pct
+    board: star
+    st_flag: false
+    effective_from: 2019-07-22
+    limit_ratio: 0.20
+    ipo_no_limit_trading_days: 5
+  - rule_id: chinext_20pct
+    board: chinext
+    st_flag: false
+    effective_from: 2020-08-24
+    limit_ratio: 0.20
+    ipo_no_limit_trading_days: 5
+lot_rules:
+  - rule_id: main_buy_100
+    board: main
+    side: buy
+    minimum_shares: 100
+    increment_shares: 100
+    odd_lot_liquidation: false
+  - rule_id: main_sell_odd_lot
+    board: main
+    side: sell
+    minimum_shares: 1
+    increment_shares: 100
+    odd_lot_liquidation: true
+  - rule_id: star_buy_200_plus_one
+    board: star
+    side: buy
+    minimum_shares: 200
+    increment_shares: 1
+    odd_lot_liquidation: false
+  - rule_id: star_sell_200_plus_one
+    board: star
+    side: sell
+    minimum_shares: 200
+    increment_shares: 1
+    odd_lot_liquidation: true
+  - rule_id: chinext_buy_100
+    board: chinext
+    side: buy
+    minimum_shares: 100
+    increment_shares: 100
+    odd_lot_liquidation: false
+  - rule_id: chinext_sell_odd_lot
+    board: chinext
+    side: sell
+    minimum_shares: 1
+    increment_shares: 100
+    odd_lot_liquidation: true
+valuation:
+  policy_id: last_valid_close_max_20_trading_days
+  maximum_stale_trading_days: 20
+  allow_backward_fill: false
+terminal_event:
+  policy_id: explicit_event_required_v1
+  missing_event_action: block_authoritative_readiness
+  zero_price_liquidation_allowed: false

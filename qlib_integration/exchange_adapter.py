@@ -6,6 +6,7 @@ import numpy as np
 import pandas as pd
 
 from .contracts import validate_market_frame
+from .market_semantics import resolve_fee
 
 try:
     from qlib.backtest.decision import Order
@@ -19,6 +20,7 @@ except ImportError:  # pragma: no cover - lightweight CI deliberately omits Qlib
 class ExecutionCostBreakdown:
     commission: float
     stamp_tax: float
+    transfer_fee: float
     slippage_cost: float
     cash_fee: float
     implementation_cost: float
@@ -43,18 +45,21 @@ def component_costs(
     commission_rate: float,
     sell_tax_rate: float,
     minimum_commission: float,
+    transfer_fee_rate: float = 0.0,
 ) -> ExecutionCostBreakdown:
     if side not in {"buy", "sell"}:
         raise ValueError(f"unsupported side: {side}")
     if gross_value <= 0 or executed_shares <= 0:
-        return ExecutionCostBreakdown(0.0, 0.0, 0.0, 0.0, 0.0)
+        return ExecutionCostBreakdown(0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
     commission = max(float(minimum_commission), float(gross_value) * float(commission_rate))
     stamp_tax = float(gross_value) * float(sell_tax_rate) if side == "sell" else 0.0
+    transfer_fee = float(gross_value) * float(transfer_fee_rate)
     slippage_cost = abs(float(fill_price) - float(base_price)) * float(executed_shares)
-    cash_fee = commission + stamp_tax
+    cash_fee = commission + stamp_tax + transfer_fee
     return ExecutionCostBreakdown(
         commission=commission,
         stamp_tax=stamp_tax,
+        transfer_fee=transfer_fee,
         slippage_cost=slippage_cost,
         cash_fee=cash_fee,
         implementation_cost=cash_fee + slippage_cost,
@@ -153,6 +158,7 @@ class PreparedQuoteExchange(Exchange):  # type: ignore[misc]
         sell_tax_rate: float,
         minimum_commission: float,
         slippage_bps: float,
+        fee_schedule: dict[str, object] | None = None,
         **kwargs: object,
     ) -> None:
         if Order is None:
@@ -163,10 +169,11 @@ class PreparedQuoteExchange(Exchange):  # type: ignore[misc]
         self.sell_tax_rate = float(sell_tax_rate)
         self.minimum_commission = float(minimum_commission)
         self.slippage_bps = float(slippage_bps)
+        self.fee_schedule = fee_schedule
         self.t_plus_one = TPlusOneLedger()
         self.audit_events: list[dict[str, object]] = []
         self._event_counter = 0
-        self._last_cost = ExecutionCostBreakdown(0.0, 0.0, 0.0, 0.0, 0.0)
+        self._last_cost = ExecutionCostBreakdown(0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
         super().__init__(
             open_cost=0.0,
             close_cost=0.0,
@@ -200,12 +207,14 @@ class PreparedQuoteExchange(Exchange):  # type: ignore[misc]
     def _calc_trade_info_by_order(self, order: object, position: object, dealt_order_amount: dict) -> tuple[float, float, float]:
         base_adjusted_price, _, _ = super()._calc_trade_info_by_order(order, position, dealt_order_amount)
         if order.deal_amount <= 0 or not np.isfinite(base_adjusted_price):
-            self._last_cost = ExecutionCostBreakdown(0.0, 0.0, 0.0, 0.0, 0.0)
+            self._last_cost = ExecutionCostBreakdown(0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
             return base_adjusted_price, 0.0, 0.0
 
         factor = float(order.factor or 1.0)
         side = "buy" if order.direction == Order.BUY else "sell"
-        fill_adjusted_price = apply_slippage(base_adjusted_price, side, self.slippage_bps)
+        fee = resolve_fee(self.fee_schedule, order.start_time) if self.fee_schedule else None
+        slippage_bps = fee.slippage_bps if fee else self.slippage_bps
+        fill_adjusted_price = apply_slippage(base_adjusted_price, side, slippage_bps)
 
         def calculate() -> tuple[float, ExecutionCostBreakdown]:
             raw_shares = float(order.deal_amount) * factor
@@ -216,9 +225,12 @@ class PreparedQuoteExchange(Exchange):  # type: ignore[misc]
                 executed_shares=raw_shares,
                 base_price=base_adjusted_price / factor,
                 fill_price=fill_adjusted_price / factor,
-                commission_rate=self.buy_commission_rate if side == "buy" else self.sell_commission_rate,
-                sell_tax_rate=self.sell_tax_rate,
-                minimum_commission=self.minimum_commission,
+                commission_rate=(
+                    fee.buy_commission_rate if side == "buy" else fee.sell_commission_rate
+                ) if fee else (self.buy_commission_rate if side == "buy" else self.sell_commission_rate),
+                sell_tax_rate=fee.sell_stamp_tax_rate if fee else self.sell_tax_rate,
+                minimum_commission=fee.minimum_commission if fee else self.minimum_commission,
+                transfer_fee_rate=fee.transfer_fee_rate if fee else 0.0,
             )
             return gross_value, costs
 
@@ -269,7 +281,7 @@ class PreparedQuoteExchange(Exchange):  # type: ignore[misc]
             order.amount = allowed_raw / factor
 
         preblocked_reason = self._blocked_reason(order)
-        self._last_cost = ExecutionCostBreakdown(0.0, 0.0, 0.0, 0.0, 0.0)
+        self._last_cost = ExecutionCostBreakdown(0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
         trade_val, trade_cost, trade_price = super().deal_order(
             order,
             trade_account=trade_account,

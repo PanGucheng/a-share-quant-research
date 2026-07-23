@@ -35,6 +35,7 @@ def run_qlib_execution(signal: pd.DataFrame, market: pd.DataFrame, config: dict[
         sell_tax_rate=float(config["sell_tax_rate"]),
         minimum_commission=float(config["minimum_commission"]),
         slippage_bps=float(config["slippage_bps"]),
+        fee_schedule=config.get("fee_schedule"),
         freq="day",
         start_time=start_time,
         end_time=end_time,
