@@ -23,7 +23,7 @@ from scripts.run_split_transparent_score_v1 import load_test_factor_frame, selec
 CONTROLLED = (
     "artifact_manifest.json", "score_artifact.csv", "score_sample.csv", "score_diagnostics.csv",
     "daily_factor_component_count.csv", "factor_partition_inventory.csv", "input_receipts.csv",
-    "contract_status.csv", "score_report.md", "resolved_config.json",
+    "contract_status.csv", "score_report.md", "resolved_config.json", "runtime/composite_scores.parquet",
 )
 
 
@@ -191,7 +191,11 @@ def main() -> int:
             "- Deterministically consumes PR6 weights and score policy; no labels, returns, execution, or NAV are read.\n",
             encoding="utf-8",
         )
-        files = [publisher.path(name) for name in CONTROLLED if name != "artifact_manifest.json"]
+        files = [
+            publisher.path(name)
+            for name in CONTROLLED
+            if name != "artifact_manifest.json" and not name.startswith("runtime/")
+        ]
         write_stage_artifact_manifest(
             project_root=PROJECT_ROOT, stage_id="split_transparent_score_v2", config=config,
             output_dir=publisher.staging_dir, output_files=files, code_state=capture_code_state(PROJECT_ROOT),
