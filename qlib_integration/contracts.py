@@ -114,10 +114,14 @@ def validate_market_frame(frame: pd.DataFrame) -> pd.DataFrame:
     if (result["factor"].dropna() <= 0).any():
         raise ValueError("market factor must be positive")
 
-    tradable = ~result["suspended"]
-    required_positive = ["open", "close", "volume", "factor", "execution_price"]
-    for column in required_positive:
-        invalid = tradable & (~np.isfinite(result[column]) | result[column].le(0))
+    order_eligible = result["can_buy"] | result["can_sell"]
+    valuation_eligible = ~result["suspended"]
+    for column in ["open", "volume", "execution_price"]:
+        invalid = order_eligible & (~np.isfinite(result[column]) | result[column].le(0))
+        if invalid.any():
+            raise ValueError(f"tradable market rows require positive finite {column}")
+    for column in ["close", "factor"]:
+        invalid = valuation_eligible & (~np.isfinite(result[column]) | result[column].le(0))
         if invalid.any():
             raise ValueError(f"tradable market rows require positive finite {column}")
 

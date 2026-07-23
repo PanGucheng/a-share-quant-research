@@ -152,9 +152,15 @@ def main() -> int:
             market["execution_price"] = market["open"]
             market["limit_up"] = ratio.notna() & market["open"].ge(market["upper_limit_price"] - 0.005)
             market["limit_down"] = ratio.notna() & market["open"].le(market["lower_limit_price"] + 0.005)
-            market["suspended"] = market["open"].isna() | market["open"].le(0)
-            market["can_buy"] = ~market["suspended"] & ~market["limit_up"]
-            market["can_sell"] = ~market["suspended"] & ~market["limit_down"]
+            market["suspended"] = (
+                market["open"].isna()
+                | market["open"].le(0)
+                | market["valuation_stale_blocked"]
+            )
+            capacity_valid = market["participation_volume"].notna() & market["participation_volume"].gt(0)
+            rule_available = market["board"].isin(["main", "star", "chinext"]) & market["ipo_age"].notna()
+            market["can_buy"] = ~market["suspended"] & capacity_valid & rule_available & ~market["limit_up"]
+            market["can_sell"] = ~market["suspended"] & capacity_valid & rule_available & ~market["limit_down"]
             market["close"] = market["valuation_price"]
             market["volume"] = market["participation_volume"]
             market["change"] = np.nan
