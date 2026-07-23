@@ -7,6 +7,13 @@ qlib_provider: ../qlib_data/cn_data_community_20260609_derived
 score_runtime: outputs/split_transparent_score_v2/current/runtime/composite_scores.parquet
 score_receipt: outputs/split_transparent_score_v2/current/score_artifact.csv
 score_manifest: outputs/split_transparent_score_v2/current/artifact_manifest.json
+allowlist_manifest: outputs/split_specific_allowlist_v2/current/split_allowlist_manifest.csv
+allowlist_artifact_manifest: outputs/split_specific_allowlist_v2/current/artifact_manifest.json
+factor_weights: outputs/split_transparent_weights_v2/current/factor_weights_by_split.csv
+weight_manifest: outputs/split_transparent_weights_v2/current/weight_manifest.csv
+weights_artifact_manifest: outputs/split_transparent_weights_v2/current/artifact_manifest.json
+score_policy: outputs/transparent_score_policy_v1/current/transparent_score_policy.json
+score_policy_manifest: outputs/transparent_score_policy_v1/current/artifact_manifest.json
 outer_date_assignments: outputs/purged_walk_forward_v1/full_research_669/date_assignments.csv
 instrument_lifecycle_source: outputs/universes/community_20260609/all_stock_shsz.txt
 universe_manifest: outputs/point_in_time_universe_v2/full_research/artifact_manifest.json
@@ -32,3 +39,4 @@ execution:
   max_participation_rate: 0.05
   participation_volume_lookback_days: 20
   participation_share_tolerance: 1.0
+  dynamic_lot_rules: true

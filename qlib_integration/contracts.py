@@ -96,7 +96,7 @@ def validate_signal_frame(frame: pd.DataFrame) -> pd.DataFrame:
 
 def validate_market_frame(frame: pd.DataFrame) -> pd.DataFrame:
     _require_columns(frame, MARKET_COLUMNS, "market")
-    result = _normalize_common(frame[MARKET_COLUMNS], "market")
+    result = _normalize_common(frame, "market")
     if result.duplicated(["datetime", "instrument"]).any():
         raise ValueError("market has duplicate datetime/instrument rows")
 

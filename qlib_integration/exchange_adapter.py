@@ -138,6 +138,9 @@ def to_qlib_quote(market: pd.DataFrame, max_participation_rate: float) -> pd.Dat
             "audit_can_sell": frame["can_sell"],
             "audit_invalid_execution_price": invalid_price,
             "audit_no_volume": frame["volume"].fillna(0).le(0),
+            "audit_lot_minimum_buy": frame.get("lot_minimum_buy", pd.Series(100, index=frame.index)),
+            "audit_lot_increment_buy": frame.get("lot_increment_buy", pd.Series(100, index=frame.index)),
+            "audit_lot_increment_sell": frame.get("lot_increment_sell", pd.Series(100, index=frame.index)),
         }
     )
     quote.index = pd.MultiIndex.from_arrays(
@@ -159,6 +162,7 @@ class PreparedQuoteExchange(Exchange):  # type: ignore[misc]
         minimum_commission: float,
         slippage_bps: float,
         fee_schedule: dict[str, object] | None = None,
+        dynamic_lot_rules: bool = False,
         **kwargs: object,
     ) -> None:
         if Order is None:
@@ -170,9 +174,13 @@ class PreparedQuoteExchange(Exchange):  # type: ignore[misc]
         self.minimum_commission = float(minimum_commission)
         self.slippage_bps = float(slippage_bps)
         self.fee_schedule = fee_schedule
+        self.dynamic_lot_rules = bool(dynamic_lot_rules)
         self.t_plus_one = TPlusOneLedger()
         self.audit_events: list[dict[str, object]] = []
         self._event_counter = 0
+        self._last_fee_schedule_id = "legacy_static"
+        self._last_sell_stamp_tax_rate = self.sell_tax_rate
+        self._last_transfer_fee_rate = 0.0
         self._last_cost = ExecutionCostBreakdown(0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
         super().__init__(
             open_cost=0.0,
@@ -213,6 +221,9 @@ class PreparedQuoteExchange(Exchange):  # type: ignore[misc]
         factor = float(order.factor or 1.0)
         side = "buy" if order.direction == Order.BUY else "sell"
         fee = resolve_fee(self.fee_schedule, order.start_time) if self.fee_schedule else None
+        self._last_fee_schedule_id = fee.schedule_id if fee else "legacy_static"
+        self._last_sell_stamp_tax_rate = fee.sell_stamp_tax_rate if fee else self.sell_tax_rate
+        self._last_transfer_fee_rate = fee.transfer_fee_rate if fee else 0.0
         slippage_bps = fee.slippage_bps if fee else self.slippage_bps
         fill_adjusted_price = apply_slippage(base_adjusted_price, side, slippage_bps)
 
@@ -271,13 +282,40 @@ class PreparedQuoteExchange(Exchange):  # type: ignore[misc]
             dealt_order_amount = {}
         actual_position = trade_account.current_position if trade_account is not None else position
         trading_date = pd.Timestamp(order.start_time).normalize()
+        day_fee = resolve_fee(self.fee_schedule, trading_date) if self.fee_schedule else None
+        self._last_fee_schedule_id = day_fee.schedule_id if day_fee else "legacy_static"
+        self._last_sell_stamp_tax_rate = day_fee.sell_stamp_tax_rate if day_fee else self.sell_tax_rate
+        self._last_transfer_fee_rate = day_fee.transfer_fee_rate if day_fee else 0.0
         self.t_plus_one.start_day(trading_date, self._opening_raw_shares(actual_position, trading_date))
         factor = float(self.get_factor(order.stock_id, order.start_time, order.end_time) or 1.0)
         requested_adjusted = float(order.amount)
         requested_raw = requested_adjusted * factor
+        lot_rejected = 0.0
+        lot_allowed = requested_raw
+        if self.dynamic_lot_rules:
+            row = self._prepared_quote.loc[(order.stock_id, trading_date)]
+            if order.direction == Order.BUY:
+                minimum = float(row["audit_lot_minimum_buy"])
+                increment = float(row["audit_lot_increment_buy"])
+                lot_allowed = (
+                    0.0
+                    if requested_raw + 1e-8 < minimum
+                    else minimum + np.floor((requested_raw - minimum + 1e-8) / increment) * increment
+                )
+            else:
+                increment = float(row["audit_lot_increment_sell"])
+                opening = self.t_plus_one.sellable(order.stock_id)
+                lot_allowed = (
+                    requested_raw
+                    if requested_raw + 1e-8 >= opening
+                    else np.floor((requested_raw + 1e-8) / increment) * increment
+                )
+            lot_allowed = max(0.0, min(requested_raw, float(lot_allowed)))
+            lot_rejected = requested_raw - lot_allowed
+            order.amount = lot_allowed / factor
         t1_rejected = 0.0
         if order.direction == Order.SELL:
-            allowed_raw, t1_rejected = self.t_plus_one.clip_sell(order.stock_id, requested_raw)
+            allowed_raw, t1_rejected = self.t_plus_one.clip_sell(order.stock_id, lot_allowed)
             order.amount = allowed_raw / factor
 
         preblocked_reason = self._blocked_reason(order)
@@ -298,7 +336,9 @@ class PreparedQuoteExchange(Exchange):  # type: ignore[misc]
             reasons.append(preblocked_reason)
         if t1_rejected > 1e-8:
             reasons.append("t_plus_one")
-        if executed_raw + 1e-8 < requested_raw - t1_rejected and not preblocked_reason:
+        if lot_rejected > 1e-8:
+            reasons.append("lot_rule")
+        if executed_raw + 1e-8 < requested_raw - t1_rejected - lot_rejected and not preblocked_reason:
             reasons.append("cash_volume_or_lot")
         unfilled_raw = max(0.0, requested_raw - executed_raw)
         status = "filled" if unfilled_raw <= 1e-8 else ("partial" if executed_raw > 0 else "rejected")
@@ -318,6 +358,9 @@ class PreparedQuoteExchange(Exchange):  # type: ignore[misc]
                 "gross_value": trade_val,
                 "status": status,
                 "reason": ";".join(dict.fromkeys(reasons)),
+                "fee_schedule_id": self._last_fee_schedule_id,
+                "sell_stamp_tax_rate": self._last_sell_stamp_tax_rate,
+                "transfer_fee_rate": self._last_transfer_fee_rate,
                 **cost_dict(self._last_cost),
             }
         )
