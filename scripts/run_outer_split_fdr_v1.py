@@ -46,6 +46,7 @@ def main() -> int:
     if issues or any(manifest["artifact_status"] != "pass" for manifest in manifests):
         raise ValueError("FDR projection manifest is stale or blocked")
     canary_manifest_path = config.get("canary_manifest")
+    canary_gate_observed = "not_required"
     if canary_manifest_path:
         canary_manifest_resolved = resolve(canary_manifest_path)
         canary_manifest = load_artifact_manifest(canary_manifest_resolved)
@@ -57,6 +58,7 @@ def main() -> int:
             or not canary_contract["status"].eq("pass").all()
         ):
             raise ValueError("corrected FDR canary is stale, blocked, or incomplete")
+        canary_gate_observed = "pass"
     bootstrap_method = str(config.get("bootstrap_method", "legacy_dropna_moving_block"))
     bootstrap_functions = {
         "legacy_dropna_moving_block": moving_block_mean_test,
@@ -117,7 +119,7 @@ def main() -> int:
     expected_hypotheses = int(config["expected_hypotheses_per_family"])
     false_discovery_rate = float(null_results["fdr_bh_pass"].mean())
     contracts = pd.DataFrame([
-        contract_row("canary_gate_passed", not canary_manifest_path or not canary_issues, bool(canary_manifest_path), True),
+        contract_row("canary_gate_passed", canary_gate_observed in {"not_required", "pass"}, canary_gate_observed, "pass_or_not_required"),
         contract_row("family_count", len(family_summary) == expected_families, len(family_summary), expected_families),
         contract_row("unique_factor_count_per_family", family_summary["unique_factors"].eq(expected_hypotheses).all(), family_summary["unique_factors"].tolist(), expected_hypotheses),
         contract_row("hypotheses_per_family", family_summary["hypotheses"].eq(expected_hypotheses).all(), family_summary["hypotheses"].tolist(), expected_hypotheses),
