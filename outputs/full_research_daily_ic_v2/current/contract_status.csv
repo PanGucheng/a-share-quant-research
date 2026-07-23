@@ -1,0 +1,13 @@
+﻿check,status,severity,detail
+factor_count_expected,pass,critical,669
+daily_ic_unique,pass,critical,0
+pairwise_formula_scipy_match,pass,critical,0.0
+row_order_invariant,pass,critical,fixture
+minimum_ic_days,pass,critical,1228
+minimum_pair_count_on_ic_days,pass,critical,102
+pair_counts_bounded,pass,critical,2000
+tie_policy_frozen,pass,critical,average
+matrix_label_lineage_match,pass,critical,factor-frame-v4:f1e93a2428446673f5c873a01886a38ae9e654e5f863cf2b236040dbbf28dc3c
+label_runtime_hash_bound,pass,critical,4acdfd874c339cd094bf702619861714ec9c75eb27547240eaaa7b945a302ac8
+legacy_difference_audited,pass,critical,598072
+outer_test_not_used_for_decision,pass,critical,descriptive daily IC only

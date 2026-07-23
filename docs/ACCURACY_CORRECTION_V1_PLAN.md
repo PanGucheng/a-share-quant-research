@@ -6,7 +6,7 @@
 > 前置阶段：逻辑 PR #4.1 Selection Holdout Integrity 已完成
 > 后续阶段：PR #5A 模型输入协议（当前暂停）
 
-> 2026-07-23 实施回执：机器级 hard-stop、Universe lifecycle v2、669 因子依赖审计、Matrix v4 与 Labels v2 已完成。Universe v2 截断旧 29 个越界 membership interval、移除 329 个非法 key。Matrix v4 的 30 个分区各含 2,587,671 个 Universe v2 key：605 个复用因子合法共同 key 差异为 0，64 个 Alpha101 完整重算并产生 107,066,948 个值级修正；Matrix 与 approval Manifest 均 clean/complete/pass。Labels v2 在相同 2,587,671 key 上按 canonical calendar 精确连接 t+1/t+21 close，不使用物理行 shift 或价格填充；coverage 为 0.980970，末端 21 个 feature date / 42,000 key 全部按预期缺失，Manifest clean/complete/pass。`matrix_v4_lifecycle_clean=true`、`labels_v2_ready=true`，但 IC v2 与后续研究修正仍未完成，模型 hard-stop 不变。
+> 2026-07-23 实施回执：机器级 hard-stop、Universe lifecycle v2、669 因子依赖审计、Matrix v4、Labels v2 与 Pairwise IC v2 已完成。Matrix v4 的 30 个分区各含 2,587,671 个 Universe v2 key：605 个复用因子共同 key 差异为 0，64 个 Alpha101 完整重算并产生 107,066,948 个值级修正。Labels v2 按 canonical calendar 精确连接 t+1/t+21 close，不使用物理行 shift 或价格填充。IC v2 对每个 `(date,factor)` 先构造 factor-label 共同非空集合，再在同一集合内分别 rank；669 因子全部通过 scipy、行序、pair count、tie policy 与 lineage 门禁，相对 v1 有 621 个因子、598,072 个日因子 IC 值被修正。上述 Manifest 均 clean/complete/pass。`matrix_v4_lifecycle_clean=true`、`labels_v2_ready=true`、`pairwise_ic_ready=true`，但 bootstrap gap policy 与后续选择链仍未完成，模型 hard-stop 不变。
 
 ## 1. 文档权威性与当前结论
 
@@ -324,6 +324,15 @@ rank_ic = corr(factor_rank, label_rank)
 ```
 
 记录 `pair_count`、factor/label missing count、tie policy 和最小样本门槛。增加人工小例、与 `scipy.stats.spearmanr` 的容差对照、缺失模式 mutation 和行顺序不变性测试。
+
+实施结果（2026-07-23）：
+
+- 真实 5 因子 canary 先通过，随后 30/30 分区、669/669 因子完整运行；
+- 每个 `(date,factor)` 独立记录 `pair_count`、factor/label missing count 与冻结的 `average` tie policy；日因子 key 无重复；
+- 人工缺失 fixture 与 scipy 在 `1e-12` 容差内完全一致，修改 factor 缺失位置上的 label 不改变 IC，打乱行顺序不改变结果；
+- 每因子最少 1,228 个有效 IC 日，有效 IC 日最小 pair count 102，满足冻结门槛 100；
+- 相对 v1，621 个因子共 598,072 个日 IC 值发生修正，最大绝对差异 0.380201；缺失状态没有不对称新增或丢失；
+- `full_research_daily_ic_v2:3e20d7...` Manifest clean/complete/pass；本阶段仅生成描述性 IC，不执行资格筛选。
 
 ### 5.7 Bootstrap gap sensitivity audit
 

@@ -18,6 +18,8 @@
   生命周期清洁的 669 因子矩阵权威 receipt：30 个分区各 2,587,671 个 Universe v2 key；605 个复用因子零差异，64 个 Alpha101 全量重算并产生 107,066,948 个值级修正；Manifest clean/complete/pass。
 - `outputs/full_research_labels_v2/current/`
   精确日历 Labels v2：2,587,671 个生命周期清洁 key，按 canonical trading calendar 连接 t+1/t+21 close，不使用物理行 shift 或价格填充；coverage 0.980970，末端 21 个日期标签全部按预期缺失。
+- `outputs/full_research_daily_ic_v2/current/`
+  Pairwise Spearman IC v2：669 因子逐日先构造 factor-label 共同非空集合，再分别 rank；scipy、行序、最小 pair 与 lineage 门禁通过。相对 v1 有 621 个因子、598,072 个日因子 IC 值被修正。
 - `PR5A_MODEL_INPUT_PROTOCOL_HANDOFF_V1.md`
   延后的模型输入协议参考。只能在 PR #6/#7 全部门禁通过后重新启用，不能直接采用当前已被替代的 allowlist、score 或 OOS execution。
 - `SELECTION_HOLDOUT_INTEGRITY_AND_MODEL_PLAN_V1.md`
