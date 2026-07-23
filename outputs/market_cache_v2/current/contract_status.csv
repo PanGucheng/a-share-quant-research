@@ -6,4 +6,4 @@ full_day_volume_not_used_at_open,pass,lagged_20d_median,lagged_or_estimated,crit
 no_valuation_bfill,pass,True,True,critical,
 stale_policy_valid,pass,20,<=20 trading days,critical,
 terminal_event_policy_valid,blocked,missing_authoritative_event_feed,complete,capability,Execution remains explicitly non-authoritative.
-market_cache_v2_ready,pass,c9fc766fc201b267dfbdc0813f8f0fd421bcb6e9d25cb1859455760941b742bc,all semantic hashes bound,critical,
+market_cache_v2_ready,pass,f9151b5d1bc7070e5d6a167df9fc5eb1d8683805f08de6fbee4bf1ea40d2b99a,all semantic hashes bound,critical,

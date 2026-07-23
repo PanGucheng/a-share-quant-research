@@ -1,2 +1,2 @@
 ﻿outer_split_id,path,rows,sha256,date_count,instrument_count,authoritative_row_count,stale_blocked_count
-split_001,E:\qlib_prj\qlib_baseline\outputs\market_cache_v2\current\canary\runtime\split_001_market.parquet,1830,86deb33398ce701a56f2092884e90a99a4bf7142ab7cd1ec3149a01367de9181,10,183,0,0
+split_001,E:\qlib_prj\qlib_baseline\outputs\market_cache_v2\current\canary\runtime\split_001_market.parquet,1830,8f2b36cf728518b3cfdb8b39fb96fe3c6335fc1cfdc435de3a3e4682c0660832,10,183,0,0
