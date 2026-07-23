@@ -1,0 +1,7 @@
+﻿datetime,instrument,method,composite_score,component_count,outer_split_id,expected_component_count,component_fraction,component_policy_pass,renormalization_applied
+2024-08-01,SH600000,equal_weight,-0.29621756156828155,45,split_001,45,1.0,True,False
+2024-08-01,SH600004,equal_weight,0.21575459097280042,45,split_001,45,1.0,True,False
+2024-08-01,SH600006,equal_weight,-1.273336327794059,45,split_001,45,1.0,True,False
+2024-08-01,SH600000,stability_weight,-0.2972961983412526,45,split_001,45,1.0,True,False
+2024-08-01,SH600004,stability_weight,0.22671912430662747,45,split_001,45,1.0,True,False
+2024-08-01,SH600006,stability_weight,-1.3050092180816328,45,split_001,45,1.0,True,False

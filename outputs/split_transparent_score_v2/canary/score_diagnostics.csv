@@ -1,0 +1,3 @@
+﻿outer_split_id,method,rows,score_row_presence_coverage,component_completeness_coverage,minimum_components,median_component_fraction,renormalization_rate
+split_001,equal_weight,2000,1.0,1.0,14,1.0,0.045
+split_001,stability_weight,2000,1.0,1.0,14,1.0,0.045
