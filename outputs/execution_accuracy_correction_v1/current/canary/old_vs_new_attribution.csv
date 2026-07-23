@@ -5,5 +5,5 @@ price_limit_semantics,classified_non_authoritative,Previous-close board rule rep
 lot_rule,classified,Board-aware buy minimum and increments replace uniform 100-share assumption.
 stale_valuation,classified,No bfill; 898 cache rows exceed the 20-day policy.
 terminal_event,classified_non_authoritative,No authoritative terminal-event feed is available.
-calendar_or_cache,classified,Market Cache v2 key f9151b5d1bc7070e5d6a167df9fc5eb1d8683805f08de6fbee4bf1ea40d2b99a binds calendar and all semantic hashes.
+calendar_or_cache,classified,Market Cache v2 key 68864351e6fb50c7ab793619b31943dbac651469bc0750e8253c1a690dfbc0f4 binds calendar and all semantic hashes.
 unknown,none,

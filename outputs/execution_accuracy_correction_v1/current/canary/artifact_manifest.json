@@ -1,40 +1,40 @@
 {
-  "artifact_id": "execution_accuracy_correction_v1:e64758792d40f0c42a9e6f90e531d2fd2ab148cd7df262b15fb8394c784b83f0",
+  "artifact_id": "execution_accuracy_correction_v1:52e293288190f63d0f0c66be99a4680fcaf178b3a7ecb23d8a86a0b1b021370c",
   "artifact_status": "pass",
   "blocked_reason": "",
-  "code_commit_sha": "5833de28ae4e2a3f4215da94827f74bf6adb1c7c",
+  "code_commit_sha": "03a55d3af48b82a60646eab7949645719409fdb8",
   "code_diff_sha256": "",
   "code_dirty": false,
-  "config_sha256": "7e55ded4676f0a5f5b1bb86984861d889c50eb9613cceadf50a825f8a407b458",
-  "created_at": "2026-07-23T07:09:54.438355+00:00",
+  "config_sha256": "0c704b9fc6bd62dae3e589acda1dc9b6b8d3df1d7356921a5a18f0ca3ad99bd3",
+  "created_at": "2026-07-23T07:22:35.555410+00:00",
   "end_date": "2026-02-04",
   "factor_catalog_id": "factor-catalog:8c031a09892fc915ac45201942f563925a9bab617e60fce5ecbbe274a51a02e1",
   "factor_frame_id": "factor-frame-v4:f1e93a2428446673f5c873a01886a38ae9e654e5f863cf2b236040dbbf28dc3c",
   "input_artifact_ids": [
-    "bugfix_research_freeze_v1:979a4a8aea8e3ee4330f51ebd3611ab8829d689eda858f748e08ff98792f8a14",
-    "market_cache_v2:af5a003740513ef04a2eb42e8eed17e4263bafebcb0706f548a9391c853ce26c",
+    "bugfix_research_freeze_v1:e3a309afa9907c46119564844a842cffd65de23e73f2e0b47480fa3a6603616e",
+    "market_cache_v2:d6d3374b19fe335b698dca4076d701031788c421cfaff9c04e7ebfb3fb56bec7",
     "split_transparent_score_v2:fc2080f082503c77e0f4f112430e77a5e385ce130a6e54a366baf73cde8d836b"
   ],
   "lineage_status": "complete",
   "missing_lineage_fields": [],
   "output_file_hashes": {
-    "contract_status.csv": "35da65c3e41ceed0ce5613d2e7eb35bce134a26995bfcbdf63c4fd29c3b857d2",
+    "contract_status.csv": "ea1731544874f6c9568c806a0108c7170ada053f668ed4751fdd3eec9835e25a",
     "execution_accuracy_report.md": "98b8ebeb1e3160cbb1fa7309fb0a071962c59e7064e932e1a7d090442fc86ea5",
-    "execution_artifacts.csv": "7da5a9e9246af3c0dbc8d56e1ab2b73dc8b545fd18d889a9e6a57d5234636977",
+    "execution_artifacts.csv": "847f57826f1a370a8a872dfb0e1bd6cd9443a7b1025247b17080355c1e6324bf",
     "execution_summary.csv": "402ab56c65bcca5099ee7c7dd50377e6e278d1a3bc6afa8ba8a5a03e57934fd1",
     "execution_summary_comparison.csv": "364b730d272fdb72bca29f07917da1a7245e37980e83271c9a061e57fc6d6c3d",
     "fee_schedule_usage.csv": "cd4814e300609ae09bd4a985e29502d812bb832ae4cc916350e8d0c32db87273",
-    "old_vs_new_attribution.csv": "a09417d0d1d9bbfa1c748f27c368dc2f7b61c2cc29147617de247e92de750f60",
-    "resolved_config.json": "0327158b0306a70c90d5d207bab69b3d4731c0371be12beed28af81c6fe04932"
+    "old_vs_new_attribution.csv": "bb336120db446007d4421722e2423291830fa77b098cd80d46ba92acb17476af",
+    "resolved_config.json": "195870f6a4d3a78187748e613185f70bbfd9b4864b7c5d342c1ba470753b0e06"
   },
-  "producer_run_id": "20260723T070954Z-1a2d5a00",
+  "producer_run_id": "20260723T072235Z-28a82207",
   "profile_name": "full_research",
   "profile_type": "full_research",
   "research_run_family_id": "full_research_factor_669_v1",
-  "run_id": "20260723T070954Z-1a2d5a00",
+  "run_id": "20260723T072235Z-28a82207",
   "schema_version": 2,
   "split_manifest_id": "split-manifest:75ccf0f37e85422729d54aef5a363f68d4f9b3daed3d42a87eb120e6b5aefe0e",
   "stage_id": "execution_accuracy_correction_v1",
   "start_date": "2024-08-01",
-  "universe_artifact_id": null
+  "universe_artifact_id": "universe-v2:a7875d74d5119230ab5576cb245fe8b389e0dd3030606299dad6d1f0e147ccd2"
 }
