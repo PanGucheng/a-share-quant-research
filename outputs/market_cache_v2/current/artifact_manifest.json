@@ -1,12 +1,12 @@
 {
-  "artifact_id": "market_cache_v2:af5a003740513ef04a2eb42e8eed17e4263bafebcb0706f548a9391c853ce26c",
+  "artifact_id": "market_cache_v2:d6d3374b19fe335b698dca4076d701031788c421cfaff9c04e7ebfb3fb56bec7",
   "artifact_status": "pass",
   "blocked_reason": "",
-  "code_commit_sha": "d3f885d0f699e2f554b2f9a6c8a0d06f39460915",
+  "code_commit_sha": "0725f0f28c3e1ffd6141b35fe30d15b4128db424",
   "code_diff_sha256": "",
   "code_dirty": false,
-  "config_sha256": "a9b6df412595eecbfbf0edd5f7752f7bc3fbe25f47f14ce84cfb17f4bef1c616",
-  "created_at": "2026-07-23T07:01:41.916658+00:00",
+  "config_sha256": "e60e5c59d488d58504a8648bdd05c0f095b10dcbd4b819eeaa26f4dd93e8e037",
+  "created_at": "2026-07-23T07:22:01.092352+00:00",
   "end_date": "2026-02-04",
   "factor_catalog_id": "factor-catalog:8c031a09892fc915ac45201942f563925a9bab617e60fce5ecbbe274a51a02e1",
   "factor_frame_id": "factor-frame-v4:f1e93a2428446673f5c873a01886a38ae9e654e5f863cf2b236040dbbf28dc3c",
@@ -15,27 +15,25 @@
     "raw_market_data_snapshot_v1:e2f213da365ea6ba4d8375c830ff32e45f78fc847b814a11aaeb9e26b49d8cd9",
     "split_transparent_score_v2:fc2080f082503c77e0f4f112430e77a5e385ce130a6e54a366baf73cde8d836b"
   ],
-  "lineage_status": "inconsistent",
-  "missing_lineage_fields": [
-    "inconsistent:universe_artifact_id"
-  ],
+  "lineage_status": "complete",
+  "missing_lineage_fields": [],
   "output_file_hashes": {
     "cache_artifacts.csv": "612127c50eeaab1d42d3cffb13a5de5557990a20ecf2e53d1cde4822c3244b99",
-    "cache_key.json": "deae945f03765fe42a9e5e79db7e8718c9aeae9cf682666c444ded28e1cce47f",
-    "contract_status.csv": "b436a3a3f4538b32a3fdf1ce00ae8515dd0ef3d4aa0f1497842438db08500647",
+    "cache_key.json": "1e3a68a8d51e3620c4b1a2d4a91507fe87d41c562958944ebb18da7e5a95bab3",
+    "contract_status.csv": "d00ddb32619ab106267034f122b631e8cd41c54cd326208665ca795820f56c4d",
     "field_timing_audit.csv": "e92ba4d5469b1803e78e6dc2eac66bff03f26bd8a2e8db2a0f93b8e18ef644d7",
-    "market_cache_report.md": "f788c64d58cacd166f9dfc6ab481543ec9933af0064643935870be0aead5af40",
-    "resolved_config.json": "93b438ce9322f17144dea1c7c1717eb7c9977655524da1fe3938fd54da2d3cd4",
-    "semantic_input_hashes.csv": "85e530f2e3e5273beac312ddde62c897b6cd5cdbdbd7e538c252626760f77ed2"
+    "market_cache_report.md": "f5aebe08dfa2ddf5d831e5ce4842dbd861580f2ba367445bbe902c485ebb2a22",
+    "resolved_config.json": "cf29cecaea4801aa386fa5a935e6f04fd3636595e3f174c47bb2bfb48743a0e9",
+    "semantic_input_hashes.csv": "c4bd10bef6d679ad68bc0f52e6a43f568f4acc7ad57969ed21c6611e1ee4c4aa"
   },
-  "producer_run_id": "20260723T070141Z-ca5fb915",
+  "producer_run_id": "20260723T072201Z-31043254",
   "profile_name": "full_research",
   "profile_type": "full_research",
   "research_run_family_id": "full_research_factor_669_v1",
-  "run_id": "20260723T070141Z-ca5fb915",
+  "run_id": "20260723T072201Z-31043254",
   "schema_version": 2,
   "split_manifest_id": "split-manifest:75ccf0f37e85422729d54aef5a363f68d4f9b3daed3d42a87eb120e6b5aefe0e",
   "stage_id": "market_cache_v2",
   "start_date": "2024-08-01",
-  "universe_artifact_id": null
+  "universe_artifact_id": "universe-v2:a7875d74d5119230ab5576cb245fe8b389e0dd3030606299dad6d1f0e147ccd2"
 }

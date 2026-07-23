@@ -41,6 +41,7 @@
   "score_policy_manifest": "outputs/transparent_score_policy_v1/current/artifact_manifest.json",
   "score_receipt": "outputs/split_transparent_score_v2/current/score_artifact.csv",
   "score_runtime": "outputs/split_transparent_score_v2/current/runtime/composite_scores.parquet",
+  "superseded_execution_summary": "outputs/qlib_exchange_split_transparent_v1/full_research_669/execution_summary.csv",
   "trading_rules": "configs/a_share_trading_rules_v1.yaml",
   "universe_manifest": "outputs/point_in_time_universe_v2/full_research/artifact_manifest.json",
   "weight_manifest": "outputs/split_transparent_weights_v2/current/weight_manifest.csv",
