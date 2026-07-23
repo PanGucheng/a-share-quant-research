@@ -30,6 +30,7 @@ freeze_stage_id: bugfix_research_freeze_v1_2
 execution_output: outputs/execution_unit_semantics_correction_v1_2/current
 execution_stage_id: execution_unit_semantics_correction_v1_2
 superseded_execution_summary: outputs/execution_accuracy_correction_v1/current/execution_summary.csv
+superseded_execution_canary_summary: outputs/execution_accuracy_correction_v1/current/canary/execution_summary.csv
 fee_schedule: configs/a_share_fee_schedule_v1.yaml
 field_timing: configs/a_share_market_field_timing_v1.yaml
 trading_rules: configs/a_share_trading_rules_v1.yaml

@@ -75,6 +75,9 @@ def main() -> int:
     if args.canary:
         canary = config["canary"]
         selected_splits = [split_id for split_id in selected_splits if split_id in canary["outer_splits"]]
+    active_cache_rows = cache_rows.loc[
+        cache_rows["outer_split_id"].astype(str).isin(selected_splits)
+    ].copy()
     fee_schedule = load_yaml(resolve(config["fee_schedule"]))
     execution_source_sha = canonical_hash({
         "runner_source": file_sha256(PROJECT_ROOT / "scripts/run_corrected_oos_execution_v1.py"),
@@ -188,9 +191,17 @@ def main() -> int:
     terminal_fill_count = int(
         fills["reason"].fillna("").str.contains("terminal_event_settlement_approximation").sum()
     )
-    market_authoritative = int(cache_rows["authoritative_row_count"].sum())
-    stale_blocked = int(cache_rows["stale_blocked_count"].sum())
-    old_summary = pd.read_csv(resolve(config["superseded_execution_summary"]))
+    market_authoritative = int(active_cache_rows["authoritative_row_count"].sum())
+    stale_blocked = int(active_cache_rows["stale_blocked_count"].sum())
+    old_summary_path = (
+        config.get(
+            "superseded_execution_canary_summary",
+            config["superseded_execution_summary"],
+        )
+        if args.canary
+        else config["superseded_execution_summary"]
+    )
+    old_summary = pd.read_csv(resolve(old_summary_path))
     comparison = old_summary.merge(
         combined["execution_summary"],
         on=["outer_split_id", "method"],
@@ -205,7 +216,7 @@ def main() -> int:
             comparison[f"{metric}_new_corrected"] - comparison[f"{metric}_old_superseded"]
         )
     market_frames = []
-    for _, row in cache_rows.iterrows():
+    for _, row in active_cache_rows.iterrows():
         frame = pd.read_parquet(Path(str(row["path"])), columns=[
             "datetime", "instrument", "can_buy", "can_sell",
             "execution_price_is_valuation_fallback", "terminal_event_approximation", "board",
