@@ -6,7 +6,7 @@
 > 前置阶段：逻辑 PR #4.1 Selection Holdout Integrity 已完成
 > 后续阶段：PR #5A 模型输入协议（当前暂停）
 
-> 2026-07-23 实施回执：研究链已完成至 corrected clustering。Matrix v4、Labels v2、pairwise IC v2、gap-aware bootstrap、corrected FDR 与 stability 均已固化；stable-core 为 460/238/214。clean 两层 canary 后，聚类投影逐文件验证 Matrix v4 runtime，并严格绑定 development-date hashes；corrected clustering 得到 45/46/52 个代表（旧为 48/46/54），新旧代表交集 133 个。全部 Manifest clean/complete/pass，test 使用为 0。后续进入 split-specific allowlist，模型 hard-stop 不变。
+> 2026-07-23 实施回执：研究链已完成至 corrected split-specific allowlist。Matrix v4、Labels v2、pairwise IC v2、gap-aware bootstrap、FDR、stability 与 exact-date clustering 均已固化；corrected clustering 得到 45/46/52 个代表。三份 allowlist 各自冻结 payload 与 feature-order hash，共 143 行，全部来源按 Manifest/hash 绑定且 test 使用为 0。当前 `model_input_allowed=false`，后续进入 corrected weights 与 mutation/score policy，模型 hard-stop 不变。
 
 ## 1. 文档权威性与当前结论
 
@@ -354,6 +354,7 @@ rank_ic = corr(factor_rank, label_rank)
 - `factor_multiple_testing_v2:bccfb0ee...` 已按冻结政策完成 3×669 corrected FDR；三个 family 的 BH pass 为 518/512/570，BY pass 为 390/385/475，且 outer-test count=0。
 - `factor_rolling_stability_v2:8d49e0c1...` 只消费 corrected FDR 和 inner-development projection；stable-core 为 460/238/214，FDR 内部重算与 test 使用均为 0。
 - `clustering_input_projection_v2:c91e3129...` 与 `factor_clustering_v2:11145476...` 完成 exact-date corrected clustering；代表数为 45/46/52，日期越界、outer-test 与 insufficient pair 均为 0。
+- `split_specific_allowlist_v2:f58b3f13...` 冻结 45/46/52 三份 allowlist 及独立哈希；在 mutation/score policy 前保持 `model_input_allowed=false`。
 
 ### 5.8 重新运行完整研究选择链
 
