@@ -43,18 +43,14 @@ def selection_hashes(config: dict[str, object], outer_split_id: str) -> dict[str
     return hashes
 
 
-def validate_selection_parent_chain(manifests: list[dict[str, object]]) -> tuple[bool, list[str]]:
+def validate_selection_parent_chain(
+    manifests: list[dict[str, object]], expected: dict[str, list[str]]
+) -> tuple[bool, list[str]]:
     by_stage = {str(manifest["stage_id"]): manifest for manifest in manifests}
     stage_by_artifact_id = {str(manifest["artifact_id"]): str(manifest["stage_id"]) for manifest in manifests}
-    expected = {
-        "factor_multiple_testing_v1": {"selection_input_projection_v1"},
-        "factor_rolling_stability_v1": {"selection_input_projection_v1", "factor_multiple_testing_v1"},
-        "factor_clustering_v1": {"factor_rolling_stability_v1", "clustering_input_projection_v1", "development_robustness_split_v1"},
-        "split_specific_allowlist_v1": {"factor_clustering_v1", "factor_rolling_stability_v1", "development_robustness_split_v1", "purged_walk_forward_v1"},
-        "split_transparent_weights_v1": {"split_specific_allowlist_v1", "factor_rolling_stability_v1"},
-    }
     issues: list[str] = []
-    for stage_id, required_parents in expected.items():
+    for stage_id, parent_list in expected.items():
+        required_parents = set(parent_list)
         manifest = by_stage.get(stage_id)
         if manifest is None:
             issues.append(f"missing selection manifest: {stage_id}")
@@ -84,6 +80,16 @@ def main() -> int:
     issues = [issue for manifest, path in zip(manifests, manifest_paths) for issue in validate_manifest_outputs(manifest, path.parent)]
     if issues or any(manifest["artifact_status"] != "pass" for manifest in manifests):
         raise ValueError("mutation contract upstream is stale or blocked")
+    canary_manifest_path = config.get("canary_manifest")
+    canary_gate = "not_required"
+    if canary_manifest_path:
+        canary_path = resolve(canary_manifest_path)
+        canary = load_artifact_manifest(canary_path)
+        if validate_manifest_outputs(canary, canary_path.parent) or canary["artifact_status"] != "pass":
+            raise ValueError("mutation canary is stale or blocked")
+        if not pd.read_csv(resolve(config["canary_contract"]))["status"].eq("pass").all():
+            raise ValueError("mutation canary contract is incomplete")
+        canary_gate = "pass"
     outer = pd.read_csv(resolve(config["outer_date_assignments"]), parse_dates=["datetime"])
     allowed = pd.read_csv(resolve(config["allowed_dates"]), parse_dates=["datetime"])
     daily = pd.read_csv(resolve(config["daily_ic"]), parse_dates=["datetime"])
@@ -113,7 +119,9 @@ def main() -> int:
     }
     results = []
     payload_rows = []
-    selection_chain_valid, selection_chain_issues = validate_selection_parent_chain(manifests)
+    selection_chain_valid, selection_chain_issues = validate_selection_parent_chain(
+        manifests, config["expected_parent_chain"]
+    )
     for outer_split_id in sorted(outer["split_id"].astype(str).unique()):
         test_dates = pd.DatetimeIndex(outer.loc[outer["split_id"].astype(str).eq(outer_split_id) & outer["fold"].eq("test"), "datetime"])
         development_dates = pd.DatetimeIndex(allowed.loc[allowed["outer_split_id"].astype(str).eq(outer_split_id), "datetime"])
@@ -155,7 +163,20 @@ def main() -> int:
     mutation_results = pd.DataFrame(results)
     payload_hashes = pd.DataFrame(payload_rows)
     expected_mutations = len(sources) * 3 * outer["split_id"].nunique()
+    matrix_canary_contract = pd.read_csv(resolve(config["matrix_canary_contract"]))
+    axis_check = matrix_canary_contract.loc[
+        matrix_canary_contract["check"].eq("alpha101_axis_labels_strict")
+    ]
+    illegal = pd.read_csv(resolve(config["illegal_key_resolution"]), parse_dates=["datetime"])
+    impacts = pd.read_csv(resolve(config["impact_date_manifest"]), parse_dates=["recompute_start", "recompute_end"])
+    lifecycle_impact_covered = bool(
+        len(illegal)
+        and len(impacts)
+        and impacts["recompute_start"].le(illegal["datetime"].min()).any()
+        and impacts["recompute_end"].ge(illegal["datetime"].max()).any()
+    )
     contracts = pd.DataFrame([
+        contract_row("canary_gate_passed", canary_gate in {"not_required", "pass"}, canary_gate, "pass_or_not_required"),
         contract_row("mutation_case_count", len(mutation_results) == expected_mutations, len(mutation_results), expected_mutations),
         contract_row("development_projection_hash_unchanged", mutation_results["development_projection_unchanged"].all(), int(mutation_results["development_projection_unchanged"].sum()), len(mutation_results)),
         contract_row("selection_payload_hashes_unchanged", mutation_results["selection_payloads_unchanged"].all(), int(mutation_results["selection_payloads_unchanged"].sum()), len(mutation_results)),
@@ -163,6 +184,8 @@ def main() -> int:
         contract_row("all_mutations_touch_test_rows", mutation_results["test_row_count"].gt(0).all(), int(mutation_results["test_row_count"].gt(0).sum()), len(mutation_results)),
         contract_row("mutation_effective", mutation_results["mutation_effective"].all(), int(mutation_results["mutation_effective"].sum()), len(mutation_results)),
         contract_row("row_order_canonicalized", mutation_results.loc[mutation_results["mutation"].eq("row_order"), "row_order_canonicalized"].all(), int(mutation_results.loc[mutation_results["mutation"].eq("row_order"), "row_order_canonicalized"].sum()), len(mutation_results.loc[mutation_results["mutation"].eq("row_order")])),
+        contract_row("alpha101_axis_relabel_mutation_blocked", len(axis_check) == 1 and axis_check.iloc[0]["status"] == "pass", axis_check.iloc[0]["status"] if len(axis_check) else "missing", "pass"),
+        contract_row("lifecycle_illegal_key_impact_covered", lifecycle_impact_covered, lifecycle_impact_covered, True),
     ])
     receipts = pd.DataFrame([
         {
@@ -182,7 +205,7 @@ def main() -> int:
         contracts.to_csv(publisher.path("contract_status.csv"), index=False, encoding="utf-8-sig")
         publisher.path("resolved_config.json").write_text(json.dumps(config, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
         publisher.path("mutation_contract_report.md").write_text(
-            "# Selection Mutation Contract V1\n\n"
+            "# Corrected Selection Mutation Contract\n\n"
             + f"- Status: `{'pass' if ready else 'blocked'}`\n"
             + f"- Outer-test mutation cases: `{len(mutation_results)}`\n"
             + "- Sources: test IC, factor exposure, labels, raw OHLCVA; each also covers row order and extreme missing values.\n"
@@ -192,7 +215,7 @@ def main() -> int:
         )
         files = [publisher.path(name) for name in CONTROLLED if name != "artifact_manifest.json"]
         write_stage_artifact_manifest(
-            project_root=PROJECT_ROOT, stage_id="selection_mutation_contract_v1", config=config,
+            project_root=PROJECT_ROOT, stage_id=str(config.get("stage_id", "selection_mutation_contract_v1")), config=config,
             output_dir=publisher.staging_dir, output_files=files, code_state=capture_code_state(PROJECT_ROOT),
             input_manifest_paths=manifest_paths, factor_frame_id=manifests[1]["factor_frame_id"],
             split_manifest_id=manifests[4]["split_manifest_id"], start_date=allowed["datetime"].min(),

@@ -1,0 +1,50 @@
+schema_version: 1
+stage_id: selection_mutation_contract_v2
+profile: full_research
+profile_name: full_research
+profile_type: full_research
+research_run_family_id: full_research_factor_669_v1
+outer_date_assignments: outputs/purged_walk_forward_v1/full_research_669/date_assignments.csv
+allowed_dates: outputs/development_robustness_split_v1/full_research_669/outer_development_allowed_dates.csv
+daily_ic: outputs/full_research_daily_ic_v2/current/daily_rank_ic.csv
+labels: outputs/full_research_feature_matrix_v4/runtime/labels_v2.parquet
+factor_exposure: outputs/full_research_feature_matrix_v4/runtime/alpha158_001.parquet
+raw_ohlcva: outputs/full_research_feature_matrix_v1/runtime/raw_ohlcva.parquet
+matrix_canary_contract: outputs/full_research_feature_matrix_v4_canary/current/contract_status.csv
+illegal_key_resolution: outputs/point_in_time_universe_v2/full_research/illegal_key_resolution.csv
+impact_date_manifest: outputs/full_research_feature_matrix_v4/current/impact_date_manifest.csv
+sample_instruments: 200
+sample_exposure_factors: 5
+selection_artifacts:
+  fdr: outputs/factor_multiple_testing_v2/current/fdr_results.csv
+  stability: outputs/factor_rolling_stability_v2/current/factor_stability_board.csv
+  clustering: outputs/factor_clustering_v2/current/representatives_by_split.csv
+  allowlist: outputs/split_specific_allowlist_v2/current/split_allowlist.csv
+  weights: outputs/split_transparent_weights_v2/current/factor_weights_by_split.csv
+expected_parent_chain:
+  factor_multiple_testing_v2: [selection_input_projection_v2, bootstrap_gap_sensitivity_v1]
+  factor_rolling_stability_v2: [selection_input_projection_v2, factor_multiple_testing_v2]
+  factor_clustering_v2: [factor_rolling_stability_v2, clustering_input_projection_v2, development_robustness_split_v1]
+  split_specific_allowlist_v2: [factor_clustering_v2, factor_rolling_stability_v2, development_robustness_split_v1, purged_walk_forward_v1]
+  split_transparent_weights_v2: [split_specific_allowlist_v2]
+canary_manifest: outputs/selection_mutation_contract_v2/canary/artifact_manifest.json
+canary_contract: outputs/selection_mutation_contract_v2/canary/contract_status.csv
+input_manifests:
+  - outputs/raw_market_data_snapshot_v1/full_research_669/artifact_manifest.json
+  - outputs/full_research_feature_matrix_v4/current/artifact_manifest.json
+  - outputs/full_research_labels_v2/current/artifact_manifest.json
+  - outputs/full_research_daily_ic_v2/current/artifact_manifest.json
+  - outputs/purged_walk_forward_v1/full_research_669/artifact_manifest.json
+  - outputs/selection_input_projection_v2/current/artifact_manifest.json
+  - outputs/bootstrap_gap_sensitivity_v1/current/artifact_manifest.json
+  - outputs/factor_multiple_testing_v2/current/artifact_manifest.json
+  - outputs/factor_rolling_stability_v2/current/artifact_manifest.json
+  - outputs/clustering_input_projection_v2/current/artifact_manifest.json
+  - outputs/development_robustness_split_v1/full_research_669/artifact_manifest.json
+  - outputs/factor_clustering_v2/current/artifact_manifest.json
+  - outputs/split_specific_allowlist_v2/current/artifact_manifest.json
+  - outputs/split_transparent_weights_v2/current/artifact_manifest.json
+  - outputs/full_research_feature_matrix_v4_canary/current/artifact_manifest.json
+  - outputs/point_in_time_universe_v2/full_research/artifact_manifest.json
+  - outputs/selection_mutation_contract_v2/canary/artifact_manifest.json
+output_dir: outputs/selection_mutation_contract_v2/current
