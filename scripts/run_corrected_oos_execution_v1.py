@@ -16,7 +16,13 @@ from qlib_integration.contracts import validate_market_frame, validate_signal_fr
 from qlib_integration.market_semantics import load_yaml, resolve_fee  # noqa: E402
 from qlib_integration.runner import run_qlib_execution  # noqa: E402
 from research_validation.feature_matrix import canonical_hash, file_sha256  # noqa: E402
-from research_validation.lineage import capture_code_state, load_artifact_manifest, validate_manifest_outputs, write_stage_artifact_manifest  # noqa: E402
+from research_validation.lineage import (  # noqa: E402
+    capture_code_state,
+    direct_parent_gate_failures,
+    load_artifact_manifest,
+    validate_manifest_outputs,
+    write_stage_artifact_manifest,
+)
 from research_validation.stage_output import StageOutputPublisher  # noqa: E402
 
 
@@ -103,8 +109,13 @@ def main() -> int:
         issue for manifest, path in zip(manifests, input_manifest_paths)
         for issue in validate_manifest_outputs(manifest, path.parent)
     ]
-    if issues or any(manifest["artifact_status"] != "pass" for manifest in manifests):
-        raise ValueError(f"corrected execution upstream stale or blocked: {issues}")
+    gate_failures = direct_parent_gate_failures(manifests)
+    if issues or gate_failures:
+        raise ValueError(
+            "corrected execution upstream stale or blocked: "
+            f"freshness={[issue.check_name for issue in issues]} "
+            f"gates={gate_failures}"
+        )
     score_manifest = manifests[0]
 
     output_dir = resolve(config["execution_output"] + ("/canary" if args.canary else ""))
