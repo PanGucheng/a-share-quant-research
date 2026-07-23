@@ -141,7 +141,7 @@ def stale_valuation(
     return pd.DataFrame(
         {
             "valuation_price": values,
-            "valuation_price_age_trading_days": pd.Series(ages, dtype="Int64"),
+            "valuation_price_age_trading_days": pd.array(ages, dtype="Int64"),
             "valuation_stale_blocked": [
                 age is None or age > maximum_stale_trading_days for age in ages
             ],

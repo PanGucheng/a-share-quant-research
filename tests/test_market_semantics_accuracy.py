@@ -72,3 +72,9 @@ def test_stale_valuation_never_backfills_and_expires() -> None:
     assert result.iloc[2]["valuation_price"] == pytest.approx(10.0)
     assert np.isnan(result.iloc[3]["valuation_price"])
     assert result.iloc[4]["valuation_price_age_trading_days"] == 0
+
+
+def test_stale_valuation_preserves_multiindex_ages() -> None:
+    index = pd.MultiIndex.from_product([["SH600000"], pd.date_range("2025-01-01", periods=2)])
+    result = stale_valuation(pd.Series([10.0, np.nan], index=index), maximum_stale_trading_days=2)
+    assert result["valuation_price_age_trading_days"].tolist() == [0, 1]
