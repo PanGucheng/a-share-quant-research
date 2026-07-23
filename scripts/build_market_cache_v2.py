@@ -13,7 +13,7 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-from qlib_integration.market_semantics import load_yaml, stale_valuation, validate_field_timing  # noqa: E402
+from qlib_integration.market_semantics import convert_community_market_units, load_yaml, stale_valuation, validate_field_timing  # noqa: E402
 from research_validation.feature_matrix import canonical_hash, file_sha256  # noqa: E402
 from research_validation.lineage import (  # noqa: E402
     capture_code_state,
@@ -32,6 +32,7 @@ COMPACT_OUTPUTS = [
     "cache_key.json",
     "contract_status.csv",
     "field_timing_audit.csv",
+    "unit_correction_audit.csv",
     "market_cache_report.md",
     "resolved_config.json",
     "semantic_input_hashes.csv",
@@ -60,6 +61,20 @@ def main() -> int:
     parser.add_argument("--canary", action="store_true")
     args = parser.parse_args()
     config = yaml.safe_load(resolve(args.config).read_text(encoding="utf-8")) or {}
+    units = dict(config.get("community_units", {}))
+    volume_multiplier = float(units.get("volume_lot_to_shares_multiplier", 0.0))
+    amount_multiplier = float(units.get("amount_to_cny_multiplier", 0.0))
+    if volume_multiplier != 100.0 or amount_multiplier != 1000.0:
+        raise ValueError("Community unit semantics must be explicitly frozen at 100 shares and 1000 CNY")
+    audit_readiness = pd.read_csv(resolve(config["data_source_audit_readiness"])).iloc[0]
+    semantics = pd.read_csv(resolve(config["data_source_audit_semantics"])).set_index("check_name")
+    if (
+        audit_readiness["source_decision"] != "Decision B"
+        or not bool(audit_readiness["community_core_ohlc_reliable"])
+        or semantics.loc["community_volume_unit", "status"] != "p0_correction_required"
+        or semantics.loc["community_amount_unit", "status"] != "p1_correction_required"
+    ):
+        raise ValueError("Data Source Audit V2 does not authorize the frozen unit correction")
     state_dir = resolve(config["instrument_state_output"] + ("/canary" if args.canary else ""))
     state_receipt = pd.read_csv(state_dir / "instrument_state_artifact.csv")
     state_path = state_dir / "runtime/instrument_state.parquet"
@@ -78,6 +93,8 @@ def main() -> int:
         "score_receipt": resolve(config["score_receipt"]),
         "instrument_state_receipt": state_dir / "instrument_state_artifact.csv",
         "raw_market_manifest": resolve(config["raw_market_manifest"]),
+        "data_source_audit_manifest": resolve(config["data_source_audit_manifest"]),
+        "data_source_audit_semantics": resolve(config["data_source_audit_semantics"]),
     }
     semantic_hashes = {name: file_sha256(path) for name, path in semantics_paths.items()}
     code_state = capture_code_state(PROJECT_ROOT)
@@ -85,6 +102,8 @@ def main() -> int:
         resolve(config["score_manifest"]),
         state_dir / "artifact_manifest.json",
         resolve(config["raw_market_manifest"]),
+        resolve(config["data_source_audit_manifest"]),
+        resolve(config["superseded_market_cache_output"]) / "artifact_manifest.json",
     ]
     manifests = [load_artifact_manifest(path) for path in input_manifests]
     issues = [
@@ -112,6 +131,7 @@ def main() -> int:
     controlled = COMPACT_OUTPUTS + [f"runtime/{split_id}_market.parquet" for split_id in split_ids]
     cache_rows = []
     timing_frames = []
+    unit_rows = []
     with StageOutputPublisher(output_dir, controlled) as publisher:
         for split_id, split_state in state.groupby("outer_split_id", sort=True):
             dates = pd.DatetimeIndex(sorted(split_state["datetime"].unique()))
@@ -138,8 +158,13 @@ def main() -> int:
             raw["factor"] = factor
             raw["open"] = raw_open / factor
             raw["reported_close"] = raw_close / factor
-            raw["reported_volume"] = raw_volume * factor
-            raw["amount"] = raw_amount
+            raw["reported_volume"], raw["amount"] = convert_community_market_units(
+                raw_volume,
+                factor,
+                raw_amount,
+                volume_lot_to_shares_multiplier=volume_multiplier,
+                amount_to_cny_multiplier=amount_multiplier,
+            )
             raw["previous_close"] = raw.groupby(level="instrument")["reported_close"].shift(1)
             raw["participation_volume"] = (
                 raw.groupby(level="instrument")["reported_volume"]
@@ -226,6 +251,48 @@ def main() -> int:
                 "execution_price_is_valuation_fallback", "terminal_event_approximation",
             ]
             market = market[columns]
+            old_dir = resolve(
+                config["superseded_market_cache_output"]
+                + ("/canary" if args.canary else "")
+            )
+            old_market = pd.read_parquet(
+                old_dir / f"runtime/{split_id}_market.parquet",
+                columns=["datetime", "instrument", "volume", "amount"],
+            )
+            unit_pair = market[["datetime", "instrument", "volume", "amount"]].merge(
+                old_market,
+                on=["datetime", "instrument"],
+                suffixes=("_v3", "_v2"),
+                validate="one_to_one",
+            )
+            volume_pair = unit_pair.loc[
+                unit_pair["volume_v2"].gt(0) & unit_pair["volume_v3"].notna()
+            ]
+            amount_pair = unit_pair.loc[
+                unit_pair["amount_v2"].gt(0) & unit_pair["amount_v3"].notna()
+            ]
+            volume_ratio = volume_pair["volume_v3"] / volume_pair["volume_v2"]
+            amount_ratio = amount_pair["amount_v3"] / amount_pair["amount_v2"]
+            unit_rows.append(
+                {
+                    "outer_split_id": split_id,
+                    "compared_key_count": len(unit_pair),
+                    "volume_compared_count": len(volume_ratio),
+                    "volume_expected_ratio": volume_multiplier,
+                    "volume_maximum_ratio_error": float(
+                        (volume_ratio - volume_multiplier).abs().max()
+                    )
+                    if len(volume_ratio)
+                    else np.nan,
+                    "amount_compared_count": len(amount_ratio),
+                    "amount_expected_ratio": amount_multiplier,
+                    "amount_maximum_ratio_error": float(
+                        (amount_ratio - amount_multiplier).abs().max()
+                    )
+                    if len(amount_ratio)
+                    else np.nan,
+                }
+            )
             runtime = publisher.path(f"runtime/{split_id}_market.parquet")
             market.to_parquet(runtime, index=False)
             cache_rows.append({
@@ -249,8 +316,19 @@ def main() -> int:
                 state.groupby("outer_split_id")["datetime"].apply(lambda values: sorted(pd.DatetimeIndex(values.unique()).strftime("%Y-%m-%d"))).to_dict()
             ),
             "code_commit_sha": code_state.commit_sha,
+            "community_units": units,
+            "data_source_audit_artifact_id": manifests[3]["artifact_id"],
         }
         cache_key = canonical_hash(cache_key_payload)
+        unit_audit = pd.DataFrame(unit_rows)
+        volume_units_ready = (
+            unit_audit["volume_compared_count"].gt(0).all()
+            and unit_audit["volume_maximum_ratio_error"].le(1e-8).all()
+        )
+        amount_units_ready = (
+            unit_audit["amount_compared_count"].gt(0).all()
+            and unit_audit["amount_maximum_ratio_error"].le(1e-8).all()
+        )
         contract = pd.DataFrame([
             {"check_name": "frozen_score_hash_valid", "status": "pass", "observed_value": score_sha, "required_value": score_sha, "severity": "critical", "reason": ""},
             {"check_name": "future_market_field_count", "status": "pass" if not timing["future_field"].any() else "blocked", "observed_value": int(timing["future_field"].sum()), "required_value": 0, "severity": "critical", "reason": ""},
@@ -259,10 +337,14 @@ def main() -> int:
             {"check_name": "no_valuation_bfill", "status": "pass", "observed_value": True, "required_value": True, "severity": "critical", "reason": ""},
             {"check_name": "stale_policy_valid", "status": "pass", "observed_value": int(config["execution"]["maximum_stale_valuation_days"]), "required_value": "<=20 trading days", "severity": "critical", "reason": ""},
             {"check_name": "terminal_event_policy_valid", "status": "blocked", "observed_value": "missing_authoritative_event_feed", "required_value": "complete", "severity": "capability", "reason": "Execution remains explicitly non-authoritative."},
-            {"check_name": "market_cache_v2_ready", "status": "pass", "observed_value": cache_key, "required_value": "all semantic hashes bound", "severity": "critical", "reason": ""},
+            {"check_name": str(config.get("market_cache_ready_check", "market_cache_v3_ready")), "status": "pass", "observed_value": cache_key, "required_value": "all semantic hashes bound", "severity": "critical", "reason": ""},
+            {"check_name": "community_volume_unit_fixture_pass", "status": "pass" if volume_units_ready else "blocked", "observed_value": float(unit_audit["volume_maximum_ratio_error"].max()), "required_value": "<=1e-8 around x100", "severity": "critical", "reason": ""},
+            {"check_name": "community_amount_unit_fixture_pass", "status": "pass" if amount_units_ready else "blocked", "observed_value": float(unit_audit["amount_maximum_ratio_error"].max()), "required_value": "<=1e-8 around x1000", "severity": "critical", "reason": ""},
+            {"check_name": "unknown_unit_difference_count", "status": "pass" if volume_units_ready and amount_units_ready else "blocked", "observed_value": 0 if volume_units_ready and amount_units_ready else 1, "required_value": 0, "severity": "critical", "reason": ""},
         ])
         pd.DataFrame(cache_rows).to_csv(publisher.path("cache_artifacts.csv"), index=False, encoding="utf-8-sig")
         timing.to_csv(publisher.path("field_timing_audit.csv"), index=False, encoding="utf-8-sig")
+        unit_audit.to_csv(publisher.path("unit_correction_audit.csv"), index=False, encoding="utf-8-sig")
         pd.DataFrame([{"semantic_input": key, "sha256": value} for key, value in semantic_hashes.items()]).to_csv(
             publisher.path("semantic_input_hashes.csv"), index=False, encoding="utf-8-sig"
         )
@@ -273,20 +355,21 @@ def main() -> int:
         )
         publisher.path("resolved_config.json").write_text(json.dumps(config, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
         publisher.path("market_cache_report.md").write_text(
-            "# Market Cache V2\n\n"
+            "# Market Cache V3 — Unit Semantics Correction\n\n"
             f"- Scope: `{'canary' if args.canary else 'full corrected OOS'}`\n"
             f"- Cache key: `{cache_key}`\n"
             f"- Rows: `{sum(row['rows'] for row in cache_rows)}`\n"
             "- Open execution uses current open, previous close, lagged 20-day median volume and PIT state only.\n"
             "- Same-day close is consumed only at the after-close valuation timestamp; no backward fill is permitted.\n"
-            "- Missing historical ST/suspension/terminal-event sources keep authoritative execution blocked.\n",
+            "- Missing historical ST/suspension/terminal-event sources keep authoritative execution blocked.\n"
+            "- Community volume is converted from adjusted board lots with `factor × 100`; amount is converted from CNY thousands with `×1000`.\n",
             encoding="utf-8",
         )
         score_manifest = load_artifact_manifest(input_manifests[0])
         state_manifest = load_artifact_manifest(input_manifests[1])
         write_stage_artifact_manifest(
             project_root=PROJECT_ROOT,
-            stage_id="market_cache_v2",
+            stage_id=str(config.get("market_cache_stage_id", "market_cache_v3")),
             config={**config, "cache_key": cache_key, "scope": "canary" if args.canary else "full"},
             output_dir=publisher.staging_dir,
             output_files=[publisher.path(name) for name in COMPACT_OUTPUTS if name != "artifact_manifest.json"],

@@ -7,6 +7,7 @@ import pandas as pd
 import pytest
 
 from qlib_integration.market_semantics import (
+    convert_community_market_units,
     infer_board,
     load_yaml,
     resolve_fee,
@@ -65,6 +66,26 @@ def test_price_limit_resolution_rejects_unknown_state() -> None:
     with pytest.raises(ValueError, match="incomplete"):
         resolve_price_limit_rule(
             rules, board="main", st_flag=None, ipo_age=100, trading_date="2025-01-02"
+        )
+
+
+def test_community_market_units_are_explicit_and_fail_closed() -> None:
+    volume, amount = convert_community_market_units(
+        5_641_746.0,
+        0.3225237,
+        2_102_923.07811,
+        volume_lot_to_shares_multiplier=100,
+        amount_to_cny_multiplier=1000,
+    )
+    assert volume == pytest.approx(181_959_699, rel=1e-6)
+    assert amount == pytest.approx(2_102_923_078.11)
+    with pytest.raises(ValueError, match="100 shares"):
+        convert_community_market_units(
+            1.0,
+            1.0,
+            1.0,
+            volume_lot_to_shares_multiplier=1,
+            amount_to_cny_multiplier=1000,
         )
 
 

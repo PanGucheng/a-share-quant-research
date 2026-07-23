@@ -9,6 +9,21 @@ stage_authority:
   execution_accuracy_correction_v1:
     authoritative_fields:
       [universe_artifact_id, split_manifest_id, factor_catalog_id, factor_frame_id]
+  execution_unit_semantics_correction_v1_2:
+    authoritative_fields:
+      [universe_artifact_id, split_manifest_id, factor_catalog_id, factor_frame_id]
+  bugfix_research_freeze_v1_2:
+    authoritative_fields:
+      [universe_artifact_id, split_manifest_id, factor_catalog_id, factor_frame_id]
+  market_cache_v3:
+    authoritative_fields:
+      [universe_artifact_id, split_manifest_id, factor_catalog_id, factor_frame_id]
+  data_source_audit_v2:
+    authoritative_fields:
+      [universe_artifact_id, split_manifest_id]
+  data_source_audit_sample_v2:
+    authoritative_fields:
+      [universe_artifact_id, split_manifest_id]
   bugfix_research_freeze_v1:
     authoritative_fields:
       [universe_artifact_id, split_manifest_id, factor_catalog_id, factor_frame_id]

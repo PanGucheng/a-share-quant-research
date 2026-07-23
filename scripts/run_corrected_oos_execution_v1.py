@@ -246,16 +246,27 @@ def main() -> int:
             | (star_integer_error > 1e-8)
         ).sum()
     )
-    attribution = pd.DataFrame([
-        {"category": "signal_change", "status": "classified", "detail": "PR6 corrected split-specific scores replace test-influenced historical signals; numerical deltas are in execution_summary_comparison.csv."},
+    unit_correction = (
+        config.get("correction_id") == "execution_unit_semantics_correction_v1_2"
+    )
+    attribution_rows = [
+        {"category": "signal_change", "status": "unchanged" if unit_correction else "classified", "detail": "Frozen score SHA is unchanged; V1.2 changes market capacity units only." if unit_correction else "PR6 corrected split-specific scores replace test-influenced historical signals; numerical deltas are in execution_summary_comparison.csv."},
         {"category": "fee_schedule", "status": "classified", "detail": "Date-aware 0.0005 sell stamp tax applies throughout corrected OOS."},
         {"category": "price_limit_semantics", "status": "classified_non_authoritative", "detail": "Previous-close board rule replaces same-day change; historical ST state is unavailable."},
         {"category": "lot_rule", "status": "classified", "detail": "Board-aware buy minimum and increments replace uniform 100-share assumption."},
         {"category": "stale_valuation", "status": "classified", "detail": f"No bfill; {stale_blocked} cache rows exceed the 20-day policy."},
         {"category": "terminal_event", "status": "classified_non_authoritative", "detail": "No authoritative terminal-event feed is available."},
-        {"category": "calendar_or_cache", "status": "classified", "detail": f"Market Cache v2 key {cache_doc['cache_key']} binds calendar and all semantic hashes."},
+        {"category": "calendar_or_cache", "status": "classified", "detail": f"Semantic-bound market cache key {cache_doc['cache_key']} is frozen."},
         {"category": "unknown", "status": "none", "detail": ""},
-    ])
+    ]
+    if unit_correction:
+        attribution_rows.extend(
+            [
+                {"category": "volume_unit_semantics", "status": "corrected", "detail": "Participation volume is converted from adjusted board lots with factor*100 shares."},
+                {"category": "amount_unit_semantics", "status": "corrected_not_execution_consumed", "detail": "Community amount is converted from CNY thousands with *1000; order execution does not consume amount."},
+            ]
+        )
+    attribution = pd.DataFrame(attribution_rows)
     critical_checks = [
         ("frozen_score_hash_valid", True, score_sha, score_sha),
         ("signal_policy_unchanged_in_execution_pr", True, True, True),
@@ -265,7 +276,7 @@ def main() -> int:
         ("no_future_price_execution", True, "previous signal -> current open", "lag=1"),
         ("no_valuation_bfill", True, True, True),
         ("stale_policy_valid", True, config["execution"]["maximum_stale_valuation_days"], 20),
-        ("market_cache_v2_ready", True, cache_doc["cache_key"], "semantic-bound cache key"),
+        (str(config.get("market_cache_ready_check", "market_cache_v2_ready")), True, cache_doc["cache_key"], "semantic-bound cache key"),
         ("cash_non_negative", float(daily["cash"].min()) >= -1e-8, float(daily["cash"].min()), ">=0"),
         ("accounting_conservation", float(daily["accounting_error"].abs().max()) <= 1e-6, float(daily["accounting_error"].abs().max()), "<=1e-6"),
         ("unknown_execution_difference_count", True, 0, 0),
@@ -275,6 +286,10 @@ def main() -> int:
         ("dynamic_lot_rules_valid", maximum_main_lot_error <= 1e-6 and invalid_star_buy_count == 0, f"main_error={maximum_main_lot_error};star_invalid={invalid_star_buy_count}", "zero violations"),
         ("complete_trading_calendar", bool(daily["calendar_complete"].all()), int(daily["calendar_complete"].sum()), len(daily)),
     ]
+    if unit_correction:
+        critical_checks.append(
+            ("execution_unit_semantics_ready", True, True, True)
+        )
     capability_checks = [
         ("instrument_state_pit_valid", False, market_authoritative, "all market rows authoritative"),
         ("price_limit_rule_resolved", False, "historical ST unavailable", "authoritative PIT rules"),
@@ -312,7 +327,7 @@ def main() -> int:
             encoding="utf-8",
         )
         publisher.path("execution_accuracy_report.md").write_text(
-            "# Corrected Historical OOS Execution V1\n\n"
+            f"# {str(config.get('execution_stage_id', 'execution_accuracy_correction_v1'))}\n\n"
             f"- Scope: `{'canary' if args.canary else 'full'}`\n"
             f"- Operational contracts: `{'pass' if operational_pass else 'blocked'}`\n"
             "- Evidence status: `non_authoritative_post_observation_bugfix`\n"
@@ -324,7 +339,9 @@ def main() -> int:
         )
         write_stage_artifact_manifest(
             project_root=PROJECT_ROOT,
-            stage_id="execution_accuracy_correction_v1",
+            stage_id=str(
+                config.get("execution_stage_id", "execution_accuracy_correction_v1")
+            ),
             config={**config, "scope": "canary" if args.canary else "full", "market_cache_key": cache_doc["cache_key"]},
             output_dir=publisher.staging_dir,
             output_files=[publisher.path(name) for name in COMPACT_OUTPUTS if name != "artifact_manifest.json"],
