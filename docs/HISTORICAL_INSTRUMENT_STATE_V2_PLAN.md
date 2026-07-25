@@ -1,9 +1,15 @@
 # Historical Instrument State V2 计划
 
-> 状态：正式实施基线
-> 当前分支：`fix/historical-instrument-state-v2`
+> 状态：已完成并以 Decision B 冻结
+> 历史实施分支：`fix/historical-instrument-state-v2`
 > 前置：PR #9 / Execution Unit Semantics Correction V1.2 已完成
-> 硬边界：不进入 PR #5A，不训练模型，不修改 Matrix v4、Labels v2、IC、FDR、stability、clustering、allowlist、weights 或冻结 score。
+> 阶段内硬边界：实施期间不进入 PR #5A，不训练模型，不修改 Matrix v4、Labels v2、IC、FDR、stability、clustering、allowlist、weights 或冻结 score。
+>
+> **2026-07-25 后续方向：**用户接受 Decision B，并明确要求停止继续搜索、
+> 抓取或核实历史公告；除非用户未来提供新数据源/Tier-0 接口，本阶段不再重开。
+> 后续研究模型工作由
+> [研究级多因子模型 V1 实施计划](./RESEARCH_GRADE_MULTIFACTOR_MODEL_V1_PLAN.md)
+> 接管，不改变本阶段的 authoritative execution blocker。
 
 ## 0. 实施状态（2026-07-25）
 
@@ -465,9 +471,10 @@ source semantics unreliable or irreproducible
 - terminal 3/3 能证明停牌/停止交易，但不能证明现金处置；
 - 在此基础上扩大抓取不会自动修复 publication-time 语义。
 
-后续只有出现新的稳定 Tier 0 结构化历史接口或可复现的公告发布时间证据时，才
-能新建 bounded source re-evaluation；不能沿用本 canary 的授权直接进行全市场
-网页爬取。
+本 source decision 现已冻结。后续即使公开网络出现疑似新入口，也不主动搜索或
+重开 canary；只有用户未来明确提供新的数据源/Tier-0 接口并要求重新评估时，才
+能另建 bounded source re-evaluation。任何情况下都不能沿用本 canary 的授权
+直接进行全市场网页爬取。
 
 ### Phase 6：Instrument State v2
 
