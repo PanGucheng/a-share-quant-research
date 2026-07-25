@@ -24,15 +24,23 @@ def main() -> int:
         "--config",
         default="configs/research_lightgbm_v1.yaml",
     )
+    parser.add_argument("--resource-canary", action="store_true")
     args = parser.parse_args()
     config = load_lightgbm_config(resolve(args.config))
     result = run_lightgbm_canary(
         config,
-        output_dir=resolve(config["canary"]["output_dir"]),
+        output_dir=resolve(
+            config[
+                "resource_canary"
+                if args.resource_canary
+                else "canary"
+            ]["output_dir"]
+        ),
         command=" ".join(shlex.quote(value) for value in sys.argv),
+        resource_canary=args.resource_canary,
     )
     print(
-        "LightGBM canary passed: "
+        f"LightGBM {result['scope']} passed: "
         f"rows={result['sample_rows']}; "
         f"factors={result['factor_count']}; "
         f"candidate_runs={result['candidate_runs']}; "

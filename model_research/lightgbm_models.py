@@ -104,6 +104,8 @@ def _array_hash(value: np.ndarray) -> str:
 
 def _training_sample(
     config: dict[str, Any],
+    *,
+    scope_key: str,
 ) -> tuple[
     np.ndarray,
     np.ndarray,
@@ -116,7 +118,7 @@ def _training_sample(
         resolve(config["protocol_config"]).read_text(encoding="utf-8")
     )
     resolution = resolve_authoritative_parents(parent_paths(protocol_config))
-    canary = config["canary"]
+    canary = config[scope_key]
     split_id = str(canary["split_id"])
     ordered, _ = load_split_feature_order(
         resolve(protocol_config["selection"]["factor_weights"]),
@@ -241,6 +243,7 @@ def run_lightgbm_canary(
     *,
     output_dir: Path,
     command: str,
+    resource_canary: bool = False,
 ) -> dict[str, Any]:
     import lightgbm as lgb
 
@@ -270,20 +273,48 @@ def run_lightgbm_canary(
     )
     if actual_environment != expected_environment:
         raise ValueError("LightGBM canary environment differs from frozen lock")
+    prior_canary: tuple[str, Path, dict[str, Any]] | None = None
+    if resource_canary:
+        prior_path = resolve(
+            "outputs/research_lightgbm_v1/canary/artifact_manifest.json"
+        )
+        prior_manifest = load_artifact_manifest(prior_path)
+        if (
+            prior_manifest.get("artifact_status") != "pass"
+            or prior_manifest.get("lineage_status") != "complete"
+        ):
+            raise ValueError(
+                "resource canary requires complete/pass train-only canary"
+            )
+        prior_canary = (
+            "lightgbm_train_only_canary",
+            prior_path,
+            prior_manifest,
+        )
 
     grid = candidate_grid(config)
-    canary_ids = set(config["canary"]["structural_row_ids"])
-    checkpoint = int(config["canary"]["checkpoint"])
+    scope_key = "resource_canary" if resource_canary else "canary"
+    scope = config[scope_key]
+    canary_ids = set(scope["structural_row_ids"])
+    checkpoints = (
+        {int(value) for value in scope["checkpoints"]}
+        if resource_canary
+        else {int(scope["checkpoint"])}
+    )
     canary_candidates = [
         row
         for row in grid
         if row["structural_row_id"] in canary_ids
-        and int(row["num_boost_round"]) == checkpoint
+        and int(row["num_boost_round"]) in checkpoints
     ]
-    if len(canary_candidates) != 2:
-        raise ValueError("LightGBM canary must contain two structural rows")
+    expected_candidates = 16 if resource_canary else 2
+    if len(canary_candidates) != expected_candidates:
+        raise ValueError(
+            "LightGBM canary candidate scope mismatch: "
+            f"{len(canary_candidates)} != {expected_candidates}"
+        )
     features, target, weights, factors, audit, partitions = (
-        _training_sample(config)
+        _training_sample(config, scope_key=scope_key)
     )
     dataset = lgb.Dataset(
         features,
@@ -295,7 +326,7 @@ def run_lightgbm_canary(
     results: list[dict[str, Any]] = []
     with _MemorySampler() as memory:
         for candidate in canary_candidates:
-            for repeat in range(int(config["canary"]["repeats"])):
+            for repeat in range(int(scope["repeats"])):
                 started = time.perf_counter()
                 booster = lgb.train(
                     _training_params(config, candidate),
@@ -336,10 +367,10 @@ def run_lightgbm_canary(
         [
             _contract("candidate_manifest_16", len(grid) == 16, len(grid), 16),
             _contract(
-                "canary_two_structural_rows",
-                len(canary_candidates) == 2,
+                "canary_candidate_scope",
+                len(canary_candidates) == expected_candidates,
                 len(canary_candidates),
-                2,
+                expected_candidates,
             ),
             _contract(
                 "repeated_hashes_stable",
@@ -375,6 +406,20 @@ def run_lightgbm_canary(
     )
     if not contracts["status"].eq("pass").all():
         raise ValueError("LightGBM canary contracts failed")
+    parent_items = [
+        (
+            "research_model_protocol_v1_1",
+            protocol_manifest_path,
+            load_artifact_manifest(protocol_manifest_path),
+        ),
+        (
+            "research_linear_models_v1",
+            linear_manifest_path,
+            linear_manifest,
+        ),
+    ]
+    if prior_canary is not None:
+        parent_items.append(prior_canary)
     parent_receipts = pd.DataFrame(
         [
             {
@@ -385,24 +430,13 @@ def run_lightgbm_canary(
                 "lineage_status": manifest["lineage_status"],
                 "direct_parent": True,
             }
-            for role, path, manifest in (
-                (
-                    "research_model_protocol_v1_1",
-                    protocol_manifest_path,
-                    load_artifact_manifest(protocol_manifest_path),
-                ),
-                (
-                    "research_linear_models_v1",
-                    linear_manifest_path,
-                    linear_manifest,
-                ),
-            )
+            for role, path, manifest in parent_items
         ]
     )
     resolved_config = {
         **config,
         "executed_command": command,
-        "executed_scope": "train_only_canary",
+        "executed_scope": scope_key,
         "feature_order": list(factors),
         "feature_order_sha256": canonical_hash(list(factors)),
         "partition_receipts_sha256": canonical_hash(partitions),
@@ -440,6 +474,9 @@ def run_lightgbm_canary(
             [
                 {
                     "lightgbm_canary_ready": True,
+                    "lightgbm_resource_canary_ready": bool(
+                        resource_canary
+                    ),
                     "lightgbm_model_research_complete": False,
                     "production_model_selected": False,
                     "authoritative_execution": False,
@@ -465,7 +502,7 @@ def run_lightgbm_canary(
             "# Research LightGBM V1 Train-only Canary\n\n"
             f"- Samples / factors: {len(features):,} / {len(factors)}.\n"
             f"- Structural rows / repeats: {len(canary_candidates)} / "
-            f"{config['canary']['repeats']}.\n"
+            f"{scope['repeats']}.\n"
             f"- Peak RSS: {peak_rss:.1f} MiB.\n"
             "- Candidate and train prediction hashes are repeat-stable.\n"
             "- Validation/test payload reads: 0/0.\n",
@@ -484,8 +521,7 @@ def run_lightgbm_canary(
             output_files=output_files,
             code_state=code_state,
             input_manifest_paths=[
-                protocol_manifest_path,
-                linear_manifest_path,
+                path for _, path, _ in parent_items
             ],
             contract_paths=[publisher.path("contract_status.csv")],
         )
@@ -496,4 +532,5 @@ def run_lightgbm_canary(
         "factor_count": len(factors),
         "candidate_runs": len(result_frame),
         "peak_rss_mib": peak_rss,
+        "scope": scope_key,
     }

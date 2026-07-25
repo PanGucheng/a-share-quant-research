@@ -93,6 +93,19 @@ canary:
   repeats: 2
   output_dir: outputs/research_lightgbm_v1/canary
 
+resource_canary:
+  split_id: split_001
+  factor_count: 5
+  train_date_count: 20
+  structural_row_ids:
+    - structure_01
+    - structure_02
+    - structure_03
+    - structure_04
+  checkpoints: [100, 200, 400, 800]
+  repeats: 1
+  output_dir: outputs/research_lightgbm_v1/resource_canary
+
 resources:
   peak_rss_mib: 4096
   runtime_disk_gib: 12

@@ -316,6 +316,8 @@ def test_lightgbm_candidate_protocol_is_fixed_and_bounded() -> None:
     assert config["early_stopping"] is False
     assert config["trainer_metric_authority"] == "diagnostic_only"
     assert config["determinism"]["num_threads"] == 1
+    assert config["resource_canary"]["checkpoints"] == [100, 200, 400, 800]
+    assert len(config["resource_canary"]["structural_row_ids"]) == 4
 
 
 def test_linear_validation_metric_is_daily_rank_ic() -> None:
