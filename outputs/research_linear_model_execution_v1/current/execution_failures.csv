@@ -1,0 +1,3 @@
+outer_split_id,method,failure_code,candidate_row_count,first_candidate_date,candidate_instruments,detail
+split_002,ridge,blocked_unpriceable_held_position,1,2025-04-18,SZ300280,blocked_unpriceable_held_position:first_candidate_date=2025-04-18;candidate_instruments=SZ300280;cause=TypeError:unsupported operand type(s) for *: 'NoneType' and 'float'
+split_002,elastic_net,blocked_unpriceable_held_position,1,2025-04-18,SZ300280,blocked_unpriceable_held_position:first_candidate_date=2025-04-18;candidate_instruments=SZ300280;cause=TypeError:unsupported operand type(s) for *: 'NoneType' and 'float'

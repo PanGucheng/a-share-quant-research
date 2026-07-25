@@ -607,6 +607,11 @@ Test 后的 coefficient/metric 只进入只读 OOS evidence，不反馈选参。
 
 只有 PR #5B 三个 split 全部完成、prediction schema 和 leakage audit 通过后开始。
 
+PR #5B 的辅助 Qlib 执行不属于 PR #5C 的训练入口。若模型 prediction 已完整、
+零提前 test read 和 leakage audit 通过，但某个历史持仓因 Decision B 下缺少
+可用估值而 fail-closed，则允许继续 prediction-only LightGBM 研究；禁止把该
+授权扩展为完整历史组合比较、authoritative execution 或生产资格。
+
 基础协议：
 
 ```text
@@ -1037,6 +1042,16 @@ research_model_experiment_started = true
 model_training_started = true
 ```
 
+辅助执行状态独立记录。若出现 `blocked_unpriceable_held_position`：
+
+```text
+linear_model_research_complete = true
+linear_model_execution_complete = false
+linear_model_execution_operational_ready = false
+```
+
+不得通过无限价格回填、未来知情清仓或无证据结算消除阻断。
+
 ### PR #5C
 
 ```text
@@ -1048,13 +1063,22 @@ unknown leakage difference = 0
 ### PR #5D
 
 ```text
-five-method historical comparison complete
+five-method prediction comparison complete
 historical_oos_model_comparison_complete = true
 historical_oos_research_leader recorded or explicitly none
 production_model_selected = false
 authoritative_oos_execution_ready = false
 unbiased_final_estimate = false
 ```
+
+只有五种方法的相同执行链均完成时，才可额外设置：
+
+```text
+five_method_historical_portfolio_comparison_complete = true
+```
+
+任一方法存在长期停牌后不可估值持仓时，该字段必须为 false，并记录
+`blocked_execution_capability`；prediction IC 比较不得被误写为 NAV 比较。
 
 ## 19. 当前立即执行顺序
 

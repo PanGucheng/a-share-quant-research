@@ -152,3 +152,54 @@ authoritative_execution = false
 unbiased_final_estimate = false
 ```
 
+## 8. 实施回执与执行能力边界
+
+截至 2026-07-26，PR #5B 的模型研究部分已完成：
+
+```text
+Ridge                  3/3 split complete
+Elastic Net            3/3 split complete
+pre-test freeze        6/6
+single test release    6/6
+test predictions       1,471,764 rows
+test read before freeze = 0
+linear_model_research_complete = true
+production_model_selected = false
+```
+
+使用冻结 Market Cache V3 和相同 Qlib 配置进行的辅助执行诊断为：
+
+```text
+successful scenarios = 4/6
+split_001 Ridge / Elastic Net = complete
+split_002 Ridge / Elastic Net = blocked
+split_003 Ridge / Elastic Net = complete
+```
+
+两个 `split_002` 场景均在 `2025-04-18` 对已持有的 `SZ300280` 估值时触发
+`blocked_unpriceable_held_position`。该股票长期停牌后已超过冻结的 20 个
+交易日 stale valuation 上限。禁止：
+
+- 为使回测通过而无限延用旧 close；
+- 利用后来已知的停牌长度，在停牌前主动清仓；
+- 构造没有 Tier-0 证据的退市或终止上市结算价；
+- 将 Qlib 的底层 `NoneType` 异常误报为成功 execution。
+
+执行器必须发布 blocked manifest、失败 split/method、精确日期和 instrument，并
+继续运行其余独立场景。当前机器状态为：
+
+```text
+linear_model_research_complete = true
+linear_model_execution_complete = false
+linear_model_execution_operational_ready = false
+historical_oos_linear_evaluation_complete = true
+authoritative_execution = false
+unbiased_final_estimate = false
+production_model_selected = false
+```
+
+这一能力阻断不回滚已冻结的 prediction IC 研究结论，也不阻止 PR #5C 按同一
+prediction-only、零泄漏协议训练 LightGBM；但在问题未由用户提供的新 Tier-0
+数据源或新执行政策解决前，PR #5D 不得声称完成五方法的全历史组合或 NAV
+比较。PR #5D 仍可完成 prediction-level 历史科学比较，并必须把组合比较标记为
+`blocked_execution_capability`。
