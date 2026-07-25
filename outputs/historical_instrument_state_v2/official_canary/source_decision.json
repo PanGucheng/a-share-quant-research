@@ -1,0 +1,10 @@
+{
+  "after_open_event_count": 0,
+  "before_open_provable_rate": 0.38461538461538464,
+  "decision": "B",
+  "execution_rerun_authorized": false,
+  "instrument_state_materialization_authorized": false,
+  "label": "candidate_source_useful_official_coverage_incomplete",
+  "reason": "The curated Tier-0 evidence is reproducible and validates fail-closed time semantics, but the frozen ST/full-day minimums and complete before-open coverage are not met.",
+  "unknown_event_count": 8
+}

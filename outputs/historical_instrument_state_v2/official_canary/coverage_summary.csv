@@ -1,0 +1,5 @@
+﻿category,observed_count,required_count,status
+st_boundary_events,5,10,blocked
+full_day_suspension_events,3,10,blocked
+intraday_control_events,3,3,pass
+terminal_instruments,3,3,pass

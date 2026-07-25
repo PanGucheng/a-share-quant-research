@@ -1,0 +1,189 @@
+schema_version: 1
+profile_name: full_research
+profile_type: full_research
+research_run_family_id: full_research_factor_669_v1
+timezone: Asia/Shanghai
+before_open_cutoff: "09:00:00"
+scope_manifest: outputs/historical_instrument_state_v2/scope/artifact_manifest.json
+scope_candidates: outputs/historical_instrument_state_v2/scope/state_boundary_candidates.csv
+output_dir: outputs/historical_instrument_state_v2/official_canary
+stage_id: historical_instrument_state_official_canary_v2
+request:
+  timeout_seconds: 30
+  retries: 3
+  user_agent: qlib-baseline-historical-state-audit/2.0
+minimums:
+  st_boundary_events: 10
+  full_day_suspension_events: 10
+  intraday_control_events: 3
+  terminal_instruments: 3
+events:
+  - evidence_id: sz000413_suspend_20240815
+    instrument: SZ000413
+    state_type: suspension
+    state_value: full_day
+    effective_from: 2024-08-15
+    published_at: 2024-08-14
+    publication_precision: date
+    source_id: szse_issuer_announcement
+    source_tier: tier_0
+    source_url: https://disc.static.szse.cn/download/disc/disk03/finalpage/2024-08-14/4e9bbfce-9b8e-4eca-9a30-8ec5b2dcff4b.PDF
+    expected_tokens: ["000413", "2024年8月15日", "停牌"]
+    review_status: manually_normalized
+    terminal_scope: true
+  - evidence_id: sz002308_suspend_20240823
+    instrument: SZ002308
+    state_type: suspension
+    state_value: full_day
+    effective_from: 2024-08-23
+    published_at: 2024-08-23
+    publication_precision: date
+    source_id: szse_issuer_announcement
+    source_tier: tier_0
+    source_url: https://disc.static.szse.cn/download/disc/disk03/finalpage/2024-08-23/44a13a70-2c82-4568-8492-ffdae2a26fb2.PDF
+    expected_tokens: ["002308", "2024年8月23日", "停牌"]
+    review_status: manually_normalized
+    terminal_scope: true
+  - evidence_id: sh600811_stop_trading_20250415
+    instrument: SH600811
+    state_type: suspension
+    state_value: full_day
+    effective_from: 2025-04-15
+    published_at: 2025-04-28
+    publication_precision: date
+    source_id: sse_listing_termination_notice
+    source_tier: tier_0
+    source_url: https://www.sse.com.cn/disclosure/announcement/listing/stock/c/c_20250428_10777919.shtml
+    expected_tokens: ["600811", "2025年4月14日", "终止上市"]
+    review_status: manually_normalized_retrospective
+    terminal_scope: true
+  - evidence_id: sh600811_st_start_20250318
+    instrument: SH600811
+    state_type: st
+    state_value: "true"
+    effective_from: 2025-03-18
+    published_at: 2025-03-17
+    publication_precision: date
+    source_id: sse_issuer_announcement
+    source_tier: tier_0
+    source_url: https://www.sse.com.cn/disclosure/magin/announcement/ssereport/c/c_20250317_10775875.shtml
+    expected_tokens: ["600811", "2025年3月18日", "风险警示"]
+    review_status: manually_normalized
+    terminal_scope: true
+  - evidence_id: sz002308_st_start_20240709
+    instrument: SZ002308
+    state_type: st
+    state_value: "true"
+    effective_from: 2024-07-09
+    published_at: 2024-07-05
+    publication_precision: date
+    source_id: szse_issuer_announcement
+    source_tier: tier_0
+    source_url: https://disc.static.szse.cn/disc/disk03/finalpage/2024-07-05/4658dd68-8676-4445-a961-b79d8573c23d.PDF
+    expected_tokens: ["002308", "2024年7月9日", "风险警示"]
+    review_status: manually_normalized
+    terminal_scope: true
+  - evidence_id: sz000627_st_start_20250708
+    instrument: SZ000627
+    state_type: st
+    state_value: "true"
+    effective_from: 2025-07-08
+    published_at: 2025-07-15
+    publication_precision: date
+    source_id: szse_issuer_announcement
+    source_tier: tier_0
+    source_url: https://disc.static.szse.cn/disc/disk03/finalpage/2025-07-15/3666aebd-b0f1-4232-ae96-579bf333e392.PDF
+    expected_tokens: ["000627", "2025年7月8日", "风险警示"]
+    review_status: manually_normalized_retrospective
+    terminal_scope: false
+  - evidence_id: sz300280_st_start_20250520
+    instrument: SZ300280
+    state_type: st
+    state_value: "true"
+    effective_from: 2025-05-20
+    published_at: 2025-07-11
+    publication_precision: date
+    source_id: szse_issuer_announcement
+    source_tier: tier_0
+    source_url: https://disc.static.szse.cn/download/disc/disk03/finalpage/2025-07-11/e2dd9f40-2bb4-49a2-bcc2-1df8acf620fe.PDF
+    expected_tokens: ["300280", "2025年5月20日", "风险警示"]
+    review_status: manually_normalized_retrospective
+    terminal_scope: false
+  - evidence_id: sh603003_st_start_20240506
+    instrument: SH603003
+    state_type: st
+    state_value: "true"
+    effective_from: 2024-05-06
+    published_at: 2025-04-01
+    publication_precision: date
+    source_id: sse_issuer_announcement
+    source_tier: tier_0
+    source_url: https://big5.sse.com.cn/site/cht/www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2025-04-01/603003_20250401_9896.pdf
+    expected_tokens: ["603003", "2024年5月6日", "风险警示"]
+    review_status: manually_normalized_retrospective
+    terminal_scope: false
+  - evidence_id: sz002750_retirement_board_20250606
+    instrument: SZ002750
+    state_type: listing_termination
+    state_value: retirement_board
+    effective_from: 2025-06-06
+    published_at: 2025-05-28
+    publication_precision: date
+    source_id: szse_issuer_announcement
+    source_tier: tier_0
+    source_url: https://disc.static.szse.cn/download/disc/disk03/finalpage/2025-05-28/6f1d2aa7-c851-48bb-bb68-40ee8722152a.PDF
+    expected_tokens: ["002750", "退市整理期", "终止上市"]
+    review_status: manually_normalized
+    terminal_scope: false
+  - evidence_id: sz300280_retirement_board_20250915
+    instrument: SZ300280
+    state_type: listing_termination
+    state_value: retirement_board
+    effective_from: 2025-09-15
+    published_at: 2025-09-06
+    publication_precision: date
+    source_id: szse_issuer_announcement
+    source_tier: tier_0
+    source_url: https://disc.static.szse.cn/download/disc/disk03/finalpage/2025-09-06/a4685008-5b54-4175-ab30-78b0f96ad5d8.PDF
+    expected_tokens: ["300280", "2025年9月15日", "退市整理期"]
+    review_status: manually_normalized
+    terminal_scope: false
+  - evidence_id: sh603120_intraday_20250409
+    instrument: SH603120
+    state_type: suspension
+    state_value: intraday
+    effective_from: 2025-04-09
+    published_at: 2025-04-09
+    publication_precision: date
+    source_id: sse_intraday_notice
+    source_tier: tier_0
+    source_url: https://www.sse.com.cn/disclosure/announcement/general/mainsuspension/c/c_20250409_10776957.shtml
+    expected_tokens: ["603120", "09时32分", "恢复交易"]
+    review_status: manually_normalized_control
+    terminal_scope: false
+  - evidence_id: sh900952_intraday_20250630
+    instrument: SH900952
+    state_type: suspension
+    state_value: intraday
+    effective_from: 2025-06-30
+    published_at: 2025-06-30
+    publication_precision: date
+    source_id: sse_intraday_notice
+    source_tier: tier_0
+    source_url: https://www.sse.com.cn/disclosure/announcement/general/mainsuspension/c/c_20250630_10783427.shtml
+    expected_tokens: ["900952", "09时30分", "恢复交易"]
+    review_status: manually_normalized_control
+    terminal_scope: false
+  - evidence_id: sz301557_intraday_20250306
+    instrument: SZ301557
+    state_type: suspension
+    state_value: intraday
+    effective_from: 2025-03-06
+    published_at: 2025-03-06
+    publication_precision: date
+    source_id: szse_intraday_notice
+    source_tier: tier_0
+    source_url: https://www.szse.cn/disclosure/notice/temp/t20250306_612207.html
+    expected_tokens: ["301557", "13时00分48秒", "复牌"]
+    review_status: manually_normalized_control
+    terminal_scope: false

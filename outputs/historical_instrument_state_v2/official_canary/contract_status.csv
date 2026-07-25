@@ -1,0 +1,13 @@
+﻿check_name,status,observed_value,required_value,severity,reason
+scope_parent_ready,pass,True,True,critical,
+event_schema_valid,pass,0,0,critical,
+raw_evidence_hashes_valid,pass,True,True,critical,
+source_tier_valid,pass,True,True,critical,
+authoritative_conflict_count,pass,0,0,critical,
+same_day_date_only_fail_closed,pass,True,True,critical,
+intraday_controls_not_full_day,pass,True,True,critical,
+candidate_reconciliation_materialized,pass,True,True,critical,
+minimum_st_boundary_events,blocked,5,10,capability,Curated official evidence is below the frozen canary minimum.
+minimum_full_day_suspension_events,blocked,3,10,capability,Curated official evidence is below the frozen canary minimum.
+minimum_intraday_control_events,pass,3,3,capability,
+minimum_terminal_instruments,pass,3,3,capability,

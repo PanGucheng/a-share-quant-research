@@ -54,6 +54,7 @@ jobs:
           python scripts/validate_accuracy_correction_hard_stop_v1.py
           python scripts/validate_data_source_audit_v2.py
           python scripts/validate_execution_unit_semantics_v1_2.py
+          python scripts/validate_historical_instrument_state_canary_v2.py
 
   qlib-exchange-runtime:
     runs-on: windows-latest
