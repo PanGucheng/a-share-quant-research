@@ -1,0 +1,4 @@
+﻿outer_split_id,train_date_count,validation_date_count,factor_count,train_fit_row_count,runtime_seconds,peak_rss_mb_observed,spool_file_count,model_fit_count,test_read_count,total_runtime_seconds,runtime_parquet_committed
+split_001,688,77,45,1372311,89.36920980000286,543.078125,18,0,0,353.1149327000021,False
+split_002,808,77,46,1611797,111.06863910000538,605.26171875,21,0,0,353.1149327000021,False
+split_003,926,83,52,1847051,148.91280320001533,635.67578125,24,0,0,353.1149327000021,False

@@ -1,0 +1,24 @@
+{
+  "columns": [
+    "outer_split_id",
+    "datetime",
+    "instrument",
+    "method",
+    "prediction",
+    "prediction_artifact_id",
+    "allowlist_sha256",
+    "feature_order_sha256",
+    "model_freeze_id",
+    "experiment_class"
+  ],
+  "forbidden_payloads": [
+    "label",
+    "return",
+    "IC",
+    "Rank IC",
+    "NAV",
+    "Sharpe",
+    "test selection rank"
+  ],
+  "status": "frozen"
+}

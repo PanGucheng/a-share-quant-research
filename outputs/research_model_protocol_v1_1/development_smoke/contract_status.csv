@@ -1,0 +1,7 @@
+﻿check_name,status,observed_value,required_value,severity,reason
+canary_protocol_binding_valid,pass,0f305eeaecfca2f37bc0afb2e71f3edafe4f37b670b7cb393b2c63878a787b4a,current protocol equals canary binding,critical,
+sample_eligibility_exact,pass,30,30,critical,
+validation_transform_ready,pass,"[{'outer_split_id': 'split_001', 'transform_coverage': 1.0, 'status': 'pass'}]",all split validation transforms pass,critical,
+matrix_runtime_authority_valid,pass,15,15,critical,
+development_smoke_ready,pass,"{'split_ids': ['split_001'], 'train_date_limit': 20, 'validation_date_limit': 10}",requested development scope completed,critical,
+test_read_count_before_freeze_zero,pass,0,0,critical,

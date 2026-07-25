@@ -1,0 +1,2 @@
+﻿artifact_id,stage_id,disposition,reason
+research_model_protocol_v1:31563f686e4d66a1b02109a6cf4cb890c2c17fba31af8a702bb6ff6cead90d81,research_model_protocol_v1,superseded_for_model_entry,V1 entry was CSV-based and lacked exact canary/config binding and development dry-run closure.

@@ -1,0 +1,2 @@
+﻿stage,runtime_seconds,runtime_parquet_committed,model_fit_count,test_read_count
+canary,1.290090299997246,False,0,0
