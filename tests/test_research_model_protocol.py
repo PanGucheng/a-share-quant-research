@@ -3,11 +3,18 @@ from __future__ import annotations
 from pathlib import Path
 
 import numpy as np
+import pandas as pd
 import pytest
 
+from model_research.freeze import load_freeze_before_test
 from model_research.gates import (
     ModelScopeBlockedError,
     assert_model_scope_allowed,
+)
+from model_research.inputs import (
+    InputAccessAudit,
+    assert_feature_order,
+    assert_fold_isolation,
 )
 from model_research.lineage import AuthoritativeParentPaths, resolve_authoritative_parents
 from model_research.preprocessing import (
@@ -20,6 +27,7 @@ from model_research.schemas import (
     freeze_schema_missing,
     prediction_schema_violations,
 )
+from model_research.targets import daily_cross_sectional_rank_centered
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -161,3 +169,47 @@ def test_prediction_and_freeze_schemas_are_fail_closed() -> None:
         list(PREDICTION_COLUMNS) + ["label_20d_t1"]
     )
     assert "environment_lock_sha256" in freeze_schema_missing({})
+
+
+def test_test_loader_requires_freeze_artifact(tmp_path: Path) -> None:
+    with pytest.raises(PermissionError, match="missing pre-test freeze"):
+        load_freeze_before_test(tmp_path / "pre_test_freeze_manifest.json")
+
+
+def test_feature_order_and_fold_overlap_fail_closed() -> None:
+    with pytest.raises(ValueError, match="feature order mismatch"):
+        assert_feature_order(["f2", "f1"], ["f1", "f2"])
+    train = pd.DatetimeIndex(["2024-01-02", "2024-01-03"])
+    validation = pd.DatetimeIndex(["2024-01-03"])
+    test = pd.DatetimeIndex(["2024-02-01"])
+    with pytest.raises(ValueError, match="assignments overlap"):
+        assert_fold_isolation(train, validation, test)
+
+
+def test_target_transform_uses_daily_rank_and_blocks_small_days() -> None:
+    frame = pd.DataFrame(
+        {
+            "datetime": pd.to_datetime(
+                ["2024-01-02"] * 3 + ["2024-01-03"] * 2
+            ),
+            "label": [1.0, 2.0, 3.0, 1.0, 2.0],
+        }
+    )
+    transformed, receipt = daily_cross_sectional_rank_centered(
+        frame,
+        label_column="label",
+        minimum_daily_pairs=3,
+    )
+    assert transformed.iloc[:3].notna().all()
+    assert transformed.iloc[3:].isna().all()
+    assert receipt["status"].tolist() == [
+        "pass",
+        "blocked_insufficient_daily_pairs",
+    ]
+
+
+def test_access_audit_starts_with_zero_test_reads() -> None:
+    audit = InputAccessAudit()
+    audit.record(kind="feature", fold="train")
+    audit.record(kind="label", fold="validation")
+    assert audit.test_read_count == 0

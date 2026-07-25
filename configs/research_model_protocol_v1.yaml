@@ -60,6 +60,7 @@ lightgbm:
   official_selection_metric: mean_daily_rank_ic
 
 environment:
+  qlib_repository: E:/qlib_prj/qlib_clone
   thread_values_must_be_explicit: true
   required_fields:
     - python_version
