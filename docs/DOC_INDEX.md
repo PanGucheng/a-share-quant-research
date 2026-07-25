@@ -4,6 +4,8 @@
 
 ## Current Working Documents
 
+- `HISTORICAL_INSTRUMENT_STATE_V2_PLAN.md`
+  当前唯一执行计划。先冻结真实 decision/valuation/terminal scope，撤销“lifecycle end 即按最后价卖出”的非权威语义，再以 SSE/SZSE/BSE/CNInfo Tier 0 事件证据验证 ST、全天停复牌与 terminal disposition；所有模型入口继续关闭。
 - `EXECUTION_UNIT_SEMANTICS_CORRECTION_V1_2_PLAN.md`
   已完成的单位语义修正与实施回执。Market Cache v3 已显式执行 volume `factor × 100` 和 amount `×1000`，全量 cache/execution、单票归因、transitive lineage 与治理门禁通过；旧 Market Cache v2 永久 superseded。
 - `DATA_SOURCE_AUDIT_V2.md`
