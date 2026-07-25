@@ -1,0 +1,5 @@
+﻿mutation_name,status,development_hash_unchanged,reason
+train_row_order_permutation,pass,True,
+feature_order_permutation,pass,True,must fail closed
+validation_date_injected_into_train,pass,True,must fail closed
+pre_freeze_test_feature_read,pass,True,must fail closed

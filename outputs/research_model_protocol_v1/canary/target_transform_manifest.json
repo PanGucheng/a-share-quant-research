@@ -1,0 +1,13 @@
+{
+  "feature_time": "t",
+  "label_end": "t+21",
+  "label_id": "label_20d_t1",
+  "label_start": "t+1",
+  "minimum_daily_pairs": 100,
+  "rank_center": 0.5,
+  "rank_method": "average",
+  "rank_pct": true,
+  "status": "frozen",
+  "target_transform_id": "daily_cross_sectional_rank_centered_v1",
+  "training_transform": "daily_cross_sectional_rank_centered"
+}
