@@ -9,6 +9,7 @@ import pytest
 from model_research.freeze import load_freeze_before_test
 from model_research.gates import (
     ModelScopeBlockedError,
+    assert_research_model_entry_artifact,
     assert_research_model_entry_file,
     assert_model_scope_allowed,
 )
@@ -216,23 +217,29 @@ def test_access_audit_starts_with_zero_test_reads() -> None:
     assert audit.test_read_count == 0
 
 
-def test_scoped_entry_file_is_fail_closed_and_accepts_research(
+def test_direct_readiness_file_entry_is_always_forbidden(
     tmp_path: Path,
 ) -> None:
-    missing = tmp_path / "missing.csv"
-    with pytest.raises(ModelScopeBlockedError, match="missing scoped readiness"):
-        assert_research_model_entry_file(
-            missing,
-            experiment_class="post_observation_research",
-        )
     readiness = tmp_path / "readiness.csv"
     pd.DataFrame([ready_scope()]).to_csv(readiness, index=False)
-    assert_research_model_entry_file(
-        readiness,
-        experiment_class="post_observation_research",
-    )
-    with pytest.raises(ModelScopeBlockedError, match="experiment_class_blocked"):
+    with pytest.raises(ModelScopeBlockedError, match="direct readiness CSV"):
         assert_research_model_entry_file(
             readiness,
+            experiment_class="post_observation_research",
+        )
+
+
+def test_artifact_entry_rejects_missing_and_legacy_v1_manifest(
+    tmp_path: Path,
+) -> None:
+    with pytest.raises(ModelScopeBlockedError, match="missing protocol manifest"):
+        assert_research_model_entry_artifact(
+            tmp_path / "artifact_manifest.json",
+            experiment_class="post_observation_research",
+        )
+    with pytest.raises(ModelScopeBlockedError, match="stage_id="):
+        assert_research_model_entry_artifact(
+            ROOT
+            / "outputs/research_model_protocol_v1/current/artifact_manifest.json",
             experiment_class="production",
         )
