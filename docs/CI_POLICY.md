@@ -63,3 +63,10 @@ ci-gate
 
 连续推送使用 workflow concurrency 自动取消同一 PR/分支的旧运行。禁止使用
 `[skip ci]` 或人工声称“只是文档”来绕过分类器。
+
+## 仓库设置边界
+
+截至 2026-07-25，远端 `main` 尚未启用 branch protection。Workflow 已稳定产出
+`ci-gate`，但它只有在仓库管理员以后启用分支保护并将 `ci-gate` 设为唯一 required
+check 后，才会成为 GitHub 层面的强制合并门禁。不得把可能按路径跳过的
+`lightweight-contracts` 或 `qlib-exchange-runtime` 单独设为 required check。
