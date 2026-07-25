@@ -57,6 +57,7 @@ CONTROLLED_OUTPUTS = (
     "sample_eligibility_receipt.csv",
     "validation_transform_receipt.csv",
     "partition_source_receipt.csv",
+    "superseded_artifacts.csv",
     "target_transform_manifest.json",
     "preprocessing_protocol.json",
     "metric_registry.json",
@@ -175,6 +176,7 @@ def _publish(
             ("sample_eligibility_receipt.csv", "sample_eligibility_receipt"),
             ("validation_transform_receipt.csv", "validation_transform_receipt"),
             ("partition_source_receipt.csv", "partition_source_receipt"),
+            ("superseded_artifacts.csv", "superseded_artifacts"),
             ("mutation_results.csv", "mutation_results"),
             ("access_audit.csv", "access_audit"),
             ("resource_summary.csv", "resource_summary"),
@@ -565,6 +567,14 @@ def run_canary(
         "sample_eligibility_receipt": eligibility,
         "validation_transform_receipt": validation_transform,
         "partition_source_receipt": partition_receipts,
+        "superseded_artifacts": pd.DataFrame(
+            columns=[
+                "artifact_id",
+                "stage_id",
+                "disposition",
+                "reason",
+            ]
+        ),
         "mutation_results": mutations,
         "access_audit": pd.DataFrame(audit.rows()),
         "resource_summary": pd.DataFrame(
@@ -641,3 +651,388 @@ def validate_canary_binding(
             "canary protocol binding differs from current base protocol"
         )
     return expected
+
+
+def freeze_protocol(
+    config: dict[str, Any],
+    *,
+    canary_manifest_path: Path,
+    dry_run_manifest_path: Path,
+    superseded_manifest_path: Path,
+) -> dict[str, Any]:
+    resolution = resolve_authoritative_parents(parent_paths(config))
+    binding = validate_canary_binding(
+        config=config,
+        resolution=resolution,
+        canary_manifest_path=canary_manifest_path,
+    )
+    dry_manifest = load_artifact_manifest(dry_run_manifest_path)
+    dry_issues = validate_manifest_outputs(
+        dry_manifest, dry_run_manifest_path.parent
+    )
+    if (
+        dry_issues
+        or dry_manifest.get("stage_id") != STAGE_ID
+        or dry_manifest.get("artifact_status") != "pass"
+        or dry_manifest.get("lineage_status") != "complete"
+        or bool(dry_manifest.get("code_dirty"))
+    ):
+        raise ValueError(f"invalid development dry-run artifact: {dry_issues}")
+    observed_dry_binding = json.loads(
+        (dry_run_manifest_path.parent / "protocol_binding.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    if observed_dry_binding != binding:
+        raise ValueError("development dry-run binding differs from current protocol")
+    dry_contracts = pd.read_csv(
+        dry_run_manifest_path.parent / "contract_status.csv"
+    )
+    dry_contract_map = dry_contracts.set_index("check_name")["status"].to_dict()
+    if dry_contract_map.get("development_dry_run_ready") != "pass":
+        raise ValueError("full development dry-run is not ready")
+    dry_readiness = pd.read_csv(
+        dry_run_manifest_path.parent / "readiness_summary.csv"
+    )
+    if len(dry_readiness) != 1 or not bool(
+        dry_readiness.iloc[0]["development_dry_run_ready"]
+    ):
+        raise ValueError("development dry-run readiness is false")
+
+    superseded = load_artifact_manifest(superseded_manifest_path)
+    superseded_issues = validate_manifest_outputs(
+        superseded, superseded_manifest_path.parent
+    )
+    if superseded_issues:
+        raise ValueError(f"superseded V1 artifact is invalid: {superseded_issues}")
+
+    split_inputs = pd.read_csv(
+        dry_run_manifest_path.parent / "split_input_manifest.csv"
+    )
+    feature_order = pd.read_csv(
+        dry_run_manifest_path.parent / "feature_order_manifest.csv"
+    )
+    eligibility = pd.read_csv(
+        dry_run_manifest_path.parent / "sample_eligibility_receipt.csv"
+    )
+    validation = pd.read_csv(
+        dry_run_manifest_path.parent / "validation_transform_receipt.csv"
+    )
+    partitions = pd.read_csv(
+        dry_run_manifest_path.parent / "partition_source_receipt.csv"
+    )
+    access = pd.read_csv(dry_run_manifest_path.parent / "access_audit.csv")
+    resources = pd.read_csv(
+        dry_run_manifest_path.parent / "resource_summary.csv"
+    )
+    mutations = pd.read_csv(canary_manifest_path.parent / "mutation_results.csv")
+    allowlists = pd.read_csv(resolve(config["selection"]["allowlist_manifest"]))
+    expected_split_ids = [str(item) for item in config["development_dry_run"]["split_ids"]]
+
+    split_hashes_valid = True
+    split_observed: list[dict[str, object]] = []
+    for split_id in expected_split_ids:
+        expected = allowlists.loc[
+            allowlists["outer_split_id"].astype(str).eq(split_id)
+        ]
+        observed = split_inputs.loc[
+            split_inputs["outer_split_id"].astype(str).eq(split_id)
+        ]
+        if len(expected) != 1 or len(observed) != 2:
+            split_hashes_valid = False
+            continue
+        expected_row = expected.iloc[0]
+        current = {
+            "outer_split_id": split_id,
+            "factor_count": int(observed["factor_count"].iloc[0]),
+            "allowlist_sha256": str(observed["allowlist_sha256"].iloc[0]),
+            "feature_order_sha256": str(
+                observed["feature_order_sha256"].iloc[0]
+            ),
+        }
+        split_observed.append(current)
+        split_hashes_valid = split_hashes_valid and (
+            current["factor_count"] == int(expected_row["factor_count"])
+            and current["allowlist_sha256"]
+            == str(expected_row["allowlist_sha256"])
+            and current["feature_order_sha256"]
+            == str(expected_row["feature_order_sha256"])
+        )
+    date_assignments = pd.read_csv(
+        parent_paths(config).selection_date_assignments
+    )
+    expected_date_count = int(
+        date_assignments.loc[
+            date_assignments["split_id"].astype(str).isin(expected_split_ids)
+            & date_assignments["fold"]
+            .astype(str)
+            .isin(["train", "validation"])
+        ].shape[0]
+    )
+    sample_exact = (
+        len(eligibility) == expected_date_count
+        and eligibility["datetime"].notna().all()
+        and eligibility["status"].astype(str).eq("pass").all()
+    )
+    validation_ready = (
+        set(validation["outer_split_id"].astype(str)) == set(expected_split_ids)
+        and validation["status"].astype(str).eq("pass").all()
+        and (
+            pd.to_numeric(validation["transform_coverage"])
+            >= float(config["validation"]["minimum_transform_coverage"])
+        ).all()
+    )
+    matrix_ready = (
+        not partitions.empty
+        and partitions["hash_verified"].astype(bool).all()
+        and partitions["observed_sha256"].astype(str).eq(
+            partitions["recorded_sha256"].astype(str)
+        ).all()
+    )
+    test_reads = int(
+        pd.to_numeric(
+            access.loc[access["fold"].astype(str).eq("test"), "read_count"]
+        ).sum()
+    )
+    parent_stages = [str(item["stage_id"]) for item in resolution.receipts]
+    matrix_issues = validate_manifest_outputs(
+        resolution.manifests["matrix"], parent_paths(config).matrix_manifest.parent
+    )
+    labels_issues = validate_manifest_outputs(
+        resolution.manifests["labels"], parent_paths(config).labels_manifest.parent
+    )
+    policy_valid = (
+        config["linear_model"]["solver_auto"] == "forbidden"
+        and config["lightgbm"]["early_stopping"] is False
+        and config["lightgbm"]["boosting_round_checkpoints"]
+        == [100, 200, 400, 800]
+    )
+    contracts = pd.DataFrame(
+        [
+            contract_row(
+                "manifest_bound_entry_gate_valid",
+                config["stage_id"] == STAGE_ID
+                and str(config["protocol_closure_version"]) == "1.1",
+                {
+                    "stage_id": config["stage_id"],
+                    "protocol_closure_version": config[
+                        "protocol_closure_version"
+                    ],
+                    "entry_type": "artifact_manifest_only",
+                },
+                {
+                    "stage_id": STAGE_ID,
+                    "protocol_closure_version": "1.1",
+                    "entry_type": "artifact_manifest_only",
+                },
+            ),
+            contract_row(
+                "authoritative_selection_closure_consumed",
+                "research_selection_lineage_closure_v1" in parent_stages,
+                parent_stages,
+                "research_selection_lineage_closure_v1 present",
+            ),
+            contract_row(
+                "date_split_semantics_authority_consumed",
+                "date_split_semantics_v1" in parent_stages,
+                parent_stages,
+                "date_split_semantics_v1 present",
+            ),
+            contract_row(
+                "legacy_purged_split_not_direct_parent",
+                "purged_walk_forward_v1" not in parent_stages,
+                parent_stages,
+                "legacy stage absent",
+            ),
+            contract_row(
+                "date_assignment_payload_hash_equal",
+                bool(resolution.date_assignment_sha256),
+                resolution.date_assignment_sha256,
+                resolution.date_assignment_sha256,
+            ),
+            contract_row(
+                "canary_protocol_binding_valid",
+                observed_dry_binding == binding,
+                binding["binding_sha256"],
+                binding["binding_sha256"],
+            ),
+            contract_row(
+                "matrix_v4_hash_valid",
+                not matrix_issues,
+                [issue.reason for issue in matrix_issues],
+                [],
+            ),
+            contract_row(
+                "labels_v2_hash_valid",
+                not labels_issues,
+                [issue.reason for issue in labels_issues],
+                [],
+            ),
+            contract_row(
+                "split_allowlists_exact",
+                split_hashes_valid,
+                split_observed,
+                [
+                    {
+                        "outer_split_id": row.outer_split_id,
+                        "factor_count": int(row.factor_count),
+                        "allowlist_sha256": row.allowlist_sha256,
+                        "feature_order_sha256": row.feature_order_sha256,
+                    }
+                    for row in allowlists.loc[
+                        allowlists["outer_split_id"].astype(str).isin(
+                            expected_split_ids
+                        )
+                    ].itertuples(index=False)
+                ],
+            ),
+            contract_row(
+                "sample_eligibility_exact",
+                sample_exact,
+                {
+                    "receipt_date_count": len(eligibility),
+                    "all_dates_pass": eligibility["status"]
+                    .astype(str)
+                    .eq("pass")
+                    .all(),
+                },
+                {
+                    "receipt_date_count": expected_date_count,
+                    "all_dates_pass": True,
+                },
+            ),
+            contract_row(
+                "validation_transform_ready",
+                validation_ready,
+                validation[
+                    ["outer_split_id", "transform_coverage", "status"]
+                ].to_dict("records"),
+                "all three split transforms pass",
+            ),
+            contract_row(
+                "matrix_runtime_authority_valid",
+                matrix_ready,
+                partitions[
+                    ["batch_id", "hash_verified", "observed_sha256"]
+                ].to_dict("records"),
+                "all selected partitions hash-verified",
+            ),
+            contract_row(
+                "development_dry_run_ready",
+                dry_contract_map.get("development_dry_run_ready") == "pass",
+                dry_contract_map.get("development_dry_run_ready"),
+                "pass",
+            ),
+            contract_row(
+                "target_transform_frozen",
+                config["target"]["training_transform"]
+                == "daily_cross_sectional_rank_centered_v2",
+                config["target"]["training_transform"],
+                "daily_cross_sectional_rank_centered_v2",
+            ),
+            contract_row(
+                "metric_and_model_policy_frozen",
+                policy_valid,
+                {
+                    "solver_auto": config["linear_model"]["solver_auto"],
+                    "early_stopping": config["lightgbm"]["early_stopping"],
+                    "checkpoints": config["lightgbm"][
+                        "boosting_round_checkpoints"
+                    ],
+                },
+                {
+                    "solver_auto": "forbidden",
+                    "early_stopping": False,
+                    "checkpoints": [100, 200, 400, 800],
+                },
+            ),
+            contract_row(
+                "test_read_count_before_freeze_zero",
+                test_reads == 0,
+                test_reads,
+                0,
+            ),
+        ]
+    )
+    ready = contracts["status"].eq("pass").all()
+    payloads = common_payloads(config)
+    payloads["target_transform"]["target_transform_id"] = (
+        TARGET_TRANSFORM_V2_ID
+    )
+    payloads["protocol_binding"] = binding
+    frames = {
+        "parent_receipts": pd.DataFrame(resolution.receipts),
+        "split_input_manifest": split_inputs,
+        "feature_order_manifest": feature_order,
+        "sample_eligibility_receipt": eligibility,
+        "validation_transform_receipt": validation,
+        "partition_source_receipt": partitions,
+        "superseded_artifacts": pd.DataFrame(
+            [
+                {
+                    "artifact_id": superseded["artifact_id"],
+                    "stage_id": superseded["stage_id"],
+                    "disposition": "superseded_for_model_entry",
+                    "reason": (
+                        "V1 entry was CSV-based and lacked exact canary/config "
+                        "binding and development dry-run closure."
+                    ),
+                }
+            ]
+        ),
+        "mutation_results": mutations,
+        "access_audit": access,
+        "resource_summary": resources,
+        "contract_status": contracts,
+        "readiness_summary": pd.DataFrame(
+            [
+                {
+                    "protocol_closure_version": "1.1",
+                    "research_model_protocol_ready": ready,
+                    "research_model_input_protocol_ready": ready,
+                    "research_model_input_ready": ready,
+                    "research_model_training_ready": ready,
+                    "research_model_hard_stop_active": not ready,
+                    "production_model_hard_stop_active": True,
+                    "production_model_selected": False,
+                    "research_model_experiment_started": False,
+                    "linear_model_research_complete": False,
+                    "lightgbm_model_research_complete": False,
+                    "historical_oos_model_comparison_complete": False,
+                    "core_model_ready": False,
+                    "pr5_model_training_ready": False,
+                    "model_training_started": False,
+                    "experiment_class": "post_observation_research",
+                    "historical_test_already_observed": True,
+                    "authoritative_execution": False,
+                    "unbiased_final_estimate": False,
+                    "development_dry_run_ready": ready,
+                    "test_read_count_before_freeze": test_reads,
+                }
+            ]
+        ),
+    }
+    return _publish(
+        config=config,
+        output_dir=resolve(config["output_dir"]),
+        resolution=resolution,
+        frames=frames,
+        payloads=payloads,
+        report=(
+            "# Research Model Protocol V1.1 Closure\n\n"
+            "- Model entry is bound to this artifact manifest; direct readiness "
+            "CSV entry is forbidden.\n"
+            "- Canary and full freeze share exact protocol, parent and selection "
+            "bindings.\n"
+            "- Target ranks are calculated inside final eligible samples.\n"
+            "- All three full development splits passed train-only preprocessing "
+            "and validation transform dry-runs.\n"
+            "- V1 is superseded for model entry. Test reads: 0. Model fits: 0.\n"
+        ),
+        input_manifest_paths=[
+            *parent_paths(config).direct_model_parent_paths,
+            canary_manifest_path,
+            dry_run_manifest_path,
+            superseded_manifest_path,
+        ],
+    )

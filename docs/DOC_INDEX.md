@@ -8,6 +8,8 @@
   路径感知 CI 与稳定 `ci-gate` 政策：纯文档只跑快速 diff/link/index/大文件检查，普通研究代码跑完整 pytest/validators，只有 Qlib 执行链、相关依赖或 workflow 变化才安装并运行 Qlib runtime。
 - `RESEARCH_MODEL_PROTOCOL_V1_IMPLEMENTATION.md`
   逻辑 PR #5A 实施说明：权威 parent、split-specific 输入、零 test-read canary、统一统计/预处理协议、scope-aware research gate，以及继续关闭的生产和 authoritative execution 边界。
+- `RESEARCH_MODEL_PROTOCOL_V1_1_CLOSURE.md`
+  逻辑 PR #5A.1 收口：artifact-only 模型入口、Canary/config 强绑定、最终样本内 target 排名、validation transform，以及三个 split 的 development-only full dry-run。
 - `RESEARCH_GRADE_MULTIFACTOR_MODEL_V1_PLAN.md`
   当前唯一执行计划。Historical Instrument State Decision B 已冻结，不再继续搜索历史公告；模型阶段按 PR #5A 输入协议、PR #5B Ridge/Elastic Net、PR #5C LightGBM、PR #5D 历史科学比较推进。日期 authority 使用 `date_split_semantics_v1` 与 Selection Lineage Closure，旧 purged manifest 禁止作直接 parent；预处理、solver、环境锁和 LightGBM 固定 checkpoint 已精确冻结。研究模型允许产生 post-observation evidence，但 authoritative execution、无偏最终估计和生产模型选择继续关闭。
 - `HISTORICAL_INSTRUMENT_STATE_V2_PLAN.md`

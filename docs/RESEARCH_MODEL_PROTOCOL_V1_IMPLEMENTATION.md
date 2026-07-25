@@ -1,5 +1,11 @@
 # Research Model Protocol V1 实施说明
 
+> **2026-07-25 supersession：** 本 artifact 的输入协议证据仍保留，但其直接
+> readiness CSV 入口已废止。模型入口和训练资格仅由
+> `RESEARCH_MODEL_PROTOCOL_V1_1_CLOSURE.md` 及
+> `outputs/research_model_protocol_v1_1/current/artifact_manifest.json`
+> 决定。
+
 > 逻辑阶段：PR #5A
 > 实验类别：`post_observation_research`
 > 正式模型训练：未启动

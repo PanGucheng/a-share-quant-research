@@ -217,7 +217,13 @@ def assert_research_model_entry_artifact(
         ("production_model_hard_stop_active", True),
         ("production_model_selected", False),
     ):
-        if _as_bool(row.get(field), field=field) is not expected:
+        try:
+            observed = _as_bool(row.get(field), field=field)
+        except ValueError as exc:
+            raise ModelScopeBlockedError(
+                f"model scope blocked: invalid {field}: {exc}"
+            ) from exc
+        if observed is not expected:
             raise ModelScopeBlockedError(
                 f"model scope blocked: {field} must be {str(expected).lower()}"
             )

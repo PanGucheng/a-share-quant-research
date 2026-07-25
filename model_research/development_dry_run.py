@@ -486,6 +486,14 @@ def run_development_dry_run(
         "sample_eligibility_receipt": eligibility,
         "validation_transform_receipt": validation,
         "partition_source_receipt": partitions,
+        "superseded_artifacts": pd.DataFrame(
+            columns=[
+                "artifact_id",
+                "stage_id",
+                "disposition",
+                "reason",
+            ]
+        ),
         "mutation_results": pd.DataFrame(
             [
                 {

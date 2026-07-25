@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 from pathlib import Path
+import json
+import shutil
 
 import numpy as np
 import pandas as pd
@@ -321,3 +323,30 @@ def test_v1_1_binding_changes_for_protocol_mutation() -> None:
         changed["policy_section_sha256"]["target"]
         != baseline["policy_section_sha256"]["target"]
     )
+
+
+def test_v1_1_artifact_entry_accepts_verified_current_and_rejects_tamper(
+    tmp_path: Path,
+) -> None:
+    source = ROOT / "outputs/research_model_protocol_v1_1/current"
+    manifest_path = source / "artifact_manifest.json"
+    if not manifest_path.is_file():
+        pytest.skip("V1.1 compact artifact is published later in the implementation")
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    if bool(manifest.get("code_dirty")):
+        pytest.skip("local pre-publication artifact is intentionally dirty")
+    assert_research_model_entry_artifact(
+        manifest_path,
+        experiment_class="post_observation_research",
+    )
+    tampered = tmp_path / "current"
+    shutil.copytree(source, tampered)
+    readiness_path = tampered / "readiness_summary.csv"
+    readiness = pd.read_csv(readiness_path)
+    readiness.loc[0, "authoritative_execution"] = True
+    readiness.to_csv(readiness_path, index=False)
+    with pytest.raises(ModelScopeBlockedError, match="output_hash_mismatch"):
+        assert_research_model_entry_artifact(
+            tampered / "artifact_manifest.json",
+            experiment_class="post_observation_research",
+        )
