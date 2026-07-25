@@ -1,0 +1,9 @@
+check_name,status,severity,observed,expected,reason
+release_freeze_validated_before_first_test_read,pass,critical,true,true,
+single_test_release,pass,critical,6,6,
+prediction_schema_valid,pass,critical,1,1,
+prediction_coverage_valid,pass,critical,0.9953051643192489,""">=0.95""",
+test_metrics_finite,pass,critical,"[{""outer_split_id"": ""split_001"", ""method"": ""ridge"", ""mean_daily_rank_ic"": 0.07556115857297172, ""daily_rank_ic_ir"": 0.4394398161113786}, {""outer_split_id"": ""split_001"", ""method"": ""elastic_net"", ""mean_daily_rank_ic"": 0.08463535243458627, ""daily_rank_ic_ir"": 0.5112311320225005}, {""outer_split_id"": ""split_002"", ""method"": ""ridge"", ""mean_daily_rank_ic"": 0.12620404649911546, ""daily_rank_ic_ir"": 0.6707494244034145}, {""outer_split_id"": ""split_002"", ""method"": ""elastic_net"", ""mean_daily_rank_ic"": 0.11829804071739052, ""daily_rank_ic_ir"": 0.6430573397360072}, {""outer_split_id"": ""split_003"", ""method"": ""ridge"", ""mean_daily_rank_ic"": 0.057644408516549096, ""daily_rank_ic_ir"": 0.4199411904670578}, {""outer_split_id"": ""split_003"", ""method"": ""elastic_net"", ""mean_daily_rank_ic"": 0.05772899061102505, ""daily_rank_ic_ir"": 0.4224838749804385}]","""all finite""",
+model_binary_hash_valid,pass,critical,6,6,
+historical_oos_disclosure_valid,pass,critical,true,true,
+production_model_not_selected,pass,critical,false,false,
