@@ -1,0 +1,40 @@
+{
+  "artifact_id": "research_linear_models_v1:1289518d45f773355a10e7b3ece2bf47d2d41b6a29a012be9624d44b4f73b00b",
+  "artifact_status": "pass",
+  "blocked_reason": "",
+  "code_commit_sha": "d385a99fd47d1d1eac76ef18af1741247c385645",
+  "code_diff_sha256": "",
+  "code_dirty": false,
+  "config_sha256": "8488f41b136e5106767791f7a345615a7bae1bd40038292f80317dc088a8b5ec",
+  "created_at": "2026-07-25T09:07:44.687089+00:00",
+  "end_date": null,
+  "factor_catalog_id": "factor-catalog:8c031a09892fc915ac45201942f563925a9bab617e60fce5ecbbe274a51a02e1",
+  "factor_frame_id": "factor-frame-v4:f1e93a2428446673f5c873a01886a38ae9e654e5f863cf2b236040dbbf28dc3c",
+  "input_artifact_ids": [
+    "research_model_protocol_v1_1:ae43f92603de397c8249c8c50ea6db2b0001fabeaabb98f00a183f1d34c7401c"
+  ],
+  "lineage_status": "complete",
+  "missing_lineage_fields": [],
+  "output_file_hashes": {
+    "access_audit.csv": "cee85bab8297bd84767a0f18d564fcb123102b3884076716dcb13151ca678a35",
+    "contract_status.csv": "1941e8ac770df8c8cc251a0eb08bf4db5885b243c5c2737ca66ecb13fdb756e8",
+    "parent_receipts.csv": "24b35afaaf08b2fdd3bd7d38d30360a5d90b81ebde7899625e094ba30f9fe8c5",
+    "readiness_summary.csv": "cdad927d90c659c76c18e7eb222b5a2a1f81f3b9e7af44a9a11b83fd784ce5cd",
+    "resolved_config.json": "9a7479c8a67c2608fdacf6929c8763c0267782bd5d94bf05e3b29b84069db53b",
+    "resource_summary.csv": "0e2ef49b7ba3a5a1f97208d6df3e56ae6dd482f48fa02313a76b79a0e7a680ad",
+    "ridge_solver_receipt.json": "1931fae4f374067f929edf2e712e560aa7b1b544a92c53763f26daac71f96398",
+    "run_report.md": "6e802b60c6e40904964337e53068bdb5c5f65f379e28e485523dfbe5da0c3d64",
+    "run_review_bundle.json": "d47ec9520f0b451a509543cb07afcf1e34c58020ec28012a099d5cd708c162f6",
+    "solver_canary_results.csv": "b62bf6a4d302007d4326838c8eed3cb1b2cb9f08147e27c536033bf2ffdb215d"
+  },
+  "producer_run_id": "20260725T090744Z-9c859d1a",
+  "profile_name": "full_research",
+  "profile_type": "full_research",
+  "research_run_family_id": "full_research_factor_669_v1",
+  "run_id": "20260725T090744Z-9c859d1a",
+  "schema_version": 2,
+  "split_manifest_id": "split-manifest:75ccf0f37e85422729d54aef5a363f68d4f9b3daed3d42a87eb120e6b5aefe0e",
+  "stage_id": "research_linear_models_v1",
+  "start_date": null,
+  "universe_artifact_id": "universe-v2:a7875d74d5119230ab5576cb245fe8b389e0dd3030606299dad6d1f0e147ccd2"
+}

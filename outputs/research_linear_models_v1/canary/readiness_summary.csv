@@ -1,0 +1,2 @@
+solver_canary_ready,ridge_development_ready,elastic_net_development_ready,linear_model_research_complete,research_model_experiment_started,model_training_started,test_read_count_before_freeze,production_model_selected,authoritative_execution,unbiased_final_estimate
+True,True,False,False,True,True,0,False,False,False

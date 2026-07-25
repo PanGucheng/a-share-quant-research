@@ -1,0 +1,6 @@
+check_name,status,severity,observed,expected,reason
+protocol_artifact_gate_valid,pass,critical,"""research_model_protocol_v1_1:ae43f92603de397c8249c8c50ea6db2b0001fabeaabb98f00a183f1d34c7401c""","""hash-verified V1.1 protocol""",
+solver_auto_forbidden,pass,critical,"[""cholesky"", ""lsqr""]","""auto absent""",
+solver_repeat_hash_stable,pass,critical,"{""cholesky"": [""pass"", ""pass""], ""lsqr"": [""pass"", ""pass""]}","""all pass""",
+test_read_count_before_freeze_zero,pass,critical,0,0,
+resource_budget_valid,pass,critical,1.12890625,4096,
