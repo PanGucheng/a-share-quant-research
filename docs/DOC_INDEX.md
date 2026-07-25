@@ -4,6 +4,8 @@
 
 ## Current Working Documents
 
+- `PROSPECTIVE_FORWARD_CONFIRMATION_V1_PLAN.md`
+  PR #5D 后的当前执行计划：把 2026-02-05—2026-06-09 既有扩展隔离为非 prospective 证据，冻结 LightGBM split_003 规格作为 research-only provisional candidate；先完成协议、refit 和不可变 freeze，再等待 2026-06-09 后且 freeze 后首次到达的新数据，至少 60 个标签成熟日期后才允许一次 primary confirmation。
 - `CI_POLICY.md`
   路径感知 CI 与稳定 `ci-gate` 政策：纯文档只跑快速 diff/link/index/大文件检查，普通研究代码跑完整 pytest/validators，只有 Qlib 执行链、相关依赖或 workflow 变化才安装并运行 Qlib runtime。
 - `RESEARCH_MODEL_PROTOCOL_V1_IMPLEMENTATION.md`
