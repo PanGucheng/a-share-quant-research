@@ -1,0 +1,2 @@
+fit_row_count,factor_count,candidate_solver_count,repeat_fit_count,peak_memory_delta_mb,wall_time_seconds,free_disk_gb_at_start,test_read_count
+39886,5,2,4,1.12890625,0.02910610000253655,377.0471954345703,0

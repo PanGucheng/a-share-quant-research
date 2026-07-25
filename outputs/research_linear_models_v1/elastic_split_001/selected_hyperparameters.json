@@ -1,0 +1,13 @@
+{
+  "split_001:elastic_net": {
+    "alpha": 0.01,
+    "candidate_sha256": "6203286bc0077b5eb48b61a527accaa85afb169620cc0d61ce25a9b96ef6cf2e",
+    "fit_intercept": true,
+    "l1_ratio": 0.5,
+    "max_iter": 5000,
+    "method": "elastic_net",
+    "random_state": 20260725,
+    "selection": "cyclic",
+    "tol": 1e-05
+  }
+}

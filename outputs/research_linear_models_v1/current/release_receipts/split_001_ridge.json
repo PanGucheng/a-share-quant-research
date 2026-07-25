@@ -1,0 +1,22 @@
+{
+  "authoritative_execution": false,
+  "development_artifact_id": "research_linear_models_v1:b7efca2b26bd118e377c13ab21523f9102e827f75e8c5da65d7d26a37fc5008e",
+  "execution_commit_sha": "ebb1643e76cc418a5a73a8fb129a1736e618e2b1",
+  "freeze_artifact_id": "research_linear_test_release_freeze_v1:a2e6a29d43ee605d1325ffd467f27e98da07289df086381b4b147962e89060f1",
+  "freeze_id": "linear-test-release-freeze:24b62d170ed53dae74c8d5ab19f904e9e6cd285146e925ed09be2d88fedf322d",
+  "freeze_sha256": "f305160ef72be361fb392cb3ba636eb32b6cc0d7aab3c52efabb629c46df8502",
+  "historical_test_already_observed": true,
+  "method": "ridge",
+  "outer_split_id": "split_001",
+  "prediction_artifact_id": "linear-prediction:f3b4c33abd49a45715c8cd7fdfe382b73ab89f06793796085ae3ca763b073599",
+  "prediction_row_count": 239982,
+  "prediction_sha256": "911984462a46d060067ae920bb0dd73e13531634d8dbb85fd07b775ce8eadff8",
+  "production_model_selected": false,
+  "release_id": "linear-test-release:2b97be5c72d215ca940d56af47db5f1cf3aba633623e3ef26d1b27bf1301ca1b",
+  "release_timestamp": "2026-07-25T16:58:14.682831+00:00",
+  "schema_version": 1,
+  "status": "consumed",
+  "test_dates_sha256": "4d0cffda19519732685109a0a2d37e38c1a3748ecd94d7c403346df174c58a15",
+  "test_label_sha256": "1dd0933588aee587963c80dd9a56436539e0aff3e851abc056b305d2776f1c18",
+  "unbiased_final_estimate": false
+}

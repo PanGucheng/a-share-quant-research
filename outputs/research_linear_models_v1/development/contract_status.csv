@@ -1,0 +1,8 @@
+check_name,status,severity,observed,expected,reason
+linear_split_method_coverage_exact,pass,critical,"[""split_001:elastic_net"", ""split_001:ridge"", ""split_002:elastic_net"", ""split_002:ridge"", ""split_003:elastic_net"", ""split_003:ridge""]","[""split_001:elastic_net"", ""split_001:ridge"", ""split_002:elastic_net"", ""split_002:ridge"", ""split_003:elastic_net"", ""split_003:ridge""]",
+candidate_grid_exact,pass,critical,"{""('split_001', 'elastic_net')"": 15, ""('split_001', 'ridge')"": 5, ""('split_002', 'elastic_net')"": 15, ""('split_002', 'ridge')"": 5, ""('split_003', 'elastic_net')"": 15, ""('split_003', 'ridge')"": 5}","""5 Ridge and 15 Elastic Net candidates per split""",
+validation_mutation_invariance_pass,pass,critical,"[""pass"", ""pass"", ""pass"", ""pass"", ""pass"", ""pass""]","""all pass""",
+model_binary_hash_valid,pass,critical,true,true,
+fitted_preprocessing_hash_valid,pass,critical,true,true,
+pre_test_freeze_valid,pass,critical,"{""freeze_count"": 6, ""model_hashes_valid"": true}","{""freeze_count"": 6, ""model_hashes_valid"": true}",
+test_read_count_before_freeze_zero,pass,critical,0,0,

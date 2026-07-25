@@ -1,0 +1,7 @@
+input_kind,fold,read_count
+feature,test,0
+feature,train,1932
+feature,validation,214
+label,test,0
+label,train,126
+label,validation,14

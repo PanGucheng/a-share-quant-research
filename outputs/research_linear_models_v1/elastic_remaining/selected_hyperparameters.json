@@ -1,0 +1,24 @@
+{
+  "split_002:elastic_net": {
+    "alpha": 0.01,
+    "candidate_sha256": "0e7c270ac33bad6b82fbd8ab55a384d7b25efa422b408f9c027c28651448441e",
+    "fit_intercept": true,
+    "l1_ratio": 0.9,
+    "max_iter": 5000,
+    "method": "elastic_net",
+    "random_state": 20260725,
+    "selection": "cyclic",
+    "tol": 1e-05
+  },
+  "split_003:elastic_net": {
+    "alpha": 0.001,
+    "candidate_sha256": "471d9723d2459a3350c16a163c2ffeed430b7e152926919da555610cd68947fe",
+    "fit_intercept": true,
+    "l1_ratio": 0.1,
+    "max_iter": 5000,
+    "method": "elastic_net",
+    "random_state": 20260725,
+    "selection": "cyclic",
+    "tol": 1e-05
+  }
+}

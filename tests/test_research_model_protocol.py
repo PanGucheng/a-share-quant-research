@@ -31,6 +31,13 @@ from model_research.lineage import (
     resolve_authoritative_parents,
     resolve_matrix_runtime_authority,
 )
+from model_research.linear_models import (
+    _candidate_grid,
+    _select_candidate,
+    _validation_metrics,
+    load_linear_config,
+)
+from model_research.linear_execution import load_linear_execution_config
 from model_research.preprocessing import (
     daily_equal_weights,
     fit_weighted_preprocessing,
@@ -213,6 +220,101 @@ def test_matrix_runtime_is_resolved_from_authoritative_manifest(
     assert runtime.factor_index[factor_name] == partition_path
     assert runtime.runtime_dir == runtime_dir
     assert runtime.partition_receipts[0]["hash_verified"] is True
+
+
+def test_linear_model_config_freezes_candidate_counts_and_rejects_auto(
+    tmp_path: Path,
+) -> None:
+    source = ROOT / "configs/research_linear_models_v1.yaml"
+    config = yaml.safe_load(source.read_text(encoding="utf-8"))
+    assert load_linear_config(source)["validation"]["primary_metric"] == (
+        "mean_daily_rank_ic"
+    )
+    config["ridge"]["solver"] = "auto"
+    rejected = tmp_path / "linear.yaml"
+    rejected.write_text(
+        yaml.safe_dump(config, sort_keys=False),
+        encoding="utf-8",
+    )
+    with pytest.raises(ValueError, match="solver=auto"):
+        load_linear_config(rejected)
+
+
+def test_linear_candidate_grid_and_metric_tie_breaks_are_frozen() -> None:
+    config = load_linear_config(
+        ROOT / "configs/research_linear_models_v1.yaml"
+    )
+    ridge = _candidate_grid(
+        config,
+        method="ridge",
+        solver="lsqr",
+        limit=None,
+    )
+    elastic = _candidate_grid(
+        config,
+        method="elastic_net",
+        solver="lsqr",
+        limit=None,
+    )
+    assert len(ridge) == 5
+    assert len(elastic) == 15
+    assert all(candidate["solver"] != "auto" for candidate in ridge)
+    metrics = pd.DataFrame(
+        [
+            {
+                **ridge[0],
+                "mean_daily_rank_ic": 0.01,
+                "daily_rank_ic_ir": 0.2,
+                "prediction_coverage": 1.0,
+                "nonzero_coefficient_count": 2,
+                "status": "pass",
+            },
+            {
+                **ridge[-1],
+                "mean_daily_rank_ic": 0.01,
+                "daily_rank_ic_ir": 0.2,
+                "prediction_coverage": 1.0,
+                "nonzero_coefficient_count": 2,
+                "status": "pass",
+            },
+        ]
+    )
+    assert float(_select_candidate(metrics, method="ridge")["alpha"]) == 100.0
+
+
+def test_linear_execution_config_keeps_corrected_semantics() -> None:
+    config = load_linear_execution_config(
+        ROOT / "configs/research_linear_execution_v1.yaml"
+    )
+    assert config["methods"] == ["ridge", "elastic_net"]
+    assert config["execution"]["signal_lag_trading_days"] == 1
+    assert config["execution"]["strict_t_plus_one"] is True
+    assert config["execution"]["dynamic_lot_rules"] is True
+    assert config["market_cache_manifest"].startswith(
+        "outputs/market_cache_v3/"
+    )
+    assert config["execution"]["maximum_stale_valuation_days"] == 20
+
+
+def test_linear_validation_metric_is_daily_rank_ic() -> None:
+    metadata = pd.DataFrame(
+        {
+            "datetime": pd.to_datetime(
+                ["2024-01-02"] * 3 + ["2024-01-03"] * 3
+            ),
+            "instrument": ["a", "b", "c", "a", "b", "c"],
+            "__label": [1.0, 2.0, 3.0, 3.0, 2.0, 1.0],
+        }
+    )
+    result = _validation_metrics(
+        metadata,
+        np.asarray([1.0, 2.0, 3.0, 3.0, 2.0, 1.0]),
+    )
+    assert result["mean_daily_rank_ic"] == pytest.approx(1.0)
+    assert result["prediction_coverage"] == 1.0
+    constant = _validation_metrics(metadata, np.ones(len(metadata)))
+    assert constant["daily_ic_count"] == 0
+    assert constant["mean_daily_rank_ic"] == float("-inf")
 
 
 def test_weighted_preprocessing_is_daily_equal_and_order_stable() -> None:

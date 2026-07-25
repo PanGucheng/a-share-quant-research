@@ -1,0 +1,2 @@
+outer_split_id,market_row_count,calendar_day_count,instrument_count,suspended_count,limit_up_count,limit_down_count,authoritative_row_count,stale_blocked_count
+split_001,4000,20,200,6,5,2,0,174

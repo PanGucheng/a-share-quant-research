@@ -1,0 +1,69 @@
+{
+  "canary": {
+    "instruments": 200,
+    "methods": [
+      "ridge"
+    ],
+    "output_dir": "outputs/research_linear_model_execution_v1/canary",
+    "runtime_dir": "outputs/research_linear_model_execution_v1/runtime/canary",
+    "split_ids": [
+      "split_001"
+    ],
+    "trading_days": 20
+  },
+  "executed_command": "scripts/run_research_linear_execution_v1.py",
+  "executed_scope": "full",
+  "execution": {
+    "buy_commission_rate": 0.0,
+    "dynamic_lot_rules": true,
+    "initial_cash": 10000000.0,
+    "lot_size": 1,
+    "max_participation_rate": 0.05,
+    "maximum_stale_valuation_days": 20,
+    "minimum_commission": 0.0,
+    "participation_share_tolerance": 1.0,
+    "risk_degree": 0.95,
+    "sell_commission_rate": 0.0,
+    "sell_tax_rate": 0.0,
+    "signal_lag_trading_days": 1,
+    "slippage_bps": 0.0,
+    "strict_t_plus_one": true,
+    "top_k": 50
+  },
+  "execution_source_sha256": "32e5ef44016f9d6cf13994c05dc45a48c8d2a2d234cacca013f8d9559a255179",
+  "experiment_class": "post_observation_research",
+  "fee_schedule": "configs/a_share_fee_schedule_v1.yaml",
+  "market_cache_dir": "outputs/market_cache_v3/current",
+  "market_cache_key": "55d7a4f0a86e4bb095d6d63ea9180000c8152cde5aa6b328ed74dc54208ab4e9",
+  "market_cache_manifest": "outputs/market_cache_v3/current/artifact_manifest.json",
+  "methods": [
+    "ridge",
+    "elastic_net"
+  ],
+  "output_dir": "E:/qlib_prj/qlib_baseline/outputs/research_linear_model_execution_v1/current",
+  "prediction_manifest": "outputs/research_linear_models_v1/current/artifact_manifest.json",
+  "profile_name": "full_research",
+  "profile_type": "full_research",
+  "qlib_environment_artifact_id": "qlib_environment_v1:9fb963c45740b9a1eef36f32d703494eb446513f7857eec3d7ca9acbb3711983",
+  "qlib_environment_manifest": "outputs/qlib_environment_v1/current/artifact_manifest.json",
+  "qlib_provider": "../qlib_data/cn_data_community_20260609_derived",
+  "release_freeze_manifest": "outputs/research_linear_models_v1/test_release_freeze/artifact_manifest.json",
+  "research_run_family_id": "full_research_factor_669_v1",
+  "runtime_dir": "E:/qlib_prj/qlib_baseline/outputs/research_linear_model_execution_v1/runtime",
+  "schema_version": 1,
+  "selected_methods": [
+    "ridge",
+    "elastic_net"
+  ],
+  "selected_splits": [
+    "split_001",
+    "split_002",
+    "split_003"
+  ],
+  "split_ids": [
+    "split_001",
+    "split_002",
+    "split_003"
+  ],
+  "stage_id": "research_linear_model_execution_v1"
+}

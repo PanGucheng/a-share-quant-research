@@ -1,0 +1,30 @@
+{
+  "approval_id": "user-session-waiver:50ca3e54ee3746bba1ca137c75a4cce8eb5ba8fedc50521cd9b0521063a27d17",
+  "approval_type": "user_session_waiver",
+  "code_commit_sha": "ca63d0c1cdec1cdb7c7c6338a111963cc5dc38ac",
+  "command": "'scripts\\run_research_linear_development_v1.py' --output-dir outputs/research_linear_models_v1/elastic_split_001 --runtime-dir outputs/research_linear_models_v1/runtime/elastic_split_001 --splits split_001 --methods elastic_net --full-scope",
+  "config_sha256": "edb9136213cdba8f9061543effff20f28f2bff425e73fe0a434dc510afc005d2",
+  "protocol_artifact_id": "research_model_protocol_v1_1:ae43f92603de397c8249c8c50ea6db2b0001fabeaabb98f00a183f1d34c7401c",
+  "resource_budget": {
+    "maximum_peak_rss_mb": 4096,
+    "maximum_runtime_disk_gb": 12,
+    "maximum_wall_time_hours": 8,
+    "minimum_free_disk_gb": 20
+  },
+  "schema_version": 1,
+  "scope": {
+    "candidate_limit": null,
+    "factor_limit": null,
+    "full_scope": true,
+    "methods": [
+      "elastic_net"
+    ],
+    "split_ids": [
+      "split_001"
+    ],
+    "train_date_limit": null,
+    "validation_date_limit": null
+  },
+  "solver_receipt_sha256": "848e9e1d386182f2a1cabd21b4f58c4a93b8f7f6339d0fb4e15c6f3807be4aba",
+  "test_read_budget": 0
+}

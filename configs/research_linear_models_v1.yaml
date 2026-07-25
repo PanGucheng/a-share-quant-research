@@ -1,0 +1,86 @@
+schema_version: 1
+stage_id: research_linear_models_v1
+profile_name: full_research
+profile_type: full_research
+research_run_family_id: full_research_factor_669_v1
+experiment_class: post_observation_research
+
+protocol_manifest: outputs/research_model_protocol_v1_1/current/artifact_manifest.json
+protocol_config: configs/research_model_protocol_v1_1.yaml
+
+execution:
+  split_ids: [split_001, split_002, split_003]
+  date_batch_size: 40
+  runtime_dir: outputs/research_linear_models_v1/runtime
+  output_dir: outputs/research_linear_models_v1/current
+  canary_output_dir: outputs/research_linear_models_v1/canary
+  test_read_budget_before_freeze: 0
+  num_threads: 1
+  random_seed: 20260725
+
+solver_canary:
+  split_id: split_001
+  factor_count: 5
+  train_date_count: 20
+  repeat_count: 2
+  candidates: [cholesky, lsqr]
+  eligibility: repeated_fit_coefficient_and_prediction_hash_stable
+  tie_breaks:
+    - lower_peak_memory
+    - lower_wall_time
+    - canonical_solver_name
+
+ridge:
+  alphas: [0.01, 0.1, 1.0, 10.0, 100.0]
+  fit_intercept: true
+  solver: frozen_by_solver_canary
+  maximum_candidates_per_split: 5
+  complexity_tie_break: larger_alpha
+
+elastic_net:
+  alphas: [0.001, 0.01, 0.1, 1.0, 10.0]
+  l1_ratios: [0.1, 0.5, 0.9]
+  fit_intercept: true
+  max_iter: 5000
+  tol: 1.0e-5
+  selection: cyclic
+  random_seed: 20260725
+  maximum_candidates_per_split: 15
+  complexity_tie_break:
+    - fewer_nonzero_coefficients
+    - larger_alpha
+    - larger_l1_ratio
+    - canonical_candidate_sha256
+
+validation:
+  primary_metric: mean_daily_rank_ic
+  tie_break_1: daily_rank_ic_ir
+  tie_break_2: prediction_coverage
+  tie_break_3: lower_model_complexity
+  final_tie_break: canonical_candidate_sha256
+  minimum_prediction_coverage: 0.95
+  final_fit_scope: outer_train_plus_validation
+
+pre_test:
+  required: true
+  release_count_per_split_method: 1
+  authoritative_execution: false
+  unbiased_final_estimate: false
+  historical_test_already_observed: true
+  production_model_selected: false
+
+resource_budget:
+  maximum_peak_rss_mb: 4096
+  maximum_runtime_disk_gb: 12
+  maximum_wall_time_hours: 8
+  minimum_free_disk_gb: 20
+
+run_sequence:
+  - solver_canary
+  - ridge_canary_1_split_5_factors_1_candidate
+  - ridge_1_split_full_grid
+  - ridge_3_split_full_grid
+  - elastic_net_1_split_full_grid
+  - elastic_net_3_split_full_grid
+  - pre_test_freeze
+  - single_test_release

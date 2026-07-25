@@ -1,0 +1,45 @@
+schema_version: 1
+stage_id: research_linear_model_execution_v1
+profile_name: full_research
+profile_type: full_research
+research_run_family_id: full_research_factor_669_v1
+experiment_class: post_observation_research
+
+prediction_manifest: outputs/research_linear_models_v1/current/artifact_manifest.json
+release_freeze_manifest: outputs/research_linear_models_v1/test_release_freeze/artifact_manifest.json
+market_cache_manifest: outputs/market_cache_v3/current/artifact_manifest.json
+market_cache_dir: outputs/market_cache_v3/current
+qlib_environment_manifest: outputs/qlib_environment_v1/current/artifact_manifest.json
+qlib_provider: ../qlib_data/cn_data_community_20260609_derived
+fee_schedule: configs/a_share_fee_schedule_v1.yaml
+
+methods: [ridge, elastic_net]
+split_ids: [split_001, split_002, split_003]
+
+execution:
+  initial_cash: 10000000.0
+  top_k: 50
+  risk_degree: 0.95
+  signal_lag_trading_days: 1
+  strict_t_plus_one: true
+  max_participation_rate: 0.05
+  participation_share_tolerance: 1.0
+  maximum_stale_valuation_days: 20
+  dynamic_lot_rules: true
+  buy_commission_rate: 0.0
+  sell_commission_rate: 0.0
+  sell_tax_rate: 0.0
+  minimum_commission: 0.0
+  slippage_bps: 0.0
+  lot_size: 1
+
+canary:
+  split_ids: [split_001]
+  methods: [ridge]
+  trading_days: 20
+  instruments: 200
+  output_dir: outputs/research_linear_model_execution_v1/canary
+  runtime_dir: outputs/research_linear_model_execution_v1/runtime/canary
+
+output_dir: outputs/research_linear_model_execution_v1/current
+runtime_dir: outputs/research_linear_model_execution_v1/runtime

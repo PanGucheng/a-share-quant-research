@@ -1,0 +1,23 @@
+{
+  "candidate_solvers": [
+    "cholesky",
+    "lsqr"
+  ],
+  "code_commit_sha": "d385a99fd47d1d1eac76ef18af1741247c385645",
+  "factor_count": 5,
+  "fit_row_count": 39886,
+  "protocol_artifact_id": "research_model_protocol_v1_1:ae43f92603de397c8249c8c50ea6db2b0001fabeaabb98f00a183f1d34c7401c",
+  "repeat_count": 2,
+  "result_sha256": "a73eed2506abf7db0a8e8da35ca5c7ee100be5a10c77a22c148d847ac272b642",
+  "schema_version": 1,
+  "selected_solver": "lsqr",
+  "selection_order": [
+    "lower_peak_memory",
+    "lower_wall_time",
+    "canonical_solver_name"
+  ],
+  "selection_uses_prediction_quality": false,
+  "solver_receipt_sha256": "848e9e1d386182f2a1cabd21b4f58c4a93b8f7f6339d0fb4e15c6f3807be4aba",
+  "test_read_count": 0,
+  "train_date_count": 20
+}

@@ -10,6 +10,8 @@
   逻辑 PR #5A 实施说明：权威 parent、split-specific 输入、零 test-read canary、统一统计/预处理协议、scope-aware research gate，以及继续关闭的生产和 authoritative execution 边界。
 - `RESEARCH_MODEL_PROTOCOL_V1_1_CLOSURE.md`
   逻辑 PR #5A.1 收口：artifact-only 模型入口、Canary/config 强绑定、最终样本内 target 排名、validation transform，以及三个 split 的 development-only full dry-run。
+- `RESEARCH_LINEAR_MODELS_V1_IMPLEMENTATION_PLAN.md`
+  逻辑 PR #5B 的 Ridge/Elastic Net 精确候选、solver canary、资源预算、分阶段运行、预测试冻结与单次 test release 基线；实施回执同时记录 3/3 + 3/3 模型研究完成，以及 split_002 长期停牌持仓估值导致的 fail-closed Qlib 能力阻断。
 - `RESEARCH_GRADE_MULTIFACTOR_MODEL_V1_PLAN.md`
   当前唯一执行计划。Historical Instrument State Decision B 已冻结，不再继续搜索历史公告；模型阶段按 PR #5A 输入协议、PR #5B Ridge/Elastic Net、PR #5C LightGBM、PR #5D 历史科学比较推进。日期 authority 使用 `date_split_semantics_v1` 与 Selection Lineage Closure，旧 purged manifest 禁止作直接 parent；预处理、solver、环境锁和 LightGBM 固定 checkpoint 已精确冻结。研究模型允许产生 post-observation evidence，但 authoritative execution、无偏最终估计和生产模型选择继续关闭。
 - `HISTORICAL_INSTRUMENT_STATE_V2_PLAN.md`
@@ -38,6 +40,8 @@
   单位修正后的当前 Market Cache：三个 split 共 853,936 行，volume/amount 分别以 shares/CNY 物化，future field=0，完整 unit audit 为 0 unknown。
 - `outputs/execution_unit_semantics_correction_v1_2/current/`
   冻结研究信号上的 3 split × 2 method 修正执行；730 个会计日关键 contract 全通过，unknown semantic difference=0，仍是 post-observation / non-authoritative evidence。
+- `outputs/research_linear_model_execution_v1/current/`
+  PR #5B 的非权威 Qlib 辅助执行证据：4/6 场景完成；split_002 的 Ridge/Elastic Net 均因 2025-04-18 `SZ300280` 长期停牌后超过 20 日估值上限而 `blocked_unpriceable_held_position`。Artifact/lineage 完整但状态诚实为 blocked，不得解释为完整历史 NAV。
 - `outputs/execution_unit_semantics_correction_v1_2/governance/`
   V1.2 fail-closed 收口、旧新 artifact supersession、全市场及 SZ302132 单票归因与中央 readiness 回执。
 - `outputs/bugfix_research_freeze_v1/current/`

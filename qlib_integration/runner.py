@@ -10,6 +10,31 @@ from .signal_adapter import to_qlib_signal
 from .strategy_adapter import EqualWeightTargetStrategy
 
 
+class UnpriceableHeldPositionError(RuntimeError):
+    """Qlib cannot value a held position under the frozen stale-price policy."""
+
+    def __init__(self, *, candidate_rows: pd.DataFrame, cause: Exception) -> None:
+        self.candidate_rows = candidate_rows.copy()
+        first_date = (
+            pd.Timestamp(candidate_rows["datetime"].min()).date().isoformat()
+            if not candidate_rows.empty
+            else "unknown"
+        )
+        instruments = (
+            ",".join(
+                sorted(candidate_rows["instrument"].astype(str).unique())[:10]
+            )
+            if not candidate_rows.empty
+            else "unknown"
+        )
+        super().__init__(
+            "blocked_unpriceable_held_position:"
+            f"first_candidate_date={first_date};"
+            f"candidate_instruments={instruments};"
+            f"cause={type(cause).__name__}:{cause}"
+        )
+
+
 def run_qlib_execution(signal: pd.DataFrame, market: pd.DataFrame, config: dict[str, object]) -> dict[str, pd.DataFrame]:
     from qlib.backtest import create_account_instance
     from qlib.backtest.backtest import backtest_loop
@@ -63,7 +88,52 @@ def run_qlib_execution(signal: pd.DataFrame, market: pd.DataFrame, config: dict[
         trade_type="serial",
         common_infra=common,
     )
-    portfolio_metrics, _ = backtest_loop(start_time, end_time, strategy, executor)
+    try:
+        portfolio_metrics, _ = backtest_loop(
+            start_time, end_time, strategy, executor
+        )
+    except TypeError as exc:
+        # Qlib multiplies the current amount by the close when valuing an
+        # existing holding. A deliberately unavailable close (after the
+        # frozen stale-valuation horizon) otherwise surfaces as an opaque
+        # ``float * None`` TypeError. Preserve the fail-closed policy and
+        # expose a classified capability block instead of silently extending
+        # the last price or anticipating a future suspension.
+        stale_mask = markets.get(
+            "valuation_stale_blocked",
+            pd.Series(False, index=markets.index),
+        ).fillna(False).astype(bool)
+        stale_unpriceable = markets.loc[
+            stale_mask
+            & pd.to_numeric(
+                markets["close"], errors="coerce"
+            ).isna(),
+            ["datetime", "instrument"],
+        ].drop_duplicates()
+        exact_requests = pd.DataFrame(
+            exchange.unpriceable_price_requests
+        )
+        if exact_requests.empty:
+            stale_candidates = stale_unpriceable
+        else:
+            exact_keys = exact_requests[
+                ["datetime", "instrument"]
+            ].tail(1)
+            stale_candidates = exact_keys.merge(
+                stale_unpriceable,
+                on=["datetime", "instrument"],
+                how="inner",
+            )
+        is_none_price_failure = (
+            "NoneType" in str(exc)
+            and "unsupported operand type" in str(exc)
+        )
+        if is_none_price_failure and not stale_candidates.empty:
+            raise UnpriceableHeldPositionError(
+                candidate_rows=stale_candidates,
+                cause=exc,
+            ) from exc
+        raise
     return normalize_execution_results(
         portfolio_metrics=portfolio_metrics,
         events=executor.execution_events,

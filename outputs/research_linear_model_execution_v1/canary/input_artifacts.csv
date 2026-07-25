@@ -1,0 +1,3 @@
+outer_split_id,method,input_kind,row_count,sha256
+split_001,ridge,signal,3660,911984462a46d060067ae920bb0dd73e13531634d8dbb85fd07b775ce8eadff8
+split_001,all,market,4000,5a9b33647489f86ca532916c0adbb69cfc2c11834de667f5eec0bf05867695c9
