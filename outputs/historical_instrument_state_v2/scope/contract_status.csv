@@ -1,0 +1,11 @@
+﻿check_name,status,observed_value,required_value,severity,reason
+score_payload_unchanged,pass,beb4e4ad738e263e72bb75ead4d948f7a44e7c086bc56b310a56a823a6adecbf,beb4e4ad738e263e72bb75ead4d948f7a44e7c086bc56b310a56a823a6adecbf,critical,
+decision_scope_nonempty,pass,True,True,critical,
+valuation_scope_nonempty,pass,True,True,critical,
+state_boundary_scope_nonempty,pass,True,True,critical,
+terminal_approximation_count,pass,8,8,critical,
+terminal_instrument_count,pass,3,3,critical,
+terminal_focus_exact,pass,True,True,critical,
+all_consumed_parents_ready,pass,5,5,critical,
+synthetic_terminal_liquidation_authoritative,pass,False,False,critical,
+official_event_evidence_complete,blocked,0,canary minimums,capability,Tier-0 event canary is the next phase.
