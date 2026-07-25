@@ -31,7 +31,12 @@ from model_research.lineage import (
     resolve_authoritative_parents,
     resolve_matrix_runtime_authority,
 )
-from model_research.linear_models import load_linear_config
+from model_research.linear_models import (
+    _candidate_grid,
+    _select_candidate,
+    _validation_metrics,
+    load_linear_config,
+)
 from model_research.preprocessing import (
     daily_equal_weights,
     fit_weighted_preprocessing,
@@ -232,6 +237,66 @@ def test_linear_model_config_freezes_candidate_counts_and_rejects_auto(
     )
     with pytest.raises(ValueError, match="solver=auto"):
         load_linear_config(rejected)
+
+
+def test_linear_candidate_grid_and_metric_tie_breaks_are_frozen() -> None:
+    config = load_linear_config(
+        ROOT / "configs/research_linear_models_v1.yaml"
+    )
+    ridge = _candidate_grid(
+        config,
+        method="ridge",
+        solver="lsqr",
+        limit=None,
+    )
+    elastic = _candidate_grid(
+        config,
+        method="elastic_net",
+        solver="lsqr",
+        limit=None,
+    )
+    assert len(ridge) == 5
+    assert len(elastic) == 15
+    assert all(candidate["solver"] != "auto" for candidate in ridge)
+    metrics = pd.DataFrame(
+        [
+            {
+                **ridge[0],
+                "mean_daily_rank_ic": 0.01,
+                "daily_rank_ic_ir": 0.2,
+                "prediction_coverage": 1.0,
+                "nonzero_coefficient_count": 2,
+                "status": "pass",
+            },
+            {
+                **ridge[-1],
+                "mean_daily_rank_ic": 0.01,
+                "daily_rank_ic_ir": 0.2,
+                "prediction_coverage": 1.0,
+                "nonzero_coefficient_count": 2,
+                "status": "pass",
+            },
+        ]
+    )
+    assert float(_select_candidate(metrics, method="ridge")["alpha"]) == 100.0
+
+
+def test_linear_validation_metric_is_daily_rank_ic() -> None:
+    metadata = pd.DataFrame(
+        {
+            "datetime": pd.to_datetime(
+                ["2024-01-02"] * 3 + ["2024-01-03"] * 3
+            ),
+            "instrument": ["a", "b", "c", "a", "b", "c"],
+            "__label": [1.0, 2.0, 3.0, 3.0, 2.0, 1.0],
+        }
+    )
+    result = _validation_metrics(
+        metadata,
+        np.asarray([1.0, 2.0, 3.0, 3.0, 2.0, 1.0]),
+    )
+    assert result["mean_daily_rank_ic"] == pytest.approx(1.0)
+    assert result["prediction_coverage"] == 1.0
 
 
 def test_weighted_preprocessing_is_daily_equal_and_order_stable() -> None:
