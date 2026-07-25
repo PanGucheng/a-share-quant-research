@@ -3,9 +3,17 @@ from __future__ import annotations
 import argparse
 import shlex
 import sys
+from pathlib import Path
 
-from model_research.linear_models import load_linear_config, run_solver_canary
-from model_research.protocol import resolve
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(PROJECT_ROOT))
+
+from model_research.linear_models import (  # noqa: E402
+    load_linear_config,
+    run_solver_canary,
+)
+from model_research.protocol import resolve  # noqa: E402
 
 
 def main() -> int:
@@ -39,4 +47,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-
