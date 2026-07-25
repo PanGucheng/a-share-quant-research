@@ -1,0 +1,22 @@
+{
+  "authoritative_execution": false,
+  "development_artifact_id": "research_lightgbm_v1:03b0c1d694284d72b4c633b44032d89cc4bbefded3399d345f47f0b13bd57be1",
+  "execution_commit_sha": "8cf618a9c978b4ae8f5aea2a12868a479c36df75",
+  "freeze_artifact_id": "research_lightgbm_test_release_freeze_v1:b6cdd17c5f88c73ef4b1c7be063f6762ee209c278915b0c47ce9745a9e74edf0",
+  "freeze_id": "lightgbm-test-release-freeze:0e966f86473927a62578c7c4838093cffd476a79c98b747e1e6809d05c4da563",
+  "freeze_sha256": "e33e2d63e1f38c929d530d44fb5bd0d915c50cb43aee0323641a014c219ad2ac",
+  "historical_test_already_observed": true,
+  "method": "lightgbm",
+  "outer_split_id": "split_003",
+  "prediction_artifact_id": "lightgbm-prediction:91e6d930cb3ba0c7897a582d15cc07f63834e483fa1e2bed2e97e8439f084a9c",
+  "prediction_row_count": 247968,
+  "prediction_sha256": "94c637bb4ee12b89a8359c53b1aed330ac9efd3eb412427e1a0952d2e1375d50",
+  "production_model_selected": false,
+  "release_id": "lightgbm-test-release:b1784a5c2d56155ce81af795ce5e6b8730720fe9f43dd2bdfffa46ce740c2a46",
+  "release_timestamp": "2026-07-25T18:30:29.306339+00:00",
+  "schema_version": 1,
+  "status": "consumed",
+  "test_dates_sha256": "ea2adda5697e136c7e31ed1c3220b729e245369f052e0044f556281d9e7710d6",
+  "test_label_sha256": "87b7b704ed79096649ebdefa63b9d6fdd0d9c388df2cf8215344cb61b0d49616",
+  "unbiased_final_estimate": false
+}

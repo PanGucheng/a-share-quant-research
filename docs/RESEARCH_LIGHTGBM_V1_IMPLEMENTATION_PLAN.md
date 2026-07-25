@@ -190,3 +190,28 @@ release freeze 发布前仍不得读取 test feature 或 label。
 `date_split_semantics_v1` 的精确 test dates、date assignment hash、模型 hash
 和 base freeze hash；test payload read count 仍为 0。下一步允许执行一次
 LightGBM historical test release，重复 release 必须 fail-closed。
+
+单次 historical test release 已完成：
+
+```text
+releases / prediction rows     3 / 735,882
+minimum prediction coverage    0.995305
+split_001 Rank IC / ICIR       0.077783 / 0.486703
+split_002 Rank IC / ICIR       0.143224 / 0.738107
+split_003 Rank IC / ICIR       0.051802 / 0.317176
+```
+
+3/3 release receipt 已 consumed，prediction schema、coverage、有限指标、模型 hash
+与 disclosure 合同全部通过。最终阶段状态：
+
+```text
+lightgbm_model_research_complete = true
+historical_oos_lightgbm_evaluation_complete = true
+production_model_selected = false
+authoritative_execution = false
+unbiased_final_estimate = false
+```
+
+PR #5C 到此完成。下一阶段只能进入 PR #5D 的五方法 prediction-level 历史科学
+比较；由于 `SZ300280` 长期停牌估值能力阻断，五方法完整组合/NAV 比较仍不得
+标记完成。
