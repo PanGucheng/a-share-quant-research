@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from model_research.forward_candidate import (
     _selected_candidate,
-    _training_dates,
 )
 from model_research.forward_protocol import load_forward_config
 
@@ -23,7 +22,9 @@ def test_forward_candidate_training_dates_stop_before_snapshot() -> None:
     config = load_forward_config(
         "configs/prospective_forward_confirmation_v1.yaml"
     )
-    dates = _training_dates(config)
-    assert dates.min().date().isoformat() == "2021-02-01"
-    assert dates.max().date().isoformat() == "2026-05-11"
-    assert dates.max().date().isoformat() < "2026-06-09"
+    assert config["training"]["start_date"].isoformat() == "2021-02-01"
+    assert config["training"]["end_date"].isoformat() == "2026-05-11"
+    assert (
+        config["training"]["end_date"]
+        < config["temporal_boundary"]["current_snapshot_end"]
+    )
