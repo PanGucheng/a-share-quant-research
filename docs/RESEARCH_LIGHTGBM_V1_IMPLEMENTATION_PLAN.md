@@ -98,3 +98,18 @@ peak RSS                 275.9 MiB
 
 下一门禁是同一小样本上的完整 16 候选资源 canary；只有其通过后才允许
 `split_001 × full features × 16 candidates`。
+
+完整候选资源 canary 随后通过：
+
+```text
+candidate runs          16/16
+samples / factors       39,886 / 5
+validation reads        0
+test reads              0
+finite predictions      16/16
+peak RSS                278.6 MiB
+environment lock        exact match
+```
+
+因此下一步获准进入 `split_001 × 45 frozen features × 16 candidates` 的
+train/validation 开发搜索；仍不得读取 test。

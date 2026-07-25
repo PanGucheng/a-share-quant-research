@@ -1,0 +1,41 @@
+{
+  "artifact_id": "research_lightgbm_v1:5ba98f44385383702770335255f31d434d16f02fcab60c4d390e90680f8a5da2",
+  "artifact_status": "pass",
+  "blocked_reason": "",
+  "code_commit_sha": "d472da38ec30a1c696b2104b8b1f8a5efcfbbd48",
+  "code_diff_sha256": "",
+  "code_dirty": false,
+  "config_sha256": "2c61e501803ac5fe3ac054e1af88ddf17a8f4d2ba0b552f4e93f777c33e5f885",
+  "created_at": "2026-07-25T17:38:37.641966+00:00",
+  "end_date": null,
+  "factor_catalog_id": "factor-catalog:8c031a09892fc915ac45201942f563925a9bab617e60fce5ecbbe274a51a02e1",
+  "factor_frame_id": "factor-frame-v4:f1e93a2428446673f5c873a01886a38ae9e654e5f863cf2b236040dbbf28dc3c",
+  "input_artifact_ids": [
+    "research_lightgbm_v1:f7e27660115ce8c6abdf055693c84a8f087654ce5e379eebcb74f6bc39bcf327",
+    "research_linear_model_test_release_v1:05490ec686e66efabda95a9529520978d884defa7123448505d20b785c126429",
+    "research_model_protocol_v1_1:ae43f92603de397c8249c8c50ea6db2b0001fabeaabb98f00a183f1d34c7401c"
+  ],
+  "lineage_status": "complete",
+  "missing_lineage_fields": [],
+  "output_file_hashes": {
+    "access_audit.csv": "cee85bab8297bd84767a0f18d564fcb123102b3884076716dcb13151ca678a35",
+    "canary_results.csv": "153fbf121ccbda06398c2a6faa3c83f5145340bd5fbf2dc5fd74d2fa25433aa2",
+    "contract_status.csv": "48405c881af7f5d519d5cd7cf303415f4e243bb3f892a245ff786d5071eae0c6",
+    "hyperparameter_candidate_manifest.csv": "b5460ae68259cd01c7e99a6c6c61f26fa8ed21046e5205a62c62fc8fc442c0c3",
+    "parent_receipts.csv": "328961936ff0380d348303bfb31c62e107e442474bd48828b13ba56f2b98c895",
+    "readiness_summary.csv": "42e487fc860a0aef29c7e47aff88af50ef620544daa18c450f91616b5f4c65e1",
+    "resolved_config.json": "118149c276d1282570adac51ef57ef1331dbbaf75f427c7a2bfd135fe3ddf860",
+    "resource_summary.csv": "d1780b89612e4d0785ef09d6fb83680ba05044b891fdb44c54c70d0187f9914c",
+    "run_report.md": "0d439b2e329802b82552534d240265c73e14f6662ce70326400d3ecc3e286373"
+  },
+  "producer_run_id": "20260725T173837Z-1e5402de",
+  "profile_name": "full_research",
+  "profile_type": "full_research",
+  "research_run_family_id": "full_research_factor_669_v1",
+  "run_id": "20260725T173837Z-1e5402de",
+  "schema_version": 2,
+  "split_manifest_id": "split-manifest:75ccf0f37e85422729d54aef5a363f68d4f9b3daed3d42a87eb120e6b5aefe0e",
+  "stage_id": "research_lightgbm_v1",
+  "start_date": null,
+  "universe_artifact_id": "universe-v2:a7875d74d5119230ab5576cb245fe8b389e0dd3030606299dad6d1f0e147ccd2"
+}
