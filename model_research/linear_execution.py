@@ -110,8 +110,13 @@ def run_linear_execution(
         if issues:
             raise ValueError(f"{role} output hashes are invalid")
         parents.append((role, path, manifest))
+    lineage_parents = [
+        (role, path, manifest)
+        for role, path, manifest in parents
+        if role != "qlib_environment"
+    ]
     gate_failures = direct_parent_gate_failures(
-        [manifest for _, _, manifest in parents]
+        [manifest for _, _, manifest in lineage_parents]
     )
     if gate_failures:
         raise ValueError(f"linear execution parent gates failed: {gate_failures}")
@@ -565,6 +570,9 @@ def run_linear_execution(
             for role, path, manifest in parents
         ]
     )
+    parent_receipts["direct_parent"] = ~parent_receipts[
+        "parent_role"
+    ].eq("qlib_environment")
     resolved_config = {
         **config,
         "executed_command": command,
@@ -572,6 +580,9 @@ def run_linear_execution(
         "selected_splits": selected_splits,
         "selected_methods": selected_methods,
         "market_cache_key": cache_key["cache_key"],
+        "qlib_environment_artifact_id": parent_by_role[
+            "qlib_environment"
+        ][1]["artifact_id"],
         "execution_source_sha256": canonical_hash(
             {
                 "linear_execution": file_sha256(Path(__file__)),
@@ -641,7 +652,9 @@ def run_linear_execution(
             output_dir=publisher.staging_dir,
             output_files=output_files,
             code_state=code_state,
-            input_manifest_paths=[path for _, path, _ in parents],
+            input_manifest_paths=[
+                path for _, path, _ in lineage_parents
+            ],
             universe_artifact_id=parent_by_role["linear_predictions"][1].get(
                 "universe_artifact_id"
             ),
