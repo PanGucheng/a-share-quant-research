@@ -131,3 +131,23 @@ peak RSS                 242.2 MiB
 至此数据投影、选参、mutation、final refit 和 freeze 路径均在小样本验证通过，
 可以开始首个单 split 全量开发运行。该授权只覆盖 `split_001 × 45 frozen
 features × 16 candidates`。
+
+首个单 split 全量开发运行已通过：
+
+```text
+split                       split_001
+frozen factors              45
+train / validation dates    688 / 77
+train / validation rows     1,372,311 / 153,643
+candidates pass             16/16
+selected                    structure_03 × 800 rounds
+validation mean Rank IC     0.140388
+validation ICIR             0.823724
+peak RSS                    1,922.1 MiB
+runtime                     654.2 seconds
+test reads                  0
+```
+
+候选表在首次 fit 前冻结，validation mutation、train+validation final refit、
+pre-test freeze、环境锁和 lineage 均通过。资源低于 4096 MiB 上限，因此获准
+以同一代码和候选表继续 `split_002`、`split_003`；不得改变参数空间或并行线程。

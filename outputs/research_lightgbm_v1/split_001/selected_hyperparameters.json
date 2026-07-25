@@ -1,0 +1,17 @@
+{
+  "split_001": {
+    "bagging_fraction": 1.0,
+    "bagging_freq": 0,
+    "candidate_sha256": "3a297ec60da703b9888a3000f3d45354eae6d4a7c74ece0e8c551b8644c2f4ac",
+    "feature_fraction": 0.8,
+    "lambda_l1": 0.0,
+    "lambda_l2": 1.0,
+    "learning_rate": 0.05,
+    "max_depth": 4,
+    "method": "lightgbm",
+    "min_data_in_leaf": 50,
+    "num_boost_round": 800,
+    "num_leaves": 31,
+    "structural_row_id": "structure_03"
+  }
+}
