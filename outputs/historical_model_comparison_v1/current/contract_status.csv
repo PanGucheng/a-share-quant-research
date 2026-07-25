@@ -1,0 +1,10 @@
+check_name,status,observed_value,required_value,severity,reason
+direct_parents_valid,pass,6,6,critical,
+legacy_purged_manifest_not_direct_parent,pass,"['date_split_semantics_v1', 'research_selection_lineage_closure_v1', 'full_research_labels_v2', 'split_transparent_score_v2', 'research_linear_model_test_release_v1', 'research_lightgbm_test_release_v1']",no purged_walk_forward_v1,critical,
+five_methods_three_splits_complete,pass,15,15,critical,
+common_test_dates_complete,pass,True,True,critical,
+minimum_prediction_coverage,pass,0.9953051643192488,>=0.95,critical,
+all_daily_ic_finite,pass,1840,1840,critical,
+all_pairwise_comparisons_complete,pass,30,30,critical,
+historical_leader_not_production_selection,pass,False,False,critical,
+portfolio_comparison_fail_closed,pass,blocked_execution_capability,blocked_execution_capability,critical,

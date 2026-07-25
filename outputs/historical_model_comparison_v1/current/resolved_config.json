@@ -1,0 +1,80 @@
+{
+  "bootstrap": {
+    "block_length": 10,
+    "method": "moving_block_mean",
+    "random_seed": 20260726,
+    "samples": 5000
+  },
+  "comparison": {
+    "final_tie_break": "canonical_method_name",
+    "label_name": "label_20d_t1",
+    "method_complexity": {
+      "elastic_net": 4,
+      "equal_weight": 1,
+      "lightgbm": 5,
+      "ridge": 3,
+      "stability_weight": 2
+    },
+    "methods": [
+      "equal_weight",
+      "stability_weight",
+      "ridge",
+      "elastic_net",
+      "lightgbm"
+    ],
+    "minimum_daily_pairs": 100,
+    "minimum_prediction_coverage": 0.95,
+    "primary_summary_metric": "equal_split_mean_daily_rank_ic",
+    "split_ids": [
+      "split_001",
+      "split_002",
+      "split_003"
+    ],
+    "tie_break_1": "equal_split_mean_daily_rank_ic_ir",
+    "tie_break_2": "minimum_split_prediction_coverage",
+    "tie_break_3": "lower_method_complexity"
+  },
+  "config_file_sha256": "db3128c550b384ac63704f72c02c72a6fd1972dadd6f81f20bcd8254a0f75960",
+  "executed_command": "python scripts/run_historical_model_comparison_v1.py --config configs/historical_model_comparison_v1.yaml",
+  "executed_scope": "five_method_prediction_level_historical_oos_comparison",
+  "execution": {
+    "authoritative_execution": false,
+    "blocker": "blocked_unpriceable_held_position",
+    "blocker_date": "2025-04-18",
+    "blocker_instrument": "SZ300280",
+    "portfolio_comparison_status": "blocked_execution_capability",
+    "terminal_approximation_allowed": false
+  },
+  "experiment_class": "post_observation_research",
+  "governance": {
+    "authoritative_oos_execution_ready": false,
+    "historical_oos_comparison_complete": true,
+    "historical_test_already_observed": true,
+    "production_model_selected": false,
+    "unbiased_final_estimate": false
+  },
+  "historical_oos_research_leader": "lightgbm",
+  "output_dir": "E:/qlib_prj/qlib_baseline/outputs/historical_model_comparison_v1/current",
+  "parents": {
+    "date_assignments": "outputs/research_selection_lineage_closure_v1/current/date_assignments.csv",
+    "date_manifest": "outputs/date_split_semantics_v1/current/artifact_manifest.json",
+    "labels_manifest": "outputs/full_research_labels_v2/current/artifact_manifest.json",
+    "labels_runtime": "outputs/full_research_feature_matrix_v4/runtime/labels_v2.parquet",
+    "lightgbm_daily_ic": "outputs/research_lightgbm_v1/current/test_daily_ic.csv",
+    "lightgbm_manifest": "outputs/research_lightgbm_v1/current/artifact_manifest.json",
+    "lightgbm_metrics": "outputs/research_lightgbm_v1/current/test_metrics.csv",
+    "lightgbm_release_receipts": "outputs/research_lightgbm_v1/current/release_receipts",
+    "linear_daily_ic": "outputs/research_linear_models_v1/current/test_daily_ic.csv",
+    "linear_manifest": "outputs/research_linear_models_v1/current/artifact_manifest.json",
+    "linear_metrics": "outputs/research_linear_models_v1/current/test_metrics.csv",
+    "linear_release_receipts": "outputs/research_linear_models_v1/current/release_receipts",
+    "selection_manifest": "outputs/research_selection_lineage_closure_v1/current/artifact_manifest.json",
+    "transparent_manifest": "outputs/split_transparent_score_v2/current/artifact_manifest.json",
+    "transparent_score_artifact": "outputs/split_transparent_score_v2/current/score_artifact.csv",
+    "transparent_scores_runtime": "outputs/split_transparent_score_v2/current/runtime/composite_scores.parquet"
+  },
+  "profile_name": "full_research",
+  "profile_type": "full_research",
+  "research_run_family_id": "full_research_factor_669_v1",
+  "schema_version": 1
+}

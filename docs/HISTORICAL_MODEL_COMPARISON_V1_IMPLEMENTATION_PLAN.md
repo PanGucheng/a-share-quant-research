@@ -135,3 +135,40 @@ unbiased_final_estimate = false
 
 历史 leader 只支持本组已观察历史 test 的科研描述。生产候选确认必须依赖 PR #5D
 之后出现的新未来时期或 forward/paper evidence。
+
+## 7. 实施回执（2026-07-26）
+
+五方法 prediction-level 比较已完成。15 组 split-method 指标、1,840 条 daily IC、
+15 组单方法 block-bootstrap 和 30 组逐 split 两两差异均已发布，全部关键合同
+通过，最低 prediction coverage 为 0.995305。
+
+按预注册的三个 split 等权平均 Rank IC，结果为：
+
+| method | equal-split Rank IC | equal-split ICIR | worst-split Rank IC |
+| --- | ---: | ---: | ---: |
+| LightGBM | 0.090936 | 0.513995 | 0.051802 |
+| Elastic Net | 0.086887 | 0.525591 | 0.057729 |
+| Ridge | 0.086470 | 0.510043 | 0.057644 |
+| Equal Weight | 0.073678 | 0.514804 | 0.055294 |
+| Stability Weight | 0.072760 | 0.510242 | 0.053072 |
+
+因此记录：
+
+```text
+historical_oos_research_leader = lightgbm
+historical_oos_model_comparison_complete = true
+```
+
+这不是“LightGBM 已稳定显著胜出”。其三个 split 排名波动较大，多数组合的逐
+split 配对 bootstrap 区间跨零。该 leader 只表示预注册汇总指标上的历史描述性
+第一名。
+
+组合/NAV 比较没有运行，继续记录：
+
+```text
+five_method_historical_portfolio_comparison_complete = false
+portfolio_comparison_status = blocked_execution_capability
+production_model_selected = false
+authoritative_oos_execution_ready = false
+unbiased_final_estimate = false
+```
