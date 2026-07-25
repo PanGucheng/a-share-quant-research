@@ -1,7 +1,7 @@
 # Research Model Protocol V1 实施说明
 
-> 逻辑阶段：PR #5A  
-> 实验类别：`post_observation_research`  
+> 逻辑阶段：PR #5A
+> 实验类别：`post_observation_research`
 > 正式模型训练：未启动
 
 ## 实施范围
