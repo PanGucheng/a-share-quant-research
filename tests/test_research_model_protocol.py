@@ -37,6 +37,7 @@ from model_research.linear_models import (
     _validation_metrics,
     load_linear_config,
 )
+from model_research.linear_execution import load_linear_execution_config
 from model_research.preprocessing import (
     daily_equal_weights,
     fit_weighted_preprocessing,
@@ -279,6 +280,19 @@ def test_linear_candidate_grid_and_metric_tie_breaks_are_frozen() -> None:
         ]
     )
     assert float(_select_candidate(metrics, method="ridge")["alpha"]) == 100.0
+
+
+def test_linear_execution_config_keeps_corrected_semantics() -> None:
+    config = load_linear_execution_config(
+        ROOT / "configs/research_linear_execution_v1.yaml"
+    )
+    assert config["methods"] == ["ridge", "elastic_net"]
+    assert config["execution"]["signal_lag_trading_days"] == 1
+    assert config["execution"]["strict_t_plus_one"] is True
+    assert config["execution"]["dynamic_lot_rules"] is True
+    assert config["market_cache_manifest"].startswith(
+        "outputs/market_cache_v3/"
+    )
 
 
 def test_linear_validation_metric_is_daily_rank_ic() -> None:
