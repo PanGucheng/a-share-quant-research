@@ -1,8 +1,8 @@
 # Research Linear Models V1 实施计划
 
-> 逻辑阶段：PR #5B  
-> 实验类别：`post_observation_research`  
-> Historical test：已被历史研究观察，不能解释为无偏最终估计  
+> 逻辑阶段：PR #5B
+> 实验类别：`post_observation_research`
+> Historical test：已被历史研究观察，不能解释为无偏最终估计
 > Production model selection：禁止
 
 ## 1. 边界

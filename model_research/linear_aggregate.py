@@ -382,4 +382,3 @@ def aggregate_linear_development(
             }
         ),
     }
-

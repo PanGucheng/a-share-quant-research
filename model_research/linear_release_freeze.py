@@ -305,4 +305,3 @@ def publish_linear_test_release_freezes(
         "freeze_count": len(freezes),
         "test_read_count": 0,
     }
-
