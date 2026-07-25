@@ -1,0 +1,6 @@
+outer_split_id,method,factor,feature_order,coefficient,coefficient_nonzero
+split_001,ridge,alpha158_BETA10,0,-0.054731306427671975,True
+split_001,ridge,alpha158_BETA5,1,0.011617481988548983,True
+split_001,ridge,alpha158_CNTD30,2,-0.01943529827664621,True
+split_001,ridge,alpha158_CNTP60,3,-0.048007819293260375,True
+split_001,ridge,alpha158_CORD10,4,0.005784064365444308,True
