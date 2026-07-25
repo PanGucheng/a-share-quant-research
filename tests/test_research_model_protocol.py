@@ -1,14 +1,23 @@
 from __future__ import annotations
 
 from pathlib import Path
+import json
+import shutil
 
 import numpy as np
 import pandas as pd
 import pytest
+import yaml
 
+from research_validation.lineage import (
+    CodeState,
+    sha256_file,
+    write_stage_artifact_manifest,
+)
 from model_research.freeze import load_freeze_before_test
 from model_research.gates import (
     ModelScopeBlockedError,
+    assert_research_model_entry_artifact,
     assert_research_model_entry_file,
     assert_model_scope_allowed,
 )
@@ -17,18 +26,27 @@ from model_research.inputs import (
     assert_feature_order,
     assert_fold_isolation,
 )
-from model_research.lineage import AuthoritativeParentPaths, resolve_authoritative_parents
+from model_research.lineage import (
+    AuthoritativeParentPaths,
+    resolve_authoritative_parents,
+    resolve_matrix_runtime_authority,
+)
 from model_research.preprocessing import (
     daily_equal_weights,
     fit_weighted_preprocessing,
     stable_weighted_median,
 )
+from model_research.protocol import parent_paths
+from model_research.protocol_v1_1 import build_protocol_binding
 from model_research.schemas import (
     PREDICTION_COLUMNS,
     freeze_schema_missing,
     prediction_schema_violations,
 )
-from model_research.targets import daily_cross_sectional_rank_centered
+from model_research.targets import (
+    daily_cross_sectional_rank_centered,
+    eligible_daily_cross_sectional_rank_centered,
+)
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -128,6 +146,75 @@ def test_authoritative_parent_resolution_uses_date_wrapper_and_closure() -> None
     )
 
 
+def test_matrix_runtime_is_resolved_from_authoritative_manifest(
+    tmp_path: Path,
+) -> None:
+    current_dir = tmp_path / "current"
+    runtime_dir = tmp_path / "runtime"
+    current_dir.mkdir()
+    runtime_dir.mkdir()
+    factor_name = "alpha158_CNTD30"
+    partition_path = runtime_dir / "batch_000.parquet"
+    pd.DataFrame(
+        {
+            "datetime": pd.to_datetime(["2024-01-02", "2024-01-03"]),
+            "instrument": ["SH600000", "SH600000"],
+            factor_name: [0.1, 0.2],
+        }
+    ).to_parquet(partition_path, index=False)
+    resolved_config_path = current_dir / "resolved_config.json"
+    resolved_config = {
+        "profile_name": "full_research",
+        "profile_type": "full_research",
+        "research_run_family_id": "matrix-runtime-unit-test",
+        "output_dir": current_dir.as_posix(),
+        "runtime_dir": runtime_dir.as_posix(),
+    }
+    resolved_config_path.write_text(
+        json.dumps(resolved_config, sort_keys=True),
+        encoding="utf-8",
+    )
+    partition_status_path = current_dir / "partition_status.csv"
+    pd.DataFrame(
+        [
+            {
+                "batch_id": "batch_000",
+                "status": "pass",
+                "output_path": partition_path.as_posix(),
+                "output_sha256": sha256_file(partition_path),
+            }
+        ]
+    ).to_csv(partition_status_path, index=False)
+    write_stage_artifact_manifest(
+        project_root=ROOT,
+        stage_id="full_research_feature_matrix_v4",
+        config=resolved_config,
+        output_dir=current_dir,
+        output_files=[resolved_config_path, partition_status_path],
+        code_state=CodeState(
+            commit_sha="unit-test",
+            dirty=False,
+            diff_sha256="",
+        ),
+        universe_artifact_id="universe:unit-test",
+        factor_catalog_id="catalog:unit-test",
+        factor_frame_id="frame:unit-test",
+        start_date="2024-01-02",
+        end_date="2024-01-03",
+    )
+
+    runtime = resolve_matrix_runtime_authority(
+        project_root=ROOT,
+        matrix_manifest_path=current_dir / "artifact_manifest.json",
+        selected_factors=[factor_name],
+        verify_selected_partition_hashes=True,
+    )
+    assert runtime.partition_status_path == partition_status_path
+    assert runtime.factor_index[factor_name] == partition_path
+    assert runtime.runtime_dir == runtime_dir
+    assert runtime.partition_receipts[0]["hash_verified"] is True
+
+
 def test_weighted_preprocessing_is_daily_equal_and_order_stable() -> None:
     dates = np.asarray(["a", "a", "b"])
     weights = daily_equal_weights(dates)
@@ -209,6 +296,42 @@ def test_target_transform_uses_daily_rank_and_blocks_small_days() -> None:
     ]
 
 
+def test_target_v2_ranks_only_final_eligible_sample_and_records_zero_dates() -> None:
+    frame = pd.DataFrame(
+        {
+            "datetime": pd.to_datetime(
+                ["2024-01-02"] * 4 + ["2024-01-03"]
+            ),
+            "instrument": ["a", "b", "c", "d", "a"],
+            "f1": [1.0, 2.0, 3.0, np.nan, np.nan],
+            "label": [1.0, 2.0, 100.0, -100.0, np.nan],
+        }
+    )
+    transformed, eligible, receipt = (
+        eligible_daily_cross_sectional_rank_centered(
+            frame,
+            label_column="label",
+            feature_columns=["f1"],
+            expected_dates=pd.DatetimeIndex(
+                ["2024-01-02", "2024-01-03", "2024-01-04"]
+            ),
+            minimum_daily_pairs=3,
+        )
+    )
+    assert eligible.tolist() == [True, True, True, False, False]
+    assert np.allclose(
+        transformed.iloc[:3].to_numpy(),
+        [-1 / 6, 1 / 6, 0.5],
+    )
+    assert transformed.iloc[3:].isna().all()
+    assert receipt["valid_pair_count"].tolist() == [3, 0, 0]
+    assert receipt["status"].tolist() == [
+        "pass",
+        "blocked_insufficient_daily_pairs",
+        "blocked_insufficient_daily_pairs",
+    ]
+
+
 def test_access_audit_starts_with_zero_test_reads() -> None:
     audit = InputAccessAudit()
     audit.record(kind="feature", fold="train")
@@ -216,23 +339,74 @@ def test_access_audit_starts_with_zero_test_reads() -> None:
     assert audit.test_read_count == 0
 
 
-def test_scoped_entry_file_is_fail_closed_and_accepts_research(
+def test_direct_readiness_file_entry_is_always_forbidden(
     tmp_path: Path,
 ) -> None:
-    missing = tmp_path / "missing.csv"
-    with pytest.raises(ModelScopeBlockedError, match="missing scoped readiness"):
-        assert_research_model_entry_file(
-            missing,
-            experiment_class="post_observation_research",
-        )
     readiness = tmp_path / "readiness.csv"
     pd.DataFrame([ready_scope()]).to_csv(readiness, index=False)
-    assert_research_model_entry_file(
-        readiness,
-        experiment_class="post_observation_research",
-    )
-    with pytest.raises(ModelScopeBlockedError, match="experiment_class_blocked"):
+    with pytest.raises(ModelScopeBlockedError, match="direct readiness CSV"):
         assert_research_model_entry_file(
             readiness,
+            experiment_class="post_observation_research",
+        )
+
+
+def test_artifact_entry_rejects_missing_and_legacy_v1_manifest(
+    tmp_path: Path,
+) -> None:
+    with pytest.raises(ModelScopeBlockedError, match="missing protocol manifest"):
+        assert_research_model_entry_artifact(
+            tmp_path / "artifact_manifest.json",
+            experiment_class="post_observation_research",
+        )
+    with pytest.raises(ModelScopeBlockedError, match="stage_id="):
+        assert_research_model_entry_artifact(
+            ROOT
+            / "outputs/research_model_protocol_v1/current/artifact_manifest.json",
             experiment_class="production",
+        )
+
+
+def test_v1_1_binding_changes_for_protocol_mutation() -> None:
+    config = yaml.safe_load(
+        (
+            ROOT / "configs/research_model_protocol_v1_1.yaml"
+        ).read_text(encoding="utf-8")
+    )
+    resolution = resolve_authoritative_parents(parent_paths(config))
+    baseline = build_protocol_binding(config, resolution)
+    mutated = yaml.safe_load(yaml.safe_dump(config))
+    mutated["target"]["minimum_daily_pairs"] = 101
+    changed = build_protocol_binding(mutated, resolution)
+    assert changed["base_protocol_sha256"] != baseline["base_protocol_sha256"]
+    assert (
+        changed["policy_section_sha256"]["target"]
+        != baseline["policy_section_sha256"]["target"]
+    )
+
+
+def test_v1_1_artifact_entry_accepts_verified_current_and_rejects_tamper(
+    tmp_path: Path,
+) -> None:
+    source = ROOT / "outputs/research_model_protocol_v1_1/current"
+    manifest_path = source / "artifact_manifest.json"
+    if not manifest_path.is_file():
+        pytest.skip("V1.1 compact artifact is published later in the implementation")
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    if bool(manifest.get("code_dirty")):
+        pytest.skip("local pre-publication artifact is intentionally dirty")
+    assert_research_model_entry_artifact(
+        manifest_path,
+        experiment_class="post_observation_research",
+    )
+    tampered = tmp_path / "current"
+    shutil.copytree(source, tampered)
+    readiness_path = tampered / "readiness_summary.csv"
+    readiness = pd.read_csv(readiness_path)
+    readiness.loc[0, "authoritative_execution"] = True
+    readiness.to_csv(readiness_path, index=False)
+    with pytest.raises(ModelScopeBlockedError, match="output_hash_mismatch"):
+        assert_research_model_entry_artifact(
+            tampered / "artifact_manifest.json",
+            experiment_class="post_observation_research",
         )

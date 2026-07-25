@@ -1,0 +1,2 @@
+﻿outer_split_id,factor_count,input_row_count,feature_eligible_row_count,all_nan_row_count,label_and_feature_eligible_row_count,output_row_count,output_feature_count,feature_order_valid,transform_coverage,minimum_transform_coverage,status
+split_001,5,20000,20000,0,19995,20000,5,True,1.0,0.95,pass

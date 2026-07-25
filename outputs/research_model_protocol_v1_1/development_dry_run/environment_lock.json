@@ -1,0 +1,22 @@
+{
+  "blas_backend": {
+    "configuration": "OpenBLAS 0.3.29  USE64BITINT DYNAMIC_ARCH NO_AFFINITY Haswell MAX_THREADS=24",
+    "name": "scipy-openblas",
+    "version": "0.3.29"
+  },
+  "environment_lock_sha256": "ef9169cf9cf7f13904867b6d83ba356700ffb6117ae22084e74e03a1ffcfebf6",
+  "lightgbm_version": "4.6.0",
+  "mkl_num_threads": "1",
+  "num_threads": "1",
+  "numexpr_num_threads": "1",
+  "numpy_version": "2.2.6",
+  "omp_num_threads": "1",
+  "openblas_num_threads": "1",
+  "pandas_version": "2.3.3",
+  "platform": "Windows-10-10.0.26200-SP0",
+  "python_executable": "E:\\anaconda_envs\\qlib_env\\python.exe",
+  "python_version": "3.10.19",
+  "qlib_commit_sha": "d5379c520f66a39953bad76234a7019a72796fd0",
+  "scikit_learn_version": "1.7.2",
+  "scipy_version": "1.15.3"
+}

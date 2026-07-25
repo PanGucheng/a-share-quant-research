@@ -1,0 +1,46 @@
+{
+  "base_protocol_sha256": "7656cb4dc546397e475acad4d55ddca531212c3d6b83a07e6577ceeaab3aeb59",
+  "binding_sha256": "0f305eeaecfca2f37bc0afb2e71f3edafe4f37b670b7cb393b2c63878a787b4a",
+  "parent_artifact_ids_sha256": "ebe5a2882850d5ff4a12e89bab75b19490f8930c6ce74604028c926e6c145f9b",
+  "parent_artifacts": [
+    {
+      "artifact_id": "date_split_semantics_v1:163bf974b6238e0387689e795be56263c7c7bc7e3c9cad3bea66fc793e4072b8",
+      "parent_role": "date_split_authority",
+      "stage_id": "date_split_semantics_v1"
+    },
+    {
+      "artifact_id": "full_research_feature_matrix_v4:10f6e026d5c6c13eda166f702fb2bae2e7ca76c6747bd9e9482ee482e605df1d",
+      "parent_role": "feature_matrix",
+      "stage_id": "full_research_feature_matrix_v4"
+    },
+    {
+      "artifact_id": "full_research_labels_v2:404fe40807d674d4ec5fc7b7b0727c4e679bec6ddaa2c00d967eaeb08c80102b",
+      "parent_role": "labels",
+      "stage_id": "full_research_labels_v2"
+    },
+    {
+      "artifact_id": "research_selection_lineage_closure_v1:abe0d942b28dfbd6ca679a8a2aee0ee83890309922b5184f5efa28d1fb842e6b",
+      "parent_role": "selection_authority",
+      "stage_id": "research_selection_lineage_closure_v1"
+    },
+    {
+      "artifact_id": "point_in_time_universe_v2:325e39d7dd68afe0828154840b813287d0bf991487a42ed51a7d6476e85d7838",
+      "parent_role": "universe",
+      "stage_id": "point_in_time_universe_v2"
+    }
+  ],
+  "policy_section_sha256": {
+    "lightgbm": "c34496b7fbdf4f3eb060db12484b5f6423fbb027626133fec4dc7da8fc9f341c",
+    "linear_model": "94c9b4f1fad85e3b7ab2962f9ab0109e331a7236c855d03416800c50fbed8326",
+    "preprocessing": "4c2778be1d7f94f25cd3222c401f0a47e847e1941d6bad6128421e2c4e21f432",
+    "target": "0373b6808e38c6ed8ec687b4d07aab9494fee50e8f6050c2877574d5af4d338b",
+    "validation": "2a068133299bb4f373d6c32999d0f9960430509af7dc55db4ace8df7b4481e27"
+  },
+  "protocol_closure_version": "1.1",
+  "selection_input_sha256": "533ceb29bdca7861f210bc185a72c79639f442e31860b5b6c2f3153e433676d0",
+  "selection_inputs": {
+    "allowlist_manifest_sha256": "3f4fdb504a0b591d55b4f8c634f7f6218118ff92efa92eb0dd6d97698cf5569d",
+    "date_assignments_sha256": "69dbc339fd55ac05b789a4cf9ba49e49fd082f1846b366885b9612acff89de63",
+    "factor_weights_sha256": "9d0a59afb607a3cd26b4b6f8f4f064aefe0bd024f4515542e23e985c4e553ed2"
+  }
+}

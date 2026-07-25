@@ -1,0 +1,21 @@
+{
+  "all_nan_feature": "blocked",
+  "all_nan_row": "exclude_with_receipt",
+  "fit_scope_final": "outer_train_plus_validation",
+  "fit_scope_search": "outer_train_only",
+  "infinite_to_nan": true,
+  "lightgbm_boosting_round_checkpoints": [
+    100,
+    200,
+    400,
+    800
+  ],
+  "lightgbm_early_stopping": false,
+  "near_zero_variance": "blocked",
+  "near_zero_variance_threshold": 1e-12,
+  "output_feature_order_change": "blocked",
+  "partial_missing": "stable_daily_equal_weighted_median_v1",
+  "scaler": "daily_equal_weighted_standard_scaler_v1",
+  "solver_auto": "forbidden",
+  "status": "frozen"
+}

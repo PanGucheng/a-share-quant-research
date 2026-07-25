@@ -1,0 +1,9 @@
+schema_version: 1
+base_protocol: configs/research_model_protocol_v1_1.yaml
+outer_split_id: split_001
+factor_count: 5
+train_date_count: 20
+validation_date_count: 10
+test_read_budget: 0
+minimum_daily_pairs: 100
+output_dir: outputs/research_model_protocol_v1_1/canary
