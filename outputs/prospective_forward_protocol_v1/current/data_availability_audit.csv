@@ -1,0 +1,4 @@
+data_scope,start_date,end_date,first_seen_after_freeze,prospective_evidence_eligible,status
+current_matrix_snapshot,2021-02-01,2026-06-09,False,False,frozen_training_or_quarantine_input
+retrospective_extension,2026-02-05,2026-06-09,False,False,quarantined
+official_forward,>2026-06-09,,True,True,waiting_for_new_data
