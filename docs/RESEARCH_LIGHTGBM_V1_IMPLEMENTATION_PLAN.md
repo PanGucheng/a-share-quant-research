@@ -185,3 +185,8 @@ lightgbm_model_research_complete = false
 
 下一步只允许为三份 base freeze 绑定精确 test dates，生成 release freeze；在
 release freeze 发布前仍不得读取 test feature 或 label。
+
+统一 release freeze 已生成：3/3 final model 均绑定
+`date_split_semantics_v1` 的精确 test dates、date assignment hash、模型 hash
+和 base freeze hash；test payload read count 仍为 0。下一步允许执行一次
+LightGBM historical test release，重复 release 必须 fail-closed。
