@@ -5,7 +5,7 @@
 ## Current Working Documents
 
 - `RESEARCH_GRADE_MULTIFACTOR_MODEL_V1_PLAN.md`
-  当前唯一执行计划。Historical Instrument State Decision B 已冻结，不再继续搜索历史公告；模型阶段按 PR #5A 输入协议、PR #5B Ridge/Elastic Net、PR #5C LightGBM、PR #5D 历史科学比较推进。研究模型允许产生 post-observation evidence，但 authoritative execution、无偏最终估计和生产模型选择继续关闭。
+  当前唯一执行计划。Historical Instrument State Decision B 已冻结，不再继续搜索历史公告；模型阶段按 PR #5A 输入协议、PR #5B Ridge/Elastic Net、PR #5C LightGBM、PR #5D 历史科学比较推进。日期 authority 使用 `date_split_semantics_v1` 与 Selection Lineage Closure，旧 purged manifest 禁止作直接 parent；预处理、solver、环境锁和 LightGBM 固定 checkpoint 已精确冻结。研究模型允许产生 post-observation evidence，但 authoritative execution、无偏最终估计和生产模型选择继续关闭。
 - `HISTORICAL_INSTRUMENT_STATE_V2_PLAN.md`
   已完成的 source decision 记录。真实 decision/valuation/terminal scope 已冻结，13 条 Tier 0 官方快照与候选边界对账完成；ST 5/10、全天停牌 3/10、盘前可证明率 38.46%，故正式选择 Decision B。除非用户明确提供新源，否则不再继续该方向。
 - `outputs/historical_instrument_state_v2/official_canary/`

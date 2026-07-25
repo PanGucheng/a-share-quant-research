@@ -5,6 +5,24 @@
 > 前置：Research Accuracy Correction、Selection Lineage Closure、Execution Unit Semantics V1.2 与 Historical Instrument State V2 Decision B 已完成  
 > 当前入口：逻辑 PR #5A（统一模型输入与实验协议）
 
+## 0. 2026-07-25 审阅修正
+
+本版已落实模型计划审阅提出的六项修正：
+
+1. 日期 authority 改为 `date_split_semantics_v1`，模型日期读取
+   Selection Lineage Closure 的 `date_assignments.csv`；
+2. 旧 `purged_walk_forward_v1/full_research_669` 只保留 legacy payload，
+   禁止成为模型 artifact 的直接 parent；
+3. LightGBM 取消 L2 early stopping，候选结构与固定 boosting checkpoint 一起
+   按 Rank IC 选择；
+4. 线性预处理冻结 daily-equal weighted median/scaler、全空列、近零方差和
+   all-NaN row 规则；
+5. Ridge `solver=auto` 禁止进入正式运行，环境版本、BLAS 与线程配置进入 freeze；
+6. validation-label mutation 只强制指标与 search artifact 改变，不脆弱地要求
+   最优候选必然变化。
+
+其中日期 authority 是 PR #5A 发布任何输入 artifact 前的 P0 contract。
+
 ## 1. 方向调整与冻结边界
 
 Historical Instrument State V2 已按计划结束：
@@ -161,15 +179,45 @@ Feature matrix:
 Labels:
   outputs/full_research_labels_v2/current/
 
-Date splits:
-  outputs/purged_walk_forward_v1/full_research_669/
+Date split authority:
+  outputs/date_split_semantics_v1/current/
 
 Selection authority:
   outputs/research_selection_lineage_closure_v1/current/
 
+Selection and model date assignments:
+  outputs/research_selection_lineage_closure_v1/current/date_assignments.csv
+
 Selection mutation proof:
   outputs/research_selection_lineage_closure_v1/current/
+
+Legacy split payload source only:
+  outputs/purged_walk_forward_v1/full_research_669/
 ```
+
+`outputs/purged_walk_forward_v1/full_research_669/artifact_manifest.json`
+仍直接绑定 Matrix v1、Labels v1 与 Universe v1。它只能作为
+`date_split_semantics_v1` 已登记的 legacy payload evidence，**不得成为任何
+PR #5A—#5D artifact 的直接 parent**。
+
+模型 stage 必须同时把以下两个当前 artifact 作为直接 parent：
+
+```text
+date_split_semantics_v1
+research_selection_lineage_closure_v1
+```
+
+并验证：
+
+```text
+date_split_semantics_v1/date_assignments.csv SHA
+==
+research_selection_lineage_closure_v1/date_assignments.csv SHA
+```
+
+日期 authority 只声明 `split_manifest_id`；Universe v2、factor catalog 和
+factor frame authority 由 Selection Lineage Closure、Matrix v4 与 Labels v2
+分别提供。禁止从 date-only artifact 传播 Universe、catalog 或 frame 身份。
 
 不得直接把历史
 `outputs/split_specific_allowlist_v2/current/artifact_manifest.json` 当作模型
@@ -270,13 +318,44 @@ label leakage column → blocked
 线性模型：
 
 ```text
-SimpleImputer(strategy=median)
-StandardScaler
+DailyEqualWeightedMedianImputer
+StandardScaler.fit(X_train, sample_weight=train_daily_equal_weights)
 Ridge / ElasticNet
 ```
 
+精确规则：
+
+```text
+训练期整列全 NaN
+  → blocked
+
+训练期 daily-equal weighted variance <= 1e-12
+  → blocked_near_zero_variance
+
+某一行所有 frozen features 均为 NaN
+  → 在所有模型中统一排除；保留 missing-prediction row receipt
+
+单个特征部分缺失
+  → 用 fit scope 内、按 daily-equal sample weight 计算的确定性 weighted median
+
+validation 缺失值
+  → 搜索阶段只能使用 outer-train weighted median
+
+test 缺失值
+  → final model 只能使用 outer train+validation 重新 fit 的 weighted median
+
+imputer 输出列数或列顺序变化
+  → blocked
+```
+
+Weighted median 对排序相同值使用稳定的 canonical key 顺序，并把算法版本写入
+`preprocessing_config_sha256`。不得依赖 `SimpleImputer` 对全空列的版本相关
+行为，也不得静默删除 frozen feature。
+
 imputer 与 scaler 在超参数搜索阶段只能 fit outer train；选参后在
-outer train+validation 重新 fit。
+outer train+validation 重新 fit。Scaler 的 weighted mean/variance 必须消费与
+模型 fit 完全相同的 daily-equal weights。所有模型的 all-NaN row 排除规则必须
+一致；排除行计入 prediction coverage 分母。
 
 LightGBM：
 
@@ -315,7 +394,7 @@ final_fit_scope = outer_train_plus_validation
 
 - Ridge 看 IC、LightGBM 看收益或 Sharpe；
 - 参数跑完后改变主指标；
-- 用 test 选择超参数、预处理、target transform 或 early stopping；
+- 用 test 选择超参数、预处理、target transform 或 boosting checkpoint；
 - 跨 split 看 test 后统一选择一个“更好”的参数。
 
 每个 outer split 独立搜索并冻结参数。三个 split 可以得到不同最优参数。
@@ -326,17 +405,35 @@ final_fit_scope = outer_train_plus_validation
 
 PR #5A 不训练 Ridge、Elastic Net 或 LightGBM，只建立：
 
+- P0 date authority resolver，拒绝 legacy purged manifest 直接作为 parent；
 - scope-aware model entry gate；
 - authoritative input resolver；
 - split-specific wide matrix projection；
 - label exact join；
 - feature order receipt；
 - target-transform audit/freeze；
-- preprocessing contract；
+- daily-equal weighted preprocessing contract；
 - validation metric registry；
+- environment/thread/solver freeze schema；
 - prediction schema；
 - pre-test freeze/release contract；
 - canary、mutation、lineage 与 CI。
+
+PR #5A **第一个业务提交**必须同时完成：
+
+```text
+date_split_semantics_v1 direct-parent contract
+legacy purged manifest direct-parent rejection
+date-assignment hash equality contract
+scope-aware research/production gate skeleton
+weighted preprocessing edge-case policy
+environment_lock schema
+solver=auto rejection
+fixed-checkpoint model-selection policy
+validation-mutation hash assertions
+```
+
+在该提交通过测试和 CI 前，不得发布任何模型 input artifact。
 
 ### 8.2 标准输出
 
@@ -428,9 +525,28 @@ Elastic Net 不得先于 Ridge。
 ```text
 alpha = [0.01, 0.1, 1.0, 10.0, 100.0]
 fit_intercept = true
-solver = auto
+solver = <frozen_solver_receipt>
 maximum_candidates_per_split = 5
 ```
+
+`solver=auto` 仅可出现在拒绝测试中，禁止进入正式 candidate manifest。
+PR #5B canary 允许比较：
+
+```text
+solver_canary_candidates = [lsqr, cholesky]
+```
+
+比较只使用固定 train-only 子集，不读取 validation/test，也不使用预测质量：
+
+```text
+eligibility = repeated-fit coefficient/prediction hash stable
+tie_break_1 = lower_peak_memory
+tie_break_2 = lower_wall_time
+final_tie_break = canonical_solver_name
+```
+
+选定 solver 后生成 `ridge_solver_receipt.json`；solver 变化必须创建新 protocol
+version，并使 run approval 与 pre-test freeze 失效。
 
 复杂度 tie-break：优先更大的 `alpha`。
 
@@ -495,8 +611,11 @@ Test 后的 coefficient/metric 只进入只读 OOS evidence，不反馈选参。
 
 ```text
 objective = regression
-metric used by trainer = l2 only for training diagnostics
+trainer metric = l2
+trainer metric authority = diagnostic_only
 official candidate selection metric = mean_daily_rank_ic
+early_stopping = false
+boosting_round_checkpoints = [100, 200, 400, 800]
 boosting_type = gbdt
 deterministic = true
 force_col_wise = true
@@ -506,8 +625,17 @@ bagging_seed = 20260725
 data_random_seed = 20260725
 ```
 
-最多 16 个预注册候选/outer split。候选表在任何 validation fit 前写入
-`hyperparameter_candidate_manifest.csv`。变化维度限制为：
+每个 outer split 精确使用：
+
+```text
+4 个预注册 structural parameter rows
+× 4 个固定 boosting-round checkpoints
+= 16 个完整 candidate rows
+```
+
+每个 candidate ID 同时绑定 structural parameters 与 `num_boost_round`。候选表
+在任何 validation fit 前写入 `hyperparameter_candidate_manifest.csv`。
+Structural row 的变化维度限制为：
 
 ```text
 num_leaves
@@ -521,15 +649,17 @@ bagging_fraction
 ```
 
 禁止大范围随机搜索、Bayesian optimization 或 test-driven grid expansion。
+禁止用 LightGBM 内部 L2 early stopping 生成 `best_iteration`。L2 只能作为训练
+健康度诊断；不得控制 checkpoint、候选排名或最终轮数。
 
 流程：
 
-1. outer train fit candidate；
-2. outer validation 产生 daily Rank IC；
-3. early stopping 只使用 validation；
-4. 按统一 metric/tie-break 选择 candidate；
-5. 冻结 best iteration 与所有参数；
-6. outer train+validation 按固定 boosting rounds 从头重训；
+1. outer train 对每个 structural row 训练到 800 rounds；
+2. 只在 100/200/400/800 checkpoint 生成 outer-validation prediction；
+3. 每个 structural-row/checkpoint 形成一个完整候选；
+4. 按统一 Rank IC/ICIR/coverage/complexity 规则选择候选及轮数；
+5. 冻结 `num_boost_round` 与所有 structural parameters；
+6. outer train+validation 按冻结轮数从头重训；
 7. 生成并验证 pre-test freeze；
 8. test 只预测一次；
 9. SHAP/feature importance 在 test release 后仅作解释，不反馈模型选择。
@@ -572,10 +702,29 @@ metric_registry_sha256
 random_seed
 code_commit_sha
 freeze_timestamp
+python_version
+numpy_version
+pandas_version
+scipy_version
+scikit_learn_version
+lightgbm_version
+qlib_commit_sha
+environment_lock_sha256
+num_threads
+omp_num_threads
+mkl_num_threads
+openblas_num_threads
+numexpr_num_threads
+blas_backend
 historical_test_already_observed
 authoritative_execution
 unbiased_final_estimate
 ```
+
+`environment_lock.json` 必须在 model fit 前生成并纳入所有 model/cache key。
+当前环境审计值只能作为 canary 输入；正式值必须由 runner 从实际进程读取，禁止
+手写。线程数不得使用 auto。相同 model binary hash 的严格复现声明只在
+environment lock、代码、数据、配置和线程设置全部相同时成立。
 
 Test runner：
 
@@ -625,7 +774,11 @@ Test prediction hash可以因 test feature mutation 变化；开发与冻结 has
 附加测试：
 
 - train mutation 必须改变 fit-data/model hash；
-- validation label mutation可以改变选参结果，证明 validation 真被消费；
+- validation label mutation 必须改变 validation-label hash、validation-metric
+  hash 与 validation-search artifact hash；
+- 真实数据 mutation 中，最优候选是否改变只作记录，不作为 pass/fail；
+- 另建一个候选排名必然翻转的 synthetic fixture，专门验证 selector 会响应
+  validation metric 变化；
 - feature-order permutation 必须被 schema gate 拒绝；
 - test column 名伪装成 feature 必须被 leakage registry 拒绝；
 - test label loader 在 freeze 前必须非零退出。
@@ -808,6 +961,9 @@ PR #5A：
 
 ```text
 authoritative_selection_closure_consumed
+date_split_semantics_authority_consumed
+legacy_purged_split_not_direct_parent
+date_assignment_payload_hash_equal
 matrix_v4_hash_valid
 labels_v2_hash_valid
 split_dates_exact
@@ -827,6 +983,14 @@ train_only_search_fit
 validation_only_hyperparameter_selection
 daily_sample_weight_valid
 preprocessing_fit_scope_valid
+daily_equal_weighted_imputer_valid
+daily_equal_weighted_scaler_valid
+all_nan_feature_blocked
+near_zero_variance_feature_blocked
+all_nan_row_policy_consistent
+imputer_feature_order_preserved
+solver_auto_forbidden
+environment_lock_complete
 final_refit_train_plus_validation
 pre_test_freeze_valid
 single_test_release
@@ -896,8 +1060,10 @@ unbiased_final_estimate = false
 
 下一次实施从以下顺序开始：
 
-1. PR #5A 第一提交：scope-aware model gate 与新 readiness 字段；
-2. 审计 Selection Lineage Closure、Matrix v4、Labels v2、split 输入；
+1. PR #5A 第一提交：P0 date authority/legacy-parent rejection、scope-aware
+   model gate、weighted preprocessing/environment schema 与新 readiness 字段；
+2. 审计 Date Split Semantics、Selection Lineage Closure、Matrix v4、Labels
+   v2 和 exact split 输入；
 3. 冻结 target transform、metric registry 与 preprocessing protocol；
 4. 建立 prediction schema 与 test-access audit；
 5. 运行 1 split × 5 factor、零 test read canary；

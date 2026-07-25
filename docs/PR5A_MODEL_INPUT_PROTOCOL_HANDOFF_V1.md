@@ -190,24 +190,23 @@ PR #5A 任何 runtime materialization 前必须：
 
 PR #5A 不应重算 669 因子矩阵；只能读取 PR #6 Matrix v4 的 hash-verified、split-allowlisted columns，禁止回退到当前 v3 或已被替代的 48/46/54 输入。
 
-## 9. Definition of Done
+## 9. 历史 Definition of Done（已废止）
 
-只有以下全部成立，才允许创建 PR #5B：
+本节旧版本曾要求 authoritative execution、旧 core-model gate 与旧 PR5
+training gate 全部放行后才能进入 PR #5B。该组合要求已废止，**不得作为
+validator、readiness generator、model gate 或实现依据**。研究模型资格与
+authoritative execution/生产资格现已拆分；本文件不再保留那组三个相反的
+机器状态表达式，避免全文搜索误用。
 
-1. `model_research_ready=true` 且 `authoritative_oos_execution_ready=true`；
-2. `core_model_ready=true` 且 `pr5_model_training_ready=true`；
-3. 三个 split 的修正后 allowlist 和 feature order hash 固定；
-4. primary metric 与 tie-break 机器可读且不可在结果后修改；
-5. Equal Weight、Stability Weight 预测无损采用；
-6. prediction schema 不包含结果或选择字段；
-7. common-period 与 corrected Qlib semantics 完全一致；
-8. post-observation freeze/release lineage 被保留，不伪造新的 untouched test；
-9. mutation、freshness、output hashes 和 lineage 全通过；
-10. `pr5a_protocol_ready=true`；
-11. `historical_oos_comparison_complete=false`；
-12. `production_model_selected=false`；
-13. `model_training_started=false`；
-14. pytest、validators、PR CI 与 main CI 全部通过。
+当前 PR #5A Definition of Done 仅以：
+
+```text
+RESEARCH_GRADE_MULTIFACTOR_MODEL_V1_PLAN.md
+第 18 节
+```
+
+为准。全文搜索命中本文件中的旧设计字段时，也必须先读取顶部接管声明与本节
+废止说明。
 
 ## 10. PR #5B 前的强制停点
 
