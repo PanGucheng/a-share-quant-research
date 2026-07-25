@@ -1,0 +1,2 @@
+trading_day_count,accounting_day_count,order_count,fill_count,partial_count,rejected_count,ending_nav,total_cash_fee,total_slippage_cost,outer_split_id,method
+19,19,1143,935,735,208,9486562.753086373,46039.39499044756,82598.0776105423,split_001,ridge

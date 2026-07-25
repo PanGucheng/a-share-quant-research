@@ -1,0 +1,18 @@
+check_name,status,observed_value,required_value,severity,reason
+prediction_artifacts_fresh,pass,1,1,critical,
+single_test_release_consumed,pass,1,1,critical,
+market_cache_v3_hash_valid,pass,1,1,critical,
+signal_schema_valid,pass,six finite prediction signals,non-empty,critical,
+complete_trading_calendar,pass,19,19,critical,
+no_future_price_execution,pass,1,1,critical,
+cash_non_negative,pass,472854.60978373396,>=0,critical,
+accounting_conservation,pass,3.725290298461914e-09,<=1e-6,critical,
+commission_tax_transfer_fee_reported,pass,1,>0,critical,
+tradability_constraints_applied,pass,0,0,critical,
+valuation_fallback_never_filled_as_trade,pass,0,0,critical,
+volume_participation_respected,pass,-54857.100000000006,<=1.0,critical,
+dynamic_lot_rules_valid,pass,"{'main_error': 7.275957614183426e-12, 'star_invalid': 0}",zero violations,critical,
+t_plus_one_applied,pass,True,True,critical,
+unknown_execution_difference_count,pass,0,0,critical,
+authoritative_oos_execution_ready,blocked,False,True,capability,Historical instrument state remains Decision B.
+unbiased_final_estimate,blocked,False,True,capability,Historical test was already observed.
