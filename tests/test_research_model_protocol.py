@@ -5,6 +5,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 import pytest
+import yaml
 
 from model_research.freeze import load_freeze_before_test
 from model_research.gates import (
@@ -18,18 +19,27 @@ from model_research.inputs import (
     assert_feature_order,
     assert_fold_isolation,
 )
-from model_research.lineage import AuthoritativeParentPaths, resolve_authoritative_parents
+from model_research.lineage import (
+    AuthoritativeParentPaths,
+    resolve_authoritative_parents,
+    resolve_matrix_runtime_authority,
+)
 from model_research.preprocessing import (
     daily_equal_weights,
     fit_weighted_preprocessing,
     stable_weighted_median,
 )
+from model_research.protocol import parent_paths
+from model_research.protocol_v1_1 import build_protocol_binding
 from model_research.schemas import (
     PREDICTION_COLUMNS,
     freeze_schema_missing,
     prediction_schema_violations,
 )
-from model_research.targets import daily_cross_sectional_rank_centered
+from model_research.targets import (
+    daily_cross_sectional_rank_centered,
+    eligible_daily_cross_sectional_rank_centered,
+)
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -129,6 +139,20 @@ def test_authoritative_parent_resolution_uses_date_wrapper_and_closure() -> None
     )
 
 
+def test_matrix_runtime_is_resolved_from_authoritative_manifest() -> None:
+    runtime = resolve_matrix_runtime_authority(
+        project_root=ROOT,
+        matrix_manifest_path=authoritative_paths().matrix_manifest,
+        selected_factors=["alpha158_CNTD30"],
+        verify_selected_partition_hashes=False,
+    )
+    assert runtime.partition_status_path == (
+        ROOT
+        / "outputs/full_research_feature_matrix_v4/current/partition_status.csv"
+    )
+    assert runtime.factor_index["alpha158_CNTD30"].parent == runtime.runtime_dir
+
+
 def test_weighted_preprocessing_is_daily_equal_and_order_stable() -> None:
     dates = np.asarray(["a", "a", "b"])
     weights = daily_equal_weights(dates)
@@ -210,6 +234,42 @@ def test_target_transform_uses_daily_rank_and_blocks_small_days() -> None:
     ]
 
 
+def test_target_v2_ranks_only_final_eligible_sample_and_records_zero_dates() -> None:
+    frame = pd.DataFrame(
+        {
+            "datetime": pd.to_datetime(
+                ["2024-01-02"] * 4 + ["2024-01-03"]
+            ),
+            "instrument": ["a", "b", "c", "d", "a"],
+            "f1": [1.0, 2.0, 3.0, np.nan, np.nan],
+            "label": [1.0, 2.0, 100.0, -100.0, np.nan],
+        }
+    )
+    transformed, eligible, receipt = (
+        eligible_daily_cross_sectional_rank_centered(
+            frame,
+            label_column="label",
+            feature_columns=["f1"],
+            expected_dates=pd.DatetimeIndex(
+                ["2024-01-02", "2024-01-03", "2024-01-04"]
+            ),
+            minimum_daily_pairs=3,
+        )
+    )
+    assert eligible.tolist() == [True, True, True, False, False]
+    assert np.allclose(
+        transformed.iloc[:3].to_numpy(),
+        [-1 / 6, 1 / 6, 0.5],
+    )
+    assert transformed.iloc[3:].isna().all()
+    assert receipt["valid_pair_count"].tolist() == [3, 0, 0]
+    assert receipt["status"].tolist() == [
+        "pass",
+        "blocked_insufficient_daily_pairs",
+        "blocked_insufficient_daily_pairs",
+    ]
+
+
 def test_access_audit_starts_with_zero_test_reads() -> None:
     audit = InputAccessAudit()
     audit.record(kind="feature", fold="train")
@@ -243,3 +303,21 @@ def test_artifact_entry_rejects_missing_and_legacy_v1_manifest(
             / "outputs/research_model_protocol_v1/current/artifact_manifest.json",
             experiment_class="production",
         )
+
+
+def test_v1_1_binding_changes_for_protocol_mutation() -> None:
+    config = yaml.safe_load(
+        (
+            ROOT / "configs/research_model_protocol_v1_1.yaml"
+        ).read_text(encoding="utf-8")
+    )
+    resolution = resolve_authoritative_parents(parent_paths(config))
+    baseline = build_protocol_binding(config, resolution)
+    mutated = yaml.safe_load(yaml.safe_dump(config))
+    mutated["target"]["minimum_daily_pairs"] = 101
+    changed = build_protocol_binding(mutated, resolution)
+    assert changed["base_protocol_sha256"] != baseline["base_protocol_sha256"]
+    assert (
+        changed["policy_section_sha256"]["target"]
+        != baseline["policy_section_sha256"]["target"]
+    )
