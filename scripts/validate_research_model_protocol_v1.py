@@ -37,6 +37,9 @@ REQUIRED_CONTRACTS = {
     "prediction_schema_leakage_free",
     "test_read_count_before_freeze_zero",
     "scope_aware_model_gate_valid",
+    "solver_auto_forbidden",
+    "fixed_checkpoint_selection_policy",
+    "validation_mutation_hash_policy",
 }
 
 

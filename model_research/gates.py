@@ -1,11 +1,21 @@
 from __future__ import annotations
 
+import csv
 from collections.abc import Mapping
+from pathlib import Path
 
 
 RESEARCH_EXPERIMENT_CLASS = "post_observation_research"
 BLOCKED_EXPERIMENT_CLASSES = frozenset(
     {"authoritative_oos", "production", "paper", "live"}
+)
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+RESEARCH_MODEL_PROTOCOL_READINESS = (
+    PROJECT_ROOT
+    / "outputs"
+    / "research_model_protocol_v1"
+    / "current"
+    / "readiness_summary.csv"
 )
 
 
@@ -93,3 +103,26 @@ def assert_model_scope_allowed(
         raise ModelScopeBlockedError(
             "model scope blocked: " + "; ".join(blockers)
         )
+
+
+def assert_research_model_entry_file(
+    readiness_path: Path = RESEARCH_MODEL_PROTOCOL_READINESS,
+    *,
+    experiment_class: str | None,
+    operation: str = "training",
+) -> None:
+    if not readiness_path.is_file():
+        raise ModelScopeBlockedError(
+            f"model scope blocked: missing scoped readiness: {readiness_path}"
+        )
+    with readiness_path.open("r", encoding="utf-8-sig", newline="") as handle:
+        rows = list(csv.DictReader(handle))
+    if len(rows) != 1:
+        raise ModelScopeBlockedError(
+            f"model scope blocked: scoped readiness rows={len(rows)}"
+        )
+    assert_model_scope_allowed(
+        rows[0],
+        experiment_class=experiment_class,
+        operation=operation,
+    )

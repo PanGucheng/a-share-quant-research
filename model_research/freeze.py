@@ -21,6 +21,24 @@ def _version(distribution: str) -> str:
 
 
 def capture_environment_lock(*, qlib_commit_sha: str) -> dict[str, Any]:
+    try:
+        import numpy as np
+
+        blas = (
+            getattr(np.__config__, "CONFIG", {})
+            .get("Build Dependencies", {})
+            .get("blas", {})
+        )
+        blas_backend = {
+            "name": blas.get("name", "unresolved"),
+            "version": blas.get("version", "unresolved"),
+            "configuration": blas.get(
+                "openblas configuration",
+                blas.get("detection method", "unresolved"),
+            ),
+        }
+    except Exception as exc:  # pragma: no cover - defensive environment audit
+        blas_backend = {"name": "unresolved", "reason": type(exc).__name__}
     threads = {
         "num_threads": os.environ.get("QLIB_MODEL_NUM_THREADS", "1"),
         "omp_num_threads": os.environ.get("OMP_NUM_THREADS", "1"),
@@ -41,7 +59,7 @@ def capture_environment_lock(*, qlib_commit_sha: str) -> dict[str, Any]:
         "lightgbm_version": _version("lightgbm"),
         "qlib_commit_sha": qlib_commit_sha,
         **threads,
-        "blas_backend": os.environ.get("QLIB_MODEL_BLAS_BACKEND", "runtime_audit_required"),
+        "blas_backend": blas_backend,
     }
     payload["environment_lock_sha256"] = canonical_hash(payload)
     return payload

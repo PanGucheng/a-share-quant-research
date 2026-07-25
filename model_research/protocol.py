@@ -456,6 +456,37 @@ def run_canary(
                 "post_observation_research",
             ),
             contract_row(
+                "solver_auto_forbidden",
+                config["linear_model"]["solver_auto"] == "forbidden",
+                config["linear_model"]["solver_auto"],
+                "forbidden",
+            ),
+            contract_row(
+                "fixed_checkpoint_selection_policy",
+                config["lightgbm"]["early_stopping"] is False
+                and config["lightgbm"]["boosting_round_checkpoints"]
+                == [100, 200, 400, 800],
+                config["lightgbm"]["boosting_round_checkpoints"],
+                [100, 200, 400, 800],
+            ),
+            contract_row(
+                "validation_mutation_hash_policy",
+                set(
+                    config["mutation"][
+                        "validation_label_required_hash_changes"
+                    ]
+                )
+                == {
+                    "validation_label_sha256",
+                    "validation_metric_sha256",
+                    "validation_search_artifact_sha256",
+                }
+                and config["mutation"]["selected_candidate_change_required"]
+                is False,
+                config["mutation"],
+                "three hashes change; candidate change is not mandatory",
+            ),
+            contract_row(
                 "canary_mutation_contracts_pass",
                 mutations["status"].eq("pass").all(),
                 int(mutations["status"].eq("pass").sum()),
@@ -631,6 +662,9 @@ def freeze_protocol(
         "prediction_schema_leakage_free",
         "test_read_count_before_freeze_zero",
         "scope_aware_model_gate_valid",
+        "solver_auto_forbidden",
+        "fixed_checkpoint_selection_policy",
+        "validation_mutation_hash_policy",
     )
     contracts = pd.DataFrame(
         [

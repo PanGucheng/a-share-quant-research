@@ -9,6 +9,7 @@ import pytest
 from model_research.freeze import load_freeze_before_test
 from model_research.gates import (
     ModelScopeBlockedError,
+    assert_research_model_entry_file,
     assert_model_scope_allowed,
 )
 from model_research.inputs import (
@@ -213,3 +214,25 @@ def test_access_audit_starts_with_zero_test_reads() -> None:
     audit.record(kind="feature", fold="train")
     audit.record(kind="label", fold="validation")
     assert audit.test_read_count == 0
+
+
+def test_scoped_entry_file_is_fail_closed_and_accepts_research(
+    tmp_path: Path,
+) -> None:
+    missing = tmp_path / "missing.csv"
+    with pytest.raises(ModelScopeBlockedError, match="missing scoped readiness"):
+        assert_research_model_entry_file(
+            missing,
+            experiment_class="post_observation_research",
+        )
+    readiness = tmp_path / "readiness.csv"
+    pd.DataFrame([ready_scope()]).to_csv(readiness, index=False)
+    assert_research_model_entry_file(
+        readiness,
+        experiment_class="post_observation_research",
+    )
+    with pytest.raises(ModelScopeBlockedError, match="experiment_class_blocked"):
+        assert_research_model_entry_file(
+            readiness,
+            experiment_class="production",
+        )
