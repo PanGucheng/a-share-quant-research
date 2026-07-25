@@ -1,0 +1,72 @@
+schema_version: 1
+profile_name: full_research
+profile_type: full_research
+research_run_family_id: full_research_factor_669_v1
+experiment_class: post_observation_research
+
+parents:
+  date_manifest: outputs/date_split_semantics_v1/current/artifact_manifest.json
+  selection_manifest: outputs/research_selection_lineage_closure_v1/current/artifact_manifest.json
+  date_assignments: outputs/research_selection_lineage_closure_v1/current/date_assignments.csv
+  labels_manifest: outputs/full_research_labels_v2/current/artifact_manifest.json
+  labels_runtime: outputs/full_research_feature_matrix_v4/runtime/labels_v2.parquet
+  transparent_manifest: outputs/split_transparent_score_v2/current/artifact_manifest.json
+  transparent_score_artifact: outputs/split_transparent_score_v2/current/score_artifact.csv
+  transparent_scores_runtime: outputs/split_transparent_score_v2/current/runtime/composite_scores.parquet
+  linear_manifest: outputs/research_linear_models_v1/current/artifact_manifest.json
+  linear_daily_ic: outputs/research_linear_models_v1/current/test_daily_ic.csv
+  linear_metrics: outputs/research_linear_models_v1/current/test_metrics.csv
+  linear_release_receipts: outputs/research_linear_models_v1/current/release_receipts
+  lightgbm_manifest: outputs/research_lightgbm_v1/current/artifact_manifest.json
+  lightgbm_daily_ic: outputs/research_lightgbm_v1/current/test_daily_ic.csv
+  lightgbm_metrics: outputs/research_lightgbm_v1/current/test_metrics.csv
+  lightgbm_release_receipts: outputs/research_lightgbm_v1/current/release_receipts
+
+comparison:
+  methods:
+    - equal_weight
+    - stability_weight
+    - ridge
+    - elastic_net
+    - lightgbm
+  split_ids:
+    - split_001
+    - split_002
+    - split_003
+  label_name: label_20d_t1
+  minimum_daily_pairs: 100
+  minimum_prediction_coverage: 0.95
+  primary_summary_metric: equal_split_mean_daily_rank_ic
+  tie_break_1: equal_split_mean_daily_rank_ic_ir
+  tie_break_2: minimum_split_prediction_coverage
+  tie_break_3: lower_method_complexity
+  final_tie_break: canonical_method_name
+  method_complexity:
+    equal_weight: 1
+    stability_weight: 2
+    ridge: 3
+    elastic_net: 4
+    lightgbm: 5
+
+bootstrap:
+  method: moving_block_mean
+  samples: 5000
+  block_length: 10
+  random_seed: 20260726
+
+execution:
+  portfolio_comparison_status: blocked_execution_capability
+  blocker: blocked_unpriceable_held_position
+  blocker_instrument: SZ300280
+  blocker_date: 2025-04-18
+  terminal_approximation_allowed: false
+  authoritative_execution: false
+
+governance:
+  historical_test_already_observed: true
+  historical_oos_comparison_complete: true
+  production_model_selected: false
+  unbiased_final_estimate: false
+  authoritative_oos_execution_ready: false
+
+output_dir: outputs/historical_model_comparison_v1/current
