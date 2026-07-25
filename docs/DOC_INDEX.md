@@ -12,6 +12,8 @@
   逻辑 PR #5A.1 收口：artifact-only 模型入口、Canary/config 强绑定、最终样本内 target 排名、validation transform，以及三个 split 的 development-only full dry-run。
 - `RESEARCH_LINEAR_MODELS_V1_IMPLEMENTATION_PLAN.md`
   逻辑 PR #5B 的 Ridge/Elastic Net 精确候选、solver canary、资源预算、分阶段运行、预测试冻结与单次 test release 基线；实施回执同时记录 3/3 + 3/3 模型研究完成，以及 split_002 长期停牌持仓估值导致的 fail-closed Qlib 能力阻断。
+- `RESEARCH_LIGHTGBM_V1_IMPLEMENTATION_PLAN.md`
+  逻辑 PR #5C 的四结构行、固定 100/200/400/800 checkpoint、16 候选上限、train-only 可复现性 canary、逐级资源门禁和单次 test release 实施基线。
 - `RESEARCH_GRADE_MULTIFACTOR_MODEL_V1_PLAN.md`
   当前唯一执行计划。Historical Instrument State Decision B 已冻结，不再继续搜索历史公告；模型阶段按 PR #5A 输入协议、PR #5B Ridge/Elastic Net、PR #5C LightGBM、PR #5D 历史科学比较推进。日期 authority 使用 `date_split_semantics_v1` 与 Selection Lineage Closure，旧 purged manifest 禁止作直接 parent；预处理、solver、环境锁和 LightGBM 固定 checkpoint 已精确冻结。研究模型允许产生 post-observation evidence，但 authoritative execution、无偏最终估计和生产模型选择继续关闭。
 - `HISTORICAL_INSTRUMENT_STATE_V2_PLAN.md`
