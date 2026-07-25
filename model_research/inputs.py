@@ -7,6 +7,7 @@ import pandas as pd
 import pyarrow.parquet as pq
 
 from research_validation.feature_matrix import canonical_hash
+from .freeze import load_freeze_before_test
 
 
 KEY_COLUMNS = ("datetime", "instrument")
@@ -152,7 +153,7 @@ def _read_partition_dates(
     )
 
 
-def project_features(
+def _project_features(
     *,
     factor_names: list[str],
     factor_index: dict[str, Path],
@@ -160,8 +161,6 @@ def project_features(
     fold: str,
     audit: InputAccessAudit,
 ) -> pd.DataFrame:
-    if fold == "test":
-        raise PermissionError("test feature loader is disabled before pre-test freeze")
     validate_factor_availability(factor_names, factor_index)
     by_partition: dict[Path, list[str]] = {}
     for factor in factor_names:
@@ -189,7 +188,55 @@ def project_features(
     ).reset_index(drop=True)
 
 
-def join_labels(
+def project_features(
+    *,
+    factor_names: list[str],
+    factor_index: dict[str, Path],
+    dates: pd.DatetimeIndex,
+    fold: str,
+    audit: InputAccessAudit,
+) -> pd.DataFrame:
+    if fold == "test":
+        raise PermissionError("test feature loader is disabled before pre-test freeze")
+    return _project_features(
+        factor_names=factor_names,
+        factor_index=factor_index,
+        dates=dates,
+        fold=fold,
+        audit=audit,
+    )
+
+
+def project_test_features_after_freeze(
+    *,
+    factor_names: list[str],
+    factor_index: dict[str, Path],
+    dates: pd.DatetimeIndex,
+    audit: InputAccessAudit,
+    freeze_manifest_path: Path,
+    outer_split_id: str,
+    authorized_dates: pd.DatetimeIndex | None = None,
+) -> pd.DataFrame:
+    freeze = load_freeze_before_test(freeze_manifest_path)
+    if freeze.get("outer_split_id") != outer_split_id:
+        raise PermissionError("test feature freeze split mismatch")
+    full_dates = dates if authorized_dates is None else authorized_dates
+    if canonical_hash([value.date().isoformat() for value in full_dates]) != str(
+        freeze.get("test_dates_sha256", "")
+    ):
+        raise PermissionError("test feature dates do not match release freeze")
+    if not set(dates).issubset(set(full_dates)):
+        raise PermissionError("test feature batch escapes authorized dates")
+    return _project_features(
+        factor_names=factor_names,
+        factor_index=factor_index,
+        dates=dates,
+        fold="test",
+        audit=audit,
+    )
+
+
+def _join_labels(
     features: pd.DataFrame,
     *,
     labels_path: Path,
@@ -198,8 +245,6 @@ def join_labels(
     fold: str,
     audit: InputAccessAudit,
 ) -> pd.DataFrame:
-    if fold == "test":
-        raise PermissionError("test label loader is disabled before pre-test freeze")
     audit.record(kind="label", fold=fold)
     labels = pd.read_parquet(
         labels_path,
@@ -221,6 +266,58 @@ def join_labels(
         validate="one_to_one",
     )
     return merged.sort_values(list(KEY_COLUMNS), kind="stable").reset_index(drop=True)
+
+
+def join_labels(
+    features: pd.DataFrame,
+    *,
+    labels_path: Path,
+    label_name: str,
+    dates: pd.DatetimeIndex,
+    fold: str,
+    audit: InputAccessAudit,
+) -> pd.DataFrame:
+    if fold == "test":
+        raise PermissionError("test label loader is disabled before pre-test freeze")
+    return _join_labels(
+        features,
+        labels_path=labels_path,
+        label_name=label_name,
+        dates=dates,
+        fold=fold,
+        audit=audit,
+    )
+
+
+def join_test_labels_after_freeze(
+    features: pd.DataFrame,
+    *,
+    labels_path: Path,
+    label_name: str,
+    dates: pd.DatetimeIndex,
+    audit: InputAccessAudit,
+    freeze_manifest_path: Path,
+    outer_split_id: str,
+    authorized_dates: pd.DatetimeIndex | None = None,
+) -> pd.DataFrame:
+    freeze = load_freeze_before_test(freeze_manifest_path)
+    if freeze.get("outer_split_id") != outer_split_id:
+        raise PermissionError("test label freeze split mismatch")
+    full_dates = dates if authorized_dates is None else authorized_dates
+    if canonical_hash([value.date().isoformat() for value in full_dates]) != str(
+        freeze.get("test_dates_sha256", "")
+    ):
+        raise PermissionError("test label dates do not match release freeze")
+    if not set(dates).issubset(set(full_dates)):
+        raise PermissionError("test label batch escapes authorized dates")
+    return _join_labels(
+        features,
+        labels_path=labels_path,
+        label_name=label_name,
+        dates=dates,
+        fold="test",
+        audit=audit,
+    )
 
 
 def assert_fold_isolation(
