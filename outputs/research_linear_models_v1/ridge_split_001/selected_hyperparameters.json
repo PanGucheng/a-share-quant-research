@@ -1,0 +1,9 @@
+{
+  "split_001:ridge": {
+    "alpha": 0.01,
+    "candidate_sha256": "3392b05e48d6f751dc5deb4ec06eda1dc29e0c5d35d1fb1c29efd85f47106694",
+    "fit_intercept": true,
+    "method": "ridge",
+    "solver": "lsqr"
+  }
+}
