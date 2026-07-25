@@ -639,6 +639,26 @@ def run_lightgbm_development(
         ):
             raise ValueError(f"LightGBM development parent blocked: {role}")
         parent_items.append((role, path, manifest))
+    if "split_001" not in split_ids:
+        split_one_path = resolve(
+            "outputs/research_lightgbm_v1/split_001/"
+            "artifact_manifest.json"
+        )
+        split_one_manifest = load_artifact_manifest(split_one_path)
+        if (
+            split_one_manifest.get("artifact_status") != "pass"
+            or split_one_manifest.get("lineage_status") != "complete"
+        ):
+            raise ValueError(
+                "remaining LightGBM splits require complete/pass split_001"
+            )
+        parent_items.append(
+            (
+                "lightgbm_split_001_development",
+                split_one_path,
+                split_one_manifest,
+            )
+        )
     code_state = capture_code_state(PROJECT_ROOT)
     if code_state.dirty:
         raise ValueError(
