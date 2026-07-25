@@ -6,6 +6,9 @@ lineage_fields:
   - factor_catalog_id
   - factor_frame_id
 stage_authority:
+  historical_instrument_state_scope_v2:
+    authoritative_fields:
+      [universe_artifact_id, split_manifest_id, factor_catalog_id, factor_frame_id]
   execution_unit_semantics_governance_v1_2:
     authoritative_fields:
       [universe_artifact_id, split_manifest_id, factor_catalog_id, factor_frame_id]
@@ -81,6 +84,17 @@ stage_authority:
     authoritative_fields:
       [universe_artifact_id, factor_catalog_id, factor_frame_id]
 edge_authority:
+  historical_instrument_state_scope_v2:
+    data_source_audit_v2:
+      authoritative_fields: [universe_artifact_id, split_manifest_id]
+    execution_unit_semantics_correction_v1_2:
+      authoritative_fields:
+        [universe_artifact_id, split_manifest_id, factor_catalog_id, factor_frame_id]
+    market_cache_v3:
+      authoritative_fields:
+        [universe_artifact_id, split_manifest_id, factor_catalog_id, factor_frame_id]
+    point_in_time_universe_v2:
+      authoritative_fields: [universe_artifact_id]
   execution_unit_semantics_governance_v1_2:
     execution_accuracy_correction_v1:
       mode: evidence_only

@@ -1,0 +1,33 @@
+schema_version: 1
+profile_name: full_research
+profile_type: full_research
+research_run_family_id: full_research_factor_669_v1
+status: active_scope_and_canary
+timezone: Asia/Shanghai
+before_open_cutoff: "09:00:00"
+score_runtime: outputs/split_transparent_score_v2/current/runtime/composite_scores.parquet
+score_receipt: outputs/split_transparent_score_v2/current/score_artifact.csv
+score_manifest: outputs/split_transparent_score_v2/current/artifact_manifest.json
+expected_score_runtime_sha256: beb4e4ad738e263e72bb75ead4d948f7a44e7c086bc56b310a56a823a6adecbf
+execution_output: outputs/execution_unit_semantics_correction_v1_2/current
+execution_manifest: outputs/execution_unit_semantics_correction_v1_2/current/artifact_manifest.json
+market_cache_manifest: outputs/market_cache_v3/current/artifact_manifest.json
+universe_manifest: outputs/point_in_time_universe_v2/full_research/artifact_manifest.json
+data_source_audit_manifest: outputs/data_source_audit_v2/current/artifact_manifest.json
+data_source_audit_snapshot_manifest: outputs/data_source_audit_v2/current/raw_snapshot_manifest.csv
+baostock_normalized_snapshot: outputs/data_source_audit_v2/current/normalized/baostock_daily.parquet
+scope_output: outputs/historical_instrument_state_v2/scope
+scope_stage_id: historical_instrument_state_scope_v2
+terminal_focus_instruments: [SZ000413, SZ002308, SH600811]
+official_canary_minimums:
+  st_boundary_events: 10
+  full_day_suspension_events: 10
+  intraday_control_events: 3
+  terminal_instruments: 3
+model_entry_policy:
+  historical_instrument_state_v2_ready: false
+  authoritative_oos_execution_ready: false
+  core_model_ready: false
+  pr5_model_training_ready: false
+  model_training_started: false
+  model_entry_hard_stop_active: true
