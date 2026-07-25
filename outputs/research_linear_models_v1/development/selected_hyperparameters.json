@@ -1,0 +1,56 @@
+{
+  "split_001:elastic_net": {
+    "alpha": 0.01,
+    "candidate_sha256": "6203286bc0077b5eb48b61a527accaa85afb169620cc0d61ce25a9b96ef6cf2e",
+    "fit_intercept": true,
+    "l1_ratio": 0.5,
+    "max_iter": 5000,
+    "method": "elastic_net",
+    "random_state": 20260725,
+    "selection": "cyclic",
+    "tol": 1e-05
+  },
+  "split_001:ridge": {
+    "alpha": 0.01,
+    "candidate_sha256": "3392b05e48d6f751dc5deb4ec06eda1dc29e0c5d35d1fb1c29efd85f47106694",
+    "fit_intercept": true,
+    "method": "ridge",
+    "solver": "lsqr"
+  },
+  "split_002:elastic_net": {
+    "alpha": 0.01,
+    "candidate_sha256": "0e7c270ac33bad6b82fbd8ab55a384d7b25efa422b408f9c027c28651448441e",
+    "fit_intercept": true,
+    "l1_ratio": 0.9,
+    "max_iter": 5000,
+    "method": "elastic_net",
+    "random_state": 20260725,
+    "selection": "cyclic",
+    "tol": 1e-05
+  },
+  "split_002:ridge": {
+    "alpha": 100.0,
+    "candidate_sha256": "b7c445b417bf5ef60e21bb658117fde9874480663e608803d93faf6a8b8e464e",
+    "fit_intercept": true,
+    "method": "ridge",
+    "solver": "lsqr"
+  },
+  "split_003:elastic_net": {
+    "alpha": 0.001,
+    "candidate_sha256": "471d9723d2459a3350c16a163c2ffeed430b7e152926919da555610cd68947fe",
+    "fit_intercept": true,
+    "l1_ratio": 0.1,
+    "max_iter": 5000,
+    "method": "elastic_net",
+    "random_state": 20260725,
+    "selection": "cyclic",
+    "tol": 1e-05
+  },
+  "split_003:ridge": {
+    "alpha": 0.01,
+    "candidate_sha256": "3392b05e48d6f751dc5deb4ec06eda1dc29e0c5d35d1fb1c29efd85f47106694",
+    "fit_intercept": true,
+    "method": "ridge",
+    "solver": "lsqr"
+  }
+}
