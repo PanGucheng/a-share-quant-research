@@ -31,6 +31,7 @@ from model_research.lineage import (
     resolve_authoritative_parents,
     resolve_matrix_runtime_authority,
 )
+from model_research.linear_models import load_linear_config
 from model_research.preprocessing import (
     daily_equal_weights,
     fit_weighted_preprocessing,
@@ -213,6 +214,24 @@ def test_matrix_runtime_is_resolved_from_authoritative_manifest(
     assert runtime.factor_index[factor_name] == partition_path
     assert runtime.runtime_dir == runtime_dir
     assert runtime.partition_receipts[0]["hash_verified"] is True
+
+
+def test_linear_model_config_freezes_candidate_counts_and_rejects_auto(
+    tmp_path: Path,
+) -> None:
+    source = ROOT / "configs/research_linear_models_v1.yaml"
+    config = yaml.safe_load(source.read_text(encoding="utf-8"))
+    assert load_linear_config(source)["validation"]["primary_metric"] == (
+        "mean_daily_rank_ic"
+    )
+    config["ridge"]["solver"] = "auto"
+    rejected = tmp_path / "linear.yaml"
+    rejected.write_text(
+        yaml.safe_dump(config, sort_keys=False),
+        encoding="utf-8",
+    )
+    with pytest.raises(ValueError, match="solver=auto"):
+        load_linear_config(rejected)
 
 
 def test_weighted_preprocessing_is_daily_equal_and_order_stable() -> None:
