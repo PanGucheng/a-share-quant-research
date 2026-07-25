@@ -1,0 +1,14 @@
+﻿evidence_id,instrument,state_type,state_value,effective_from,available_phase,candidate_state_type,candidate_relation,nearest_candidate_date,nearest_candidate_delta_days,candidate_boundary_count
+sz000413_suspend_20240815,SZ000413,suspension,full_day,2024-08-15,before_open,tradestatus,exact_boundary_match,2024-08-15,0,1
+sz002308_suspend_20240823,SZ002308,suspension,full_day,2024-08-23,unknown,tradestatus,exact_boundary_match,2024-08-23,0,1
+sh600811_stop_trading_20250415,SH600811,suspension,full_day,2025-04-15,unknown,tradestatus,exact_boundary_match,2025-04-15,0,3
+sh600811_st_start_20250318,SH600811,st,true,2025-03-18,before_open,st,exact_boundary_match,2025-03-18,0,2
+sz002308_st_start_20240709,SZ002308,st,true,2024-07-09,before_open,st,nonmatching_candidate_boundary,2024-09-27,80,1
+sz000627_st_start_20250708,SZ000627,st,true,2025-07-08,unknown,st,exact_boundary_match,2025-07-08,0,1
+sz300280_st_start_20250520,SZ300280,st,true,2025-05-20,unknown,st,exact_boundary_match,2025-05-20,0,2
+sh603003_st_start_20240506,SH603003,st,true,2024-05-06,unknown,st,nonmatching_candidate_boundary,2025-06-10,400,1
+sz002750_retirement_board_20250606,SZ002750,listing_termination,retirement_board,2025-06-06,before_open,,not_comparable_control_or_terminal,,,0
+sz300280_retirement_board_20250915,SZ300280,listing_termination,retirement_board,2025-09-15,before_open,,not_comparable_control_or_terminal,,,0
+sh603120_intraday_20250409,SH603120,suspension,intraday,2025-04-09,unknown,,not_comparable_control_or_terminal,,,0
+sh900952_intraday_20250630,SH900952,suspension,intraday,2025-06-30,unknown,,not_comparable_control_or_terminal,,,0
+sz301557_intraday_20250306,SZ301557,suspension,intraday,2025-03-06,unknown,,not_comparable_control_or_terminal,,,0
