@@ -5,6 +5,58 @@
 > 前置：PR #9 / Execution Unit Semantics Correction V1.2 已完成
 > 硬边界：不进入 PR #5A，不训练模型，不修改 Matrix v4、Labels v2、IC、FDR、stability、clustering、allowlist、weights 或冻结 score。
 
+## 0. 实施状态（2026-07-25）
+
+已完成：
+
+```text
+Phase 0  machine hard-stop 保持
+Phase 1  scope freeze
+Phase 2  evidence schema / fail-closed tests
+Phase 3  curated Tier-0 official canary
+Phase 4  BaoStock candidate boundary reconciliation
+Phase 5  source decision = Decision B
+```
+
+当前证据：
+
+```text
+official normalized events       13
+raw official snapshots           13/13 retrieved and hashed
+terminal instruments             3/3
+intraday controls                3/3
+ST boundary events               5/10
+full-day suspension events       3/10
+before-open provable rate        38.46%
+same-day date-only / later evidence unknown count = 8
+authoritative conflicts          0
+```
+
+因此：
+
+```text
+official_canary_complete = false
+candidate_source_reconciliation_complete = true
+source_decision = B
+historical_instrument_state_v2_ready = false
+terminal_disposition_ready = false
+execution_rerun_authorized = false
+model_entry_hard_stop_active = true
+```
+
+该结论不是 canary 失败后降低标准，而是冻结门槛正常发挥作用。当前 Tier 0
+证据可证明事件本身，也可证明 BaoStock 适合作为候选定位源；但不足以证明全范围
+历史盘前可得性。尤其没有任何 terminal 证据包含可执行的
+`cash_per_share` 处置，因此不得生成 Instrument State v2、Market Cache v4 或新
+历史 NAV。
+
+机器证据位于：
+
+```text
+outputs/historical_instrument_state_v2/scope/
+outputs/historical_instrument_state_v2/official_canary/
+```
+
 ## 1. 目标与当前结论
 
 本阶段只解决 corrected historical execution 尚未具备的三类 PIT 状态：
@@ -405,6 +457,17 @@ source semantics unreliable or irreproducible
 ```
 
 任何 full-scope 操作前都必须生成 review bundle；本次持续会话有计算授权，但 source URL、parser、scope、commit 或 config 变化会使 bundle 失效。
+
+本轮实际决策为 `Decision B`。未启动 full-scope 抓取，原因是：
+
+- ST 与全天停牌样本未达到冻结的 10/10 最低数；
+- 多份公告只能事后确认 effective date，不能回填成历史 before-open 可得；
+- terminal 3/3 能证明停牌/停止交易，但不能证明现金处置；
+- 在此基础上扩大抓取不会自动修复 publication-time 语义。
+
+后续只有出现新的稳定 Tier 0 结构化历史接口或可复现的公告发布时间证据时，才
+能新建 bounded source re-evaluation；不能沿用本 canary 的授权直接进行全市场
+网页爬取。
 
 ### Phase 6：Instrument State v2
 

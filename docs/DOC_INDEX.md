@@ -5,7 +5,9 @@
 ## Current Working Documents
 
 - `HISTORICAL_INSTRUMENT_STATE_V2_PLAN.md`
-  当前唯一执行计划。先冻结真实 decision/valuation/terminal scope，撤销“lifecycle end 即按最后价卖出”的非权威语义，再以 SSE/SZSE/BSE/CNInfo Tier 0 事件证据验证 ST、全天停复牌与 terminal disposition；所有模型入口继续关闭。
+  当前完成记录与 source decision。真实 decision/valuation/terminal scope 已冻结，13 条 Tier 0 官方快照与候选边界对账完成；ST 5/10、全天停牌 3/10、盘前可证明率 38.46%，故正式选择 Decision B。Instrument State v2、Market Cache v4、历史 NAV 重跑和所有模型入口继续关闭。
+- `outputs/historical_instrument_state_v2/official_canary/`
+  Historical Instrument State V2 的 compact evidence：官方原文 receipt/hash、13 条归一化事件、BaoStock 边界对账、覆盖门槛、Decision B 与 fail-closed readiness。原始网页/PDF 仅保存在忽略的 runtime，不进入 Git。
 - `EXECUTION_UNIT_SEMANTICS_CORRECTION_V1_2_PLAN.md`
   已完成的单位语义修正与实施回执。Market Cache v3 已显式执行 volume `factor × 100` 和 amount `×1000`，全量 cache/execution、单票归因、transitive lineage 与治理门禁通过；旧 Market Cache v2 永久 superseded。
 - `DATA_SOURCE_AUDIT_V2.md`
