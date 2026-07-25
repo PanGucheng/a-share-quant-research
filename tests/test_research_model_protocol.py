@@ -37,6 +37,11 @@ from model_research.linear_models import (
     _validation_metrics,
     load_linear_config,
 )
+from model_research.lightgbm_models import (
+    candidate_grid as lightgbm_candidate_grid,
+    load_lightgbm_config,
+    select_lightgbm_candidate,
+)
 from model_research.linear_execution import load_linear_execution_config
 from model_research.preprocessing import (
     daily_equal_weights,
@@ -294,6 +299,55 @@ def test_linear_execution_config_keeps_corrected_semantics() -> None:
         "outputs/market_cache_v3/"
     )
     assert config["execution"]["maximum_stale_valuation_days"] == 20
+
+
+def test_lightgbm_candidate_protocol_is_fixed_and_bounded() -> None:
+    config = load_lightgbm_config(
+        ROOT / "configs/research_lightgbm_v1.yaml"
+    )
+    candidates = lightgbm_candidate_grid(config)
+    assert len(candidates) == 16
+    assert len({row["candidate_sha256"] for row in candidates}) == 16
+    assert {row["num_boost_round"] for row in candidates} == {
+        100,
+        200,
+        400,
+        800,
+    }
+    assert config["early_stopping"] is False
+    assert config["trainer_metric_authority"] == "diagnostic_only"
+    assert config["determinism"]["num_threads"] == 1
+    assert config["resource_canary"]["checkpoints"] == [100, 200, 400, 800]
+    assert len(config["resource_canary"]["structural_row_ids"]) == 4
+
+
+def test_lightgbm_selector_uses_rank_ic_then_frozen_complexity() -> None:
+    rows = pd.DataFrame(
+        [
+            {
+                "candidate_sha256": "b",
+                "mean_daily_rank_ic": 0.01,
+                "daily_rank_ic_ir": 0.2,
+                "prediction_coverage": 1.0,
+                "num_leaves": 31,
+                "max_depth": 6,
+                "num_boost_round": 100,
+                "status": "pass",
+            },
+            {
+                "candidate_sha256": "a",
+                "mean_daily_rank_ic": 0.01,
+                "daily_rank_ic_ir": 0.2,
+                "prediction_coverage": 1.0,
+                "num_leaves": 15,
+                "max_depth": 4,
+                "num_boost_round": 800,
+                "status": "pass",
+            },
+        ]
+    )
+    selected = select_lightgbm_candidate(rows)
+    assert int(selected["num_leaves"]) == 15
 
 
 def test_linear_validation_metric_is_daily_rank_ic() -> None:

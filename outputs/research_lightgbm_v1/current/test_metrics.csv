@@ -1,0 +1,4 @@
+outer_split_id,method,mean_daily_rank_ic,daily_rank_ic_ir,prediction_coverage,daily_ic_count,historical_test_already_observed,authoritative_execution,unbiased_final_estimate
+split_001,lightgbm,0.07778251120600295,0.48670274432298255,0.9969664391496029,120,True,False,False
+split_002,lightgbm,0.1432237436609923,0.738106848538767,0.9953051643192489,124,True,False,False
+split_003,lightgbm,0.05180160483930414,0.3171756939104618,0.9964551877661634,124,True,False,False

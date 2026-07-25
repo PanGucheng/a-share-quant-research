@@ -1,0 +1,8 @@
+check_name,status,severity,observed,expected,reason
+candidate_manifest_16,pass,critical,16,16,
+canary_candidate_scope,pass,critical,16,16,
+repeated_hashes_stable,pass,critical,true,true,
+predictions_finite,pass,critical,true,true,
+test_read_before_freeze,pass,critical,0,0,
+peak_rss_within_budget,pass,critical,278.58203125,4096,
+environment_lock_matches,pass,critical,"""ef9169cf9cf7f13904867b6d83ba356700ffb6117ae22084e74e03a1ffcfebf6""","""ef9169cf9cf7f13904867b6d83ba356700ffb6117ae22084e74e03a1ffcfebf6""",

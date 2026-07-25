@@ -1,0 +1,3 @@
+outer_split_id,structural_row_id,num_leaves,max_depth,min_data_in_leaf,learning_rate,lambda_l1,lambda_l2,feature_fraction,bagging_fraction,bagging_freq,method,num_boost_round,candidate_sha256
+split_001,structure_01,15,4,100,0.03,0.0,1.0,0.8,1.0,0,lightgbm,100,cc064e736c3b291ee2940655e6be0a1bafde3fdb42ecea2b53a5d7e65c9838cc
+split_001,structure_01,15,4,100,0.03,0.0,1.0,0.8,1.0,0,lightgbm,200,82515221150f99d2de755f013964fa0364b546028d74e42fd381207f424e37a6

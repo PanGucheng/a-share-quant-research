@@ -1,0 +1,6 @@
+check_name,status,severity,observed,expected,reason
+lightgbm_development_artifact_valid,pass,critical,"""research_lightgbm_v1:03b0c1d694284d72b4c633b44032d89cc4bbefded3399d345f47f0b13bd57be1""","""passing complete development artifact""",
+date_split_semantics_authority_consumed,pass,critical,"""date_split_semantics_v1""","""date_split_semantics_v1""",
+release_freeze_split_coverage_exact,pass,critical,"[[""split_001"", ""lightgbm""], [""split_002"", ""lightgbm""], [""split_003"", ""lightgbm""]]","[[""split_001"", ""lightgbm""], [""split_002"", ""lightgbm""], [""split_003"", ""lightgbm""]]",
+test_dates_explicitly_frozen,pass,critical,"[{""outer_split_id"": ""split_001"", ""test_date_count"": 120}, {""outer_split_id"": ""split_002"", ""test_date_count"": 124}, {""outer_split_id"": ""split_003"", ""test_date_count"": 124}]","""three non-empty exact test date sets""",
+test_read_count_before_release_zero,pass,critical,0,0,

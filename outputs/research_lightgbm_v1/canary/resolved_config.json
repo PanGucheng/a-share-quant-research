@@ -1,0 +1,159 @@
+{
+  "boosting_round_checkpoints": [
+    100,
+    200,
+    400,
+    800
+  ],
+  "boosting_type": "gbdt",
+  "canary": {
+    "checkpoint": 100,
+    "factor_count": 5,
+    "output_dir": "outputs/research_lightgbm_v1/canary",
+    "repeats": 2,
+    "split_id": "split_001",
+    "structural_row_ids": [
+      "structure_01",
+      "structure_02"
+    ],
+    "train_date_count": 20
+  },
+  "determinism": {
+    "bagging_seed": 20260725,
+    "data_random_seed": 20260725,
+    "deterministic": true,
+    "feature_fraction_seed": 20260725,
+    "force_col_wise": true,
+    "num_threads": 1,
+    "seed": 20260725
+  },
+  "early_stopping": false,
+  "environment_lock": {
+    "blas_backend": {
+      "configuration": "OpenBLAS 0.3.29  USE64BITINT DYNAMIC_ARCH NO_AFFINITY Haswell MAX_THREADS=24",
+      "name": "scipy-openblas",
+      "version": "0.3.29"
+    },
+    "environment_lock_sha256": "ef9169cf9cf7f13904867b6d83ba356700ffb6117ae22084e74e03a1ffcfebf6",
+    "lightgbm_version": "4.6.0",
+    "mkl_num_threads": "1",
+    "num_threads": "1",
+    "numexpr_num_threads": "1",
+    "numpy_version": "2.2.6",
+    "omp_num_threads": "1",
+    "openblas_num_threads": "1",
+    "pandas_version": "2.3.3",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "python_executable": "E:\\anaconda_envs\\qlib_env\\python.exe",
+    "python_version": "3.10.19",
+    "qlib_commit_sha": "d5379c520f66a39953bad76234a7019a72796fd0",
+    "scikit_learn_version": "1.7.2",
+    "scipy_version": "1.15.3"
+  },
+  "executed_command": "scripts/run_research_lightgbm_canary_v1.py",
+  "executed_scope": "train_only_canary",
+  "experiment_class": "post_observation_research",
+  "feature_order": [
+    "alpha158_BETA10",
+    "alpha158_BETA5",
+    "alpha158_CNTD30",
+    "alpha158_CNTP60",
+    "alpha158_CORD10"
+  ],
+  "feature_order_sha256": "517b3ac6911fa914787e9052d5277ea757212e7f92ccff4d81131f6e24853a88",
+  "final_fit_scope": "outer_train_plus_validation",
+  "lightgbm_version": "4.6.0",
+  "linear_model_manifest": "outputs/research_linear_models_v1/current/artifact_manifest.json",
+  "maximum_candidates_per_split": 16,
+  "method": "lightgbm",
+  "objective": "regression",
+  "official_selection_metric": "mean_daily_rank_ic",
+  "output_dir": "E:/qlib_prj/qlib_baseline/outputs/research_lightgbm_v1/canary",
+  "partition_receipts_sha256": "56441df030f7fdf5e7cecfa6812faf50a053c658c282a0647cc71a85699d956d",
+  "profile_name": "full_research",
+  "profile_type": "full_research",
+  "protocol_config": "configs/research_model_protocol_v1_1.yaml",
+  "protocol_manifest": "outputs/research_model_protocol_v1_1/current/artifact_manifest.json",
+  "research_run_family_id": "full_research_factor_669_v1",
+  "resources": {
+    "peak_rss_mib": 4096,
+    "runtime_disk_gib": 12,
+    "start_free_disk_gib": 20,
+    "threads": 1,
+    "wall_time_hours": 8
+  },
+  "runtime_dir": "outputs/research_lightgbm_v1/runtime",
+  "schema_version": 1,
+  "search_method": "pre_registered_balanced_candidate_table",
+  "source_sha256": "07765fd6dda3b3094a67b055f17378778a307182f49e43fe9c2e20072067a6ec",
+  "split_ids": [
+    "split_001",
+    "split_002",
+    "split_003"
+  ],
+  "stage_id": "research_lightgbm_v1",
+  "structural_rows": [
+    {
+      "bagging_fraction": 1.0,
+      "bagging_freq": 0,
+      "feature_fraction": 0.8,
+      "lambda_l1": 0.0,
+      "lambda_l2": 1.0,
+      "learning_rate": 0.03,
+      "max_depth": 4,
+      "min_data_in_leaf": 100,
+      "num_leaves": 15,
+      "structural_row_id": "structure_01"
+    },
+    {
+      "bagging_fraction": 0.8,
+      "bagging_freq": 1,
+      "feature_fraction": 1.0,
+      "lambda_l1": 0.1,
+      "lambda_l2": 0.0,
+      "learning_rate": 0.05,
+      "max_depth": 6,
+      "min_data_in_leaf": 50,
+      "num_leaves": 15,
+      "structural_row_id": "structure_02"
+    },
+    {
+      "bagging_fraction": 1.0,
+      "bagging_freq": 0,
+      "feature_fraction": 0.8,
+      "lambda_l1": 0.0,
+      "lambda_l2": 1.0,
+      "learning_rate": 0.05,
+      "max_depth": 4,
+      "min_data_in_leaf": 50,
+      "num_leaves": 31,
+      "structural_row_id": "structure_03"
+    },
+    {
+      "bagging_fraction": 0.8,
+      "bagging_freq": 1,
+      "feature_fraction": 1.0,
+      "lambda_l1": 0.1,
+      "lambda_l2": 0.0,
+      "learning_rate": 0.03,
+      "max_depth": 6,
+      "min_data_in_leaf": 100,
+      "num_leaves": 31,
+      "structural_row_id": "structure_04"
+    }
+  ],
+  "trainer_metric": "l2",
+  "trainer_metric_authority": "diagnostic_only",
+  "validation": {
+    "complexity_order": [
+      "lower_num_leaves",
+      "shallower_max_depth",
+      "fewer_boosting_rounds",
+      "canonical_candidate_sha256"
+    ],
+    "minimum_prediction_coverage": 0.95,
+    "primary_metric": "mean_daily_rank_ic",
+    "tie_break_1": "daily_rank_ic_ir",
+    "tie_break_2": "prediction_coverage"
+  }
+}

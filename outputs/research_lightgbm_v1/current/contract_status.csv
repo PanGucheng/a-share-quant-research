@@ -1,0 +1,9 @@
+check_name,status,severity,observed,expected,reason
+release_freeze_validated_before_first_test_read,pass,critical,true,true,
+single_test_release,pass,critical,3,3,
+prediction_schema_valid,pass,critical,1,1,
+prediction_coverage_valid,pass,critical,0.9953051643192489,""">=0.95""",
+test_metrics_finite,pass,critical,"[{""outer_split_id"": ""split_001"", ""mean_daily_rank_ic"": 0.07778251120600295, ""daily_rank_ic_ir"": 0.48670274432298255}, {""outer_split_id"": ""split_002"", ""mean_daily_rank_ic"": 0.1432237436609923, ""daily_rank_ic_ir"": 0.738106848538767}, {""outer_split_id"": ""split_003"", ""mean_daily_rank_ic"": 0.05180160483930414, ""daily_rank_ic_ir"": 0.3171756939104618}]","""all finite""",
+model_binary_hash_valid,pass,critical,3,3,
+historical_oos_disclosure_valid,pass,critical,true,true,
+production_model_not_selected,pass,critical,false,false,

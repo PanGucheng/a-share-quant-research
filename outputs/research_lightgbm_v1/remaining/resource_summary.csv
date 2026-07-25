@@ -1,0 +1,3 @@
+outer_split_id,factor_count,train_date_count,validation_date_count,train_fit_row_count,validation_row_count,final_fit_row_count,runtime_seconds,peak_rss_mib_observed,test_read_count
+split_002,46,808,77,1611797,153548,1765345,644.9922278000004,2150.984375,0
+split_003,52,926,83,1847051,165019,2012070,887.3125867999997,2614.78515625,0

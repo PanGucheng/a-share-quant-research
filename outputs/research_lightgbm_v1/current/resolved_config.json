@@ -1,0 +1,147 @@
+{
+  "boosting_round_checkpoints": [
+    100,
+    200,
+    400,
+    800
+  ],
+  "boosting_type": "gbdt",
+  "canary": {
+    "checkpoint": 100,
+    "factor_count": 5,
+    "output_dir": "outputs/research_lightgbm_v1/canary",
+    "repeats": 2,
+    "split_id": "split_001",
+    "structural_row_ids": [
+      "structure_01",
+      "structure_02"
+    ],
+    "train_date_count": 20
+  },
+  "determinism": {
+    "bagging_seed": 20260725,
+    "data_random_seed": 20260725,
+    "deterministic": true,
+    "feature_fraction_seed": 20260725,
+    "force_col_wise": true,
+    "num_threads": 1,
+    "seed": 20260725
+  },
+  "development_artifact_id": "research_lightgbm_v1:03b0c1d694284d72b4c633b44032d89cc4bbefded3399d345f47f0b13bd57be1",
+  "early_stopping": false,
+  "executed_command": "scripts/release_research_lightgbm_tests_v1.py",
+  "executed_scope": "single_outer_test_release_3_lightgbm_models",
+  "experiment_class": "post_observation_research",
+  "final_fit_scope": "outer_train_plus_validation",
+  "linear_model_manifest": "outputs/research_linear_models_v1/current/artifact_manifest.json",
+  "maximum_candidates_per_split": 16,
+  "method": "lightgbm",
+  "objective": "regression",
+  "official_selection_metric": "mean_daily_rank_ic",
+  "output_dir": "E:/qlib_prj/qlib_baseline/outputs/research_lightgbm_v1/current",
+  "profile_name": "full_research",
+  "profile_type": "full_research",
+  "protocol_config": "configs/research_model_protocol_v1_1.yaml",
+  "protocol_manifest": "outputs/research_model_protocol_v1_1/current/artifact_manifest.json",
+  "release_freeze_artifact_id": "research_lightgbm_test_release_freeze_v1:b6cdd17c5f88c73ef4b1c7be063f6762ee209c278915b0c47ce9745a9e74edf0",
+  "research_run_family_id": "full_research_factor_669_v1",
+  "resource_canary": {
+    "checkpoints": [
+      100,
+      200,
+      400,
+      800
+    ],
+    "factor_count": 5,
+    "output_dir": "outputs/research_lightgbm_v1/resource_canary",
+    "repeats": 1,
+    "split_id": "split_001",
+    "structural_row_ids": [
+      "structure_01",
+      "structure_02",
+      "structure_03",
+      "structure_04"
+    ],
+    "train_date_count": 20
+  },
+  "resources": {
+    "peak_rss_mib": 4096,
+    "runtime_disk_gib": 12,
+    "start_free_disk_gib": 20,
+    "threads": 1,
+    "wall_time_hours": 8
+  },
+  "runtime_dir": "E:/qlib_prj/qlib_baseline/outputs/research_lightgbm_v1/runtime/test_predictions",
+  "schema_version": 1,
+  "search_method": "pre_registered_balanced_candidate_table",
+  "split_ids": [
+    "split_001",
+    "split_002",
+    "split_003"
+  ],
+  "stage_id": "research_lightgbm_v1",
+  "structural_rows": [
+    {
+      "bagging_fraction": 1.0,
+      "bagging_freq": 0,
+      "feature_fraction": 0.8,
+      "lambda_l1": 0.0,
+      "lambda_l2": 1.0,
+      "learning_rate": 0.03,
+      "max_depth": 4,
+      "min_data_in_leaf": 100,
+      "num_leaves": 15,
+      "structural_row_id": "structure_01"
+    },
+    {
+      "bagging_fraction": 0.8,
+      "bagging_freq": 1,
+      "feature_fraction": 1.0,
+      "lambda_l1": 0.1,
+      "lambda_l2": 0.0,
+      "learning_rate": 0.05,
+      "max_depth": 6,
+      "min_data_in_leaf": 50,
+      "num_leaves": 15,
+      "structural_row_id": "structure_02"
+    },
+    {
+      "bagging_fraction": 1.0,
+      "bagging_freq": 0,
+      "feature_fraction": 0.8,
+      "lambda_l1": 0.0,
+      "lambda_l2": 1.0,
+      "learning_rate": 0.05,
+      "max_depth": 4,
+      "min_data_in_leaf": 50,
+      "num_leaves": 31,
+      "structural_row_id": "structure_03"
+    },
+    {
+      "bagging_fraction": 0.8,
+      "bagging_freq": 1,
+      "feature_fraction": 1.0,
+      "lambda_l1": 0.1,
+      "lambda_l2": 0.0,
+      "learning_rate": 0.03,
+      "max_depth": 6,
+      "min_data_in_leaf": 100,
+      "num_leaves": 31,
+      "structural_row_id": "structure_04"
+    }
+  ],
+  "trainer_metric": "l2",
+  "trainer_metric_authority": "diagnostic_only",
+  "validation": {
+    "complexity_order": [
+      "lower_num_leaves",
+      "shallower_max_depth",
+      "fewer_boosting_rounds",
+      "canonical_candidate_sha256"
+    ],
+    "minimum_prediction_coverage": 0.95,
+    "primary_metric": "mean_daily_rank_ic",
+    "tie_break_1": "daily_rank_ic_ir",
+    "tie_break_2": "prediction_coverage"
+  }
+}

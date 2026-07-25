@@ -1,0 +1,117 @@
+schema_version: 1
+stage_id: research_lightgbm_v1
+profile_name: full_research
+profile_type: full_research
+research_run_family_id: full_research_factor_669_v1
+experiment_class: post_observation_research
+
+protocol_config: configs/research_model_protocol_v1_1.yaml
+protocol_manifest: outputs/research_model_protocol_v1_1/current/artifact_manifest.json
+linear_model_manifest: outputs/research_linear_models_v1/current/artifact_manifest.json
+
+method: lightgbm
+split_ids: [split_001, split_002, split_003]
+objective: regression
+trainer_metric: l2
+trainer_metric_authority: diagnostic_only
+official_selection_metric: mean_daily_rank_ic
+boosting_type: gbdt
+early_stopping: false
+boosting_round_checkpoints: [100, 200, 400, 800]
+maximum_candidates_per_split: 16
+final_fit_scope: outer_train_plus_validation
+search_method: pre_registered_balanced_candidate_table
+
+determinism:
+  deterministic: true
+  force_col_wise: true
+  seed: 20260725
+  feature_fraction_seed: 20260725
+  bagging_seed: 20260725
+  data_random_seed: 20260725
+  num_threads: 1
+
+structural_rows:
+  - structural_row_id: structure_01
+    num_leaves: 15
+    max_depth: 4
+    min_data_in_leaf: 100
+    learning_rate: 0.03
+    lambda_l1: 0.0
+    lambda_l2: 1.0
+    feature_fraction: 0.8
+    bagging_fraction: 1.0
+    bagging_freq: 0
+  - structural_row_id: structure_02
+    num_leaves: 15
+    max_depth: 6
+    min_data_in_leaf: 50
+    learning_rate: 0.05
+    lambda_l1: 0.1
+    lambda_l2: 0.0
+    feature_fraction: 1.0
+    bagging_fraction: 0.8
+    bagging_freq: 1
+  - structural_row_id: structure_03
+    num_leaves: 31
+    max_depth: 4
+    min_data_in_leaf: 50
+    learning_rate: 0.05
+    lambda_l1: 0.0
+    lambda_l2: 1.0
+    feature_fraction: 0.8
+    bagging_fraction: 1.0
+    bagging_freq: 0
+  - structural_row_id: structure_04
+    num_leaves: 31
+    max_depth: 6
+    min_data_in_leaf: 100
+    learning_rate: 0.03
+    lambda_l1: 0.1
+    lambda_l2: 0.0
+    feature_fraction: 1.0
+    bagging_fraction: 0.8
+    bagging_freq: 1
+
+validation:
+  primary_metric: mean_daily_rank_ic
+  tie_break_1: daily_rank_ic_ir
+  tie_break_2: prediction_coverage
+  complexity_order:
+    - lower_num_leaves
+    - shallower_max_depth
+    - fewer_boosting_rounds
+    - canonical_candidate_sha256
+  minimum_prediction_coverage: 0.95
+
+canary:
+  split_id: split_001
+  factor_count: 5
+  train_date_count: 20
+  structural_row_ids: [structure_01, structure_02]
+  checkpoint: 100
+  repeats: 2
+  output_dir: outputs/research_lightgbm_v1/canary
+
+resource_canary:
+  split_id: split_001
+  factor_count: 5
+  train_date_count: 20
+  structural_row_ids:
+    - structure_01
+    - structure_02
+    - structure_03
+    - structure_04
+  checkpoints: [100, 200, 400, 800]
+  repeats: 1
+  output_dir: outputs/research_lightgbm_v1/resource_canary
+
+resources:
+  peak_rss_mib: 4096
+  runtime_disk_gib: 12
+  wall_time_hours: 8
+  start_free_disk_gib: 20
+  threads: 1
+
+output_dir: outputs/research_lightgbm_v1/current
+runtime_dir: outputs/research_lightgbm_v1/runtime
