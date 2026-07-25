@@ -79,3 +79,22 @@ unbiased_final_estimate = false
 
 在长期停牌估值能力缺口解决前，五方法 prediction-level 科学比较可继续，但五
 方法完整组合/NAV 比较必须保持 `blocked_execution_capability`。
+
+## 6. Train-only Canary 回执
+
+2026-07-26 首个 canary 已通过：
+
+```text
+split                    split_001 train only
+samples / factors        39,886 / 5
+structural rows          structure_01, structure_02
+checkpoint / repeats     100 / 2
+model hash stable        true
+prediction hash stable   true
+validation reads         0
+test reads               0
+peak RSS                 275.9 MiB
+```
+
+下一门禁是同一小样本上的完整 16 候选资源 canary；只有其通过后才允许
+`split_001 × full features × 16 candidates`。
