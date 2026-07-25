@@ -1,0 +1,10 @@
+check_name,status,severity,observed,expected,reason
+candidate_manifest_written_before_fit,pass,critical,"{""candidate_frozen_at"": ""2026-07-25T17:43:53.997056+00:00"", ""first_fit_started_at"": ""2026-07-25T17:43:54.985181+00:00""}","""candidate_frozen_at < first_fit_started_at""",
+candidate_grid_exact,pass,critical,2,2,
+validation_candidates_eligible,pass,critical,2,""">=1 per split""",
+final_refit_train_plus_validation,pass,critical,1,1,
+validation_label_mutation_sensitive,pass,critical,"[""pass""]","""all pass""",
+test_read_count_before_freeze_zero,pass,critical,0,0,
+pre_test_freeze_valid,pass,critical,0,0,
+peak_rss_within_budget,pass,critical,242.2265625,4096,
+environment_lock_matches,pass,critical,"""ef9169cf9cf7f13904867b6d83ba356700ffb6117ae22084e74e03a1ffcfebf6""","""ef9169cf9cf7f13904867b6d83ba356700ffb6117ae22084e74e03a1ffcfebf6""",

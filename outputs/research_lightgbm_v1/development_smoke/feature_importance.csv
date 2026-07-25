@@ -1,0 +1,11 @@
+outer_split_id,method,importance_type,factor,feature_order,importance,selection_authority
+split_001,lightgbm,gain,alpha158_BETA10,0,1.3804749175862696,diagnostic_only
+split_001,lightgbm,gain,alpha158_BETA5,1,0.3905911818746972,diagnostic_only
+split_001,lightgbm,gain,alpha158_CNTD30,2,0.4582390385457984,diagnostic_only
+split_001,lightgbm,gain,alpha158_CNTP60,3,2.4955294763713027,diagnostic_only
+split_001,lightgbm,gain,alpha158_CORD10,4,0.21113078777975858,diagnostic_only
+split_001,lightgbm,split,alpha158_BETA10,0,252.0,diagnostic_only
+split_001,lightgbm,split,alpha158_BETA5,1,145.0,diagnostic_only
+split_001,lightgbm,split,alpha158_CNTD30,2,259.0,diagnostic_only
+split_001,lightgbm,split,alpha158_CNTP60,3,221.0,diagnostic_only
+split_001,lightgbm,split,alpha158_CORD10,4,252.0,diagnostic_only

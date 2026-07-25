@@ -113,3 +113,21 @@ environment lock        exact match
 
 因此下一步获准进入 `split_001 × 45 frozen features × 16 candidates` 的
 train/validation 开发搜索；仍不得读取 test。
+
+在正式运行前又完成 development pipeline smoke：
+
+```text
+scope                    split_001
+train / validation       20 / 10 dates
+factors / candidates     5 / 2
+candidate frozen first   true
+Rank IC selection        pass
+validation mutation      pass
+train+validation refit   pass
+test reads               0
+peak RSS                 242.2 MiB
+```
+
+至此数据投影、选参、mutation、final refit 和 freeze 路径均在小样本验证通过，
+可以开始首个单 split 全量开发运行。该授权只覆盖 `split_001 × 45 frozen
+features × 16 candidates`。
