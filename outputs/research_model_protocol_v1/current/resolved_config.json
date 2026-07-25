@@ -1,0 +1,96 @@
+{
+  "environment": {
+    "qlib_repository": "E:/qlib_prj/qlib_clone",
+    "required_fields": [
+      "python_version",
+      "numpy_version",
+      "pandas_version",
+      "scipy_version",
+      "scikit_learn_version",
+      "lightgbm_version",
+      "qlib_commit_sha",
+      "environment_lock_sha256",
+      "num_threads",
+      "omp_num_threads",
+      "mkl_num_threads",
+      "openblas_num_threads",
+      "numexpr_num_threads",
+      "blas_backend"
+    ],
+    "thread_values_must_be_explicit": true
+  },
+  "experiment_class": "post_observation_research",
+  "lightgbm": {
+    "boosting_round_checkpoints": [
+      100,
+      200,
+      400,
+      800
+    ],
+    "early_stopping": false,
+    "official_selection_metric": "mean_daily_rank_ic",
+    "trainer_metric": "l2",
+    "trainer_metric_authority": "diagnostic_only"
+  },
+  "linear_model": {
+    "solver_auto": "forbidden",
+    "solver_receipt_required": true
+  },
+  "mutation": {
+    "selected_candidate_change_required": false,
+    "validation_label_required_hash_changes": [
+      "validation_label_sha256",
+      "validation_metric_sha256",
+      "validation_search_artifact_sha256"
+    ]
+  },
+  "output_dir": "outputs/research_model_protocol_v1/current",
+  "parents": {
+    "date_assignments": "outputs/date_split_semantics_v1/current/date_assignments.csv",
+    "date_manifest": "outputs/date_split_semantics_v1/current/artifact_manifest.json",
+    "labels_manifest": "outputs/full_research_labels_v2/current/artifact_manifest.json",
+    "matrix_manifest": "outputs/full_research_feature_matrix_v4/current/artifact_manifest.json",
+    "selection_date_assignments": "outputs/research_selection_lineage_closure_v1/current/date_assignments.csv",
+    "selection_manifest": "outputs/research_selection_lineage_closure_v1/current/artifact_manifest.json",
+    "universe_manifest": "outputs/point_in_time_universe_v2/full_research/artifact_manifest.json"
+  },
+  "preprocessing": {
+    "all_nan_feature": "blocked",
+    "all_nan_row": "exclude_with_receipt",
+    "infinite_to_nan": true,
+    "near_zero_variance": "blocked",
+    "near_zero_variance_threshold": 1e-12,
+    "output_feature_order_change": "blocked",
+    "partial_missing": "stable_daily_equal_weighted_median_v1",
+    "scaler": "daily_equal_weighted_standard_scaler_v1"
+  },
+  "profile_name": "full_research",
+  "profile_type": "full_research",
+  "research_run_family_id": "full_research_factor_669_v1",
+  "schema_version": 1,
+  "selection": {
+    "allowlist_manifest": "outputs/research_selection_lineage_closure_v1/current/split_allowlist_manifest.csv",
+    "factor_weights": "outputs/research_selection_lineage_closure_v1/current/factor_weights_by_split.csv",
+    "legacy_purged_manifest_forbidden": "outputs/purged_walk_forward_v1/full_research_669/artifact_manifest.json"
+  },
+  "target": {
+    "feature_time": "t",
+    "label_end": "t+21",
+    "label_id": "label_20d_t1",
+    "label_start": "t+1",
+    "minimum_daily_pairs": 100,
+    "rank_center": 0.5,
+    "rank_method": "average",
+    "rank_pct": true,
+    "training_transform": "daily_cross_sectional_rank_centered"
+  },
+  "validation": {
+    "final_fit_scope": "outer_train_plus_validation",
+    "final_tie_break": "canonical_candidate_sha256",
+    "minimum_prediction_coverage": 0.95,
+    "primary_metric": "mean_daily_rank_ic",
+    "tie_break_1": "daily_rank_ic_ir",
+    "tie_break_2": "prediction_coverage",
+    "tie_break_3": "lower_model_complexity"
+  }
+}

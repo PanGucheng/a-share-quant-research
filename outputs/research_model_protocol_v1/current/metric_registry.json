@@ -1,0 +1,12 @@
+{
+  "candidate_selection_scope": "outer_validation_only",
+  "final_fit_scope": "outer_train_plus_validation",
+  "final_tie_break": "canonical_candidate_sha256",
+  "minimum_prediction_coverage": 0.95,
+  "primary_metric": "mean_daily_rank_ic",
+  "registry_status": "frozen",
+  "test_metric_authority": "evaluation_only",
+  "tie_break_1": "daily_rank_ic_ir",
+  "tie_break_2": "prediction_coverage",
+  "tie_break_3": "lower_model_complexity"
+}
