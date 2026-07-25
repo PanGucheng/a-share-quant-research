@@ -4,6 +4,8 @@
 
 ## Current Working Documents
 
+- `PROSPECTIVE_FORWARD_CONFIRMATION_V1_PLAN.md`
+  PR #5D 后的当前执行计划：把 2026-02-05—2026-06-09 既有扩展隔离为非 prospective 证据，冻结 LightGBM split_003 规格作为 research-only provisional candidate；先完成协议、refit 和不可变 freeze，再等待 2026-06-09 后且 freeze 后首次到达的新数据，至少 60 个标签成熟日期后才允许一次 primary confirmation。
 - `CI_POLICY.md`
   路径感知 CI 与稳定 `ci-gate` 政策：纯文档只跑快速 diff/link/index/大文件检查，普通研究代码跑完整 pytest/validators，只有 Qlib 执行链、相关依赖或 workflow 变化才安装并运行 Qlib runtime。
 - `RESEARCH_MODEL_PROTOCOL_V1_IMPLEMENTATION.md`
@@ -50,6 +52,10 @@
   PR #5C 的 3/3 单次 historical test release：735,882 行 prediction，Rank IC 为 0.077783/0.143224/0.051802，最低 coverage 0.995305；研究完成但 production、authoritative execution 与 unbiased estimate 均保持 false。
 - `outputs/historical_model_comparison_v1/current/`
   PR #5D 五方法历史 prediction 比较：三 split 等权 Rank IC 为 LightGBM 0.090936、Elastic Net 0.086887、Ridge 0.086470、Equal Weight 0.073678、Stability Weight 0.072760；科研 leader 为 LightGBM。多数组合的逐 split 配对区间跨零；生产选择、权威执行、无偏估计和五方法 NAV 比较均保持 false。
+- `outputs/prospective_forward_protocol_v1/current/`
+  PR #20A 的 prospective 时间与候选协议 freeze：79 个既有扩展日期全部 quarantine，official forward 只接受 2026-06-09 后且 freeze 后首次到达的数据。
+- `outputs/prospective_forward_candidate_v1/current/`
+  固定 LightGBM provisional candidate 的一次无搜索 refit：52 因子、1,273 日期、2,538,428 行、200 轮，模型/预处理哈希冻结；没有运行 forward 评价，当前为 `forward_data_waiting=true`。
 - `outputs/execution_unit_semantics_correction_v1_2/governance/`
   V1.2 fail-closed 收口、旧新 artifact supersession、全市场及 SZ302132 单票归因与中央 readiness 回执。
 - `outputs/bugfix_research_freeze_v1/current/`

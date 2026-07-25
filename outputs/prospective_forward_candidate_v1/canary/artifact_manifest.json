@@ -1,0 +1,43 @@
+{
+  "artifact_id": "prospective_forward_candidate_canary_v1:69f2ab750a3e2f4f3ce5416c5bb44a7aafcae1f5d7a0a5b68f06953e75914c21",
+  "artifact_status": "pass",
+  "blocked_reason": "",
+  "code_commit_sha": "79a0792c06197521463e484b27f2a9cf38b6d2c7",
+  "code_diff_sha256": "",
+  "code_dirty": false,
+  "config_sha256": "f99c045251a3f7f613b0d060390daf773c8ae1cd9a418d1ede748e6286de8e00",
+  "created_at": "2026-07-25T18:54:56.011441+00:00",
+  "end_date": null,
+  "factor_catalog_id": "factor-catalog:8c031a09892fc915ac45201942f563925a9bab617e60fce5ecbbe274a51a02e1",
+  "factor_frame_id": "factor-frame-v4:f1e93a2428446673f5c873a01886a38ae9e654e5f863cf2b236040dbbf28dc3c",
+  "input_artifact_ids": [
+    "full_research_feature_matrix_v4:10f6e026d5c6c13eda166f702fb2bae2e7ca76c6747bd9e9482ee482e605df1d",
+    "full_research_labels_v2:404fe40807d674d4ec5fc7b7b0727c4e679bec6ddaa2c00d967eaeb08c80102b",
+    "historical_model_comparison_v1:78b76b328283f1bab8f024f3891a75aca804624c4d072b0ca28382e5feaef5fc",
+    "prospective_forward_protocol_v1:580c94f5fccf86ef4c5e7e0ca07e5b284470f4ad4779d6753c2fa22633c6970d",
+    "research_selection_lineage_closure_v1:abe0d942b28dfbd6ca679a8a2aee0ee83890309922b5184f5efa28d1fb842e6b"
+  ],
+  "lineage_status": "complete",
+  "missing_lineage_fields": [],
+  "output_file_hashes": {
+    "access_audit.csv": "76bc70da1c636b127b9cbb9b20dca7b77985112788f36387e39878393fd2e5dd",
+    "canary_results.csv": "c74d884b7b28d3e3ac22636b3f73779629e26104bc5cb7cd91d4904b00bc8bb2",
+    "contract_status.csv": "3c165e98c86fc74b7e76ce5bb586e092455cd1422a867d24ccb4cff69ff515ef",
+    "parent_receipts.csv": "343118cc41162f1d3b2647f6aef822be2c3727ddd41936d952c4deaa7c0e3e3d",
+    "readiness_summary.csv": "dd8e3cecb3adf586a4ee1aab243b4d95be2557429ade5f8108c05a6e8f6efc06",
+    "resolved_config.json": "497901a29135ae416d7da21f2f1931a378012775106a1f38a837e3b9e7108023",
+    "resource_summary.csv": "4d4015d45575f74ef6eb71a7c2eceee5628aa53ba2c7a6c9f6680acc97a47e13",
+    "run_report.md": "c0fdbf29c3170877a1db51b164a127a926625405d16dbcaea7a3c3a8a84d95d4",
+    "run_review_bundle.json": "a9709d9b362706163c786eb6f8e7880ae8f5ac793dca88faeac8fa623ae73b0a"
+  },
+  "producer_run_id": "20260725T185456Z-13e40ec5",
+  "profile_name": "full_research",
+  "profile_type": "full_research",
+  "research_run_family_id": "full_research_factor_669_v1",
+  "run_id": "20260725T185456Z-13e40ec5",
+  "schema_version": 2,
+  "split_manifest_id": "split-manifest:75ccf0f37e85422729d54aef5a363f68d4f9b3daed3d42a87eb120e6b5aefe0e",
+  "stage_id": "prospective_forward_candidate_canary_v1",
+  "start_date": null,
+  "universe_artifact_id": "universe-v2:a7875d74d5119230ab5576cb245fe8b389e0dd3030606299dad6d1f0e147ccd2"
+}

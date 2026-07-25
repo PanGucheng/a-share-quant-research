@@ -1,0 +1,16 @@
+{
+  "candidate_spec_sha256": "27b794c1d1062f51a4cc0700c406a43829503e7d2b30c9e29f574b76dcd22d2e",
+  "code_commit_sha": "c372271036d2671171582aa65c7b8f119440d40e",
+  "config_file_sha256": "2fea01e697488671f3d966b5a502bbed943cbec6aa4ec68f655e4f926d149e83",
+  "current_snapshot_end": "2026-06-09",
+  "forward_data_waiting": true,
+  "forward_protocol_freeze_id": "forward-protocol-freeze:23ea239e7689027362f7c4d05d8399f8d10faf95f02cd61aa9e642eaa26f775b",
+  "latest_label_mature_training_date": "2026-05-11",
+  "live_trading_ready": false,
+  "minimum_label_mature_dates_for_primary_confirmation": 60,
+  "official_forward_rule": "decision_date_after_snapshot_and_first_seen_after_candidate_freeze",
+  "production_model_selected": false,
+  "schema_version": 1,
+  "status": "frozen_waiting_for_new_data",
+  "temporal_boundary_sha256": "3df1b838bbd7e79e5bc334c705a2f4f31eba3a153073c61da8fc8f6bf58686de"
+}

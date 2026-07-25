@@ -1,0 +1,85 @@
+schema_version: 1
+profile_name: full_research
+profile_type: full_research
+research_run_family_id: full_research_factor_669_v1
+experiment_class: prospective_research_protocol
+
+parents:
+  historical_comparison_manifest: outputs/historical_model_comparison_v1/current/artifact_manifest.json
+  historical_leader: outputs/historical_model_comparison_v1/current/historical_research_leader.json
+  lightgbm_development_manifest: outputs/research_lightgbm_v1/development/artifact_manifest.json
+  selected_hyperparameters: outputs/research_lightgbm_v1/development/selected_hyperparameters.json
+  selection_manifest: outputs/research_selection_lineage_closure_v1/current/artifact_manifest.json
+  split_allowlist_manifest: outputs/research_selection_lineage_closure_v1/current/split_allowlist_manifest.csv
+  feature_order: outputs/research_model_protocol_v1/current/feature_order_manifest.csv
+  matrix_manifest: outputs/full_research_feature_matrix_v4/current/artifact_manifest.json
+  labels_manifest: outputs/full_research_labels_v2/current/artifact_manifest.json
+  labels_runtime: outputs/full_research_feature_matrix_v4/runtime/labels_v2.parquet
+  protocol_config: configs/research_model_protocol_v1_1.yaml
+  protocol_manifest: outputs/research_model_protocol_v1_1/current/artifact_manifest.json
+  lightgbm_config: configs/research_lightgbm_v1.yaml
+  factor_weights: outputs/research_selection_lineage_closure_v1/current/factor_weights_by_split.csv
+
+temporal_boundary:
+  historical_test_end: 2026-02-04
+  current_snapshot_end: 2026-06-09
+  latest_label_mature_training_date: 2026-05-11
+  retrospective_extension_start: 2026-02-05
+  retrospective_extension_end: 2026-06-09
+  official_forward_rule: decision_date_after_snapshot_and_first_seen_after_candidate_freeze
+  minimum_label_mature_dates_for_primary_confirmation: 60
+  label_maturation_trading_days: 21
+
+candidate:
+  method: lightgbm
+  source_split_id: split_003
+  factor_count: 52
+  allowlist_sha256: 85470aa9f42ddd4970f849b32208d3f0d0ee13587f5ab45aa55c88f509db1f5c
+  feature_order_sha256: 544ee7b8f7464d5fb43c3638dfdca7ac25f2cc654b951b4c9b817499bfdd3f71
+  structural_row_id: structure_04
+  num_boost_round: 200
+  hyperparameter_search_allowed: false
+  threads: 1
+
+training:
+  start_date: 2021-02-01
+  end_date: 2026-05-11
+  label_name: label_20d_t1
+  target_transform: daily_cross_sectional_rank_centered_v2
+  minimum_daily_pairs: 100
+  all_label_mature_rows: true
+  date_batch_size: 40
+
+canary:
+  factor_count: 5
+  train_date_count: 20
+  quarantine_date_count: 20
+  repeat_count: 2
+  maximum_peak_rss_mib: 1024
+  minimum_free_disk_gib: 10
+  output_dir: outputs/prospective_forward_candidate_v1/canary
+
+refit:
+  maximum_peak_rss_mib: 4096
+  minimum_free_disk_gib: 20
+  output_dir: outputs/prospective_forward_candidate_v1/current
+  runtime_dir: outputs/prospective_forward_candidate_v1/runtime/current
+
+confirmation:
+  primary_metric: mean_daily_rank_ic
+  minimum_prediction_coverage: 0.95
+  minimum_mean_daily_rank_ic: 0.0
+  require_bootstrap_ci_lower_above_zero: true
+  bootstrap_samples: 5000
+  block_length: 10
+  random_seed: 20260726
+
+governance:
+  retrospective_extension_prospective_eligible: false
+  production_model_selected: false
+  live_trading_ready: false
+  authoritative_historical_execution_ready: false
+  unbiased_historical_estimate: false
+  forward_data_waiting: true
+
+output_dir: outputs/prospective_forward_protocol_v1/current

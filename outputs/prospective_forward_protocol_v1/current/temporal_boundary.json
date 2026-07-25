@@ -1,0 +1,17 @@
+{
+  "current_snapshot_end": "2026-06-09",
+  "historical_test_end": "2026-02-04",
+  "label_maturation_trading_days": 21,
+  "latest_label_mature_training_date": "2026-05-11",
+  "minimum_label_mature_dates_for_primary_confirmation": 60,
+  "observed_latest_label_mature_date": "2026-05-11",
+  "observed_matrix_end": "2026-06-09",
+  "official_forward_first_date": null,
+  "official_forward_rule": "decision_date_after_snapshot_and_first_seen_after_candidate_freeze",
+  "official_forward_status": "waiting_for_post_freeze_new_data",
+  "retrospective_extension_end": "2026-06-09",
+  "retrospective_extension_prospective_eligible": false,
+  "retrospective_extension_start": "2026-02-05",
+  "schema_version": 1,
+  "temporal_boundary_sha256": "3df1b838bbd7e79e5bc334c705a2f4f31eba3a153073c61da8fc8f6bf58686de"
+}

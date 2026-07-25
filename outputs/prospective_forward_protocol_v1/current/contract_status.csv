@@ -1,0 +1,9 @@
+check_name,status,observed_value,required_value,severity,reason
+direct_parents_valid,pass,5,5,critical,
+historical_leader_is_research_only,pass,False,False,critical,
+candidate_feature_identity_frozen,pass,52,52,critical,
+matrix_snapshot_end_frozen,pass,2026-06-09,2026-06-09,critical,
+latest_training_label_mature_date_frozen,pass,2026-05-11,2026-05-11,critical,
+training_label_window_ends_before_forward_boundary,pass,2026-05-11,<2026-06-09,critical,
+retrospective_extension_quarantined,pass,False,False,critical,
+official_forward_waiting_fail_closed,pass,True,True,critical,

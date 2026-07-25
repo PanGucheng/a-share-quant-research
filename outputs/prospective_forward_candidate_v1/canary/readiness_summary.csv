@@ -1,0 +1,2 @@
+forward_candidate_canary_ready,forward_candidate_refit_ready,forward_candidate_refit_complete,forward_data_waiting,production_model_selected,live_trading_ready
+True,True,False,True,False,False

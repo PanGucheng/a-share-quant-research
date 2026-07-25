@@ -1,0 +1,35 @@
+{
+  "approval_type": "user_session_waiver",
+  "candidate": {
+    "bagging_fraction": 0.8,
+    "bagging_freq": 1,
+    "candidate_sha256": "28cd65e113ad52527ff34ec9268ee4a5cbd286d9a81c838fda2e8d86b897980a",
+    "feature_fraction": 1.0,
+    "lambda_l1": 0.1,
+    "lambda_l2": 0.0,
+    "learning_rate": 0.03,
+    "max_depth": 6,
+    "method": "lightgbm",
+    "min_data_in_leaf": 100,
+    "num_boost_round": 200,
+    "num_leaves": 31,
+    "structural_row_id": "structure_04"
+  },
+  "code_commit_sha": "79a0792c06197521463e484b27f2a9cf38b6d2c7",
+  "command": "python scripts/refit_prospective_forward_candidate_v1.py --config configs/prospective_forward_confirmation_v1.yaml",
+  "config_sha256": "2fea01e697488671f3d966b5a502bbed943cbec6aa4ec68f655e4f926d149e83",
+  "factor_count": 52,
+  "hyperparameter_search_allowed": false,
+  "quarantine_label_read_budget": 0,
+  "resource_budget": {
+    "maximum_peak_rss_mib": 4096,
+    "minimum_free_disk_gib": 20,
+    "output_dir": "outputs/prospective_forward_candidate_v1/current",
+    "runtime_dir": "outputs/prospective_forward_candidate_v1/runtime/current"
+  },
+  "review_bundle_id": "forward-refit-review:964f94d11273d07387a5e0f5f5f69b7f811b44808b80336b92bf18c642c57df1",
+  "schema_version": 1,
+  "scope": "single fixed LightGBM forward candidate refit",
+  "training_end": "2026-05-11",
+  "training_start": "2021-02-01"
+}
