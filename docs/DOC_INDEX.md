@@ -14,6 +14,8 @@
   逻辑 PR #5B 的 Ridge/Elastic Net 精确候选、solver canary、资源预算、分阶段运行、预测试冻结与单次 test release 基线；实施回执同时记录 3/3 + 3/3 模型研究完成，以及 split_002 长期停牌持仓估值导致的 fail-closed Qlib 能力阻断。
 - `RESEARCH_LIGHTGBM_V1_IMPLEMENTATION_PLAN.md`
   逻辑 PR #5C 的四结构行、固定 100/200/400/800 checkpoint、16 候选上限、train-only 可复现性 canary、逐级资源门禁和单次 test release 实施及完成回执。
+- `HISTORICAL_MODEL_COMPARISON_V1_IMPLEMENTATION_PLAN.md`
+  逻辑 PR #5D 的五方法 prediction-level 历史科学比较与完成回执：15 组 split-method、1,840 条 daily IC、30 组配对 block-bootstrap 均完成；LightGBM 是预注册汇总指标上的历史科研 leader，但不是生产选择或无偏未来 winner，组合/NAV 比较继续因 `SZ300280` 估值能力缺口 fail-closed。
 - `RESEARCH_GRADE_MULTIFACTOR_MODEL_V1_PLAN.md`
   当前唯一执行计划。Historical Instrument State Decision B 已冻结，不再继续搜索历史公告；模型阶段按 PR #5A 输入协议、PR #5B Ridge/Elastic Net、PR #5C LightGBM、PR #5D 历史科学比较推进。日期 authority 使用 `date_split_semantics_v1` 与 Selection Lineage Closure，旧 purged manifest 禁止作直接 parent；预处理、solver、环境锁和 LightGBM 固定 checkpoint 已精确冻结。研究模型允许产生 post-observation evidence，但 authoritative execution、无偏最终估计和生产模型选择继续关闭。
 - `HISTORICAL_INSTRUMENT_STATE_V2_PLAN.md`
@@ -46,6 +48,8 @@
   PR #5B 的非权威 Qlib 辅助执行证据：4/6 场景完成；split_002 的 Ridge/Elastic Net 均因 2025-04-18 `SZ300280` 长期停牌后超过 20 日估值上限而 `blocked_unpriceable_held_position`。Artifact/lineage 完整但状态诚实为 blocked，不得解释为完整历史 NAV。
 - `outputs/research_lightgbm_v1/current/`
   PR #5C 的 3/3 单次 historical test release：735,882 行 prediction，Rank IC 为 0.077783/0.143224/0.051802，最低 coverage 0.995305；研究完成但 production、authoritative execution 与 unbiased estimate 均保持 false。
+- `outputs/historical_model_comparison_v1/current/`
+  PR #5D 五方法历史 prediction 比较：三 split 等权 Rank IC 为 LightGBM 0.090936、Elastic Net 0.086887、Ridge 0.086470、Equal Weight 0.073678、Stability Weight 0.072760；科研 leader 为 LightGBM。多数组合的逐 split 配对区间跨零；生产选择、权威执行、无偏估计和五方法 NAV 比较均保持 false。
 - `outputs/execution_unit_semantics_correction_v1_2/governance/`
   V1.2 fail-closed 收口、旧新 artifact supersession、全市场及 SZ302132 单票归因与中央 readiness 回执。
 - `outputs/bugfix_research_freeze_v1/current/`

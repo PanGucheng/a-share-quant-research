@@ -1065,11 +1065,17 @@ unknown leakage difference = 0
 ```text
 five-method prediction comparison complete
 historical_oos_model_comparison_complete = true
-historical_oos_research_leader recorded or explicitly none
+historical_oos_research_leader = lightgbm
 production_model_selected = false
 authoritative_oos_execution_ready = false
 unbiased_final_estimate = false
 ```
+
+2026-07-26 实施状态：prediction-level 五方法比较已完成。LightGBM 的三个
+split 等权 Rank IC 为 0.090936，在预注册汇总指标上排名第一；Elastic Net、
+Ridge、Equal Weight、Stability Weight 分别为 0.086887、0.086470、0.073678、
+0.072760。该排名是已观察历史 test 的描述性科研结论，多数逐 split 配对
+bootstrap 区间跨零，不构成稳定显著胜出或生产选择。
 
 只有五种方法的相同执行链均完成时，才可额外设置：
 

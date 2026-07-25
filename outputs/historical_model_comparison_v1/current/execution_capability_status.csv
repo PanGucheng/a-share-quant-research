@@ -1,0 +1,2 @@
+status,reason,instrument,datetime,terminal_approximation_present,authoritative_execution
+blocked_execution_capability,blocked_unpriceable_held_position,SZ300280,2025-04-18,False,False

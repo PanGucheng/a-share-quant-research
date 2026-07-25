@@ -1,0 +1,11 @@
+{
+  "authoritative_execution": false,
+  "disclosure": "Historical research leader is descriptive for previously observed test periods and is not a production selection.",
+  "evidence_class": "post_observation_research",
+  "historical_oos_research_leader": "lightgbm",
+  "historical_test_already_observed": true,
+  "production_model_selected": false,
+  "schema_version": 1,
+  "selection_metric": "equal_split_mean_daily_rank_ic",
+  "unbiased_final_estimate": false
+}
