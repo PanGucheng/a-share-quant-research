@@ -43,11 +43,12 @@ def main() -> int:
         canary=args.canary,
     )
     print(
-        "Linear Qlib execution passed: "
+        f"Linear Qlib execution {result['status']}: "
+        f"runs={result['successful_runs']}/{result['expected_runs']}; "
         f"summary_rows={result['execution_rows']}; "
         f"orders={result['orders']}; fills={result['fills']}"
     )
-    return 0
+    return 0 if result["status"] == "pass" else 2
 
 
 if __name__ == "__main__":

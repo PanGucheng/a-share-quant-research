@@ -15,7 +15,10 @@ from qlib_integration.contracts import (
     validate_signal_frame,
 )
 from qlib_integration.market_semantics import load_yaml
-from qlib_integration.runner import run_qlib_execution
+from qlib_integration.runner import (
+    UnpriceableHeldPositionError,
+    run_qlib_execution,
+)
 from research_validation.feature_matrix import canonical_hash, file_sha256
 from research_validation.lineage import (
     capture_code_state,
@@ -47,6 +50,7 @@ OUTPUTS = (
     "input_artifacts.csv",
     "execution_artifacts.csv",
     "execution_summary.csv",
+    "execution_failures.csv",
     "fee_schedule_usage.csv",
     "tradability_diagnostics.csv",
     "contract_status.csv",
@@ -170,6 +174,8 @@ def run_linear_execution(
     tradability_rows: list[dict[str, Any]] = []
     prediction_hash_valid = 0
     market_hash_valid = 0
+    execution_failures: list[dict[str, Any]] = []
+    successful_runs = 0
     for split_id in selected_splits:
         cache_row = cache_rows.loc[
             cache_rows["outer_split_id"].astype(str).eq(split_id)
@@ -263,7 +269,35 @@ def run_linear_execution(
                     "sha256": prediction_sha,
                 }
             )
-            result = run_qlib_execution(signal, market, run_config)
+            try:
+                result = run_qlib_execution(signal, market, run_config)
+            except UnpriceableHeldPositionError as exc:
+                candidates = exc.candidate_rows
+                execution_failures.append(
+                    {
+                        "outer_split_id": split_id,
+                        "method": method,
+                        "failure_code": "blocked_unpriceable_held_position",
+                        "candidate_row_count": len(candidates),
+                        "first_candidate_date": (
+                            pd.Timestamp(candidates["datetime"].min())
+                            .date()
+                            .isoformat()
+                            if not candidates.empty
+                            else ""
+                        ),
+                        "candidate_instruments": ";".join(
+                            sorted(
+                                candidates["instrument"]
+                                .astype(str)
+                                .unique()
+                            )
+                        ),
+                        "detail": str(exc),
+                    }
+                )
+                continue
+            successful_runs += 1
             for name in RESULT_TABLES:
                 results[name].append(
                     result[name].assign(
@@ -281,12 +315,28 @@ def run_linear_execution(
             }
         )
     combined = {
-        name: pd.concat(values, ignore_index=True)
+        name: (
+            pd.concat(values, ignore_index=True)
+            if values
+            else pd.DataFrame()
+        )
         for name, values in results.items()
     }
     daily = combined["daily_accounting"]
     fills = combined["fills"]
     costs = combined["transaction_costs"]
+    failure_frame = pd.DataFrame(
+        execution_failures,
+        columns=[
+            "outer_split_id",
+            "method",
+            "failure_code",
+            "candidate_row_count",
+            "first_candidate_date",
+            "candidate_instruments",
+            "detail",
+        ],
+    )
     market_frames: list[pd.DataFrame] = []
     for row in cache_rows.loc[
         cache_rows["outer_split_id"].astype(str).isin(selected_splits)
@@ -376,6 +426,12 @@ def run_linear_execution(
     )
     critical = [
         (
+            "all_execution_scenarios_complete",
+            successful_runs == expected_runs,
+            successful_runs,
+            expected_runs,
+        ),
+        (
             "prediction_artifacts_fresh",
             prediction_hash_valid == expected_runs,
             prediction_hash_valid,
@@ -412,8 +468,15 @@ def run_linear_execution(
         ),
         (
             "complete_trading_calendar",
-            bool(daily["calendar_complete"].all()),
-            int(daily["calendar_complete"].sum()),
+            bool(
+                not daily.empty
+                and daily["calendar_complete"].all()
+            ),
+            (
+                int(daily["calendar_complete"].sum())
+                if not daily.empty
+                else 0
+            ),
             len(daily),
         ),
         (
@@ -424,14 +487,28 @@ def run_linear_execution(
         ),
         (
             "cash_non_negative",
-            float(daily["cash"].min()) >= -1e-8,
-            float(daily["cash"].min()),
+            bool(
+                not daily.empty
+                and float(daily["cash"].min()) >= -1e-8
+            ),
+            (
+                float(daily["cash"].min())
+                if not daily.empty
+                else "no successful scenarios"
+            ),
             ">=0",
         ),
         (
             "accounting_conservation",
-            float(daily["accounting_error"].abs().max()) <= 1e-6,
-            float(daily["accounting_error"].abs().max()),
+            bool(
+                not daily.empty
+                and float(daily["accounting_error"].abs().max()) <= 1e-6
+            ),
+            (
+                float(daily["accounting_error"].abs().max())
+                if not daily.empty
+                else "no successful scenarios"
+            ),
             "<=1e-6",
         ),
         (
@@ -520,23 +597,19 @@ def run_linear_execution(
         .eq("pass")
         .all()
     )
-    if not operational_pass:
-        raise ValueError(
-            "linear execution critical contracts failed: "
-            + ",".join(
-                contract.loc[
-                    contract["severity"].eq("critical")
-                    & ~contract["status"].eq("pass"),
-                    "check_name",
-                ].astype(str)
-            )
-        )
+    failed_contracts = contract.loc[
+        contract["severity"].eq("critical")
+        & ~contract["status"].eq("pass"),
+        "check_name",
+    ].astype(str).tolist()
     readiness = pd.DataFrame(
         [
             {
                 "linear_model_research_complete": True,
-                "linear_model_execution_complete": not canary,
-                "linear_model_execution_operational_ready": True,
+                "linear_model_execution_complete": bool(
+                    not canary and operational_pass
+                ),
+                "linear_model_execution_operational_ready": operational_pass,
                 "historical_oos_linear_evaluation_complete": True,
                 "production_model_selected": False,
                 "authoritative_execution": False,
@@ -604,6 +677,9 @@ def run_linear_execution(
         combined["execution_summary"].to_csv(
             publisher.path("execution_summary.csv"), index=False
         )
+        failure_frame.to_csv(
+            publisher.path("execution_failures.csv"), index=False
+        )
         fee_rows.to_csv(
             publisher.path("fee_schedule_usage.csv"), index=False
         )
@@ -635,8 +711,15 @@ def run_linear_execution(
             f"- Orders / fills: {len(combined['orders']):,} / {len(fills):,}.\n"
             "- Market semantics: corrected Market Cache V3, date-aware fees, "
             "dynamic lot rules, T+1 and participation limit.\n"
-            "- Operational contracts pass; historical execution remains "
-            "non-authoritative under Instrument State Decision B.\n"
+            f"- Successful / expected scenarios: {successful_runs} / "
+            f"{expected_runs}.\n"
+            f"- Operational status: `{'pass' if operational_pass else 'blocked'}`.\n"
+            f"- Classified failures: {len(failure_frame)}.\n"
+            "- A held position that exceeds the frozen 20-trading-day stale "
+            "valuation horizon is blocked; prices are not silently carried "
+            "forward and positions are not liquidated using future knowledge.\n"
+            "- Historical execution remains non-authoritative under "
+            "Instrument State Decision B.\n"
             "- Production model selected: false.\n",
             encoding="utf-8",
         )
@@ -668,6 +751,15 @@ def run_linear_execution(
                 "factor_frame_id"
             ),
             contract_paths=[publisher.path("contract_status.csv")],
+            artifact_status=(
+                "pass" if operational_pass else "blocked"
+            ),
+            blocked_reason=(
+                ""
+                if operational_pass
+                else "execution_contract:"
+                + "|".join(failed_contracts)
+            ),
         )
         publisher.publish()
     return {
@@ -675,4 +767,7 @@ def run_linear_execution(
         "orders": len(combined["orders"]),
         "fills": len(fills),
         "execution_rows": len(combined["execution_summary"]),
+        "status": "pass" if operational_pass else "blocked",
+        "successful_runs": successful_runs,
+        "expected_runs": expected_runs,
     }

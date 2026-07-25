@@ -293,6 +293,7 @@ def test_linear_execution_config_keeps_corrected_semantics() -> None:
     assert config["market_cache_manifest"].startswith(
         "outputs/market_cache_v3/"
     )
+    assert config["execution"]["maximum_stale_valuation_days"] == 20
 
 
 def test_linear_validation_metric_is_daily_rank_ic() -> None:
