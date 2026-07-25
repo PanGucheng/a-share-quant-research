@@ -15,6 +15,10 @@ parents:
   matrix_manifest: outputs/full_research_feature_matrix_v4/current/artifact_manifest.json
   labels_manifest: outputs/full_research_labels_v2/current/artifact_manifest.json
   labels_runtime: outputs/full_research_feature_matrix_v4/runtime/labels_v2.parquet
+  protocol_config: configs/research_model_protocol_v1_1.yaml
+  protocol_manifest: outputs/research_model_protocol_v1_1/current/artifact_manifest.json
+  lightgbm_config: configs/research_lightgbm_v1.yaml
+  factor_weights: outputs/research_selection_lineage_closure_v1/current/factor_weights_by_split.csv
 
 temporal_boundary:
   historical_test_end: 2026-02-04
@@ -44,6 +48,22 @@ training:
   target_transform: daily_cross_sectional_rank_centered_v2
   minimum_daily_pairs: 100
   all_label_mature_rows: true
+  date_batch_size: 40
+
+canary:
+  factor_count: 5
+  train_date_count: 20
+  quarantine_date_count: 20
+  repeat_count: 2
+  maximum_peak_rss_mib: 1024
+  minimum_free_disk_gib: 10
+  output_dir: outputs/prospective_forward_candidate_v1/canary
+
+refit:
+  maximum_peak_rss_mib: 4096
+  minimum_free_disk_gib: 20
+  output_dir: outputs/prospective_forward_candidate_v1/current
+  runtime_dir: outputs/prospective_forward_candidate_v1/runtime/current
 
 confirmation:
   primary_metric: mean_daily_rank_ic
