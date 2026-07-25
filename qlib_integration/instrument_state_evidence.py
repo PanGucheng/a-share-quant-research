@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 from datetime import datetime, time
+import hashlib
+import json
 from typing import Any
 from zoneinfo import ZoneInfo
 
@@ -27,6 +29,23 @@ VALID_STATE_TYPES = {
     "listing_termination",
     "asset_disposition",
 }
+
+
+def evidence_cache_key(
+    normalized_event: dict[str, Any], raw_snapshot_sha256: str
+) -> str:
+    """Bind a normalized event to the exact raw evidence payload."""
+
+    payload = {
+        "normalized_event": normalized_event,
+        "raw_snapshot_sha256": str(raw_snapshot_sha256),
+        "cache_schema": "historical_instrument_state_evidence_v2",
+    }
+    return hashlib.sha256(
+        json.dumps(
+            payload, ensure_ascii=False, sort_keys=True, separators=(",", ":"), default=str
+        ).encode("utf-8")
+    ).hexdigest()
 
 
 def classify_available_phase(

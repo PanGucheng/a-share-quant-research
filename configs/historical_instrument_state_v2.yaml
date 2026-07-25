@@ -18,6 +18,7 @@ data_source_audit_snapshot_manifest: outputs/data_source_audit_v2/current/raw_sn
 baostock_normalized_snapshot: outputs/data_source_audit_v2/current/normalized/baostock_daily.parquet
 scope_output: outputs/historical_instrument_state_v2/scope
 scope_stage_id: historical_instrument_state_scope_v2
+official_canary_config: configs/historical_instrument_state_official_canary_v2.yaml
 terminal_focus_instruments: [SZ000413, SZ002308, SH600811]
 official_canary_minimums:
   st_boundary_events: 10

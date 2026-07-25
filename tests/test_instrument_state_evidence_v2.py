@@ -6,6 +6,7 @@ import pytest
 from qlib_integration.instrument_state_evidence import (
     classify_available_phase,
     detect_authoritative_conflicts,
+    evidence_cache_key,
     executable_disposition,
     trading_permissions,
     validate_evidence_frame,
@@ -117,3 +118,8 @@ def test_only_tier_zero_before_open_cash_disposition_is_executable() -> None:
     assert executable_disposition(payload)
     assert not executable_disposition({**payload, "source_tier": "tier_1"})
     assert not executable_disposition({**payload, "available_phase": "unknown"})
+
+
+def test_raw_snapshot_hash_is_part_of_evidence_cache_key() -> None:
+    event = evidence().iloc[0].to_dict()
+    assert evidence_cache_key(event, "a" * 64) != evidence_cache_key(event, "b" * 64)
