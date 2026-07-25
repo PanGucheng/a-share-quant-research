@@ -9,6 +9,11 @@ import pandas as pd
 import pytest
 import yaml
 
+from research_validation.lineage import (
+    CodeState,
+    sha256_file,
+    write_stage_artifact_manifest,
+)
 from model_research.freeze import load_freeze_before_test
 from model_research.gates import (
     ModelScopeBlockedError,
@@ -141,18 +146,73 @@ def test_authoritative_parent_resolution_uses_date_wrapper_and_closure() -> None
     )
 
 
-def test_matrix_runtime_is_resolved_from_authoritative_manifest() -> None:
+def test_matrix_runtime_is_resolved_from_authoritative_manifest(
+    tmp_path: Path,
+) -> None:
+    current_dir = tmp_path / "current"
+    runtime_dir = tmp_path / "runtime"
+    current_dir.mkdir()
+    runtime_dir.mkdir()
+    factor_name = "alpha158_CNTD30"
+    partition_path = runtime_dir / "batch_000.parquet"
+    pd.DataFrame(
+        {
+            "datetime": pd.to_datetime(["2024-01-02", "2024-01-03"]),
+            "instrument": ["SH600000", "SH600000"],
+            factor_name: [0.1, 0.2],
+        }
+    ).to_parquet(partition_path, index=False)
+    resolved_config_path = current_dir / "resolved_config.json"
+    resolved_config = {
+        "profile_name": "full_research",
+        "profile_type": "full_research",
+        "research_run_family_id": "matrix-runtime-unit-test",
+        "output_dir": current_dir.as_posix(),
+        "runtime_dir": runtime_dir.as_posix(),
+    }
+    resolved_config_path.write_text(
+        json.dumps(resolved_config, sort_keys=True),
+        encoding="utf-8",
+    )
+    partition_status_path = current_dir / "partition_status.csv"
+    pd.DataFrame(
+        [
+            {
+                "batch_id": "batch_000",
+                "status": "pass",
+                "output_path": partition_path.as_posix(),
+                "output_sha256": sha256_file(partition_path),
+            }
+        ]
+    ).to_csv(partition_status_path, index=False)
+    write_stage_artifact_manifest(
+        project_root=ROOT,
+        stage_id="full_research_feature_matrix_v4",
+        config=resolved_config,
+        output_dir=current_dir,
+        output_files=[resolved_config_path, partition_status_path],
+        code_state=CodeState(
+            commit_sha="unit-test",
+            dirty=False,
+            diff_sha256="",
+        ),
+        universe_artifact_id="universe:unit-test",
+        factor_catalog_id="catalog:unit-test",
+        factor_frame_id="frame:unit-test",
+        start_date="2024-01-02",
+        end_date="2024-01-03",
+    )
+
     runtime = resolve_matrix_runtime_authority(
         project_root=ROOT,
-        matrix_manifest_path=authoritative_paths().matrix_manifest,
-        selected_factors=["alpha158_CNTD30"],
-        verify_selected_partition_hashes=False,
+        matrix_manifest_path=current_dir / "artifact_manifest.json",
+        selected_factors=[factor_name],
+        verify_selected_partition_hashes=True,
     )
-    assert runtime.partition_status_path == (
-        ROOT
-        / "outputs/full_research_feature_matrix_v4/current/partition_status.csv"
-    )
-    assert runtime.factor_index["alpha158_CNTD30"].parent == runtime.runtime_dir
+    assert runtime.partition_status_path == partition_status_path
+    assert runtime.factor_index[factor_name] == partition_path
+    assert runtime.runtime_dir == runtime_dir
+    assert runtime.partition_receipts[0]["hash_verified"] is True
 
 
 def test_weighted_preprocessing_is_daily_equal_and_order_stable() -> None:
