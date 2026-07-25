@@ -1,6 +1,12 @@
-# PR #5A 模型输入协议交接计划 V1（延后）
+# PR #5A 模型输入协议交接计划 V1（已由新计划接管）
 
-> **2026-07-23 状态：暂停，不能作为当前启动清单。** 当前唯一执行计划为 [Research / Execution Accuracy Correction V1](./ACCURACY_CORRECTION_V1_PLAN.md)。本文件保留后续模型协议设计，但只能在 GitHub PR #6 与 PR #7 全部门禁通过后重新启用。
+> **2026-07-25 接管声明：** Historical Instrument State V2 已以 Decision B
+> 结束，用户已明确要求停止 Tier-0 source re-evaluation 并转入研究级多因子模型。
+> 本文中要求 `authoritative_oos_execution_ready=true` 才能开展模型研究的旧门禁
+> 不再适用；它也不能直接作为当前启动清单。当前唯一模型实施基线为
+> [研究级多因子模型 V1 实施计划](./RESEARCH_GRADE_MULTIFACTOR_MODEL_V1_PLAN.md)。
+> authoritative execution、生产选择和无偏最终估计仍保持 blocked；只有明确标记
+> 为 `post_observation_research` 的模型实验可在新 scoped gate 下逐步放行。
 
 ## 1. 定位与停止边界
 

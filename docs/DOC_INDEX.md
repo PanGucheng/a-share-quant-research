@@ -4,8 +4,10 @@
 
 ## Current Working Documents
 
+- `RESEARCH_GRADE_MULTIFACTOR_MODEL_V1_PLAN.md`
+  当前唯一执行计划。Historical Instrument State Decision B 已冻结，不再继续搜索历史公告；模型阶段按 PR #5A 输入协议、PR #5B Ridge/Elastic Net、PR #5C LightGBM、PR #5D 历史科学比较推进。研究模型允许产生 post-observation evidence，但 authoritative execution、无偏最终估计和生产模型选择继续关闭。
 - `HISTORICAL_INSTRUMENT_STATE_V2_PLAN.md`
-  当前完成记录与 source decision。真实 decision/valuation/terminal scope 已冻结，13 条 Tier 0 官方快照与候选边界对账完成；ST 5/10、全天停牌 3/10、盘前可证明率 38.46%，故正式选择 Decision B。Instrument State v2、Market Cache v4、历史 NAV 重跑和所有模型入口继续关闭。
+  已完成的 source decision 记录。真实 decision/valuation/terminal scope 已冻结，13 条 Tier 0 官方快照与候选边界对账完成；ST 5/10、全天停牌 3/10、盘前可证明率 38.46%，故正式选择 Decision B。除非用户明确提供新源，否则不再继续该方向。
 - `outputs/historical_instrument_state_v2/official_canary/`
   Historical Instrument State V2 的 compact evidence：官方原文 receipt/hash、13 条归一化事件、BaoStock 边界对账、覆盖门槛、Decision B 与 fail-closed readiness。原始网页/PDF 仅保存在忽略的 runtime，不进入 Git。
 - `EXECUTION_UNIT_SEMANTICS_CORRECTION_V1_2_PLAN.md`
@@ -156,6 +158,13 @@ docs/Qlib A股因子研究框架完整升级计划 V1.md
 docs/FACTOR_VALIDATION_ROADMAP_V1.md
 ```
 
-当前 corrected 45/46/52 allowlist、weights 与 score 可作为研究层冻结证据，但 `model_input_allowed=false`。机器状态为 `model_research_ready=true`、`execution_semantics_accuracy_ready=true`、`market_cache_v3_ready=true`，旧 `market_cache_v2_ready=false`；历史 ST、盘前停牌和 terminal-event 权威源缺失，所以 `authoritative_oos_execution_ready=false`、`core_model_ready=false`、`pr5_model_training_ready=false`、`model_training_started=false`。
+Historical Instrument State V2 已以 Decision B 冻结。当前 corrected 45/46/52
+allowlist、weights 与 score 可作为研究输入证据，但必须通过
+`research_selection_lineage_closure_v1` 消费。机器状态仍保持
+`authoritative_oos_execution_ready=false`、`core_model_ready=false` 和
+production hard-stop。
 
-下一阶段只能制定并实施 Historical Instrument State V2；不进入 PR #5A。未来若重新授权模型阶段，仍须先解决或明确接受权威历史状态能力缺口，并按 `PR5A_MODEL_INPUT_PROTOCOL_HANDOFF_V1.md` 重新冻结模型输入、validation 指标和 pre-test release 边界。
+当前阶段正式转入 `RESEARCH_GRADE_MULTIFACTOR_MODEL_V1_PLAN.md`。先实施逻辑
+PR #5A 的 scoped model gate、模型输入、validation 指标和 pre-test freeze；
+只有 `post_observation_research` 实验可以逐步放行，authoritative execution 与
+production model selection 不随模型研究解除。

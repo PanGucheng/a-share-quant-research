@@ -1,5 +1,11 @@
 # Selection Holdout Integrity 与后续模型计划 V1
 
+> **2026-07-25 模型阶段接管声明：**本文继续作为 holdout 修复的历史设计与证据，
+> 但后续 PR #5A—#5D 的当前实施语义已由
+> [研究级多因子模型 V1 实施计划](./RESEARCH_GRADE_MULTIFACTOR_MODEL_V1_PLAN.md)
+> 接管。Historical Instrument State Decision B 冻结且不再主动重审；研究模型
+> 与 authoritative execution/生产资格改用分离的 scoped readiness。
+
 > **2026-07-23 Accuracy Correction 覆盖声明：**逻辑 PR #4.1 的 `selection_holdout_integrity_ready=true` 继续有效，但实现级复核确认 PIT lifecycle、横截面因子影响、pairwise IC、bootstrap 缺口语义、score completeness、市场字段时点、税费和陈旧估值问题。当前 48/46/54 allowlist 与透明 score 已被替代，历史 OOS NAV 不具权威性；`model_research_ready=false`、`authoritative_oos_execution_ready=false`、`core_model_ready=false`、`pr5_model_training_ready=false`、`model_training_started=false`。当前唯一执行计划改为 [Research / Execution Accuracy Correction V1](./ACCURACY_CORRECTION_V1_PLAN.md)：先 GitHub PR #6 研究正确性，再 PR #7 执行正确性，PR #5A 继续暂停。本文其余内容保留为已完成 holdout 修复的设计与历史证据，若与新计划冲突，以新计划为准。
 
 > **2026-07-22 历史实施状态：**逻辑 PR #4.1 曾完成三个 split 48/46/54 allowlist、36 组 outer-test mutation、3 份 freeze/release、两种透明 score 和 3 split × 2 method Qlib execution。该记录只证明选择链对 outer test 的隔离与工程 lineage；其中模型 readiness、当前 allowlist 和 OOS 数值资格已由上方 2026-07-23 声明撤回。
