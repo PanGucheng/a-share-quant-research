@@ -1,0 +1,2 @@
+fit_row_count,training_date_count,factor_count,spool_file_count,spool_bytes,peak_rss_mib,free_disk_gib_at_start,runtime_seconds,forward_feature_read_count,forward_label_read_count
+2538428,1273,52,32,726246450,1860.2421875,376.3798408508301,253.1048155999997,0,0

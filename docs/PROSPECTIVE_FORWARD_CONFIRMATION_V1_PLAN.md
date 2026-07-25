@@ -213,3 +213,44 @@ unbiased_historical_estimate = false
 6. 发布 candidate freeze 并进入 `forward_data_waiting=true`；
 7. 若没有 `2026-06-09` 后且 freeze 后首次到达的数据，必须停止计算并等待，
    不得把现有 retrospective extension 改名为 forward。
+
+## 10. PR #20A 实施回执（2026-07-26）
+
+协议与候选冻结已按计划完成：
+
+```text
+forward_protocol_ready               = true
+forward_candidate_canary_ready       = true
+forward_candidate_refit_complete     = true
+forward_candidate_freeze_ready       = true
+forward_data_waiting                 = true
+forward_prediction_confirmation_complete = false
+provisional_candidate_confirmed      = false
+production_model_selected            = false
+live_trading_ready                   = false
+```
+
+时间审计将 2026-02-05—2026-06-09 的 79 个现有日期全部隔离，其中 58 个日期
+标签已成熟、21 个日期因 20 日 horizon 尚未成熟；全部
+`prospective_evidence_eligible=false`。
+
+小规模 canary 使用 5 因子 × 20 个旧训练日期，随后只投影 20 个隔离日期，
+生成 40,000 条 prediction。两次训练的模型和 prediction 哈希完全一致，隔离
+日期标签读取数为 0，峰值 RSS 322.0 MiB。
+
+正式 refit 不做任何超参数搜索，严格采用 split_003 的 52 因子顺序和
+`structure_04 × 200 rounds`。结果：
+
+```text
+training dates      = 1,273
+fit rows            = 2,538,428
+training end        = 2026-05-11
+runtime             = 253.1 seconds
+peak RSS            = 1,860.2 MiB
+model SHA256        = c89972d27ec610cf7c2598d8ccb1ecd1c227c73d0b5dc51dcf11210b57245ee7
+preprocessing SHA256= 679765a462e79a3018db3ab77170a1bc60e3114816aff23b1d8fd38d2a2e37f2
+```
+
+模型 binary 和 preprocessing 保存在 Git 忽略的受控 runtime，仓库提交不可变
+freeze、hash、复现配置和资源回执。当前没有符合“晚于 2026-06-09 且 freeze
+后首次到达”的数据，因此 PR #20A 到此停止计算；PR #20B 仍等待真实新数据。
