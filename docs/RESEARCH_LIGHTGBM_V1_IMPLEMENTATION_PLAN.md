@@ -151,3 +151,23 @@ test reads                  0
 候选表在首次 fit 前冻结，validation mutation、train+validation final refit、
 pre-test freeze、环境锁和 lineage 均通过。资源低于 4096 MiB 上限，因此获准
 以同一代码和候选表继续 `split_002`、`split_003`；不得改变参数空间或并行线程。
+
+剩余两个 split 随后一次性顺序完成：
+
+```text
+split_002
+  factors / train / validation dates = 46 / 808 / 77
+  selected = structure_01 × 100 rounds
+  validation mean Rank IC / ICIR = 0.025234 / 0.163880
+  peak RSS / runtime = 2,151.0 MiB / 645.0 seconds
+
+split_003
+  factors / train / validation dates = 52 / 926 / 83
+  selected = structure_04 × 200 rounds
+  validation mean Rank IC / ICIR = 0.221618 / 1.067217
+  peak RSS / runtime = 2,614.8 MiB / 887.3 seconds
+```
+
+三组共 48/48 候选合格，3/3 final refit 与 pre-test freeze 构造通过，所有
+test read 均为 0。下一步只做三组 artifact 聚合、runtime 模型与 preprocessing
+hash 复核以及统一 release freeze；不得重新选参或重拟合。
