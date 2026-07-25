@@ -188,6 +188,7 @@ class PreparedQuoteExchange(Exchange):  # type: ignore[misc]
         self._last_sell_stamp_tax_rate = self.sell_tax_rate
         self._last_transfer_fee_rate = 0.0
         self._last_cost = ExecutionCostBreakdown(0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
+        self.unpriceable_price_requests: list[dict[str, object]] = []
         super().__init__(
             open_cost=0.0,
             close_cost=0.0,
@@ -195,6 +196,36 @@ class PreparedQuoteExchange(Exchange):  # type: ignore[misc]
             impact_cost=0.0,
             **kwargs,
         )
+
+    def get_deal_price(
+        self,
+        stock_id: str,
+        start_time: pd.Timestamp,
+        end_time: pd.Timestamp,
+        direction: object,
+        method: str | None = "ts_data_last",
+    ) -> object:
+        price = super().get_deal_price(
+            stock_id,
+            start_time,
+            end_time,
+            direction,
+            method,
+        )
+        try:
+            valid = price is not None and np.isfinite(float(price)) and float(price) > 0
+        except (TypeError, ValueError):
+            valid = False
+        if not valid:
+            self.unpriceable_price_requests.append(
+                {
+                    "datetime": pd.Timestamp(start_time).normalize(),
+                    "instrument": str(stock_id),
+                    "end_time": pd.Timestamp(end_time),
+                    "direction": str(direction),
+                }
+            )
+        return price
 
     def get_quote_from_qlib(self) -> None:
         missing = sorted(set(self.all_fields) - set(self._prepared_quote.columns))

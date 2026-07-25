@@ -103,15 +103,27 @@ def run_qlib_execution(signal: pd.DataFrame, market: pd.DataFrame, config: dict[
             "valuation_stale_blocked",
             pd.Series(False, index=markets.index),
         ).fillna(False).astype(bool)
-        stale_candidates = markets.loc[
+        stale_unpriceable = markets.loc[
             stale_mask
-            & (
-                ~pd.to_numeric(markets["close"], errors="coerce").map(
-                    lambda value: pd.notna(value) and float(value) > 0
-                )
-            ),
+            & pd.to_numeric(
+                markets["close"], errors="coerce"
+            ).isna(),
             ["datetime", "instrument"],
         ].drop_duplicates()
+        exact_requests = pd.DataFrame(
+            exchange.unpriceable_price_requests
+        )
+        if exact_requests.empty:
+            stale_candidates = stale_unpriceable
+        else:
+            exact_keys = exact_requests[
+                ["datetime", "instrument"]
+            ].tail(1)
+            stale_candidates = exact_keys.merge(
+                stale_unpriceable,
+                on=["datetime", "instrument"],
+                how="inner",
+            )
         is_none_price_failure = (
             "NoneType" in str(exc)
             and "unsupported operand type" in str(exc)
