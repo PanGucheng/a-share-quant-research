@@ -171,3 +171,17 @@ split_003
 三组共 48/48 候选合格，3/3 final refit 与 pre-test freeze 构造通过，所有
 test read 均为 0。下一步只做三组 artifact 聚合、runtime 模型与 preprocessing
 hash 复核以及统一 release freeze；不得重新选参或重拟合。
+
+三组 development aggregate 已完成：48 个候选、3 个 final model、3 个 fitted
+preprocessing 和 3 份 base pre-test freeze 的 runtime hash 全部有效；
+validation mutation 3/3 pass，test read=0。当前：
+
+```text
+lightgbm_development_complete = true
+pre_test_freeze_ready = true
+single_test_release_complete = false
+lightgbm_model_research_complete = false
+```
+
+下一步只允许为三份 base freeze 绑定精确 test dates，生成 release freeze；在
+release freeze 发布前仍不得读取 test feature 或 label。

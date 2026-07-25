@@ -1,0 +1,8 @@
+check_name,status,severity,observed,expected,reason
+lightgbm_split_coverage_exact,pass,critical,"[""split_001"", ""split_002"", ""split_003""]","[""split_001"", ""split_002"", ""split_003""]",
+candidate_grid_exact,pass,critical,"{""split_001"": 16, ""split_002"": 16, ""split_003"": 16}","""16 candidates per split""",
+validation_mutation_sensitive,pass,critical,"[""pass"", ""pass"", ""pass""]","""3 pass""",
+model_binary_hash_valid,pass,critical,true,true,
+fitted_preprocessing_hash_valid,pass,critical,true,true,
+pre_test_freeze_valid,pass,critical,"{""freeze_count"": 3, ""model_hashes_valid"": true}","{""freeze_count"": 3, ""model_hashes_valid"": true}",
+test_read_count_before_freeze_zero,pass,critical,0,0,
