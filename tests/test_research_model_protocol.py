@@ -297,6 +297,9 @@ def test_linear_validation_metric_is_daily_rank_ic() -> None:
     )
     assert result["mean_daily_rank_ic"] == pytest.approx(1.0)
     assert result["prediction_coverage"] == 1.0
+    constant = _validation_metrics(metadata, np.ones(len(metadata)))
+    assert constant["daily_ic_count"] == 0
+    assert constant["mean_daily_rank_ic"] == float("-inf")
 
 
 def test_weighted_preprocessing_is_daily_equal_and_order_stable() -> None:

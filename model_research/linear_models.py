@@ -797,6 +797,8 @@ def _validation_metrics(
     for _, group in frame.loc[finite].groupby("datetime", sort=True):
         if len(group) < 2:
             continue
+        if group["prediction"].nunique(dropna=True) < 2:
+            continue
         value = float(
             spearmanr(
                 group["prediction"].to_numpy(),
@@ -1083,6 +1085,11 @@ def run_linear_development(
                     metrics["prediction_coverage"]
                     >= float(config["validation"]["minimum_prediction_coverage"])
                 )
+                metric_valid = (
+                    int(metrics["daily_ic_count"]) > 0
+                    and np.isfinite(metrics["mean_daily_rank_ic"])
+                    and np.isfinite(metrics["daily_rank_ic_ir"])
+                )
                 row = {
                     "outer_split_id": split_id,
                     **candidate,
@@ -1094,7 +1101,11 @@ def run_linear_development(
                     "coefficient_sha256": _array_hash(model.coef_),
                     "validation_prediction_sha256": _array_hash(prediction),
                     "validation_label_sha256": validation_label_hash,
-                    "status": "pass" if converged and coverage_pass else "blocked",
+                    "status": (
+                        "pass"
+                        if converged and coverage_pass and metric_valid
+                        else "blocked"
+                    ),
                 }
                 method_metrics.append(row)
                 metric_rows.append(row)
