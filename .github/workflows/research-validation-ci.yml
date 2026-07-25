@@ -6,8 +6,48 @@ on:
     branches:
       - main
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
+  change-classifier:
+    name: change-classifier / docs-check
+    runs-on: ubuntu-latest
+    outputs:
+      docs_changed: ${{ steps.changes.outputs.docs_changed }}
+      research_code_changed: ${{ steps.changes.outputs.research_code_changed }}
+      qlib_changed: ${{ steps.changes.outputs.qlib_changed }}
+      docs_only: ${{ steps.changes.outputs.docs_only }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.10"
+      - name: Classify changed paths
+        id: changes
+        env:
+          BASE_SHA: ${{ github.event_name == 'pull_request' && github.event.pull_request.base.sha || github.event.before }}
+          HEAD_SHA: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
+        run: >-
+          python scripts/ci/classify_changes.py
+          --base "$BASE_SHA"
+          --head "$HEAD_SHA"
+          --github-output "$GITHUB_OUTPUT"
+      - name: Run fast repository and documentation checks
+        env:
+          BASE_SHA: ${{ github.event_name == 'pull_request' && github.event.pull_request.base.sha || github.event.before }}
+          HEAD_SHA: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
+        run: >-
+          python scripts/ci/check_docs.py
+          --base "$BASE_SHA"
+          --head "$HEAD_SHA"
+
   lightweight-contracts:
+    needs: change-classifier
+    if: needs.change-classifier.outputs.research_code_changed == 'true'
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v5
@@ -57,6 +97,8 @@ jobs:
           python scripts/validate_historical_instrument_state_canary_v2.py
 
   qlib-exchange-runtime:
+    needs: change-classifier
+    if: needs.change-classifier.outputs.qlib_changed == 'true'
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v5
@@ -71,3 +113,29 @@ jobs:
       - name: Run Qlib Exchange integration tests
         shell: pwsh
         run: python -m pytest tests/test_qlib_exchange_runtime.py -q
+
+  ci-gate:
+    name: ci-gate
+    if: always()
+    needs:
+      - change-classifier
+      - lightweight-contracts
+      - qlib-exchange-runtime
+    runs-on: ubuntu-latest
+    steps:
+      - name: Require every applicable CI tier
+        env:
+          CLASSIFIER_RESULT: ${{ needs.change-classifier.result }}
+          RESEARCH_RESULT: ${{ needs.lightweight-contracts.result }}
+          QLIB_RESULT: ${{ needs.qlib-exchange-runtime.result }}
+        run: |
+          for result in "$CLASSIFIER_RESULT" "$RESEARCH_RESULT" "$QLIB_RESULT"; do
+            case "$result" in
+              success|skipped) ;;
+              *)
+                echo "CI tier failed or was cancelled: $result"
+                exit 1
+                ;;
+            esac
+          done
+          echo "All applicable CI tiers passed."
