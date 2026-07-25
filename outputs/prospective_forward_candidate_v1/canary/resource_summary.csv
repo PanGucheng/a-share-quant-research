@@ -1,0 +1,2 @@
+train_row_count,quarantine_prediction_row_count,factor_count,train_date_count,quarantine_date_count,repeat_count,peak_rss_mib,free_disk_gib_at_start,quarantine_label_read_count
+39886,40000,5,20,20,2,322.01171875,377.0141830444336,0
