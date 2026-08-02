@@ -1,0 +1,32 @@
+{
+  "contracts": {
+    "decision_after_candidate_freeze_local_date": true,
+    "feature_snapshot_not_before_raw_first_seen": true,
+    "label_read_count_at_prediction": 0,
+    "prediction_commit_before_label_start_cutoff": true,
+    "prediction_commit_receipt_immutable": true,
+    "prediction_created_before_label_start_cutoff": true,
+    "prediction_payload_immutable": true,
+    "raw_first_seen_after_candidate_freeze_timestamp": true
+  },
+  "evaluation_policy": "evaluation may consume only a hash-valid payload plus its pre-label-start commit receipt after label maturity",
+  "label_start_cutoff_policy": "next_trading_day_09_25",
+  "required_fields": [
+    "decision_date",
+    "raw_snapshot_first_seen_at",
+    "feature_snapshot_created_at",
+    "prediction_created_at",
+    "prediction_sha256",
+    "prediction_commit_sha",
+    "prediction_commit_timestamp",
+    "label_start_date",
+    "label_start_cutoff",
+    "label_mature_date",
+    "label_read_count_at_prediction",
+    "candidate_freeze_id",
+    "model_sha256",
+    "preprocessing_sha256"
+  ],
+  "schema_version": 1,
+  "timezone": "Asia/Shanghai"
+}

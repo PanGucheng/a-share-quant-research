@@ -1,0 +1,105 @@
+{
+  "canary": {
+    "factor_count": 5,
+    "maximum_peak_rss_mib": 1024,
+    "minimum_free_disk_gib": 10,
+    "output_dir": "outputs/prospective_forward_candidate_v1/canary",
+    "quarantine_date_count": 20,
+    "repeat_count": 2,
+    "train_date_count": 20
+  },
+  "candidate": {
+    "allowlist_sha256": "85470aa9f42ddd4970f849b32208d3f0d0ee13587f5ab45aa55c88f509db1f5c",
+    "factor_count": 52,
+    "feature_order_sha256": "544ee7b8f7464d5fb43c3638dfdca7ac25f2cc654b951b4c9b817499bfdd3f71",
+    "hyperparameter_search_allowed": false,
+    "method": "lightgbm",
+    "num_boost_round": 200,
+    "source_split_id": "split_003",
+    "structural_row_id": "structure_04",
+    "threads": 1
+  },
+  "confirmation": {
+    "block_length": 10,
+    "bootstrap_samples": 5000,
+    "minimum_mean_daily_rank_ic": 0.0,
+    "minimum_prediction_coverage": 0.95,
+    "primary_metric": "mean_daily_rank_ic",
+    "random_seed": 20260726,
+    "require_bootstrap_ci_lower_above_zero": true
+  },
+  "durable_storage": {
+    "backup_verification": "committed_checkout_hash_validation",
+    "model_sha256": "c89972d27ec610cf7c2598d8ccb1ecd1c227c73d0b5dc51dcf11210b57245ee7",
+    "preprocessing_sha256": "679765a462e79a3018db3ab77170a1bc60e3114816aff23b1d8fd38d2a2e37f2",
+    "root": "artifacts/prospective_forward_candidate_v1/sha256",
+    "storage_class": "git_content_addressed"
+  },
+  "executed_command": "python scripts/harden_prospective_forward_candidate_v1.py --config configs/prospective_forward_confirmation_v1.yaml",
+  "executed_scope": "candidate_rebind_and_prospective_time_hardening",
+  "experiment_class": "prospective_research_protocol",
+  "governance": {
+    "authoritative_historical_execution_ready": false,
+    "forward_data_waiting": true,
+    "live_trading_ready": false,
+    "production_model_selected": false,
+    "retrospective_extension_prospective_eligible": false,
+    "unbiased_historical_estimate": false
+  },
+  "output_dir": "E:/qlib_prj/qlib_baseline/outputs/prospective_forward_hardening_v1/current",
+  "parents": {
+    "factor_weights": "outputs/research_selection_lineage_closure_v1/current/factor_weights_by_split.csv",
+    "feature_order": "outputs/research_model_protocol_v1_1/current/feature_order_manifest.csv",
+    "historical_comparison_manifest": "outputs/historical_model_comparison_v1/current/artifact_manifest.json",
+    "historical_leader": "outputs/historical_model_comparison_v1/current/historical_research_leader.json",
+    "labels_manifest": "outputs/full_research_labels_v2/current/artifact_manifest.json",
+    "lightgbm_config": "configs/research_lightgbm_v1.yaml",
+    "lightgbm_development_manifest": "outputs/research_lightgbm_v1/development/artifact_manifest.json",
+    "matrix_manifest": "outputs/full_research_feature_matrix_v4/current/artifact_manifest.json",
+    "protocol_config": "configs/research_model_protocol_v1_1.yaml",
+    "protocol_manifest": "outputs/research_model_protocol_v1_1/current/artifact_manifest.json",
+    "selected_hyperparameters": "outputs/research_lightgbm_v1/development/selected_hyperparameters.json",
+    "selection_manifest": "outputs/research_selection_lineage_closure_v1/current/artifact_manifest.json",
+    "split_allowlist_manifest": "outputs/research_selection_lineage_closure_v1/current/split_allowlist_manifest.csv"
+  },
+  "prediction_freeze": {
+    "commit_receipt_must_precede_label_start_cutoff": true,
+    "immutable_commit_receipt_required": true,
+    "immutable_payload_required": true,
+    "label_read_count_at_prediction": 0,
+    "label_start_cutoff": "next_trading_day_09_25",
+    "payload_must_precede_label_start_cutoff": true,
+    "timezone": "Asia/Shanghai"
+  },
+  "profile_name": "full_research",
+  "profile_type": "full_research",
+  "refit": {
+    "maximum_peak_rss_mib": 4096,
+    "minimum_free_disk_gib": 20,
+    "output_dir": "outputs/prospective_forward_candidate_v1/current",
+    "runtime_dir": "outputs/prospective_forward_candidate_v1/runtime/current"
+  },
+  "research_run_family_id": "full_research_factor_669_v1",
+  "schema_version": 1,
+  "temporal_boundary": {
+    "current_snapshot_end": "2026-06-09",
+    "historical_test_end": "2026-02-04",
+    "label_maturation_trading_days": 21,
+    "latest_label_mature_training_date": "2026-05-11",
+    "minimum_label_mature_dates_for_primary_confirmation": 60,
+    "official_forward_rule": "decision_date_after_candidate_freeze_effective_local_date_and_raw_snapshot_first_seen_after_candidate_freeze_timestamp",
+    "retrospective_extension_end": "2026-06-09",
+    "retrospective_extension_start": "2026-02-05",
+    "timezone": "Asia/Shanghai"
+  },
+  "training": {
+    "all_label_mature_rows": true,
+    "date_batch_size": 40,
+    "end_date": "2026-05-11",
+    "label_name": "label_20d_t1",
+    "labels_runtime_sha256": "4acdfd874c339cd094bf702619861714ec9c75eb27547240eaaa7b945a302ac8",
+    "minimum_daily_pairs": 100,
+    "start_date": "2021-02-01",
+    "target_transform": "daily_cross_sectional_rank_centered_v2"
+  }
+}

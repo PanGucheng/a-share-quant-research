@@ -1,0 +1,14 @@
+{
+  "backup_verification_method": "committed_checkout_hash_validation",
+  "backup_verified": true,
+  "model_sha256": "c89972d27ec610cf7c2598d8ccb1ecd1c227c73d0b5dc51dcf11210b57245ee7",
+  "model_size_bytes": 688235,
+  "model_storage_uri": "repo://artifacts/prospective_forward_candidate_v1/sha256/c89972d27ec610cf7c2598d8ccb1ecd1c227c73d0b5dc51dcf11210b57245ee7/forward_candidate_lightgbm.txt",
+  "preprocessing_sha256": "679765a462e79a3018db3ab77170a1bc60e3114816aff23b1d8fd38d2a2e37f2",
+  "preprocessing_size_bytes": 5639,
+  "preprocessing_storage_uri": "repo://artifacts/prospective_forward_candidate_v1/sha256/c89972d27ec610cf7c2598d8ccb1ecd1c227c73d0b5dc51dcf11210b57245ee7/forward_candidate_preprocessing.json",
+  "schema_version": 1,
+  "storage_class": "git_content_addressed",
+  "storage_receipt_id": "durable-candidate-storage:7240c0230e64028a82fb2f4eb3efe96777c33fd330b5e0deb8d1bafb737e291b",
+  "verification_timestamp_utc": "2026-08-02T14:26:26.563188+00:00"
+}

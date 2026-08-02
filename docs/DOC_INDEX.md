@@ -56,6 +56,8 @@
   PR #20A 的 prospective 时间与候选协议 freeze：79 个既有扩展日期全部 quarantine，official forward 只接受 2026-06-09 后且 freeze 后首次到达的数据。
 - `outputs/prospective_forward_candidate_v1/current/`
   固定 LightGBM provisional candidate 的一次无搜索 refit：52 因子、1,273 日期、2,538,428 行、200 轮，模型/预处理哈希冻结；没有运行 forward 评价，当前为 `forward_data_waiting=true`。
+- `outputs/prospective_forward_hardening_v1/current/`
+  PR #20A.1 当前 authority：候选有效冻结时间为 2026-08-02T14:26:26.563188Z（上海日期 2026-08-02）；official 日期与 raw first-seen 必须同时越过该边界。prediction payload/commit 必须早于 t+1 09:25；V1.1/Labels lineage、runtime hash 和 Git 内容寻址模型均已通过门禁，未重训且继续等待新数据。
 - `outputs/execution_unit_semantics_correction_v1_2/governance/`
   V1.2 fail-closed 收口、旧新 artifact supersession、全市场及 SZ302132 单票归因与中央 readiness 回执。
 - `outputs/bugfix_research_freeze_v1/current/`

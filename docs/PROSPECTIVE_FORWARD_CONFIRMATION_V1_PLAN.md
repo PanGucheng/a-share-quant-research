@@ -281,3 +281,68 @@ preprocessing SHA256= 679765a462e79a3018db3ab77170a1bc60e3114816aff23b1d8fd38d2a
 
 本节是 PR #20A 原始回执。其 runtime-only 保存与“晚于 2026-06-09”起点已由
 PR #20A.1 加固要求接管；旧 freeze 保留历史证据，不得作为 PR #20B authority。
+
+## 11. PR #20A.1 实施回执（2026-08-02）
+
+审阅意见经代码与 artifact 核验后确认成立，现已完成以下修复：
+
+```text
+prospective_time_boundary_hardened          = true
+prediction_before_label_contract_ready      = true
+forward_lineage_hardened                    = true
+forward_candidate_durable_storage_ready     = true
+forward_candidate_rebound_without_retraining= true
+forward_data_waiting                        = true
+forward_prediction_confirmation_complete    = false
+production_model_selected                   = false
+live_trading_ready                          = false
+```
+
+新 authority 为：
+
+```text
+outputs/prospective_forward_hardening_v1/current/
+```
+
+新候选有效冻结边界：
+
+```text
+candidate_freeze_effective_time_utc            = 2026-08-02T14:26:26.563188+00:00
+candidate_freeze_effective_date_asia_shanghai  = 2026-08-02
+earliest possible official decision date       = 2026-08-03
+```
+
+`2026-08-03` 只是日期下界，不自动获得资格；对应 raw snapshot 的
+`first_seen_at` 仍必须严格晚于上述精确 UTC 时间戳。冻结后下载的 2026-08-02
+及更早行情一律拒绝。
+
+每个未来 prediction 必须形成两层不可变证据：
+
+1. t 日收盘特征完成后的 prediction payload；
+2. 下一交易日 09:25 `Asia/Shanghai` 前完成的 commit receipt。
+
+payload 与 receipt 任一超时、label read count 非零、hash 不一致或 commit SHA
+缺失，均禁止进入 label-mature evaluation。
+
+lineage 已改为直接消费 `research_model_protocol_v1_1`，旧 V1 feature-order 路径
+删除。Labels runtime 只能由 Labels v2 manifest 控制的 `resolved_config.json`
+解析，实际 runtime SHA256 冻结为：
+
+```text
+4acdfd874c339cd094bf702619861714ec9c75eb27547240eaaa7b945a302ac8
+```
+
+模型未重训、未搜索，原始 binary/preprocessing hash 保持不变，并已复制到普通
+Git 管理的内容寻址目录：
+
+```text
+artifacts/prospective_forward_candidate_v1/sha256/
+  c89972d27ec610cf7c2598d8ccb1ecd1c227c73d0b5dc51dcf11210b57245ee7/
+```
+
+模型 688,235 bytes、预处理 5,639 bytes，均在读取前执行 SHA256 与 size 复验；
+`.gitattributes` 禁止换行转换。旧 runtime 路径只保留本机历史副本，不再是唯一
+候选存储。
+
+PR #20A.1 到此完成。PR #20B 继续停止，等待严格晚于新冻结边界的真实新交易
+日和 first-seen snapshot。
