@@ -1,16 +1,18 @@
 {
-  "candidate_spec_sha256": "27b794c1d1062f51a4cc0700c406a43829503e7d2b30c9e29f574b76dcd22d2e",
-  "code_commit_sha": "c372271036d2671171582aa65c7b8f119440d40e",
-  "config_file_sha256": "2fea01e697488671f3d966b5a502bbed943cbec6aa4ec68f655e4f926d149e83",
+  "candidate_spec_sha256": "09eb24573e44f4aebb11f7917240a547654b590d5068f57fa9379ba104cde6b8",
+  "code_commit_sha": "ac5f2e59a978b111b41662087e589d55c80e3759",
+  "config_file_sha256": "cf96625dd73ce18d32c093a038cdf0b21c39e0f87a95235a6a21c8a45cc57fe0",
   "current_snapshot_end": "2026-06-09",
   "forward_data_waiting": true,
-  "forward_protocol_freeze_id": "forward-protocol-freeze:23ea239e7689027362f7c4d05d8399f8d10faf95f02cd61aa9e642eaa26f775b",
+  "forward_protocol_freeze_id": "forward-protocol-freeze:498d2a2136a5d59db4c25bc41ccbb15eb9e97bbb5c2da1741153acc62645a34c",
+  "labels_runtime_sha256": "4acdfd874c339cd094bf702619861714ec9c75eb27547240eaaa7b945a302ac8",
   "latest_label_mature_training_date": "2026-05-11",
   "live_trading_ready": false,
   "minimum_label_mature_dates_for_primary_confirmation": 60,
-  "official_forward_rule": "decision_date_after_snapshot_and_first_seen_after_candidate_freeze",
+  "official_forward_rule": "decision_date_after_candidate_freeze_effective_local_date_and_raw_snapshot_first_seen_after_candidate_freeze_timestamp",
   "production_model_selected": false,
+  "protocol_freeze_timestamp_utc": "2026-08-02T14:24:15.897487+00:00",
   "schema_version": 1,
-  "status": "frozen_waiting_for_new_data",
-  "temporal_boundary_sha256": "3df1b838bbd7e79e5bc334c705a2f4f31eba3a153073c61da8fc8f6bf58686de"
+  "status": "frozen_waiting_for_candidate_rebind",
+  "temporal_boundary_sha256": "172cfcec11b77b9a173c44ef1068ba390eb33f52f3c0c43ba46bdbae7d67d119"
 }

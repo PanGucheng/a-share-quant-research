@@ -1,9 +1,10 @@
 {
   "allowlist_sha256": "85470aa9f42ddd4970f849b32208d3f0d0ee13587f5ab45aa55c88f509db1f5c",
-  "candidate_spec_sha256": "27b794c1d1062f51a4cc0700c406a43829503e7d2b30c9e29f574b76dcd22d2e",
+  "candidate_spec_sha256": "09eb24573e44f4aebb11f7917240a547654b590d5068f57fa9379ba104cde6b8",
   "candidate_status": "provisional_research_only",
   "factor_count": 52,
   "feature_order_sha256": "544ee7b8f7464d5fb43c3638dfdca7ac25f2cc654b951b4c9b817499bfdd3f71",
+  "feature_order_source_artifact_id": "research_model_protocol_v1_1:ae43f92603de397c8249c8c50ea6db2b0001fabeaabb98f00a183f1d34c7401c",
   "hyperparameter_search_allowed": false,
   "method": "lightgbm",
   "production_model_selected": false,

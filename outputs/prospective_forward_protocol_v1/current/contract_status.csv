@@ -1,5 +1,7 @@
 check_name,status,observed_value,required_value,severity,reason
-direct_parents_valid,pass,5,5,critical,
+direct_parents_valid,pass,6,6,critical,
+labels_runtime_hash_valid,pass,4acdfd874c339cd094bf702619861714ec9c75eb27547240eaaa7b945a302ac8,4acdfd874c339cd094bf702619861714ec9c75eb27547240eaaa7b945a302ac8,critical,
+v1_1_protocol_is_direct_parent,pass,"['historical_model_comparison_v1', 'research_lightgbm_v1', 'research_selection_lineage_closure_v1', 'full_research_feature_matrix_v4', 'full_research_labels_v2', 'research_model_protocol_v1_1']",research_model_protocol_v1_1,critical,
 historical_leader_is_research_only,pass,False,False,critical,
 candidate_feature_identity_frozen,pass,52,52,critical,
 matrix_snapshot_end_frozen,pass,2026-06-09,2026-06-09,critical,
