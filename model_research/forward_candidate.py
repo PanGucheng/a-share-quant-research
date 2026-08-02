@@ -21,7 +21,11 @@ from research_validation.lineage import (
 from research_validation.stage_output import StageOutputPublisher
 
 from .development_dry_run import _fit_from_spool
-from .forward_protocol import load_forward_config, resolve
+from .forward_protocol import (
+    load_forward_config,
+    resolve,
+    resolve_labels_runtime,
+)
 from .inputs import InputAccessAudit, load_split_feature_order, project_features
 from .lightgbm_models import _training_params, load_lightgbm_config
 from .lineage import resolve_authoritative_parents
@@ -170,7 +174,7 @@ def _training_dates(
 ) -> pd.DatetimeIndex:
     label_name = config["training"]["label_name"]
     labels = pd.read_parquet(
-        resolve(config["parents"]["labels_runtime"]),
+        resolve_labels_runtime(config),
         columns=["datetime", label_name],
     )
     labels["datetime"] = pd.to_datetime(labels["datetime"]).dt.normalize()
@@ -196,7 +200,7 @@ def _quarantine_dates(
 ) -> pd.DatetimeIndex:
     label_name = config["training"]["label_name"]
     labels = pd.read_parquet(
-        resolve(config["parents"]["labels_runtime"]),
+        resolve_labels_runtime(config),
         columns=["datetime", label_name],
     )
     dates = pd.DatetimeIndex(
@@ -258,6 +262,13 @@ def _candidate_parents(
                 "prospective_forward_candidate_canary_v1",
             )
         )
+    specs.append(
+        (
+            "research_model_protocol_v1_1",
+            resolve(config["parents"]["protocol_manifest"]),
+            "research_model_protocol_v1_1",
+        )
+    )
     return [
         (role, path, _parent(path, expected_stage=stage))
         for role, path, stage in specs

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -15,6 +16,10 @@ from research_validation.lineage import (
     write_stage_artifact_manifest,
 )
 from research_validation.stage_output import StageOutputPublisher
+
+from .lineage import resolve_authoritative_parents
+from .protocol import parent_paths
+from .protocol_v1_1 import _labels_runtime_path
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -56,6 +61,27 @@ def load_forward_config(path: str | Path) -> dict[str, Any]:
             raise ValueError(f"forward protocol overclaims {field}")
     if bool(governance["retrospective_extension_prospective_eligible"]):
         raise ValueError("retrospective extension cannot be prospective evidence")
+    parents = payload["parents"]
+    if "labels_runtime" in parents:
+        raise ValueError("arbitrary labels_runtime configuration is forbidden")
+    if "research_model_protocol_v1_1" not in parents["feature_order"]:
+        raise ValueError("feature order must come from protocol V1.1")
+    required_rule = (
+        "decision_date_after_candidate_freeze_effective_local_date_and_"
+        "raw_snapshot_first_seen_after_candidate_freeze_timestamp"
+    )
+    if payload["temporal_boundary"]["official_forward_rule"] != required_rule:
+        raise ValueError("official forward event-time rule is not hardened")
+    prediction = payload["prediction_freeze"]
+    if (
+        prediction["label_start_cutoff"] != "next_trading_day_09_25"
+        or not prediction["payload_must_precede_label_start_cutoff"]
+        or not prediction["commit_receipt_must_precede_label_start_cutoff"]
+        or int(prediction["label_read_count_at_prediction"]) != 0
+    ):
+        raise ValueError("prediction-before-label contract is not frozen")
+    if payload["durable_storage"]["storage_class"] != "git_content_addressed":
+        raise ValueError("candidate durable storage class is not frozen")
     return payload
 
 
@@ -81,13 +107,23 @@ def _parents(
         "selection_manifest",
         "matrix_manifest",
         "labels_manifest",
+        "protocol_manifest",
     )
+    expected_stages = {
+        "historical_comparison_manifest": "historical_model_comparison_v1",
+        "lightgbm_development_manifest": "research_lightgbm_v1",
+        "selection_manifest": "research_selection_lineage_closure_v1",
+        "matrix_manifest": "full_research_feature_matrix_v4",
+        "labels_manifest": "full_research_labels_v2",
+        "protocol_manifest": "research_model_protocol_v1_1",
+    }
     result = []
     for role in roles:
         path = resolve(config["parents"][role])
         manifest = load_artifact_manifest(path)
         if (
-            manifest["artifact_status"] != "pass"
+            manifest["stage_id"] != expected_stages[role]
+            or manifest["artifact_status"] != "pass"
             or manifest["lineage_status"] != "complete"
             or bool(manifest["code_dirty"])
         ):
@@ -100,6 +136,30 @@ def _parents(
             )
         result.append((role, path, manifest))
     return result
+
+
+def resolve_labels_runtime(config: dict[str, Any]) -> Path:
+    """Resolve Labels v2 runtime only through its manifest-controlled config."""
+
+    protocol_config = yaml.safe_load(
+        resolve(config["parents"]["protocol_config"]).read_text(
+            encoding="utf-8"
+        )
+    )
+    resolution = resolve_authoritative_parents(parent_paths(protocol_config))
+    direct = load_artifact_manifest(
+        resolve(config["parents"]["labels_manifest"])
+    )
+    if resolution.manifests["labels"]["artifact_id"] != direct["artifact_id"]:
+        raise ValueError("protocol and direct Labels v2 parents differ")
+    path = _labels_runtime_path(protocol_config, resolution)
+    observed = file_sha256(path)
+    expected = str(config["training"]["labels_runtime_sha256"])
+    if observed != expected:
+        raise ValueError(
+            f"Labels v2 runtime hash mismatch: {observed} != {expected}"
+        )
+    return path
 
 
 def _candidate_spec(config: dict[str, Any]) -> dict[str, Any]:
@@ -136,6 +196,25 @@ def _candidate_spec(config: dict[str, Any]) -> dict[str, Any]:
         or row["feature_order_sha256"] != configured["feature_order_sha256"]
     ):
         raise ValueError("configured split_003 feature identity mismatch")
+    protocol_manifest_path = resolve(config["parents"]["protocol_manifest"])
+    protocol_manifest = load_artifact_manifest(protocol_manifest_path)
+    feature_order_path = resolve(config["parents"]["feature_order"])
+    if feature_order_path.parent != protocol_manifest_path.parent:
+        raise ValueError("feature order does not come from V1.1 protocol")
+    recorded_feature_order = protocol_manifest["output_file_hashes"].get(
+        "feature_order_manifest.csv"
+    )
+    if recorded_feature_order != file_sha256(feature_order_path):
+        raise ValueError("V1.1 feature-order output hash mismatch")
+    feature_order = pd.read_csv(feature_order_path)
+    factors = (
+        feature_order.loc[feature_order["outer_split_id"].eq("split_003")]
+        .sort_values("feature_order", kind="stable")["factor"]
+        .astype(str)
+        .tolist()
+    )
+    if canonical_hash(factors) != configured["feature_order_sha256"]:
+        raise ValueError("V1.1 feature order differs from candidate freeze")
     payload = {
         "schema_version": 1,
         "candidate_status": "provisional_research_only",
@@ -145,6 +224,7 @@ def _candidate_spec(config: dict[str, Any]) -> dict[str, Any]:
         "factor_count": int(configured["factor_count"]),
         "allowlist_sha256": configured["allowlist_sha256"],
         "feature_order_sha256": configured["feature_order_sha256"],
+        "feature_order_source_artifact_id": protocol_manifest["artifact_id"],
         "selected_hyperparameters": selected,
         "hyperparameter_search_allowed": False,
         "production_model_selected": False,
@@ -167,7 +247,7 @@ def freeze_forward_protocol(
         raise ValueError("forward protocol freeze requires clean committed code")
     candidate = _candidate_spec(config)
     boundary = config["temporal_boundary"]
-    labels_path = resolve(config["parents"]["labels_runtime"])
+    labels_path = resolve_labels_runtime(config)
     labels = pd.read_parquet(
         labels_path,
         columns=["datetime", "instrument", config["training"]["label_name"]],
@@ -203,6 +283,8 @@ def freeze_forward_protocol(
         **boundary,
         "observed_matrix_end": matrix_end.date().isoformat(),
         "observed_latest_label_mature_date": latest_mature.date().isoformat(),
+        "candidate_freeze_effective_time_utc": None,
+        "candidate_freeze_effective_date_asia_shanghai": None,
         "official_forward_first_date": None,
         "official_forward_status": "waiting_for_post_freeze_new_data",
         "retrospective_extension_prospective_eligible": False,
@@ -240,17 +322,19 @@ def freeze_forward_protocol(
     )
     freeze = {
         "schema_version": 1,
-        "status": "frozen_waiting_for_new_data",
+        "status": "frozen_waiting_for_candidate_rebind",
         "candidate_spec_sha256": candidate["candidate_spec_sha256"],
         "temporal_boundary_sha256": temporal["temporal_boundary_sha256"],
         "config_file_sha256": file_sha256(config_file),
         "code_commit_sha": code_state.commit_sha,
+        "protocol_freeze_timestamp_utc": datetime.now(timezone.utc).isoformat(),
         "current_snapshot_end": snapshot_end.date().isoformat(),
         "latest_label_mature_training_date": latest_mature.date().isoformat(),
         "official_forward_rule": boundary["official_forward_rule"],
         "minimum_label_mature_dates_for_primary_confirmation": int(
             boundary["minimum_label_mature_dates_for_primary_confirmation"]
         ),
+        "labels_runtime_sha256": file_sha256(labels_path),
         "forward_data_waiting": True,
         "production_model_selected": False,
         "live_trading_ready": False,
@@ -261,7 +345,23 @@ def freeze_forward_protocol(
     contracts = pd.DataFrame(
         [
             _contract(
-                "direct_parents_valid", len(parents) == 5, len(parents), 5
+                "direct_parents_valid", len(parents) == 6, len(parents), 6
+            ),
+            _contract(
+                "labels_runtime_hash_valid",
+                file_sha256(labels_path)
+                == config["training"]["labels_runtime_sha256"],
+                file_sha256(labels_path),
+                config["training"]["labels_runtime_sha256"],
+            ),
+            _contract(
+                "v1_1_protocol_is_direct_parent",
+                any(
+                    manifest["stage_id"] == "research_model_protocol_v1_1"
+                    for _, _, manifest in parents
+                ),
+                [manifest["stage_id"] for _, _, manifest in parents],
+                "research_model_protocol_v1_1",
             ),
             _contract(
                 "historical_leader_is_research_only",
@@ -388,8 +488,9 @@ def freeze_forward_protocol(
             "# Prospective Forward Protocol V1\n\n"
             "- Provisional candidate: LightGBM split_003 frozen specification.\n"
             "- Existing 2026-02-05—2026-06-09 extension: quarantined.\n"
-            "- Official forward data: waiting for dates after 2026-06-09 "
-            "first seen after this freeze.\n"
+            "- Official forward data: decision date must be after the "
+            "candidate effective local date, and raw first-seen time must "
+            "be after the candidate freeze timestamp.\n"
             "- Production model selected: false.\n"
             "- Live trading ready: false.\n",
             encoding="utf-8",
