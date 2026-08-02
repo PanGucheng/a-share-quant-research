@@ -9,6 +9,6 @@
   "preprocessing_storage_uri": "repo://artifacts/prospective_forward_candidate_v1/sha256/c89972d27ec610cf7c2598d8ccb1ecd1c227c73d0b5dc51dcf11210b57245ee7/forward_candidate_preprocessing.json",
   "schema_version": 1,
   "storage_class": "git_content_addressed",
-  "storage_receipt_id": "durable-candidate-storage:7240c0230e64028a82fb2f4eb3efe96777c33fd330b5e0deb8d1bafb737e291b",
-  "verification_timestamp_utc": "2026-08-02T14:26:26.563188+00:00"
+  "storage_receipt_id": "durable-candidate-storage:5083914d498084519085916943c89d1b912d308095cb9201ab4122f9beb9c703",
+  "verification_timestamp_utc": "2026-08-02T14:33:38.772344+00:00"
 }

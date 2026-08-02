@@ -307,7 +307,7 @@ outputs/prospective_forward_hardening_v1/current/
 新候选有效冻结边界：
 
 ```text
-candidate_freeze_effective_time_utc            = 2026-08-02T14:26:26.563188+00:00
+candidate_freeze_effective_time_utc            = 2026-08-02T14:33:38.772344+00:00
 candidate_freeze_effective_date_asia_shanghai  = 2026-08-02
 earliest possible official decision date       = 2026-08-03
 ```
