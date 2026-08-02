@@ -42,11 +42,15 @@ prospective_evidence_eligible = false
 正式 prospective 起点为：
 
 ```text
-第一个满足 decision_date > 2026-06-09
-且其原始快照在本计划 freeze commit 后首次进入仓库的交易日
+decision_date > candidate_freeze_effective_date_asia_shanghai
+AND
+raw_snapshot_first_seen_at > candidate_freeze_effective_time_utc
 ```
 
-只比较日期晚于 PR #5D 不够；还必须证明该日期的数据在候选冻结后才首次可用。
+两个条件必须同时成立。冻结后下载的旧交易日仍是 retrospective 数据，即使其
+`first_seen_at` 较晚也必须拒绝。正式 forward 从候选有效冻结后的首个合法新
+交易日开始，旧 Matrix 的 2026-06-09 只保留训练标签窗口隔离边界，不再决定
+official forward 起点。
 
 ## 3. Provisional candidate
 
@@ -108,7 +112,7 @@ artifact。不得原地修改 Matrix v4 或 Labels v2。
 每个新日期至少记录：
 
 - `decision_date`；
-- `first_seen_at`；
+- `raw_snapshot_first_seen_at`；
 - `raw_snapshot_id` 与 SHA256；
 - `universe_artifact_id`；
 - `factor_frame_id`；
@@ -125,6 +129,13 @@ fail-closed。
 候选冻结后：
 
 - 每个新决策日只生成一次 prediction；
+- t 日收盘特征完成后才能生成 prediction；
+- prediction payload 与 commit receipt 都必须在下一交易日 09:25
+  `Asia/Shanghai` 前不可变发布；
+- 每份 receipt 必须记录 `decision_date`、`feature_snapshot_created_at`、
+  `prediction_created_at`、`prediction_sha256`、`prediction_commit_sha`、
+  `prediction_commit_timestamp`、`label_start_date`、`label_start_cutoff`、
+  `label_mature_date` 和 `label_read_count_at_prediction=0`；
 - 不因表现改变模型、特征、参数、预处理或指标；
 - 标签成熟前只记录 prediction receipt，不计算 IC；
 - 允许在第 20、40 个成熟日期生成 operational snapshot；
@@ -132,6 +143,10 @@ fail-closed。
 - primary metric 固定为 mean daily Rank IC；
 - 同时报告 ICIR、positive-IC ratio、coverage 和 block-bootstrap 区间；
 - historical OOS 与 forward 结果严格分表，不拼接重估。
+
+未来评价器只能在 label maturity 后消费已经存在且 hash-valid 的 prediction
+payload 与 pre-label-start commit receipt。标签成熟后补生成或覆盖 prediction
+必须 fail-closed，不得称为 forward evidence。
 
 冻结通过标准：
 
@@ -183,6 +198,18 @@ unbiased_historical_estimate = false
 - immutable candidate freeze；
 - `forward_data_waiting = true`。
 
+### PR #20A.1：Prospective boundary 与 durability hardening
+
+- official date 同时晚于候选有效冻结本地日期；
+- raw snapshot first-seen 严格晚于候选冻结时间戳；
+- prediction payload 和 commit receipt 均早于 t+1 09:25；
+- feature order 只消费 V1.1 protocol artifact；
+- V1.1 protocol 与 Labels v2 成为 direct parents；
+- Labels runtime 只从 manifest-controlled config 解析并校验 SHA256；
+- 模型与预处理进入普通 Git 的内容寻址耐久目录；
+- 只重新绑定 freeze，不重训、不搜索、不读取 forward label；
+- 完成后继续 `forward_data_waiting=true`。
+
 ### PR #20B：Future append pipeline
 
 仅在 freeze 后新数据到达时启动：
@@ -211,8 +238,9 @@ unbiased_historical_estimate = false
 4. 审阅 canary、资源和 exact refit bundle；
 5. 运行一次固定规格 candidate refit；
 6. 发布 candidate freeze 并进入 `forward_data_waiting=true`；
-7. 若没有 `2026-06-09` 后且 freeze 后首次到达的数据，必须停止计算并等待，
-   不得把现有 retrospective extension 改名为 forward。
+7. 完成 PR #20A.1 并重新发布有效候选 freeze；
+8. 若没有同时晚于有效冻结日期与时间戳的新数据，必须停止计算并等待，不得把
+   任何冻结后下载的历史日期改名为 forward。
 
 ## 10. PR #20A 实施回执（2026-07-26）
 
@@ -251,6 +279,70 @@ model SHA256        = c89972d27ec610cf7c2598d8ccb1ecd1c227c73d0b5dc51dcf11210b57
 preprocessing SHA256= 679765a462e79a3018db3ab77170a1bc60e3114816aff23b1d8fd38d2a2e37f2
 ```
 
-模型 binary 和 preprocessing 保存在 Git 忽略的受控 runtime，仓库提交不可变
-freeze、hash、复现配置和资源回执。当前没有符合“晚于 2026-06-09 且 freeze
-后首次到达”的数据，因此 PR #20A 到此停止计算；PR #20B 仍等待真实新数据。
+本节是 PR #20A 原始回执。其 runtime-only 保存与“晚于 2026-06-09”起点已由
+PR #20A.1 加固要求接管；旧 freeze 保留历史证据，不得作为 PR #20B authority。
+
+## 11. PR #20A.1 实施回执（2026-08-02）
+
+审阅意见经代码与 artifact 核验后确认成立，现已完成以下修复：
+
+```text
+prospective_time_boundary_hardened          = true
+prediction_before_label_contract_ready      = true
+forward_lineage_hardened                    = true
+forward_candidate_durable_storage_ready     = true
+forward_candidate_rebound_without_retraining= true
+forward_data_waiting                        = true
+forward_prediction_confirmation_complete    = false
+production_model_selected                   = false
+live_trading_ready                          = false
+```
+
+新 authority 为：
+
+```text
+outputs/prospective_forward_hardening_v1/current/
+```
+
+新候选有效冻结边界：
+
+```text
+candidate_freeze_effective_time_utc            = 2026-08-02T14:33:38.772344+00:00
+candidate_freeze_effective_date_asia_shanghai  = 2026-08-02
+earliest possible official decision date       = 2026-08-03
+```
+
+`2026-08-03` 只是日期下界，不自动获得资格；对应 raw snapshot 的
+`first_seen_at` 仍必须严格晚于上述精确 UTC 时间戳。冻结后下载的 2026-08-02
+及更早行情一律拒绝。
+
+每个未来 prediction 必须形成两层不可变证据：
+
+1. t 日收盘特征完成后的 prediction payload；
+2. 下一交易日 09:25 `Asia/Shanghai` 前完成的 commit receipt。
+
+payload 与 receipt 任一超时、label read count 非零、hash 不一致或 commit SHA
+缺失，均禁止进入 label-mature evaluation。
+
+lineage 已改为直接消费 `research_model_protocol_v1_1`，旧 V1 feature-order 路径
+删除。Labels runtime 只能由 Labels v2 manifest 控制的 `resolved_config.json`
+解析，实际 runtime SHA256 冻结为：
+
+```text
+4acdfd874c339cd094bf702619861714ec9c75eb27547240eaaa7b945a302ac8
+```
+
+模型未重训、未搜索，原始 binary/preprocessing hash 保持不变，并已复制到普通
+Git 管理的内容寻址目录：
+
+```text
+artifacts/prospective_forward_candidate_v1/sha256/
+  c89972d27ec610cf7c2598d8ccb1ecd1c227c73d0b5dc51dcf11210b57245ee7/
+```
+
+模型 688,235 bytes、预处理 5,639 bytes，均在读取前执行 SHA256 与 size 复验；
+`.gitattributes` 禁止换行转换。旧 runtime 路径只保留本机历史副本，不再是唯一
+候选存储。
+
+PR #20A.1 到此完成。PR #20B 继续停止，等待严格晚于新冻结边界的真实新交易
+日和 first-seen snapshot。

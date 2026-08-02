@@ -11,10 +11,9 @@ parents:
   selected_hyperparameters: outputs/research_lightgbm_v1/development/selected_hyperparameters.json
   selection_manifest: outputs/research_selection_lineage_closure_v1/current/artifact_manifest.json
   split_allowlist_manifest: outputs/research_selection_lineage_closure_v1/current/split_allowlist_manifest.csv
-  feature_order: outputs/research_model_protocol_v1/current/feature_order_manifest.csv
+  feature_order: outputs/research_model_protocol_v1_1/current/feature_order_manifest.csv
   matrix_manifest: outputs/full_research_feature_matrix_v4/current/artifact_manifest.json
   labels_manifest: outputs/full_research_labels_v2/current/artifact_manifest.json
-  labels_runtime: outputs/full_research_feature_matrix_v4/runtime/labels_v2.parquet
   protocol_config: configs/research_model_protocol_v1_1.yaml
   protocol_manifest: outputs/research_model_protocol_v1_1/current/artifact_manifest.json
   lightgbm_config: configs/research_lightgbm_v1.yaml
@@ -26,7 +25,8 @@ temporal_boundary:
   latest_label_mature_training_date: 2026-05-11
   retrospective_extension_start: 2026-02-05
   retrospective_extension_end: 2026-06-09
-  official_forward_rule: decision_date_after_snapshot_and_first_seen_after_candidate_freeze
+  official_forward_rule: decision_date_after_candidate_freeze_effective_local_date_and_raw_snapshot_first_seen_after_candidate_freeze_timestamp
+  timezone: Asia/Shanghai
   minimum_label_mature_dates_for_primary_confirmation: 60
   label_maturation_trading_days: 21
 
@@ -49,6 +49,23 @@ training:
   minimum_daily_pairs: 100
   all_label_mature_rows: true
   date_batch_size: 40
+  labels_runtime_sha256: 4acdfd874c339cd094bf702619861714ec9c75eb27547240eaaa7b945a302ac8
+
+prediction_freeze:
+  timezone: Asia/Shanghai
+  label_start_cutoff: next_trading_day_09_25
+  payload_must_precede_label_start_cutoff: true
+  commit_receipt_must_precede_label_start_cutoff: true
+  label_read_count_at_prediction: 0
+  immutable_payload_required: true
+  immutable_commit_receipt_required: true
+
+durable_storage:
+  storage_class: git_content_addressed
+  root: artifacts/prospective_forward_candidate_v1/sha256
+  model_sha256: c89972d27ec610cf7c2598d8ccb1ecd1c227c73d0b5dc51dcf11210b57245ee7
+  preprocessing_sha256: 679765a462e79a3018db3ab77170a1bc60e3114816aff23b1d8fd38d2a2e37f2
+  backup_verification: committed_checkout_hash_validation
 
 canary:
   factor_count: 5

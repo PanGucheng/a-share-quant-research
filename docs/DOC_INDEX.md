@@ -5,7 +5,7 @@
 ## Current Working Documents
 
 - `PROSPECTIVE_FORWARD_CONFIRMATION_V1_PLAN.md`
-  PR #5D 后的当前执行计划：把 2026-02-05—2026-06-09 既有扩展隔离为非 prospective 证据，冻结 LightGBM split_003 规格作为 research-only provisional candidate；先完成协议、refit 和不可变 freeze，再等待 2026-06-09 后且 freeze 后首次到达的新数据，至少 60 个标签成熟日期后才允许一次 primary confirmation。
+  PR #5D 后的当前执行计划及 PR #20A.1 hardening：旧扩展全部隔离；official forward 日期必须晚于候选有效冻结本地日期且 raw first-seen 晚于冻结时间戳；prediction payload 与 commit receipt 必须在 t+1 09:25 前冻结。V1.1/Labels lineage、runtime hash 和内容寻址耐久模型均为 PR #20B 前置门禁。
 - `CI_POLICY.md`
   路径感知 CI 与稳定 `ci-gate` 政策：纯文档只跑快速 diff/link/index/大文件检查，普通研究代码跑完整 pytest/validators，只有 Qlib 执行链、相关依赖或 workflow 变化才安装并运行 Qlib runtime。
 - `RESEARCH_MODEL_PROTOCOL_V1_IMPLEMENTATION.md`
@@ -56,6 +56,8 @@
   PR #20A 的 prospective 时间与候选协议 freeze：79 个既有扩展日期全部 quarantine，official forward 只接受 2026-06-09 后且 freeze 后首次到达的数据。
 - `outputs/prospective_forward_candidate_v1/current/`
   固定 LightGBM provisional candidate 的一次无搜索 refit：52 因子、1,273 日期、2,538,428 行、200 轮，模型/预处理哈希冻结；没有运行 forward 评价，当前为 `forward_data_waiting=true`。
+- `outputs/prospective_forward_hardening_v1/current/`
+  PR #20A.1 当前 authority：候选有效冻结时间为 2026-08-02T14:26:26.563188Z（上海日期 2026-08-02）；official 日期与 raw first-seen 必须同时越过该边界。prediction payload/commit 必须早于 t+1 09:25；V1.1/Labels lineage、runtime hash 和 Git 内容寻址模型均已通过门禁，未重训且继续等待新数据。
 - `outputs/execution_unit_semantics_correction_v1_2/governance/`
   V1.2 fail-closed 收口、旧新 artifact supersession、全市场及 SZ302132 单票归因与中央 readiness 回执。
 - `outputs/bugfix_research_freeze_v1/current/`

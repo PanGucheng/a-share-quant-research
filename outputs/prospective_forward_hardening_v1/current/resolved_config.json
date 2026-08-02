@@ -19,7 +19,6 @@
     "structural_row_id": "structure_04",
     "threads": 1
   },
-  "config_file_sha256": "cf96625dd73ce18d32c093a038cdf0b21c39e0f87a95235a6a21c8a45cc57fe0",
   "confirmation": {
     "block_length": 10,
     "bootstrap_samples": 5000,
@@ -36,8 +35,8 @@
     "root": "artifacts/prospective_forward_candidate_v1/sha256",
     "storage_class": "git_content_addressed"
   },
-  "executed_command": "python scripts/freeze_prospective_forward_protocol_v1.py --config configs/prospective_forward_confirmation_v1.yaml",
-  "executed_scope": "prospective_protocol_and_temporal_boundary_freeze",
+  "executed_command": "python scripts/harden_prospective_forward_candidate_v1.py --config configs/prospective_forward_confirmation_v1.yaml",
+  "executed_scope": "candidate_rebind_and_prospective_time_hardening",
   "experiment_class": "prospective_research_protocol",
   "governance": {
     "authoritative_historical_execution_ready": false,
@@ -47,7 +46,7 @@
     "retrospective_extension_prospective_eligible": false,
     "unbiased_historical_estimate": false
   },
-  "output_dir": "E:/qlib_prj/qlib_baseline/outputs/prospective_forward_protocol_v1/current",
+  "output_dir": "E:/qlib_prj/qlib_baseline/outputs/prospective_forward_hardening_v1/current",
   "parents": {
     "factor_weights": "outputs/research_selection_lineage_closure_v1/current/factor_weights_by_split.csv",
     "feature_order": "outputs/research_model_protocol_v1_1/current/feature_order_manifest.csv",

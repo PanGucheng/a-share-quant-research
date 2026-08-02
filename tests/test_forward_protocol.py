@@ -20,6 +20,13 @@ def test_forward_protocol_is_fail_closed() -> None:
     )
     assert config["governance"]["production_model_selected"] is False
     assert config["governance"]["forward_data_waiting"] is True
+    assert "labels_runtime" not in config["parents"]
+    assert config["prediction_freeze"]["label_start_cutoff"] == (
+        "next_trading_day_09_25"
+    )
+    assert config["durable_storage"]["storage_class"] == (
+        "git_content_addressed"
+    )
 
 
 def test_forward_protocol_rejects_search_or_overclaim() -> None:
