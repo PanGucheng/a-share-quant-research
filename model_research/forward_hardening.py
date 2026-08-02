@@ -131,7 +131,7 @@ def verify_durable_candidate(
 
 def prediction_freeze_schema() -> dict[str, Any]:
     return {
-        "schema_version": 1,
+        "schema_version": 2,
         "required_fields": [
             "decision_date",
             "raw_snapshot_first_seen_at",
@@ -139,9 +139,11 @@ def prediction_freeze_schema() -> dict[str, Any]:
             "prediction_created_at",
             "prediction_sha256",
             "prediction_commit_sha",
+            "prediction_repo_path",
             "prediction_commit_timestamp",
             "label_start_date",
             "label_start_cutoff",
+            "trading_calendar_sha256",
             "label_mature_date",
             "label_read_count_at_prediction",
             "candidate_freeze_id",
@@ -156,6 +158,12 @@ def prediction_freeze_schema() -> dict[str, Any]:
             "feature_snapshot_not_before_raw_first_seen": True,
             "prediction_created_before_label_start_cutoff": True,
             "prediction_commit_before_label_start_cutoff": True,
+            "label_start_derived_from_authoritative_calendar": True,
+            "label_start_cutoff_program_generated_at_09_25_asia_shanghai": True,
+            "prediction_commit_exists": True,
+            "prediction_blob_loaded_from_commit_tree": True,
+            "prediction_blob_sha256_matches_receipt": True,
+            "prediction_commit_timestamp_loaded_from_git": True,
             "label_read_count_at_prediction": 0,
             "prediction_payload_immutable": True,
             "prediction_commit_receipt_immutable": True,
