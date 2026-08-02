@@ -7,4 +7,4 @@ configs/qlib_exchange_semantics_669_v1.yaml text eol=lf
 
 # Frozen model binaries/config payloads are byte-addressed and must never
 # receive checkout-time newline conversion.
-artifacts/prospective_forward_candidate_v1/** -text
+artifacts/prospective_forward_candidate_v1/** binary
