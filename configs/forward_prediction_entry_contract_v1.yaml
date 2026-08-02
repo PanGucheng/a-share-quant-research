@@ -1,0 +1,27 @@
+schema_version: 1
+contract_id: forward_prediction_entry_contract_v1
+
+calendar:
+  authority: admitted_raw_snapshot_manifest
+  decision_date_must_exist: true
+  label_start_date: program_derived_next_trading_day
+  label_start_cutoff: program_derived_09_25_asia_shanghai
+  receipt_values_are_non_authoritative: true
+  canonical_calendar_sha256_required: true
+
+git_binding:
+  prediction_repo_path_required: true
+  commit_must_exist: true
+  commit_sha_length: 40
+  prediction_tree_entry_type: regular_file_blob
+  prediction_blob_sha256_must_match: true
+  commit_timestamp_source: git_committer_metadata
+  commit_timestamp_must_precede_derived_cutoff: true
+
+governance:
+  generate_forward_prediction: false
+  read_forward_label: false
+  change_candidate_freeze: false
+  forward_data_waiting: true
+  production_model_selected: false
+  live_trading_ready: false

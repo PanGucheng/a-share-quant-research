@@ -346,3 +346,24 @@ artifacts/prospective_forward_candidate_v1/sha256/
 
 PR #20A.1 到此完成。PR #20B 继续停止，等待严格晚于新冻结边界的真实新交易
 日和 first-seen snapshot。
+
+## 12. Forward prediction 入口密码学合同（2026-08-02）
+
+在首份正式 prediction 生成前，入口合同进一步 fail-closed：
+
+1. `decision_date` 必须存在于调用方从 admitted raw snapshot manifest 解析出的
+   权威交易日历；
+2. 程序在该日历中定位紧邻的下一交易日，生成 `label_start_date`；
+3. 程序固定生成该日 `09:25:00 Asia/Shanghai` 的
+   `label_start_cutoff`，receipt 只能复述结果；
+4. receipt 中的日期、cutoff 或 canonical calendar SHA256 与推导结果任一不同即
+   阻断；
+5. `prediction_commit_sha` 必须解析为精确 Git commit；
+6. `prediction_repo_path` 必须是安全、规范的仓库相对路径，且 commit tree 中该
+   路径必须是普通 file blob；
+7. 从 Git blob 原始字节重新计算 SHA256，并与 `prediction_sha256` 完全一致；
+8. committer timestamp 只从 Git `%cI` 元数据读取，receipt 记录值必须完全一致，
+   且真实时间严格早于程序推导的 cutoff。
+
+上述实现只完成 prediction 入口能力，不生成 prediction、不读取 forward label，
+也不改变 2026-08-02 的 candidate freeze。PR #20B 评价继续停止等待新数据。
