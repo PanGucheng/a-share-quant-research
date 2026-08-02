@@ -4,7 +4,7 @@ import json
 import shutil
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any
+from typing import Any, Mapping
 from zoneinfo import ZoneInfo
 
 import pandas as pd
@@ -91,6 +91,42 @@ def _copy_content_addressed(
     if file_sha256(target) != expected_sha256:
         raise ValueError(f"durable copy hash mismatch: {target}")
     return target
+
+
+def _resolve_repo_uri(uri: object) -> Path:
+    value = str(uri)
+    if not value.startswith("repo://"):
+        raise ValueError("durable candidate URI must use repo://")
+    path = (PROJECT_ROOT / value.removeprefix("repo://")).resolve()
+    if PROJECT_ROOT.resolve() not in path.parents:
+        raise ValueError("durable candidate URI escapes repository")
+    return path
+
+
+def verify_durable_candidate(
+    freeze_or_path: Mapping[str, Any] | str | Path,
+) -> tuple[Path, Path]:
+    """Resolve and hash-check durable model assets before every prediction."""
+
+    if isinstance(freeze_or_path, Mapping):
+        freeze = dict(freeze_or_path)
+    else:
+        freeze = json.loads(
+            resolve(freeze_or_path).read_text(encoding="utf-8")
+        )
+    model = _resolve_repo_uri(freeze["model_storage_uri"])
+    preprocessing = _resolve_repo_uri(freeze["preprocessing_storage_uri"])
+    for path, hash_field, size_field in (
+        (model, "model_binary_sha256", "model_size_bytes"),
+        (preprocessing, "preprocessing_sha256", "preprocessing_size_bytes"),
+    ):
+        if not path.is_file():
+            raise FileNotFoundError(f"durable candidate asset missing: {path}")
+        if file_sha256(path) != str(freeze[hash_field]):
+            raise ValueError(f"durable candidate asset hash mismatch: {path}")
+        if path.stat().st_size != int(freeze[size_field]):
+            raise ValueError(f"durable candidate asset size mismatch: {path}")
+    return model, preprocessing
 
 
 def prediction_freeze_schema() -> dict[str, Any]:
@@ -252,6 +288,7 @@ def harden_forward_candidate(
     new_freeze["forward_candidate_freeze_id"] = (
         "forward-candidate-freeze:" + canonical_hash(new_freeze)
     )
+    verify_durable_candidate(new_freeze)
     durability = {
         "schema_version": 1,
         "storage_class": storage["storage_class"],
@@ -316,6 +353,12 @@ def harden_forward_candidate(
                 bool(durability["backup_verified"]),
                 durability["backup_verified"],
                 True,
+            ),
+            _contract(
+                "durable_assets_reload_hash_valid",
+                all(path.is_file() for path in verify_durable_candidate(new_freeze)),
+                [path.as_posix() for path in verify_durable_candidate(new_freeze)],
+                "two hash-valid durable assets",
             ),
             _contract(
                 "candidate_rebound_without_retraining",

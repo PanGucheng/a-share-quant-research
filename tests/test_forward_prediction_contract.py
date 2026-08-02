@@ -4,7 +4,10 @@ import copy
 
 import pytest
 
-from model_research.forward_hardening import prediction_freeze_schema
+from model_research.forward_hardening import (
+    prediction_freeze_schema,
+    verify_durable_candidate,
+)
 from model_research.forward_prediction_contract import (
     validate_forward_admission,
     validate_prediction_freeze_receipt,
@@ -109,3 +112,12 @@ def test_prediction_freeze_schema_requires_payload_and_commit_receipts() -> None
     assert "prediction_commit_sha" in schema["required_fields"]
     assert schema["contracts"]["prediction_created_before_label_start_cutoff"]
     assert schema["contracts"]["prediction_commit_before_label_start_cutoff"]
+
+
+def test_committed_candidate_assets_are_hash_valid() -> None:
+    model, preprocessing = verify_durable_candidate(
+        "outputs/prospective_forward_hardening_v1/current/"
+        "forward_candidate_freeze.json"
+    )
+    assert model.stat().st_size == 688235
+    assert preprocessing.stat().st_size == 5639
