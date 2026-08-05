@@ -44,7 +44,18 @@ def load_prediction_entry_contract(path: str | Path) -> dict[str, Any]:
     ):
         raise ValueError("forward prediction entry contract is not fail-closed")
     if (
-        governance["generate_forward_prediction"]
+        not governance["forward_pipeline_code_ready"]
+        or not governance["single_day_feature_pipeline_ready"]
+        or not governance["single_day_prediction_pipeline_ready"]
+        or not governance["label_maturity_tracker_ready"]
+        or not governance["duplicate_prediction_protection_ready"]
+        or not governance["frozen_model_hash_valid"]
+        or not governance["frozen_feature_order_valid"]
+        or int(governance["prediction_stage_label_read_count"]) != 0
+        or int(governance["official_forward_prediction_count"]) != 0
+        or governance["primary_confirmation_complete"]
+        or not governance["official_prediction_requires_legal_admission"]
+        or governance["dry_run_prospective_evidence_eligible"]
         or governance["read_forward_label"]
         or governance["change_candidate_freeze"]
         or not governance["forward_data_waiting"]

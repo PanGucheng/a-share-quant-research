@@ -44,6 +44,8 @@ E:/qlib_prj/qlib_data/cn_data_community_20260609_derived
 
 ## Current Factor Research Status
 
+> **2026-08-05 PR #20B Prospective Forward Pipeline MVP：**实现 personal-research-grade 的本地单日入口：严格校验 OHLCVA 与既有 Matrix-v4-compatible 52 因子快照，按冻结顺序加载 Git 内容寻址 preprocessing/LightGBM 并生成 prediction；预测阶段没有 label 输入且读取计数为 0。正式发布采用“两步式”Git blob finalize，复用程序推导的下一交易日 09:25 cutoff 和真实 commit/tree/blob/timestamp 校验。同日正式预测不可覆盖，`--force-dev` 仅限非证据 dry-run。独立标签命令只在 t+21 成熟后读取标签并维护 daily Rank IC、Pearson IC、coverage 与一个 `outputs/forward/status.json`。当前数据仍止于 2026-06-09，因此只验证 dry-run，`forward_data_waiting=true`、`official_forward_prediction_count=0`、primary confirmation/production/live 均 false；没有重训、调参或更换候选。
+
 > **2026-08-02 Forward prediction 入口加固：**`label_start_date` 现只由 admitted raw snapshot 的权威交易日历定位下一交易日，cutoff 由程序固定生成下一交易日 `09:25 Asia/Shanghai`；receipt 的日期、cutoff 和日历哈希只能复述推导结果。commit 必须真实存在，预测路径必须是 commit tree 中的普通 file blob，SHA256 从 blob 原始字节重算，committer timestamp 从 Git `%cI` 读取并要求严格早于 cutoff。此项只建立入口合同，未生成 prediction、未读 forward label，PR #20B 仍停止。
 
 > **2026-08-02 PR #20A.1 Prospective hardening 完成：**审阅确认旧规则可能把“冻结后下载的旧日期”误作 forward，现已改为 `decision_date > candidate_freeze_effective_date_asia_shanghai` 且 `raw_snapshot_first_seen_at > candidate_freeze_effective_time_utc`；有效边界为 `2026-08-02T14:33:38.772344Z` / 上海日期 2026-08-02，故最早可能日期为 2026-08-03，且 first-seen 仍须越过精确时间戳。每份 prediction payload 与 commit receipt 都必须在下一交易日 09:25 前冻结且 label read=0。feature order 改为 V1.1，V1.1 protocol 成为 direct parent；Labels runtime 只经 manifest 解析并校验 SHA `4acdfd...`。模型未重训，原 SHA `c89972d...` 与预处理 SHA `679765a...` 已进入 Git 内容寻址目录并按 hash/size 复验。`forward_data_waiting=true`、production/live/forward confirmation 均 false；PR #20B 继续停止等待严格新数据。下方 PR #20A 的“晚于 2026-06-09”规则已废止，仅保留历史回执。

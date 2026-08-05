@@ -19,7 +19,18 @@ git_binding:
   commit_timestamp_must_precede_derived_cutoff: true
 
 governance:
-  generate_forward_prediction: false
+  forward_pipeline_code_ready: true
+  single_day_feature_pipeline_ready: true
+  single_day_prediction_pipeline_ready: true
+  label_maturity_tracker_ready: true
+  duplicate_prediction_protection_ready: true
+  frozen_model_hash_valid: true
+  frozen_feature_order_valid: true
+  prediction_stage_label_read_count: 0
+  official_forward_prediction_count: 0
+  primary_confirmation_complete: false
+  official_prediction_requires_legal_admission: true
+  dry_run_prospective_evidence_eligible: false
   read_forward_label: false
   change_candidate_freeze: false
   forward_data_waiting: true

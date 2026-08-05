@@ -367,3 +367,104 @@ PR #20A.1 到此完成。PR #20B 继续停止，等待严格晚于新冻结边�
 
 上述实现只完成 prediction 入口能力，不生成 prediction、不读取 forward label，
 也不改变 2026-08-02 的 candidate freeze。PR #20B 评价继续停止等待新数据。
+
+## 13. PR #20B MVP 实施方案（personal research grade）
+
+### 13.1 定位与边界
+
+本阶段按 `personal_research_grade` 实现，重点防止无意的数据泄漏、模型漂移和
+同日预测覆盖；它不是监管合规、机构级资管或实盘授权系统，也不增加外部时间戳、
+数字签名、数据库、工作流引擎或多层 readiness artifact。
+
+PR #20B 负责合法单日数据接入、冻结特征投影、每日预测、标签成熟跟踪、逐日
+Rank IC/coverage 等 operational metrics 和一个运行状态文件。PR #20C 仍独占至少
+60 个成熟日期后的 primary confirmation、block bootstrap 和 research-only 正式报告。
+PR #20B 的逐日指标不得提前解释为 primary confirmation。
+
+### 13.2 MVP 主流程
+
+```text
+合法新交易日的本地 raw bundle
+→ 保存并校验 raw schema、first-seen 与 SHA256
+→ 导入 Matrix-v4/factor-registry 既有链生成的当日 52 因子快照
+→ 校验 52 个名称、数量、顺序及 date/instrument keys
+→ 从 Git 内容寻址目录复验并加载冻结 preprocessing 与 LightGBM
+→ 生成 prediction（此阶段 label read count 固定为 0）
+→ 原子保存 prediction 与 pending receipt
+→ 将 prediction blob 提交 Git 后，反向校验 commit/tree/blob/timestamp
+→ 完成 receipt，状态进入 pending_label
+→ t+21 成熟后由独立命令读取标签并写逐日指标
+→ 更新 outputs/forward/status.json
+```
+
+第一版采用明确的本地文件导入模式，不接入新的行情供应商。raw 输入固定为单日
+OHLCVA schema；feature 输入必须是仓库既有 Matrix v4、factor registry 与 feature
+projection 语义计算出的单日快照。MVP 只负责严格导入、精确投影和模型推理，不复制
+Alpha158/Alpha360/TA/Alpha101/basic 的因子实现。未来自动增量数据源属于后续小型
+扩展，不是完成本 PR 的前提。
+
+### 13.3 目录与命令
+
+```text
+data/forward/raw/                    # 本地输入，不提交
+data/forward/features/               # 本地 52 因子快照，不提交
+data/forward/labels/                 # 成熟后本地输入，不提交
+outputs/forward/predictions/<date>/  # prediction + 简单 receipt
+outputs/forward/metrics/             # daily metrics
+outputs/forward/status.json          # 唯一累计状态文件
+```
+
+```powershell
+python scripts/run_forward_prediction_v1.py --date YYYY-MM-DD `
+  --calendar-file <calendar.txt> --raw-file <raw.csv> `
+  --feature-file <features.csv> --first-seen-at <ISO-8601>
+
+python scripts/run_forward_prediction_v1.py --date YYYY-MM-DD `
+  --calendar-file <calendar.txt> --finalize-commit <40-char Git SHA>
+
+python scripts/update_forward_labels_v1.py --as-of-date YYYY-MM-DD `
+  --calendar-file <calendar.txt> --label-dir data/forward/labels
+
+python scripts/show_forward_status_v1.py
+```
+
+正式 prediction 分两步完成：第一步在 cutoff 前生成不可变 CSV；第二步提交该 CSV
+后用真实 Git commit 完成 receipt。程序不信任 receipt 自报时间，而是从交易日历
+生成下一交易日 09:25 `Asia/Shanghai` cutoff，并从 commit tree 读取 blob 重算
+SHA256、从 Git 元数据读取 committer timestamp。
+
+### 13.4 Dry-run、重复保护与标签成熟
+
+`--dry-run` 可使用历史 fixture 验证 frozen 52-factor → preprocessing → LightGBM
+链，但固定 `evidence_eligible=false`，写入独立 `dry_run/`，不增加正式 prediction
+计数。`--force-dev` 只允许覆盖 dry-run；正式目录同日存在即 fail closed。
+
+预测命令不接受 label 路径。标签更新命令只扫描已完成 commit receipt 的
+`pending_label_dates`；交易日历尚未到 `label_mature_date` 时不打开标签文件。
+成熟后仅计算 daily Rank IC、Pearson IC、coverage、valid pair count 和正 IC 标记，
+并继续记录 `primary_confirmation_complete=false`。
+
+### 13.5 完成状态与当前停止条件
+
+代码与测试完成时允许：
+
+```text
+forward_pipeline_code_ready              = true
+single_day_feature_pipeline_ready        = true
+single_day_prediction_pipeline_ready     = true
+label_maturity_tracker_ready             = true
+duplicate_prediction_protection_ready    = true
+frozen_model_hash_valid                  = true
+frozen_feature_order_valid               = true
+prediction_stage_label_read_count        = 0
+forward_data_waiting                     = true
+official_forward_prediction_count        = 0
+primary_confirmation_complete            = false
+production_model_selected                = false
+live_trading_ready                       = false
+```
+
+截至本方案实施日，仓库数据仍止于 2026-06-09，没有满足 2026-08-02 精确冻结边界
+的合法新交易日。故只允许运行明确标记的历史 dry-run；不得伪造、回填或提交正式
+forward prediction，也不得重训、调参、更换模型、改变 52 因子或根据 forward
+表现修改候选。

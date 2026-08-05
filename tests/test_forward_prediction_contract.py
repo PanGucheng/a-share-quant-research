@@ -122,7 +122,19 @@ def test_prediction_entry_contract_is_fail_closed() -> None:
     assert contract["calendar"]["receipt_values_are_non_authoritative"]
     assert contract["git_binding"]["prediction_blob_sha256_must_match"]
     assert contract["governance"]["forward_data_waiting"]
-    assert contract["governance"]["generate_forward_prediction"] is False
+    assert contract["governance"]["forward_pipeline_code_ready"] is True
+    assert contract["governance"]["single_day_feature_pipeline_ready"] is True
+    assert contract["governance"]["single_day_prediction_pipeline_ready"] is True
+    assert contract["governance"]["label_maturity_tracker_ready"] is True
+    assert contract["governance"]["official_forward_prediction_count"] == 0
+    assert contract["governance"]["primary_confirmation_complete"] is False
+    assert (
+        contract["governance"]["official_prediction_requires_legal_admission"]
+        is True
+    )
+    assert (
+        contract["governance"]["dry_run_prospective_evidence_eligible"] is False
+    )
 
 
 def test_calendar_rejects_non_trading_decision_date() -> None:
