@@ -88,6 +88,8 @@ jobs:
           python scripts/validate_historical_instrument_state_canary_v2.py
           python scripts/validate_research_model_protocol_v1.py
           python scripts/validate_research_model_protocol_v1_1.py
+          python scripts/validate_prospective_forward_candidate_v1.py
+          python scripts/validate_prospective_forward_hardening_v1.py
 
   qlib-exchange-runtime:
     needs: change-classifier

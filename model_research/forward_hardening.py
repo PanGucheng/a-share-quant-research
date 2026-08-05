@@ -93,18 +93,21 @@ def _copy_content_addressed(
     return target
 
 
-def _resolve_repo_uri(uri: object) -> Path:
+def _resolve_repo_uri(uri: object, *, repository_root: Path = PROJECT_ROOT) -> Path:
     value = str(uri)
     if not value.startswith("repo://"):
         raise ValueError("durable candidate URI must use repo://")
-    path = (PROJECT_ROOT / value.removeprefix("repo://")).resolve()
-    if PROJECT_ROOT.resolve() not in path.parents:
+    root = repository_root.resolve()
+    path = (root / value.removeprefix("repo://")).resolve()
+    if root not in path.parents:
         raise ValueError("durable candidate URI escapes repository")
     return path
 
 
 def verify_durable_candidate(
     freeze_or_path: Mapping[str, Any] | str | Path,
+    *,
+    repository_root: str | Path = PROJECT_ROOT,
 ) -> tuple[Path, Path]:
     """Resolve and hash-check durable model assets before every prediction."""
 
@@ -114,8 +117,13 @@ def verify_durable_candidate(
         freeze = json.loads(
             resolve(freeze_or_path).read_text(encoding="utf-8")
         )
-    model = _resolve_repo_uri(freeze["model_storage_uri"])
-    preprocessing = _resolve_repo_uri(freeze["preprocessing_storage_uri"])
+    root = Path(repository_root)
+    model = _resolve_repo_uri(
+        freeze["model_storage_uri"], repository_root=root
+    )
+    preprocessing = _resolve_repo_uri(
+        freeze["preprocessing_storage_uri"], repository_root=root
+    )
     for path, hash_field, size_field in (
         (model, "model_binary_sha256", "model_size_bytes"),
         (preprocessing, "preprocessing_sha256", "preprocessing_size_bytes"),
