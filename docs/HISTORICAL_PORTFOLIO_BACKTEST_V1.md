@@ -85,8 +85,9 @@ coverage/common-period 起点。组合自身全区间净收益仍按完整 split
 ```text
 historical_portfolio_backtest_complete = true
 portfolio_candidate_scan_complete = true
-portfolio_rule_selected = true
+portfolio_rule_selected = P01
 portfolio_holdout_evaluated = true
+portfolio_holdout_supported_relative_advantage = false
 historical_execution_approximate = true
 
 model_retrained = false
@@ -111,6 +112,10 @@ P01 的 development 平均净收益为 29.10%、平均年化超额为 61.70%，�
 7.01%。单次 split_003 holdout 的净收益为 3.57%，但相对 SH000985 的年化超额
 为 -30.24%、信息比率 -1.86、最大回撤 -4.33%，成本拖累 5.80%。因此 holdout
 没有支持开发期相对优势；结果已原样保留，没有改规则或增加候选。
+即使把记录成本近似加回，holdout gross return 约 9.37%，仍低于基准 19.19%；
+成本不是相对失利的唯一原因。实际持仓的 stale fallback 日期数为 0，因此首要后续
+研究方向是市场状态稳定性与风格暴露，第二方向才是换手和成本；历史可交易性数据
+继续作为可信度限制保留，但当前没有证据表明它是 holdout 相对失利的主要原因。
 
 最终 artifact 为
 `historical_portfolio_backtest_v1:e98873a6da06f0e8e9b9644e22073823c0b92e7651e4dc21ddeaf29d4d8ab65e`，

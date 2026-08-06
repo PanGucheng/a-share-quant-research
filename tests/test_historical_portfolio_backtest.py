@@ -236,6 +236,28 @@ def test_holdout_rows_are_rejected_from_candidate_selection() -> None:
         backtest.select_portfolio_rule(contaminated)
 
 
+def test_holdout_relative_advantage_requires_positive_holdout_excess() -> None:
+    performance = pd.DataFrame(
+        [
+            {"portfolio_id": "P01", "outer_split_id": "split_001", "annualized_excess_return": 0.8},
+            {"portfolio_id": "P01", "outer_split_id": "split_002", "annualized_excess_return": 0.4},
+            {"portfolio_id": "P01", "outer_split_id": "split_003", "annualized_excess_return": -0.3},
+        ]
+    )
+    assert not backtest.holdout_supported_relative_advantage(
+        performance, {"selected_portfolio_id": "P01"}
+    )
+    contract = backtest.completion_contract(
+        performance, {"selected_portfolio_id": "P01"}
+    )
+    row = contract.loc[
+        contract["check_name"].eq(
+            "portfolio_holdout_supported_relative_advantage"
+        )
+    ].iloc[0]
+    assert row["observed_value"] == False  # noqa: E712
+
+
 def test_each_scenario_keeps_independent_initial_cash() -> None:
     development = _development_results()
     development["initial_nav"] = 10_000_000.0

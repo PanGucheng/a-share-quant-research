@@ -12,6 +12,7 @@ if str(PROJECT_ROOT) not in sys.path:
 
 from qlib_integration.historical_portfolio_backtest import (  # noqa: E402
     load_backtest_config,
+    republish_reporting,
     run_development,
     run_holdout,
     run_smoke,
@@ -27,7 +28,7 @@ def main() -> None:
     parser.add_argument(
         "--mode",
         required=True,
-        choices=["smoke", "development", "holdout"],
+        choices=["smoke", "development", "holdout", "report"],
     )
     args = parser.parse_args()
     config = load_backtest_config(args.config)
@@ -35,6 +36,8 @@ def main() -> None:
         result = run_smoke(config)
     elif args.mode == "development":
         result = run_development(config)
+    elif args.mode == "report":
+        result = republish_reporting(config)
     else:
         result = run_holdout(config)
     print(json.dumps(result, ensure_ascii=False, indent=2, default=str))

@@ -843,6 +843,46 @@ def _write_plots(output_dir: Path, performance: pd.DataFrame, daily: pd.DataFram
         plt.close(fig)
 
 
+def holdout_supported_relative_advantage(
+    performance: pd.DataFrame, selection: Mapping[str, Any]
+) -> bool:
+    selected = performance.loc[
+        performance["portfolio_id"].eq(str(selection["selected_portfolio_id"]))
+    ]
+    development = selected.loc[selected["outer_split_id"].isin(DEVELOPMENT_SPLITS)]
+    holdout = selected.loc[selected["outer_split_id"].eq(HOLDOUT_SPLIT)]
+    if len(development) != len(DEVELOPMENT_SPLITS) or len(holdout) != 1:
+        raise ValueError("relative-advantage interpretation requires 2 development and 1 holdout rows")
+    return bool(
+        float(development["annualized_excess_return"].mean()) > 0.0
+        and float(holdout.iloc[0]["annualized_excess_return"]) > 0.0
+    )
+
+
+def completion_contract(
+    performance: pd.DataFrame, selection: Mapping[str, Any]
+) -> pd.DataFrame:
+    development_count = int(
+        performance["outer_split_id"].isin(DEVELOPMENT_SPLITS).sum()
+    )
+    return pd.DataFrame(
+        [
+            {"check_name": "historical_portfolio_backtest_complete", "status": "pass", "observed_value": True, "required_value": True},
+            {"check_name": "portfolio_candidate_scan_complete", "status": "pass", "observed_value": development_count, "required_value": 12},
+            {"check_name": "portfolio_rule_selected", "status": "pass", "observed_value": selection["selected_portfolio_id"], "required_value": "one frozen rule"},
+            {"check_name": "portfolio_holdout_evaluated", "status": "pass", "observed_value": int(performance["outer_split_id"].eq(HOLDOUT_SPLIT).sum()), "required_value": 1},
+            {"check_name": "portfolio_holdout_supported_relative_advantage", "status": "pass", "observed_value": holdout_supported_relative_advantage(performance, selection), "required_value": "reported, not a readiness gate"},
+            {"check_name": "historical_execution_approximate", "status": "pass", "observed_value": True, "required_value": True},
+            {"check_name": "model_retrained", "status": "pass", "observed_value": False, "required_value": False},
+            {"check_name": "predictions_regenerated", "status": "pass", "observed_value": False, "required_value": False},
+            {"check_name": "features_changed", "status": "pass", "observed_value": False, "required_value": False},
+            {"check_name": "unbiased_final_estimate", "status": "pass", "observed_value": False, "required_value": False},
+            {"check_name": "production_model_selected", "status": "pass", "observed_value": False, "required_value": False},
+            {"check_name": "live_trading_ready", "status": "pass", "observed_value": False, "required_value": False},
+        ]
+    )
+
+
 def _write_report(output_dir: Path, performance: pd.DataFrame, selection: Mapping[str, Any]) -> None:
     selected_id = str(selection["selected_portfolio_id"])
     selected = performance.loc[performance["portfolio_id"].eq(selected_id)]
@@ -852,16 +892,18 @@ def _write_report(output_dir: Path, performance: pd.DataFrame, selection: Mappin
     mean_excess = float(development["annualized_excess_return"].mean())
     mean_cost = float(development["cost_drag"].mean())
     high_turnover = float(development["annualized_turnover"].mean()) > 12.0
-    holdout_supports = bool(
-        np.sign(float(holdout["annualized_excess_return"]))
-        == np.sign(mean_excess)
-    )
-    if int(holdout["unknown_tradability_count"]) > 0 or int(holdout["stale_valuation_date_count"]) > 0:
-        priority = "数据与可交易性，其次是组合换手和成本"
+    holdout_supports = holdout_supported_relative_advantage(performance, selection)
+    if not holdout_supports:
+        priority = "模型与组合在不同市场状态下的稳定性和风格暴露"
     elif high_turnover:
-        priority = "组合规则与交易成本"
+        priority = "降低换手与交易成本"
     else:
         priority = "模型与组合规则的前瞻验证"
+    gross_below_benchmark = bool(
+        float(holdout["gross_return_approx"])
+        < float(holdout["benchmark_total_return"])
+    )
+    held_stale_dates = int(holdout["held_stale_valuation_date_count"])
     text = f"""# Historical Portfolio Backtest V1 Report
 
 ## 结论
@@ -870,18 +912,22 @@ def _write_report(output_dir: Path, performance: pd.DataFrame, selection: Mappin
 - 固定开发规则选中 `{selected_id}`（Top K `{int(selection['top_k'])}`，每 `{int(selection['rebalance_interval'])}` 个交易日调仓）。
 - development 平均年化超额收益为 `{mean_excess:.2%}`，平均成本拖累为 `{mean_cost:.2%}`。
 - split_003 holdout 净收益 `{float(holdout['total_return']):.2%}`、年化超额 `{float(holdout['annualized_excess_return']):.2%}`、最大回撤 `{float(holdout['max_drawdown']):.2%}`。
-- holdout 对 development 方向结论的支持：`{str(holdout_supports).lower()}`；无论结果正负，参数均未改变。
-- 高换手是否是主要问题：`{str(high_turnover).lower()}`。当前优先优化方向：{priority}。
+- `portfolio_holdout_supported_relative_advantage={str(holdout_supports).lower()}`；无论结果正负，参数均未改变。
+- holdout gross return approximation 为 `{float(holdout['gross_return_approx']):.2%}`，基准收益为 `{float(holdout['benchmark_total_return']):.2%}`；加回成本后仍低于基准：`{str(gross_below_benchmark).lower()}`。
+- 实际持仓使用 stale valuation fallback 的日期数为 `{held_stale_dates}`。当前首要研究方向：{priority}；第二研究方向：降低换手与交易成本。
 
 ## 分层解释
 
 模型预测质量由既有 prediction-level Rank IC 证明，本 PR 未重训或重建 prediction。
 组合构建只比较预注册的六组等权 Top K/调仓间隔；执行成本包含佣金、印花税和
 10 bps 滑点。gross return 是在同一次执行上把累计实现成本加回 NAV 的近似值，
-不是另跑的零成本组合。
+不是另跑的零成本组合。由于加回成本后仍低于基准，成本不是 holdout 相对失利的
+唯一原因，也不能仅靠降成本推断策略可以跑赢基准。
 
 历史可交易性仍来自代理字段；stale valuation 只用过去最后有效 close 保持研究 NAV
-连续，不恢复交易资格。SH000985 的相对指标只使用双方收益同时有效的 common dates。
+连续，不恢复交易资格。本次 holdout 实际持仓没有使用该 fallback，因此数据与历史
+可交易性继续限制回测可信度，但没有证据表明它是相对失利的主要原因。SH000985 的
+相对指标只使用双方收益同时有效的 common dates。
 因此 `historical_execution_approximate=true`、`unbiased_final_estimate=false`、
 `production_model_selected=false`、`live_trading_ready=false`。
 
@@ -951,21 +997,7 @@ def run_holdout(config: Mapping[str, Any]) -> dict[str, Any]:
     _atomic_csv(output_dir / "daily_returns.csv", pd.concat([returns, holdout_returns], ignore_index=True))
     monthly_all = pd.read_csv(output_dir / "monthly_returns.csv")
     _atomic_csv(output_dir / "monthly_returns.csv", pd.concat([monthly_all, monthly], ignore_index=True))
-    contract = pd.DataFrame(
-        [
-            {"check_name": "historical_portfolio_backtest_complete", "status": "pass", "observed_value": True, "required_value": True},
-            {"check_name": "portfolio_candidate_scan_complete", "status": "pass", "observed_value": len(development), "required_value": 12},
-            {"check_name": "portfolio_rule_selected", "status": "pass", "observed_value": selection["selected_portfolio_id"], "required_value": "one frozen rule"},
-            {"check_name": "portfolio_holdout_evaluated", "status": "pass", "observed_value": 1, "required_value": 1},
-            {"check_name": "historical_execution_approximate", "status": "pass", "observed_value": True, "required_value": True},
-            {"check_name": "model_retrained", "status": "pass", "observed_value": False, "required_value": False},
-            {"check_name": "predictions_regenerated", "status": "pass", "observed_value": False, "required_value": False},
-            {"check_name": "features_changed", "status": "pass", "observed_value": False, "required_value": False},
-            {"check_name": "unbiased_final_estimate", "status": "pass", "observed_value": False, "required_value": False},
-            {"check_name": "production_model_selected", "status": "pass", "observed_value": False, "required_value": False},
-            {"check_name": "live_trading_ready", "status": "pass", "observed_value": False, "required_value": False},
-        ]
-    )
+    contract = completion_contract(performance, selection)
     _atomic_csv(output_dir / "contract_status.csv", contract)
     _write_report(output_dir, performance, selection)
     _write_plots(output_dir, performance, daily_all)
@@ -990,5 +1022,49 @@ def run_holdout(config: Mapping[str, Any]) -> dict[str, Any]:
         "selected_portfolio_id": selection["selected_portfolio_id"],
         "holdout_total_return": summary["total_return"],
         "holdout_information_ratio": summary["information_ratio"],
+        "artifact_id": manifest["artifact_id"],
+    }
+
+
+def republish_reporting(config: Mapping[str, Any]) -> dict[str, Any]:
+    """Rebuild interpretation/contract/manifest without rerunning any scenario."""
+    code_state = capture_code_state(PROJECT_ROOT)
+    if code_state.dirty:
+        raise ValueError("report republish requires a clean committed implementation")
+    output_dir = resolve(config["output_dir"])
+    _validated_manifest(output_dir / "artifact_manifest.json", "Historical portfolio backtest")
+    selection = json.loads(
+        (output_dir / "selected_portfolio_rule.json").read_text(encoding="utf-8")
+    )
+    performance = pd.read_csv(output_dir / "performance_summary.csv")
+    if len(performance) != 13:
+        raise ValueError("report republish requires the frozen 12 development + 1 holdout rows")
+    contract = completion_contract(performance, selection)
+    _atomic_csv(output_dir / "contract_status.csv", contract)
+    _write_report(output_dir, performance, selection)
+    output_files = [
+        output_dir / name for name in COMPACT_FILES if (output_dir / name).is_file()
+    ]
+    manifest = write_stage_artifact_manifest(
+        project_root=PROJECT_ROOT,
+        stage_id=STAGE_ID,
+        config=config,
+        output_dir=output_dir,
+        output_files=output_files,
+        code_state=code_state,
+        input_manifest_paths=[
+            resolve(config["prediction_manifest"]),
+            resolve(config["market_cache_manifest"]),
+        ],
+        start_date=performance["start_date"].min(),
+        end_date=performance["end_date"].max(),
+        artifact_status="pass",
+        contract_paths=[output_dir / "contract_status.csv"],
+    )
+    return {
+        "report_only_republish": True,
+        "portfolio_holdout_supported_relative_advantage": (
+            holdout_supported_relative_advantage(performance, selection)
+        ),
         "artifact_id": manifest["artifact_id"],
     }
