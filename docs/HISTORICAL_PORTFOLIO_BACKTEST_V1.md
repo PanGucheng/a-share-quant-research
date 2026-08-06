@@ -118,6 +118,6 @@ P01 的 development 平均净收益为 29.10%、平均年化超额为 61.70%，�
 继续作为可信度限制保留，但当前没有证据表明它是 holdout 相对失利的主要原因。
 
 最终 artifact 为
-`historical_portfolio_backtest_v1:e98873a6da06f0e8e9b9644e22073823c0b92e7651e4dc21ddeaf29d4d8ab65e`，
+`historical_portfolio_backtest_v1:de86a138a69854bed9a0810465e1a791e63d902fe356c124b6d1c414332f5e93`，
 所有完成合同为 pass。历史可交易性代理仍不完整，故本阶段只形成 approximate、
 post-observation 的个人研究证据，生产选择、无偏最终估计和实盘资格继续为 false。

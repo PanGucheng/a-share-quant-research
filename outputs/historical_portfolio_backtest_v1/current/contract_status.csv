@@ -3,6 +3,7 @@ historical_portfolio_backtest_complete,pass,True,True
 portfolio_candidate_scan_complete,pass,12,12
 portfolio_rule_selected,pass,P01,one frozen rule
 portfolio_holdout_evaluated,pass,1,1
+portfolio_holdout_supported_relative_advantage,pass,False,"reported, not a readiness gate"
 historical_execution_approximate,pass,True,True
 model_retrained,pass,False,False
 predictions_regenerated,pass,False,False
