@@ -1,0 +1,13 @@
+﻿check_name,status,observed_value,required_value
+historical_portfolio_backtest_complete,pass,True,True
+portfolio_candidate_scan_complete,pass,12,12
+portfolio_rule_selected,pass,P01,one frozen rule
+portfolio_holdout_evaluated,pass,1,1
+portfolio_holdout_supported_relative_advantage,pass,False,"reported, not a readiness gate"
+historical_execution_approximate,pass,True,True
+model_retrained,pass,False,False
+predictions_regenerated,pass,False,False
+features_changed,pass,False,False
+unbiased_final_estimate,pass,False,False
+production_model_selected,pass,False,False
+live_trading_ready,pass,False,False

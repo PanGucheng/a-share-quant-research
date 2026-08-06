@@ -1,0 +1,74 @@
+schema_version: 1
+stage_id: historical_portfolio_backtest_v1
+evidence_grade: personal_research_grade
+experiment_class: post_observation_research
+profile_name: full_research
+profile_type: full_research
+research_run_family_id: full_research_factor_669_v1
+
+qlib_provider: ../qlib_data/cn_data_community_20260609_derived
+environment_manifest: outputs/qlib_environment_v1/current/artifact_manifest.json
+prediction_manifest: outputs/research_lightgbm_v1/current/artifact_manifest.json
+prediction_receipt: outputs/research_lightgbm_v1/current/prediction_receipt.csv
+date_assignments: outputs/research_selection_lineage_closure_v1/current/date_assignments.csv
+market_cache_manifest: outputs/market_cache_v3/current/artifact_manifest.json
+market_cache_artifacts: outputs/market_cache_v3/current/cache_artifacts.csv
+
+development_splits: [split_001, split_002]
+holdout_split: split_003
+benchmark: SH000985
+
+initial_cash: 10000000.0
+risk_degree: 0.95
+weighting: equal_weight
+portfolio_candidates:
+  - {portfolio_id: P01, top_k: 50, rebalance_interval: 5}
+  - {portfolio_id: P02, top_k: 100, rebalance_interval: 5}
+  - {portfolio_id: P03, top_k: 200, rebalance_interval: 5}
+  - {portfolio_id: P04, top_k: 50, rebalance_interval: 20}
+  - {portfolio_id: P05, top_k: 100, rebalance_interval: 20}
+  - {portfolio_id: P06, top_k: 200, rebalance_interval: 20}
+
+lot_size: 100
+dynamic_lot_rules: true
+buy_commission_rate: 0.0003
+sell_commission_rate: 0.0003
+sell_tax_rate: 0.001
+minimum_commission: 5.0
+slippage_bps: 10.0
+max_participation_rate: 0.05
+participation_share_tolerance: 1.0
+signal_lag_trading_days: 1
+strict_t_plus_one: true
+limit_threshold_approximation: 0.095
+
+valuation_policy: last_valid_close
+maximum_stale_valuation_days: 20
+research_valuation_fallback: carry_last_valid_close
+tradability_source_complete: false
+historical_execution_approximate: true
+
+selection:
+  primary: development_mean_net_excess_information_ratio
+  tie_break_1: development_mean_net_annualized_excess_return
+  tie_break_2: lower_development_mean_turnover
+  tie_break_3: lower_top_k
+  final_tie_break: portfolio_id
+
+smoke:
+  split_id: split_001
+  trading_days: 20
+  portfolio_id: P02
+  output_dir: tmp/historical_portfolio_backtest_v1_smoke
+
+output_dir: outputs/historical_portfolio_backtest_v1/current
+
+governance:
+  retrain_model: false
+  regenerate_predictions: false
+  change_features: false
+  historical_test_already_observed: true
+  unbiased_final_estimate: false
+  authoritative_historical_execution_ready: false
+  production_model_selected: false
+  live_trading_ready: false

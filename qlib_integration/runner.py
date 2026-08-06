@@ -77,6 +77,7 @@ def run_qlib_execution(signal: pd.DataFrame, market: pd.DataFrame, config: dict[
     strategy = EqualWeightTargetStrategy(
         signal=to_qlib_signal(signals),
         top_k=int(config["top_k"]),
+        rebalance_interval=int(config.get("rebalance_interval", 1)),
         risk_degree=float(config["risk_degree"]),
         common_infra=common,
     )

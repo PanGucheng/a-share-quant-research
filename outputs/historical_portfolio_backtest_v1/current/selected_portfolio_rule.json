@@ -1,0 +1,74 @@
+{
+  "candidate_ranking": [
+    {
+      "development_mean_net_annualized_excess_return": 0.617006462973903,
+      "development_mean_net_excess_information_ratio": 2.2071436561696824,
+      "development_mean_turnover": 0.27618240711542286,
+      "portfolio_id": "P01",
+      "rebalance_interval": 5,
+      "top_k": 50
+    },
+    {
+      "development_mean_net_annualized_excess_return": 0.48527729977542455,
+      "development_mean_net_excess_information_ratio": 2.1221991233515625,
+      "development_mean_turnover": 0.21376516753856248,
+      "portfolio_id": "P03",
+      "rebalance_interval": 5,
+      "top_k": 200
+    },
+    {
+      "development_mean_net_annualized_excess_return": 0.5275550540765853,
+      "development_mean_net_excess_information_ratio": 2.0783547027495546,
+      "development_mean_turnover": 0.24835887521399047,
+      "portfolio_id": "P02",
+      "rebalance_interval": 5,
+      "top_k": 100
+    },
+    {
+      "development_mean_net_annualized_excess_return": 0.604087820156659,
+      "development_mean_net_excess_information_ratio": 1.6451334779953202,
+      "development_mean_turnover": 0.07919952455263991,
+      "portfolio_id": "P04",
+      "rebalance_interval": 20,
+      "top_k": 50
+    },
+    {
+      "development_mean_net_annualized_excess_return": 0.3960377854858306,
+      "development_mean_net_excess_information_ratio": 1.4661200261748908,
+      "development_mean_turnover": 0.06575144420686593,
+      "portfolio_id": "P06",
+      "rebalance_interval": 20,
+      "top_k": 200
+    },
+    {
+      "development_mean_net_annualized_excess_return": 0.4575386671506627,
+      "development_mean_net_excess_information_ratio": 1.3905352375932514,
+      "development_mean_turnover": 0.07296956890513598,
+      "portfolio_id": "P05",
+      "rebalance_interval": 20,
+      "top_k": 100
+    }
+  ],
+  "config_sha256": "def1889cf9ac59263b43454d5697131be3c081dd1566c79c8913d193209ca70a",
+  "development_results_sha256": "e78942aaa3e381357f36fe8deaf538b283cedd8464fdd094092e93298f86e5e4",
+  "development_splits": [
+    "split_001",
+    "split_002"
+  ],
+  "holdout_execution_count_at_selection": 0,
+  "holdout_performance_read_count_at_selection": 0,
+  "holdout_split": "split_003",
+  "live_trading_ready": false,
+  "portfolio_rule_selected": true,
+  "production_model_selected": false,
+  "rebalance_interval": 5,
+  "schema_version": 1,
+  "selected_portfolio_id": "P01",
+  "selection_metrics": {
+    "development_mean_net_annualized_excess_return": 0.617006462973903,
+    "development_mean_net_excess_information_ratio": 2.2071436561696824,
+    "development_mean_turnover": 0.27618240711542286
+  },
+  "selection_status": "frozen_before_holdout",
+  "top_k": 50
+}
