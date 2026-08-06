@@ -4,6 +4,8 @@
 
 ## Current Working Documents
 
+- `HISTORICAL_PORTFOLIO_BACKTEST_V1.md`
+  PR #24 个人研究级历史组合回测：只消费冻结 LightGBM test predictions，固定比较 6 个 Long Only TopK 等权规则；split_001/002 选择参数，split_003 单次 holdout，并复用现有 Qlib Exchange/Executor 与 A 股约束。
 - `PROSPECTIVE_FORWARD_CONFIRMATION_V1_PLAN.md`
   PR #5D 后的当前执行计划及 PR #20A.1 hardening：旧扩展全部隔离；official forward 日期必须晚于候选有效冻结本地日期且 raw first-seen 晚于冻结时间戳；prediction payload 与 commit receipt 必须在 t+1 09:25 前冻结。V1.1/Labels lineage、runtime hash 和内容寻址耐久模型均为 PR #20B 前置门禁。
 - `CI_POLICY.md`
