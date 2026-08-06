@@ -98,3 +98,21 @@ live_trading_ready = false
 ```
 
 阶段成功标准是冻结输入、固定扫描、holdout 和报告完整，而不是收益必须为正。
+
+## 7. 完成回执（2026-08-06）
+
+输入审计、20 日 smoke、12 个 development 场景、开发选择冻结与唯一一次 holdout
+均已完成。286 项仓库测试与 25 个既有 validator 在实现冻结前通过。开发集只使用
+split_001/002，按预注册排序选中 P01（Top 50、5 日调仓）；冻结回执明确记录
+`holdout_execution_count_at_selection=0` 和
+`holdout_performance_read_count_at_selection=0`。
+
+P01 的 development 平均净收益为 29.10%、平均年化超额为 61.70%，平均成本拖累
+7.01%。单次 split_003 holdout 的净收益为 3.57%，但相对 SH000985 的年化超额
+为 -30.24%、信息比率 -1.86、最大回撤 -4.33%，成本拖累 5.80%。因此 holdout
+没有支持开发期相对优势；结果已原样保留，没有改规则或增加候选。
+
+最终 artifact 为
+`historical_portfolio_backtest_v1:e98873a6da06f0e8e9b9644e22073823c0b92e7651e4dc21ddeaf29d4d8ab65e`，
+所有完成合同为 pass。历史可交易性代理仍不完整，故本阶段只形成 approximate、
+post-observation 的个人研究证据，生产选择、无偏最终估计和实盘资格继续为 false。

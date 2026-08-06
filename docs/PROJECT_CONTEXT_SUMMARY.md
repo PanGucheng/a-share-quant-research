@@ -44,6 +44,8 @@ E:/qlib_prj/qlib_data/cn_data_community_20260609_derived
 
 ## Current Factor Research Status
 
+> **2026-08-06 PR #24 Historical Portfolio Backtest V1 完成：**只消费三份冻结 LightGBM historical test prediction，复用既有 Qlib Exchange/SimulatorExecutor、Market Cache V3、t+1、T+1、动态整手、涨跌停/停牌代理、5% 参与率与固定费用；没有重训、重建 prediction 或改变因子。预注册 6 个 TopK/调仓规则只在 split_001/002 比较，选中 P01（Top 50、5 日调仓），选择时 holdout read/execution 均为 0。P01 两段 development 平均净收益 29.10%、平均年化超额 61.70%、平均成本拖累 7.01%；随后唯一一次 split_003 holdout 净收益 3.57%，但相对 SH000985 年化超额 -30.24%、信息比率 -1.86、最大回撤 -4.33%、成本拖累 5.80%，未支持开发期的相对表现。阶段合同全部通过，artifact 为 `historical_portfolio_backtest_v1:e98873a6...`；结论仍是 post-observation / approximate 个人研究证据，`unbiased_final_estimate=false`、`production_model_selected=false`、`live_trading_ready=false`。不得因该回测继续扫描参数；如进入 forward paper portfolio，需另行冻结 P01 规则。
+
 > **2026-08-05 PR #20B Prospective Forward Pipeline MVP：**实现 personal-research-grade 的本地单日入口：严格校验 OHLCVA 与既有 Matrix-v4-compatible 52 因子快照，按冻结顺序加载 Git 内容寻址 preprocessing/LightGBM 并生成 prediction；预测阶段没有 label 输入且读取计数为 0。正式发布采用“两步式”Git blob finalize，复用程序推导的下一交易日 09:25 cutoff 和真实 commit/tree/blob/timestamp 校验。同日正式预测不可覆盖，`--force-dev` 仅限非证据 dry-run。独立标签命令只在 t+21 成熟后读取标签并维护 daily Rank IC、Pearson IC、coverage 与一个 `outputs/forward/status.json`。当前数据仍止于 2026-06-09，因此只验证 dry-run，`forward_data_waiting=true`、`official_forward_prediction_count=0`、primary confirmation/production/live 均 false；没有重训、调参或更换候选。
 
 > **2026-08-02 Forward prediction 入口加固：**`label_start_date` 现只由 admitted raw snapshot 的权威交易日历定位下一交易日，cutoff 由程序固定生成下一交易日 `09:25 Asia/Shanghai`；receipt 的日期、cutoff 和日历哈希只能复述推导结果。commit 必须真实存在，预测路径必须是 commit tree 中的普通 file blob，SHA256 从 blob 原始字节重算，committer timestamp 从 Git `%cI` 读取并要求严格早于 cutoff。此项只建立入口合同，未生成 prediction、未读 forward label，PR #20B 仍停止。
