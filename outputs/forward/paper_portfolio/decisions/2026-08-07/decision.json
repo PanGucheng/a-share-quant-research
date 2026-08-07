@@ -1,0 +1,19 @@
+{
+  "action": "rebalance",
+  "decision_created_at": "2026-08-07T15:02:07.660869+00:00",
+  "decision_date": "2026-08-07",
+  "execution_cutoff": "2026-08-10T09:25:00+08:00",
+  "execution_date": "2026-08-10",
+  "label_read_count": 0,
+  "portfolio_id": "P01",
+  "prediction_commit_sha": "bbc5f82518892f84e3deedd964d98612f48ea5ab",
+  "prediction_row_count": 1845,
+  "prediction_sha256": "84eee5f4c40bf350acce69313d2f5d64d6270deab392a819e127fd52cb6019bb",
+  "schema_version": 1,
+  "selected_count": 50,
+  "status": "pending_execution",
+  "strategy_id": "strategy_v1",
+  "target_source_decision_date": "2026-08-07",
+  "target_stock_weight_sum": 0.9500000000000001,
+  "target_weight_sum": 1.0
+}

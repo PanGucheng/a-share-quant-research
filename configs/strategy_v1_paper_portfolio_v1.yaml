@@ -1,0 +1,27 @@
+schema_version: 1
+stage_id: strategy_v1_paper_portfolio_v1
+historical_config: outputs/historical_portfolio_backtest_v1/current/resolved_config.json
+selected_portfolio_rule: outputs/historical_portfolio_backtest_v1/current/selected_portfolio_rule.json
+candidate_freeze: outputs/prospective_forward_hardening_v1/current/forward_candidate_freeze.json
+prediction_root: outputs/forward/predictions
+daily_update_root: outputs/daily_data_update_v1
+output_root: outputs/forward/paper_portfolio
+trading_rules: configs/a_share_trading_rules_v1.yaml
+
+portfolio_id: P01
+top_k: 50
+rebalance_interval: 5
+weighting: equal_weight
+initial_cash: 10000000.0
+risk_degree: 0.95
+lot_size: 100
+dynamic_lot_rules: true
+buy_commission_rate: 0.0003
+sell_commission_rate: 0.0003
+sell_tax_rate: 0.001
+minimum_commission: 5.0
+slippage_bps: 10.0
+max_participation_rate: 0.05
+signal_lag_trading_days: 1
+strict_t_plus_one: true
+limit_threshold_approximation: 0.095

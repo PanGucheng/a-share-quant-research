@@ -1,0 +1,25 @@
+{
+  "decision_dates": [
+    "2026-08-07"
+  ],
+  "executed_through": null,
+  "first_execution_date": "2026-08-10",
+  "label_read_count": 0,
+  "last_decision_date": "2026-08-07",
+  "last_rebalance_decision_date": "2026-08-07",
+  "live_trading_ready": false,
+  "paper_decision_count": 1,
+  "pending_execution_dates": [
+    "2026-08-10"
+  ],
+  "portfolio_id": "P01",
+  "production_model_selected": false,
+  "rebalance_decision_dates": [
+    "2026-08-07"
+  ],
+  "rebalance_interval": 5,
+  "schema_version": 1,
+  "status": "pending_execution",
+  "strategy_id": "strategy_v1",
+  "top_k": 50
+}
