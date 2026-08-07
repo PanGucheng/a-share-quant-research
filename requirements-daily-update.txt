@@ -1,0 +1,2 @@
+# Lightweight Daily Data Update V1 runtime. Qlib is reused from E:/qlib_prj/qlib_clone.
+baostock==0.9.3

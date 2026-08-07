@@ -233,6 +233,7 @@ outputs/forward/predictions/*/raw.csv
 outputs/forward/predictions/*/features.csv
 outputs/forward/predictions/*/prediction_pending_receipt.json
 outputs/forward/predictions/*/prediction_receipt.json
+outputs/daily_data_update_v1/
 
 # Editor and OS noise
 .vscode/
