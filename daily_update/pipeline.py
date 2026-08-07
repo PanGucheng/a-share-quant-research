@@ -6,6 +6,7 @@ import os
 import shutil
 import subprocess
 import sys
+import time
 import tarfile
 import tempfile
 import urllib.request
@@ -18,7 +19,7 @@ import numpy as np
 import pandas as pd
 
 from data_source_audit.normalizers import normalize_baostock
-from data_source_audit.sources.baostock import collect_one
+from data_source_audit.sources.baostock import collect_daily_adjust_factor, collect_daily_all
 from factor_research.alpha101_source import Alpha101SourceConfig, compute_alpha101_features
 from factor_research.factor_library import BASE_FIELDS, add_basic_factors
 from factor_research.ta_source import TaSourceConfig, compute_ta_features
@@ -164,29 +165,9 @@ def load_frozen_universe(path: Path) -> list[str]:
     return sorted(set(instruments))
 
 
-def query_baostock_day_symbols(target: date) -> list[str]:
-    import baostock as bs
+def collect_baostock_range(start: date, end: date) -> tuple[pd.DataFrame, list[str]]:
+    """Use one official batch request per calendar date, not one request per stock."""
 
-    login = bs.login()
-    if login.error_code != "0":
-        raise RuntimeError(f"BaoStock login failed: {login.error_code}:{login.error_msg}")
-    try:
-        result = bs.query_all_stock(day=target.isoformat())
-        rows = []
-        while result.error_code == "0" and result.next():
-            rows.append(result.get_row_data())
-        if result.error_code != "0":
-            raise RuntimeError(f"BaoStock stock list failed: {result.error_code}:{result.error_msg}")
-        frame = pd.DataFrame(rows, columns=result.fields)
-        if frame.empty:
-            return []
-        symbols = frame["code"].astype(str).str.replace(".", "", regex=False).str.upper()
-        return sorted(set(symbols[symbols.str.startswith(("SH6", "SZ0", "SZ3"))]))
-    finally:
-        bs.logout()
-
-
-def collect_baostock_range(instruments: list[str], start: date, end: date) -> tuple[pd.DataFrame, list[str]]:
     import baostock as bs
 
     login = bs.login()
@@ -195,15 +176,40 @@ def collect_baostock_range(instruments: list[str], start: date, end: date) -> tu
     frames: list[pd.DataFrame] = []
     failures: list[str] = []
     try:
-        for instrument in instruments:
-            frame, status = collect_one(instrument, start.isoformat(), end.isoformat())
+        for current in pd.date_range(start, end, freq="D"):
+            frame, status = collect_daily_all(current.date().isoformat())
             if status != "success":
-                failures.append(f"{instrument}:{status}")
+                failures.append(f"{current.date().isoformat()}:{status}")
             elif not frame.empty:
                 frames.append(frame)
     finally:
         bs.logout()
     return (pd.concat(frames, ignore_index=True) if frames else pd.DataFrame()), failures
+
+
+def collect_baostock_factor_once(
+    target: date, attempts: int = 2, retry_delay_seconds: int = 10
+) -> tuple[pd.DataFrame, str]:
+    """Low-frequency factor probe; tolerate one transient BaoStock socket error."""
+
+    import baostock as bs
+
+    last_status = "unavailable"
+    for attempt in range(max(1, attempts)):
+        login = bs.login()
+        if login.error_code != "0":
+            last_status = f"{login.error_code}:{login.error_msg}"
+        else:
+            try:
+                frame, status = collect_daily_adjust_factor(target.isoformat())
+                if status == "success":
+                    return frame, status
+                last_status = status
+            finally:
+                bs.logout()
+        if attempt + 1 < attempts:
+            time.sleep(retry_delay_seconds)
+    return pd.DataFrame(), last_status
 
 
 def validate_baostock_target(
@@ -222,6 +228,11 @@ def validate_baostock_target(
     ]
     complete = day[required].notna().all(axis=1) & day["is_trading"].astype(bool)
     covered = set(day.loc[complete, "instrument"])
+    trading = set(day.loc[day["is_trading"].astype(bool), "instrument"])
+    required_set = set(expected)
+    missing_fields_while_trading = set(
+        day.loc[day["is_trading"].astype(bool) & ~day[required].notna().all(axis=1), "instrument"]
+    ).intersection(required_set)
     coverage = len(covered.intersection(expected)) / len(expected) if expected else 0.0
     if coverage < min_coverage:
         raise NotReady(
@@ -230,8 +241,11 @@ def validate_baostock_target(
     return {
         "expected_instruments": len(expected),
         "complete_instruments": len(covered.intersection(expected)),
+        "normal_trading_instruments": len(trading.intersection(required_set)),
+        "suspended_or_nontrading_instruments": len(required_set - trading),
+        "missing_ohlcva_while_trading": len(missing_fields_while_trading),
         "coverage": coverage,
-        "ohlcva_complete": True,
+        "ohlcva_complete": not missing_fields_while_trading,
     }
 
 
@@ -501,15 +515,22 @@ def run(config: DailyUpdateConfig) -> dict[str, object]:
             raise NotReady(
                 "BaoStock publication window is not complete; retry after 18:00 Asia/Shanghai"
             )
-        published = query_baostock_day_symbols(config.target_date)
-        if not published:
-            raise NotReady(f"BaoStock has not published {config.target_date.isoformat()} stock list")
-        expected = sorted(set(universe).intersection(published))
+        raw, failures = collect_baostock_range(
+            release.target_trade_date + timedelta(days=1), config.target_date
+        )
+        factor_frame, factor_status = collect_baostock_factor_once(config.target_date)
+        if factor_status != "success":
+            raise NotReady(f"BaoStock adjustment factor is not ready: {factor_status}")
+        target_codes = (
+            raw.loc[raw["date"].astype(str).eq(config.target_date.isoformat()), "code"]
+            .astype(str).str.replace(".", "", regex=False).str.upper().unique()
+        )
+        expected = sorted(set(universe).intersection(target_codes))
         if not expected:
-            raise NotReady("BaoStock target stock list does not overlap the frozen Strategy V1 universe")
-        raw, failures = collect_baostock_range(expected, release.target_trade_date + timedelta(days=1), config.target_date)
+            raise NotReady("BaoStock target daily batch does not overlap the frozen Strategy V1 universe")
         readiness = validate_baostock_target(raw, config.target_date, expected, config.min_coverage)
-        readiness["published_sh_sz_market_instruments"] = len(published)
+        readiness["published_sh_sz_market_instruments"] = len(set(target_codes))
+        readiness["adjustment_factor_event_rows"] = len(factor_frame)
         readiness["request_failures"] = len(failures)
         if failures:
             raise NotReady(f"BaoStock returned {len(failures)} request failures")
@@ -526,6 +547,9 @@ def run(config: DailyUpdateConfig) -> dict[str, object]:
         snapshot = compute_frozen_snapshot(provider, config.target_date, expected, config.warmup_calendar_days)
         readiness = {
             "expected_instruments": len(expected), "complete_instruments": len(expected),
+            "normal_trading_instruments": len(expected),
+            "suspended_or_nontrading_instruments": 0,
+            "missing_ohlcva_while_trading": 0,
             "coverage": 1.0, "ohlcva_complete": True,
         }
 

@@ -25,7 +25,13 @@ provider. An absent list, incomplete OHLCVA,
 request error, or coverage below 95% returns `status=not_ready` with exit code zero;
 it writes no empty daily data or feature snapshot.
 
-For a valid fallback, raw BaoStock fields follow the frozen Data Source Audit V2
+For a valid fallback, the collector uses BaoStock 0.9.3's official
+`query_daily_history_k_AStock(date=...)` once per calendar date, rather than issuing
+one historical request per stock. It also calls `query_daily_adjust_factor(date=...)`
+once to confirm the factor endpoint is available. A transient factor socket error is
+retried only once after ten seconds. The process uses no concurrent BaoStock sessions,
+keeping request volume far below the behavior shown on the official blacklist page.
+Raw fields follow the frozen Data Source Audit V2
 semantics. The previous valid Community close and factor anchor each instrument. For
 each later BaoStock row:
 

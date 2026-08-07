@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from datetime import date, datetime
+from types import SimpleNamespace
 from zoneinfo import ZoneInfo
 
 import numpy as np
@@ -11,6 +12,7 @@ from daily_update.pipeline import (
     NotReady,
     baostock_release_window_open,
     bridge_baostock_to_community,
+    collect_baostock_range,
     compatibility_smoke,
     validate_baostock_target,
 )
@@ -39,6 +41,25 @@ def test_baostock_waits_for_adjustment_factor_window() -> None:
     assert baostock_release_window_open(
         date(2026, 8, 7), datetime(2026, 8, 7, 18, 0, tzinfo=shanghai)
     )
+
+
+def test_baostock_range_uses_one_batch_call_per_date(monkeypatch: pytest.MonkeyPatch) -> None:
+    calls: list[str] = []
+    fake_baostock = SimpleNamespace(
+        login=lambda: SimpleNamespace(error_code="0", error_msg="success"),
+        logout=lambda: SimpleNamespace(error_code="0", error_msg="success"),
+    )
+    monkeypatch.setitem(__import__("sys").modules, "baostock", fake_baostock)
+
+    def fake_daily(day: str) -> tuple[pd.DataFrame, str]:
+        calls.append(day)
+        return _bao_row(day), "success"
+
+    monkeypatch.setattr("daily_update.pipeline.collect_daily_all", fake_daily)
+    frame, failures = collect_baostock_range(date(2026, 8, 6), date(2026, 8, 7))
+    assert calls == ["2026-08-06", "2026-08-07"]
+    assert len(frame) == 2
+    assert failures == []
 
 
 def test_incomplete_coverage_is_safe_not_ready() -> None:
