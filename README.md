@@ -1,10 +1,10 @@
 # Qlib A-Share Research Baseline
 
-This repository is a local, reproducible A-share quant research workspace built around
-[Microsoft Qlib](https://github.com/microsoft/qlib). It started as a validated
-LightGBM + Alpha158 baseline and is now being extended into a beginner-friendly
-research framework with data diagnostics, tradability constraints, factor research,
-and factor screening tools.
+This repository is a personal A-share quantitative research workspace built around
+[Microsoft Qlib](https://github.com/microsoft/qlib). It supports learning and
+practical work across factors, machine learning, portfolios, backtests, and genuine
+forward observation. It is intentionally not an institutional platform, compliance
+system, or production trading service.
 
 Chinese documentation is available in [README.zh-CN.md](README.zh-CN.md).
 
@@ -13,14 +13,19 @@ Chinese documentation is available in [README.zh-CN.md](README.zh-CN.md).
 
 ## Current Direction
 
-> **Current milestone:** logical PR #4.1 completed selection-holdout isolation, but a
-> subsequent implementation audit found accuracy defects in PIT lifecycle handling,
-> cross-sectional factor recomputation, pairwise IC, market-field timing, historical
-> fees, and stale valuation. The 48/46/54 allowlists and transparent scores are now
-> superseded, and their OOS NAV is non-authoritative. Model training remains paused.
+> **Current milestone:** Historical LightGBM research and Historical Portfolio
+> Backtest V1 are complete. The frozen LightGBM + P01 candidate (52 factors, long-only
+> Top50 equal weight, five-day rebalance) performed well in development but materially
+> underperformed its benchmark in the already observed `split_003`. `split_003` is
+> diagnosis-only and cannot be reused for selection or described as a fresh holdout.
 
-The project keeps Qlib as the main data and model backbone while adding independent
-research modules around it:
+The project now follows a research-first priority: correct research logic, no future
+data, and strict train/validation/test isolation come first; interpretability,
+maintainability, automation, and governance follow a personal-project cost/benefit
+test. The detailed direction is in
+[docs/PERSONAL_QUANT_RESEARCH_ROADMAP.md](docs/PERSONAL_QUANT_RESEARCH_ROADMAP.md).
+
+Qlib remains the main data and model backbone, with existing research modules reused:
 
 - **Qlib baseline**: validated official LightGBM + Alpha158 workflow.
 - **Data quality**: checks missing values, price/volume anomalies, lifecycle gaps,
@@ -35,11 +40,21 @@ research modules around it:
 - **Qlib execution layer**: pinned Exchange/Executor adapters, A-share constraints,
   normalized artifacts, exact synthetic reconciliation, and a local-reference run.
 
-The next stages are GitHub PR #6, Research Accuracy Correction V1, followed by PR #7,
-Execution Accuracy Correction V1. The detailed plan is in
-[docs/ACCURACY_CORRECTION_V1_PLAN.md](docs/ACCURACY_CORRECTION_V1_PLAN.md). PR #5A is
-deferred until both `model_research_ready` and `authoritative_oos_execution_ready`
-pass. Ridge, Elastic Net, and LightGBM remain outside the current implementation.
+Existing manifests, validators, lineage, receipts, and frozen artifacts remain for
+compatibility and historical evidence. New research modules do not copy that heavy
+governance by default: ordinary Python, YAML, CSV/JSON, figures, Markdown reports,
+Git, and focused pytest coverage are preferred when sufficient.
+
+The time-sensitive priority is a lightweight Forward Track: Daily Data Update,
+frozen Strategy V1 prediction, and paper portfolio recording should begin genuine
+prospective evidence collection as soon as practical. A prediction not produced at
+the time cannot later be backfilled as independent prospective evidence.
+
+Strategy Diagnostics V1 is a parallel historical research task. It explains the
+observed P01 weakness through performance, IC, exposure, concentration, turnover,
+and cost analysis without changing Strategy V1 or blocking forward collection.
+Historical diagnostics plus genuine forward evidence may later justify a separately
+versioned Strategy V2. Shadow or small-capital work remains a much later direction.
 
 ## Repository Layout
 
@@ -949,16 +964,21 @@ docs/_archive/03_factor_research_history/FACTOR_EXPANSION_V3_5_REFERENCE_SURVEY.
 
 ## Development Notes
 
-- Keep Qlib baseline, data quality, tradability, and factor research decoupled.
-- Do not bypass tradability labels in factor evaluation.
+- Follow `AGENTS.md` and the personal research roadmap for current scope and evidence
+  boundaries.
+- Never use information after decision time; forward prediction must not read labels.
+- Keep train, validation, and test/holdout isolated. `split_003` is observed and may
+  be diagnosed, not reused for tuning or called a new OOS result.
+- Preserve Strategy V1 history when a future Strategy V2 is introduced.
+- Reuse existing modules and keep new research engineering lightweight by default.
 - Prefer compact summary outputs in Git; keep large scratch artifacts under `tmp/`.
-- Add new factors only after the evaluation and screening toolchain is stable.
 - Run full Qlib experiments with normal local permissions on Windows.
 
 ## Key Documents
 
 ```text
 docs/DOC_INDEX.md
+docs/PERSONAL_QUANT_RESEARCH_ROADMAP.md
 docs/PROJECT_CONTEXT_SUMMARY.md
 docs/SELECTION_HOLDOUT_INTEGRITY_AND_MODEL_PLAN_V1.md
 docs/STEP_5_FACTOR_RESEARCH_AND_MODEL_PLAN.md

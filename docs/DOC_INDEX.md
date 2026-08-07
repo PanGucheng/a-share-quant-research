@@ -4,10 +4,16 @@
 
 ## Current Working Documents
 
+- `PERSONAL_QUANT_RESEARCH_ROADMAP.md`
+  当前权威路线：项目定位为个人 A 股量化研究，从 governance-heavy 转向
+  research-first；严格保留无未来数据、时间隔离和已观察 holdout 不得复用调参的
+  科研底线。当前最高优先级是 Daily Data Update、冻结 Strategy V1 prediction 与
+  paper portfolio 组成的 Forward Track；Strategy Diagnostics V1 是不阻塞 forward
+  的并行历史研究。二者后续共同支持 Strategy V2 决策。
 - `HISTORICAL_PORTFOLIO_BACKTEST_V1.md`
   PR #24 个人研究级历史组合回测：只消费冻结 LightGBM test predictions，固定比较 6 个 Long Only TopK 等权规则；split_001/002 选择参数，split_003 单次 holdout，并复用现有 Qlib Exchange/Executor 与 A 股约束。
 - `PROSPECTIVE_FORWARD_CONFIRMATION_V1_PLAN.md`
-  PR #5D 后的当前执行计划及 PR #20A.1 hardening：旧扩展全部隔离；official forward 日期必须晚于候选有效冻结本地日期且 raw first-seen 晚于冻结时间戳；prediction payload 与 commit receipt 必须在 t+1 09:25 前冻结。V1.1/Labels lineage、runtime hash 和内容寻址耐久模型均为 PR #20B 前置门禁。
+  已完成 forward MVP 的历史计划与边界参考：旧扩展全部隔离；official forward 日期必须晚于候选有效冻结本地日期且 raw first-seen 晚于冻结时间戳；prediction payload 与 commit receipt 必须在 t+1 09:25 前冻结。后续 forward 简化以个人研究路线为准，但既有时间边界继续有效。
 - `CI_POLICY.md`
   路径感知 CI 与稳定 `ci-gate` 政策：纯文档只跑快速 diff/link/index/大文件检查，普通研究代码跑完整 pytest/validators，只有 Qlib 执行链、相关依赖或 workflow 变化才安装并运行 Qlib runtime。
 - `RESEARCH_MODEL_PROTOCOL_V1_IMPLEMENTATION.md`
@@ -21,7 +27,7 @@
 - `HISTORICAL_MODEL_COMPARISON_V1_IMPLEMENTATION_PLAN.md`
   逻辑 PR #5D 的五方法 prediction-level 历史科学比较与完成回执：15 组 split-method、1,840 条 daily IC、30 组配对 block-bootstrap 均完成；LightGBM 是预注册汇总指标上的历史科研 leader，但不是生产选择或无偏未来 winner，组合/NAV 比较继续因 `SZ300280` 估值能力缺口 fail-closed。
 - `RESEARCH_GRADE_MULTIFACTOR_MODEL_V1_PLAN.md`
-  当前唯一执行计划。Historical Instrument State Decision B 已冻结，不再继续搜索历史公告；模型阶段按 PR #5A 输入协议、PR #5B Ridge/Elastic Net、PR #5C LightGBM、PR #5D 历史科学比较推进。日期 authority 使用 `date_split_semantics_v1` 与 Selection Lineage Closure，旧 purged manifest 禁止作直接 parent；预处理、solver、环境锁和 LightGBM 固定 checkpoint 已精确冻结。研究模型允许产生 post-observation evidence，但 authoritative execution、无偏最终估计和生产模型选择继续关闭。
+  已完成模型研究阶段的历史计划。其输入与时间隔离边界仍可参考，但不再是当前唯一执行计划；当前方向以个人研究路线为准。
 - `HISTORICAL_INSTRUMENT_STATE_V2_PLAN.md`
   已完成的 source decision 记录。真实 decision/valuation/terminal scope 已冻结，13 条 Tier 0 官方快照与候选边界对账完成；ST 5/10、全天停牌 3/10、盘前可证明率 38.46%，故正式选择 Decision B。除非用户明确提供新源，否则不再继续该方向。
 - `outputs/historical_instrument_state_v2/official_canary/`
@@ -177,22 +183,11 @@ docs/_archive/README.md
 
 ## Current Stage
 
-逻辑 PR #4.1 的 outer-test 隔离继续有效；PR #6 已完成研究准确性修正，PR #7 已完成执行语义修正，PR #8 已完成 lineage/gate closure 与 Data Source Audit V2，V1.2 已完成 Market Cache v3 和执行单位修正。
+Historical LightGBM 与 P01 组合研究已完成，`split_003` 已观察且只允许用于诊断。
+Strategy V1 继续固定为 frozen LightGBM、52 因子、Long Only Top50 等权、5 个交易日
+调仓。
 
-```text
-docs/EXECUTION_UNIT_SEMANTICS_CORRECTION_V1_2_PLAN.md
-docs/DATA_SOURCE_AUDIT_V2.md
-docs/Qlib A股因子研究框架完整升级计划 V1.md
-docs/FACTOR_VALIDATION_ROADMAP_V1.md
-```
-
-Historical Instrument State V2 已以 Decision B 冻结。当前 corrected 45/46/52
-allowlist、weights 与 score 可作为研究输入证据，但必须通过
-`research_selection_lineage_closure_v1` 消费。机器状态仍保持
-`authoritative_oos_execution_ready=false`、`core_model_ready=false` 和
-production hard-stop。
-
-当前阶段正式转入 `RESEARCH_GRADE_MULTIFACTOR_MODEL_V1_PLAN.md`。先实施逻辑
-PR #5A 的 scoped model gate、模型输入、validation 指标和 pre-test freeze；
-只有 `post_observation_research` 实验可以逐步放行，authoritative execution 与
-production model selection 不随模型研究解除。
+当前时间敏感主线是轻量 Forward Track：Daily Data Update、Strategy V1 prediction、
+paper portfolio 与持久记录，目标是尽快开始 genuine prospective evidence collection。
+Strategy Diagnostics V1 并行解释历史失效，不修改 V1，也不阻塞 forward。未来结合
+两类证据再判断是否创建 Strategy V2；生产交易基础设施不在当前范围。
