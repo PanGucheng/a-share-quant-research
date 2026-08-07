@@ -509,6 +509,7 @@ def run(config: DailyUpdateConfig) -> dict[str, object]:
     target_dir = config.output_dir / config.target_date.isoformat()
     source = "community" if release.target_trade_date >= config.target_date else "baostock"
     readiness: dict[str, object] = {}
+    raw_snapshot_first_seen_at: str | None = None
 
     if source == "baostock":
         if not baostock_release_window_open(config.target_date):
@@ -518,6 +519,7 @@ def run(config: DailyUpdateConfig) -> dict[str, object]:
         raw, failures = collect_baostock_range(
             release.target_trade_date + timedelta(days=1), config.target_date
         )
+        raw_snapshot_first_seen_at = datetime.now(timezone.utc).isoformat()
         factor_frame, factor_status = collect_baostock_factor_once(config.target_date)
         if factor_status != "success":
             raise NotReady(f"BaoStock adjustment factor is not ready: {factor_status}")
@@ -543,6 +545,7 @@ def run(config: DailyUpdateConfig) -> dict[str, object]:
     else:
         provider = ensure_community_provider(release, config.cache_dir)
         daily = community_daily(provider, config.target_date, universe)
+        raw_snapshot_first_seen_at = datetime.now(timezone.utc).isoformat()
         expected = sorted(daily["symbol"].unique())
         snapshot = compute_frozen_snapshot(provider, config.target_date, expected, config.warmup_calendar_days)
         readiness = {
@@ -583,11 +586,14 @@ def run(config: DailyUpdateConfig) -> dict[str, object]:
             raise RuntimeError("Factor bridge compatibility smoke found a material difference")
 
     snapshot.to_csv(target_dir / "feature_snapshot.csv", index=False, encoding="utf-8-sig")
+    feature_snapshot_created_at = datetime.now(timezone.utc).isoformat()
     result = {
         "status": "ready", "target_date": config.target_date.isoformat(), "source": source,
         "community_release": release.tag, "community_trade_date": release.target_trade_date.isoformat(),
         "provider_uri": str(provider), "feature_snapshot": str(target_dir / "feature_snapshot.csv"),
         "feature_rows": len(snapshot), "factor_count": len(snapshot.columns) - 2,
+        "raw_snapshot_first_seen_at": raw_snapshot_first_seen_at,
+        "feature_snapshot_created_at": feature_snapshot_created_at,
         "coverage": readiness, "compatibility_smoke": comparison,
     }
     (target_dir / "summary.json").write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

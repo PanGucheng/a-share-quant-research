@@ -53,3 +53,20 @@ the same date compares reconstructed raw OHLCVA, factor, and all 52 final factor
 material difference removes the current snapshot alias, records the comparison, and
 stops. This command does not run prediction, paper portfolio logic, retraining, or
 Strategy V2.
+
+## Forward Prediction Input
+
+The existing Forward pipeline can consume a ready day directly:
+
+```powershell
+python scripts/run_forward_prediction_v1.py `
+  --date 2026-08-07 `
+  --calendar-file <community-provider>/calendars/day_future.txt `
+  --daily-update-dir outputs/daily_data_update_v1/2026-08-07
+```
+
+The adapter selects exactly the feature-snapshot instruments and maps provider
+OHLCVA to the existing Forward raw schema. BaoStock documents suspended daily bars
+as unchanged OHLC with zero volume and amount. When the batch response leaves those
+two fields empty, the adapter records the affected instruments and maps only those
+fields to zero. It does not filter instruments or alter model features.

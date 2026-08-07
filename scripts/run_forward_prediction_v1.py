@@ -15,6 +15,7 @@ from model_research.forward_pipeline import (  # noqa: E402
     record_forward_failure,
     run_single_day_prediction,
 )
+from daily_update.forward_adapter import prepare_forward_inputs  # noqa: E402
 
 
 DEFAULT_FREEZE = (
@@ -32,6 +33,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--feature-file")
     parser.add_argument("--first-seen-at")
     parser.add_argument("--feature-created-at")
+    parser.add_argument("--daily-update-dir")
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument("--force-dev", action="store_true")
     parser.add_argument("--finalize-commit")
@@ -55,6 +57,19 @@ def main() -> None:
             state_path=state_path,
         )
     else:
+        if args.daily_update_dir:
+            if any((args.raw_file, args.feature_file, args.first_seen_at, args.feature_created_at)):
+                raise SystemExit(
+                    "--daily-update-dir cannot be combined with explicit daily input arguments"
+                )
+            adapted = prepare_forward_inputs(
+                args.daily_update_dir,
+                decision_date=args.date,
+            )
+            args.raw_file = adapted["raw_path"]
+            args.feature_file = adapted["feature_path"]
+            args.first_seen_at = adapted["raw_snapshot_first_seen_at"]
+            args.feature_created_at = adapted["feature_snapshot_created_at"]
         missing = [
             name
             for name, value in (
