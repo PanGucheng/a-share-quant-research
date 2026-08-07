@@ -1,18 +1,25 @@
 # Qlib A 股量化研究基线项目
 
-本项目是一个围绕 [Microsoft Qlib](https://github.com/microsoft/qlib) 搭建的
-A 股量化研究工程。它最初用于复现官方 LightGBM + Alpha158 baseline，现在正在扩展为一个适合量化新手逐步学习和实践的研究框架：先保证数据、可交易性和因子评价可靠，再考虑模型、组合和回测。
+本项目是一个围绕 [Microsoft Qlib](https://github.com/microsoft/qlib) 搭建的个人
+A 股量化研究项目，用于学习和实践因子、机器学习、组合、回测与真实 forward
+观察。它不是机构级研究平台、合规审计系统或生产交易基础设施。
 
 > 本项目仅用于研究和学习，不构成投资建议，也不包含实盘交易代码。
 
 ## 当前方向
 
-> **当前里程碑：**逻辑 PR #4.1 已完成选择 holdout 隔离，但后续实现审计发现 PIT
-> lifecycle、横截面因子重算、pairwise IC、市场字段时点、历史费率和陈旧估值仍有
-> 准确性缺陷。当前 48/46/54 allowlist 与透明 score 已被替代，对应 OOS NAV 不具
-> 权威性；模型训练继续暂停。
+> **当前里程碑：**历史 LightGBM 研究和 Historical Portfolio Backtest V1 已完成。
+> 冻结的 LightGBM + P01（52 因子、Long Only Top50 等权、每 5 个交易日调仓）在
+> development 表现较好，但在已经观察的 `split_003` 明显跑输 benchmark。下一实施
+> 阶段是 Strategy Diagnostics V1：只解释失效，不重训、不搜索参数，也不把
+> `split_003` 重新称为独立 holdout。
 
-项目坚持一个原则：不替换 Qlib 主线，而是在 Qlib 外围补齐研究工程能力。
+项目当前转向 research-first：研究逻辑正确、防止未来数据、严格隔离
+train/validation/test 是不可放松的前三优先级；可解释性、维护性、自动化和治理按
+个人项目的成本收益取舍。权威路线见
+[docs/PERSONAL_QUANT_RESEARCH_ROADMAP.md](docs/PERSONAL_QUANT_RESEARCH_ROADMAP.md)。
+
+项目不替换 Qlib 主线，而是复用其外围已有研究能力。
 
 当前主线包括：
 
@@ -23,7 +30,13 @@ A 股量化研究工程。它最初用于复现官方 LightGBM + Alpha158 baseli
 - **因子筛选模块**：把因子研究输出转成可解释的候选看板，再交给后续组合测试。
 - **Qlib execution 层**：固定版本的 Exchange/Executor adapter、A 股约束、标准化 artifact、合成精确对账和本地真实小样本均已落地。
 
-下一优先级依次是 GitHub PR #6 `Research Accuracy Correction V1` 与 PR #7 `Execution Accuracy Correction V1`，详细计划见 [docs/ACCURACY_CORRECTION_V1_PLAN.md](docs/ACCURACY_CORRECTION_V1_PLAN.md)。在 `model_research_ready` 和 `authoritative_oos_execution_ready` 同时通过前，PR #5A 继续暂停；Ridge、Elastic Net、LightGBM 均未开始。
+过去建立的 manifests、validators、lineage、receipts 和 frozen artifacts 继续保留，
+用于历史证据和现有模块兼容；新研究模块默认不复制这套重治理模式。如果普通
+Python、YAML、CSV/JSON、图表、Markdown、Git 与重点 pytest 足够，就采用简单方案。
+
+未来主线依次是 Strategy Diagnostics、Daily Data Update、Forward Research 与 paper
+portfolio、持续积累真实 forward；只有证据指出具体问题后才开发并单独保存 Strategy
+V2。Shadow trading 或小资金验证属于很后期方向。
 
 ## 目录结构
 
@@ -899,17 +912,21 @@ docs/_archive/03_factor_research_history/FACTOR_EXPANSION_V3_5_REFERENCE_SURVEY.
 
 ## 开发约束
 
-- 保持 Qlib baseline、data_quality、tradability、factor_research 解耦。
-- 因子评价不能绕过 tradability 标签。
+- 当前范围和研究证据边界以 `AGENTS.md` 与个人量化研究路线为准。
+- 任何决策不得使用当时不可知的信息；forward prediction 禁止读取 future label。
+- 严格隔离 train、validation 与 test/holdout；`split_003` 已观察，只能诊断，不能
+  用于调参后再称为新 OOS。
+- 未来 Strategy V2 必须保留 Strategy V1 的历史预测、持仓、交易和 NAV。
+- 优先复用现有模块，新研究工程默认保持轻量。
 - 大体积临时输出和参考仓库放在 `tmp/`。
 - Git 中尽量保留紧凑 summary、报告和关键验证结果。
-- 在因子筛选工具链稳定前，不急着训练新模型或做实盘相关模块。
 - Windows 下完整 qrun 使用本地普通权限运行，不要放在受限沙盒里。
 
 ## 关键文档
 
 ```text
 docs/DOC_INDEX.md
+docs/PERSONAL_QUANT_RESEARCH_ROADMAP.md
 docs/PROJECT_CONTEXT_SUMMARY.md
 docs/SELECTION_HOLDOUT_INTEGRITY_AND_MODEL_PLAN_V1.md
 docs/STEP_5_FACTOR_RESEARCH_AND_MODEL_PLAN.md

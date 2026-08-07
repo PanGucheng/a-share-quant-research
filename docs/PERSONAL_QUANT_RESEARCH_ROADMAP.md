@@ -1,0 +1,207 @@
+# Personal A-Share Quant Research Roadmap
+
+## 1. Project Positioning
+
+`qlib-baseline` is a personal A-share quantitative research project. Its purpose is
+to support learning and practical research with Qlib across factors, machine
+learning, portfolios, backtests, and genuine forward observation, with Codex used to
+accelerate implementation.
+
+It is not intended to become an institutional platform, compliance audit system,
+production trading infrastructure, or large-team financial application. Research
+correctness remains strict; engineering complexity must earn its maintenance cost.
+
+## 2. Why the Direction Changed
+
+Earlier stages built extensive manifests, hashes, lineage, receipts, contracts,
+validators, readiness gates, freeze protocols, and CI governance. That work helped
+find real errors and existing modules may still depend on it, so it remains intact.
+
+The project has now reached a point where extending those mechanisms by default has
+diminishing research value. New work therefore changes from governance-driven to
+research-first: solve the concrete quantitative question with the simplest design
+that preserves temporal correctness and evidence boundaries.
+
+Priority order:
+
+1. correct research logic;
+2. no future-data leakage;
+3. no repeated tuning on test/holdout;
+4. interpretable results;
+5. maintainable code;
+6. useful automation;
+7. audit and governance only where justified.
+
+## 3. Scientific Boundaries That Remain Strict
+
+Every factor, feature, universe membership, preprocessing statistic, model input,
+and portfolio decision must use only information available at decision time. Forward
+prediction may not read future labels; evaluation begins only after labels mature.
+
+Training and model/portfolio selection use only their declared development data.
+Test or holdout is a final evaluation, not an iterative tuning surface.
+
+`split_003` has already been observed. It remains useful for diagnosis but is no
+longer an independent test for any change informed by it. In particular it must not
+select TopK, rebalance interval, LightGBM parameters, factors, or a revised portfolio
+and then be relabelled OOS.
+
+Strategy V1 is LightGBM with the frozen 52-factor input, long-only Top50 equal
+weighting, and five-trading-day rebalancing. If later evidence motivates Strategy
+V2, both versions remain separately recorded. V2 begins genuine evidence only after
+its own freeze date; V1 forward prediction and NAV history are never overwritten.
+
+## 4. Lightweight Research Engineering
+
+Existing manifests, validators, lineage records, receipts, and frozen artifacts are
+kept for compatibility and historical evidence. This roadmap does not authorize a
+large deletion or refactor of them.
+
+New research modules should normally use existing inputs and modules, a small YAML
+configuration, ordinary Python functions or small classes, CSV/JSON outputs,
+figures, a clear Markdown report, focused pytest tests, and normal Git history.
+
+Do not add layered lineage graphs, per-CSV hash receipts, prediction Git receipts,
+stage-specific readiness gates, formal contract stacks, or production-style service
+abstractions unless a demonstrated problem requires them. Correctness failures stop
+the run; small non-critical coverage gaps should usually produce warnings and be
+disclosed in the report.
+
+## 5. Current Project State
+
+Historical LightGBM research is complete. The current portfolio candidate is:
+
+```text
+Model:       LightGBM
+Features:    frozen 52-factor set
+Portfolio:   long only, Top 50, equal weight
+Rebalance:   every 5 trading days
+```
+
+P01 performed well across the two development splits but failed to preserve relative
+performance in the observed `split_003` holdout:
+
+```text
+Development mean net return:          about 29.10%
+Development mean annualized excess:   about 61.70%
+split_003 net return:                  about 3.57%
+split_003 benchmark return:            about 19.19%
+split_003 annualized excess:           about -30.24%
+split_003 information ratio:           about -1.86
+```
+
+Approximate gross return in `split_003` was about 9.37%, still below the benchmark,
+so cost alone is not a sufficient explanation. Frozen LightGBM test Rank IC was
+approximately 0.078, 0.143, and 0.052 for `split_001`, `split_002`, and `split_003`.
+The immediate research question is therefore why some prediction signal remained
+while portfolio-relative performance deteriorated.
+
+These are historical, already observed results. They are not a basis for claiming
+an unbiased final estimate or a production-ready strategy.
+
+## 6. Stage 1 — Strategy Diagnostics V1
+
+The next implementation stage explains the performance change; it does not search
+for a better strategy. It should reuse frozen predictions, existing historical
+backtest outputs, market/factor data, universe membership, and reliable existing
+industry/style fields.
+
+The analysis covers:
+
+- daily, monthly, cumulative, and 20/60-day rolling strategy, benchmark, and excess
+  performance;
+- daily, monthly, and 20/60-day rolling Rank IC plus mean, dispersion, ICIR, and
+  positive ratio;
+- point-in-time Size, Momentum, Volatility, and Industry exposure, with Liquidity or
+  Value only if already reliable and easy to reuse;
+- industry and market-cap concentration, top-ten stock contribution, and major
+  positive/negative contributors where existing data supports them;
+- turnover, commission, stamp tax, slippage, gross return, net return, and cost drag.
+
+The report separates prediction quality, market regime, style exposure, portfolio
+concentration, and turnover/cost. A mixed or inconclusive result is valid. Benchmark
+constituent exposure is optional; if reliable weights are unavailable, Top50 versus
+the research universe is the primary comparison and the limitation is stated.
+
+This stage must not call `model.fit`, retrain any model, select factors/features,
+search hyperparameters, scan TopK or rebalance intervals, optimize portfolio
+parameters, or create a new preferred strategy from `split_003`.
+
+The intended lightweight interface is one configuration and one command, with CSVs,
+figures, `report.md`, and at most a simple `run_info.json`. This document update does
+not implement or run the stage.
+
+## 7. Stage 2 — Daily Data Update V1
+
+After diagnostics, build a simple daily incremental update command that discovers
+new trading days, downloads market data, performs essential checks, updates local
+and Qlib data, calculates the frozen 52 features, and writes the day's feature data.
+Checks focus on trading date, instrument count, OHLC gaps, volume anomalies, factor
+count, and feature missing rate. It should not introduce another ingest-governance
+framework.
+
+## 8. Stage 3 — Forward Research V1
+
+Integrate daily data, the frozen 52-factor transform, LightGBM prediction, Strategy
+V1 Top50 paper portfolio accounting, label maturity, and IC/performance evaluation
+into a convenient personal workflow. Simple append-only/versioned CSVs for
+predictions, trades, positions, daily NAV, and evaluation are sufficient. Git plus
+strategy configuration provides the default version record; per-prediction receipt
+infrastructure is not a default requirement.
+
+## 9. Stage 4 — Accumulate Genuine Forward Evidence
+
+Run the frozen strategy without adapting it to short-term results. Generate reports
+at useful horizons such as 60, 120, or 250 trading days without creating a separate
+governance project for every checkpoint.
+
+## 10. Stage 5 — Strategy V2
+
+Develop Strategy V2 only after historical diagnostics or genuine forward evidence
+identifies a concrete problem. Observed history can generate hypotheses, but V2's
+real validation starts after its own freeze date. Preserve Strategy V1 alongside it.
+
+## 11. Stage 6 — Shadow or Small-Capital Validation
+
+Shadow trading and small-capital validation are long-term possibilities, not current
+scope. Broker abstraction, order gateways, distributed monitoring, failover,
+production reconciliation services, and complex kill-switch infrastructure are
+explicitly deferred.
+
+## 12. Long-Term Repository Shape
+
+The repository may gradually converge toward:
+
+```text
+data/
+    acquisition/
+    update/
+    quality/
+research/
+    factors/
+    models/
+    diagnostics/
+backtest/
+    portfolio/
+    qlib_execution/
+forward/
+    prediction/
+    paper_trading/
+    evaluation/
+configs/
+scripts/
+outputs/
+```
+
+This is a direction, not a migration task. Existing modules should not be moved in
+bulk merely to match the diagram.
+
+## 13. Codex Development Principles
+
+Codex should read the relevant current architecture and results before changing it,
+reuse existing modules, and prefer simple, explainable work that answers a research
+question. Before adding a manager, registry, manifest, protocol, validator, gate,
+adapter, or abstraction, ask whether the present research problem truly needs it.
+
+Every handoff should state what was reused, what changed, what was deliberately not
+done, the evidence boundary of any findings, and the next concrete research problem.

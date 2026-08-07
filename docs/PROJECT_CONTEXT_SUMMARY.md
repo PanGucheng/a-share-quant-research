@@ -10,11 +10,28 @@
 E:\qlib_prj\qlib_baseline
 ```
 
-目标：
+定位：
 
-- 面向量化新手，基于 Qlib 和开源项目整合 A 股量化研究框架。
-- 当前重点是因子研究、因子筛选、数据质量和可交易性约束。
-- 不急于训练新模型，不做实盘，不替换 Qlib baseline。
+- 个人 A 股量化研究项目，用于学习并实践 Qlib 因子、机器学习、组合和 forward
+  research；不是机构平台、合规系统或生产交易基础设施。
+- 优先级依次为研究逻辑正确、无未来数据、train/validation/test 隔离、可解释、
+  易维护、自动化、工程治理；前三项严格，后四项按个人项目成本收益取舍。
+- 旧 manifests/validators/lineage/frozen artifacts 保留兼容；新增研究模块默认采用
+  Python + YAML + CSV/JSON + Markdown + focused pytest 的轻量设计。
+
+## Current Direction
+
+权威路线为 `docs/PERSONAL_QUANT_RESEARCH_ROADMAP.md`。当前历史状态是 LightGBM
+研究与 P01 历史组合回测均已完成；P01 固定为 52 因子、Long Only Top50 等权、每
+5 个交易日调仓。`split_003` 已被观察，不能再用于策略选择或声称新的独立 OOS。
+
+下一实施阶段为 Strategy Diagnostics V1，目标是解释为什么预测仍有一定 Rank IC，
+但 P01 在 `split_003` 明显跑输 benchmark。只做 performance、IC、style/industry、
+concentration 和 turnover/cost 诊断，不重训、不筛因子、不扫描 TopK/调仓周期、
+不产生新的 preferred strategy。本次文档调整本身不执行该阶段。
+
+后续顺序为 Daily Data Update V1、Forward Research V1、积累真实 forward、再根据
+证据决定是否创建并独立保留 Strategy V2；shadow/small-capital 属于长期方向。
 
 ## Environment
 
@@ -42,7 +59,7 @@ E:/qlib_prj/qlib_data/cn_data_community_20260609_derived
 - Windows multiprocessing 需要 `freeze_support()`。
 - 临时参考仓库放在 `tmp/reference_repos/`，该目录被 `.gitignore` 忽略。
 
-## Current Factor Research Status
+## Historical Research Status
 
 > **2026-08-06 PR #24 Historical Portfolio Backtest V1 完成：**只消费三份冻结 LightGBM historical test prediction，复用既有 Qlib Exchange/SimulatorExecutor、Market Cache V3、t+1、T+1、动态整手、涨跌停/停牌代理、5% 参与率与固定费用；没有重训、重建 prediction 或改变因子。预注册 6 个 TopK/调仓规则只在 split_001/002 比较，选中 P01（Top 50、5 日调仓），选择时 holdout read/execution 均为 0。P01 两段 development 平均净收益 29.10%、平均年化超额 61.70%、平均成本拖累 7.01%；随后唯一一次 split_003 holdout 净收益 3.57%，但相对 SH000985 年化超额 -30.24%、信息比率 -1.86、最大回撤 -4.33%、成本拖累 5.80%，未支持开发期的相对表现。即使近似加回成本，gross 9.37% 仍低于基准 19.19%；holdout 实际持仓 stale fallback 日期为 0，因此首要研究方向是市场状态稳定性与风格暴露，成本/换手居次，历史可交易性只保留为可信度限制。阶段合同全部通过，artifact 为 `historical_portfolio_backtest_v1:de86a138...`；结论仍是 post-observation / approximate 个人研究证据，`unbiased_final_estimate=false`、`production_model_selected=false`、`live_trading_ready=false`。不得因该回测继续扫描参数；如进入 forward paper portfolio，需另行冻结 P01 规则。
 
@@ -151,6 +168,14 @@ tmp/reference_repos/techfactor
 - 不绕过现有 data_quality/tradability。
 
 ## Next Work
+
+> **2026-08-07 个人研究路线接管主线：**当前下一阶段固定为 Strategy Diagnostics
+> V1。复用冻结 LightGBM predictions、Historical Portfolio Backtest V1 与现有市场/
+> 因子/universe 数据，解释三段 performance、rolling Rank IC、Size/Momentum/
+> Volatility/Industry 暴露、集中度及 turnover/cost。禁止训练、因子选择、参数搜索、
+> TopK/rebalance 扫描或利用已观察 `split_003` 产生新的 preferred strategy。完成后才
+> 进入 Daily Data Update V1，再进入 Forward Research V1。以下旧 `Next Work` 条目
+> 仅保留历史时间线，不再代表当前执行优先级。
 
 > **2026-07-24 Accuracy Correction V1.1 / Data Source Audit V2 接管主线：**实现前核验确认 `split_transparent_score_v2` 为 pass 但 lineage inconsistent，根因是 date-only `purged_walk_forward_v1` 仍携带旧 Universe v1，并与 Matrix v4/Universe v2 一起被 policy、mutation、canary 和 score 的无维度 lineage 聚合传播；下游又未统一检查 parent lineage/critical contracts。`instrument_state_v1` 的 124 个 unknown-board 行全部属于合法创业板代码 `SZ302132`（中航成飞由 300114 变更代码），当前推断器漏掉 302 号段；这导致 critical `lot_rule_resolved=blocked`，但 manifest 仍错误为 pass。当前计划先实施维度化 lineage 语义、通用 fail-closed publication/parent/transitive gate、score 数值无损重发和最小执行链；再做 Community/BaoStock/AKShare 100–200 股 canary。不得进入 PR #5A、训练模型、改变选择链或声称 authoritative historical OOS。
 
