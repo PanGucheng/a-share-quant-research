@@ -1,0 +1,36 @@
+{
+  "candidate_freeze_id": "forward-candidate-freeze:ca1434d4a27ff8ab35e31b5a9d8d4ec136ee773972dbbee37c65cb6517a6be10",
+  "dry_run_dates": [
+    "2026-08-07"
+  ],
+  "duplicate_prediction_protection_ready": true,
+  "evidence_grade": "personal_research_grade",
+  "failed_dates": [],
+  "feature_order_sha256": "544ee7b8f7464d5fb43c3638dfdca7ac25f2cc654b951b4c9b817499bfdd3f71",
+  "forward_data_waiting": false,
+  "forward_pipeline_code_ready": true,
+  "frozen_feature_order_valid": true,
+  "frozen_model_hash_valid": true,
+  "label_maturity_tracker_ready": true,
+  "last_feature_date": "2026-08-07",
+  "last_prediction_date": "2026-08-07",
+  "last_raw_date": "2026-08-07",
+  "live_trading_ready": false,
+  "mature_label_dates": [],
+  "model_sha256": "c89972d27ec610cf7c2598d8ccb1ecd1c227c73d0b5dc51dcf11210b57245ee7",
+  "official_forward_prediction_count": 1,
+  "pending_commit_dates": [],
+  "pending_label_dates": [
+    "2026-08-07"
+  ],
+  "prediction_dates": [
+    "2026-08-07"
+  ],
+  "prediction_stage_label_read_count": 0,
+  "preprocessing_sha256": "679765a462e79a3018db3ab77170a1bc60e3114816aff23b1d8fd38d2a2e37f2",
+  "primary_confirmation_complete": false,
+  "production_model_selected": false,
+  "schema_version": 1,
+  "single_day_feature_pipeline_ready": true,
+  "single_day_prediction_pipeline_ready": true
+}

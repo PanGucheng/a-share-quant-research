@@ -18,6 +18,7 @@ def _daily_dir(tmp_path: Path) -> Path:
                 "status": "ready",
                 "target_date": "2026-08-07",
                 "factor_count": 52,
+                "source": "baostock",
                 "raw_snapshot_first_seen_at": "2026-08-07T11:30:00+00:00",
                 "feature_snapshot_created_at": "2026-08-07T11:40:00+00:00",
             }
@@ -74,3 +75,16 @@ def test_prepare_forward_inputs_maps_suspended_empty_volume_to_zero(tmp_path: Pa
     assert raw.loc[0, "$amount"] == 0.0
     metadata = json.loads(Path(result["metadata_path"]).read_text(encoding="utf-8"))
     assert metadata["suspended_zero_fill_instruments"] == ["SH600000"]
+
+
+def test_prepare_forward_inputs_uses_community_daily_file(tmp_path: Path) -> None:
+    target = _daily_dir(tmp_path)
+    summary_path = target / "summary.json"
+    summary = json.loads(summary_path.read_text(encoding="utf-8"))
+    summary["source"] = "community"
+    summary_path.write_text(json.dumps(summary), encoding="utf-8")
+    (target / "baostock_qlib_daily.csv").rename(target / "community_qlib_daily.csv")
+
+    result = prepare_forward_inputs(target, decision_date="2026-08-07")
+    raw = pd.read_csv(result["raw_path"])
+    assert raw.loc[0, "instrument"] == "SH600000"

@@ -51,9 +51,8 @@ def prepare_forward_inputs(
 
     target = Path(daily_update_dir)
     summary_path = target / "summary.json"
-    daily_path = target / "baostock_qlib_daily.csv"
     feature_path = target / "feature_snapshot.csv"
-    for path in (summary_path, daily_path, feature_path):
+    for path in (summary_path, feature_path):
         if not path.is_file():
             raise FileNotFoundError(f"Daily Data Update input is missing: {path}")
     summary = json.loads(summary_path.read_text(encoding="utf-8"))
@@ -61,6 +60,16 @@ def prepare_forward_inputs(
         raise ValueError("Daily Data Update summary is not ready for the decision date")
     if int(summary.get("factor_count", 0)) != 52:
         raise ValueError("Daily Data Update summary does not contain 52 factors")
+    daily_names = {
+        "community": "community_qlib_daily.csv",
+        "baostock": "baostock_qlib_daily.csv",
+    }
+    source = str(summary.get("source", "")).lower()
+    if source not in daily_names:
+        raise ValueError(f"Daily Data Update summary has unsupported source: {source!r}")
+    daily_path = target / daily_names[source]
+    if not daily_path.is_file():
+        raise FileNotFoundError(f"Daily Data Update input is missing: {daily_path}")
 
     features = pd.read_csv(feature_path, usecols=["datetime", "instrument"])
     features["datetime"] = pd.to_datetime(features["datetime"], errors="raise").dt.date
