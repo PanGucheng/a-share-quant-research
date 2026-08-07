@@ -99,12 +99,58 @@ while portfolio-relative performance deteriorated.
 These are historical, already observed results. They are not a basis for claiming
 an unbiased final estimate or a production-ready strategy.
 
-## 6. Stage 1 — Strategy Diagnostics V1
+## 6. Why Forward Collection Has Temporal Priority
 
-The next implementation stage explains the performance change; it does not search
-for a better strategy. It should reuse frozen predictions, existing historical
-backtest outputs, market/factor data, universe membership, and reliable existing
-industry/style fields.
+Historical diagnostics and prospective evidence do not have the same time property.
+The preserved `split_001`, `split_002`, and `split_003` inputs can be analyzed later:
+performance, IC, style, industry, concentration, and cost diagnostics remain
+reproducible from existing data.
+
+A genuine forward observation cannot be recreated in the same way. If a trading day
+passes without using the information then available to produce features, a frozen
+strategy prediction, and a paper portfolio decision, a later calculation with full
+historical data cannot honestly be relabelled as independent prospective evidence.
+
+> Genuine forward evidence has time value and cannot be backfilled retrospectively.
+
+The roadmap therefore uses a priority track plus parallel research instead of a
+strict Diagnostics → Daily Data → Forward sequence.
+
+## 7. Phase 1 — Start Genuine Forward Collection
+
+The highest engineering priority is a lightweight Forward Track:
+
+```text
+new market data
+        ↓
+Daily Data Update V1
+        ↓
+frozen 52-feature generation
+        ↓
+frozen LightGBM prediction
+        ↓
+Strategy V1 Top50 paper decision
+        ↓
+persistent prediction / portfolio record
+```
+
+The immediate success criterion is not that the strategy makes money. It is that the
+project starts producing real, time-stamped prospective evidence using only data
+available at each decision time. Prediction must read zero future labels; evaluation
+runs separately only after labels mature.
+
+The implementation should reuse the existing forward candidate, model/preprocessing
+artifacts, Qlib data/execution knowledge, and paper-accounting components. Essential
+daily checks cover trading date, instrument count, OHLC gaps, volume anomalies,
+52-feature count, and feature missing rate. It should not introduce another ingest
+governance framework.
+
+## 8. Parallel Historical Research — Strategy Diagnostics V1
+
+Strategy Diagnostics remains important, but it does not block the Forward Track. It
+explains the historical performance change; it does not search for a better strategy.
+It should reuse frozen predictions, existing historical backtest outputs,
+market/factor data, universe membership, and reliable existing industry/style fields.
 
 The analysis covers:
 
@@ -123,52 +169,48 @@ concentration, and turnover/cost. A mixed or inconclusive result is valid. Bench
 constituent exposure is optional; if reliable weights are unavailable, Top50 versus
 the research universe is the primary comparison and the limitation is stated.
 
-This stage must not call `model.fit`, retrain any model, select factors/features,
+This research must not call `model.fit`, retrain any model, select factors/features,
 search hyperparameters, scan TopK or rebalance intervals, optimize portfolio
 parameters, or create a new preferred strategy from `split_003`.
 
 The intended lightweight interface is one configuration and one command, with CSVs,
-figures, `report.md`, and at most a simple `run_info.json`. This document update does
-not implement or run the stage.
+figures, `report.md`, and at most a simple `run_info.json`. Its findings may generate
+Strategy V2 hypotheses but must not modify the frozen Strategy V1 definition.
 
-## 7. Stage 2 — Daily Data Update V1
+## 9. Phase 2 — Accumulate and Evaluate Forward Evidence
 
-After diagnostics, build a simple daily incremental update command that discovers
-new trading days, downloads market data, performs essential checks, updates local
-and Qlib data, calculates the frozen 52 features, and writes the day's feature data.
-Checks focus on trading date, instrument count, OHLC gaps, volume anomalies, factor
-count, and feature missing rate. It should not introduce another ingest-governance
-framework.
-
-## 8. Stage 3 — Forward Research V1
-
-Integrate daily data, the frozen 52-factor transform, LightGBM prediction, Strategy
-V1 Top50 paper portfolio accounting, label maturity, and IC/performance evaluation
-into a convenient personal workflow. Simple append-only/versioned CSVs for
+Once the Forward Track is operational, the normal cycle is update, predict, paper
+trade, record, and evaluate matured labels. Simple append-only or versioned CSVs for
 predictions, trades, positions, daily NAV, and evaluation are sufficient. Git plus
 strategy configuration provides the default version record; per-prediction receipt
 infrastructure is not a default requirement.
 
-## 9. Stage 4 — Accumulate Genuine Forward Evidence
+Run Strategy V1 without adapting it to short-term results. Generate reports at useful
+horizons such as 60, 120, or 250 trading days without creating a separate governance
+project for every checkpoint.
 
-Run the frozen strategy without adapting it to short-term results. Generate reports
-at useful horizons such as 60, 120, or 250 trading days without creating a separate
-governance project for every checkpoint.
+## 10. Phase 3 — Research Decision
 
-## 10. Stage 5 — Strategy V2
+Combine historical diagnostics with genuine forward evidence to decide whether the
+main issue is alpha decay, style exposure, portfolio construction, concentration,
+turnover/cost, or mixed/inconclusive. Neither evidence source should be forced into a
+single explanation, and observed history is not promoted back into a fresh holdout.
 
-Develop Strategy V2 only after historical diagnostics or genuine forward evidence
-identifies a concrete problem. Observed history can generate hypotheses, but V2's
-real validation starts after its own freeze date. Preserve Strategy V1 alongside it.
+## 11. Phase 4 — Strategy V2 If Needed
 
-## 11. Stage 6 — Shadow or Small-Capital Validation
+Develop Strategy V2 only if the combined evidence identifies a concrete, actionable
+problem. Observed history can generate hypotheses, but V2 receives a new version and
+start/freeze date, and its real validation begins with new forward evidence after
+that date. Preserve Strategy V1 and all of its forward history alongside it.
+
+## 12. Phase 5 — Long-Term Validation
 
 Shadow trading and small-capital validation are long-term possibilities, not current
 scope. Broker abstraction, order gateways, distributed monitoring, failover,
 production reconciliation services, and complex kill-switch infrastructure are
 explicitly deferred.
 
-## 12. Long-Term Repository Shape
+## 13. Long-Term Repository Shape
 
 The repository may gradually converge toward:
 
@@ -196,7 +238,7 @@ outputs/
 This is a direction, not a migration task. Existing modules should not be moved in
 bulk merely to match the diagram.
 
-## 13. Codex Development Principles
+## 14. Codex Development Principles
 
 Codex should read the relevant current architecture and results before changing it,
 reuse existing modules, and prefer simple, explainable work that answers a research
@@ -205,3 +247,7 @@ adapter, or abstraction, ask whether the present research problem truly needs it
 
 Every handoff should state what was reused, what changed, what was deliberately not
 done, the evidence boundary of any findings, and the next concrete research problem.
+
+This roadmap correction changes documentation priority only. It does not authorize
+implementation or execution of Daily Data Update, forward prediction, paper
+portfolio, Strategy Diagnostics, Strategy V2, or shadow trading.

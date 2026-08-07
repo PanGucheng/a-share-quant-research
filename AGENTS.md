@@ -67,18 +67,25 @@ the rest.
 
 The authoritative roadmap is `docs/PERSONAL_QUANT_RESEARCH_ROADMAP.md`:
 
-1. Strategy Diagnostics;
-2. Daily Data Update;
-3. Forward Prediction and Paper Portfolio;
-4. accumulation of genuine forward evidence;
-5. Strategy V2 only after evidence identifies a concrete problem;
-6. shadow trading or small-capital validation much later.
+1. highest-priority Forward Track: Daily Data Update, frozen Strategy V1 prediction,
+   and paper portfolio recording;
+2. parallel historical Strategy Diagnostics V1, which must not block forward data
+   collection;
+3. accumulation and evaluation of genuine prospective evidence;
+4. Strategy V2 only if historical diagnostics plus forward evidence justify it;
+5. shadow trading or small-capital validation much later.
 
-The current implementation target is Strategy Diagnostics V1. It diagnoses the
-already observed LightGBM + P01 results without training, factor selection,
-hyperparameter search, TopK scans, rebalance scans, or portfolio optimization.
-Until the user explicitly asks implementation to resume, documentation changes do
-not authorize running or building that diagnostics stage.
+Genuine forward evidence has temporal priority: historical analysis can be reproduced
+later from preserved data, but a prediction or paper decision not genuinely produced
+at the time cannot later be reconstructed as independent prospective evidence.
+
+Current business priority is to begin genuine forward evidence collection through
+lightweight Daily Data Update and Forward Research work. Strategy Diagnostics V1
+remains an important parallel historical research task; it diagnoses the already
+observed LightGBM + P01 results without changing Strategy V1, training, factor
+selection, hyperparameter search, TopK scans, rebalance scans, or portfolio
+optimization. Until the user explicitly asks implementation to resume, this roadmap
+change does not authorize building or running either track.
 
 ## Codex Change Discipline
 

@@ -7,8 +7,9 @@
 - `PERSONAL_QUANT_RESEARCH_ROADMAP.md`
   当前权威路线：项目定位为个人 A 股量化研究，从 governance-heavy 转向
   research-first；严格保留无未来数据、时间隔离和已观察 holdout 不得复用调参的
-  科研底线。当前阶段为 Strategy Diagnostics V1，之后依次为 Daily Data Update、
-  Forward Research、真实 forward 积累、Strategy V2 与远期 shadow/small-capital。
+  科研底线。当前最高优先级是 Daily Data Update、冻结 Strategy V1 prediction 与
+  paper portfolio 组成的 Forward Track；Strategy Diagnostics V1 是不阻塞 forward
+  的并行历史研究。二者后续共同支持 Strategy V2 决策。
 - `HISTORICAL_PORTFOLIO_BACKTEST_V1.md`
   PR #24 个人研究级历史组合回测：只消费冻结 LightGBM test predictions，固定比较 6 个 Long Only TopK 等权规则；split_001/002 选择参数，split_003 单次 holdout，并复用现有 Qlib Exchange/Executor 与 A 股约束。
 - `PROSPECTIVE_FORWARD_CONFIRMATION_V1_PLAN.md`
@@ -182,22 +183,11 @@ docs/_archive/README.md
 
 ## Current Stage
 
-逻辑 PR #4.1 的 outer-test 隔离继续有效；PR #6 已完成研究准确性修正，PR #7 已完成执行语义修正，PR #8 已完成 lineage/gate closure 与 Data Source Audit V2，V1.2 已完成 Market Cache v3 和执行单位修正。
+Historical LightGBM 与 P01 组合研究已完成，`split_003` 已观察且只允许用于诊断。
+Strategy V1 继续固定为 frozen LightGBM、52 因子、Long Only Top50 等权、5 个交易日
+调仓。
 
-```text
-docs/EXECUTION_UNIT_SEMANTICS_CORRECTION_V1_2_PLAN.md
-docs/DATA_SOURCE_AUDIT_V2.md
-docs/Qlib A股因子研究框架完整升级计划 V1.md
-docs/FACTOR_VALIDATION_ROADMAP_V1.md
-```
-
-Historical Instrument State V2 已以 Decision B 冻结。当前 corrected 45/46/52
-allowlist、weights 与 score 可作为研究输入证据，但必须通过
-`research_selection_lineage_closure_v1` 消费。机器状态仍保持
-`authoritative_oos_execution_ready=false`、`core_model_ready=false` 和
-production hard-stop。
-
-当前阶段正式转入 `RESEARCH_GRADE_MULTIFACTOR_MODEL_V1_PLAN.md`。先实施逻辑
-PR #5A 的 scoped model gate、模型输入、validation 指标和 pre-test freeze；
-只有 `post_observation_research` 实验可以逐步放行，authoritative execution 与
-production model selection 不随模型研究解除。
+当前时间敏感主线是轻量 Forward Track：Daily Data Update、Strategy V1 prediction、
+paper portfolio 与持久记录，目标是尽快开始 genuine prospective evidence collection。
+Strategy Diagnostics V1 并行解释历史失效，不修改 V1，也不阻塞 forward。未来结合
+两类证据再判断是否创建 Strategy V2；生产交易基础设施不在当前范围。

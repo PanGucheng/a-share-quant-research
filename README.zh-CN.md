@@ -10,9 +10,8 @@ A 股量化研究项目，用于学习和实践因子、机器学习、组合、
 
 > **当前里程碑：**历史 LightGBM 研究和 Historical Portfolio Backtest V1 已完成。
 > 冻结的 LightGBM + P01（52 因子、Long Only Top50 等权、每 5 个交易日调仓）在
-> development 表现较好，但在已经观察的 `split_003` 明显跑输 benchmark。下一实施
-> 阶段是 Strategy Diagnostics V1：只解释失效，不重训、不搜索参数，也不把
-> `split_003` 重新称为独立 holdout。
+> development 表现较好，但在已经观察的 `split_003` 明显跑输 benchmark。
+> `split_003` 只用于诊断，不能重新用于选择或称为新的独立 holdout。
 
 项目当前转向 research-first：研究逻辑正确、防止未来数据、严格隔离
 train/validation/test 是不可放松的前三优先级；可解释性、维护性、自动化和治理按
@@ -34,9 +33,15 @@ train/validation/test 是不可放松的前三优先级；可解释性、维护�
 用于历史证据和现有模块兼容；新研究模块默认不复制这套重治理模式。如果普通
 Python、YAML、CSV/JSON、图表、Markdown、Git 与重点 pytest 足够，就采用简单方案。
 
-未来主线依次是 Strategy Diagnostics、Daily Data Update、Forward Research 与 paper
-portfolio、持续积累真实 forward；只有证据指出具体问题后才开发并单独保存 Strategy
-V2。Shadow trading 或小资金验证属于很后期方向。
+当前具有时间敏感性的最高优先级是轻量 Forward Track：尽快接通 Daily Data
+Update、冻结 Strategy V1 prediction 与 paper portfolio 记录，开始积累真正的
+prospective evidence。没有在当时真实生成的 prediction，未来不能事后补算成独立的
+forward 证据。
+
+Strategy Diagnostics V1 是并行的历史研究任务：通过 performance、IC、暴露、集中度、
+换手和成本解释 P01 的历史失效，但不修改 Strategy V1，也不阻塞 forward 收集。以后
+只有结合历史诊断与真实 forward 证据，才判断是否建立单独版本的 Strategy V2。
+Shadow trading 或小资金验证仍属于很后期方向。
 
 ## 目录结构
 

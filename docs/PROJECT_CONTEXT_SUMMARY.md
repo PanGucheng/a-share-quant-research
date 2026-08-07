@@ -25,13 +25,18 @@ E:\qlib_prj\qlib_baseline
 研究与 P01 历史组合回测均已完成；P01 固定为 52 因子、Long Only Top50 等权、每
 5 个交易日调仓。`split_003` 已被观察，不能再用于策略选择或声称新的独立 OOS。
 
-下一实施阶段为 Strategy Diagnostics V1，目标是解释为什么预测仍有一定 Rank IC，
-但 P01 在 `split_003` 明显跑输 benchmark。只做 performance、IC、style/industry、
-concentration 和 turnover/cost 诊断，不重训、不筛因子、不扫描 TopK/调仓周期、
-不产生新的 preferred strategy。本次文档调整本身不执行该阶段。
+当前最高工程优先级是尽快启动轻量 Forward Track：Daily Data Update V1、冻结
+Strategy V1 prediction 和 paper portfolio 持久记录，以开始积累 genuine prospective
+evidence。历史数据与诊断可以稍后复现；某日若没有用当时可得数据真实产生 feature、
+prediction 和 paper decision，未来不能把事后补算结果声称为当天的独立 forward
+证据。因此 forward collection 具有时间优先级。
 
-后续顺序为 Daily Data Update V1、Forward Research V1、积累真实 forward、再根据
-证据决定是否创建并独立保留 Strategy V2；shadow/small-capital 属于长期方向。
+Strategy Diagnostics V1 是重要的并行历史研究任务，但不再是 Forward Track 的前置
+条件。它解释 P01 在 `split_003` 的历史弱势，只做 performance、IC、style/industry、
+concentration 和 turnover/cost 诊断，不重训、不筛因子、不扫描 TopK/调仓周期、
+不修改 Strategy V1。未来只有结合历史诊断与 genuine forward evidence，才判断是否
+创建并独立保留 Strategy V2；shadow/small-capital 属于长期方向。本次文档调整不
+实施任何业务模块。
 
 ## Environment
 
@@ -169,13 +174,14 @@ tmp/reference_repos/techfactor
 
 ## Next Work
 
-> **2026-08-07 个人研究路线接管主线：**当前下一阶段固定为 Strategy Diagnostics
-> V1。复用冻结 LightGBM predictions、Historical Portfolio Backtest V1 与现有市场/
-> 因子/universe 数据，解释三段 performance、rolling Rank IC、Size/Momentum/
-> Volatility/Industry 暴露、集中度及 turnover/cost。禁止训练、因子选择、参数搜索、
-> TopK/rebalance 扫描或利用已观察 `split_003` 产生新的 preferred strategy。完成后才
-> 进入 Daily Data Update V1，再进入 Forward Research V1。以下旧 `Next Work` 条目
-> 仅保留历史时间线，不再代表当前执行优先级。
+> **2026-08-07 Forward-first 路线修正：**当前最高优先级是 Daily Data Update V1、
+> 冻结 Strategy V1 prediction 与 paper portfolio 组成的轻量 Forward Track，尽快开始
+> 产生无法事后补回的 genuine prospective evidence。Strategy Diagnostics V1 改为并行
+> 历史研究任务，复用冻结 predictions、Historical Portfolio Backtest V1 与现有市场/
+> 因子/universe 数据解释 performance、rolling Rank IC、Size/Momentum/Volatility/
+> Industry、集中度及 turnover/cost；它不阻塞 forward，也不得训练、选择因子、搜索
+> 参数、扫描 TopK/rebalance 或修改 Strategy V1。以下旧 `Next Work` 条目仅保留历史
+> 时间线，不再代表当前执行优先级。
 
 > **2026-07-24 Accuracy Correction V1.1 / Data Source Audit V2 接管主线：**实现前核验确认 `split_transparent_score_v2` 为 pass 但 lineage inconsistent，根因是 date-only `purged_walk_forward_v1` 仍携带旧 Universe v1，并与 Matrix v4/Universe v2 一起被 policy、mutation、canary 和 score 的无维度 lineage 聚合传播；下游又未统一检查 parent lineage/critical contracts。`instrument_state_v1` 的 124 个 unknown-board 行全部属于合法创业板代码 `SZ302132`（中航成飞由 300114 变更代码），当前推断器漏掉 302 号段；这导致 critical `lot_rule_resolved=blocked`，但 manifest 仍错误为 pass。当前计划先实施维度化 lineage 语义、通用 fail-closed publication/parent/transitive gate、score 数值无损重发和最小执行链；再做 Community/BaoStock/AKShare 100–200 股 canary。不得进入 PR #5A、训练模型、改变选择链或声称 authoritative historical OOS。
 

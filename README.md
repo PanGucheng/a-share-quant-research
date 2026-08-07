@@ -16,9 +16,8 @@ Chinese documentation is available in [README.zh-CN.md](README.zh-CN.md).
 > **Current milestone:** Historical LightGBM research and Historical Portfolio
 > Backtest V1 are complete. The frozen LightGBM + P01 candidate (52 factors, long-only
 > Top50 equal weight, five-day rebalance) performed well in development but materially
-> underperformed its benchmark in the already observed `split_003`. The next
-> implementation stage is Strategy Diagnostics V1: explain the failure without
-> retraining, parameter search, or treating `split_003` as a fresh holdout.
+> underperformed its benchmark in the already observed `split_003`. `split_003` is
+> diagnosis-only and cannot be reused for selection or described as a fresh holdout.
 
 The project now follows a research-first priority: correct research logic, no future
 data, and strict train/validation/test isolation come first; interpretability,
@@ -46,9 +45,16 @@ compatibility and historical evidence. New research modules do not copy that hea
 governance by default: ordinary Python, YAML, CSV/JSON, figures, Markdown reports,
 Git, and focused pytest coverage are preferred when sufficient.
 
-The roadmap is Strategy Diagnostics, Daily Data Update, Forward Research and paper
-portfolio, accumulation of genuine forward evidence, then a separately versioned
-Strategy V2 only if evidence supports it. Shadow or small-capital work is much later.
+The time-sensitive priority is a lightweight Forward Track: Daily Data Update,
+frozen Strategy V1 prediction, and paper portfolio recording should begin genuine
+prospective evidence collection as soon as practical. A prediction not produced at
+the time cannot later be backfilled as independent prospective evidence.
+
+Strategy Diagnostics V1 is a parallel historical research task. It explains the
+observed P01 weakness through performance, IC, exposure, concentration, turnover,
+and cost analysis without changing Strategy V1 or blocking forward collection.
+Historical diagnostics plus genuine forward evidence may later justify a separately
+versioned Strategy V2. Shadow or small-capital work remains a much later direction.
 
 ## Repository Layout
 
