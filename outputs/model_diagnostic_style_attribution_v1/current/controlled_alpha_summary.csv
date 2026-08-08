@@ -1,0 +1,4 @@
+﻿outer_split_id,mean_model_score_coefficient,coefficient_std,coefficient_mean_over_std,positive_ratio,valid_days,specification
+split_001,0.0003138698542312269,0.022027487679233,0.014249008275561813,0.5916666666666667,120,daily OLS: return_20d_t1 ~ model_score_z + size_percentile_z + SW_L1_FE
+split_002,0.004054362843459653,0.016829897836372416,0.24090240373874708,0.5967741935483871,124,daily OLS: return_20d_t1 ~ model_score_z + size_percentile_z + SW_L1_FE
+split_003,-0.0005800585118047348,0.014153822180870274,-0.04098246426952559,0.49193548387096775,124,daily OLS: return_20d_t1 ~ model_score_z + size_percentile_z + SW_L1_FE

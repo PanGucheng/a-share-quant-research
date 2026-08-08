@@ -1,0 +1,20 @@
+schema_version: 1
+default_group: Other
+groups:
+  - Momentum / Trend
+  - Reversal / Short-term Price-Volume
+  - Value
+  - Quality / Growth
+  - Size / Liquidity
+  - Volatility / Risk
+  - Other
+rules:
+  - group: Volatility / Risk
+    pattern: "volatility|alpha158_STD|alpha158_VSTD|bbhi|mass_index|amount_cv"
+  - group: Size / Liquidity
+    pattern: "volume|liquidity|alpha158_VMA|alpha158_VSUMD|amount_mean|ta_volume"
+  - group: Momentum / Trend
+    pattern: "trend|momentum|alpha158_(BETA|RSQR|ROC|IMAX|IMIN|MAX|MIN)|adx|dpo"
+  - group: Reversal / Short-term Price-Volume
+    pattern: "reversal|price_volume|alpha158_(CORR|CORD|CNTP|CNTD|KLEN|KLOW|KMID|KUP|HIGH0|LOW0)|kunquant_alpha101"
+overrides: {}

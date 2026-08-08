@@ -1,11 +1,122 @@
-schema_version: 1
-profile: gated_reference
-profile_name: gated_reference
-profile_type: reference
-research_run_family_id: reference_v1_1_1
-diagnostic_stage: post_model_diagnostics
-input_manifests:
-  - outputs/factor_model_comparison_v1/gated/artifact_manifest.json
-model_scores: outputs/factor_model_comparison_v1/gated/runtime/model_scores.parquet
-required_methods: [regularized_linear, lightgbm]
-output_dir: outputs/post_model_diagnostics_v1/gated
+schema_version: 2
+stage_id: post_model_diagnostics_v1
+stage_name: Model Diagnostic V1
+profile_name: full_research
+profile_type: full_research
+research_run_family_id: full_research_factor_669_v1
+experiment_class: post_observation_research
+
+parents:
+  selection_manifest: outputs/research_selection_lineage_closure_v1/current/artifact_manifest.json
+  split_allowlist_manifest: outputs/research_selection_lineage_closure_v1/current/split_allowlist_manifest.csv
+  factor_weights: outputs/research_selection_lineage_closure_v1/current/factor_weights_by_split.csv
+  date_assignments: outputs/research_selection_lineage_closure_v1/current/date_assignments.csv
+  matrix_manifest: outputs/full_research_feature_matrix_v4/current/artifact_manifest.json
+  matrix_partitions: outputs/full_research_feature_matrix_v4/current/partition_status.csv
+  factor_catalog_manifest: outputs/full_research_factor_catalog_669_v1/current/artifact_manifest.json
+  factor_inventory: outputs/full_research_factor_catalog_669_v1/current/factor_inventory.csv
+  labels_manifest: outputs/full_research_labels_v2/current/artifact_manifest.json
+  labels_runtime: outputs/full_research_feature_matrix_v4/runtime/labels_v2.parquet
+  raw_market_cache: outputs/full_research_feature_matrix_v1/runtime/raw_ohlcva.parquet
+  lightgbm_release_manifest: outputs/research_lightgbm_v1/current/artifact_manifest.json
+  prediction_receipt: outputs/research_lightgbm_v1/current/prediction_receipt.csv
+  lightgbm_development_manifest: outputs/research_lightgbm_v1/development/artifact_manifest.json
+  model_receipt: outputs/research_lightgbm_v1/development/model_receipt.csv
+  preprocessing_receipt: outputs/research_lightgbm_v1/development/preprocessing_receipt.csv
+  builtin_feature_importance: outputs/research_lightgbm_v1/development/feature_importance.csv
+  release_freeze_dir: outputs/research_lightgbm_v1/test_release_freeze/release_freezes
+  portfolio_manifest: outputs/historical_portfolio_backtest_v1/current/artifact_manifest.json
+  portfolio_output_dir: outputs/historical_portfolio_backtest_v1/current
+  exposure_capability: outputs/exposure_data_capability_audit_v1/current/exposure_data_capability_board.csv
+
+split_ids: [split_001, split_002, split_003]
+expected_factor_counts: {split_001: 45, split_002: 46, split_003: 52}
+expected_factor_union: 77
+expected_factor_intersection: 22
+taxonomy_config: configs/model_diagnostic_factor_taxonomy_v1.yaml
+qlib_repository: E:/qlib_prj/qlib_clone
+qlib_commit_sha: d5379c520f66a39953bad76234a7019a72796fd0
+
+forward_returns:
+  price_column: $close
+  entry_lag: 1
+  horizons: [1, 5, 10, 20]
+  frozen_label: label_20d_t1
+  label_atol: 1.0e-7
+  label_rtol: 1.0e-7
+
+style_proxies:
+  liquidity_proxy: amount_mean_20
+  volatility_proxy: alpha158_STD20
+  momentum_source: alpha158_ROC20
+  momentum_transform: reciprocal_minus_one
+  bucket_count: 3
+
+ranking:
+  buckets:
+    - {name: rank_001_010, start: 1, end: 10}
+    - {name: rank_011_020, start: 11, end: 20}
+    - {name: rank_021_030, start: 21, end: 30}
+    - {name: rank_031_050, start: 31, end: 50}
+    - {name: rank_051_100, start: 51, end: 100}
+    - {name: rank_101_200, start: 101, end: 200}
+    - {name: rank_201_plus, start: 201, end: null}
+  stability_lags: [1, 5, 10, 20]
+  retention_topk: [10, 20, 50, 100]
+  edge_topk: 50
+  edge_band_start: 41
+  edge_band_end: 60
+
+metrics:
+  minimum_daily_pairs: 100
+  minimum_valid_days: 20
+  icir_ddof: 1
+
+prediction_equivalence:
+  sample_rows_per_split: 4096
+  atol: 1.0e-11
+  rtol: 1.0e-10
+
+permutation:
+  enabled: true
+  sampled_dates_per_split: 20
+  repeats: 3
+  random_seed: 20260808
+
+shap:
+  enabled: true
+  maximum_rows_per_split: 3000
+  sampled_dates_per_split: 20
+  random_seed: 20260808
+  required_version: 0.49.1
+
+external_style:
+  enabled: true
+  required_for_core: false
+  input_path: null
+  schema_version: 1
+  cache_dir: outputs/post_model_diagnostics_v1/runtime/external_style
+  future_sources:
+    market_cap: tushare.daily_basic
+    industry: tushare.index_member_all
+
+cache:
+  base_dir: outputs/post_model_diagnostics_v1/runtime/base
+  core_dir: outputs/post_model_diagnostics_v1/runtime/core
+
+resources:
+  threads: 1
+  peak_rss_mib: 4096
+  runtime_disk_gib: 8
+
+governance:
+  historical_test_already_observed: true
+  model_retrained: false
+  predictions_regenerated: false
+  features_reselected: false
+  portfolio_rule_changed: false
+  unbiased_final_estimate: false
+  production_model_selected: false
+
+output_dir: outputs/post_model_diagnostics_v1/current
+smoke_output_dir: tmp/post_model_diagnostics_v1_smoke

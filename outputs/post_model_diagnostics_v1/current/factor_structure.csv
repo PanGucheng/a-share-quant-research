@@ -1,0 +1,144 @@
+﻿outer_split_id,feature_order,factor,economic_group,source,source_category,definition
+split_001,0,alpha158_BETA10,Momentum / Trend,alpha158,alpha158_rolling_price,"Qlib Alpha158 expression: Slope($close, 10)/$close"
+split_001,1,alpha158_BETA5,Momentum / Trend,alpha158,alpha158_rolling_price,"Qlib Alpha158 expression: Slope($close, 5)/$close"
+split_001,2,alpha158_CNTD30,Reversal / Short-term Price-Volume,alpha158,alpha158_price_momentum_balance,"Qlib Alpha158 expression: Mean($close>Ref($close, 1), 30)-Mean($close<Ref($close, 1), 30)"
+split_001,3,alpha158_CNTP60,Reversal / Short-term Price-Volume,alpha158,alpha158_price_momentum_balance,"Qlib Alpha158 expression: Mean($close>Ref($close, 1), 60)"
+split_001,4,alpha158_CORD10,Reversal / Short-term Price-Volume,alpha158,alpha158_price_volume_correlation,"Qlib Alpha158 expression: Corr($close/Ref($close,1), Log($volume/Ref($volume, 1)+1), 10)"
+split_001,5,alpha158_CORD20,Reversal / Short-term Price-Volume,alpha158,alpha158_price_volume_correlation,"Qlib Alpha158 expression: Corr($close/Ref($close,1), Log($volume/Ref($volume, 1)+1), 20)"
+split_001,6,alpha158_CORD5,Reversal / Short-term Price-Volume,alpha158,alpha158_price_volume_correlation,"Qlib Alpha158 expression: Corr($close/Ref($close,1), Log($volume/Ref($volume, 1)+1), 5)"
+split_001,7,alpha158_CORD60,Reversal / Short-term Price-Volume,alpha158,alpha158_price_volume_correlation,"Qlib Alpha158 expression: Corr($close/Ref($close,1), Log($volume/Ref($volume, 1)+1), 60)"
+split_001,8,alpha158_CORR10,Reversal / Short-term Price-Volume,alpha158,alpha158_price_volume_correlation,"Qlib Alpha158 expression: Corr($close, Log($volume+1), 10)"
+split_001,9,alpha158_CORR20,Reversal / Short-term Price-Volume,alpha158,alpha158_price_volume_correlation,"Qlib Alpha158 expression: Corr($close, Log($volume+1), 20)"
+split_001,10,alpha158_CORR5,Reversal / Short-term Price-Volume,alpha158,alpha158_price_volume_correlation,"Qlib Alpha158 expression: Corr($close, Log($volume+1), 5)"
+split_001,11,alpha158_HIGH0,Reversal / Short-term Price-Volume,alpha158,alpha158_price_volume_lag,Qlib Alpha158 expression: $high/$close
+split_001,12,alpha158_IMIN20,Momentum / Trend,alpha158,alpha158_rolling_price,"Qlib Alpha158 expression: IdxMin($low, 20)/20"
+split_001,13,alpha158_KLEN,Reversal / Short-term Price-Volume,alpha158,alpha158_kbar,Qlib Alpha158 expression: ($high-$low)/$open
+split_001,14,alpha158_KLOW,Reversal / Short-term Price-Volume,alpha158,alpha158_kbar,"Qlib Alpha158 expression: (Less($open, $close)-$low)/$open"
+split_001,15,alpha158_KMID,Reversal / Short-term Price-Volume,alpha158,alpha158_kbar,Qlib Alpha158 expression: ($close-$open)/$open
+split_001,16,alpha158_KUP,Reversal / Short-term Price-Volume,alpha158,alpha158_kbar,"Qlib Alpha158 expression: ($high-Greater($open, $close))/$open"
+split_001,17,alpha158_LOW0,Reversal / Short-term Price-Volume,alpha158,alpha158_price_volume_lag,Qlib Alpha158 expression: $low/$close
+split_001,18,alpha158_MAX5,Momentum / Trend,alpha158,alpha158_rolling_price,"Qlib Alpha158 expression: Max($high, 5)/$close"
+split_001,19,alpha158_MIN10,Momentum / Trend,alpha158,alpha158_rolling_price,"Qlib Alpha158 expression: Min($low, 10)/$close"
+split_001,20,alpha158_QTLD60,Other,alpha158,alpha158_rolling_price,"Qlib Alpha158 expression: Quantile($close, 60, 0.2)/$close"
+split_001,21,alpha158_RSQR30,Momentum / Trend,alpha158,alpha158_rolling_price,"Qlib Alpha158 expression: Rsquare($close, 30)"
+split_001,22,alpha158_VMA30,Size / Liquidity,alpha158,alpha158_volume_liquidity,"Qlib Alpha158 expression: Mean($volume, 30)/($volume+1e-12)"
+split_001,23,alpha158_VMA60,Size / Liquidity,alpha158,alpha158_volume_liquidity,"Qlib Alpha158 expression: Mean($volume, 60)/($volume+1e-12)"
+split_001,24,alpha158_VSUMD60,Size / Liquidity,alpha158,alpha158_volume_liquidity,"Qlib Alpha158 expression: (Sum(Greater($volume-Ref($volume, 1), 0), 60)-Sum(Greater(Ref($volume, 1)-$volume, 0), 60))/(Sum(Abs($volume-Ref($volume, 1)), 60)+1e-12)"
+split_001,25,alpha360_LOW1,Other,alpha360,alpha360_low_window,"Qlib Alpha360 expression: Ref($low, 1)/$close Alpha360 batch V4 passed."
+split_001,26,alpha360_VOLUME13,Size / Liquidity,alpha360,alpha360_volume_window,"Qlib Alpha360 expression: Ref($volume, 13)/($volume+1e-12) Alpha360 batch V4 passed."
+split_001,27,amount_cv_20,Volatility / Risk,project_basic,liquidity,20-day coefficient of variation of trading amount.
+split_001,28,amount_std_20,Other,project_basic,liquidity,20-day trading amount volatility.
+split_001,29,corr_ret_amount_20,Other,project_basic,price_volume,20-day rolling correlation between return and trading amount.
+split_001,30,kunquant_alpha101_alpha003,Reversal / Short-term Price-Volume,alpha101,alpha101,Alpha101 batch V4 passed.
+split_001,31,kunquant_alpha101_alpha011,Reversal / Short-term Price-Volume,alpha101,alpha101,Alpha101 batch V4 passed.
+split_001,32,kunquant_alpha101_alpha012,Reversal / Short-term Price-Volume,alpha101,alpha101,Generated from KunQuant pandas reference smoke; coverage=0.987213 V4 smoke passed for selected Alpha101 adapter factor.
+split_001,33,kunquant_alpha101_alpha013,Reversal / Short-term Price-Volume,alpha101,alpha101,Alpha101 batch V4 passed.
+split_001,34,kunquant_alpha101_alpha020,Reversal / Short-term Price-Volume,alpha101,alpha101,Alpha101 batch V4 passed.
+split_001,35,kunquant_alpha101_alpha029,Reversal / Short-term Price-Volume,alpha101,alpha101,Alpha101 batch V4 passed.
+split_001,36,kunquant_alpha101_alpha034,Reversal / Short-term Price-Volume,alpha101,alpha101,Alpha101 batch V4 passed.
+split_001,37,kunquant_alpha101_alpha050,Reversal / Short-term Price-Volume,alpha101,alpha101,Alpha101 batch V4 passed.
+split_001,38,kunquant_alpha101_alpha055,Reversal / Short-term Price-Volume,alpha101,alpha101,Alpha101 batch V4 passed.
+split_001,39,kunquant_alpha101_alpha062,Reversal / Short-term Price-Volume,alpha101,alpha101,Alpha101 batch V4 passed.
+split_001,40,kunquant_alpha101_alpha094,Reversal / Short-term Price-Volume,alpha101,alpha101,Alpha101 batch V4 passed.
+split_001,41,ta_trend_mass_index,Volatility / Risk,ta,ta_trend,Generated from ta wrapper smoke; coverage=0.773831 TA batch V4 passed.
+split_001,42,ta_volatility_bbhi,Volatility / Risk,ta,ta_volatility,Generated from ta wrapper smoke; coverage=1.000000 TA batch V4 passed.
+split_001,43,ta_volume_cmf,Size / Liquidity,ta,ta_volume,Generated from ta wrapper smoke; coverage=0.875828 V4 smoke passed for selected TA adapter factor.
+split_001,44,ta_volume_sma_em,Size / Liquidity,ta,ta_volume,Generated from ta wrapper smoke; coverage=0.906601 TA batch V4 passed.
+split_002,0,alpha158_CNTP10,Reversal / Short-term Price-Volume,alpha158,alpha158_price_momentum_balance,"Qlib Alpha158 expression: Mean($close>Ref($close, 1), 10)"
+split_002,1,alpha158_CNTP5,Reversal / Short-term Price-Volume,alpha158,alpha158_price_momentum_balance,"Qlib Alpha158 expression: Mean($close>Ref($close, 1), 5)"
+split_002,2,alpha158_CORD10,Reversal / Short-term Price-Volume,alpha158,alpha158_price_volume_correlation,"Qlib Alpha158 expression: Corr($close/Ref($close,1), Log($volume/Ref($volume, 1)+1), 10)"
+split_002,3,alpha158_CORD20,Reversal / Short-term Price-Volume,alpha158,alpha158_price_volume_correlation,"Qlib Alpha158 expression: Corr($close/Ref($close,1), Log($volume/Ref($volume, 1)+1), 20)"
+split_002,4,alpha158_CORD5,Reversal / Short-term Price-Volume,alpha158,alpha158_price_volume_correlation,"Qlib Alpha158 expression: Corr($close/Ref($close,1), Log($volume/Ref($volume, 1)+1), 5)"
+split_002,5,alpha158_CORR5,Reversal / Short-term Price-Volume,alpha158,alpha158_price_volume_correlation,"Qlib Alpha158 expression: Corr($close, Log($volume+1), 5)"
+split_002,6,alpha158_HIGH0,Reversal / Short-term Price-Volume,alpha158,alpha158_price_volume_lag,Qlib Alpha158 expression: $high/$close
+split_002,7,alpha158_IMAX10,Momentum / Trend,alpha158,alpha158_rolling_price,"Qlib Alpha158 expression: IdxMax($high, 10)/10"
+split_002,8,alpha158_IMAX20,Momentum / Trend,alpha158,alpha158_rolling_price,"Qlib Alpha158 expression: IdxMax($high, 20)/20"
+split_002,9,alpha158_IMAX60,Momentum / Trend,alpha158,alpha158_rolling_price,"Qlib Alpha158 expression: IdxMax($high, 60)/60"
+split_002,10,alpha158_IMIN5,Momentum / Trend,alpha158,alpha158_rolling_price,"Qlib Alpha158 expression: IdxMin($low, 5)/5"
+split_002,11,alpha158_KLEN,Reversal / Short-term Price-Volume,alpha158,alpha158_kbar,Qlib Alpha158 expression: ($high-$low)/$open
+split_002,12,alpha158_KLOW,Reversal / Short-term Price-Volume,alpha158,alpha158_kbar,"Qlib Alpha158 expression: (Less($open, $close)-$low)/$open"
+split_002,13,alpha158_KUP,Reversal / Short-term Price-Volume,alpha158,alpha158_kbar,"Qlib Alpha158 expression: ($high-Greater($open, $close))/$open"
+split_002,14,alpha158_LOW0,Reversal / Short-term Price-Volume,alpha158,alpha158_price_volume_lag,Qlib Alpha158 expression: $low/$close
+split_002,15,alpha158_MIN10,Momentum / Trend,alpha158,alpha158_rolling_price,"Qlib Alpha158 expression: Min($low, 10)/$close"
+split_002,16,alpha158_STD10,Volatility / Risk,alpha158,alpha158_rolling_price,"Qlib Alpha158 expression: Std($close, 10)/$close"
+split_002,17,alpha158_VMA60,Size / Liquidity,alpha158,alpha158_volume_liquidity,"Qlib Alpha158 expression: Mean($volume, 60)/($volume+1e-12)"
+split_002,18,alpha158_VSTD5,Volatility / Risk,alpha158,alpha158_volume_liquidity,"Qlib Alpha158 expression: Std($volume, 5)/($volume+1e-12)"
+split_002,19,alpha158_VSUMD20,Size / Liquidity,alpha158,alpha158_volume_liquidity,"Qlib Alpha158 expression: (Sum(Greater($volume-Ref($volume, 1), 0), 20)-Sum(Greater(Ref($volume, 1)-$volume, 0), 20))/(Sum(Abs($volume-Ref($volume, 1)), 20)+1e-12)"
+split_002,20,alpha158_VSUMD60,Size / Liquidity,alpha158,alpha158_volume_liquidity,"Qlib Alpha158 expression: (Sum(Greater($volume-Ref($volume, 1), 0), 60)-Sum(Greater(Ref($volume, 1)-$volume, 0), 60))/(Sum(Abs($volume-Ref($volume, 1)), 60)+1e-12)"
+split_002,21,alpha360_HIGH34,Other,alpha360,alpha360_high_window,"Qlib Alpha360 expression: Ref($high, 34)/$close Alpha360 batch V4 passed."
+split_002,22,alpha360_LOW1,Other,alpha360,alpha360_low_window,"Qlib Alpha360 expression: Ref($low, 1)/$close Alpha360 batch V4 passed."
+split_002,23,amount_cv_20,Volatility / Risk,project_basic,liquidity,20-day coefficient of variation of trading amount.
+split_002,24,kunquant_alpha101_alpha002,Reversal / Short-term Price-Volume,alpha101,alpha101,Alpha101 batch V4 passed.
+split_002,25,kunquant_alpha101_alpha011,Reversal / Short-term Price-Volume,alpha101,alpha101,Alpha101 batch V4 passed.
+split_002,26,kunquant_alpha101_alpha012,Reversal / Short-term Price-Volume,alpha101,alpha101,Generated from KunQuant pandas reference smoke; coverage=0.987213 V4 smoke passed for selected Alpha101 adapter factor.
+split_002,27,kunquant_alpha101_alpha013,Reversal / Short-term Price-Volume,alpha101,alpha101,Alpha101 batch V4 passed.
+split_002,28,kunquant_alpha101_alpha020,Reversal / Short-term Price-Volume,alpha101,alpha101,Alpha101 batch V4 passed.
+split_002,29,kunquant_alpha101_alpha026,Reversal / Short-term Price-Volume,alpha101,alpha101,Alpha101 batch V4 passed.
+split_002,30,kunquant_alpha101_alpha029,Reversal / Short-term Price-Volume,alpha101,alpha101,Alpha101 batch V4 passed.
+split_002,31,kunquant_alpha101_alpha034,Reversal / Short-term Price-Volume,alpha101,alpha101,Alpha101 batch V4 passed.
+split_002,32,kunquant_alpha101_alpha050,Reversal / Short-term Price-Volume,alpha101,alpha101,Alpha101 batch V4 passed.
+split_002,33,kunquant_alpha101_alpha055,Reversal / Short-term Price-Volume,alpha101,alpha101,Alpha101 batch V4 passed.
+split_002,34,kunquant_alpha101_alpha062,Reversal / Short-term Price-Volume,alpha101,alpha101,Alpha101 batch V4 passed.
+split_002,35,kunquant_alpha101_alpha077,Reversal / Short-term Price-Volume,alpha101,alpha101,Alpha101 batch V4 passed.
+split_002,36,kunquant_alpha101_alpha083,Reversal / Short-term Price-Volume,alpha101,alpha101,Alpha101 batch V4 passed.
+split_002,37,kunquant_alpha101_alpha085,Reversal / Short-term Price-Volume,alpha101,alpha101,Alpha101 batch V4 passed.
+split_002,38,kunquant_alpha101_alpha094,Reversal / Short-term Price-Volume,alpha101,alpha101,Alpha101 batch V4 passed.
+split_002,39,ta_momentum_ao,Momentum / Trend,ta,ta_momentum,Generated from ta wrapper smoke; coverage=0.790792 TA batch V4 passed.
+split_002,40,ta_trend_dpo,Momentum / Trend,ta,ta_trend,Generated from ta wrapper smoke; coverage=0.875828 TA batch V4 passed.
+split_002,41,ta_volatility_atr,Volatility / Risk,ta,ta_volatility,Generated from ta wrapper smoke; coverage=0.959502 TA batch V4 passed.
+split_002,42,ta_volatility_bbhi,Volatility / Risk,ta,ta_volatility,Generated from ta wrapper smoke; coverage=1.000000 TA batch V4 passed.
+split_002,43,ta_volume_cmf,Size / Liquidity,ta,ta_volume,Generated from ta wrapper smoke; coverage=0.875828 V4 smoke passed for selected TA adapter factor.
+split_002,44,ta_volume_em,Size / Liquidity,ta,ta_volume,Generated from ta wrapper smoke; coverage=0.988161 TA batch V4 passed.
+split_002,45,ta_volume_sma_em,Size / Liquidity,ta,ta_volume,Generated from ta wrapper smoke; coverage=0.906601 TA batch V4 passed.
+split_003,0,alpha158_CORD10,Reversal / Short-term Price-Volume,alpha158,alpha158_price_volume_correlation,"Qlib Alpha158 expression: Corr($close/Ref($close,1), Log($volume/Ref($volume, 1)+1), 10)"
+split_003,1,alpha158_CORD20,Reversal / Short-term Price-Volume,alpha158,alpha158_price_volume_correlation,"Qlib Alpha158 expression: Corr($close/Ref($close,1), Log($volume/Ref($volume, 1)+1), 20)"
+split_003,2,alpha158_CORD5,Reversal / Short-term Price-Volume,alpha158,alpha158_price_volume_correlation,"Qlib Alpha158 expression: Corr($close/Ref($close,1), Log($volume/Ref($volume, 1)+1), 5)"
+split_003,3,alpha158_CORR10,Reversal / Short-term Price-Volume,alpha158,alpha158_price_volume_correlation,"Qlib Alpha158 expression: Corr($close, Log($volume+1), 10)"
+split_003,4,alpha158_CORR20,Reversal / Short-term Price-Volume,alpha158,alpha158_price_volume_correlation,"Qlib Alpha158 expression: Corr($close, Log($volume+1), 20)"
+split_003,5,alpha158_CORR5,Reversal / Short-term Price-Volume,alpha158,alpha158_price_volume_correlation,"Qlib Alpha158 expression: Corr($close, Log($volume+1), 5)"
+split_003,6,alpha158_HIGH0,Reversal / Short-term Price-Volume,alpha158,alpha158_price_volume_lag,Qlib Alpha158 expression: $high/$close
+split_003,7,alpha158_IMAX30,Momentum / Trend,alpha158,alpha158_rolling_price,"Qlib Alpha158 expression: IdxMax($high, 30)/30"
+split_003,8,alpha158_IMAX60,Momentum / Trend,alpha158,alpha158_rolling_price,"Qlib Alpha158 expression: IdxMax($high, 60)/60"
+split_003,9,alpha158_IMIN20,Momentum / Trend,alpha158,alpha158_rolling_price,"Qlib Alpha158 expression: IdxMin($low, 20)/20"
+split_003,10,alpha158_IMIN5,Momentum / Trend,alpha158,alpha158_rolling_price,"Qlib Alpha158 expression: IdxMin($low, 5)/5"
+split_003,11,alpha158_KLEN,Reversal / Short-term Price-Volume,alpha158,alpha158_kbar,Qlib Alpha158 expression: ($high-$low)/$open
+split_003,12,alpha158_KLOW,Reversal / Short-term Price-Volume,alpha158,alpha158_kbar,"Qlib Alpha158 expression: (Less($open, $close)-$low)/$open"
+split_003,13,alpha158_KMID,Reversal / Short-term Price-Volume,alpha158,alpha158_kbar,Qlib Alpha158 expression: ($close-$open)/$open
+split_003,14,alpha158_KUP,Reversal / Short-term Price-Volume,alpha158,alpha158_kbar,"Qlib Alpha158 expression: ($high-Greater($open, $close))/$open"
+split_003,15,alpha158_LOW0,Reversal / Short-term Price-Volume,alpha158,alpha158_price_volume_lag,Qlib Alpha158 expression: $low/$close
+split_003,16,alpha158_MAX5,Momentum / Trend,alpha158,alpha158_rolling_price,"Qlib Alpha158 expression: Max($high, 5)/$close"
+split_003,17,alpha158_MIN10,Momentum / Trend,alpha158,alpha158_rolling_price,"Qlib Alpha158 expression: Min($low, 10)/$close"
+split_003,18,alpha158_QTLD10,Other,alpha158,alpha158_rolling_price,"Qlib Alpha158 expression: Quantile($close, 10, 0.2)/$close"
+split_003,19,alpha158_QTLD5,Other,alpha158,alpha158_rolling_price,"Qlib Alpha158 expression: Quantile($close, 5, 0.2)/$close"
+split_003,20,alpha158_RSQR30,Momentum / Trend,alpha158,alpha158_rolling_price,"Qlib Alpha158 expression: Rsquare($close, 30)"
+split_003,21,alpha158_STD60,Volatility / Risk,alpha158,alpha158_rolling_price,"Qlib Alpha158 expression: Std($close, 60)/$close"
+split_003,22,alpha158_VMA60,Size / Liquidity,alpha158,alpha158_volume_liquidity,"Qlib Alpha158 expression: Mean($volume, 60)/($volume+1e-12)"
+split_003,23,alpha158_VSTD5,Volatility / Risk,alpha158,alpha158_volume_liquidity,"Qlib Alpha158 expression: Std($volume, 5)/($volume+1e-12)"
+split_003,24,alpha158_VSUMD20,Size / Liquidity,alpha158,alpha158_volume_liquidity,"Qlib Alpha158 expression: (Sum(Greater($volume-Ref($volume, 1), 0), 20)-Sum(Greater(Ref($volume, 1)-$volume, 0), 20))/(Sum(Abs($volume-Ref($volume, 1)), 20)+1e-12)"
+split_003,25,alpha158_VSUMD60,Size / Liquidity,alpha158,alpha158_volume_liquidity,"Qlib Alpha158 expression: (Sum(Greater($volume-Ref($volume, 1), 0), 60)-Sum(Greater(Ref($volume, 1)-$volume, 0), 60))/(Sum(Abs($volume-Ref($volume, 1)), 60)+1e-12)"
+split_003,26,alpha360_VOLUME12,Size / Liquidity,alpha360,alpha360_volume_window,"Qlib Alpha360 expression: Ref($volume, 12)/($volume+1e-12) Alpha360 batch V4 passed."
+split_003,27,alpha360_VOLUME38,Size / Liquidity,alpha360,alpha360_volume_window,"Qlib Alpha360 expression: Ref($volume, 38)/($volume+1e-12) Alpha360 batch V4 passed."
+split_003,28,amount_cv_20,Volatility / Risk,project_basic,liquidity,20-day coefficient of variation of trading amount.
+split_003,29,amount_mean_20,Size / Liquidity,project_basic,liquidity,Existing V4 seed factor; liquidity exposure diagnostic.
+split_003,30,corr_ret_amount_20,Other,project_basic,price_volume,20-day rolling correlation between return and trading amount.
+split_003,31,kunquant_alpha101_alpha002,Reversal / Short-term Price-Volume,alpha101,alpha101,Alpha101 batch V4 passed.
+split_003,32,kunquant_alpha101_alpha003,Reversal / Short-term Price-Volume,alpha101,alpha101,Alpha101 batch V4 passed.
+split_003,33,kunquant_alpha101_alpha005,Reversal / Short-term Price-Volume,alpha101,alpha101,Alpha101 batch V4 passed.
+split_003,34,kunquant_alpha101_alpha011,Reversal / Short-term Price-Volume,alpha101,alpha101,Alpha101 batch V4 passed.
+split_003,35,kunquant_alpha101_alpha012,Reversal / Short-term Price-Volume,alpha101,alpha101,Generated from KunQuant pandas reference smoke; coverage=0.987213 V4 smoke passed for selected Alpha101 adapter factor.
+split_003,36,kunquant_alpha101_alpha013,Reversal / Short-term Price-Volume,alpha101,alpha101,Alpha101 batch V4 passed.
+split_003,37,kunquant_alpha101_alpha020,Reversal / Short-term Price-Volume,alpha101,alpha101,Alpha101 batch V4 passed.
+split_003,38,kunquant_alpha101_alpha024,Reversal / Short-term Price-Volume,alpha101,alpha101,Alpha101 batch V4 passed.
+split_003,39,kunquant_alpha101_alpha026,Reversal / Short-term Price-Volume,alpha101,alpha101,Alpha101 batch V4 passed.
+split_003,40,kunquant_alpha101_alpha043,Reversal / Short-term Price-Volume,alpha101,alpha101,Alpha101 batch V4 passed.
+split_003,41,kunquant_alpha101_alpha050,Reversal / Short-term Price-Volume,alpha101,alpha101,Alpha101 batch V4 passed.
+split_003,42,kunquant_alpha101_alpha055,Reversal / Short-term Price-Volume,alpha101,alpha101,Alpha101 batch V4 passed.
+split_003,43,kunquant_alpha101_alpha062,Reversal / Short-term Price-Volume,alpha101,alpha101,Alpha101 batch V4 passed.
+split_003,44,kunquant_alpha101_alpha071,Reversal / Short-term Price-Volume,alpha101,alpha101,Alpha101 batch V4 passed.
+split_003,45,kunquant_alpha101_alpha072,Reversal / Short-term Price-Volume,alpha101,alpha101,Alpha101 batch V4 passed.
+split_003,46,kunquant_alpha101_alpha094,Reversal / Short-term Price-Volume,alpha101,alpha101,Alpha101 batch V4 passed.
+split_003,47,ta_trend_adx_pos,Momentum / Trend,ta,ta_trend,Generated from ta wrapper smoke; coverage=0.967395 TA batch V4 passed.
+split_003,48,ta_trend_dpo,Momentum / Trend,ta,ta_trend,Generated from ta wrapper smoke; coverage=0.875828 TA batch V4 passed.
+split_003,49,ta_trend_mass_index,Volatility / Risk,ta,ta_trend,Generated from ta wrapper smoke; coverage=0.773831 TA batch V4 passed.
+split_003,50,ta_volatility_bbhi,Volatility / Risk,ta,ta_volatility,Generated from ta wrapper smoke; coverage=1.000000 TA batch V4 passed.
+split_003,51,ta_volume_em,Size / Liquidity,ta,ta_volume,Generated from ta wrapper smoke; coverage=0.988161 TA batch V4 passed.

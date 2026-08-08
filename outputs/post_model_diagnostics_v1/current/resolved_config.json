@@ -1,0 +1,175 @@
+{
+  "cache": {
+    "base_dir": "outputs/post_model_diagnostics_v1/runtime/base",
+    "core_dir": "outputs/post_model_diagnostics_v1/runtime/core"
+  },
+  "expected_factor_counts": {
+    "split_001": 45,
+    "split_002": 46,
+    "split_003": 52
+  },
+  "expected_factor_intersection": 22,
+  "expected_factor_union": 77,
+  "experiment_class": "post_observation_research",
+  "external_style": {
+    "cache_dir": "outputs/post_model_diagnostics_v1/runtime/external_style",
+    "enabled": true,
+    "future_sources": {
+      "industry": "tushare.index_member_all",
+      "market_cap": "tushare.daily_basic"
+    },
+    "input_path": null,
+    "required_for_core": false,
+    "schema_version": 1
+  },
+  "forward_returns": {
+    "entry_lag": 1,
+    "frozen_label": "label_20d_t1",
+    "horizons": [
+      1,
+      5,
+      10,
+      20
+    ],
+    "label_atol": 1e-07,
+    "label_rtol": 1e-07,
+    "price_column": "$close"
+  },
+  "governance": {
+    "features_reselected": false,
+    "historical_test_already_observed": true,
+    "model_retrained": false,
+    "portfolio_rule_changed": false,
+    "predictions_regenerated": false,
+    "production_model_selected": false,
+    "unbiased_final_estimate": false
+  },
+  "metrics": {
+    "icir_ddof": 1,
+    "minimum_daily_pairs": 100,
+    "minimum_valid_days": 20
+  },
+  "output_dir": "outputs/post_model_diagnostics_v1/current",
+  "parents": {
+    "builtin_feature_importance": "outputs/research_lightgbm_v1/development/feature_importance.csv",
+    "date_assignments": "outputs/research_selection_lineage_closure_v1/current/date_assignments.csv",
+    "exposure_capability": "outputs/exposure_data_capability_audit_v1/current/exposure_data_capability_board.csv",
+    "factor_catalog_manifest": "outputs/full_research_factor_catalog_669_v1/current/artifact_manifest.json",
+    "factor_inventory": "outputs/full_research_factor_catalog_669_v1/current/factor_inventory.csv",
+    "factor_weights": "outputs/research_selection_lineage_closure_v1/current/factor_weights_by_split.csv",
+    "labels_manifest": "outputs/full_research_labels_v2/current/artifact_manifest.json",
+    "labels_runtime": "outputs/full_research_feature_matrix_v4/runtime/labels_v2.parquet",
+    "lightgbm_development_manifest": "outputs/research_lightgbm_v1/development/artifact_manifest.json",
+    "lightgbm_release_manifest": "outputs/research_lightgbm_v1/current/artifact_manifest.json",
+    "matrix_manifest": "outputs/full_research_feature_matrix_v4/current/artifact_manifest.json",
+    "matrix_partitions": "outputs/full_research_feature_matrix_v4/current/partition_status.csv",
+    "model_receipt": "outputs/research_lightgbm_v1/development/model_receipt.csv",
+    "portfolio_manifest": "outputs/historical_portfolio_backtest_v1/current/artifact_manifest.json",
+    "portfolio_output_dir": "outputs/historical_portfolio_backtest_v1/current",
+    "prediction_receipt": "outputs/research_lightgbm_v1/current/prediction_receipt.csv",
+    "preprocessing_receipt": "outputs/research_lightgbm_v1/development/preprocessing_receipt.csv",
+    "raw_market_cache": "outputs/full_research_feature_matrix_v1/runtime/raw_ohlcva.parquet",
+    "release_freeze_dir": "outputs/research_lightgbm_v1/test_release_freeze/release_freezes",
+    "selection_manifest": "outputs/research_selection_lineage_closure_v1/current/artifact_manifest.json",
+    "split_allowlist_manifest": "outputs/research_selection_lineage_closure_v1/current/split_allowlist_manifest.csv"
+  },
+  "permutation": {
+    "enabled": true,
+    "random_seed": 20260808,
+    "repeats": 3,
+    "sampled_dates_per_split": 20
+  },
+  "prediction_equivalence": {
+    "atol": 1e-11,
+    "rtol": 1e-10,
+    "sample_rows_per_split": 4096
+  },
+  "profile_name": "full_research",
+  "profile_type": "full_research",
+  "qlib_commit_sha": "d5379c520f66a39953bad76234a7019a72796fd0",
+  "qlib_repository": "E:/qlib_prj/qlib_clone",
+  "ranking": {
+    "buckets": [
+      {
+        "end": 10,
+        "name": "rank_001_010",
+        "start": 1
+      },
+      {
+        "end": 20,
+        "name": "rank_011_020",
+        "start": 11
+      },
+      {
+        "end": 30,
+        "name": "rank_021_030",
+        "start": 21
+      },
+      {
+        "end": 50,
+        "name": "rank_031_050",
+        "start": 31
+      },
+      {
+        "end": 100,
+        "name": "rank_051_100",
+        "start": 51
+      },
+      {
+        "end": 200,
+        "name": "rank_101_200",
+        "start": 101
+      },
+      {
+        "end": null,
+        "name": "rank_201_plus",
+        "start": 201
+      }
+    ],
+    "edge_band_end": 60,
+    "edge_band_start": 41,
+    "edge_topk": 50,
+    "retention_topk": [
+      10,
+      20,
+      50,
+      100
+    ],
+    "stability_lags": [
+      1,
+      5,
+      10,
+      20
+    ]
+  },
+  "research_run_family_id": "full_research_factor_669_v1",
+  "resources": {
+    "peak_rss_mib": 4096,
+    "runtime_disk_gib": 8,
+    "threads": 1
+  },
+  "schema_version": 2,
+  "shap": {
+    "enabled": true,
+    "maximum_rows_per_split": 3000,
+    "random_seed": 20260808,
+    "required_version": "0.49.1",
+    "sampled_dates_per_split": 20
+  },
+  "smoke_output_dir": "tmp/post_model_diagnostics_v1_smoke",
+  "split_ids": [
+    "split_001",
+    "split_002",
+    "split_003"
+  ],
+  "stage_id": "post_model_diagnostics_v1",
+  "stage_name": "Model Diagnostic V1",
+  "style_proxies": {
+    "bucket_count": 3,
+    "liquidity_proxy": "amount_mean_20",
+    "momentum_source": "alpha158_ROC20",
+    "momentum_transform": "reciprocal_minus_one",
+    "volatility_proxy": "alpha158_STD20"
+  },
+  "taxonomy_config": "configs/model_diagnostic_factor_taxonomy_v1.yaml"
+}

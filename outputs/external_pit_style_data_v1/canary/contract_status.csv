@@ -1,0 +1,11 @@
+﻿check_name,status,severity,observed_value,required_value
+token_environment_only,pass,critical,TUSHARE_TOKEN,TUSHARE_TOKEN
+daily_basic_segments,pass,critical,1,1
+sw2021_l1_catalog,pass,critical,1,1
+industry_current_and_history,pass,critical,Y+N,Y+N
+failed_segments,pass,critical,0,0
+industry_intervals_nonempty,pass,critical,174,>0
+project_trading_calendar_alignment,pass,critical,2000.0,>0
+project_universe_market_cap_join,pass,critical,0.998,0.98
+selected_sample_mapping,pass,critical,5.0,>0
+canary_ambiguous_membership,pass,critical,0.0,0

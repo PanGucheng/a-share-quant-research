@@ -99,6 +99,14 @@ while portfolio-relative performance deteriorated.
 These are historical, already observed results. They are not a basis for claiming
 an unbiased final estimate or a production-ready strategy.
 
+Model Diagnostic V1 has now closed. Core Diagnostic, External PIT Style Data V1,
+and the Style Attribution Extension are all `pass/complete`; the authoritative
+closeout is `docs/MODEL_DIAGNOSTIC_V1_CLOSEOUT.md`. The combined evidence rejects a
+persistent Small Cap explanation, extreme single-industry concentration, Top10
+dilution, and transaction cost alone as sufficient explanations. Relationship
+non-stationarity and Size/style-conditional effectiveness remain hypotheses for a
+future, separately frozen protocol rather than established causes.
+
 ## 6. Why Forward Collection Has Temporal Priority
 
 Historical diagnostics and prospective evidence do not have the same time property.
@@ -145,14 +153,14 @@ daily checks cover trading date, instrument count, OHLC gaps, volume anomalies,
 52-feature count, and feature missing rate. It should not introduce another ingest
 governance framework.
 
-## 8. Parallel Historical Research — Strategy Diagnostics V1
+## 8. Completed Historical Research — Strategy Diagnostics V1
 
-Strategy Diagnostics remains important, but it does not block the Forward Track. It
-explains the historical performance change; it does not search for a better strategy.
-It should reuse frozen predictions, existing historical backtest outputs,
-market/factor data, universe membership, and reliable existing industry/style fields.
+Strategy Diagnostics is closed and does not block the Forward Track. It explains the
+historical performance change; it did not search for a better strategy. It reused
+frozen predictions, existing historical backtest outputs, market/factor data,
+universe membership, and historical effective-date market-cap/industry data.
 
-The analysis covers:
+The completed analysis covers:
 
 - daily, monthly, cumulative, and 20/60-day rolling strategy, benchmark, and excess
   performance;
@@ -173,9 +181,10 @@ This research must not call `model.fit`, retrain any model, select factors/featu
 search hyperparameters, scan TopK or rebalance intervals, optimize portfolio
 parameters, or create a new preferred strategy from `split_003`.
 
-The intended lightweight interface is one configuration and one command, with CSVs,
-figures, `report.md`, and at most a simple `run_info.json`. Its findings may generate
-Strategy V2 hypotheses but must not modify the frozen Strategy V1 definition.
+The stage is frozen except for a proven data error, leakage, contract failure,
+implementation bug, or append-only clarification. Its findings may inform a future
+Model V2 Research Protocol but must not modify the frozen Strategy V1 definition.
+Benchmark constituent attribution remains unresolved/non-blocking.
 
 ## 9. Phase 2 — Accumulate and Evaluate Forward Evidence
 
@@ -202,6 +211,11 @@ Develop Strategy V2 only if the combined evidence identifies a concrete, actiona
 problem. Observed history can generate hypotheses, but V2 receives a new version and
 start/freeze date, and its real validation begins with new forward evidence after
 that date. Preserve Strategy V1 and all of its forward history alongside it.
+
+The next-stage entry, if explicitly authorized, is a separately documented **Model
+V2 Research Protocol**. It must preregister the time-adaptation, relationship-
+non-stationarity, Size/style-conditional, and alternative-model questions before
+training. Candidate approaches are non-binding until that protocol is frozen.
 
 ## 12. Phase 5 — Long-Term Validation
 

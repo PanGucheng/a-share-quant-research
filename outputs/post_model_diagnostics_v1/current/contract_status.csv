@@ -1,0 +1,8 @@
+﻿check_name,status,severity,observed_value,required_value
+stage_identity,pass,critical,post_model_diagnostics_v1,post_model_diagnostics_v1
+governance_no_mutation,pass,critical,frozen_read_only,frozen_read_only
+prediction_equivalence,pass,critical,0,0
+label_20d_equivalence,pass,critical,0,0
+shap_runtime,pass,optional,0.49.1,0.49.1
+external_pit_style,warning,optional,unavailable_data,available_or_optional
+historical_evidence_boundary,pass,critical,historical_diagnosis,not_unbiased_future_evidence

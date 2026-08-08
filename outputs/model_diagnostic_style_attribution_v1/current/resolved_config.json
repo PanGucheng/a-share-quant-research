@@ -1,0 +1,72 @@
+{
+  "benchmark_optional": {
+    "confirmed_tushare_code": "000985.CSI",
+    "frequency": "monthly",
+    "project_symbol": "SH000985",
+    "status": "mcp_canary_available_not_formal_input"
+  },
+  "cohorts": [
+    10,
+    20,
+    50,
+    100
+  ],
+  "controlled_attribution": {
+    "equal_weighted_daily_cross_section": true,
+    "regressors": [
+      "model_score_z",
+      "size_percentile_z",
+      "sw_l1_fixed_effects"
+    ],
+    "target": "return_20d_t1"
+  },
+  "experiment_class": "post_observation_research",
+  "governance": {
+    "core_rerun": false,
+    "historical_test_already_observed": true,
+    "model_retrained": false,
+    "portfolio_changed": false,
+    "unbiased_final_estimate": false
+  },
+  "minimum_daily_pairs": 30,
+  "minimum_valid_days": 20,
+  "output_dir": "outputs/model_diagnostic_style_attribution_v1/current",
+  "parents": {
+    "core_factor_structure": "outputs/post_model_diagnostics_v1/current/factor_structure.csv",
+    "core_manifest": "outputs/post_model_diagnostics_v1/current/artifact_manifest.json",
+    "core_runtime_provenance": "outputs/post_model_diagnostics_v1/current/runtime_provenance.json",
+    "external_style_data": "outputs/external_pit_style_data_v1/current/external_pit_style_data.parquet",
+    "external_style_manifest": "outputs/external_pit_style_data_v1/current/artifact_manifest.json",
+    "factor_weights": "outputs/research_selection_lineage_closure_v1/current/factor_weights_by_split.csv",
+    "model_manifest": "outputs/research_lightgbm_v1/current/artifact_manifest.json",
+    "portfolio_manifest": "outputs/historical_portfolio_backtest_v1/current/artifact_manifest.json",
+    "prediction_receipt": "outputs/research_lightgbm_v1/current/prediction_receipt.csv"
+  },
+  "profile_name": "full_research",
+  "profile_type": "full_research",
+  "protected_frozen_files": [
+    "outputs/post_model_diagnostics_v1/current/artifact_manifest.json",
+    "outputs/post_model_diagnostics_v1/current/p01_attribution.csv",
+    "outputs/research_lightgbm_v1/current/artifact_manifest.json",
+    "outputs/research_lightgbm_v1/current/prediction_receipt.csv",
+    "outputs/historical_portfolio_backtest_v1/current/artifact_manifest.json"
+  ],
+  "research_run_family_id": "full_research_factor_669_v1",
+  "schema_version": 1,
+  "size_buckets": [
+    "Small",
+    "Mid",
+    "Large"
+  ],
+  "split_ids": [
+    "split_001",
+    "split_002",
+    "split_003"
+  ],
+  "stage_id": "model_diagnostic_style_attribution_v1",
+  "stage_name": "Model Diagnostic Style Attribution Extension V1",
+  "style_proxy_association": {
+    "interpretation": "higher_values_mean_more_liquid",
+    "liquidity_proxy": "amount_mean_20"
+  }
+}

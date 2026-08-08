@@ -69,8 +69,8 @@ The authoritative roadmap is `docs/PERSONAL_QUANT_RESEARCH_ROADMAP.md`:
 
 1. highest-priority Forward Track: Daily Data Update, frozen Strategy V1 prediction,
    and paper portfolio recording;
-2. parallel historical Strategy Diagnostics V1, which must not block forward data
-   collection;
+2. completed historical Strategy Diagnostics V1 evidence, which remains frozen and
+   must not block forward data collection;
 3. accumulation and evaluation of genuine prospective evidence;
 4. Strategy V2 only if historical diagnostics plus forward evidence justify it;
 5. shadow trading or small-capital validation much later.
@@ -79,13 +79,14 @@ Genuine forward evidence has temporal priority: historical analysis can be repro
 later from preserved data, but a prediction or paper decision not genuinely produced
 at the time cannot later be reconstructed as independent prospective evidence.
 
-Current business priority is to begin genuine forward evidence collection through
-lightweight Daily Data Update and Forward Research work. Strategy Diagnostics V1
-remains an important parallel historical research task; it diagnoses the already
-observed LightGBM + P01 results without changing Strategy V1, training, factor
-selection, hyperparameter search, TopK scans, rebalance scans, or portfolio
-optimization. Until the user explicitly asks implementation to resume, this roadmap
-change does not authorize building or running either track.
+Current business priority is genuine forward evidence collection through lightweight
+Daily Data Update and Forward Research work. Strategy Diagnostics V1, External PIT
+Style Data V1, and the Style Attribution Extension are closed historical research
+stages. Their findings may only generate hypotheses for a separately frozen Model V2
+Research Protocol; they do not authorize changing Strategy V1, training Model V2,
+factor selection, hyperparameter search, TopK/rebalance scans, or portfolio
+optimization. Unless a proven error, leakage, contract failure, or implementation
+bug is found, later work may only append clarification or open a new version/stage.
 
 ## Codex Change Discipline
 
