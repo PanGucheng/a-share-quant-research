@@ -1,0 +1,4 @@
+﻿outer_split_id,proxy,coverage_status,mean_daily_rank_correlation_with_size,small_mean_daily_proxy_percentile,mid_mean_daily_proxy_percentile,large_mean_daily_proxy_percentile,valid_days,coverage_rows
+split_001,amount_mean_20,pass,0.5441707283351003,0.3300483049035233,0.4761081180132269,0.7022024633488383,120,238729
+split_002,amount_mean_20,pass,0.47068456481572174,0.3473158699457686,0.48703419846628787,0.6688507564490794,124,245682
+split_003,amount_mean_20,pass,0.5950428648794738,0.29084640457367456,0.5053681592774497,0.7019498492318634,124,246237

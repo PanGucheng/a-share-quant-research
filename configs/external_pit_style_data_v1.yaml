@@ -1,0 +1,53 @@
+schema_version: 1
+stage_id: external_pit_style_data_v1
+stage_name: External PIT Style Data V1
+profile_name: full_research
+profile_type: full_research
+research_run_family_id: full_research_factor_669_v1
+experiment_class: post_observation_research
+
+parents:
+  core_manifest: outputs/post_model_diagnostics_v1/current/artifact_manifest.json
+  labels_manifest: outputs/full_research_labels_v2/current/artifact_manifest.json
+  labels_runtime: outputs/full_research_feature_matrix_v4/runtime/labels_v2.parquet
+  prediction_receipt: outputs/research_lightgbm_v1/current/prediction_receipt.csv
+
+source:
+  provider: tushare
+  token_environment_variable: TUSHARE_TOKEN
+  daily_basic_fields: [ts_code, trade_date, total_mv, circ_mv, total_share, float_share, close]
+  market_cap_unit: ten_thousand_cny
+  industry_source: SW2021
+  industry_level: L1
+  industry_flags: [Y, N]
+
+canary:
+  trade_date: 20250805
+  l1_code: 801010.SI
+  sample_instruments: [SH600000, SZ000001, SZ300750, SH688981, SH600298]
+
+retrieval:
+  minimum_interval_seconds: 0.35
+  maximum_attempts: 4
+  initial_backoff_seconds: 1.0
+  raw_dir: outputs/external_pit_style_data_v1/runtime/raw
+
+size:
+  primary_field: total_mv
+  secondary_field: circ_mv
+  small_upper_percentile: 0.30
+  large_lower_percentile: 0.70
+
+coverage:
+  minimum_market_cap_ratio: 0.98
+  minimum_industry_ratio: 0.90
+
+output_dir: outputs/external_pit_style_data_v1/current
+canary_output_dir: outputs/external_pit_style_data_v1/canary
+
+governance:
+  historical_effective_date_classification: true
+  historical_database_vintage_claimed: false
+  future_backfill_allowed: false
+  current_classification_backfill_allowed: false
+  core_rerun_allowed: false

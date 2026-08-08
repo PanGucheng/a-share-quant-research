@@ -1,0 +1,55 @@
+schema_version: 1
+stage_id: model_diagnostic_style_attribution_v1
+stage_name: Model Diagnostic Style Attribution Extension V1
+profile_name: full_research
+profile_type: full_research
+research_run_family_id: full_research_factor_669_v1
+experiment_class: post_observation_research
+
+parents:
+  core_manifest: outputs/post_model_diagnostics_v1/current/artifact_manifest.json
+  core_runtime_provenance: outputs/post_model_diagnostics_v1/current/runtime_provenance.json
+  core_factor_structure: outputs/post_model_diagnostics_v1/current/factor_structure.csv
+  external_style_manifest: outputs/external_pit_style_data_v1/current/artifact_manifest.json
+  external_style_data: outputs/external_pit_style_data_v1/current/external_pit_style_data.parquet
+  factor_weights: outputs/research_selection_lineage_closure_v1/current/factor_weights_by_split.csv
+  prediction_receipt: outputs/research_lightgbm_v1/current/prediction_receipt.csv
+  model_manifest: outputs/research_lightgbm_v1/current/artifact_manifest.json
+  portfolio_manifest: outputs/historical_portfolio_backtest_v1/current/artifact_manifest.json
+
+protected_frozen_files:
+  - outputs/post_model_diagnostics_v1/current/artifact_manifest.json
+  - outputs/post_model_diagnostics_v1/current/p01_attribution.csv
+  - outputs/research_lightgbm_v1/current/artifact_manifest.json
+  - outputs/research_lightgbm_v1/current/prediction_receipt.csv
+  - outputs/historical_portfolio_backtest_v1/current/artifact_manifest.json
+
+split_ids: [split_001, split_002, split_003]
+cohorts: [10, 20, 50, 100]
+size_buckets: [Small, Mid, Large]
+minimum_daily_pairs: 30
+minimum_valid_days: 20
+
+controlled_attribution:
+  target: return_20d_t1
+  regressors: [model_score_z, size_percentile_z, sw_l1_fixed_effects]
+  equal_weighted_daily_cross_section: true
+
+style_proxy_association:
+  liquidity_proxy: amount_mean_20
+  interpretation: higher_values_mean_more_liquid
+
+benchmark_optional:
+  project_symbol: SH000985
+  confirmed_tushare_code: 000985.CSI
+  frequency: monthly
+  status: mcp_canary_available_not_formal_input
+
+output_dir: outputs/model_diagnostic_style_attribution_v1/current
+
+governance:
+  core_rerun: false
+  model_retrained: false
+  portfolio_changed: false
+  historical_test_already_observed: true
+  unbiased_final_estimate: false
