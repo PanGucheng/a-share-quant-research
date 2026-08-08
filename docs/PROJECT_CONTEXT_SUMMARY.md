@@ -31,12 +31,11 @@ evidence。历史数据与诊断可以稍后复现；某日若没有用当时可
 prediction 和 paper decision，未来不能把事后补算结果声称为当天的独立 forward
 证据。因此 forward collection 具有时间优先级。
 
-Strategy Diagnostics V1 是重要的并行历史研究任务，但不再是 Forward Track 的前置
-条件。它解释 P01 在 `split_003` 的历史弱势，只做 performance、IC、style/industry、
-concentration 和 turnover/cost 诊断，不重训、不筛因子、不扫描 TopK/调仓周期、
-不修改 Strategy V1。未来只有结合历史诊断与 genuine forward evidence，才判断是否
-创建并独立保留 Strategy V2；shadow/small-capital 属于长期方向。本次文档调整不
-实施任何业务模块。
+Strategy Diagnostics V1 已正式 `closed / complete`。Core、External PIT Style Data
+V1 和 Style Attribution Extension 均为 `pass/complete`；权威收尾见
+`docs/MODEL_DIAGNOSTIC_V1_CLOSEOUT.md`。未来只有结合该历史诊断与 genuine forward
+evidence，才判断是否另行冻结 Model V2 Research Protocol；当前不训练 V2、不修改
+Strategy V1，shadow/small-capital 仍属于长期方向。
 
 ## Environment
 
@@ -65,6 +64,16 @@ E:/qlib_prj/qlib_data/cn_data_community_20260609_derived
 - 临时参考仓库放在 `tmp/reference_repos/`，该目录被 `.gitignore` 忽略。
 
 ## Historical Research Status
+
+> **2026-08-09 Model Diagnostic V1 正式收尾：**Core、External PIT Style Data V1 与
+> Style Attribution Extension 均为 pass/complete。split_003 20D Rank IC 为 0.051802，
+> 较 development 均值低 0.058702；Top10 excess 为 -0.010924；成本拖累 0.058019，
+> 但不足以解释全部 benchmark 落后。External PIT 覆盖 368 日、735,882 行，最低市值/
+> 行业覆盖 0.993493/0.998499。Persistent Small Cap、Liquidity==Size、极端行业集中、
+> Top10 集中和成本主因均不受支持；Size regime change 已观察，控制 Size/SW L1 后的
+> model alpha 为 mixed。relationship non-stationarity 是未来测试的 leading working
+> hypothesis，但不是已证明根因。Benchmark attribution unresolved/non-blocking。
+> 下一入口只能是先冻结 Model V2 Research Protocol，不在本阶段训练或选择模型。
 
 > **2026-08-06 PR #24 Historical Portfolio Backtest V1 完成：**只消费三份冻结 LightGBM historical test prediction，复用既有 Qlib Exchange/SimulatorExecutor、Market Cache V3、t+1、T+1、动态整手、涨跌停/停牌代理、5% 参与率与固定费用；没有重训、重建 prediction 或改变因子。预注册 6 个 TopK/调仓规则只在 split_001/002 比较，选中 P01（Top 50、5 日调仓），选择时 holdout read/execution 均为 0。P01 两段 development 平均净收益 29.10%、平均年化超额 61.70%、平均成本拖累 7.01%；随后唯一一次 split_003 holdout 净收益 3.57%，但相对 SH000985 年化超额 -30.24%、信息比率 -1.86、最大回撤 -4.33%、成本拖累 5.80%，未支持开发期的相对表现。即使近似加回成本，gross 9.37% 仍低于基准 19.19%；holdout 实际持仓 stale fallback 日期为 0，因此首要研究方向是市场状态稳定性与风格暴露，成本/换手居次，历史可交易性只保留为可信度限制。阶段合同全部通过，artifact 为 `historical_portfolio_backtest_v1:de86a138...`；结论仍是 post-observation / approximate 个人研究证据，`unbiased_final_estimate=false`、`production_model_selected=false`、`live_trading_ready=false`。不得因该回测继续扫描参数；如进入 forward paper portfolio，需另行冻结 P01 规则。
 
@@ -174,14 +183,13 @@ tmp/reference_repos/techfactor
 
 ## Next Work
 
-> **2026-08-07 Forward-first 路线修正：**当前最高优先级是 Daily Data Update V1、
+> **2026-08-09 Diagnostic closeout 后续入口：**当前最高优先级仍是 Daily Data Update V1、
 > 冻结 Strategy V1 prediction 与 paper portfolio 组成的轻量 Forward Track，尽快开始
-> 产生无法事后补回的 genuine prospective evidence。Strategy Diagnostics V1 改为并行
-> 历史研究任务，复用冻结 predictions、Historical Portfolio Backtest V1 与现有市场/
-> 因子/universe 数据解释 performance、rolling Rank IC、Size/Momentum/Volatility/
-> Industry、集中度及 turnover/cost；它不阻塞 forward，也不得训练、选择因子、搜索
-> 参数、扫描 TopK/rebalance 或修改 Strategy V1。以下旧 `Next Work` 条目仅保留历史
-> 时间线，不再代表当前执行优先级。
+> 产生无法事后补回的 genuine prospective evidence。Strategy Diagnostics V1 已关闭；
+> 后续不得通过修改其口径做 retrospective optimization。若进入下一历史研究阶段，
+> 必须先单独冻结 Model V2 Research Protocol，再研究 time adaptation、relationship
+> non-stationarity、Size/style conditional effectiveness 与 alternative model structure。
+> 以下旧 `Next Work` 条目仅保留历史时间线，不再代表当前执行优先级。
 
 > **2026-07-24 Accuracy Correction V1.1 / Data Source Audit V2 接管主线：**实现前核验确认 `split_transparent_score_v2` 为 pass 但 lineage inconsistent，根因是 date-only `purged_walk_forward_v1` 仍携带旧 Universe v1，并与 Matrix v4/Universe v2 一起被 policy、mutation、canary 和 score 的无维度 lineage 聚合传播；下游又未统一检查 parent lineage/critical contracts。`instrument_state_v1` 的 124 个 unknown-board 行全部属于合法创业板代码 `SZ302132`（中航成飞由 300114 变更代码），当前推断器漏掉 302 号段；这导致 critical `lot_rule_resolved=blocked`，但 manifest 仍错误为 pass。当前计划先实施维度化 lineage 语义、通用 fail-closed publication/parent/transitive gate、score 数值无损重发和最小执行链；再做 Community/BaoStock/AKShare 100–200 股 canary。不得进入 PR #5A、训练模型、改变选择链或声称 authoritative historical OOS。
 

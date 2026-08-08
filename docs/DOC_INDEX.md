@@ -9,7 +9,15 @@
   research-first；严格保留无未来数据、时间隔离和已观察 holdout 不得复用调参的
   科研底线。当前最高优先级是 Daily Data Update、冻结 Strategy V1 prediction 与
   paper portfolio 组成的 Forward Track；Strategy Diagnostics V1 是不阻塞 forward
-  的并行历史研究。二者后续共同支持 Strategy V2 决策。
+  的已完成历史研究。其 closeout 与未来 genuine forward evidence 共同支持是否启动
+  Model V2 Research Protocol 的决策。
+- `MODEL_DIAGNOSTIC_V1_CLOSEOUT.md`
+  Model Diagnostic V1、External PIT Style Data V1 与 Style Attribution Extension
+  的正式收尾：阶段状态、权威 artifact 入口、被削弱/否定的简单解释、保留的未来
+  检验假设、冻结边界与 Model V2 Research Protocol 交接。
+- `MODEL_DIAGNOSTIC_V1_IMPLEMENTATION_PLAN.md`
+  Model Diagnostic V1 三阶段的实现边界、数据口径、执行记录与复现命令；详细统计
+  仍以对应正式 artifact 为准。
 - `HISTORICAL_PORTFOLIO_BACKTEST_V1.md`
   PR #24 个人研究级历史组合回测：只消费冻结 LightGBM test predictions，固定比较 6 个 Long Only TopK 等权规则；split_001/002 选择参数，split_003 单次 holdout，并复用现有 Qlib Exchange/Executor 与 A 股约束。
 - `PROSPECTIVE_FORWARD_CONFIRMATION_V1_PLAN.md`
@@ -189,5 +197,7 @@ Strategy V1 继续固定为 frozen LightGBM、52 因子、Long Only Top50 等权
 
 当前时间敏感主线是轻量 Forward Track：Daily Data Update、Strategy V1 prediction、
 paper portfolio 与持久记录，目标是尽快开始 genuine prospective evidence collection。
-Strategy Diagnostics V1 并行解释历史失效，不修改 V1，也不阻塞 forward。未来结合
-两类证据再判断是否创建 Strategy V2；生产交易基础设施不在当前范围。
+Strategy Diagnostics V1 已正式 `closed / complete`，不再继续调整历史解释；其证据
+与未来 genuine forward evidence 共同决定是否另行冻结 Model V2 Research Protocol。
+Benchmark constituent attribution 保持 unresolved/non-blocking；生产交易基础设施不在
+当前范围。

@@ -76,10 +76,10 @@ and absolute tolerances and publish maximum differences and mismatch counts.
 
 Core completion requires all three splits, exact feature counts/hashes, 20D label
 equivalence, non-empty diagnostic tables, deterministic smoke results and unchanged
-frozen artifacts. Missing optional style data is a warning, not a critical failure.
-The final report must state both `Core diagnostic complete` and
-`Style attribution partial / waiting external PIT data`, and must distinguish
-historical diagnosis from unbiased future evidence.
+frozen artifacts. Missing optional style data was a warning, not a critical failure.
+Before the extension existed, the Core-only report explicitly recorded that external
+style evidence was unavailable. Sections 7-9 supersede that capability status while
+preserving the distinction between historical diagnosis and unbiased future evidence.
 
 ## 6. Execution Record
 
@@ -174,3 +174,16 @@ E:\anaconda_envs\model_diagnostics_v1\python.exe scripts\run_external_pit_style_
 E:\anaconda_envs\model_diagnostics_v1\python.exe scripts\run_model_diagnostic_style_attribution_v1.py
 E:\anaconda_envs\model_diagnostics_v1\python.exe -m pytest -q
 ```
+
+## 9. Formal Closeout
+
+Model Diagnostic V1 Core, External PIT Style Data V1, and the Style Attribution
+Extension are formally `PASS / COMPLETE`. The concise authoritative stage status,
+combined interpretation, rejected explanations, surviving future-test hypotheses,
+frozen boundary, and Model V2 handoff are recorded in
+`docs/MODEL_DIAGNOSTIC_V1_CLOSEOUT.md`.
+
+Detailed statistics remain authoritative in the three published artifact directories;
+the closeout does not alter those artifacts or promote historical diagnosis into new
+OOS evidence. Benchmark constituent attribution remains unresolved/non-blocking and
+does not prevent this stage from closing.
