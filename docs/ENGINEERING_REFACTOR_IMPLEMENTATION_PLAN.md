@@ -222,3 +222,49 @@ CI 与本地使用同一入口；Ruff 首轮只覆盖新基础包、Daily Update
 最终状态必须保持 Strategy V1、研究时间边界、Forward evidence 和全部历史
 artifacts/manifests/receipts/lineage 不变。本轮不做 `src/` 大迁移，不批量清除
 历史 `sys.path`，不实现 KunQuant 或 factor-engine 插件系统。
+
+## 12. Phase 1 实施回执（2026-08-09）
+
+Phase 1 已按计划完成，并保持所有活动业务入口不变：
+
+```text
+pyproject_editable_install_ready      = true
+portable_project_settings_ready       = true
+ignored_local_override_ready          = true
+runtime_doctor_ready                  = true
+atomic_io_foundation_ready            = true
+active_cli_migrated                   = false
+daily_forward_behavior_changed        = false
+```
+
+实际实现：
+
+- `ProjectSettings` 只管理项目与数据路径，不包含 Python executable；
+- committed `configs/project.yaml` 的 Qlib source/provider/cache 为 `null`；
+- `configs/project.local.yaml` 只保存当前机器路径并被 Git 忽略；
+- base YAML 与 partial local/explicit YAML 合并，字段优先级为 CLI → env → YAML；
+- 所有相对路径从 repository root 解析，不依赖 cwd；
+- `qlib-doctor` 检查 `sys.executable`、Python 3.10、依赖和外部路径；
+- `qlib_baseline.io` 提供无 pandas 依赖的 atomic path/text/JSON 写入基础；
+- editable package 同时暴露现有领域 packages，但没有迁移或修改其业务代码。
+
+验证结果：
+
+```text
+new Phase 1 tests                    = 10 passed
+full pytest                          = 333 passed, 4 existing Qlib warnings
+editable install                     = pass
+qlib-doctor --strict                 = ready / exit 0
+cross-cwd settings and console usage = pass
+```
+
+已知边界：
+
+- `reports/` 尚未建立，doctor 按 Phase 4 计划标记为 warning，不阻塞 readiness；
+- 未激活环境时 `qlib-doctor.exe` 所在 Scripts 目录可能不在 `PATH`，始终可使用
+  `python -m qlib_baseline.cli.doctor`；
+- 当 cwd 恰好存在名为 `qlib_baseline` 的无 `__init__.py` 目录时，bare
+  `import qlib_baseline` 可能被识别为 namespace package；显式
+  `qlib_baseline.settings`、module CLI 和 console script 已验证可用。Phase 2 不应依赖
+  package root 的 re-export；
+- 活动 scripts 的绝对路径和 `sys.path` 暂时保留，等待 Phase 2。

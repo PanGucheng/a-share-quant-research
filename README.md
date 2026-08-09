@@ -65,7 +65,8 @@ shadow or small-capital work remains a much later direction.
 ## Repository Layout
 
 ```text
-configs/          Qlib qrun workflow configs.
+qlib_baseline/    Lightweight settings, atomic I/O, and engineering CLI foundation.
+configs/          Project settings plus Qlib/research workflow configs.
 data_quality/     Data-quality diagnostic module.
 tradability/      Tradability label builder and reports.
 factor_research/  Factor evaluation, preprocessing, neutralization, and reports.
@@ -86,6 +87,15 @@ Python:        E:\anaconda_envs\qlib_env\python.exe
 Qlib source:   E:\qlib_prj\qlib_clone
 Qlib data:     E:\qlib_prj\qlib_data\cn_data
 Derived data:  E:\qlib_prj\qlib_data\cn_data_community_20260609_derived
+```
+
+Machine-specific data paths live in ignored `configs/project.local.yaml`, not in
+the committed portable project config. Validate the active interpreter and resolved
+paths after editable installation:
+
+```powershell
+python -m pip install -e . --no-deps
+python -m qlib_baseline.cli.doctor --strict
 ```
 
 Qlib source builds may require editable installation from the local Qlib clone:

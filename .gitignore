@@ -215,7 +215,9 @@ outputs/factor_evaluation_batch_v1/alpha360_candidate358_execution/runs/
 # Local Python/cache noise
 __pycache__/
 *.py[cod]
+*.egg-info/
 .pytest_cache/
+configs/project.local.yaml
 outputs/full_research_feature_matrix_v1/runtime/
 outputs/full_research_feature_matrix_669_v1/runtime/
 outputs/full_research_feature_matrix_669_v1/runtime_v3/

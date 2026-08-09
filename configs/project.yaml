@@ -1,0 +1,12 @@
+schema_version: 1
+
+# Machine-specific locations intentionally remain unset in committed configuration.
+# Provide them in configs/project.local.yaml, environment variables, or CLI overrides.
+paths:
+  qlib_source: null
+  qlib_provider: null
+  daily_update_cache: null
+  outputs: outputs
+  artifacts: artifacts
+  reports: reports
+  tmp: tmp

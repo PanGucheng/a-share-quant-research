@@ -10,6 +10,35 @@ This document records the environment used by the reproducible A-share Qlib base
 - Conda environment: `qlib_env`
 - Python executable: `E:/anaconda_envs/qlib_env/python.exe`
 
+## Project Settings And Doctor
+
+Committed machine-independent defaults are stored in `configs/project.yaml`. Qlib
+source, provider, and daily cache paths remain `null` there. Copy the example for a
+new workstation:
+
+```powershell
+Copy-Item configs/project.local.example.yaml configs/project.local.yaml
+```
+
+`configs/project.local.yaml` is ignored by Git. It may contain machine-specific
+paths, while repository paths such as `outputs`, `artifacts`, `reports`, and `tmp`
+continue to come from the committed base config. Environment variables or later CLI
+arguments may override individual fields.
+
+After editable installation, inspect the current interpreter, dependencies, and
+resolved paths without selecting another Python executable:
+
+```powershell
+python -m pip install -e . --no-deps
+python -m qlib_baseline.cli.doctor --strict
+```
+
+With the environment's Scripts directory on `PATH`, the equivalent command is:
+
+```powershell
+qlib-doctor --strict
+```
+
 ## Python
 
 - Python version: `3.10.19`

@@ -245,3 +245,16 @@ E:\anaconda_envs\qlib_env\python.exe -m pytest -q `
 ```
 
 Phase 0 审计时该集合为 `61 passed`。完整 CI 政策见 [CI_POLICY.md](CI_POLICY.md)。
+
+## 9. Engineering Foundation Status
+
+Phase 1 已提供：
+
+- editable `pyproject.toml`；
+- `qlib_baseline.settings.ProjectSettings`；
+- portable `configs/project.yaml` 与 ignored local override；
+- `qlib-doctor`；
+- 无 pandas 依赖的 atomic path/text/JSON I/O helper。
+
+这些能力尚未改变本文件第 3 节的活动命令。Daily/Forward/Paper scripts 仍使用原有
+参数和默认路径；只有 Phase 2 获得授权后才迁移活动 CLI。

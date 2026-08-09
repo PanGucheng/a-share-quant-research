@@ -1,0 +1,8 @@
+schema_version: 1
+
+# Copy to configs/project.local.yaml and adapt to the current workstation.
+# The local file is ignored by Git and only needs to override machine-specific paths.
+paths:
+  qlib_source: C:/path/to/qlib
+  qlib_provider: C:/path/to/qlib_data/provider
+  daily_update_cache: C:/path/to/qlib_data/daily_update_v1

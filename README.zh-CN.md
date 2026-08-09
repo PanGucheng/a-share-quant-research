@@ -50,7 +50,8 @@ Strategy Diagnostics V1 已作为历史研究关闭，其结论保持冻结，�
 ## 目录结构
 
 ```text
-configs/          Qlib qrun 工作流配置。
+qlib_baseline/    轻量 Settings、原子 I/O 和工程 CLI 基础层。
+configs/          Project Settings 与 Qlib/研究工作流配置。
 data_quality/     数据质量诊断模块。
 tradability/      可交易性标签构建与报告。
 factor_research/  因子评价、预处理、中性化和报告模块。
@@ -71,6 +72,14 @@ Python 环境：     E:\anaconda_envs\qlib_env\python.exe
 Qlib 源码仓库：   E:\qlib_prj\qlib_clone
 原始 Qlib 数据：  E:\qlib_prj\qlib_data\cn_data
 衍生数据目录：    E:\qlib_prj\qlib_data\cn_data_community_20260609_derived
+```
+
+本机数据路径只写入被 Git 忽略的 `configs/project.local.yaml`，committed project
+config 保持可移植。完成 editable install 后可检查当前解释器、依赖与最终路径：
+
+```powershell
+python -m pip install -e . --no-deps
+python -m qlib_baseline.cli.doctor --strict
 ```
 
 如果遇到 Qlib 编译扩展缺失，例如：
