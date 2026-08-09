@@ -10,6 +10,20 @@ from daily_update import features, pipeline, provider, validation
 from daily_update.sources import baostock, community
 
 
+# Compact regression input: CI must not depend on ignored Forward runtime state.
+FROZEN_FEATURES_FIXTURE = (
+    Path(__file__).parent / "fixtures" / "daily_update_frozen_feature_names.json"
+)
+
+
+def _frozen_feature_names() -> list[str]:
+    return list(
+        json.loads(FROZEN_FEATURES_FIXTURE.read_text(encoding="utf-8"))[
+            "feature_names"
+        ]
+    )
+
+
 def test_pipeline_preserves_compatibility_reexports() -> None:
     expected = {
         "CommunityRelease": community.CommunityRelease,
@@ -32,9 +46,7 @@ def test_pipeline_preserves_compatibility_reexports() -> None:
 
 
 def test_frozen_daily_defaults_and_feature_order_are_unchanged() -> None:
-    feature_names = json.loads(
-        features.PREPROCESSING.read_text(encoding="utf-8")
-    )["feature_names"]
+    feature_names = _frozen_feature_names()
 
     assert pipeline.DailyUpdateConfig.__dataclass_fields__["min_coverage"].default == 0.95
     assert (
@@ -51,9 +63,7 @@ def test_pipeline_community_orchestration_writes_only_configured_output(
     tmp_path: Path,
     monkeypatch,
 ) -> None:
-    feature_names = json.loads(
-        features.PREPROCESSING.read_text(encoding="utf-8")
-    )["feature_names"]
+    feature_names = _frozen_feature_names()
     universe = tmp_path / "universe.txt"
     universe.write_text("SH600000\n", encoding="utf-8")
     provider_path = tmp_path / "provider"
