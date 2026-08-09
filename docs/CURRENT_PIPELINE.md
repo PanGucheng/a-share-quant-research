@@ -53,7 +53,8 @@ Mature-label evaluation（成熟后独立运行）
 
 - `qlib-daily-update` / `qlib_baseline.cli.daily_update`
 - `scripts/daily_update.py`（兼容包装器）
-- `daily_update/pipeline.py`
+- `daily_update/pipeline.py`（orchestration 与兼容 facade）
+- `daily_update/sources/`、`provider.py`、`features.py`、`validation.py`
 - 配套说明：[DAILY_DATA_UPDATE_V1.md](DAILY_DATA_UPDATE_V1.md)
 
 当前命令：
@@ -265,3 +266,7 @@ Phase 1–2 已提供：
 活动 CLI 默认路径现在来自 Project Settings；显式日常业务参数和底层 pipeline
 contract 保持不变。旧 scripts 不再包含本机绝对路径或 `sys.path.insert`，但仍可在
 editable install 后作为兼容入口使用。
+
+Phase 3A 已完成 Daily Update 内部拆分并通过 Regression Gate A。Community/BaoStock
+发布时间、bridge 公式、95% coverage、450 日 warmup、52 因子顺序与 fail-closed
+语义保持不变。Phase 3B 尚未开始。

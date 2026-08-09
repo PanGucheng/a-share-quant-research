@@ -324,3 +324,56 @@ frozen outputs and artifacts diff    = empty
 - 旧 scripts 依赖 Phase 1 的 editable install，不再自行修改 Python import path；
 - calendar file、label directory 和单日 input 仍是显式业务参数，没有臆测新的配置；
 - `daily_update/pipeline.py` 仍是单体模块，拆分只属于后续获得授权的 Phase 3A。
+
+## 14. Phase 3A 实施回执（2026-08-09）
+
+Phase 3A 已完成 Daily Update decomposition，并在 Regression Gate A 后停止：
+
+```text
+daily_update_decomposed               = true
+pipeline_compatibility_facade         = true
+community_baostock_semantics_changed  = false
+bridge_formula_changed                = false
+frozen_feature_order_changed          = false
+official_forward_evidence_written     = false
+phase_3b_started                      = false
+```
+
+实际实现：
+
+- `sources/community.py` 负责 Community release、下载、provider 读取；
+- `sources/baostock.py` 负责 18:00 publication window、批量日线和 factor probe；
+- `provider.py` 负责 Community anchor、BaoStock bridge、fallback provider；
+- `features.py` 负责既有 52 因子顺序和现有 Alpha/basic/TA 计算；
+- `validation.py` 负责 frozen universe、95% coverage 和 compatibility smoke；
+- `pipeline.py` 只保留 `DailyUpdateConfig`、orchestration、输出和兼容 re-export；
+- 迁移前后逐函数 AST 核验除下述 bug fix 外完全一致。
+
+拆分审计发现并修复两个已存在的运行时错误：
+
+- `datetime.time` 遮蔽标准库 `time` 模块，使 BaoStock transient failure 的
+  `sleep` 重试分支报错；现在使用明确的 `time_module`，并有重试测试；
+- `run()` 使用 `timezone.utc` 却未导入 `timezone`，使真实 ready 路径在记录时间戳时
+  报错；现在显式导入，community orchestration synthetic 已覆盖。
+
+两项修复只恢复文档已经声明的运行行为，不改变数据、因子或研究语义。
+
+验证结果：
+
+```text
+Daily decomposition focused tests     = 11 passed
+Regression Gate A                     = 65 passed
+full pytest                           = 348 passed, 4 existing Qlib warnings
+2026-08-07 temporary replay rows      = 1845
+replay score max absolute difference  = 0
+replay label read count               = 0
+replay evidence eligible              = false
+frozen outputs and artifacts diff     = empty
+```
+
+已知边界：
+
+- saved-input replay 复制已有 2026-08-07 Daily output 到自动清理的临时目录，并只运行
+  Forward dry-run；没有重新请求市场数据或写入正式 evidence；
+- `pipeline.py` 保留输出写入 orchestration，尚未引入新的 storage abstraction；
+- Forward prediction/state/label/paper 模块未拆分，Phase 3B 仍需单独授权。

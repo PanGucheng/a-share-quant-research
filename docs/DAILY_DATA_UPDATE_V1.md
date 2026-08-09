@@ -56,6 +56,22 @@ material difference removes the current snapshot alias, records the comparison, 
 stops. This command does not run prediction, paper portfolio logic, retraining, or
 Strategy V2.
 
+## Internal Modules
+
+The public entry remains `daily_update.pipeline`. Its implementation is decomposed
+without changing the data contract:
+
+```text
+sources/community.py  Community release metadata, download, provider read
+sources/baostock.py   publication window and low-frequency batch collection
+provider.py           Community anchor, BaoStock bridge, fallback provider
+features.py           frozen ordered 52-feature computation
+validation.py         universe, coverage, and compatibility checks
+pipeline.py           configuration, orchestration, output, compatibility exports
+```
+
+Callers may continue importing the existing names from `daily_update.pipeline`.
+
 ## Forward Prediction Input
 
 The existing Forward pipeline can consume a ready day directly:

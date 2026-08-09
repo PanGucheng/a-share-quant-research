@@ -55,11 +55,39 @@ def test_baostock_range_uses_one_batch_call_per_date(monkeypatch: pytest.MonkeyP
         calls.append(day)
         return _bao_row(day), "success"
 
-    monkeypatch.setattr("daily_update.pipeline.collect_daily_all", fake_daily)
+    monkeypatch.setattr("daily_update.sources.baostock.collect_daily_all", fake_daily)
     frame, failures = collect_baostock_range(date(2026, 8, 6), date(2026, 8, 7))
     assert calls == ["2026-08-06", "2026-08-07"]
     assert len(frame) == 2
     assert failures == []
+
+
+def test_baostock_factor_probe_retries_one_transient_failure(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    from daily_update.sources import baostock as source
+
+    fake_baostock = SimpleNamespace(
+        login=lambda: SimpleNamespace(error_code="0", error_msg="success"),
+        logout=lambda: SimpleNamespace(error_code="0", error_msg="success"),
+    )
+    monkeypatch.setitem(__import__("sys").modules, "baostock", fake_baostock)
+    calls = []
+
+    def fake_factor(_day: str) -> tuple[pd.DataFrame, str]:
+        calls.append(_day)
+        if len(calls) == 1:
+            return pd.DataFrame(), "transient socket error"
+        return pd.DataFrame([{"code": "sh.600000"}]), "success"
+
+    monkeypatch.setattr(source, "collect_daily_adjust_factor", fake_factor)
+    monkeypatch.setattr(source.time_module, "sleep", lambda _seconds: None)
+
+    frame, status = source.collect_baostock_factor_once(date(2026, 8, 7))
+
+    assert status == "success"
+    assert len(frame) == 1
+    assert calls == ["2026-08-07", "2026-08-07"]
 
 
 def test_incomplete_coverage_is_safe_not_ready() -> None:

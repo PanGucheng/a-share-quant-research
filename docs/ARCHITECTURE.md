@@ -58,7 +58,7 @@ Model Diagnostic V1 (closed)
 
 | 目录 | 当前职责 | 状态 |
 |---|---|---|
-| `daily_update/` | Community/BaoStock 日更、provider bridge、冻结特征快照 | ACTIVE |
+| `daily_update/` | Community/BaoStock source、provider bridge、冻结特征、验证与 orchestration | ACTIVE |
 | `qlib_baseline/` | Project Settings、原子 I/O、doctor 与活动 CLI orchestration；不承载领域计算 | ACTIVE ENGINEERING FOUNDATION |
 | `model_research/` | 历史模型研究、Forward prediction、状态和 paper portfolio | MIXED：部分 ACTIVE，部分 FROZEN/CLOSED |
 | `factor_research/` | 因子定义、adapter、评价、筛选和历史研究工具 | FROZEN/HISTORICAL，按需维护 |
@@ -122,6 +122,20 @@ contract 未改变。
 Phase 2 不改变解释器选择。`qlib-doctor` 报告当前 interpreter、依赖和路径；活动
 CLI 消费 Project Settings，且不得向 `load_settings(project_root=...)` 传值。历史
 scripts 不在本阶段批量迁移。
+
+Phase 3A 后 Daily Update 内部依赖方向为：
+
+```text
+pipeline.py (config + orchestration + compatibility re-export)
+    ├── sources/community.py
+    ├── sources/baostock.py
+    ├── provider.py
+    ├── features.py
+    └── validation.py
+```
+
+`pipeline.py` 继续保留原公开符号，现有调用者不需要迁移。拆分没有新增 manager、
+registry、protocol 或新的数据 contract。
 
 ## 6. Factor Matrix 边界
 
