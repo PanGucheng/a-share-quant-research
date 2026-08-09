@@ -161,6 +161,11 @@ hash、provider 内容 fingerprint、原子 Parquet/sidecar 读写，不建立 c
 registry 或 lineage 平台。Matrix v4、raw snapshot manifest 和
 `research_validation.lineage` 不依赖它。
 
+Phase 6 的 quality runner 只编排既有 lint、pytest、validator 和 Qlib synthetic
+runtime 命令，不进入业务 pipeline，也不写研究 outputs。GitHub Actions 与本地共享
+`scripts/check_quality.py` 的 fast/full/qlib 命令清单，workflow 只负责依赖安装、
+路径分流与 stable gate。
+
 ## 6. Factor Matrix 边界
 
 本轮不实现 KunQuant 或 factor-engine 插件系统。上层暂时只依赖现有矩阵 contract：

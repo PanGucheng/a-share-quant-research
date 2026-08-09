@@ -7,28 +7,28 @@ from pathlib import Path
 
 import pandas as pd
 
-from daily_update.features import (
+from daily_update.features import (  # noqa: F401 - compatibility facade
     ALPHA158_TABLE,
     ALPHA360_TABLE,
     PREPROCESSING,
     _expression_features,
     compute_frozen_snapshot,
 )
-from daily_update.provider import (
+from daily_update.provider import (  # noqa: F401 - compatibility facade
     PROJECT_ROOT,
     _community_anchor,
     _load_raw,
     bridge_baostock_to_community,
     build_fallback_provider,
 )
-from daily_update.sources.baostock import (
+from daily_update.sources.baostock import (  # noqa: F401 - compatibility facade
     baostock_release_window_open,
     collect_baostock_factor_once,
     collect_baostock_range,
     collect_daily_adjust_factor,
     collect_daily_all,
 )
-from daily_update.sources.community import (
+from daily_update.sources.community import (  # noqa: F401 - compatibility facade
     COMMUNITY_REPOSITORY,
     CommunityRelease,
     _request,

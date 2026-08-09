@@ -240,6 +240,18 @@ CLOSED 阶段只允许修复可证明的数据错误、泄漏、contract failure
 
 ## 8. 修改后的验证入口
 
+Phase 6 后本地与 CI 使用统一入口：
+
+```powershell
+python scripts/check_quality.py fast
+python scripts/check_quality.py full
+python scripts/check_quality.py qlib
+```
+
+`fast` 是有限 Ruff scope 与 settings/cache/active-entry tests；`full` 是完整 pytest 与
+既有 compact/synthetic validators；`qlib` 是临时 synthetic provider 上的 Qlib
+Exchange runtime tests。完整分层与路径触发政策见 [CI_POLICY.md](CI_POLICY.md)。
+
 Forward Track 的当前针对性基线：
 
 ```powershell
@@ -288,3 +300,7 @@ official allowlist；历史 tracked outputs/artifacts 未改变。Phase 5 只加
 `factor_research/expression_adapter.py` 的旧弱缓存。新缓存使用四层 fingerprint、
 Parquet 与 `.meta.json`；旧 pickle 和显式发布的 `factor_frame.pkl` 保留。Matrix v4、
 raw snapshot manifest、lineage、Forward 与 Strategy V1 计算路径均未改变。
+
+Phase 6 新增 `scripts/check_quality.py` 并让 CI 调用同一 fast/full/qlib tier。Ruff 只
+覆盖新基础包、Daily Update、quality runner 和五个活动兼容入口；没有执行全仓格式化。
+CI 不下载完整 A 股数据、不训练模型、不运行完整矩阵或历史回测。

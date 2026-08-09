@@ -10,4 +10,4 @@ if __name__ == "__main__":
         )
     )
 
-from qlib_baseline.cli.paper_portfolio import main
+from qlib_baseline.cli.paper_portfolio import main  # noqa: F401 - import compatibility

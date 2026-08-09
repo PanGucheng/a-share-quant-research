@@ -38,6 +38,7 @@ def test_workflow_or_dependency_change_runs_all_tiers() -> None:
     for path in [
         ".github/workflows/research-validation-ci.yml",
         "requirements-research-validation.txt",
+        "scripts/check_quality.py",
     ]:
         result = classify_paths([path])
         assert result["research_code_changed"]

@@ -3,6 +3,17 @@
 仓库使用单一 `research-validation-ci` workflow，并以 `ci-gate` 作为稳定的最终
 检查。Workflow 始终启动，但只运行与变更范围匹配的重型 job。
 
+本地与 CI 共用以下入口（从仓库根目录运行）：
+
+```powershell
+python scripts/check_quality.py fast
+python scripts/check_quality.py full
+python scripts/check_quality.py qlib
+```
+
+三个 tier 可组合而不互相隐式包含：普通代码 CI 依次运行 `fast`、`full`；Qlib
+runtime job 运行 `qlib`。命令失败时立即停止并返回原退出码。
+
 ## 检查分层
 
 | 变更 | Fast docs/repository check | 完整 pytest + validators | Qlib runtime |
@@ -24,6 +35,30 @@
 - changed Markdown local-link 检查；
 - `docs/DOC_INDEX.md` 路径存在性检查；
 - 5 MiB changed-file 上限。
+
+研究代码适用的 `fast` quality tier 安装 lightweight validation requirements 后执行：
+
+- Ruff lint；
+- settings、doctor、atomic I/O 和 weak-cache tests；
+- active CLI/import tests；
+- CI classifier 与 quality-command contract tests。
+
+Ruff 首轮范围固定为：
+
+```text
+qlib_baseline/**
+daily_update/**
+scripts/check_quality.py
+五个 Forward Track 兼容入口
+```
+
+不执行 `ruff format`，也不 lint/format 全仓历史 scripts、factor/model research 或
+tracked outputs。
+
+`full` tier 执行完整 pytest，并逐项运行 workflow 原有的 25 个 compact/synthetic
+validators。`qlib` tier只运行 `tests/test_qlib_exchange_runtime.py`，使用测试自己创建的
+临时 synthetic provider。三个 tier 均不下载完整 A 股数据、不训练模型、不运行完整
+矩阵或历史回测。
 
 ## 路径规则
 

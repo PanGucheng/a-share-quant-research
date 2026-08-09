@@ -543,3 +543,34 @@ Expression  = Qlib + Pandas + NumPy
 snapshot、lineage 和业务计算函数均未修改。验证为 `11` 项 weak-cache tests、`25` 项
 factor/import targeted tests、`383 passed` full pytest（4 个既有 Qlib warnings）；
 tracked outputs/artifacts 与 protected paths 继续保持不变。Phase 6 未开始。
+
+## 18. Phase 6 实施回执（2026-08-09）
+
+Phase 6 以 `48be284` 为基线，新增统一 `scripts/check_quality.py`，并将本地与
+`research-validation-ci` 收敛到相同命令：
+
+```text
+fast = finite Ruff scope + settings/cache/active-entry/CI command tests
+full = complete pytest + 25 existing compact/synthetic validators
+qlib = existing Qlib Exchange runtime tests on a temporary synthetic provider
+```
+
+Ruff 使用 `E4/E7/E9/F`，范围只包括 `qlib_baseline/`、`daily_update/`、quality runner
+和五个 Forward Track 兼容入口。Daily Update compatibility facade 与五个 wrapper 的
+re-export 通过行级 `noqa` 明确保留；没有删除公开符号或格式化全仓。
+
+CI workflow 不再复制 pytest/validator 清单，只负责安装依赖并调用同一 quality tier。
+`scripts/check_quality.py` 自身被 classifier 视为 Qlib tier 相关路径；Ruff 加入现有
+lightweight validation requirements。
+
+验证结果：
+
+```text
+fast tier    = Ruff passed + 45 passed
+full tier    = 388 passed, 4 existing Qlib warnings + 25/25 validators passed
+qlib tier    = 6 passed, 4 existing Qlib warnings
+```
+
+所有运行均使用本地既有或测试临时数据。未下载完整 A 股数据，未训练模型，未运行完整
+矩阵或历史回测，未修改 Strategy V1、Forward evidence、Matrix v4、raw snapshot、
+lineage、tracked outputs 或 artifacts。本工程重构计划至 Phase 6 完成并停止。

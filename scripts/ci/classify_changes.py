@@ -12,6 +12,7 @@ ZERO_SHA = "0" * 40
 ROOT_DOC_NAMES = {"readme.md", "readme.zh-cn.md", "contributing.md", "changelog.md"}
 QLIB_EXACT_PATHS = {
     ".github/workflows/research-validation-ci.yml",
+    "scripts/check_quality.py",
     "tests/test_qlib_exchange_runtime.py",
     "tests/test_qlib_integration_contracts.py",
 }

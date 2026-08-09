@@ -15,4 +15,4 @@ if __name__ == "__main__":
         )
     )
 
-from qlib_baseline.cli.forward_label_update import main
+from qlib_baseline.cli.forward_label_update import main  # noqa: F401 - import compatibility

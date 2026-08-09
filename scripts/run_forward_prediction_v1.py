@@ -10,4 +10,4 @@ if __name__ == "__main__":
         )
     )
 
-from qlib_baseline.cli.forward_predict import main
+from qlib_baseline.cli.forward_predict import main  # noqa: F401 - import compatibility
