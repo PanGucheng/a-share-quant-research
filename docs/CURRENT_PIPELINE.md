@@ -264,7 +264,8 @@ Phase 1–2 已提供：
 - `qlib_baseline.settings.ProjectSettings`；
 - portable `configs/project.yaml` 与 ignored local override；
 - `qlib-doctor`；
-- 无 pandas 依赖的 atomic path/text/JSON I/O helper。
+- 无 pandas 依赖的 atomic path/text/JSON I/O helper；
+- 弱缓存使用的分层 fingerprint、规范化 AST hash、Parquet 与 sidecar helper；
 - 五个安装式 Forward Track CLI；
 - 只转发到 packaged CLI 的旧活动 scripts。
 
@@ -280,3 +281,10 @@ Phase 3B 已将 Forward Pipeline 拆为 state、binding、prediction 和 mature-
 四个职责模块，原 `forward_pipeline.py` 只保留兼容 re-export。Strategy V1、模型与
 预处理 hash、52 因子顺序、append-only state、commit binding、cutoff、label
 maturity 和 paper portfolio contract 均保持不变；Regression Gate B 已通过。
+
+Phase 4 已将未来 output tracking 收敛为目录级 policy，并将 Forward evidence 收紧为
+official allowlist；历史 tracked outputs/artifacts 未改变。Phase 5 只加固了
+`factor_research/evaluator.py`、`scripts/run_factor_research_v3.py` 和
+`factor_research/expression_adapter.py` 的旧弱缓存。新缓存使用四层 fingerprint、
+Parquet 与 `.meta.json`；旧 pickle 和显式发布的 `factor_frame.pkl` 保留。Matrix v4、
+raw snapshot manifest、lineage、Forward 与 Strategy V1 计算路径均未改变。

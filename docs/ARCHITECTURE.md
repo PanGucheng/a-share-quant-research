@@ -59,7 +59,7 @@ Model Diagnostic V1 (closed)
 | 目录 | 当前职责 | 状态 |
 |---|---|---|
 | `daily_update/` | Community/BaoStock source、provider bridge、冻结特征、验证与 orchestration | ACTIVE |
-| `qlib_baseline/` | Project Settings、原子 I/O、doctor 与活动 CLI orchestration；不承载领域计算 | ACTIVE ENGINEERING FOUNDATION |
+| `qlib_baseline/` | Project Settings、原子 I/O、弱缓存 fingerprint、doctor 与活动 CLI orchestration；不承载领域计算 | ACTIVE ENGINEERING FOUNDATION |
 | `model_research/` | 历史模型研究、Forward prediction、状态和 paper portfolio | MIXED：部分 ACTIVE，部分 FROZEN/CLOSED |
 | `factor_research/` | 因子定义、adapter、评价、筛选和历史研究工具 | FROZEN/HISTORICAL，按需维护 |
 | `qlib_integration/` | Qlib Exchange/Executor、市场语义和组合执行 | SHARED/FROZEN CONTRACT |
@@ -154,6 +154,12 @@ forward_pipeline.py (compatibility re-export only)
 迁移。prediction 模块不依赖 label 模块；label update 只消费完成 Git binding 的
 official prediction。拆分没有改变 state/receipt schema、cutoff、label maturity、
 模型/预处理 hash 或 frozen 52 因子顺序，也没有拆分 `paper_portfolio.py`。
+
+Phase 5 的缓存依赖方向保持单向：三个明确的历史弱缓存调用
+`qlib_baseline.cache` 的普通函数。该模块只提供 canonical fingerprint、规范化 AST
+hash、provider 内容 fingerprint、原子 Parquet/sidecar 读写，不建立 cache manager、
+registry 或 lineage 平台。Matrix v4、raw snapshot manifest 和
+`research_validation.lineage` 不依赖它。
 
 ## 6. Factor Matrix 边界
 

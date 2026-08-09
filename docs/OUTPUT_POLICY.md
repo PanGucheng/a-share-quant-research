@@ -144,3 +144,22 @@ Phase 4 已完成以下验收：
 - allowlist 只放行 prediction、final receipt、decision、target weights 和必要 status；
 - `git check-ignore` 回归测试覆盖关键目录分类；
 - 修改前后 tracked outputs/artifacts 集合完全一致，没有 delete、move 或 untrack。
+
+## 8. Phase 5 弱缓存格式
+
+计划内的三类历史弱缓存以后写入 `tmp/` 或既有 runtime output directory，继续默认
+忽略。新文件采用：
+
+```text
+<prefix>_<cache-key>.parquet
+<prefix>_<cache-key>.meta.json
+```
+
+只有 Parquet 和匹配 sidecar 同时存在才允许命中。key 绑定 Cache Schema、provider
+内容/calendar/instruments/universe/date、实际 computation AST/formula/engine 以及请求
+fields/schema。producer 完整文件 hash、仓库 commit 和环境版本只作为 sidecar 诊断，
+不因注释或无关函数变化制造 cache miss。
+
+旧 `.pkl` 不删除、不迁移，也不作为新 schema 默认命中。Expression adapter 仍发布
+原 contract 所需的 `factor_frame.pkl`。Matrix v4 cache、raw snapshot manifest、
+artifact manifest 和 lineage 不适用本节，也未在 Phase 5 修改。

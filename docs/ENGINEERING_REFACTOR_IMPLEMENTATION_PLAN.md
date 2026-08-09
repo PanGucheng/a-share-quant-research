@@ -482,3 +482,51 @@ Phase 4 follow-up 以 `6785980` 为基线，将最初的“Forward 全放行 + r
 blacklist”进一步收紧为“Forward 默认忽略 + official evidence allowlist”。新增
 unknown Forward runtime 回归用例；tracked outputs/artifacts 数量和内容 hash
 保持不变。
+
+## 17. Phase 5 实施回执（2026-08-09）
+
+Phase 5 以 `3b176c2` 为基线，只迁移计划列出的弱缓存：
+
+```text
+factor_research/evaluator.py       Qlib raw feature frame
+scripts/run_factor_research_v3.py  V3 basic factor frame
+factor_research/expression_adapter.py expression final/chunk cache
+```
+
+实际实现：
+
+- 新增小型 `qlib_baseline/cache.py`，提供四层 canonical fingerprint、实际函数与直接
+  helper 的规范化 AST hash、provider content snapshot、原子 Parquet/sidecar I/O；
+- Data fingerprint 对 calendar 与 instrument 文件及请求 universe/fields 对应的 Qlib
+  binary 做内容 hash，并绑定日期区间；
+- Computation fingerprint 绑定因子函数/expression/metadata、直接 helper 和确实参与
+  计算的 Qlib/Pandas/NumPy engine identity；
+- Request fingerprint 绑定 factor names、raw fields、market 与输出 schema；
+- producer 文件完整 hash、当前 Git commit、Python 和 package 版本只记录在
+  `.meta.json` diagnostics，不参与 key；
+- 新 cache 使用 Parquet；只有数据文件与匹配 sidecar 同时存在时才命中；
+- 旧 pickle 保留但不作为 schema v2 默认命中，Expression adapter 的兼容发布文件
+  `factor_frame.pkl` 仍保持原格式与路径。
+
+明确未做：
+
+- 未修改 Matrix v4 cache、配置、runner、manifest 或产物；
+- 未修改 raw snapshot audit/config/manifest/产物；
+- 未修改 `research_validation.lineage`、artifact manifest 或 Forward/Strategy V1 链路；
+- 未删除、迁移或重写任何旧 pickle、tracked output 或 artifact；
+- 未重新计算因子矩阵、训练模型、筛因子或产生新研究结论。
+
+验证结果：
+
+```text
+weak-cache focused tests      = 9 passed
+factor/import targeted tests  = 23 passed
+full pytest                   = 381 passed, 4 existing Qlib warnings
+tracked outputs               = 3183, baseline set diff empty
+tracked artifacts             = 2, baseline set diff empty
+protected cache/lineage diff  = empty
+```
+
+实际工作站上，`all_stock_shsz_liquid2000` 的 2,000 个 instruments、12,000 个
+OHLCVA binary 的内容 fingerprint 约需 6 秒。这是历史弱 cache key 解析的固定成本；
+它不进入 Forward 或 Matrix v4 路径。Phase 6 未开始，必须等待单独授权。

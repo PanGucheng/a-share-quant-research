@@ -1,8 +1,6 @@
 from __future__ import annotations
 
 import argparse
-import hashlib
-import json
 import sys
 from dataclasses import dataclass
 from multiprocessing import freeze_support
@@ -17,8 +15,29 @@ if str(PROJECT_ROOT) not in sys.path:
 
 from factor_research.dataset import TradableFilterConfig, apply_tradable_filter, prepare_research_frame
 from factor_research.diagnostics import factor_correlation, information_coefficient, summarize_factors
-from factor_research.evaluator import FactorResearchConfig, finite_numeric_rows, load_feature_frame
-from factor_research.factor_library import LABEL_COLUMNS, add_basic_factors
+from qlib_baseline.cache import (
+    build_cache_fingerprint,
+    cache_path,
+    diagnostic_metadata,
+    normalized_callable_ast_hash,
+    package_engine_identity,
+    read_dataframe_cache,
+    write_dataframe_cache,
+)
+
+from factor_research.evaluator import (
+    FactorResearchConfig,
+    feature_cache_fingerprint,
+    finite_numeric_rows,
+    load_feature_frame,
+)
+from factor_research.factor_library import (
+    BASE_FIELDS,
+    FACTOR_COLUMNS,
+    LABEL_COLUMNS,
+    add_basic_factors,
+    rolling_max_drawdown,
+)
 from factor_research.metrics import group_returns, summarize_group_returns
 from factor_research.neutralization import add_neutralized_factors
 from factor_research.registry import FactorSpec, enabled_specs, spec_map
@@ -30,7 +49,6 @@ DEFAULT_PROVIDER_URI = "E:/qlib_prj/qlib_data/cn_data_community_20260609_derived
 DEFAULT_MARKET = "all_stock_shsz_liquid2000"
 DEFAULT_LABELS = "label_20d_t1"
 DEFAULT_FACTORS = "amplitude_20,std_20,rev_5,ret_20,amount_mean_20"
-BASIC_FACTOR_VERSION = 2
 
 
 @dataclass(frozen=True)
@@ -94,22 +112,61 @@ def padded_dates(window: ResearchWindow) -> tuple[str, str]:
     return start, end
 
 
-def cache_digest(payload: dict) -> str:
-    return hashlib.sha256(json.dumps(payload, sort_keys=True).encode("utf-8")).hexdigest()[:16]
+def _feature_config(args: argparse.Namespace, window: ResearchWindow, output_dir: Path) -> FactorResearchConfig:
+    load_start, load_end = padded_dates(window)
+    return FactorResearchConfig(
+        provider_uri=args.provider_uri,
+        market=args.market,
+        start_time=load_start,
+        end_time=load_end,
+        output_dir=output_dir,
+        label=args.labels[0],
+        quantiles=args.quantiles,
+        min_count=args.min_count,
+        feature_cache_dir=None if args.no_feature_cache else resolve_path(args.feature_cache_dir),
+        refresh_feature_cache=args.refresh_feature_cache,
+    )
+
+
+def basic_factor_cache_fingerprint(args: argparse.Namespace, window: ResearchWindow) -> dict:
+    config = _feature_config(args, window, PROJECT_ROOT)
+    upstream = feature_cache_fingerprint(config)
+    return build_cache_fingerprint(
+        "v3_basic_factor_frame",
+        data={
+            "upstream_feature_cache_key": upstream["cache_key"],
+            "upstream_data_fingerprint": upstream["component_hashes"]["data_fingerprint"],
+            "universe": args.market,
+            "start_time": config.start_time,
+            "end_time": config.end_time,
+        },
+        computation={
+            "normalized_ast_sha256": normalized_callable_ast_hash(
+                add_basic_factors,
+                rolling_max_drawdown,
+            ),
+            "engines": {
+                "pandas": package_engine_identity("pandas", "pandas"),
+                "numpy": package_engine_identity("numpy", "numpy"),
+            },
+        },
+        request={
+            "input_fields": list(BASE_FIELDS),
+            "factor_names": list(FACTOR_COLUMNS),
+            "label_names": list(LABEL_COLUMNS),
+            "output_schema": ["instrument", "datetime", *BASE_FIELDS, *FACTOR_COLUMNS, *LABEL_COLUMNS],
+        },
+    )
 
 
 def basic_factor_cache_path(args: argparse.Namespace, window: ResearchWindow) -> Path | None:
     if args.no_factor_cache:
         return None
-    load_start, load_end = padded_dates(window)
-    payload = {
-        "provider_uri": str(args.provider_uri).replace("\\", "/"),
-        "market": args.market,
-        "start_time": load_start,
-        "end_time": load_end,
-        "basic_factor_version": BASIC_FACTOR_VERSION,
-    }
-    return resolve_path(args.factor_cache_dir) / f"basic_factors_{cache_digest(payload)}.pkl"
+    return cache_path(
+        resolve_path(args.factor_cache_dir),
+        "basic_factors",
+        basic_factor_cache_fingerprint(args, window),
+    )
 
 
 def slice_window(frame: pd.DataFrame, window: ResearchWindow) -> pd.DataFrame:
@@ -121,27 +178,31 @@ def slice_window(frame: pd.DataFrame, window: ResearchWindow) -> pd.DataFrame:
 def load_window_frame(args: argparse.Namespace, window: ResearchWindow, output_dir: Path) -> pd.DataFrame:
     load_start, load_end = padded_dates(window)
     print(f"Loading V3 features: {window.name} {load_start} to {load_end}", flush=True)
-    factor_cache = basic_factor_cache_path(args, window)
-    if factor_cache is not None and factor_cache.exists() and not args.refresh_factor_cache:
+    factor_fingerprint = basic_factor_cache_fingerprint(args, window) if not args.no_factor_cache else None
+    factor_cache = (
+        cache_path(resolve_path(args.factor_cache_dir), "basic_factors", factor_fingerprint)
+        if factor_fingerprint is not None
+        else None
+    )
+    raw_with_factors = (
+        read_dataframe_cache(factor_cache, factor_fingerprint)
+        if factor_cache is not None and factor_fingerprint is not None and not args.refresh_factor_cache
+        else None
+    )
+    if raw_with_factors is not None:
         print(f"Loading cached basic factors: {factor_cache}", flush=True)
-        raw_with_factors = pd.read_pickle(factor_cache)
     else:
-        config = FactorResearchConfig(
-            provider_uri=args.provider_uri,
-            market=args.market,
-            start_time=load_start,
-            end_time=load_end,
-            output_dir=output_dir,
-            label=args.labels[0],
-            quantiles=args.quantiles,
-            min_count=args.min_count,
-            feature_cache_dir=None if args.no_feature_cache else resolve_path(args.feature_cache_dir),
-            refresh_feature_cache=args.refresh_feature_cache,
-        )
+        config = _feature_config(args, window, output_dir)
         raw_with_factors = add_basic_factors(load_feature_frame(config))
-        if factor_cache is not None:
-            factor_cache.parent.mkdir(parents=True, exist_ok=True)
-            raw_with_factors.to_pickle(factor_cache)
+        if factor_cache is not None and factor_fingerprint is not None:
+            write_dataframe_cache(
+                factor_cache,
+                raw_with_factors,
+                factor_fingerprint,
+                diagnostics=diagnostic_metadata(
+                    [Path(__file__), PROJECT_ROOT / "factor_research" / "factor_library.py"]
+                ),
+            )
             print(f"Cached basic factors: {factor_cache}", flush=True)
     raw = slice_window(raw_with_factors, window)
     with_context = prepare_research_frame(raw, resolve_path(window.tradability_dir), resolve_path(window.data_quality_dir))

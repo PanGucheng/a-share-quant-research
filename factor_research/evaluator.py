@@ -1,10 +1,19 @@
 from dataclasses import dataclass
-import hashlib
-import json
 from pathlib import Path
 
 import numpy as np
 import pandas as pd
+
+from qlib_baseline.cache import (
+    build_cache_fingerprint,
+    cache_path,
+    diagnostic_metadata,
+    normalized_callable_ast_hash,
+    package_engine_identity,
+    provider_data_fingerprint,
+    read_dataframe_cache,
+    write_dataframe_cache,
+)
 
 from factor_research.factor_library import BASE_FIELDS, FACTOR_COLUMNS, FACTOR_METADATA, LABEL_COLUMNS, add_basic_factors
 from factor_research.report import write_markdown_report
@@ -24,27 +33,11 @@ class FactorResearchConfig:
     refresh_feature_cache: bool = False
 
 
-def feature_cache_path(config: FactorResearchConfig) -> Path | None:
-    if config.feature_cache_dir is None:
-        return None
-    key = {
-        "provider_uri": str(config.provider_uri).replace("\\", "/"),
-        "market": config.market,
-        "start_time": config.start_time,
-        "end_time": config.end_time,
-        "fields": BASE_FIELDS,
-        "version": 1,
-    }
-    digest = hashlib.sha256(json.dumps(key, sort_keys=True).encode("utf-8")).hexdigest()[:16]
-    return Path(config.feature_cache_dir) / f"features_{digest}.pkl"
+def _normalize_feature_frame(data: pd.DataFrame) -> pd.DataFrame:
+    return data.reset_index().sort_values(["instrument", "datetime"])
 
 
-def load_feature_frame(config: FactorResearchConfig) -> pd.DataFrame:
-    cache_path = feature_cache_path(config)
-    if cache_path is not None and cache_path.exists() and not config.refresh_feature_cache:
-        print(f"Loading cached features: {cache_path}", flush=True)
-        return pd.read_pickle(cache_path)
-
+def _compute_feature_frame(config: FactorResearchConfig) -> pd.DataFrame:
     import qlib
     from qlib.config import C, REG_CN
     from qlib.data import D
@@ -59,11 +52,67 @@ def load_feature_frame(config: FactorResearchConfig) -> pd.DataFrame:
         end_time=config.end_time,
         freq="day",
     )
-    frame = data.reset_index().sort_values(["instrument", "datetime"])
-    if cache_path is not None:
-        cache_path.parent.mkdir(parents=True, exist_ok=True)
-        frame.to_pickle(cache_path)
-        print(f"Cached features: {cache_path}", flush=True)
+    return _normalize_feature_frame(data)
+
+
+def feature_cache_fingerprint(config: FactorResearchConfig) -> dict:
+    return build_cache_fingerprint(
+        "qlib_feature_frame",
+        data={
+            "provider_snapshot": provider_data_fingerprint(
+                config.provider_uri,
+                market=config.market,
+                fields=BASE_FIELDS,
+            ),
+            "universe": config.market,
+            "start_time": config.start_time,
+            "end_time": config.end_time,
+            "frequency": "day",
+        },
+        computation={
+            "normalized_ast_sha256": normalized_callable_ast_hash(
+                _compute_feature_frame,
+                _normalize_feature_frame,
+            ),
+            "engine": package_engine_identity("pyqlib", "qlib"),
+        },
+        request={
+            "market": config.market,
+            "fields": list(BASE_FIELDS),
+            "output_schema": ["instrument", "datetime", *BASE_FIELDS],
+        },
+    )
+
+
+def feature_cache_path(config: FactorResearchConfig) -> Path | None:
+    if config.feature_cache_dir is None:
+        return None
+    fingerprint = feature_cache_fingerprint(config)
+    return cache_path(config.feature_cache_dir, "features", fingerprint)
+
+
+def load_feature_frame(config: FactorResearchConfig) -> pd.DataFrame:
+    fingerprint = feature_cache_fingerprint(config) if config.feature_cache_dir is not None else None
+    target = (
+        cache_path(config.feature_cache_dir, "features", fingerprint)
+        if config.feature_cache_dir is not None and fingerprint is not None
+        else None
+    )
+    if target is not None and not config.refresh_feature_cache:
+        cached = read_dataframe_cache(target, fingerprint)
+        if cached is not None:
+            print(f"Loading cached features: {target}", flush=True)
+            return cached
+
+    frame = _compute_feature_frame(config)
+    if target is not None and fingerprint is not None:
+        write_dataframe_cache(
+            target,
+            frame,
+            fingerprint,
+            diagnostics=diagnostic_metadata([Path(__file__)]),
+        )
+        print(f"Cached features: {target}", flush=True)
     return frame
 
 
