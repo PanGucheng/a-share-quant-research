@@ -59,7 +59,7 @@ Model Diagnostic V1 (closed)
 | 目录 | 当前职责 | 状态 |
 |---|---|---|
 | `daily_update/` | Community/BaoStock 日更、provider bridge、冻结特征快照 | ACTIVE |
-| `qlib_baseline/` | Project Settings、原子 I/O 和 doctor CLI；暂不承载业务逻辑 | ACTIVE ENGINEERING FOUNDATION |
+| `qlib_baseline/` | Project Settings、原子 I/O、doctor 与活动 CLI orchestration；不承载领域计算 | ACTIVE ENGINEERING FOUNDATION |
 | `model_research/` | 历史模型研究、Forward prediction、状态和 paper portfolio | MIXED：部分 ACTIVE，部分 FROZEN/CLOSED |
 | `factor_research/` | 因子定义、adapter、评价、筛选和历史研究工具 | FROZEN/HISTORICAL，按需维护 |
 | `qlib_integration/` | Qlib Exchange/Executor、市场语义和组合执行 | SHARED/FROZEN CONTRACT |
@@ -96,15 +96,16 @@ Qlib integration / validation / shared I/O
 - historical diagnostics 不得改变 frozen Strategy V1；
 - 新模块应优先复用现有 schema、execution 和 validation，避免平行框架。
 
-Phase 1 已建立可安装 package、统一 settings 和 doctor；活动 CLI 仍将在 Phase 2
-迁移，现有 scripts 和业务调用尚未改变。
+Phase 1 已建立可安装 package、统一 settings 和 doctor；Phase 2 将五个活动 CLI
+迁入 `qlib_baseline.cli`。原 scripts 只保留兼容转发，业务 pipeline 调用与 frozen
+contract 未改变。
 
 ## 5. 配置与运行环境
 
 当前状态：
 
-- Python/YAML/PowerShell/Markdown 中仍存在本机绝对路径；
-- 活动 Daily Update 入口仍包含 `E:/qlib_prj/...` 默认值；
+- 历史 Python/YAML/PowerShell/Markdown 中仍存在本机绝对路径；
+- 五个活动 CLI 及 Daily Update 的 Qlib source/dump 调用已移除本机绝对默认值；
 - `pyproject.toml`、`qlib_baseline.settings.ProjectSettings` 和 `qlib-doctor` 已可用；
 - committed `configs/project.yaml` 的机器路径保持 `null`，当前工作站路径仅存在于
   ignored `configs/project.local.yaml`；
@@ -118,8 +119,9 @@ Phase 1 已建立可安装 package、统一 settings 和 doctor；活动 CLI 仍
 - 本机路径只进入 ignored local config、环境变量或 CLI；
 - 路径统一相对仓库根目录解析，不依赖调用时 cwd。
 
-Phase 1 不改变现有业务入口或解释器选择。`qlib-doctor` 只报告当前 interpreter、
-依赖和路径；Phase 2 才允许活动 scripts 消费 Project Settings。
+Phase 2 不改变解释器选择。`qlib-doctor` 报告当前 interpreter、依赖和路径；活动
+CLI 消费 Project Settings，且不得向 `load_settings(project_root=...)` 传值。历史
+scripts 不在本阶段批量迁移。
 
 ## 6. Factor Matrix 边界
 

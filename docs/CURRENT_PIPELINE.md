@@ -51,15 +51,15 @@ Mature-label evaluation（成熟后独立运行）
 
 入口：
 
-- `scripts/daily_update.py`
+- `qlib-daily-update` / `qlib_baseline.cli.daily_update`
+- `scripts/daily_update.py`（兼容包装器）
 - `daily_update/pipeline.py`
 - 配套说明：[DAILY_DATA_UPDATE_V1.md](DAILY_DATA_UPDATE_V1.md)
 
 当前命令：
 
 ```powershell
-E:\anaconda_envs\qlib_env\python.exe scripts/daily_update.py `
-  --target-date YYYY-MM-DD
+qlib-daily-update --target-date YYYY-MM-DD
 ```
 
 主要输入：
@@ -83,14 +83,15 @@ outputs/daily_data_update_v1/<date>/<source>_qlib_daily.csv
 
 入口：
 
-- `scripts/run_forward_prediction_v1.py`
+- `qlib-forward-predict` / `qlib_baseline.cli.forward_predict`
+- `scripts/run_forward_prediction_v1.py`（兼容包装器）
 - `daily_update/forward_adapter.py`
 - `model_research/forward_pipeline.py`
 
 从 Daily Update 消费一天数据：
 
 ```powershell
-E:\anaconda_envs\qlib_env\python.exe scripts/run_forward_prediction_v1.py `
+qlib-forward-predict `
   --date YYYY-MM-DD `
   --calendar-file <provider>/calendars/day_future.txt `
   --daily-update-dir outputs/daily_data_update_v1/YYYY-MM-DD
@@ -100,7 +101,7 @@ E:\anaconda_envs\qlib_env\python.exe scripts/run_forward_prediction_v1.py `
 真实 40 位 commit SHA 完成 receipt：
 
 ```powershell
-E:\anaconda_envs\qlib_env\python.exe scripts/run_forward_prediction_v1.py `
+qlib-forward-predict `
   --date YYYY-MM-DD `
   --calendar-file <provider>/calendars/day_future.txt `
   --finalize-commit <40-char-commit-sha>
@@ -127,7 +128,8 @@ outputs/forward/status.json
 
 入口：
 
-- `scripts/run_paper_portfolio_v1.py`
+- `qlib-paper-portfolio` / `qlib_baseline.cli.paper_portfolio`
+- `scripts/run_paper_portfolio_v1.py`（兼容包装器）
 - `model_research/paper_portfolio.py`
 - `configs/strategy_v1_paper_portfolio_v1.yaml`
 - 配套说明：[STRATEGY_V1_PAPER_PORTFOLIO_V1.md](STRATEGY_V1_PAPER_PORTFOLIO_V1.md)
@@ -135,7 +137,7 @@ outputs/forward/status.json
 创建 decision：
 
 ```powershell
-E:\anaconda_envs\qlib_env\python.exe scripts/run_paper_portfolio_v1.py `
+qlib-paper-portfolio `
   --date YYYY-MM-DD `
   --calendar-file <provider>/calendars/day_future.txt
 ```
@@ -143,7 +145,7 @@ E:\anaconda_envs\qlib_env\python.exe scripts/run_paper_portfolio_v1.py `
 仅推进已存在 decision 的执行状态：
 
 ```powershell
-E:\anaconda_envs\qlib_env\python.exe scripts/run_paper_portfolio_v1.py --refresh-only
+qlib-paper-portfolio --refresh-only
 ```
 
 Paper Portfolio 只消费 committed official prediction。执行日数据尚未到达时必须保持
@@ -153,16 +155,18 @@ Paper Portfolio 只消费 committed official prediction。执行日数据尚未�
 
 入口：
 
-- `scripts/update_forward_labels_v1.py`
-- `scripts/show_forward_status_v1.py`
+- `qlib-forward-label-update` / `qlib_baseline.cli.forward_label_update`
+- `qlib-forward-status` / `qlib_baseline.cli.forward_status`
+- `scripts/update_forward_labels_v1.py`、`scripts/show_forward_status_v1.py`
+  （兼容包装器）
 
 ```powershell
-E:\anaconda_envs\qlib_env\python.exe scripts/update_forward_labels_v1.py `
+qlib-forward-label-update `
   --as-of-date YYYY-MM-DD `
   --calendar-file <provider>/calendars/day_future.txt `
   --label-dir data/forward/labels
 
-E:\anaconda_envs\qlib_env\python.exe scripts/show_forward_status_v1.py
+qlib-forward-status
 ```
 
 标签未成熟时不得打开 label 文件；评价只消费已完成 Git binding 的 prediction。
@@ -248,13 +252,16 @@ Phase 0 审计时该集合为 `61 passed`。完整 CI 政策见 [CI_POLICY.md](C
 
 ## 9. Engineering Foundation Status
 
-Phase 1 已提供：
+Phase 1–2 已提供：
 
 - editable `pyproject.toml`；
 - `qlib_baseline.settings.ProjectSettings`；
 - portable `configs/project.yaml` 与 ignored local override；
 - `qlib-doctor`；
 - 无 pandas 依赖的 atomic path/text/JSON I/O helper。
+- 五个安装式 Forward Track CLI；
+- 只转发到 packaged CLI 的旧活动 scripts。
 
-这些能力尚未改变本文件第 3 节的活动命令。Daily/Forward/Paper scripts 仍使用原有
-参数和默认路径；只有 Phase 2 获得授权后才迁移活动 CLI。
+活动 CLI 默认路径现在来自 Project Settings；显式日常业务参数和底层 pipeline
+contract 保持不变。旧 scripts 不再包含本机绝对路径或 `sys.path.insert`，但仍可在
+editable install 后作为兼容入口使用。

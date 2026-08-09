@@ -7,7 +7,7 @@ long-only Top50 equal weight with a five-trading-day rebalance interval.
 Run one decision after the official prediction is committed:
 
 ```powershell
-E:\anaconda_envs\qlib_env\python.exe scripts\run_paper_portfolio_v1.py `
+qlib-paper-portfolio `
   --date 2026-08-07 `
   --calendar-file E:\qlib_prj\qlib_data\cn_data_community_20260609\calendars\day_future.txt
 ```
@@ -25,7 +25,7 @@ existing Qlib A-share execution runner and writes compact `trades.csv`,
 Execution can also be advanced without creating another decision:
 
 ```powershell
-E:\anaconda_envs\qlib_env\python.exe scripts\run_paper_portfolio_v1.py --refresh-only
+qlib-paper-portfolio --refresh-only
 ```
 
 This remains prospective personal-research paper accounting. It does not retrain

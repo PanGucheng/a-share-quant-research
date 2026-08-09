@@ -98,6 +98,20 @@ python -m pip install -e . --no-deps
 python -m qlib_baseline.cli.doctor --strict
 ```
 
+The active Forward Track commands are installed with the project:
+
+```powershell
+qlib-daily-update --target-date YYYY-MM-DD
+qlib-forward-predict --help
+qlib-forward-label-update --help
+qlib-paper-portfolio --help
+qlib-forward-status
+```
+
+The historical `scripts/*.py` entry paths remain compatible wrappers around these
+same command functions. Active command defaults come from Project Settings rather
+than the current working directory or committed machine-specific paths.
+
 Qlib source builds may require editable installation from the local Qlib clone:
 
 ```powershell

@@ -26,16 +26,7 @@ from factor_research.ta_source import TaSourceConfig, compute_ta_features
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-QLIB_SOURCE = Path("E:/qlib_prj/qlib_clone")
-if QLIB_SOURCE.is_dir() and str(QLIB_SOURCE) not in sys.path:
-    sys.path.insert(0, str(QLIB_SOURCE))
 COMMUNITY_REPOSITORY = "https://github.com/chenditc/investment_data"
-DEFAULT_CACHE = Path("E:/qlib_prj/qlib_data/daily_update_v1")
-DEFAULT_OUTPUT = PROJECT_ROOT / "outputs/daily_data_update_v1"
-DEFAULT_UNIVERSE = Path(
-    "E:/qlib_prj/qlib_data/cn_data_community_20260609_derived/"
-    "instruments/all_stock_shsz_liquid2000.txt"
-)
 PREPROCESSING = (
     PROJECT_ROOT
     / "outputs/prospective_forward_candidate_v1/runtime/current/model/"
@@ -64,9 +55,10 @@ class CommunityRelease:
 @dataclass(frozen=True)
 class DailyUpdateConfig:
     target_date: date
-    cache_dir: Path = DEFAULT_CACHE
-    output_dir: Path = DEFAULT_OUTPUT
-    universe_file: Path = DEFAULT_UNIVERSE
+    cache_dir: Path
+    output_dir: Path
+    universe_file: Path
+    qlib_source: Path
     min_coverage: float = 0.95
     warmup_calendar_days: int = 450
 
@@ -325,6 +317,7 @@ def build_fallback_provider(
     target: date,
     release: CommunityRelease,
     cache_dir: Path,
+    qlib_source: Path,
 ) -> Path:
     final = cache_dir / "providers" / f"{target.isoformat()}_baostock_from_{release.tag}"
     if (final / "calendars/day.txt").is_file():
@@ -342,13 +335,15 @@ def build_fallback_provider(
         for symbol, frame in bridged.groupby("symbol"):
             frame[dump_columns].to_csv(csv_dir / f"{symbol.lower()}.csv", index=False)
         command = [
-            sys.executable, str(Path("E:/qlib_prj/qlib_clone/scripts/dump_bin.py")), "dump_update",
+            sys.executable,
+            str(qlib_source / "scripts/dump_bin.py"),
+            "dump_update",
             "--data_path", str(csv_dir), "--qlib_dir", str(stage), "--freq", "day",
             "--max_workers", "4", "--include_fields", "open,high,low,close,volume,amount,factor,vwap",
         ]
         environment = os.environ.copy()
         environment["PYTHONPATH"] = os.pathsep.join(
-            [str(QLIB_SOURCE), environment.get("PYTHONPATH", "")]
+            [str(qlib_source), environment.get("PYTHONPATH", "")]
         ).rstrip(os.pathsep)
         subprocess.run(command, check=True, cwd=PROJECT_ROOT, env=environment)
     stage.replace(final)
@@ -539,7 +534,14 @@ def run(config: DailyUpdateConfig) -> dict[str, object]:
         provider = ensure_community_provider(release, config.cache_dir)
         anchor = _community_anchor(provider, expected, release.target_trade_date)
         bridged = bridge_baostock_to_community(raw, anchor)
-        provider = build_fallback_provider(provider, bridged, config.target_date, release, config.cache_dir)
+        provider = build_fallback_provider(
+            provider,
+            bridged,
+            config.target_date,
+            release,
+            config.cache_dir,
+            config.qlib_source,
+        )
         daily = bridged.loc[bridged["date"].eq(pd.Timestamp(config.target_date))].copy()
         snapshot = compute_frozen_snapshot(provider, config.target_date, expected, config.warmup_calendar_days)
     else:

@@ -39,6 +39,21 @@ With the environment's Scripts directory on `PATH`, the equivalent command is:
 qlib-doctor --strict
 ```
 
+Phase 2 exposes the active Forward Track through installed commands:
+
+```powershell
+qlib-daily-update --target-date YYYY-MM-DD
+qlib-forward-predict --help
+qlib-forward-label-update --help
+qlib-paper-portfolio --help
+qlib-forward-status
+```
+
+Run `qlib-doctor --strict` before these commands on a new workstation. Their default
+Qlib source, provider, daily cache, repository root, and output paths are resolved
+from Project Settings. The legacy active scripts remain wrappers and require the
+editable project installation; they no longer modify `sys.path` themselves.
+
 ## Python
 
 - Python version: `3.10.19`

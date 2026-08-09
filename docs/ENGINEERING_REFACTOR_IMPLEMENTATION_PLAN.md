@@ -275,3 +275,52 @@ Phase 1 follow-up 补充了进入 Phase 2 前的环境一致性检查：
 - doctor 报告实际 `qlib` import origin，并在配置源码与实际导入源码不一致时 fail；
 - settings 测试明确覆盖 Windows `E:/...` 绝对路径解析；
 - `load_settings(project_root=...)` 仍只用于测试，活动 CLI 不得覆盖 repository root。
+
+## 13. Phase 2 实施回执（2026-08-09）
+
+Phase 2 只迁移活动 Forward Track CLI，没有改动 frozen Strategy V1 的计算、模型、
+特征、组合或 evidence：
+
+```text
+packaged_active_cli_ready             = true
+legacy_active_scripts_compatible      = true
+active_entry_machine_paths            = 0
+active_entry_sys_path_insert          = 0
+frozen_model_or_feature_changed       = false
+forward_evidence_written              = false
+```
+
+实际实现：
+
+- 新增 `qlib-daily-update`、`qlib-forward-predict`、
+  `qlib-forward-label-update`、`qlib-paper-portfolio`、`qlib-forward-status`；
+- 五个旧 scripts 直接复用 packaged CLI 的同一 `main` 函数；
+- 默认 output、freeze、status、paper config、Qlib source/provider 和 daily cache
+  由 Project Settings 派生；
+- Daily Update 的 Qlib import 不再修改 `sys.path`，fallback `dump_bin.py` 来源由
+  配置的 `qlib_source` 明确传入；
+- calendar、label、date、daily input、dry-run、commit binding 等业务参数和底层
+  contract 保持原样；
+- 没有迁移任何历史 scripts，也没有运行正式 prediction、paper 或 label update。
+
+验证结果：
+
+```text
+active CLI migration tests           = 8 passed
+Forward Track regression baseline    = 61 passed
+full pytest                          = 344 passed, 4 existing Qlib warnings
+editable install and pip check       = pass
+six installed command help checks    = pass
+five legacy wrapper help checks      = pass
+qlib-doctor --strict                 = ready / exit 0
+frozen outputs and artifacts diff    = empty
+```
+
+已知边界：
+
+- 旧 scripts 为避免 `scripts/daily_update.py` 遮蔽 `daily_update` package，会启动一个
+  指向 packaged module 的子 Python 进程，因此有很小的启动开销；新 console command
+  没有该开销；
+- 旧 scripts 依赖 Phase 1 的 editable install，不再自行修改 Python import path；
+- calendar file、label directory 和单日 input 仍是显式业务参数，没有臆测新的配置；
+- `daily_update/pipeline.py` 仍是单体模块，拆分只属于后续获得授权的 Phase 3A。

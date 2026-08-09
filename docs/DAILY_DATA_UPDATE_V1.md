@@ -11,11 +11,13 @@ single daily fallback: BaoStock
 The entry point is:
 
 ```powershell
-E:\anaconda_envs\qlib_env\python.exe scripts/daily_update.py --target-date 2026-08-07
+qlib-daily-update --target-date 2026-08-07
 ```
 
-With the Qlib environment activated, `python scripts/daily_update.py` defaults to the
-local calendar date. Install `requirements-daily-update.txt` in that environment.
+With the Qlib environment activated, `qlib-daily-update` defaults to the local
+calendar date. Install `requirements-daily-update.txt` and this project in editable
+mode in that environment. `python scripts/daily_update.py` remains a compatibility
+wrapper around the same command implementation.
 
 The command checks the latest Community release first. If it covers the target date,
 the release is used directly. Otherwise it asks BaoStock for the target-day stock
@@ -59,7 +61,7 @@ Strategy V2.
 The existing Forward pipeline can consume a ready day directly:
 
 ```powershell
-python scripts/run_forward_prediction_v1.py `
+qlib-forward-predict `
   --date 2026-08-07 `
   --calendar-file <community-provider>/calendars/day_future.txt `
   --daily-update-dir outputs/daily_data_update_v1/2026-08-07

@@ -13,7 +13,12 @@ dependencies = [
 ]
 
 [project.scripts]
+qlib-daily-update = "qlib_baseline.cli.daily_update:main"
 qlib-doctor = "qlib_baseline.cli.doctor:main"
+qlib-forward-label-update = "qlib_baseline.cli.forward_label_update:main"
+qlib-forward-predict = "qlib_baseline.cli.forward_predict:main"
+qlib-forward-status = "qlib_baseline.cli.forward_status:main"
+qlib-paper-portfolio = "qlib_baseline.cli.paper_portfolio:main"
 
 [tool.setuptools.packages.find]
 where = ["."]
