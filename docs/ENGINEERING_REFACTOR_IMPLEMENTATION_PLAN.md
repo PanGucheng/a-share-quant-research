@@ -530,3 +530,16 @@ protected cache/lineage diff  = empty
 实际工作站上，`all_stock_shsz_liquid2000` 的 2,000 个 instruments、12,000 个
 OHLCVA binary 的内容 fingerprint 约需 6 秒。这是历史弱 cache key 解析的固定成本；
 它不进入 Forward 或 Matrix v4 路径。Phase 6 未开始，必须等待单独授权。
+
+Phase 5 engine follow-up 以 `3049f1a` 为基线，补全两个 computation fingerprint：
+
+```text
+Evaluator   = Qlib + Pandas
+Expression  = Qlib + Pandas + NumPy
+```
+
+新增 engine mutation 回归覆盖上述五个 identity：任一 relevant engine identity 变化均
+改变对应 cache key。`qlib_baseline/cache.py`、provider fingerprint、Matrix v4、raw
+snapshot、lineage 和业务计算函数均未修改。验证为 `11` 项 weak-cache tests、`25` 项
+factor/import targeted tests、`383 passed` full pytest（4 个既有 Qlib warnings）；
+tracked outputs/artifacts 与 protected paths 继续保持不变。Phase 6 未开始。

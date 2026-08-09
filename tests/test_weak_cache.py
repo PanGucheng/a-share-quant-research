@@ -213,6 +213,36 @@ def test_evaluator_uses_new_cache_and_ignores_legacy_pickle(tmp_path: Path) -> N
     assert legacy.is_file()
 
 
+def test_evaluator_relevant_engine_identity_changes_cache_key(
+    tmp_path: Path,
+    monkeypatch,
+) -> None:
+    provider = _provider(tmp_path / "provider")
+    config = _feature_config(provider, tmp_path / "cache")
+    versions = {"pyqlib": "1", "pandas": "1"}
+
+    def identity(distribution: str, module: str) -> dict:
+        return {
+            "distribution": distribution,
+            "module": module,
+            "version": versions[distribution],
+        }
+
+    monkeypatch.setattr("factor_research.evaluator.package_engine_identity", identity)
+    assert set(
+        feature_cache_fingerprint(config)["computation_fingerprint"]["engines"]
+    ) == {
+        "qlib",
+        "pandas",
+    }
+    for changed_engine in versions:
+        versions = {"pyqlib": "1", "pandas": "1"}
+        before = feature_cache_fingerprint(config)["cache_key"]
+        versions[changed_engine] = "2"
+        after = feature_cache_fingerprint(config)["cache_key"]
+        assert before != after
+
+
 def test_expression_cache_key_binds_formula_and_uses_parquet(tmp_path: Path) -> None:
     provider = _provider(tmp_path / "provider")
     config = _expression_config(provider, tmp_path / "output")
@@ -232,6 +262,48 @@ def test_expression_cache_key_binds_formula_and_uses_parquet(tmp_path: Path) -> 
         expression_frame_cache_fingerprint(config, table)["cache_key"]
         != expression_frame_cache_fingerprint(config, changed)["cache_key"]
     )
+
+
+def test_expression_relevant_engine_identity_changes_cache_key(
+    tmp_path: Path,
+    monkeypatch,
+) -> None:
+    provider = _provider(tmp_path / "provider")
+    config = _expression_config(provider, tmp_path / "output")
+    table = pd.DataFrame(
+        {
+            "catalog_name": ["alpha"],
+            "factor_name": ["Alpha"],
+            "category": ["test"],
+            "expression": ["Mean($close, 5)"],
+            "field_status": ["available"],
+        }
+    )
+    versions = {"pyqlib": "1", "pandas": "1", "numpy": "1"}
+
+    def identity(distribution: str, module: str) -> dict:
+        return {
+            "distribution": distribution,
+            "module": module,
+            "version": versions[distribution],
+        }
+
+    monkeypatch.setattr(
+        "factor_research.expression_adapter.package_engine_identity",
+        identity,
+    )
+    fingerprint = expression_frame_cache_fingerprint(config, table)
+    assert set(fingerprint["computation_fingerprint"]["engines"]) == {
+        "qlib",
+        "pandas",
+        "numpy",
+    }
+    for changed_engine in versions:
+        versions = {"pyqlib": "1", "pandas": "1", "numpy": "1"}
+        before = expression_frame_cache_fingerprint(config, table)["cache_key"]
+        versions[changed_engine] = "2"
+        after = expression_frame_cache_fingerprint(config, table)["cache_key"]
+        assert before != after
 
 
 def test_expression_chunk_ignores_unrequested_provider_field_mutation(

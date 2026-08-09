@@ -176,7 +176,11 @@ def _expression_cache_fingerprint(
         computation={
             "expressions_and_metadata": expression_table[metadata_columns].to_dict(orient="records"),
             "normalized_ast_sha256": normalized_callable_ast_hash(*computation_functions),
-            "engine": package_engine_identity("pyqlib", "qlib"),
+            "engines": {
+                "qlib": package_engine_identity("pyqlib", "qlib"),
+                "pandas": package_engine_identity("pandas", "pandas"),
+                "numpy": package_engine_identity("numpy", "numpy"),
+            },
         },
         request={
             "market": config.market,

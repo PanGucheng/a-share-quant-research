@@ -74,7 +74,10 @@ def feature_cache_fingerprint(config: FactorResearchConfig) -> dict:
                 _compute_feature_frame,
                 _normalize_feature_frame,
             ),
-            "engine": package_engine_identity("pyqlib", "qlib"),
+            "engines": {
+                "qlib": package_engine_identity("pyqlib", "qlib"),
+                "pandas": package_engine_identity("pandas", "pandas"),
+            },
         },
         request={
             "market": config.market,
