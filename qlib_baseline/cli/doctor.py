@@ -20,6 +20,7 @@ EXPECTED_PYTHON = (3, 10)
 DEPENDENCIES = (
     ("PyYAML", "yaml"),
     ("pyqlib", "qlib"),
+    ("lightgbm", "lightgbm"),
     ("pandas", "pandas"),
     ("numpy", "numpy"),
     ("pandera", "pandera"),
@@ -56,6 +57,41 @@ def _external_path_check(name: str, path: Path | None, markers: tuple[str, ...])
     return _check(f"path:{name}", "pass", str(path))
 
 
+def _qlib_import_origin() -> Path | None:
+    spec = importlib.util.find_spec("qlib")
+    if spec is None or not spec.origin or spec.origin in {"built-in", "frozen"}:
+        return None
+    return Path(spec.origin).resolve()
+
+
+def _qlib_source_alignment_check(qlib_source: Path | None) -> dict[str, str]:
+    origin = _qlib_import_origin()
+    if qlib_source is None:
+        return _check(
+            "runtime:qlib_source_alignment",
+            "warn",
+            f"imported={origin or 'unavailable'}; configured source is not set",
+        )
+    configured = qlib_source.resolve()
+    package_root = (configured / "qlib").resolve()
+    if origin is None:
+        return _check(
+            "runtime:qlib_source_alignment",
+            "fail",
+            f"imported=unavailable; configured={configured}",
+        )
+    try:
+        origin.relative_to(package_root)
+        aligned = True
+    except ValueError:
+        aligned = False
+    return _check(
+        "runtime:qlib_source_alignment",
+        "pass" if aligned else "fail",
+        f"imported={origin}; configured={configured}",
+    )
+
+
 def build_report(settings: ProjectSettings, *, config_files: tuple[Path, ...] = ()) -> dict[str, Any]:
     checks: list[dict[str, str]] = []
     version = sys.version_info[:2]
@@ -74,6 +110,7 @@ def build_report(settings: ProjectSettings, *, config_files: tuple[Path, ...] = 
             ("qlib/__init__.py", "scripts/dump_bin.py"),
         )
     )
+    checks.append(_qlib_source_alignment_check(settings.qlib_source))
     checks.append(
         _external_path_check(
             "qlib_provider",

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 from pathlib import Path
 
 import pytest
@@ -124,3 +125,18 @@ def test_unknown_cli_override_fails_loudly(tmp_path: Path) -> None:
             environ={},
             cli_overrides={"python_executable": "python.exe"},
         )
+
+
+@pytest.mark.skipif(os.name != "nt", reason="Windows path semantics")
+def test_windows_absolute_paths_remain_absolute(tmp_path: Path) -> None:
+    _write_config(tmp_path, "configs/project.yaml", _portable_paths())
+    windows_source = "E:/qlib_prj/qlib_clone"
+    _write_config(
+        tmp_path,
+        "configs/project.local.yaml",
+        {"qlib_source": windows_source},
+    )
+
+    settings = load_settings(project_root=tmp_path, environ={})
+
+    assert settings.qlib_source == Path(windows_source).resolve()

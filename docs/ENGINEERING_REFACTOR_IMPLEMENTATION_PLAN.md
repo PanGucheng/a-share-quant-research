@@ -251,8 +251,8 @@ daily_forward_behavior_changed        = false
 验证结果：
 
 ```text
-new Phase 1 tests                    = 10 passed
-full pytest                          = 333 passed, 4 existing Qlib warnings
+new Phase 1 tests                    = 13 passed
+full pytest                          = 336 passed, 4 existing Qlib warnings
 editable install                     = pass
 qlib-doctor --strict                 = ready / exit 0
 cross-cwd settings and console usage = pass
@@ -268,3 +268,10 @@ cross-cwd settings and console usage = pass
   `qlib_baseline.settings`、module CLI 和 console script 已验证可用。Phase 2 不应依赖
   package root 的 re-export；
 - 活动 scripts 的绝对路径和 `sys.path` 暂时保留，等待 Phase 2。
+
+Phase 1 follow-up 补充了进入 Phase 2 前的环境一致性检查：
+
+- doctor 将 LightGBM 纳入活动 Forward Prediction 的必需依赖；
+- doctor 报告实际 `qlib` import origin，并在配置源码与实际导入源码不一致时 fail；
+- settings 测试明确覆盖 Windows `E:/...` 绝对路径解析；
+- `load_settings(project_root=...)` 仍只用于测试，活动 CLI 不得覆盖 repository root。

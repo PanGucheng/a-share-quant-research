@@ -33,11 +33,18 @@ def _settings(tmp_path: Path) -> ProjectSettings:
     )
 
 
-def test_doctor_reports_current_interpreter_and_paths(tmp_path: Path) -> None:
-    report = doctor.build_report(_settings(tmp_path), config_files=(tmp_path / "config.yaml",))
+def test_doctor_reports_current_interpreter_and_paths(tmp_path: Path, monkeypatch) -> None:
+    settings = _settings(tmp_path)
+    monkeypatch.setattr(
+        doctor,
+        "_qlib_import_origin",
+        lambda: settings.qlib_source / "qlib/__init__.py",
+    )
+    report = doctor.build_report(settings, config_files=(tmp_path / "config.yaml",))
     checks = {item["name"]: item for item in report["checks"]}
     assert checks["runtime:python"]["detail"].startswith(str(doctor.sys.executable))
     assert checks["path:qlib_source"]["status"] == "pass"
+    assert checks["runtime:qlib_source_alignment"]["status"] == "pass"
     assert checks["path:qlib_provider"]["status"] == "pass"
     assert checks["path:reports_dir"]["status"] == "warn"
 
@@ -62,3 +69,22 @@ def test_doctor_default_is_diagnostic_and_strict_is_enforcing(
     assert doctor.main(["--json"]) == 0
     assert json.loads(capsys.readouterr().out)["status"] == "incomplete"
     assert doctor.main(["--json", "--strict"]) == 1
+
+
+def test_doctor_checks_lightgbm_dependency() -> None:
+    assert ("lightgbm", "lightgbm") in doctor.DEPENDENCIES
+
+
+def test_qlib_source_alignment_rejects_a_different_checkout(
+    tmp_path: Path,
+    monkeypatch,
+) -> None:
+    configured = tmp_path / "configured-qlib"
+    imported = tmp_path / "other-qlib" / "qlib/__init__.py"
+    monkeypatch.setattr(doctor, "_qlib_import_origin", lambda: imported)
+
+    check = doctor._qlib_source_alignment_check(configured)
+
+    assert check["status"] == "fail"
+    assert f"imported={imported.resolve()}" in check["detail"]
+    assert f"configured={configured.resolve()}" in check["detail"]
