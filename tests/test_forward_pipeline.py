@@ -254,6 +254,100 @@ def test_duplicate_prediction_is_rejected_and_force_is_dev_only(forward_fixture)
         _run(forward_fixture, force_dev=True)
 
 
+def test_prediction_at_label_start_cutoff_is_rejected(forward_fixture) -> None:
+    with pytest.raises(PermissionError, match="cutoff"):
+        _run(
+            forward_fixture,
+            feature_snapshot_created_at="2026-08-04T09:24:59+08:00",
+            prediction_created_at="2026-08-04T09:25:00+08:00",
+        )
+
+
+def test_pending_receipt_prediction_and_state_schemas_are_stable(forward_fixture) -> None:
+    _run(forward_fixture)
+    target = Path(forward_fixture["output_root"]) / "predictions/2026-08-03"
+    prediction = pd.read_csv(target / "prediction.csv")
+    pending = json.loads((target / "prediction_pending_receipt.json").read_text())
+    state = json.loads(Path(forward_fixture["state_path"]).read_text())
+
+    assert tuple(prediction.columns) == (
+        "datetime",
+        "instrument",
+        "score",
+        "model_sha256",
+        "feature_order_sha256",
+        "candidate_freeze_id",
+        "prediction_created_at",
+    )
+    assert set(pending) == {
+        "schema_version",
+        "evidence_grade",
+        "evidence_eligible",
+        "status",
+        "decision_date",
+        "raw_data_path",
+        "raw_snapshot_first_seen_at",
+        "raw_data_sha256",
+        "data_completeness_status",
+        "feature_snapshot_created_at",
+        "feature_snapshot_sha256",
+        "factor_count",
+        "feature_order_sha256",
+        "prediction_created_at",
+        "prediction_sha256",
+        "label_start_date",
+        "label_start_cutoff",
+        "label_mature_date",
+        "trading_calendar_sha256",
+        "label_read_count_at_prediction",
+        "candidate_freeze_id",
+        "model_sha256",
+        "preprocessing_sha256",
+        "production_model_selected",
+        "live_trading_ready",
+    }
+    assert set(state) == {
+        "schema_version",
+        "evidence_grade",
+        "candidate_freeze_id",
+        "model_sha256",
+        "preprocessing_sha256",
+        "feature_order_sha256",
+        "last_raw_date",
+        "last_feature_date",
+        "last_prediction_date",
+        "prediction_dates",
+        "pending_commit_dates",
+        "pending_label_dates",
+        "mature_label_dates",
+        "dry_run_dates",
+        "failed_dates",
+        "official_forward_prediction_count",
+        "forward_pipeline_code_ready",
+        "single_day_feature_pipeline_ready",
+        "single_day_prediction_pipeline_ready",
+        "label_maturity_tracker_ready",
+        "duplicate_prediction_protection_ready",
+        "frozen_model_hash_valid",
+        "frozen_feature_order_valid",
+        "prediction_stage_label_read_count",
+        "forward_data_waiting",
+        "primary_confirmation_complete",
+        "production_model_selected",
+        "live_trading_ready",
+    }
+    assert pending["label_read_count_at_prediction"] == 0
+    assert state["prediction_stage_label_read_count"] == 0
+
+    _finalize(forward_fixture, _commit_prediction(forward_fixture))
+    receipt = json.loads((target / "prediction_receipt.json").read_text())
+    assert set(receipt) == set(pending) | {
+        "prediction_repo_path",
+        "prediction_commit_sha",
+        "prediction_commit_timestamp",
+    }
+
+
 def test_failed_retry_does_not_damage_existing_dry_run(forward_fixture) -> None:
     first = _run(forward_fixture, dry_run=True)
     prediction = Path(first["prediction_path"])
@@ -375,6 +469,17 @@ def test_mature_label_computes_daily_rank_ic_and_updates_state(forward_fixture) 
     assert result["matured_dates"] == ["2026-08-03"]
     metrics = pd.read_csv(
         Path(forward_fixture["output_root"]) / "metrics/daily_metrics.csv"
+    )
+    assert tuple(metrics.columns) == (
+        "datetime",
+        "daily_rank_ic",
+        "daily_pearson_ic",
+        "coverage",
+        "valid_pair_count",
+        "positive_ic_indicator",
+        "candidate_freeze_id",
+        "primary_confirmation_authority",
+        "evidence_grade",
     )
     assert metrics.loc[0, "valid_pair_count"] == 3
     assert metrics.loc[0, "daily_rank_ic"] == pytest.approx(1.0)

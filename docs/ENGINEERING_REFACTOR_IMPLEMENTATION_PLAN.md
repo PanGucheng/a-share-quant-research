@@ -377,3 +377,62 @@ frozen outputs and artifacts diff     = empty
   Forward dry-run；没有重新请求市场数据或写入正式 evidence；
 - `pipeline.py` 保留输出写入 orchestration，尚未引入新的 storage abstraction；
 - Forward prediction/state/label/paper 模块未拆分，Phase 3B 仍需单独授权。
+
+## 15. Phase 3B 实施回执（2026-08-09）
+
+Phase 3B 以 Regression Gate A 基线 `d401f2b` 为起点，完成 Forward Pipeline
+decomposition，并在 Regression Gate B 后停止：
+
+```text
+forward_pipeline_decomposed           = true
+pipeline_compatibility_facade         = true
+strategy_v1_contract_changed          = false
+append_only_state_semantics_changed   = false
+commit_cutoff_label_semantics_changed = false
+paper_portfolio_decomposed            = false
+official_forward_evidence_written     = false
+phase_4_started                       = false
+```
+
+实际实现：
+
+- `forward_state.py` 承担原子 I/O、state schema、append-only 状态和 calendar/label
+  window helper；
+- `forward_binding.py` 承担 candidate freeze、模型加载、artifact 与 Git commit
+  binding；
+- `forward_prediction.py` 承担 prediction 输入规范化、执行与结果构造；
+- `forward_labels.py` 承担 label maturity 检查和成熟标签评价；
+- `forward_pipeline.py` 改为 import-only compatibility facade，保留原有公开函数、类和
+  签名；
+- `paper_portfolio.py` 未拆分，没有新增 manager、registry、protocol 或 storage
+  abstraction；
+- 对基线 `d401f2b` 做逐函数 AST 对比，18 个迁移函数/类全部结构等价。
+
+Regression Gate B 验证结果：
+
+```text
+moved function/class AST equivalence = 18 / 18
+focused Forward tests                = 43 passed
+Regression Gate B                    = 77 passed
+full pytest                          = 352 passed, 4 existing Qlib warnings
+2026-08-07 temporary replay rows     = 1845
+replay score max absolute difference = 0
+prediction columns                   = 7
+pending receipt keys                 = 25
+final receipt keys                   = 25
+state keys                           = 28
+replay label read count              = 0
+replay evidence eligible             = false
+```
+
+Gate B 新增直接覆盖 duplicate date、cutoff、commit binding、label maturity、失败
+状态，以及 prediction/pending receipt/final receipt/state/metrics 的精确 schema。
+2026-08-07 重放只使用自动清理的临时目录，没有覆盖或新增正式 Forward evidence。
+
+已知边界：
+
+- compatibility facade 继续暴露下划线前缀 helper，以兼容现有 tests 和内部调用者；
+  新代码应直接依赖对应职责模块；
+- Forward state 仍沿用既有 JSON/CSV 文件 contract，没有引入新的持久化框架；
+- `paper_portfolio.py` 继续作为独立现有模块，本阶段没有扩大拆分范围；
+- Phase 4 的 output/Git policy 尚未开始，必须等待单独授权。

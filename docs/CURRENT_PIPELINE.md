@@ -87,7 +87,10 @@ outputs/daily_data_update_v1/<date>/<source>_qlib_daily.csv
 - `qlib-forward-predict` / `qlib_baseline.cli.forward_predict`
 - `scripts/run_forward_prediction_v1.py`（兼容包装器）
 - `daily_update/forward_adapter.py`
-- `model_research/forward_pipeline.py`
+- `model_research/forward_pipeline.py`（兼容 facade）
+- `model_research/forward_prediction.py`
+- `model_research/forward_binding.py`
+- `model_research/forward_state.py`
 
 从 Daily Update 消费一天数据：
 
@@ -160,6 +163,8 @@ Paper Portfolio 只消费 committed official prediction。执行日数据尚未�
 - `qlib-forward-status` / `qlib_baseline.cli.forward_status`
 - `scripts/update_forward_labels_v1.py`、`scripts/show_forward_status_v1.py`
   （兼容包装器）
+- `model_research/forward_labels.py`
+- `model_research/forward_state.py`
 
 ```powershell
 qlib-forward-label-update `
@@ -269,4 +274,9 @@ editable install 后作为兼容入口使用。
 
 Phase 3A 已完成 Daily Update 内部拆分并通过 Regression Gate A。Community/BaoStock
 发布时间、bridge 公式、95% coverage、450 日 warmup、52 因子顺序与 fail-closed
-语义保持不变。Phase 3B 尚未开始。
+语义保持不变。
+
+Phase 3B 已将 Forward Pipeline 拆为 state、binding、prediction 和 mature-label
+四个职责模块，原 `forward_pipeline.py` 只保留兼容 re-export。Strategy V1、模型与
+预处理 hash、52 因子顺序、append-only state、commit binding、cutoff、label
+maturity 和 paper portfolio contract 均保持不变；Regression Gate B 已通过。

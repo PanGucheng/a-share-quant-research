@@ -137,6 +137,21 @@ pipeline.py (config + orchestration + compatibility re-export)
 `pipeline.py` 继续保留原公开符号，现有调用者不需要迁移。拆分没有新增 manager、
 registry、protocol 或新的数据 contract。
 
+Phase 3B 后 Forward Pipeline 内部依赖方向为：
+
+```text
+forward_pipeline.py (compatibility re-export only)
+    ├── forward_state.py      (atomic I/O, append-only state, calendar/window helpers)
+    ├── forward_binding.py    (candidate freeze, model loading, Git commit binding)
+    ├── forward_prediction.py (prediction normalization and execution)
+    └── forward_labels.py     (mature-label evaluation)
+```
+
+`forward_pipeline.py` 保留原公开函数、类和调用签名，活动 CLI 与 paper portfolio 无需
+迁移。prediction 模块不依赖 label 模块；label update 只消费完成 Git binding 的
+official prediction。拆分没有改变 state/receipt schema、cutoff、label maturity、
+模型/预处理 hash 或 frozen 52 因子顺序，也没有拆分 `paper_portfolio.py`。
+
 ## 6. Factor Matrix 边界
 
 本轮不实现 KunQuant 或 factor-engine 插件系统。上层暂时只依赖现有矩阵 contract：
