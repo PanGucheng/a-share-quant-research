@@ -39,7 +39,7 @@ With the environment's Scripts directory on `PATH`, the equivalent command is:
 qlib-doctor --strict
 ```
 
-Phase 2 exposes the active Forward Track through installed commands:
+The active Forward Track is exposed through installed commands:
 
 ```powershell
 qlib-daily-update --target-date YYYY-MM-DD

@@ -402,7 +402,7 @@ Rank ICIR
 
 ```text
 docs/ENVIRONMENT.md
-docs/BASELINE_REPRODUCIBILITY.md
+docs/_archive/01_early_stage_plans/BASELINE_REPRODUCIBILITY.md
 outputs/reports/baseline_summary.csv
 scripts/summarize_mlruns.py
 ```

@@ -1,5 +1,9 @@
 # Personal A-Share Quant Research Roadmap
 
+> The numbered phases in this roadmap describe possible research progression. They
+> are not extensions of the CLOSED Phase 0–6 engineering refactor; there is no
+> engineering Phase 7.
+
 ## 1. Project Positioning
 
 `qlib-baseline` is a personal A-share quantitative research project. Its purpose is
@@ -101,11 +105,18 @@ an unbiased final estimate or a production-ready strategy.
 
 Model Diagnostic V1 has now closed. Core Diagnostic, External PIT Style Data V1,
 and the Style Attribution Extension are all `pass/complete`; the authoritative
-closeout is `docs/MODEL_DIAGNOSTIC_V1_CLOSEOUT.md`. The combined evidence rejects a
+historical closeout is
+[`_archive/07_research_program_history/MODEL_DIAGNOSTIC_V1_CLOSEOUT.md`](_archive/07_research_program_history/MODEL_DIAGNOSTIC_V1_CLOSEOUT.md).
+The combined evidence rejects a
 persistent Small Cap explanation, extreme single-industry concentration, Top10
 dilution, and transaction cost alone as sufficient explanations. Relationship
 non-stationarity and Size/style-conditional effectiveness remain hypotheses for a
 future, separately frozen protocol rather than established causes.
+
+The Forward Track is operational and has produced the 2026-08-07 official prediction
+and paper decision. Those records remain append-only; label evaluation waits for
+maturity. Exact current status and commands are maintained in
+[CURRENT_PIPELINE.md](CURRENT_PIPELINE.md).
 
 ## 6. Why Forward Collection Has Temporal Priority
 

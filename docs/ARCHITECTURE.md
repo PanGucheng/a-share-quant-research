@@ -5,7 +5,7 @@
 `qlib-baseline` 是个人 A 股量化研究仓库。架构首先服务于研究正确性、无未来数据、
 时间隔离、解释性和可复现性，而不是机构级平台能力。
 
-当前工程优化的目标是让开发者和 Codex 更快判断：
+当前工程结构的目标是让开发者和 Codex 更快判断：
 
 - 当前应该运行什么；
 - 哪些配置和数据路径生效；
@@ -16,6 +16,8 @@
 
 权威研究边界见 [PERSONAL_QUANT_RESEARCH_ROADMAP.md](PERSONAL_QUANT_RESEARCH_ROADMAP.md)，
 当前执行入口见 [CURRENT_PIPELINE.md](CURRENT_PIPELINE.md)。
+Phase 0–6 重构已经关闭，最终边界见
+[ENGINEERING_REFACTOR_CLOSEOUT.md](ENGINEERING_REFACTOR_CLOSEOUT.md)。
 
 ## 2. 当前逻辑结构
 
@@ -96,9 +98,9 @@ Qlib integration / validation / shared I/O
 - historical diagnostics 不得改变 frozen Strategy V1；
 - 新模块应优先复用现有 schema、execution 和 validation，避免平行框架。
 
-Phase 1 已建立可安装 package、统一 settings 和 doctor；Phase 2 将五个活动 CLI
-迁入 `qlib_baseline.cli`。原 scripts 只保留兼容转发，业务 pipeline 调用与 frozen
-contract 未改变。
+当前基础层提供可安装 package、统一 settings、doctor 和五个
+`qlib_baseline.cli` 活动入口。原 scripts 只保留兼容转发，业务 pipeline 调用与
+frozen contract 未改变。
 
 ## 5. 配置与运行环境
 
@@ -109,7 +111,7 @@ contract 未改变。
 - `pyproject.toml`、`qlib_baseline.settings.ProjectSettings` 和 `qlib-doctor` 已可用；
 - committed `configs/project.yaml` 的机器路径保持 `null`，当前工作站路径仅存在于
   ignored `configs/project.local.yaml`；
-- Phase 4 已建立 `reports/`，并以目录级 `.gitignore` policy 让普通 outputs/tmp
+- 已建立 `reports/`，并以目录级 `.gitignore` policy 让普通 outputs/tmp
   默认忽略，同时保留 artifacts/reports 和 allowlist 中 official Forward evidence
   的 tracking；未知 Forward runtime 文件默认忽略；
 - 文档声明的项目解释器是 `E:/anaconda_envs/qlib_env/python.exe`。
@@ -122,11 +124,11 @@ contract 未改变。
 - 本机路径只进入 ignored local config、环境变量或 CLI；
 - 路径统一相对仓库根目录解析，不依赖调用时 cwd。
 
-Phase 2 不改变解释器选择。`qlib-doctor` 报告当前 interpreter、依赖和路径；活动
+工程基础不改变解释器选择。`qlib-doctor` 报告当前 interpreter、依赖和路径；活动
 CLI 消费 Project Settings，且不得向 `load_settings(project_root=...)` 传值。历史
-scripts 不在本阶段批量迁移。
+scripts 未被批量迁移。
 
-Phase 3A 后 Daily Update 内部依赖方向为：
+Daily Update 当前内部依赖方向为：
 
 ```text
 pipeline.py (config + orchestration + compatibility re-export)
@@ -140,7 +142,7 @@ pipeline.py (config + orchestration + compatibility re-export)
 `pipeline.py` 继续保留原公开符号，现有调用者不需要迁移。拆分没有新增 manager、
 registry、protocol 或新的数据 contract。
 
-Phase 3B 后 Forward Pipeline 内部依赖方向为：
+Forward Pipeline 当前内部依赖方向为：
 
 ```text
 forward_pipeline.py (compatibility re-export only)
@@ -155,13 +157,13 @@ forward_pipeline.py (compatibility re-export only)
 official prediction。拆分没有改变 state/receipt schema、cutoff、label maturity、
 模型/预处理 hash 或 frozen 52 因子顺序，也没有拆分 `paper_portfolio.py`。
 
-Phase 5 的缓存依赖方向保持单向：三个明确的历史弱缓存调用
+弱缓存依赖方向保持单向：三个明确的历史弱缓存调用
 `qlib_baseline.cache` 的普通函数。该模块只提供 canonical fingerprint、规范化 AST
 hash、provider 内容 fingerprint、原子 Parquet/sidecar 读写，不建立 cache manager、
 registry 或 lineage 平台。Matrix v4、raw snapshot manifest 和
 `research_validation.lineage` 不依赖它。
 
-Phase 6 的 quality runner 只编排既有 lint、pytest、validator 和 Qlib synthetic
+quality runner 只编排既有 lint、pytest、validator 和 Qlib synthetic
 runtime 命令，不进入业务 pipeline，也不写研究 outputs。GitHub Actions 与本地共享
 `scripts/check_quality.py` 的 fast/full/qlib 命令清单，workflow 只负责依赖安装、
 路径分流与 stable gate。

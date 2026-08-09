@@ -63,7 +63,7 @@ excess_return_with_cost.max_drawdown: -0.072773
 
 ```text
 docs/ENVIRONMENT.md
-docs/BASELINE_REPRODUCIBILITY.md
+docs/_archive/01_early_stage_plans/BASELINE_REPRODUCIBILITY.md
 scripts/summarize_mlruns.py
 outputs/reports/baseline_summary.csv
 ```
@@ -168,7 +168,7 @@ cd E:\qlib_prj\qlib_baseline
 建议记录：
 
 ```text
-docs/BASELINE_REPRODUCIBILITY.md
+docs/_archive/01_early_stage_plans/BASELINE_REPRODUCIBILITY.md
 ```
 
 记录内容：
@@ -276,7 +276,7 @@ E:\anaconda_envs\qlib_env\python.exe scripts\summarize_mlruns.py --mlruns output
 新增文件：
 
 ```text
-docs/BASELINE_REPRODUCIBILITY.md
+docs/_archive/01_early_stage_plans/BASELINE_REPRODUCIBILITY.md
 ```
 
 建议结构：
@@ -355,7 +355,7 @@ git -C E:\qlib_prj\qlib_baseline status --short
 当以下事项全部满足，即认为第一步完成：
 
 - `docs/ENVIRONMENT.md` 存在且内容完整。
-- `docs/BASELINE_REPRODUCIBILITY.md` 存在且可照文档复跑。
+- `docs/_archive/01_early_stage_plans/BASELINE_REPRODUCIBILITY.md` 存在且可照文档复跑。
 - `.\scripts\run_baseline.ps1` 可完整跑通。
 - `.\scripts\run_data_quality.ps1 --config data_quality/config.yaml` 可完整跑通。
 - `scripts/summarize_mlruns.py` 可生成 `outputs/reports/baseline_summary.csv`。

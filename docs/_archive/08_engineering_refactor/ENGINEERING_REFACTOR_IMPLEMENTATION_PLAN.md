@@ -1,0 +1,579 @@
+# Engineering Refactor Implementation Plan
+
+> ARCHIVED / CLOSED：Phase 0–6 已在 `b46b4f6` 完成并通过 CI；本计划不再授权后续 Phase。
+> 当前工程权威状态见 `../../ENGINEERING_REFACTOR_CLOSEOUT.md`。
+
+## 1. 目标与执行纪律
+
+本计划把《qlib-baseline 工程优化开放式方案》落实为小步、可验证、可回滚的
+工程重构。它只改变工程组织，不授权任何量化研究变化。
+
+严格禁止：
+
+- 重新训练或重新选择模型；
+- 重新筛选因子，或改变 frozen 52-factor input/order；
+- 使用已观察的 `split_003` 调整参数、TopK、调仓周期或组合规则；
+- 修改 Strategy V1 的 Top50 等权、5 个交易日调仓、费用、滑点或 T+1 语义；
+- 覆盖既有 prediction、receipt、paper decision、持仓、交易、NAV 或 frozen artifact。
+
+每个 Phase 必须单独实施、验证和汇报。未经用户明确要求，不自动进入下一 Phase。
+如果实际审查发现某项成本、兼容风险或研究正确性风险显著高于预期，可以
+`Stop / Skip / Defer / Simplify`，但必须记录偏离原因。
+
+## 2. 审计基线
+
+Phase 0 开始前的仓库事实：
+
+- Git 共跟踪约 3,952 个文件，其中 `outputs/` 约 3,183 个；
+- 共有 439 个 Python 文件、216 个 Python scripts；
+- 约 194 个 Python 文件直接操作 `sys.path`；
+- 尚无 `pyproject.toml`；
+- `.gitignore` 约 240 行，其中大部分是 outputs 的 stage-specific 规则；
+- `daily_update/pipeline.py` 同时承担数据源、provider、特征、校验和输出；
+- Matrix v4 cache、manifest 与 lineage 已较成熟，不应被统一缓存工作替换；
+- 当前活动主线是 Daily Data Update → frozen Strategy V1 prediction → paper portfolio；
+- 2026-08-07 已有 1 条 official prediction，等待标签成熟；paper portfolio 已生成
+  2026-08-07 decision，等待 2026-08-10 execution data；
+- 当前 Forward Track 针对性基线测试为 `61 passed`（项目 Qlib Python 环境）；默认
+  系统 Python 因缺少 `pandera` 在测试收集阶段停止。
+
+## 3. Phase 0 — Documentation And Architecture Entry
+
+实施内容：
+
+- 原样复制工程优化指南到 `docs/`，并验证 SHA-256；
+- 新建本实施方案；
+- 新建 `ARCHITECTURE.md`、`CURRENT_PIPELINE.md`、`OUTPUT_POLICY.md`；
+- 更新 `DOC_INDEX.md`、README 和 `AGENTS.md` 的工程入口；
+- 将入口标记为 `ACTIVE / FROZEN / CLOSED / LEGACY / EXPERIMENTAL`；
+- 将现有 governance 分类为必须保留、Forward/Frozen 必需、历史兼容和停止扩张。
+
+完成标准：
+
+- 新 Codex 实例能够快速定位当前流水线、冻结边界、配置、输出和测试入口；
+- 文档链接、源文件副本 hash、Git diff 检查通过；
+- 不修改代码、配置、`.gitignore`、outputs 或 artifacts。
+
+## 4. Phase 1 — Settings, pyproject And Doctor
+
+计划新增：
+
+- `pyproject.toml`；
+- `configs/project.yaml` 与 `configs/project.local.example.yaml`；
+- `qlib_baseline/settings.py`、`qlib_baseline/io.py`；
+- `qlib_baseline/cli/doctor.py` 及对应测试。
+
+目标接口：
+
+```python
+@dataclass(frozen=True)
+class ProjectSettings:
+    project_root: Path
+    qlib_source: Path | None
+    qlib_provider: Path | None
+    daily_update_cache: Path | None
+    outputs_dir: Path
+    artifacts_dir: Path
+    reports_dir: Path
+    tmp_dir: Path
+```
+
+配置规则：
+
+- `project_root` 由 package 位置确定，不由 YAML 覆盖；
+- committed `project.yaml` 中机器相关路径为 `null`，repo 内路径使用
+  `outputs`、`artifacts`、`reports`、`tmp`；
+- 当前工作站的实际 `E:/qlib_prj/...` 路径只写入被忽略的
+  `configs/project.local.yaml`；
+- 文件选择顺序为 CLI → `QLIB_BASELINE_CONFIG` → local YAML → committed YAML；
+- 字段值顺序为 CLI → `QLIB_BASELINE_*` → YAML；
+- Python interpreter 不进入 Project Settings；`qlib-doctor` 直接检查
+  `sys.executable`、版本、依赖和命令所需路径；
+- 不引入 `.env` 或大型配置框架。
+
+Phase 1 只建立基础能力，不迁移业务入口。
+
+## 5. Phase 2 — Active CLI Migration
+
+只迁移当前 Forward Track：
+
+- `daily_update.py`；
+- `run_forward_prediction_v1.py`；
+- `update_forward_labels_v1.py`；
+- `run_paper_portfolio_v1.py`；
+- `show_forward_status_v1.py`。
+
+提供 `qlib-daily-update`、`qlib-forward-predict`、
+`qlib-forward-label-update`、`qlib-paper-portfolio`、
+`qlib-forward-status` 与 `qlib-doctor`。旧 scripts 保留为兼容包装器。
+
+完成标准：
+
+- 新旧命令对同一 fixture 等价；
+- 活动入口的绝对本机路径和 `sys.path.insert` 为零；
+- frozen model、preprocessing 与 factor-order hash 不变；
+- 不批量迁移历史 scripts。
+
+## 6. Phase 3A — Daily Update Decomposition
+
+计划拆分为：
+
+- `daily_update/sources/community.py`；
+- `daily_update/sources/baostock.py`；
+- `daily_update/provider.py`；
+- `daily_update/features.py`；
+- `daily_update/validation.py`；
+- `daily_update/pipeline.py` 保留 orchestration 和兼容 re-export。
+
+不得改变数据源发布时间、bridge 公式、52 因子顺序、覆盖阈值或 fail-closed 语义。
+
+### Regression Gate A
+
+在进入 Forward Pipeline 拆分前，必须通过：
+
+- Daily Update synthetic；
+- Forward adapter；
+- Forward prediction fixture 与 contract；
+- Paper Portfolio fixture；
+- 当前 Forward Track 基线测试；
+- 在临时目录重放已保存的 2026-08-07 输入，不写正式 evidence 路径。
+
+Gate 只是测试和审阅结果，不新增 validator、manifest 或治理层。
+
+## 7. Phase 3B — Forward Pipeline Decomposition
+
+仅在 Regression Gate A 通过后实施。拆分 prediction、append-only state、
+freeze/commit binding 和 mature-label update；原 `forward_pipeline.py` 保留兼容
+façade 和公开函数签名。`paper_portfolio.py` 本轮默认不拆。
+
+### Regression Gate B
+
+- 重跑 Gate A；
+- 覆盖 duplicate date、cutoff、commit binding、label maturity 和失败状态；
+- score 在 `1e-12` 容差内等价；
+- prediction/receipt/state schema 与 label-read 边界不变。
+
+未通过时只回滚 Phase 3B。
+
+## 8. Phase 4 — Output And Git Policy
+
+目标语义：
+
+- `outputs/`：默认不跟踪的运行结果；
+- `artifacts/`：不可变、content-addressed 的冻结对象；
+- `reports/`：人类可读报告与小型汇总；
+- `tmp/`：cache/download/scratch；
+- `outputs/forward/`：Strategy V1 append-only evidence 的明确兼容例外。
+
+Phase 4 只修改未来 tracking policy。明确禁止：
+
+- 对历史 outputs 运行 `git rm --cached`；
+- 批量 untrack、move、rename 或 delete；
+- 修改历史 manifest/hash；
+- 为了减少行数牺牲规则语义。
+
+完成标准是删除大部分 stage-specific 规则、未来普通实验无需持续修改
+`.gitignore`，且修改前后 `git ls-files outputs artifacts` 集合完全一致；不设置固定
+行数目标。
+
+## 9. Phase 5 — Weak Cache Hardening
+
+新 fingerprint 分为：
+
+```text
+Cache Schema
++ Data Fingerprint
++ Computation Fingerprint
++ Request Fingerprint
+```
+
+- Data：provider snapshot、calendar/instruments、universe、日期；
+- Computation：公式/expression、metadata、preprocessing、相关 engine version；
+- Request：factor names、fields、market、输出 schema；
+- Diagnostic metadata：完整 producer file hash、Git commit、环境版本，仅记录在
+  sidecar，不默认参与 key。
+
+Python 计算使用实际函数及直接 helper 的规范化 AST hash，忽略注释、格式和无关
+函数变化。Qlib commit 只在确实影响该计算时参与 key。
+
+优先迁移 `factor_research/evaluator.py`、`run_factor_research_v3.py` 和
+`expression_adapter.py`。新 cache 使用 Parquet + `.meta.json`；旧 pickle 保留但
+不作为新 schema 默认命中。Matrix v4 cache、raw snapshot manifest 与 lineage 不改。
+
+## 10. Phase 6 — Quality And CI Consolidation
+
+新增统一的 `scripts/check_quality.py`：
+
+- `fast`：Ruff 与 settings/cache/active-entry tests；
+- `full`：完整 pytest 与现有 synthetic validators；
+- `qlib`：现有 Qlib Exchange runtime tests。
+
+CI 与本地使用同一入口；Ruff 首轮只覆盖新基础包、Daily Update 和活动 CLI，不
+批量格式化历史仓库。CI 不下载完整 A 股数据、不训练模型、不运行完整矩阵或回测。
+
+## 11. 最终验收与回滚
+
+每个 Phase：
+
+1. 开始前重新核对 touched files 与研究边界；
+2. 使用独立提交；
+3. 运行该 Phase 的最小测试和完整适用 gate；
+4. 汇报实际变更、验证、风险及对后续 Phase 的影响；
+5. 等待用户授权，不自动继续；
+6. 回滚采用撤销该 Phase 提交，不清理历史 evidence。
+
+最终状态必须保持 Strategy V1、研究时间边界、Forward evidence 和全部历史
+artifacts/manifests/receipts/lineage 不变。本轮不做 `src/` 大迁移，不批量清除
+历史 `sys.path`，不实现 KunQuant 或 factor-engine 插件系统。
+
+## 12. Phase 1 实施回执（2026-08-09）
+
+Phase 1 已按计划完成，并保持所有活动业务入口不变：
+
+```text
+pyproject_editable_install_ready      = true
+portable_project_settings_ready       = true
+ignored_local_override_ready          = true
+runtime_doctor_ready                  = true
+atomic_io_foundation_ready            = true
+active_cli_migrated                   = false
+daily_forward_behavior_changed        = false
+```
+
+实际实现：
+
+- `ProjectSettings` 只管理项目与数据路径，不包含 Python executable；
+- committed `configs/project.yaml` 的 Qlib source/provider/cache 为 `null`；
+- `configs/project.local.yaml` 只保存当前机器路径并被 Git 忽略；
+- base YAML 与 partial local/explicit YAML 合并，字段优先级为 CLI → env → YAML；
+- 所有相对路径从 repository root 解析，不依赖 cwd；
+- `qlib-doctor` 检查 `sys.executable`、Python 3.10、依赖和外部路径；
+- `qlib_baseline.io` 提供无 pandas 依赖的 atomic path/text/JSON 写入基础；
+- editable package 同时暴露现有领域 packages，但没有迁移或修改其业务代码。
+
+验证结果：
+
+```text
+new Phase 1 tests                    = 13 passed
+full pytest                          = 336 passed, 4 existing Qlib warnings
+editable install                     = pass
+qlib-doctor --strict                 = ready / exit 0
+cross-cwd settings and console usage = pass
+```
+
+已知边界：
+
+- `reports/` 尚未建立，doctor 按 Phase 4 计划标记为 warning，不阻塞 readiness；
+- 未激活环境时 `qlib-doctor.exe` 所在 Scripts 目录可能不在 `PATH`，始终可使用
+  `python -m qlib_baseline.cli.doctor`；
+- 当 cwd 恰好存在名为 `qlib_baseline` 的无 `__init__.py` 目录时，bare
+  `import qlib_baseline` 可能被识别为 namespace package；显式
+  `qlib_baseline.settings`、module CLI 和 console script 已验证可用。Phase 2 不应依赖
+  package root 的 re-export；
+- 活动 scripts 的绝对路径和 `sys.path` 暂时保留，等待 Phase 2。
+
+Phase 1 follow-up 补充了进入 Phase 2 前的环境一致性检查：
+
+- doctor 将 LightGBM 纳入活动 Forward Prediction 的必需依赖；
+- doctor 报告实际 `qlib` import origin，并在配置源码与实际导入源码不一致时 fail；
+- settings 测试明确覆盖 Windows `E:/...` 绝对路径解析；
+- `load_settings(project_root=...)` 仍只用于测试，活动 CLI 不得覆盖 repository root。
+
+## 13. Phase 2 实施回执（2026-08-09）
+
+Phase 2 只迁移活动 Forward Track CLI，没有改动 frozen Strategy V1 的计算、模型、
+特征、组合或 evidence：
+
+```text
+packaged_active_cli_ready             = true
+legacy_active_scripts_compatible      = true
+active_entry_machine_paths            = 0
+active_entry_sys_path_insert          = 0
+frozen_model_or_feature_changed       = false
+forward_evidence_written              = false
+```
+
+实际实现：
+
+- 新增 `qlib-daily-update`、`qlib-forward-predict`、
+  `qlib-forward-label-update`、`qlib-paper-portfolio`、`qlib-forward-status`；
+- 五个旧 scripts 直接复用 packaged CLI 的同一 `main` 函数；
+- 默认 output、freeze、status、paper config、Qlib source/provider 和 daily cache
+  由 Project Settings 派生；
+- Daily Update 的 Qlib import 不再修改 `sys.path`，fallback `dump_bin.py` 来源由
+  配置的 `qlib_source` 明确传入；
+- calendar、label、date、daily input、dry-run、commit binding 等业务参数和底层
+  contract 保持原样；
+- 没有迁移任何历史 scripts，也没有运行正式 prediction、paper 或 label update。
+
+验证结果：
+
+```text
+active CLI migration tests           = 8 passed
+Forward Track regression baseline    = 61 passed
+full pytest                          = 344 passed, 4 existing Qlib warnings
+editable install and pip check       = pass
+six installed command help checks    = pass
+five legacy wrapper help checks      = pass
+qlib-doctor --strict                 = ready / exit 0
+frozen outputs and artifacts diff    = empty
+```
+
+已知边界：
+
+- 旧 scripts 为避免 `scripts/daily_update.py` 遮蔽 `daily_update` package，会启动一个
+  指向 packaged module 的子 Python 进程，因此有很小的启动开销；新 console command
+  没有该开销；
+- 旧 scripts 依赖 Phase 1 的 editable install，不再自行修改 Python import path；
+- calendar file、label directory 和单日 input 仍是显式业务参数，没有臆测新的配置；
+- `daily_update/pipeline.py` 仍是单体模块，拆分只属于后续获得授权的 Phase 3A。
+
+## 14. Phase 3A 实施回执（2026-08-09）
+
+Phase 3A 已完成 Daily Update decomposition，并在 Regression Gate A 后停止：
+
+```text
+daily_update_decomposed               = true
+pipeline_compatibility_facade         = true
+community_baostock_semantics_changed  = false
+bridge_formula_changed                = false
+frozen_feature_order_changed          = false
+official_forward_evidence_written     = false
+phase_3b_started                      = false
+```
+
+实际实现：
+
+- `sources/community.py` 负责 Community release、下载、provider 读取；
+- `sources/baostock.py` 负责 18:00 publication window、批量日线和 factor probe；
+- `provider.py` 负责 Community anchor、BaoStock bridge、fallback provider；
+- `features.py` 负责既有 52 因子顺序和现有 Alpha/basic/TA 计算；
+- `validation.py` 负责 frozen universe、95% coverage 和 compatibility smoke；
+- `pipeline.py` 只保留 `DailyUpdateConfig`、orchestration、输出和兼容 re-export；
+- 迁移前后逐函数 AST 核验除下述 bug fix 外完全一致。
+
+拆分审计发现并修复两个已存在的运行时错误：
+
+- `datetime.time` 遮蔽标准库 `time` 模块，使 BaoStock transient failure 的
+  `sleep` 重试分支报错；现在使用明确的 `time_module`，并有重试测试；
+- `run()` 使用 `timezone.utc` 却未导入 `timezone`，使真实 ready 路径在记录时间戳时
+  报错；现在显式导入，community orchestration synthetic 已覆盖。
+
+两项修复只恢复文档已经声明的运行行为，不改变数据、因子或研究语义。
+
+验证结果：
+
+```text
+Daily decomposition focused tests     = 11 passed
+Regression Gate A                     = 65 passed
+full pytest                           = 348 passed, 4 existing Qlib warnings
+2026-08-07 temporary replay rows      = 1845
+replay score max absolute difference  = 0
+replay label read count               = 0
+replay evidence eligible              = false
+frozen outputs and artifacts diff     = empty
+```
+
+已知边界：
+
+- saved-input replay 复制已有 2026-08-07 Daily output 到自动清理的临时目录，并只运行
+  Forward dry-run；没有重新请求市场数据或写入正式 evidence；
+- `pipeline.py` 保留输出写入 orchestration，尚未引入新的 storage abstraction；
+- Forward prediction/state/label/paper 模块未拆分，Phase 3B 仍需单独授权。
+
+## 15. Phase 3B 实施回执（2026-08-09）
+
+Phase 3B 以 Regression Gate A 基线 `d401f2b` 为起点，完成 Forward Pipeline
+decomposition，并在 Regression Gate B 后停止：
+
+```text
+forward_pipeline_decomposed           = true
+pipeline_compatibility_facade         = true
+strategy_v1_contract_changed          = false
+append_only_state_semantics_changed   = false
+commit_cutoff_label_semantics_changed = false
+paper_portfolio_decomposed            = false
+official_forward_evidence_written     = false
+phase_4_started                       = false
+```
+
+实际实现：
+
+- `forward_state.py` 承担原子 I/O、state schema、append-only 状态和 calendar/label
+  window helper；
+- `forward_binding.py` 承担 candidate freeze、模型加载、artifact 与 Git commit
+  binding；
+- `forward_prediction.py` 承担 prediction 输入规范化、执行与结果构造；
+- `forward_labels.py` 承担 label maturity 检查和成熟标签评价；
+- `forward_pipeline.py` 改为 import-only compatibility facade，保留原有公开函数、类和
+  签名；
+- `paper_portfolio.py` 未拆分，没有新增 manager、registry、protocol 或 storage
+  abstraction；
+- 对基线 `d401f2b` 做逐函数 AST 对比，18 个迁移函数/类全部结构等价。
+
+Regression Gate B 验证结果：
+
+```text
+moved function/class AST equivalence = 18 / 18
+focused Forward tests                = 43 passed
+Regression Gate B                    = 77 passed
+full pytest                          = 352 passed, 4 existing Qlib warnings
+2026-08-07 temporary replay rows     = 1845
+replay score max absolute difference = 0
+prediction columns                   = 7
+pending receipt keys                 = 25
+final receipt keys                   = 25
+state keys                           = 28
+replay label read count              = 0
+replay evidence eligible             = false
+```
+
+Gate B 新增直接覆盖 duplicate date、cutoff、commit binding、label maturity、失败
+状态，以及 prediction/pending receipt/final receipt/state/metrics 的精确 schema。
+2026-08-07 重放只使用自动清理的临时目录，没有覆盖或新增正式 Forward evidence。
+
+已知边界：
+
+- compatibility facade 继续暴露下划线前缀 helper，以兼容现有 tests 和内部调用者；
+  新代码应直接依赖对应职责模块；
+- Forward state 仍沿用既有 JSON/CSV 文件 contract，没有引入新的持久化框架；
+- `paper_portfolio.py` 继续作为独立现有模块，本阶段没有扩大拆分范围；
+- Phase 4 的 output/Git policy 尚未开始，必须等待单独授权。
+
+## 16. Phase 4 实施回执（2026-08-09）
+
+Phase 4 以 Regression Gate B 基线 `ffa8cbf` 为起点，只调整未来 tracking policy，
+没有清理历史 outputs：
+
+```text
+directory_level_output_policy_ready = true
+reports_directory_ready             = true
+historical_outputs_untracked        = false
+historical_files_moved_or_deleted   = false
+official_forward_tracking_changed   = false
+phase_5_started                     = false
+```
+
+实际实现：
+
+- `.gitignore` 从历史 stage-specific 规则收敛为目录语义；
+- 普通 `outputs/**`、`tmp/`、logs 和本地 cache/config 默认忽略；
+- `outputs/forward/` 默认忽略，只逐级放行 prediction、final receipt、decision、
+  target weights 和必要 status；
+- Forward dry-run、metrics、runtime、raw、features、pending receipt 和未知文件类型
+  默认忽略；
+- `artifacts/` 与新建的 `reports/` 保持可跟踪；
+- 新增 `git check-ignore --no-index` 回归测试覆盖 runtime 与 durable evidence 分类。
+
+验证结果：
+
+```text
+.gitignore lines before / final       = 233 / 34
+tracked outputs before / after        = 3183 / 3183
+tracked artifacts before / after      = 2 / 2
+combined tracked-set hash before/after = ecffe594789124b5f93f503a386fc9b16a0a9929
+output policy tests                   = 20 passed
+Regression Gate B                     = 77 passed
+full pytest                           = 372 passed, 4 existing Qlib warnings
+historical output/artifact diff       = empty
+```
+
+没有执行 `git rm --cached`、批量 untrack、move、rename 或 delete。Phase 5 未开始，
+必须等待单独授权。
+
+Phase 4 follow-up 以 `6785980` 为基线，将最初的“Forward 全放行 + runtime
+blacklist”进一步收紧为“Forward 默认忽略 + official evidence allowlist”。新增
+unknown Forward runtime 回归用例；tracked outputs/artifacts 数量和内容 hash
+保持不变。
+
+## 17. Phase 5 实施回执（2026-08-09）
+
+Phase 5 以 `3b176c2` 为基线，只迁移计划列出的弱缓存：
+
+```text
+factor_research/evaluator.py       Qlib raw feature frame
+scripts/run_factor_research_v3.py  V3 basic factor frame
+factor_research/expression_adapter.py expression final/chunk cache
+```
+
+实际实现：
+
+- 新增小型 `qlib_baseline/cache.py`，提供四层 canonical fingerprint、实际函数与直接
+  helper 的规范化 AST hash、provider content snapshot、原子 Parquet/sidecar I/O；
+- Data fingerprint 对 calendar 与 instrument 文件及请求 universe/fields 对应的 Qlib
+  binary 做内容 hash，并绑定日期区间；
+- Computation fingerprint 绑定因子函数/expression/metadata、直接 helper 和确实参与
+  计算的 Qlib/Pandas/NumPy engine identity；
+- Request fingerprint 绑定 factor names、raw fields、market 与输出 schema；
+- producer 文件完整 hash、当前 Git commit、Python 和 package 版本只记录在
+  `.meta.json` diagnostics，不参与 key；
+- 新 cache 使用 Parquet；只有数据文件与匹配 sidecar 同时存在时才命中；
+- 旧 pickle 保留但不作为 schema v2 默认命中，Expression adapter 的兼容发布文件
+  `factor_frame.pkl` 仍保持原格式与路径。
+
+明确未做：
+
+- 未修改 Matrix v4 cache、配置、runner、manifest 或产物；
+- 未修改 raw snapshot audit/config/manifest/产物；
+- 未修改 `research_validation.lineage`、artifact manifest 或 Forward/Strategy V1 链路；
+- 未删除、迁移或重写任何旧 pickle、tracked output 或 artifact；
+- 未重新计算因子矩阵、训练模型、筛因子或产生新研究结论。
+
+验证结果：
+
+```text
+weak-cache focused tests      = 9 passed
+factor/import targeted tests  = 23 passed
+full pytest                   = 381 passed, 4 existing Qlib warnings
+tracked outputs               = 3183, baseline set diff empty
+tracked artifacts             = 2, baseline set diff empty
+protected cache/lineage diff  = empty
+```
+
+实际工作站上，`all_stock_shsz_liquid2000` 的 2,000 个 instruments、12,000 个
+OHLCVA binary 的内容 fingerprint 约需 6 秒。这是历史弱 cache key 解析的固定成本；
+它不进入 Forward 或 Matrix v4 路径。Phase 6 未开始，必须等待单独授权。
+
+Phase 5 engine follow-up 以 `3049f1a` 为基线，补全两个 computation fingerprint：
+
+```text
+Evaluator   = Qlib + Pandas
+Expression  = Qlib + Pandas + NumPy
+```
+
+新增 engine mutation 回归覆盖上述五个 identity：任一 relevant engine identity 变化均
+改变对应 cache key。`qlib_baseline/cache.py`、provider fingerprint、Matrix v4、raw
+snapshot、lineage 和业务计算函数均未修改。验证为 `11` 项 weak-cache tests、`25` 项
+factor/import targeted tests、`383 passed` full pytest（4 个既有 Qlib warnings）；
+tracked outputs/artifacts 与 protected paths 继续保持不变。Phase 6 未开始。
+
+## 18. Phase 6 实施回执（2026-08-09）
+
+Phase 6 以 `48be284` 为基线，新增统一 `scripts/check_quality.py`，并将本地与
+`research-validation-ci` 收敛到相同命令：
+
+```text
+fast = finite Ruff scope + settings/cache/active-entry/CI command tests
+full = complete pytest + 25 existing compact/synthetic validators
+qlib = existing Qlib Exchange runtime tests on a temporary synthetic provider
+```
+
+Ruff 使用 `E4/E7/E9/F`，范围只包括 `qlib_baseline/`、`daily_update/`、quality runner
+和五个 Forward Track 兼容入口。Daily Update compatibility facade 与五个 wrapper 的
+re-export 通过行级 `noqa` 明确保留；没有删除公开符号或格式化全仓。
+
+CI workflow 不再复制 pytest/validator 清单，只负责安装依赖并调用同一 quality tier。
+`scripts/check_quality.py` 自身被 classifier 视为 Qlib tier 相关路径；Ruff 加入现有
+lightweight validation requirements。
+
+验证结果：
+
+```text
+fast tier    = Ruff passed + 45 passed
+full tier    = 388 passed, 4 existing Qlib warnings + 25/25 validators passed
+qlib tier    = 6 passed, 4 existing Qlib warnings
+```
+
+所有运行均使用本地既有或测试临时数据。未下载完整 A 股数据，未训练模型，未运行完整
+矩阵或历史回测，未修改 Strategy V1、Forward evidence、Matrix v4、raw snapshot、
+lineage、tracked outputs 或 artifacts。本工程重构计划至 Phase 6 完成并停止。

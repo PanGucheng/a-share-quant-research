@@ -1,6 +1,9 @@
 # Documentation Archive
 
-本目录保存已完成阶段的计划、审计、调研和一次性验证记录。它们不是废弃材料，而是项目演进的证据库。日常开发请先看 `docs/DOC_INDEX.md` 和 `docs/PROJECT_CONTEXT_SUMMARY.md`。
+本目录保存已完成阶段的计划、审计、调研和一次性验证记录。它们不是废弃材料，而是
+项目演进的证据库，但不再是当前执行入口。日常开发请先看
+[`docs/DOC_INDEX.md`](../DOC_INDEX.md) 和
+[`docs/PROJECT_CONTEXT_SUMMARY.md`](../PROJECT_CONTEXT_SUMMARY.md)。
 
 ## Directory Map
 
@@ -16,9 +19,19 @@
   TA、Alpha101、Alpha360、多源筛选、multi-source judgement 和开源因子扩张审计。
 - `06_probe_and_tradeability_audits/`
   new-source probe diagnostics/review、strict OOS、tradability exposure attribution 和 exposure data capability audit。
+- `07_research_program_history/`
+  已完成或被接管的 full-research、accuracy correction、selection/model protocol、
+  historical comparison/backtest、Forward MVP 与 Qlib execution 计划和回执。
+- `08_engineering_refactor/`
+  Phase 0–6 工程重构的原始开放式指南与实施计划。当前权威收尾见
+  [`ENGINEERING_REFACTOR_CLOSEOUT.md`](../ENGINEERING_REFACTOR_CLOSEOUT.md)。
 
 ## Archive Rule
 
-新文档默认不进入归档。只有当一个阶段完成、被更高层总线文档吸收，且不再是当前执行入口时，才移动到本目录。
+新文档默认不进入归档。只有当一个阶段完成、被更高层总线文档吸收，且不再是当前执行
+入口时，才移动到本目录。归档文档中的命令、路径和“下一步”只代表当时状态；若与
+`docs/` 顶层当前文档冲突，以当前文档为准。
 
-归档时使用 `git mv` 保留历史，并在需要时更新 `docs/DOC_INDEX.md`、`README.md` 和 `README.zh-CN.md`。
+归档时保留 Git 历史，并同步更新 `docs/DOC_INDEX.md`、根 README、AGENTS、配置中的
+文档路径及 Markdown 链接。不得因为归档而删除对应 outputs、artifacts、receipts、
+manifests 或 lineage。

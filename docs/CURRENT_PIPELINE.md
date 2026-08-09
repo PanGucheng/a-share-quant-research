@@ -227,7 +227,8 @@ CLOSED 阶段只允许修复可证明的数据错误、泄漏、contract failure
 - 旧模型研究、readiness、freeze、audit 和 validation scripts；
 - `docs/_archive/` 及对应 tracked outputs。
 
-不要仅因为文件名版本较高就将其视为 active。Phase 0 不移动或重命名这些文件。
+不要仅因为文件名版本较高就将其视为 active。历史代码和对应 evidence 保持原位；
+只有 CLOSED/HISTORICAL Markdown 已按文档生命周期归档。
 
 ## 7. EXPERIMENTAL / DEFERRED
 
@@ -238,9 +239,9 @@ CLOSED 阶段只允许修复可证明的数据错误、泄漏、contract failure
 
 这些方向没有当前实施授权。
 
-## 8. 修改后的验证入口
+## 8. 当前验证入口
 
-Phase 6 后本地与 CI 使用统一入口：
+本地与 CI 使用统一入口：
 
 ```powershell
 python scripts/check_quality.py fast
@@ -266,11 +267,17 @@ E:\anaconda_envs\qlib_env\python.exe -m pytest -q `
   tests/test_imports.py
 ```
 
-Phase 0 审计时该集合为 `61 passed`。完整 CI 政策见 [CI_POLICY.md](CI_POLICY.md)。
+该 targeted 列表用于 Forward 局部调试；交付仍以适用的统一 quality tier 为准。
 
-## 9. Engineering Foundation Status
+## 9. CLOSED — Engineering Refactor
 
-Phase 1–2 已提供：
+Phase 0–6 工程重构已在
+`b46b4f614f3be5388bf7a26ebf2b035d14906f5f` 形成最终绿色基线并关闭。最终状态、
+验证和禁止边界见
+[ENGINEERING_REFACTOR_CLOSEOUT.md](ENGINEERING_REFACTOR_CLOSEOUT.md)。不存在隐式
+Phase 7；archive 中的旧计划不再是当前执行入口。
+
+当前工程基础包括：
 
 - editable `pyproject.toml`；
 - `qlib_baseline.settings.ProjectSettings`；
@@ -279,28 +286,15 @@ Phase 1–2 已提供：
 - 无 pandas 依赖的 atomic path/text/JSON I/O helper；
 - 弱缓存使用的分层 fingerprint、规范化 AST hash、Parquet 与 sidecar helper；
 - 五个安装式 Forward Track CLI；
-- 只转发到 packaged CLI 的旧活动 scripts。
+- 只转发到 packaged CLI 的旧活动 scripts；
+- Daily Update 与 Forward Pipeline 的职责拆分及兼容 facade；
+- 目录级 output policy 和 official Forward evidence allowlist；
+- 三个批准弱缓存的分层 fingerprint、Parquet 与 sidecar；
+- 统一 `fast`、`full`、`qlib` quality runner 与路径感知 CI。
 
 活动 CLI 默认路径现在来自 Project Settings；显式日常业务参数和底层 pipeline
 contract 保持不变。旧 scripts 不再包含本机绝对路径或 `sys.path.insert`，但仍可在
 editable install 后作为兼容入口使用。
 
-Phase 3A 已完成 Daily Update 内部拆分并通过 Regression Gate A。Community/BaoStock
-发布时间、bridge 公式、95% coverage、450 日 warmup、52 因子顺序与 fail-closed
-语义保持不变。
-
-Phase 3B 已将 Forward Pipeline 拆为 state、binding、prediction 和 mature-label
-四个职责模块，原 `forward_pipeline.py` 只保留兼容 re-export。Strategy V1、模型与
-预处理 hash、52 因子顺序、append-only state、commit binding、cutoff、label
-maturity 和 paper portfolio contract 均保持不变；Regression Gate B 已通过。
-
-Phase 4 已将未来 output tracking 收敛为目录级 policy，并将 Forward evidence 收紧为
-official allowlist；历史 tracked outputs/artifacts 未改变。Phase 5 只加固了
-`factor_research/evaluator.py`、`scripts/run_factor_research_v3.py` 和
-`factor_research/expression_adapter.py` 的旧弱缓存。新缓存使用四层 fingerprint、
-Parquet 与 `.meta.json`；旧 pickle 和显式发布的 `factor_frame.pkl` 保留。Matrix v4、
-raw snapshot manifest、lineage、Forward 与 Strategy V1 计算路径均未改变。
-
-Phase 6 新增 `scripts/check_quality.py` 并让 CI 调用同一 fast/full/qlib tier。Ruff 只
-覆盖新基础包、Daily Update、quality runner 和五个活动兼容入口；没有执行全仓格式化。
-CI 不下载完整 A 股数据、不训练模型、不运行完整矩阵或历史回测。
+Strategy V1、模型/预处理 hash、52 因子顺序、append-only evidence、Matrix v4、raw
+snapshot、lineage 和历史 outputs/artifacts 均未因该重构改变。

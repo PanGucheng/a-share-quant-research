@@ -197,7 +197,7 @@ outputs/reports/instrument_inspection_SH601313_2016.md
 第一批输出：
 
 ```text
-docs/STEP_5_FACTOR_RESEARCH_AND_MODEL_PLAN.md
+docs/_archive/07_research_program_history/STEP_5_FACTOR_RESEARCH_AND_MODEL_PLAN.md
 ```
 
 实验 D 只定义计划，不在本步骤直接运行。

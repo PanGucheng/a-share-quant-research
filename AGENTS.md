@@ -99,14 +99,28 @@ entry documents in order:
    governance responsibilities;
 3. `docs/OUTPUT_POLICY.md` for runtime output, frozen artifact, report, cache, and
    Forward evidence boundaries;
-4. `docs/ENGINEERING_REFACTOR_IMPLEMENTATION_PLAN.md` when implementing the staged
-   engineering refactor.
+4. `docs/CI_POLICY.md` for the shared local/CI quality tiers;
+5. `docs/ENGINEERING_REFACTOR_CLOSEOUT.md` for the final Phase 0–6 engineering
+   baseline and its frozen boundaries.
 
-The refactor is phase-gated. Implement only the phase explicitly requested by the
-user, report actual changes and validation, and do not automatically enter the next
-phase. If inspection shows that a planned item has materially higher compatibility,
-maintenance, or research-correctness risk than expected, narrow, defer, skip, or
-cancel it and record the reason instead of mechanically following the plan.
+The Phase 0–6 engineering refactor is closed at
+`b46b4f614f3be5388bf7a26ebf2b035d14906f5f`. There is no implicit Phase 7. Its
+implementation plan and original guide are historical evidence under
+`docs/_archive/08_engineering_refactor/`; do not resume them as active instructions.
+A future structural change needs a concrete objective, a fresh cost/risk review, and
+explicit user authorization.
+
+## Documentation Authority
+
+- `docs/DOC_INDEX.md` is the documentation entry point. Files in the `docs/` root are
+  current authority or active operational references.
+- `docs/_archive/` contains CLOSED, HISTORICAL, or SUPERSEDED records. Preserve them,
+  but do not treat an archived plan as permission to restart work.
+- Keep both root READMEs concise and aligned with `DOC_INDEX.md`; detailed historical
+  results belong in the archive or preserved outputs.
+- When moving a document, update Markdown links, path-bearing configuration metadata,
+  and current navigation in the same change. Run the all-Markdown link audit plus the
+  repository documentation check before finalizing.
 
 ## Codex Change Discipline
 

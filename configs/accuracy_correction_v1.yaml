@@ -8,4 +8,4 @@ readiness_summary: outputs/accuracy_correction_v1/current/readiness_summary.csv
 selection_status: outputs/accuracy_correction_v1/current/selection_status.csv
 artifact_supersession: outputs/accuracy_correction_v1/current/artifact_supersession.csv
 contract_status: outputs/accuracy_correction_v1/current/contract_status.csv
-implementation_plan: docs/ACCURACY_CORRECTION_V1_PLAN.md
+implementation_plan: docs/_archive/07_research_program_history/ACCURACY_CORRECTION_V1_PLAN.md

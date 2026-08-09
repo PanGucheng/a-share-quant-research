@@ -1,221 +1,102 @@
 # Documentation Index
 
-本文件是当前开发文档入口。`docs/` 顶层只保留日常推进需要频繁查看的文档；历史计划、阶段审计和一次性验证记录已归档到 `docs/_archive/`。
+本文件是仓库文档的权威入口。`docs/` 顶层只保留当前路线、运行入口、工程政策和仍在
+使用的操作契约；已完成、历史或被取代的计划与审计位于 `docs/_archive/`。
 
-## Current Working Documents
+## Authority Order
 
-- `CURRENT_PIPELINE.md`
-  当前运行入口与状态索引：明确 ACTIVE Forward Track、frozen Strategy V1、
-  closed historical research、legacy scripts、真实命令、机器状态入口和修改后的测试集。
-- `ARCHITECTURE.md`
-  当前领域边界、依赖方向、配置与运行环境边界、Factor Matrix contract，以及现有
-  governance 的“必须保留 / Forward 必需 / 历史兼容 / 停止扩张”分类。
-- `OUTPUT_POLICY.md`
-  `outputs`、`artifacts`、未来 `reports`、`tmp` 和 Forward evidence 的目录语义。
-  Phase 0 只发布政策；实际 `.gitignore` 收口属于 Phase 4，禁止历史 outputs 的
-  `git rm --cached`、批量 untrack、移动或删除。
-- `ENGINEERING_REFACTOR_IMPLEMENTATION_PLAN.md`
-  当前工程重构的分阶段实施计划。每个 Phase 独立实施、验证和汇报，不自动进入
-  下一阶段；成本或研究风险高于预期时允许 Stop、Skip、Defer 或 Simplify。
-- `qlib-baseline 工程优化开放式方案.md`
-  本轮工程审计与重构计划的原始开放式指南副本。
+发生冲突时按以下顺序判断：
+
+1. `AGENTS.md` 的研究与修改纪律；
+2. 当前路线与运行入口；
+3. 当前架构、输出、CI 和环境政策；
+4. 冻结 artifacts、machine status、receipts 和 manifests；
+5. archive 中的历史计划和阶段回执。
+
+Archive 保留证据，但不授权恢复已关闭工作。
+
+## Current Authority
+
 - `PERSONAL_QUANT_RESEARCH_ROADMAP.md`
-  当前权威路线：项目定位为个人 A 股量化研究，从 governance-heavy 转向
-  research-first；严格保留无未来数据、时间隔离和已观察 holdout 不得复用调参的
-  科研底线。当前最高优先级是 Daily Data Update、冻结 Strategy V1 prediction 与
-  paper portfolio 组成的 Forward Track；Strategy Diagnostics V1 是不阻塞 forward
-  的已完成历史研究。其 closeout 与未来 genuine forward evidence 共同支持是否启动
-  Model V2 Research Protocol 的决策。
-- `MODEL_DIAGNOSTIC_V1_CLOSEOUT.md`
-  Model Diagnostic V1、External PIT Style Data V1 与 Style Attribution Extension
-  的正式收尾：阶段状态、权威 artifact 入口、被削弱/否定的简单解释、保留的未来
-  检验假设、冻结边界与 Model V2 Research Protocol 交接。
-- `MODEL_DIAGNOSTIC_V1_IMPLEMENTATION_PLAN.md`
-  Model Diagnostic V1 三阶段的实现边界、数据口径、执行记录与复现命令；详细统计
-  仍以对应正式 artifact 为准。
-- `HISTORICAL_PORTFOLIO_BACKTEST_V1.md`
-  PR #24 个人研究级历史组合回测：只消费冻结 LightGBM test predictions，固定比较 6 个 Long Only TopK 等权规则；split_001/002 选择参数，split_003 单次 holdout，并复用现有 Qlib Exchange/Executor 与 A 股约束。
-- `PROSPECTIVE_FORWARD_CONFIRMATION_V1_PLAN.md`
-  已完成 forward MVP 的历史计划与边界参考：旧扩展全部隔离；official forward 日期必须晚于候选有效冻结本地日期且 raw first-seen 晚于冻结时间戳；prediction payload 与 commit receipt 必须在 t+1 09:25 前冻结。后续 forward 简化以个人研究路线为准，但既有时间边界继续有效。
-- `CI_POLICY.md`
-  路径感知 CI 与稳定 `ci-gate` 政策：纯文档只跑快速 diff/link/index/大文件检查，普通研究代码跑完整 pytest/validators，只有 Qlib 执行链、相关依赖或 workflow 变化才安装并运行 Qlib runtime。
-- `RESEARCH_MODEL_PROTOCOL_V1_IMPLEMENTATION.md`
-  逻辑 PR #5A 实施说明：权威 parent、split-specific 输入、零 test-read canary、统一统计/预处理协议、scope-aware research gate，以及继续关闭的生产和 authoritative execution 边界。
-- `RESEARCH_MODEL_PROTOCOL_V1_1_CLOSURE.md`
-  逻辑 PR #5A.1 收口：artifact-only 模型入口、Canary/config 强绑定、最终样本内 target 排名、validation transform，以及三个 split 的 development-only full dry-run。
-- `RESEARCH_LINEAR_MODELS_V1_IMPLEMENTATION_PLAN.md`
-  逻辑 PR #5B 的 Ridge/Elastic Net 精确候选、solver canary、资源预算、分阶段运行、预测试冻结与单次 test release 基线；实施回执同时记录 3/3 + 3/3 模型研究完成，以及 split_002 长期停牌持仓估值导致的 fail-closed Qlib 能力阻断。
-- `RESEARCH_LIGHTGBM_V1_IMPLEMENTATION_PLAN.md`
-  逻辑 PR #5C 的四结构行、固定 100/200/400/800 checkpoint、16 候选上限、train-only 可复现性 canary、逐级资源门禁和单次 test release 实施及完成回执。
-- `HISTORICAL_MODEL_COMPARISON_V1_IMPLEMENTATION_PLAN.md`
-  逻辑 PR #5D 的五方法 prediction-level 历史科学比较与完成回执：15 组 split-method、1,840 条 daily IC、30 组配对 block-bootstrap 均完成；LightGBM 是预注册汇总指标上的历史科研 leader，但不是生产选择或无偏未来 winner，组合/NAV 比较继续因 `SZ300280` 估值能力缺口 fail-closed。
-- `RESEARCH_GRADE_MULTIFACTOR_MODEL_V1_PLAN.md`
-  已完成模型研究阶段的历史计划。其输入与时间隔离边界仍可参考，但不再是当前唯一执行计划；当前方向以个人研究路线为准。
-- `HISTORICAL_INSTRUMENT_STATE_V2_PLAN.md`
-  已完成的 source decision 记录。真实 decision/valuation/terminal scope 已冻结，13 条 Tier 0 官方快照与候选边界对账完成；ST 5/10、全天停牌 3/10、盘前可证明率 38.46%，故正式选择 Decision B。除非用户明确提供新源，否则不再继续该方向。
-- `outputs/historical_instrument_state_v2/official_canary/`
-  Historical Instrument State V2 的 compact evidence：官方原文 receipt/hash、13 条归一化事件、BaoStock 边界对账、覆盖门槛、Decision B 与 fail-closed readiness。原始网页/PDF 仅保存在忽略的 runtime，不进入 Git。
-- `EXECUTION_UNIT_SEMANTICS_CORRECTION_V1_2_PLAN.md`
-  已完成的单位语义修正与实施回执。Market Cache v3 已显式执行 volume `factor × 100` 和 amount `×1000`，全量 cache/execution、单票归因、transitive lineage 与治理门禁通过；旧 Market Cache v2 永久 superseded。
-- `DATA_SOURCE_AUDIT_V2.md`
-  Phase B 数据源决策报告。150 股 Community/BaoStock/AKShare canary 支持 Decision B：核心 raw OHLC 可靠、无需 Matrix v5；AKShare Eastmoney 不稳定，BaoStock ST/tradestatus 的 before-open 权威性未获证明。
-- `ACCURACY_CORRECTION_V1_1_AND_DATA_SOURCE_AUDIT_V2_PLAN.md`
-  已完成的 lineage/gate closure 与数据源 canary 基线。Phase A 的 22 节点/61 边传递 lineage 为 0 issue；Phase B 形成 Decision B，并将单位错误移交 V1.2。
-- `ACCURACY_CORRECTION_V1_PLAN.md`
-  已完成的 Accuracy Correction V1 实施基线。PR #6 修复研究计算，PR #7 修复执行语义；其后续 lineage/gate cleanup 以上述 V1.1 计划为准。
-- `outputs/accuracy_correction_v1/current/`
-  当前机器治理状态：research/score、Data Source Audit V2、Market Cache v3 与 execution unit semantics ready；Market Cache v2 永久 false。authoritative OOS、core model、PR5 training 和 training-started 均 false。
-- `outputs/accuracy_correction_v1_1/current/`
-  Phase A 机器审计：corrected score lineage complete、业务 payload 不变、unknown board=0、22 节点/61 边传递 lineage 0 issue。
-- `outputs/data_source_audit_v2/current/`
-  150 股 Community/BaoStock/AKShare 隔离 canary。BaoStock 覆盖 100%、AKShare Eastmoney 覆盖 2%；核心 raw OHLC 可靠，Market Cache v2 的 volume `×100` 与 amount `×1000` 单位修正待 V1.2 实施。
-- `outputs/instrument_state_v1/current/`
-  PIT instrument-state 与 board/lifecycle 证据；缺失的历史 ST、盘前停牌和 terminal event 源以 capability blocker 公开记录。
-- `outputs/market_cache_v2/current/`
-  历史 Market Cache v2 证据；字段时点与禁止估值回填通过，但成交量单位漏乘 `×100`，已 superseded，不能再支持 execution readiness。
-- `outputs/market_cache_v3/current/`
-  单位修正后的当前 Market Cache：三个 split 共 853,936 行，volume/amount 分别以 shares/CNY 物化，future field=0，完整 unit audit 为 0 unknown。
-- `outputs/execution_unit_semantics_correction_v1_2/current/`
-  冻结研究信号上的 3 split × 2 method 修正执行；730 个会计日关键 contract 全通过，unknown semantic difference=0，仍是 post-observation / non-authoritative evidence。
-- `outputs/research_linear_model_execution_v1/current/`
-  PR #5B 的非权威 Qlib 辅助执行证据：4/6 场景完成；split_002 的 Ridge/Elastic Net 均因 2025-04-18 `SZ300280` 长期停牌后超过 20 日估值上限而 `blocked_unpriceable_held_position`。Artifact/lineage 完整但状态诚实为 blocked，不得解释为完整历史 NAV。
-- `outputs/research_lightgbm_v1/current/`
-  PR #5C 的 3/3 单次 historical test release：735,882 行 prediction，Rank IC 为 0.077783/0.143224/0.051802，最低 coverage 0.995305；研究完成但 production、authoritative execution 与 unbiased estimate 均保持 false。
-- `outputs/historical_model_comparison_v1/current/`
-  PR #5D 五方法历史 prediction 比较：三 split 等权 Rank IC 为 LightGBM 0.090936、Elastic Net 0.086887、Ridge 0.086470、Equal Weight 0.073678、Stability Weight 0.072760；科研 leader 为 LightGBM。多数组合的逐 split 配对区间跨零；生产选择、权威执行、无偏估计和五方法 NAV 比较均保持 false。
-- `outputs/prospective_forward_protocol_v1/current/`
-  PR #20A 的 prospective 时间与候选协议 freeze：79 个既有扩展日期全部 quarantine，official forward 只接受 2026-06-09 后且 freeze 后首次到达的数据。
-- `outputs/prospective_forward_candidate_v1/current/`
-  固定 LightGBM provisional candidate 的一次无搜索 refit：52 因子、1,273 日期、2,538,428 行、200 轮，模型/预处理哈希冻结；没有运行 forward 评价，当前为 `forward_data_waiting=true`。
-- `outputs/prospective_forward_hardening_v1/current/`
-  PR #20A.1 当前候选 authority：official 日期与 raw first-seen 必须同时越过候选
-  冻结边界，prediction payload/commit 必须早于 t+1 09:25；V1.1/Labels lineage、
-  runtime hash 和 Git 内容寻址模型均已通过门禁。当前已经形成 2026-08-07 official
-  prediction，仍未重训、未完成 label-mature primary confirmation。
-- `outputs/execution_unit_semantics_correction_v1_2/governance/`
-  V1.2 fail-closed 收口、旧新 artifact supersession、全市场及 SZ302132 单票归因与中央 readiness 回执。
-- `outputs/bugfix_research_freeze_v1/current/`
-  三个 split 的 post-observation bug-fix freeze，明确历史 test 已观察且不能形成无偏最终估计。
-- `outputs/execution_accuracy_correction_v1/current/`
-  已 superseded 的 post-observation corrected historical OOS evidence；因 Market Cache v2 participation volume 缩小 100 倍，等待 V1.2 重发，且始终 non-authoritative。
-- `outputs/point_in_time_universe_v2/full_research/`
-  PR #6 lifecycle-clean Universe v2：29 个越界 interval 与 329 个非法 key 已修正，最终 lifecycle violation、interval overlap 和 removed-key residual 均为 0。
-- `outputs/factor_dependency_v1/current/`
-  669 因子依赖清单：605 个逐标的因子仅为 bit-identical 复用候选；Alpha101 与 `unknown` 全部 fail-closed 到强制重算审计。
-- `outputs/full_research_feature_matrix_v4_canary/current/`
-  Matrix v4 大规模计算前的五来源 Top2000 canary：四个纯时间序列代表在 39,981 个共同 key 上逐位一致；Alpha101 动态 PIT 横截面代表分别有 39,859 与 39,908 个值被纠正；严格轴标签和 unknown fixture 门禁通过。
-- `outputs/full_research_feature_matrix_v4/current/`
-  生命周期清洁的 669 因子矩阵权威 receipt：30 个分区各 2,587,671 个 Universe v2 key；605 个复用因子零差异，64 个 Alpha101 全量重算并产生 107,066,948 个值级修正；Manifest clean/complete/pass。
-- `outputs/full_research_labels_v2/current/`
-  精确日历 Labels v2：2,587,671 个生命周期清洁 key，按 canonical trading calendar 连接 t+1/t+21 close，不使用物理行 shift 或价格填充；coverage 0.980970，末端 21 个日期标签全部按预期缺失。
-- `outputs/full_research_daily_ic_v2/current/`
-  Pairwise Spearman IC v2：669 因子逐日先构造 factor-label 共同非空集合，再分别 rank；scipy、行序、最小 pair 与 lineage 门禁通过。相对 v1 有 621 个因子、598,072 个日因子 IC 值被修正。
-- `outputs/bootstrap_gap_sensitivity_v1/current/`
-  Outer-train-only bootstrap gap audit：3×669 个假设比较 legacy dropna block 与真实日期连续 segment block；p-value、CI、BH、BY 和受控缺口均越过预冻结阈值，正式政策已冻结为 `gap_aware_moving_block`。
-- `outputs/factor_multiple_testing_v2/current/`
-  Matrix v4 / Labels v2 / pairwise IC v2 派生的 3×669 corrected outer-train FDR；强制绑定 gap-aware 冻结政策和 clean canary。
-- `outputs/factor_rolling_stability_v2/current/`
-  只消费 corrected FDR v2 与 inner-development IC 的稳定性结果；不内部重算 FDR，不包含 test 字段或 test 日期。
-- `outputs/clustering_input_projection_v2/current/`
-  将 Matrix v4 stable-core exposure 与 IC v2 performance 严格投影到哈希绑定的 development allowed dates。
-- `outputs/factor_clustering_v2/current/`
-  三个 split 的 corrected 聚类与 45/46/52 个代表；所有来源、runtime 投影及日期集合均按哈希验证。
-- `outputs/split_specific_allowlist_v2/current/`
-  由 corrected clustering 冻结的 45/46/52 split-specific allowlist；各自包含独立 payload 与 feature-order hash，模型入口仍关闭。
-- `outputs/split_transparent_weights_v2/current/`
-  corrected allowlist 的 Equal Weight / Stability Weight；六组权重分别归一化并冻结哈希，不消费 test 字段。
-- `outputs/transparent_score_policy_v1/current/`
-  约 532 万 development-only 日期—股票行的组件完整性审计；冻结 5 个且 10% 的共同门槛、拒绝/标记重归一化语义和政策哈希。
-- `outputs/selection_mutation_contract_v2/current/`
-  corrected selection chain 的 36 个 outer-test mutations 与 Alpha101/lifecycle metamorphic contracts；五类 selection payload hash 全部不变。
-- `outputs/split_transparent_score_v2/current/`
-  仅按 PR #6 冻结的 Matrix v4、weights、score policy 与 mutation proof 物化的 1,471,764 行 prediction-only score。
-- `PR5A_MODEL_INPUT_PROTOCOL_HANDOFF_V1.md`
-  延后的模型输入协议参考。只能在 PR #6/#7 全部门禁通过后重新启用，不能直接采用当前已被替代的 allowlist、score 或 OOS execution。
-- `SELECTION_HOLDOUT_INTEGRITY_AND_MODEL_PLAN_V1.md`
-- `SELECTION_HOLDOUT_IMPLEMENTATION_AUDIT_V1.md`
-  PR #4 合并后的 holdout 修复计划与实现审计。其 holdout 隔离结论继续有效，但“直接进入 PR #5A”的结论已由 Accuracy Correction 计划接管。
-- `FULL_RESEARCH_669_RUN_V1.md`
-  PR #4 的 669 因子工程证据与 PR #4.1 的完成增补；旧 16 因子和当前 48/46/54 split allowlist 均只保留历史证据，后者等待 PR #6 重建。
-- `FULL_RESEARCH_FACTOR_TRIAL_V1.md`
-  PR #3 的 80 因子真实 PIT 特征矩阵、purged/FDR/稳定性/聚类/score、Qlib 执行、readiness 与复现说明。
-- `QLIB_EXCHANGE_INTEGRATION_V1.md`
-  PR #2 已实施范围、单位/约束语义、合成精确对账、30 股票真实小样本、readiness 和复现命令。
-- `QLIB_EXCHANGE_SEMANTIC_AUDIT_V1.md`
-  固定 Qlib commit 的 Exchange、Executor、Signal、成本、成交量、T+1 和输出语义源码审计。
-- `REFERENCE_PIPELINE_CONSISTENCY_V1_1_1.md`
-  V1.1.1 已实施计划与验收结果；已修复全 holdout 与旧下游混用、stale artifact、未生效 lineage gate 和 readiness 假阳性。
-- `FACTOR_VALIDATION_HARDENING_V1_1.md`
-  V1.1 已实施计划与历史证据；其 `reference_ready=true` 结论已被 V1.1.1 一致性审计更正。
-- `Qlib A股因子研究框架完整升级计划 V1.md`
-  新一轮研究框架升级总纲，定义阶段目标、约束、输出和最终完成标准。
-- `FACTOR_VALIDATION_ROADMAP_V1.md`
-  上述升级总纲的详细执行路线图，包含工作包编号、依赖、预计文件、验证顺序、阶段门禁和失败停止条件。
-- `outputs/research_data_contracts_v1/current/schema_report.md`
-  阶段 1 DataFrame contract 对现有 factor、tradability、screening 与 judgement 输出的兼容审计。
-- `outputs/point_in_time_universe_v1/local_smoke/universe_report.md`
-  阶段 2 动态股票池真实 provider smoke、PIT 审计与 Qlib instruments 回读结果。
-- `outputs/purged_walk_forward_v1/local_reference/purged_walk_forward_report.md`
-  阶段 3 date-level Purged Walk-Forward manifest、泄漏审计与 mlfinpy 非依赖语义参考边界。
-- `outputs/factor_multiple_testing_v1/local_reference/multiple_testing_report.md`
-  阶段 4 block bootstrap、BH/BY FDR、null simulation 与 test-family 审计。
-- `outputs/factor_rolling_stability_v1/local_reference/stability_report.md`
-  阶段 5 严格窗口选择历史、冻结方向、OOS degradation 与稳定性角色看板。
-- `outputs/factor_clustering_v1/local_reference/clustering_report.md`
-  阶段 6 当前 blocked reference 输出；无 eligible factor，活动 representatives 为空。
-- `outputs/factor_score_construction_v1/local_reference/score_construction_report.md`
-  阶段 7 当前 blocked reference 输出；活动 weights 为空且 score parquet 不存在。
-- `outputs/a_share_execution_v1/local_reference/execution_report.md`
-  阶段 8 执行会计基础设施；当前因无有效 score 被预期阻断，没有沿用旧执行结果。
-- `outputs/external_exposure_data_v1/current/exposure_data_report.md`
-  阶段 9 AKShare forward-only 快照、PIT 字段契约和当前外部采集阻塞状态。
-- `outputs/pre_model_diagnostics_v1/local_reference/final_portfolio_report.md`
-  阶段 10 当前 blocked pre-model diagnostics；legacy baseline 仅独立展示，current methods 不再由旧 score 补齐。
-- `outputs/legacy_common_scores_v1/local_reference/legacy_common_scores_report.md`
-  Alpha158 与旧 V3.5 candidate pool 在相同 purged test windows 下的共同口径等权 score。
-- `outputs/factor_model_comparison_v1/gated/model_comparison_report.md`
-  阶段 11 V1.1.1 能力门禁；真实 lineage/freshness/semantic gate 已启用，pipeline/reference ready 均为 false，训练未启动。
+  当前研究路线与不可放松的时间隔离、holdout 和 Strategy V1/V2 边界。
+- `CURRENT_PIPELINE.md`
+  ACTIVE、FROZEN、CLOSED、LEGACY、EXPERIMENTAL 状态，Forward Track 命令与当前机器状态入口。
 - `PROJECT_CONTEXT_SUMMARY.md`
-  项目当前状态、最新阶段、关键路径和下一步入口。
-- `STEP_5_FACTOR_RESEARCH_AND_MODEL_PLAN.md`
-  因子研究与筛选主线总线文档。
-- `FACTOR_RESEARCH_TOOLCHAIN_READINESS_V1.md`
-  当前因子研究工具链 readiness、能力边界和下一步约束。
-- `LIQUIDITY_RESIDUALIZED_FACTOR_EVALUATION_V1_PLAN.md`
-  V3.39 liquidity residualized factor evaluation 最小实现计划。
-
-## Baseline And Environment
-
+  面向新会话的紧凑上下文，不再承载逐阶段历史流水账。
+- `ARCHITECTURE.md`
+  当前领域边界、依赖方向、settings/runtime、weak cache 和保留治理职责。
+- `OUTPUT_POLICY.md`
+  `outputs/`、`artifacts/`、`reports/`、`tmp/`、cache 与 official Forward evidence 的落盘政策。
+- `CI_POLICY.md`
+  本地/CI 共用的 `fast`、`full`、`qlib` 质量层及路径分类。
 - `ENVIRONMENT.md`
-  本地 Python、Qlib、数据路径和运行环境快照。
-- `BASELINE_REPRODUCIBILITY.md`
-  Qlib baseline 复现说明，包括 Windows tempfile 和 multiprocessing wrapper。
+  portable project settings、local override、doctor、Python/Qlib 与依赖环境。
+- `ENGINEERING_REFACTOR_CLOSEOUT.md`
+  Phase 0–6 工程重构最终绿色基线；明确工程计划已 CLOSED，且不存在隐式 Phase 7。
+
+## Active Operational References
+
+- `DAILY_DATA_UPDATE_V1.md`
+  Daily Update 数据源、发布时间、fallback、覆盖率和输出契约。
+- `STRATEGY_V1_PAPER_PORTFOLIO_V1.md`
+  冻结 Strategy V1 paper decision、执行刷新、持仓和 NAV 记录规则。
 - `DATA_SOURCE_DECISION.md`
-  数据源选择、字段口径和数据使用原则。
+  当前 provider 与数据源选择边界。
 - `UNIVERSE_POLICY.md`
-  股票池与 universe 口径。
+  A 股 universe、动态 membership 和生命周期语义。
 - `TRADABILITY_LABEL_LAYER.md`
-  可交易性标签层设计；后续因子评估必须复用该层，不绕过 data_quality/tradability。
+  可交易性标签字段与 fail-closed 边界。
 
-## Archive
+## Repository Entry Documents
 
-历史文档入口：
+- `../README.md`
+  英文项目入口与最小运行导航。
+- `../README.zh-CN.md`
+  中文项目入口与最小运行导航。
+- `../data_quality/README.md`
+  数据质量模块说明。
+- `../tradability/README.md`
+  可交易性模块说明。
+- `../reports/README.md`
+  compact human-readable reports 的目录政策。
 
-```text
-docs/_archive/README.md
-```
+## Current Machine Evidence
 
-归档文档不是废弃文档，而是阶段性证据和参考材料。需要追溯某个已完成阶段时，优先从归档 README 的主题目录进入。
+文档不覆盖机器状态。Forward Track 当前状态以这些 append-only 或受控文件为准：
 
-## Current Stage
+- `outputs/forward/status.json`
+- `outputs/forward/paper_portfolio/status.json`
+- `outputs/prospective_forward_hardening_v1/current/forward_candidate_freeze.json`
 
-Historical LightGBM 与 P01 组合研究已完成，`split_003` 已观察且只允许用于诊断。
-Strategy V1 继续固定为 frozen LightGBM、52 因子、Long Only Top50 等权、5 个交易日
-调仓。
+历史研究 outputs 仍是冻结证据，但不能仅因目录名含 `current` 就视为 ACTIVE pipeline。
 
-当前时间敏感主线是轻量 Forward Track：Daily Data Update、Strategy V1 prediction、
-paper portfolio 与持久记录，目标是尽快开始 genuine prospective evidence collection。
-Strategy Diagnostics V1 已正式 `closed / complete`，不再继续调整历史解释；其证据
-与未来 genuine forward evidence 共同决定是否另行冻结 Model V2 Research Protocol。
-Benchmark constituent attribution 保持 unresolved/non-blocking；生产交易基础设施不在
-当前范围。
+## Archive Map
+
+- `_archive/README.md`
+  归档语义、目录说明和引用规则。
+- `_archive/01_early_stage_plans/`
+  初始 baseline、Step 1–4、数据与组合早期计划和回执。
+- `_archive/02_data_layer_history/`
+  数据快照、字段验证和 provider 能力历史记录。
+- `_archive/03_factor_research_history/`
+  早期因子研究、算法审计和 V3/V4 设计。
+- `_archive/04_alpha158_history/`
+  Alpha158 catalog、evaluation、portfolio 与稳定性历史。
+- `_archive/05_open_source_factor_batches/`
+  TA、Alpha101、Alpha360、多来源 screening/judgement 历史。
+- `_archive/06_probe_and_tradeability_audits/`
+  probe、strict OOS、tradability exposure 与数据能力审计。
+- `_archive/07_research_program_history/`
+  已关闭的 full research、accuracy correction、model protocol、historical
+  comparison/backtest、Forward MVP 与 Qlib execution 计划和回执。
+- `_archive/08_engineering_refactor/`
+  Phase 0–6 原始工程优化指南和实施计划。
+
+## Documentation Maintenance
+
+- 新文档先判断它是当前 authority、active operational reference，还是一次性历史记录。
+- 阶段完成且结论已被当前总线吸收后，移动到 archive，并更新所有路径引用。
+- 不在 README 或 `PROJECT_CONTEXT_SUMMARY.md` 重复堆积完整历史时间线。
+- 不删除历史研究证据；归档 Markdown 与清理 outputs/artifacts 是完全不同的操作。
+- 文档变更完成后运行全量 Markdown link audit、repository documentation check 和
+  `python scripts/check_quality.py fast`。

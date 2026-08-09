@@ -5,7 +5,7 @@
 本政策定义未来新增内容的默认边界，目标是停止 `.gitignore` 随每个实验阶段继续
 增长，同时完整保留既有研究证据。
 
-Phase 4 已将该政策落实到 `.gitignore`，并建立 Git-tracked `reports/` 入口。变更只
+该政策已落实到 `.gitignore`，并建立 Git-tracked `reports/` 入口。变更只
 影响未来新增文件；没有迁移、删除或停止跟踪任何历史文件。
 
 ## 2. 目录语义
@@ -106,9 +106,9 @@ Preserve historical evidence
 - 批量 untrack、move、rename 或 delete；
 - 仅为了目录整洁修改历史 manifest 中的路径或 hash；
 - 将已观察结果重新包装为新的 OOS/forward evidence；
-- 在本轮工程优化中做历史数据大扫除。
+- 以文档或工程清理为由做历史数据大扫除。
 
-修改 `.gitignore` 不会让 Git 自动停止跟踪现有文件。Phase 4 必须先记录
+修改 `.gitignore` 不会让 Git 自动停止跟踪现有文件。任何 policy 调整都必须先记录
 `git ls-files outputs artifacts`，修改后验证集合完全一致。
 
 ## 5. 新内容的判断顺序
@@ -133,9 +133,9 @@ Preserve historical evidence
 未来普通研究默认使用简单 YAML、CSV/JSON、Markdown 和 Git。只有出现现有方法无法
 解决的具体 correctness 或 durability 问题时，才增加新的治理对象。
 
-## 7. Phase 4 验收结果
+## 7. Current Tracking Policy
 
-Phase 4 已完成以下验收：
+当前 tracking policy 已确认：
 
 - 删除 Alpha158/Alpha101/Alpha360/TA 等 stage-specific ignore 例外；
 - 普通 outputs 与 tmp 默认忽略，无需为每个新实验修改 `.gitignore`；
@@ -145,7 +145,7 @@ Phase 4 已完成以下验收：
 - `git check-ignore` 回归测试覆盖关键目录分类；
 - 修改前后 tracked outputs/artifacts 集合完全一致，没有 delete、move 或 untrack。
 
-## 8. Phase 5 弱缓存格式
+## 8. Weak Cache Format
 
 计划内的三类历史弱缓存以后写入 `tmp/` 或既有 runtime output directory，继续默认
 忽略。新文件采用：
@@ -162,4 +162,8 @@ fields/schema。producer 完整文件 hash、仓库 commit 和环境版本只作
 
 旧 `.pkl` 不删除、不迁移，也不作为新 schema 默认命中。Expression adapter 仍发布
 原 contract 所需的 `factor_frame.pkl`。Matrix v4 cache、raw snapshot manifest、
-artifact manifest 和 lineage 不适用本节，也未在 Phase 5 修改。
+artifact manifest 和 lineage 不适用本节，也未被该弱缓存方案修改。
+
+Phase 0–6 的历史实施记录见
+[ENGINEERING_REFACTOR_CLOSEOUT.md](ENGINEERING_REFACTOR_CLOSEOUT.md)；本文件只维护
+当前有效政策。

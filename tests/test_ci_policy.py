@@ -8,7 +8,7 @@ from scripts.ci.classify_changes import classify_paths
 
 def test_docs_only_change_uses_fast_path() -> None:
     result = classify_paths(
-        ["docs/RESEARCH_GRADE_MULTIFACTOR_MODEL_V1_PLAN.md", "README.md"]
+        ["docs/PROJECT_CONTEXT_SUMMARY.md", "README.md"]
     )
     assert result["docs_changed"]
     assert result["docs_only"]
