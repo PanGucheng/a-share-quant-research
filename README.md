@@ -25,6 +25,13 @@ maintainability, automation, and governance follow a personal-project cost/benef
 test. The detailed direction is in
 [docs/PERSONAL_QUANT_RESEARCH_ROADMAP.md](docs/PERSONAL_QUANT_RESEARCH_ROADMAP.md).
 
+For engineering work, start with
+[docs/CURRENT_PIPELINE.md](docs/CURRENT_PIPELINE.md) to identify active and frozen
+entry points, then read [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) and
+[docs/OUTPUT_POLICY.md](docs/OUTPUT_POLICY.md). The staged repository refactor is
+defined in
+[docs/ENGINEERING_REFACTOR_IMPLEMENTATION_PLAN.md](docs/ENGINEERING_REFACTOR_IMPLEMENTATION_PLAN.md).
+
 Qlib remains the main data and model backbone, with existing research modules reused:
 
 - **Qlib baseline**: validated official LightGBM + Alpha158 workflow.
@@ -50,11 +57,10 @@ frozen Strategy V1 prediction, and paper portfolio recording should begin genuin
 prospective evidence collection as soon as practical. A prediction not produced at
 the time cannot later be backfilled as independent prospective evidence.
 
-Strategy Diagnostics V1 is a parallel historical research task. It explains the
-observed P01 weakness through performance, IC, exposure, concentration, turnover,
-and cost analysis without changing Strategy V1 or blocking forward collection.
-Historical diagnostics plus genuine forward evidence may later justify a separately
-versioned Strategy V2. Shadow or small-capital work remains a much later direction.
+Strategy Diagnostics V1 is closed historical research. Its findings remain frozen
+and do not change Strategy V1 or block forward collection. The closeout plus genuine
+forward evidence may later justify a separately versioned Strategy V2 protocol;
+shadow or small-capital work remains a much later direction.
 
 ## Repository Layout
 

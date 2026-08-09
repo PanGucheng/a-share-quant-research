@@ -18,6 +18,11 @@ train/validation/test 是不可放松的前三优先级；可解释性、维护�
 个人项目的成本收益取舍。权威路线见
 [docs/PERSONAL_QUANT_RESEARCH_ROADMAP.md](docs/PERSONAL_QUANT_RESEARCH_ROADMAP.md)。
 
+工程修改应先阅读 [docs/CURRENT_PIPELINE.md](docs/CURRENT_PIPELINE.md)，确认 active、
+frozen 与 legacy 入口，再阅读 [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) 和
+[docs/OUTPUT_POLICY.md](docs/OUTPUT_POLICY.md)。分阶段重构边界与验收规则见
+[docs/ENGINEERING_REFACTOR_IMPLEMENTATION_PLAN.md](docs/ENGINEERING_REFACTOR_IMPLEMENTATION_PLAN.md)。
+
 项目不替换 Qlib 主线，而是复用其外围已有研究能力。
 
 当前主线包括：
@@ -38,10 +43,9 @@ Update、冻结 Strategy V1 prediction 与 paper portfolio 记录，开始积累
 prospective evidence。没有在当时真实生成的 prediction，未来不能事后补算成独立的
 forward 证据。
 
-Strategy Diagnostics V1 是并行的历史研究任务：通过 performance、IC、暴露、集中度、
-换手和成本解释 P01 的历史失效，但不修改 Strategy V1，也不阻塞 forward 收集。以后
-只有结合历史诊断与真实 forward 证据，才判断是否建立单独版本的 Strategy V2。
-Shadow trading 或小资金验证仍属于很后期方向。
+Strategy Diagnostics V1 已作为历史研究关闭，其结论保持冻结，不修改 Strategy V1，
+也不阻塞 forward 收集。以后只有结合 closeout 与真实 forward 证据，才判断是否建立
+单独版本的 Strategy V2 protocol；Shadow trading 或小资金验证仍属于很后期方向。
 
 ## 目录结构
 

@@ -4,6 +4,21 @@
 
 ## Current Working Documents
 
+- `CURRENT_PIPELINE.md`
+  当前运行入口与状态索引：明确 ACTIVE Forward Track、frozen Strategy V1、
+  closed historical research、legacy scripts、真实命令、机器状态入口和修改后的测试集。
+- `ARCHITECTURE.md`
+  当前领域边界、依赖方向、配置与运行环境边界、Factor Matrix contract，以及现有
+  governance 的“必须保留 / Forward 必需 / 历史兼容 / 停止扩张”分类。
+- `OUTPUT_POLICY.md`
+  `outputs`、`artifacts`、未来 `reports`、`tmp` 和 Forward evidence 的目录语义。
+  Phase 0 只发布政策；实际 `.gitignore` 收口属于 Phase 4，禁止历史 outputs 的
+  `git rm --cached`、批量 untrack、移动或删除。
+- `ENGINEERING_REFACTOR_IMPLEMENTATION_PLAN.md`
+  当前工程重构的分阶段实施计划。每个 Phase 独立实施、验证和汇报，不自动进入
+  下一阶段；成本或研究风险高于预期时允许 Stop、Skip、Defer 或 Simplify。
+- `qlib-baseline 工程优化开放式方案.md`
+  本轮工程审计与重构计划的原始开放式指南副本。
 - `PERSONAL_QUANT_RESEARCH_ROADMAP.md`
   当前权威路线：项目定位为个人 A 股量化研究，从 governance-heavy 转向
   research-first；严格保留无未来数据、时间隔离和已观察 holdout 不得复用调参的
@@ -73,7 +88,10 @@
 - `outputs/prospective_forward_candidate_v1/current/`
   固定 LightGBM provisional candidate 的一次无搜索 refit：52 因子、1,273 日期、2,538,428 行、200 轮，模型/预处理哈希冻结；没有运行 forward 评价，当前为 `forward_data_waiting=true`。
 - `outputs/prospective_forward_hardening_v1/current/`
-  PR #20A.1 当前 authority：候选有效冻结时间为 2026-08-02T14:26:26.563188Z（上海日期 2026-08-02）；official 日期与 raw first-seen 必须同时越过该边界。prediction payload/commit 必须早于 t+1 09:25；V1.1/Labels lineage、runtime hash 和 Git 内容寻址模型均已通过门禁，未重训且继续等待新数据。
+  PR #20A.1 当前候选 authority：official 日期与 raw first-seen 必须同时越过候选
+  冻结边界，prediction payload/commit 必须早于 t+1 09:25；V1.1/Labels lineage、
+  runtime hash 和 Git 内容寻址模型均已通过门禁。当前已经形成 2026-08-07 official
+  prediction，仍未重训、未完成 label-mature primary confirmation。
 - `outputs/execution_unit_semantics_correction_v1_2/governance/`
   V1.2 fail-closed 收口、旧新 artifact supersession、全市场及 SZ302132 单票归因与中央 readiness 回执。
 - `outputs/bugfix_research_freeze_v1/current/`

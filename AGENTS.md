@@ -88,6 +88,26 @@ factor selection, hyperparameter search, TopK/rebalance scans, or portfolio
 optimization. Unless a proven error, leakage, contract failure, or implementation
 bug is found, later work may only append clarification or open a new version/stage.
 
+## Engineering Navigation
+
+Before changing repository structure or an established workflow, read these current
+entry documents in order:
+
+1. `docs/CURRENT_PIPELINE.md` for active, frozen, closed, legacy, and experimental
+   status plus the current run commands;
+2. `docs/ARCHITECTURE.md` for domain boundaries, dependency direction, and retained
+   governance responsibilities;
+3. `docs/OUTPUT_POLICY.md` for runtime output, frozen artifact, report, cache, and
+   Forward evidence boundaries;
+4. `docs/ENGINEERING_REFACTOR_IMPLEMENTATION_PLAN.md` when implementing the staged
+   engineering refactor.
+
+The refactor is phase-gated. Implement only the phase explicitly requested by the
+user, report actual changes and validation, and do not automatically enter the next
+phase. If inspection shows that a planned item has materially higher compatibility,
+maintenance, or research-correctness risk than expected, narrow, defer, skip, or
+cancel it and record the reason instead of mechanically following the plan.
+
 ## Codex Change Discipline
 
 - State the research question first and keep changes scoped to answering it.
