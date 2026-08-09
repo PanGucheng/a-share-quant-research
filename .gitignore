@@ -2,17 +2,20 @@
 # tracked; do not use this policy as a reason to untrack historical evidence.
 outputs/**
 
-# Genuine Forward evidence is append-only and remains eligible for tracking.
+# Forward is ignored by default. Re-include only the directories needed to reach
+# the explicit append-only official evidence allowlist below.
 !outputs/forward/
-!outputs/forward/**
-
-# Forward intermediates are runtime data, not official evidence.
-outputs/forward/dry_run/**
-outputs/forward/metrics/**
-outputs/forward/**/runtime/**
-outputs/forward/predictions/*/raw.csv
-outputs/forward/predictions/*/features.csv
-outputs/forward/predictions/*/prediction_pending_receipt.json
+!outputs/forward/status.json
+!outputs/forward/predictions/
+!outputs/forward/predictions/*/
+!outputs/forward/predictions/*/prediction.csv
+!outputs/forward/predictions/*/prediction_receipt.json
+!outputs/forward/paper_portfolio/
+!outputs/forward/paper_portfolio/status.json
+!outputs/forward/paper_portfolio/decisions/
+!outputs/forward/paper_portfolio/decisions/*/
+!outputs/forward/paper_portfolio/decisions/*/decision.json
+!outputs/forward/paper_portfolio/decisions/*/target_weights.csv
 
 # Cache, downloads, scratch data, and interrupted-run noise.
 tmp/

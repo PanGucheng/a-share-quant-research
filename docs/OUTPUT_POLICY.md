@@ -83,6 +83,11 @@ outputs/forward/paper_portfolio/status.json
 - `dry_run/`；
 - 可重新计算的临时 metrics 或 adapter 文件。
 
+`.gitignore` 对 `outputs/forward/` 采用默认忽略加 official evidence allowlist，而非
+全目录放行加 runtime blacklist。除了本节明确列出的 prediction、final receipt、
+decision、target weights 和必要 status，任何当前未知或未来新增的 Forward 文件类型
+均默认忽略；需要扩大 allowlist 时必须先更新 policy 和回归测试。
+
 ## 4. 历史内容处理
 
 仓库当前约 80% 的 tracked files 位于 `outputs/`。其中混合了 compact reports、
@@ -135,6 +140,7 @@ Phase 4 已完成以下验收：
 - 删除 Alpha158/Alpha101/Alpha360/TA 等 stage-specific ignore 例外；
 - 普通 outputs 与 tmp 默认忽略，无需为每个新实验修改 `.gitignore`；
 - artifacts、reports 与 official Forward evidence 保持可跟踪；
-- Forward raw/features/pending receipt/dry-run/metrics/runtime 继续忽略；
+- Forward raw/features/pending receipt/dry-run/metrics/runtime 及未知文件默认忽略；
+- allowlist 只放行 prediction、final receipt、decision、target weights 和必要 status；
 - `git check-ignore` 回归测试覆盖关键目录分类；
 - 修改前后 tracked outputs/artifacts 集合完全一致，没有 delete、move 或 untrack。

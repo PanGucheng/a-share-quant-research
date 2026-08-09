@@ -455,23 +455,30 @@ phase_5_started                     = false
 
 - `.gitignore` 从历史 stage-specific 规则收敛为目录语义；
 - 普通 `outputs/**`、`tmp/`、logs 和本地 cache/config 默认忽略；
-- `outputs/forward/**` 作为 append-only official evidence 例外保持可跟踪；
-- Forward dry-run、metrics、runtime、raw、features 和 pending receipt 明确重新忽略；
+- `outputs/forward/` 默认忽略，只逐级放行 prediction、final receipt、decision、
+  target weights 和必要 status；
+- Forward dry-run、metrics、runtime、raw、features、pending receipt 和未知文件类型
+  默认忽略；
 - `artifacts/` 与新建的 `reports/` 保持可跟踪；
 - 新增 `git check-ignore --no-index` 回归测试覆盖 runtime 与 durable evidence 分类。
 
 验证结果：
 
 ```text
-.gitignore lines before / after       = 233 / 30
+.gitignore lines before / final       = 233 / 34
 tracked outputs before / after        = 3183 / 3183
 tracked artifacts before / after      = 2 / 2
 combined tracked-set hash before/after = ecffe594789124b5f93f503a386fc9b16a0a9929
-output policy tests                   = 18 passed
+output policy tests                   = 20 passed
 Regression Gate B                     = 77 passed
-full pytest                           = 370 passed, 4 existing Qlib warnings
+full pytest                           = 372 passed, 4 existing Qlib warnings
 historical output/artifact diff       = empty
 ```
 
 没有执行 `git rm --cached`、批量 untrack、move、rename 或 delete。Phase 5 未开始，
 必须等待单独授权。
+
+Phase 4 follow-up 以 `6785980` 为基线，将最初的“Forward 全放行 + runtime
+blacklist”进一步收紧为“Forward 默认忽略 + official evidence allowlist”。新增
+unknown Forward runtime 回归用例；tracked outputs/artifacts 数量和内容 hash
+保持不变。

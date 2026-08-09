@@ -29,6 +29,8 @@ def _is_ignored(path: str) -> bool:
         "logs/new_run.log",
         "outputs/forward/dry_run/2099-01-01/prediction.csv",
         "outputs/forward/metrics/metrics.json",
+        "outputs/forward/unknown_runtime/session.bin",
+        "outputs/forward/predictions/2099-01-01/debug_payload.json",
         "outputs/forward/predictions/2099-01-01/raw.csv",
         "outputs/forward/predictions/2099-01-01/features.csv",
         (
