@@ -1,9 +1,12 @@
-# Qlib A-Share Research Baseline
+# A-Share Quant Research
 
-Personal A-share quantitative research with
-[Microsoft Qlib](https://github.com/microsoft/qlib), covering factors, models,
-portfolio research, and genuine forward observation. This repository is for research
-and education; it is not a production trading service or investment advice.
+Research-first quantitative research framework for the China A-share market, built
+primarily with [Microsoft Qlib](https://github.com/microsoft/qlib). Qlib is the main
+underlying framework, not the identity of the whole project. This repository is for
+research and education; it is not a production trading service or investment advice.
+
+Repository:
+[PanGucheng/a-share-quant-research](https://github.com/PanGucheng/a-share-quant-research)
 
 Chinese: [README.zh-CN.md](README.zh-CN.md)
 

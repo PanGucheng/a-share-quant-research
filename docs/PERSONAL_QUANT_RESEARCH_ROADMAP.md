@@ -6,10 +6,11 @@
 
 ## 1. Project Positioning
 
-`qlib-baseline` is a personal A-share quantitative research project. Its purpose is
-to support learning and practical research with Qlib across factors, machine
-learning, portfolios, backtests, and genuine forward observation, with Codex used to
-accelerate implementation.
+`A-Share Quant Research` is a personal, research-first China A-share quantitative
+research framework. Its purpose is to support learning and practical research across
+factors, machine learning, portfolios, backtests, and genuine forward observation,
+with Microsoft Qlib as the primary underlying framework and Codex used to accelerate
+implementation.
 
 It is not intended to become an institutional platform, compliance audit system,
 production trading infrastructure, or large-team financial application. Research

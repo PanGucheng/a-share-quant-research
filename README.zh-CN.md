@@ -1,7 +1,12 @@
-# Qlib A 股量化研究基线项目
+# A 股量化研究框架
 
-本项目基于 [Microsoft Qlib](https://github.com/microsoft/qlib)，用于个人 A 股因子、
-模型、组合与真实 forward 观察研究。它不是生产交易系统，不构成投资建议。
+这是一个 research-first 的个人中国 A 股量化研究框架，主要基于
+[Microsoft Qlib](https://github.com/microsoft/qlib)。Qlib 是重要的底层框架，不是整个
+项目的身份。项目用于因子、模型、组合与真实 forward 观察研究，不是生产交易系统，
+不构成投资建议。
+
+GitHub repository：
+[PanGucheng/a-share-quant-research](https://github.com/PanGucheng/a-share-quant-research)
 
 ## 当前状态
 

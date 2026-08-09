@@ -3,6 +3,11 @@
 本文件是仓库文档的权威入口。`docs/` 顶层只保留当前路线、运行入口、工程政策和仍在
 使用的操作契约；已完成、历史或被取代的计划与审计位于 `docs/_archive/`。
 
+当前项目展示名称为 `A-Share Quant Research` / `A 股量化研究框架`，repository 为
+[PanGucheng/a-share-quant-research](https://github.com/PanGucheng/a-share-quant-research)。
+旧 repository 名 `PanGucheng/qlib-baseline` 已永久退役，不得重新创建，以免破坏
+GitHub rename redirect。
+
 ## Authority Order
 
 发生冲突时按以下顺序判断：

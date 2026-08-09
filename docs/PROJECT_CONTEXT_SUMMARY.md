@@ -5,7 +5,12 @@
 
 ## Project Positioning
 
-- 个人 A 股量化研究项目，用于 Qlib 因子、模型、组合与 genuine forward research。
+- 展示名称：`A-Share Quant Research` / `A 股量化研究框架`。
+- 当前 repository：
+  [PanGucheng/a-share-quant-research](https://github.com/PanGucheng/a-share-quant-research)。
+- personal、research-first 的中国 A 股量化研究项目；Microsoft Qlib 是主要底层框架，
+  不是整个项目身份。
+- 用于 Qlib 因子、模型、组合与 genuine forward research。
 - 不是机构平台、合规系统、生产交易基础设施或实盘服务。
 - 优先级是研究逻辑正确、无未来数据、train/validation/test 隔离、可解释、易维护、
   有用自动化；额外工程治理必须证明成本收益。

@@ -2,8 +2,10 @@
 
 ## Project Positioning
 
-This is a personal A-share quantitative research project for learning factor,
-machine-learning, portfolio, and forward research with Qlib and Codex. It is not an
+`A-Share Quant Research`（`A 股量化研究框架`）is a personal, research-first
+China A-share quantitative research project for learning factor, machine-learning,
+portfolio, and forward research with Qlib and Codex. Microsoft Qlib is the primary
+underlying framework, not the identity of the whole project. This is not an
 institutional research platform, compliance system, production trading service, or
 large-team financial infrastructure project.
 

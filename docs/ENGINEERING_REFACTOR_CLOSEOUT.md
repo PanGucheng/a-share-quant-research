@@ -36,7 +36,25 @@ research or strategy:
 The CI follow-up at `b46b4f6` removed a fresh-checkout-only test dependency on ignored
 Forward runtime state. GitHub Actions run
 [`research-validation-ci #267`](https://github.com/PanGucheng/qlib-baseline/actions/runs/31300114400)
-completed successfully.
+completed successfully. That old URL is intentionally retained as a historical run
+link from before the repository rename.
+
+## Repository Identity Maintenance
+
+After the engineering and documentation closeouts, the same GitHub repository
+(`repository_id=1265754497`) was renamed from `PanGucheng/qlib-baseline` to
+[`PanGucheng/a-share-quant-research`](https://github.com/PanGucheng/a-share-quant-research).
+This was repository identity and branding maintenance only; it did not reopen the
+refactor or create a Phase 7.
+
+The display names are `A-Share Quant Research` and `A 股量化研究框架`. Microsoft Qlib
+remains the primary underlying framework. The Python distribution `qlib-baseline`,
+the import package `qlib_baseline`, existing CLI names, local directory
+`E:/qlib_prj/qlib_baseline`, and historical evidence remain unchanged.
+
+The retired repository name `PanGucheng/qlib-baseline` must not be recreated under
+the same owner. Recreating it could break GitHub redirects for old repository, issue,
+commit, PR, and Actions URLs.
 
 ## Current Engineering Authority
 

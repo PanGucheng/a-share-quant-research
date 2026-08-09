@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "qlib-baseline"
 version = "0.1.0"
-description = "Personal A-share quantitative research workspace built around Microsoft Qlib"
+description = "Research-first China A-share quantitative research framework built primarily with Microsoft Qlib"
 readme = "README.md"
 requires-python = ">=3.10,<3.11"
 dependencies = [
