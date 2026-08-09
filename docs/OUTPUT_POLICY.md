@@ -5,8 +5,8 @@
 本政策定义未来新增内容的默认边界，目标是停止 `.gitignore` 随每个实验阶段继续
 增长，同时完整保留既有研究证据。
 
-Phase 0 只发布政策，不修改 `.gitignore`，不创建新目录结构，也不迁移、删除或
-停止跟踪任何文件。实际 tracking policy 变更属于 Phase 4。
+Phase 4 已将该政策落实到 `.gitignore`，并建立 Git-tracked `reports/` 入口。变更只
+影响未来新增文件；没有迁移、删除或停止跟踪任何历史文件。
 
 ## 2. 目录语义
 
@@ -37,7 +37,7 @@ Artifact 应通过内容地址或明确版本保持不可覆盖。普通 datafra
 
 ### `reports/` — Human-readable Evidence
 
-Phase 4 计划建立的 Git-tracked 报告目录，用于：
+Git-tracked 报告目录，用于：
 
 - Markdown 结论与限制；
 - 小型 CSV/JSON 汇总；
@@ -128,12 +128,13 @@ Preserve historical evidence
 未来普通研究默认使用简单 YAML、CSV/JSON、Markdown 和 Git。只有出现现有方法无法
 解决的具体 correctness 或 durability 问题时，才增加新的治理对象。
 
-## 7. Phase 4 验收方向
+## 7. Phase 4 验收结果
 
-Phase 4 的成功标准不是 `.gitignore` 的固定行数，而是：
+Phase 4 已完成以下验收：
 
-- 删除大部分 Alpha158/Alpha101/Alpha360/TA 等 stage-specific 例外；
-- 新普通实验默认不需要修改 `.gitignore`；
-- `git check-ignore` 覆盖 outputs、artifacts、reports、tmp 和 Forward evidence；
-- tracked outputs/artifacts 集合没有删除、移动或 untrack；
-- 规则可以由目录语义解释，而不是由历史实验名称解释。
+- 删除 Alpha158/Alpha101/Alpha360/TA 等 stage-specific ignore 例外；
+- 普通 outputs 与 tmp 默认忽略，无需为每个新实验修改 `.gitignore`；
+- artifacts、reports 与 official Forward evidence 保持可跟踪；
+- Forward raw/features/pending receipt/dry-run/metrics/runtime 继续忽略；
+- `git check-ignore` 回归测试覆盖关键目录分类；
+- 修改前后 tracked outputs/artifacts 集合完全一致，没有 delete、move 或 untrack。

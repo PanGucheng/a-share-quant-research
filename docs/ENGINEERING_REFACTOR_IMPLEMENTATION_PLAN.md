@@ -436,3 +436,42 @@ Gate B 新增直接覆盖 duplicate date、cutoff、commit binding、label matur
 - Forward state 仍沿用既有 JSON/CSV 文件 contract，没有引入新的持久化框架；
 - `paper_portfolio.py` 继续作为独立现有模块，本阶段没有扩大拆分范围；
 - Phase 4 的 output/Git policy 尚未开始，必须等待单独授权。
+
+## 16. Phase 4 实施回执（2026-08-09）
+
+Phase 4 以 Regression Gate B 基线 `ffa8cbf` 为起点，只调整未来 tracking policy，
+没有清理历史 outputs：
+
+```text
+directory_level_output_policy_ready = true
+reports_directory_ready             = true
+historical_outputs_untracked        = false
+historical_files_moved_or_deleted   = false
+official_forward_tracking_changed   = false
+phase_5_started                     = false
+```
+
+实际实现：
+
+- `.gitignore` 从历史 stage-specific 规则收敛为目录语义；
+- 普通 `outputs/**`、`tmp/`、logs 和本地 cache/config 默认忽略；
+- `outputs/forward/**` 作为 append-only official evidence 例外保持可跟踪；
+- Forward dry-run、metrics、runtime、raw、features 和 pending receipt 明确重新忽略；
+- `artifacts/` 与新建的 `reports/` 保持可跟踪；
+- 新增 `git check-ignore --no-index` 回归测试覆盖 runtime 与 durable evidence 分类。
+
+验证结果：
+
+```text
+.gitignore lines before / after       = 233 / 30
+tracked outputs before / after        = 3183 / 3183
+tracked artifacts before / after      = 2 / 2
+combined tracked-set hash before/after = ecffe594789124b5f93f503a386fc9b16a0a9929
+output policy tests                   = 18 passed
+Regression Gate B                     = 77 passed
+full pytest                           = 370 passed, 4 existing Qlib warnings
+historical output/artifact diff       = empty
+```
+
+没有执行 `git rm --cached`、批量 untrack、move、rename 或 delete。Phase 5 未开始，
+必须等待单独授权。

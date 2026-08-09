@@ -109,6 +109,8 @@ contract 未改变。
 - `pyproject.toml`、`qlib_baseline.settings.ProjectSettings` 和 `qlib-doctor` 已可用；
 - committed `configs/project.yaml` 的机器路径保持 `null`，当前工作站路径仅存在于
   ignored `configs/project.local.yaml`；
+- Phase 4 已建立 `reports/`，并以目录级 `.gitignore` policy 让普通 outputs/tmp
+  默认忽略，同时保留 artifacts/reports/official Forward evidence 的 tracking；
 - 文档声明的项目解释器是 `E:/anaconda_envs/qlib_env/python.exe`。
 
 目标边界：
