@@ -38,6 +38,9 @@ Archive 保留证据，但不授权恢复已关闭工作。
   portable project settings、local override、doctor、Python/Qlib 与依赖环境。
 - `ENGINEERING_REFACTOR_CLOSEOUT.md`
   Phase 0–6 工程重构最终绿色基线；明确工程计划已 CLOSED，且不存在隐式 Phase 7。
+- `ML_FEATURE_POOL_POLICY_EXPERIMENT_PLAN.md`
+  已完成的 ML Feature Pool MVP V1：A/B/C 三个并列历史诊断臂、label-free eligibility
+  freeze、各 policy 独立选模、协调历史回放和固定 P01；不做 policy winner selection。
 
 ## Active Operational References
 
@@ -74,6 +77,10 @@ Archive 保留证据，但不授权恢复已关闭工作。
 - `outputs/prospective_forward_hardening_v1/current/forward_candidate_freeze.json`
 
 历史研究 outputs 仍是冻结证据，但不能仅因目录名含 `current` 就视为 ACTIVE pipeline。
+
+本次 ML Feature Pool MVP V1 的 compact 诊断报告位于：
+
+- [`../reports/ml_feature_pool_mvp_v1/REPORT.md`](../reports/ml_feature_pool_mvp_v1/REPORT.md)
 
 ## Archive Map
 

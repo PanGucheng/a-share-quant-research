@@ -1,0 +1,16 @@
+{
+  "decision_authority": "diagnostic_only",
+  "deferred": [
+    "policy winner selection",
+    "clustering ablation",
+    "SHAP/permutation",
+    "bootstrap",
+    "feature-importance stability"
+  ],
+  "historical_execution_approximate": true,
+  "historical_test_already_observed": true,
+  "policy_winner_artifact": "forbidden",
+  "selection_authorized": false,
+  "strategy_v2_authorized": false,
+  "unbiased_final_estimate": false
+}

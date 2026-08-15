@@ -1,0 +1,31 @@
+schema_version: 1
+stage_id: ml_feature_pool_mvp_v1
+decision_authority: diagnostic_only
+selection_authorized: false
+strategy_v2_authorized: false
+split_ids: [split_001, split_002, split_003]
+policy_ids:
+  - strict_current_baseline
+  - current_plus_existing_conditional_signal
+  - broad_data_qualified
+
+parents:
+  eligibility_freeze: outputs/ml_feature_eligibility_mvp_v1/current/eligibility_freeze.json
+  eligibility_decisions: outputs/ml_feature_eligibility_mvp_v1/current/feature_eligibility_decisions.csv
+  factor_weights: outputs/research_selection_lineage_closure_v1/current/factor_weights_by_split.csv
+  allowlist_manifest: outputs/research_selection_lineage_closure_v1/current/split_allowlist_manifest.csv
+  stability_board: outputs/factor_rolling_stability_v2/current/factor_stability_board.csv
+  lightgbm_config: configs/research_lightgbm_v1.yaml
+
+canary:
+  split_id: split_001
+  date_selection: evenly_spaced_within_fold
+  train_date_count: 20
+  validation_date_count: 10
+  structural_row_ids: [structure_01, structure_02]
+  checkpoint: 100
+  repeats: 2
+  test_read_budget: 0
+
+output_dir: outputs/ml_feature_pool_mvp_v1/current
+runtime_dir: outputs/ml_feature_pool_mvp_v1/runtime

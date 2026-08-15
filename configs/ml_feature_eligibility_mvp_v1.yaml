@@ -1,0 +1,61 @@
+schema_version: 1
+stage_id: ml_feature_eligibility_mvp_v1
+decision_authority: diagnostic_only
+audit_scope: feature_only
+split_ids: [split_001, split_002, split_003]
+folds: [train, validation]
+
+parents:
+  factor_inventory: outputs/full_research_factor_catalog_669_v1/current/factor_inventory.csv
+  dependency_inventory: outputs/factor_dependency_v1/current/factor_dependency_inventory.csv
+  partition_status: outputs/full_research_feature_matrix_v4/current/partition_status.csv
+  date_assignments: outputs/research_selection_lineage_closure_v1/current/date_assignments.csv
+
+# Frozen after review of the feature-only profile with SHA-256
+# c3c5090bfdd613c548c728a22ccb71a130875cb1de6bed10532a413b13e24935.
+thresholds:
+  maximum_missing_rate: 0.25
+  minimum_finite_dates: 765
+  minimum_finite_samples: 1147396
+  minimum_imputed_weighted_variance: 1.0e-12
+
+threshold_selection:
+  allowed_authorities:
+    - feature_data_quality
+    - distribution_structure
+    - resource_feasibility
+  forbidden_bases:
+    - target_feature_count
+    - desired_feature_count
+    - retained_feature_count
+    - target_retention_ratio
+  reasons:
+    - threshold: maximum_missing_rate
+      authority: distribution_structure
+      reason: >-
+        The feature-only missing-rate distribution has a stable gap in every split:
+        the worst value below the gap is at most 0.207813, while the next group starts
+        at 0.469964. A 0.25 ceiling lies inside that observed gap and requires at least
+        75% finite samples; no retained feature count was consulted.
+    - threshold: minimum_finite_dates
+      authority: feature_data_quality
+      reason: >-
+        Every audited factor has at least one finite observation on all development
+        dates of every split. The shortest development window contains 765 dates, so
+        765 freezes the fully observed feature-date support demonstrated by the audit;
+        no label or desired pool width was consulted.
+    - threshold: minimum_finite_samples
+      authority: resource_feasibility
+      reason: >-
+        The shortest development key grid contains 1,529,862 rows. The threshold is
+        floor(75% of that complete feature-only key grid), aligned with the 0.25 missing
+        ceiling and bounding imputation work without using a target feature count.
+    - threshold: minimum_imputed_weighted_variance
+      authority: distribution_structure
+      reason: >-
+        The smallest positive audited variance is 3.128604e-7, over five orders of
+        magnitude above the existing preprocessing numerical floor of 1e-12. Freezing
+        1e-12 rejects degenerate columns while leaving a wide empirical safety margin;
+        neither model performance nor retained feature count was consulted.
+
+output_dir: outputs/ml_feature_eligibility_mvp_v1/current
