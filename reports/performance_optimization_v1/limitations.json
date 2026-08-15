@@ -1,0 +1,15 @@
+{
+  "authoritative_execution": false,
+  "full_nine_arm_regression_rerun": false,
+  "historical_baseline_has_stage_timing": false,
+  "notes": [
+    "Original 17-hour run predates runtime_timing.csv; exact historical stage shares are unavailable.",
+    "Representative thread experiment is useful profiling evidence but is not numerically equivalent.",
+    "Kept preprocessing optimizations are covered by exact/tight-tolerance tests and single-thread real-canary parity."
+  ],
+  "rejected_thread_experiment": true,
+  "representative_profile_thread_count": 8,
+  "schema_version": 1,
+  "selection_authorized": false,
+  "strategy_v2_authorized": false
+}

@@ -6,6 +6,7 @@ import shutil
 import threading
 import time
 import gc
+from contextlib import nullcontext
 from datetime import datetime, timezone
 from dataclasses import dataclass
 from pathlib import Path
@@ -579,25 +580,51 @@ def _spool_fold(
     factors: list[str],
     output_dir: Path,
     audit: InputAccessAudit,
+    timing_recorder: Any | None = None,
 ) -> tuple[list[Path], pd.DataFrame]:
     paths: list[Path] = []
     receipts: list[pd.DataFrame] = []
     batch_size = int(protocol_config["development_dry_run"]["date_batch_size"])
     for batch_index, batch_dates in enumerate(_date_batches(dates, batch_size)):
-        joined = join_labels(
-            project_features(
+        timing = (
+            timing_recorder.measure(
+                "feature_projection",
+                fold=fold,
+                batch_index=batch_index,
+                input_date_count=len(batch_dates),
+            )
+            if timing_recorder is not None
+            else nullcontext({})
+        )
+        with timing as timing_payload:
+            features = project_features(
                 factor_names=factors,
                 factor_index=matrix.factor_index,
                 dates=batch_dates,
                 fold=fold,
                 audit=audit,
-            ),
-            labels_path=_labels_runtime_path(protocol_config, resolution),
-            label_name=protocol_config["target"]["label_id"],
-            dates=batch_dates,
-            fold=fold,
-            audit=audit,
+            )
+            timing_payload["output_rows"] = len(features)
+        timing = (
+            timing_recorder.measure(
+                "label_loading_and_join",
+                fold=fold,
+                batch_index=batch_index,
+                input_date_count=len(batch_dates),
+            )
+            if timing_recorder is not None
+            else nullcontext({})
         )
+        with timing as timing_payload:
+            joined = join_labels(
+                features,
+                labels_path=_labels_runtime_path(protocol_config, resolution),
+                label_name=protocol_config["target"]["label_id"],
+                dates=batch_dates,
+                fold=fold,
+                audit=audit,
+            )
+            timing_payload["output_rows"] = len(joined)
         target, _, date_receipt = eligible_daily_cross_sectional_rank_centered(
             joined,
             label_column=protocol_config["target"]["label_id"],
@@ -625,7 +652,18 @@ def _spool_fold(
             frame["datetime"].to_numpy()
         )
         path = output_dir / f"{fold}_{batch_index:03d}.parquet"
-        frame.to_parquet(path, index=False, compression="zstd")
+        timing = (
+            timing_recorder.measure(
+                "feature_spooling",
+                fold=fold,
+                batch_index=batch_index,
+                output_rows=len(frame),
+            )
+            if timing_recorder is not None
+            else nullcontext({})
+        )
+        with timing:
+            frame.to_parquet(path, index=False, compression="zstd")
         paths.append(path)
     receipt = pd.concat(receipts, ignore_index=True)
     if len(receipt) != len(dates) or not receipt["status"].eq("pass").all():

@@ -31,14 +31,15 @@ def stable_weighted_median(
         raise ValueError("weighted median has no finite positively weighted observations")
     values_valid = value_array[valid]
     weights_valid = weight_array[valid]
-    if canonical_keys is None:
-        keys_valid = np.arange(len(value_array), dtype=np.int64)[valid].astype(str)
-    else:
-        keys = np.asarray(canonical_keys).astype(str)
+    if canonical_keys is not None:
+        keys = np.asarray(canonical_keys)
         if keys.shape != value_array.shape:
             raise ValueError("canonical_keys must have identical shape")
-        keys_valid = keys[valid]
-    order = np.lexsort((keys_valid, values_valid))
+    # The returned statistic is a value, so reordering observations tied on that
+    # value cannot change the weighted-median value even when their weights differ.
+    # A stable numeric sort is therefore exactly equivalent to lexsorting large
+    # canonical string keys, while avoiding the dominant conversion/comparison cost.
+    order = np.argsort(values_valid, kind="stable")
     ordered_values = values_valid[order]
     ordered_weights = weights_valid[order]
     cutoff = ordered_weights.sum() / 2.0

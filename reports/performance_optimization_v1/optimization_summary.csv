@@ -1,0 +1,7 @@
+optimization,status,reason,speedup,numerical_parity,selected_candidate_parity,enabled_in_default_path
+batched_spool_preprocessing,implemented,removes repeated parquet metadata/decompression per factor,13.484256782512707,0.0,True,True
+boosting_checkpoint_reuse,already_implemented,development path already trains once per structural row,1.9892929328830289,0.0,True,True
+lightgbm_thread_scaling,rejected,"real broad arm changed prediction hashes, candidate ordering, metrics, and model text",4.567751981548709,0.033240358506858914,True,False
+release_train_validation_before_final_refit,implemented,avoids overlapping train/validation and final-fit mappings,,0.0,True,True
+lightgbm_dataset_reuse,already_implemented,one constructed train Dataset is reused by all structural rows,,0.0,True,True
+float32_execution,deferred,not needed before exhausting exact float64 optimizations,,,,False

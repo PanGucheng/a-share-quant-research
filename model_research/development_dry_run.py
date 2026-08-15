@@ -8,8 +8,6 @@ from typing import Any
 import numpy as np
 import pandas as pd
 
-from research_validation.feature_matrix import canonical_hash
-
 from .inputs import (
     InputAccessAudit,
     assert_feature_order,
@@ -30,7 +28,6 @@ from .protocol_v1_1 import (
     _labels_runtime_path,
     _matrix_authority,
     _publish,
-    build_protocol_binding,
     validate_canary_binding,
 )
 from .targets import (
@@ -38,6 +35,9 @@ from .targets import (
     eligible_daily_cross_sectional_rank_centered,
 )
 from .lineage import resolve_authoritative_parents
+
+
+DEFAULT_SPOOL_FACTOR_BATCH_SIZE = 16
 
 
 def _date_batches(
@@ -73,50 +73,57 @@ def _prepare_runtime_dir(path: Path) -> None:
 def _fit_from_spool(
     spool_paths: list[Path],
     factors: list[str],
+    *,
+    factor_batch_size: int = DEFAULT_SPOOL_FACTOR_BATCH_SIZE,
 ) -> WeightedPreprocessingFit:
-    medians: list[float] = []
-    for factor in factors:
-        values: list[np.ndarray] = []
-        weights: list[np.ndarray] = []
-        keys: list[np.ndarray] = []
-        for path in spool_paths:
-            frame = pd.read_parquet(
-                path,
-                columns=["datetime", "instrument", "__weight", factor],
-            )
-            values.append(frame[factor].to_numpy(dtype=float))
-            weights.append(frame["__weight"].to_numpy(dtype=float))
-            keys.append(
-                (
-                    frame["datetime"].astype(str)
-                    + "|"
-                    + frame["instrument"].astype(str)
-                ).to_numpy()
-            )
-        medians.append(
-            stable_weighted_median(
-                np.concatenate(values),
-                np.concatenate(weights),
-                canonical_keys=np.concatenate(keys),
-            )
-        )
-    median_array = np.asarray(medians, dtype=float)
+    if not spool_paths:
+        raise ValueError("preprocessing requires at least one spool")
+    if not factors:
+        raise ValueError("preprocessing requires at least one factor")
+    if factor_batch_size < 1:
+        raise ValueError("factor_batch_size must be positive")
+
+    weight_parts: list[np.ndarray] = []
+    row_counts: list[int] = []
+    for path in spool_paths:
+        metadata = pd.read_parquet(path, columns=["__weight"])
+        row_counts.append(len(metadata))
+        weight_parts.append(metadata["__weight"].to_numpy(dtype=float))
+    all_weights = np.concatenate(weight_parts)
+    total_weight = float(all_weights.sum())
+
+    median_array = np.empty(len(factors), dtype=float)
     weighted_sum = np.zeros(len(factors), dtype=float)
     weighted_square_sum = np.zeros(len(factors), dtype=float)
-    total_weight = 0.0
-    for path in spool_paths:
-        frame = pd.read_parquet(path, columns=["__weight", *factors])
-        weights = frame["__weight"].to_numpy(dtype=float)
-        matrix = frame[factors].to_numpy(dtype=float)
-        matrix[~np.isfinite(matrix)] = np.nan
-        for index in range(matrix.shape[1]):
-            missing = np.isnan(matrix[:, index])
-            matrix[missing, index] = median_array[index]
-        weighted_sum += np.sum(matrix * weights[:, None], axis=0)
-        weighted_square_sum += np.sum(
-            (matrix**2) * weights[:, None], axis=0
-        )
-        total_weight += float(weights.sum())
+    for start in range(0, len(factors), factor_batch_size):
+        stop = min(start + factor_batch_size, len(factors))
+        factor_batch = factors[start:stop]
+        matrices: list[np.ndarray] = []
+        for path, expected_rows in zip(spool_paths, row_counts, strict=True):
+            frame = pd.read_parquet(path, columns=factor_batch)
+            if len(frame) != expected_rows:
+                raise AssertionError("spool row count changed between column reads")
+            matrix = frame[factor_batch].to_numpy(dtype=float)
+            matrix[~np.isfinite(matrix)] = np.nan
+            matrices.append(matrix)
+
+        for local_index, factor_index in enumerate(range(start, stop)):
+            median_array[factor_index] = stable_weighted_median(
+                np.concatenate([matrix[:, local_index] for matrix in matrices]),
+                all_weights,
+            )
+
+        batch_medians = median_array[start:stop]
+        for matrix, weights in zip(matrices, weight_parts, strict=True):
+            for local_index in range(matrix.shape[1]):
+                missing = np.isnan(matrix[:, local_index])
+                matrix[missing, local_index] = batch_medians[local_index]
+            weighted_sum[start:stop] += np.sum(
+                matrix * weights[:, None], axis=0
+            )
+            weighted_square_sum[start:stop] += np.sum(
+                (matrix**2) * weights[:, None], axis=0
+            )
     means = weighted_sum / total_weight
     variances = weighted_square_sum / total_weight - means**2
     blocked = [

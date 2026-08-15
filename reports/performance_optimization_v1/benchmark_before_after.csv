@@ -1,0 +1,7 @@
+benchmark,before,after,before_wall_seconds,after_wall_seconds,speedup,before_peak_rss_mib,after_peak_rss_mib,prediction_max_abs_difference,metric_max_abs_difference,selected_candidate_parity,prediction_hash_parity,candidate_order_parity
+preprocessing_broad_canary,legacy_per_factor_reads,batched_factor_reads,63.16031809999549,4.68400439999823,13.484256782512707,313.1484375,280.34765625,,0.0,,,
+checkpoint_reuse_canary,independent_checkpoint_fits,max_round_checkpoint_reuse,12.41365260000748,6.240233599994099,1.9892929328830289,448.33203125,441.59765625,0.0,0.0,True,,
+thread_scaling_canary,num_threads_1,num_threads_2,6.464110400003847,4.087138800008688,1.5815734958622167,441.50390625,441.6015625,0.0,0.0,,,
+thread_scaling_canary,num_threads_1,num_threads_4,6.464110400003847,2.4266503999970155,2.663799614485794,441.50390625,442.3203125,0.0,0.0,,,
+thread_scaling_canary,num_threads_1,num_threads_8,6.464110400003847,1.4151622999925166,4.567751981548709,441.50390625,442.87890625,0.0,0.0,,,
+representative_broad_arm_thread_experiment,baseline_num_threads_1,experimental_num_threads_8,10816.3090432,2455.792212400004,4.40440725749733,17015.484375,9766.87109375,,0.033240358506858914,True,False,False

@@ -15,6 +15,7 @@ from qlib_integration.historical_portfolio_backtest import (
 )
 
 from .feature_pool_policy import POLICY_IDS
+from .runtime_timing import RuntimeTimingRecorder
 
 
 def run_fixed_p01_comparison(
@@ -44,6 +45,7 @@ def run_fixed_p01_comparison(
     test_metrics = pd.read_csv(replay_root / "test_metrics.csv")
     staging = portfolio_root.parent / ".staging_portfolio"
     staging.mkdir(parents=True, exist_ok=False)
+    timing = RuntimeTimingRecorder(execution_dtype="float64")
     summary_rows: list[dict[str, Any]] = []
     p01 = {"portfolio_id": "P01", "top_k": 50, "rebalance_interval": 5}
     for split_id in ("split_001", "split_002", "split_003"):
@@ -66,17 +68,24 @@ def run_fixed_p01_comparison(
                 scenario_config = dict(config)
                 scenario_config["slippage_bps"] = cost_bps
                 scenario_output = staging / policy_id / f"cost_{int(cost_bps)}"
-                summary, _, _, _ = run_scenario(
-                    config=scenario_config,
-                    portfolio=p01,
-                    split_id=split_id,
-                    prediction=prediction,
-                    receipt_row=receipt_row,
-                    market=markets[split_id],
-                    market_audit=market_audits[split_id],
-                    benchmark=benchmarks[split_id],
-                    output_dir=scenario_output,
-                )
+                with timing.measure(
+                    "portfolio_replay",
+                    outer_split_id=split_id,
+                    policy_id=policy_id,
+                    output_rows=len(prediction),
+                    cost_scenario_bps=cost_bps,
+                ):
+                    summary, _, _, _ = run_scenario(
+                        config=scenario_config,
+                        portfolio=p01,
+                        split_id=split_id,
+                        prediction=prediction,
+                        receipt_row=receipt_row,
+                        market=markets[split_id],
+                        market_audit=market_audits[split_id],
+                        benchmark=benchmarks[split_id],
+                        output_dir=scenario_output,
+                    )
                 summary_rows.append(
                     {
                         **summary,
@@ -91,6 +100,7 @@ def run_fixed_p01_comparison(
     if len(comparison) != 27:
         raise AssertionError("P01 comparison requires 3 splits x 3 policies x 3 costs")
     comparison.to_csv(staging / "portfolio_comparison.csv", index=False)
+    timing.write_csv(staging / "runtime_timing.csv")
     receipt = {
         "schema_version": 1,
         "status": "pass",

@@ -1,0 +1,9 @@
+benchmark,implementation,rows,feature_count,spool_count,prediction_max_abs_difference,metric_max_abs_difference,wall_seconds,cpu_seconds,peak_rss_mib,thread_count
+preprocessing_broad_canary,legacy_per_factor_reads,12000,659,4.0,,0.0,63.16031809999549,70.21875,313.1484375,
+preprocessing_broad_canary,batched_factor_reads,12000,659,4.0,,0.0,4.68400439999823,5.78125,280.34765625,
+checkpoint_reuse_canary,independent_checkpoint_fits,12000,659,,0.0,0.0,12.413652600007481,12.59375,448.33203125,
+checkpoint_reuse_canary,max_round_checkpoint_reuse,12000,659,,0.0,0.0,6.240233599994099,6.40625,441.59765625,
+thread_scaling_canary,num_threads_1,12000,659,,0.0,0.0,6.464110400003847,7.78125,441.50390625,1.0
+thread_scaling_canary,num_threads_2,12000,659,,0.0,0.0,4.087138800008688,9.234375,441.6015625,2.0
+thread_scaling_canary,num_threads_4,12000,659,,0.0,0.0,2.4266503999970155,10.609375,442.3203125,4.0
+thread_scaling_canary,num_threads_8,12000,659,,0.0,0.0,1.4151622999925166,11.5625,442.87890625,8.0
