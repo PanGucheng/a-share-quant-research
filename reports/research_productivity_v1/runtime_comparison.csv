@@ -1,0 +1,5 @@
+proposal_id,execution_class,wall_seconds,peak_rss_mib
+broad_data_qualified,exploratory_fast,596.9440221999976,4610.36328125
+broad_data_qualified,full_development_reference,25587.492238600003,17985.62890625
+current_plus_existing_conditional_signal,exploratory_fast,288.2819443000044,2506.6484375
+current_plus_existing_conditional_signal,full_development_reference,9934.7916678,11202.36328125

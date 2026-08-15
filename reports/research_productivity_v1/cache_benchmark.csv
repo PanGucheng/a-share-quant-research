@@ -1,0 +1,3 @@
+case,run_type,feature_count,train_date_count,validation_date_count,cache_hit,feature_projection_wall_seconds,spool_wall_seconds,cache_validation_wall_seconds,pre_model_preparation_wall_seconds,peak_rss_mib,cache_disk_bytes,test_read_count,cold_to_warm_speedup,materialized_numerical_parity
+split_001_broad_fast_scope,cold,659,120,77,False,69.78355379999266,29.289550700006657,0.0007689999911235645,148.4849067000032,4228.59375,1415606559,0,3.9876215592904054,True
+split_001_broad_fast_scope,warm,659,120,77,True,0.0,0.0,3.370973800017964,37.236458999992465,4284.48828125,1415606559,0,3.9876215592904054,True

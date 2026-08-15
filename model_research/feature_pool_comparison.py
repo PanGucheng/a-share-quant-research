@@ -45,7 +45,11 @@ def run_fixed_p01_comparison(
     test_metrics = pd.read_csv(replay_root / "test_metrics.csv")
     staging = portfolio_root.parent / ".staging_portfolio"
     staging.mkdir(parents=True, exist_ok=False)
-    timing = RuntimeTimingRecorder(execution_dtype="float64")
+    timing = RuntimeTimingRecorder(
+        execution_class="portfolio_replay",
+        execution_profile="ml_feature_pool_mvp_v1",
+        execution_dtype="float64",
+    )
     summary_rows: list[dict[str, Any]] = []
     p01 = {"portfolio_id": "P01", "top_k": 50, "rebalance_interval": 5}
     for split_id in ("split_001", "split_002", "split_003"):

@@ -1,0 +1,32 @@
+{
+  "parity": true,
+  "rows": [
+    {
+      "cache_keys_sha256": "fb2f0d720c1b790cd670e585093f75159411ec4b6b2f091b36f4ab376448dab9",
+      "downstream_metrics_sha256": "5f53bf278e94be7525932a4db6b4189407dea4dc615ad5366b15e64b0c1c083d",
+      "downstream_prediction_sha256": "18433cb073ad0528e041cfb020a1f60e3efa0ecf159ee3b4214d023c203d59d0",
+      "feature_order_sha256": "7ebea305fd964f8c9a2aa9e2b4979585ab5a03dc846c5018cc8378dd21881342",
+      "run_type": "cold",
+      "train_features_sha256": "03000c9f41c5d2dc66efd01a7eb2ea581f6d1442e43173ea5746aa59a1d38b97",
+      "train_target_sha256": "404b51747b2695af8a4e9bc4e1c4cf28343d6a6884bfc5b08484fed1c6d57da4",
+      "train_weights_sha256": "8135cd6d4a49150afda5f7edb64d26d220d01ccc192d22793829934bdfe849c7",
+      "validation_features_sha256": "8e7f80634bbb7dbb59a123752d538b19c954400e914407959806b9afe37d65f9",
+      "validation_target_sha256": "07bf559efd4f24298cfceb12ea111ec400c66b721b13cb6cb529c340d7a2b190",
+      "validation_weights_sha256": "6a9f5fa504799decfde62b3181ae10485770e5ef1df9ee97837419629eb57164"
+    },
+    {
+      "cache_keys_sha256": "fb2f0d720c1b790cd670e585093f75159411ec4b6b2f091b36f4ab376448dab9",
+      "downstream_metrics_sha256": "5f53bf278e94be7525932a4db6b4189407dea4dc615ad5366b15e64b0c1c083d",
+      "downstream_prediction_sha256": "18433cb073ad0528e041cfb020a1f60e3efa0ecf159ee3b4214d023c203d59d0",
+      "feature_order_sha256": "7ebea305fd964f8c9a2aa9e2b4979585ab5a03dc846c5018cc8378dd21881342",
+      "run_type": "warm",
+      "train_features_sha256": "03000c9f41c5d2dc66efd01a7eb2ea581f6d1442e43173ea5746aa59a1d38b97",
+      "train_target_sha256": "404b51747b2695af8a4e9bc4e1c4cf28343d6a6884bfc5b08484fed1c6d57da4",
+      "train_weights_sha256": "8135cd6d4a49150afda5f7edb64d26d220d01ccc192d22793829934bdfe849c7",
+      "validation_features_sha256": "8e7f80634bbb7dbb59a123752d538b19c954400e914407959806b9afe37d65f9",
+      "validation_target_sha256": "07bf559efd4f24298cfceb12ea111ec400c66b721b13cb6cb529c340d7a2b190",
+      "validation_weights_sha256": "6a9f5fa504799decfde62b3181ae10485770e5ef1df9ee97837419629eb57164"
+    }
+  ],
+  "test_scope_materialized": false
+}

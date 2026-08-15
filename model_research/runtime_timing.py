@@ -11,6 +11,8 @@ import pandas as pd
 
 RUNTIME_TIMING_COLUMNS = [
     "stage",
+    "execution_class",
+    "execution_profile",
     "outer_split_id",
     "policy_id",
     "fold",

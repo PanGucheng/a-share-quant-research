@@ -1,0 +1,67 @@
+schema_version: 1
+profile_id: fast_research_v1
+execution_class: exploratory_fast
+authoritative_execution: false
+selection_authorized: false
+production_model_selected: false
+strategy_v2_authorized: false
+
+parents:
+  policy_config: configs/ml_feature_pool_mvp_v1.yaml
+  feature_manifest: outputs/ml_feature_pool_mvp_v1/current/feature_pool_manifest.csv
+  policy_manifest: outputs/ml_feature_pool_mvp_v1/current/policy_manifest.csv
+
+output_root: outputs/research_productivity_v1/fast_runs
+runtime_root: outputs/research_productivity_v1/runtime
+
+split_ids: [split_001, split_002]
+date_selection: fixed_evenly_spaced_train_full_validation
+date_counts:
+  train: 120
+  validation: 77
+date_scope:
+  split_001:
+    train:
+      count: 120
+      start: "2021-02-01"
+      end: "2023-12-04"
+      sha256: 54df8f3bf5101a4446e05af8bf0f06075925100beec2ec5221d2fde68172c217
+    validation:
+      count: 77
+      start: "2024-02-01"
+      end: "2024-06-03"
+      sha256: 89cacf09ed2d2f4d01f50962d6492fe0d76c6240bd92e475a399db66e554fdf2
+  split_002:
+    train:
+      count: 120
+      start: "2021-02-01"
+      end: "2024-06-05"
+      sha256: d39b20ecd43d0647138fa195194cf1c91401243d20d894eaecf865c6e8d337d5
+    validation:
+      count: 77
+      start: "2024-08-05"
+      end: "2024-11-28"
+      sha256: c10e541b81d9620128ac85657a8074ebff2a249d1f12d4ab6f9cd1a9532c69ac
+
+candidate_subset:
+  structural_row_ids: [structure_01, structure_04]
+  checkpoints: [100, 200]
+num_threads: 1
+execution_dtype: float64
+seed: 20260725
+preprocessing: inherited_full_train_only
+metric_registry: inherited_full_v1_1
+frozen_parent_contracts:
+  lightgbm_config_sha256: 58b01cf9b0507000c990738e5a36c8a7c09bf0b644383ad9a462188ef820d828
+  preprocessing_config_sha256: 4c2778be1d7f94f25cd3222c401f0a47e847e1941d6bad6128421e2c4e21f432
+  metric_registry_sha256: 01e2eacd1983c52017e903c22b12e5adf49e0f0e3d56a49e94e9935c3a6e24b9
+test_read_budget: 0
+historical_replay_budget: 0
+portfolio_test_release_budget: 0
+
+promotion_gate:
+  purpose: resource_screening_only
+  promote_minimum_mean_rank_ic_delta: 0.005
+  promote_minimum_positive_split_fraction: 1.0
+  reject_maximum_mean_rank_ic_delta: -0.005
+  reject_minimum_nonpositive_split_fraction: 1.0

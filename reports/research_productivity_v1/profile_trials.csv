@@ -1,0 +1,4 @@
+profile,train_scope,validation_scope,split_count,candidate_count,conditional_pair_seconds,broad_pair_seconds,rank_ic_delta_sign_agreement,rank_ic_delta_spearman,proposal_order_agreement,decision
+trial_60_30,tail_60,tail_30,2,4,136.1681903,270.6574443,0.5,-1.0,false,reject_not_representative
+trial_tail_120_full_validation,tail_120,full_77,2,4,251.0022415,,0.5,,false,reject_false_rejection
+fast_research_v1,evenly_spaced_120_full_history,full_77,2,4,288.2819443,596.9440222,1.0,0.6,false,retain_conservative_screen

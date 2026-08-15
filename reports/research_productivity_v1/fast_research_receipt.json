@@ -1,0 +1,22 @@
+{
+  "authoritative_execution": false,
+  "baseline_id": "strict_current_baseline",
+  "execution_class": "exploratory_fast",
+  "execution_profile": "fast_research_v1",
+  "historical_replay_count": 0,
+  "metric_registry_sha256": "01e2eacd1983c52017e903c22b12e5adf49e0f0e3d56a49e94e9935c3a6e24b9",
+  "portfolio_test_release_count": 0,
+  "preprocessing_fit_scope": "train_only",
+  "production_model_selected": false,
+  "promotion_is_scientific_winner": false,
+  "promotion_reason": "mixed_or_small_development_only_delta",
+  "promotion_status": "inconclusive",
+  "profile_config_sha256": "8abd34ef5062b21bb9194eddd2f096c8ea40678d3220f56c42d769731bb935ee",
+  "proposal_id": "current_plus_existing_conditional_signal",
+  "receipt_sha256": "acb81b3e2e84c1030c0109720b97b5be33bb1bbc2ec3e709559ef83c0127ab96",
+  "selection_authorized": false,
+  "split_ids": ["split_001", "split_002"],
+  "strategy_v2_authorized": false,
+  "test_feature_read_count": 0,
+  "test_label_read_count": 0
+}

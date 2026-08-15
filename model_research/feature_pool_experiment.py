@@ -192,6 +192,8 @@ def run_policy_canary(
         if len(factors) != int(policy_row.iloc[0]["factor_count"]):
             raise ValueError(f"canary policy feature count mismatch: {policy_id}")
         timing = RuntimeTimingRecorder(
+            execution_class="canary",
+            execution_profile="ml_feature_pool_canary_v1",
             outer_split_id=split_id,
             policy_id=policy_id,
             feature_count=len(factors),
@@ -481,6 +483,8 @@ def run_development_arm(
     )
     thread_count = int(lightgbm_config["determinism"]["num_threads"])
     timing = RuntimeTimingRecorder(
+        execution_class="full_development",
+        execution_profile="ml_feature_pool_mvp_v1",
         outer_split_id=split_id,
         policy_id=policy_id,
         feature_count=len(factors),
@@ -1112,6 +1116,8 @@ def run_coordinated_historical_replay(
     (staging / "predictions").mkdir(parents=True, exist_ok=False)
     audit = InputAccessAudit()
     replay_timing = RuntimeTimingRecorder(
+        execution_class="historical_replay",
+        execution_profile="ml_feature_pool_mvp_v1",
         execution_dtype="float64",
         thread_count=int(lightgbm_config["determinism"]["num_threads"]),
     )

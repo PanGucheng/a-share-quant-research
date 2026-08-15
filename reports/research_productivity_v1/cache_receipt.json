@@ -1,0 +1,20 @@
+{
+  "cache_implementation": "development_projection_spool_cache_v1",
+  "cache_keys": {
+    "train": "25f5d7c229b02a6a970329b84328252173b55e30e9d6cb616afc428728b5812d",
+    "validation": "dbc9e48016f4e4aac1d8f45b0b48613a8033a5f46dd49f9497b52b5ba2c3a22b"
+  },
+  "cold_warm_downstream_metrics_parity": true,
+  "cold_warm_downstream_prediction_parity": true,
+  "cold_warm_materialized_parity": true,
+  "content_addressed": true,
+  "feature_count": 659,
+  "immutable": true,
+  "outer_split_id": "split_001",
+  "policy_id_is_cache_identity": false,
+  "row_key_grid_sha256": {
+    "train": "c72f0cac793eb6db17fb9438bc7efc76b507eb5d847c5e8bb438d9a79c5495b3",
+    "validation": "0358bb2ba36d213e1fe508f4bacd5e93397214d73d9a1788aff1fca7538d0a1e"
+  },
+  "test_scope_materialized": false
+}

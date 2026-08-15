@@ -1,0 +1,3 @@
+proposal_id,baseline_id,split_count,fast_pair_wall_seconds,representative_full_pair_wall_seconds,speedup,fast_peak_rss_mib,full_peak_rss_mib,promotion_status,test_feature_read_count,test_label_read_count,historical_replay_count,portfolio_test_release_count
+broad_data_qualified,strict_current_baseline,2,596.9440221999976,25587.492238600003,42.8641401656038,4610.36328125,17985.62890625,inconclusive,0,0,0,0
+current_plus_existing_conditional_signal,strict_current_baseline,2,288.2819443000044,9934.7916678,34.46206695991071,2506.6484375,11202.36328125,inconclusive,0,0,0,0

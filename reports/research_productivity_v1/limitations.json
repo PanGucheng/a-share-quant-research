@@ -1,0 +1,15 @@
+{
+  "aggregate_proposal_order_agreement": false,
+  "authoritative_path_model_semantics_changed": false,
+  "cache_full_path_default_enabled": false,
+  "cache_peak_rss_reduction_claimed": false,
+  "calibration_proposal_count": 2,
+  "calibration_split_count": 2,
+  "fast_candidate_winner_equals_full_winner_claimed": false,
+  "fast_is_scientific_winner_selector": false,
+  "historical_test_used_for_calibration": false,
+  "icir_delta_sign_agreement": 0.75,
+  "rank_ic_delta_sign_agreement": 1.0,
+  "rank_ic_delta_spearman": 0.6,
+  "split_003_used": false
+}

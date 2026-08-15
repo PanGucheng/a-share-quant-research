@@ -1,0 +1,5 @@
+proposal_id,baseline_id,outer_split_id,fast_rank_ic_delta,full_development_rank_ic_delta,rank_ic_delta_sign_agreement,fast_icir_delta,full_development_icir_delta,overall_delta_spearman,overall_sign_agreement,proposal_order_agreement
+broad_data_qualified,strict_current_baseline,split_001,0.0292002962420535,0.029246666517786818,True,0.1590099109217538,0.11403307513568761,0.6000000000000001,1.0,False
+broad_data_qualified,strict_current_baseline,split_002,-0.0125720752950916,-0.020712633358134398,True,-0.1071993682532551,-0.1382466102463372,0.6000000000000001,1.0,False
+current_plus_existing_conditional_signal,strict_current_baseline,split_001,0.0053835834803699,0.03443941625228361,True,-0.070628357318031,0.09939969937454318,0.6000000000000001,1.0,False
+current_plus_existing_conditional_signal,strict_current_baseline,split_002,-0.0162747845837057,-0.0114652395409653,True,-0.1363964742292296,-0.08430670592478089,0.6000000000000001,1.0,False
