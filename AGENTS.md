@@ -90,6 +90,14 @@ factor selection, hyperparameter search, TopK/rebalance scans, or portfolio
 optimization. Unless a proven error, leakage, contract failure, or implementation
 bug is found, later work may only append clarification or open a new version/stage.
 
+ML Feature Pool MVP V1, Performance Optimization V1, Research Productivity V1, and
+Clustering Ablation V1 are also CLOSED. Their preserved reports are diagnostic or
+engineering evidence, not Strategy V2 authorization. Fast Research is screening-only,
+and the one-representative clustering gate remains unchanged after mixed historical
+evidence. The next historical research area, when separately authorized, is a
+high-level Factor Universe / Data Capability Upgrade; no V2 implementation plan is
+implied by this roadmap entry.
+
 ## Engineering Navigation
 
 Before changing repository structure or an established workflow, read these current

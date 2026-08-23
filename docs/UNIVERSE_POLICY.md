@@ -111,12 +111,16 @@ cd E:\qlib_prj\qlib_baseline
 E:\anaconda_envs\qlib_env\python.exe scripts\create_filtered_universe.py --source E:/qlib_prj/qlib_data/cn_data_community_20260609/instruments/all.txt --output outputs/universes/community_20260609/all_stock_shsz.txt --include-prefixes SH,SZ --exclude-index-symbols --summary-output outputs/reports/filtered_universe_all_stock_shsz_community_20260609.md
 ```
 
-## Next Implementation Step
+## Historical Implementation Status
 
-The experimental point-in-time rolling universe is implemented under `universes/` and validated at:
+The point-in-time rolling universe was implemented under `universes/` and its initial
+validation is preserved at:
 
 ```text
 outputs/point_in_time_universe_v1/local_smoke/
 ```
 
-It does not mutate the raw provider or replace baseline CSI/static universe defaults. The next integration step is to consume its intervals only through the purged walk-forward experimental profile.
+Later purged walk-forward research consumed point-in-time universe artifacts under
+its own frozen contracts. This historical implementation does not mutate the raw
+provider or replace the current Strategy V1 universe. New universe work belongs to a
+separately authorized Factor Universe / Data Capability Upgrade.

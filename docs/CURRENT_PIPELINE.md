@@ -4,7 +4,7 @@
 
 本文是当前运行入口索引，不替代研究路线、冻结 artifact 或机器状态文件。
 
-截至 2026-08-09：
+当前 tracked machine status 记录：
 
 - 当前时间敏感主线是 Forward Track；
 - frozen Strategy V1 为 LightGBM、52 因子、Long Only Top50 等权、每 5 个交易日调仓；
@@ -213,10 +213,18 @@ Evidence:     personal research grade
 - Historical Portfolio Backtest V1 的选择阶段；
 - Model Diagnostic V1；
 - External PIT Style Data V1 与 Style Attribution Extension；
+- ML Feature Pool MVP V1（A/B/C historical diagnostic）；
+- Performance Optimization V1；
+- Research Productivity V1（Fast Research 仅 screening-only）；
+- Clustering Ablation V1（mixed historical diagnostic，representative gate 不变）；
 - 历史 Accuracy Correction、Data Source Audit 和 execution semantics 修正阶段。
 
 CLOSED 阶段只允许修复可证明的数据错误、泄漏、contract failure 或实现 bug；一般
 维护不得借机产生新策略结论。
+
+近期四个阶段的详细结论只在相应 final reports 中维护，入口见
+[DOC_INDEX.md](DOC_INDEX.md)。它们不产生 production winner、Strategy V2 authorization
+或新的 unbiased holdout estimate。
 
 ## 6. LEGACY / HISTORICAL
 
@@ -232,6 +240,7 @@ CLOSED 阶段只允许修复可证明的数据错误、泄漏、contract failure
 
 ## 7. EXPERIMENTAL / DEFERRED
 
+- Factor Universe / Data Capability Upgrade（下一研究区域，尚无 V2 计划或实施授权）；
 - KunQuant 作为未来 factor computation backend；
 - Strategy V2 / Model V2 Research Protocol；
 - shadow trading、小资金或 live trading；

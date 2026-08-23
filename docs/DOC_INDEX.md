@@ -38,9 +38,6 @@ Archive 保留证据，但不授权恢复已关闭工作。
   portable project settings、local override、doctor、Python/Qlib 与依赖环境。
 - `ENGINEERING_REFACTOR_CLOSEOUT.md`
   Phase 0–6 工程重构最终绿色基线；明确工程计划已 CLOSED，且不存在隐式 Phase 7。
-- `ML_FEATURE_POOL_POLICY_EXPERIMENT_PLAN.md`
-  已完成的 ML Feature Pool MVP V1：A/B/C 三个并列历史诊断臂、label-free eligibility
-  freeze、各 policy 独立选模、协调历史回放和固定 P01；不做 policy winner selection。
 
 ## Active Operational References
 
@@ -78,13 +75,21 @@ Archive 保留证据，但不授权恢复已关闭工作。
 
 历史研究 outputs 仍是冻结证据，但不能仅因目录名含 `current` 就视为 ACTIVE pipeline。
 
-本次 ML Feature Pool MVP V1 的 compact 诊断报告位于：
+## Completed Recent Stages
 
-- [`../reports/ml_feature_pool_mvp_v1/REPORT.md`](../reports/ml_feature_pool_mvp_v1/REPORT.md)
+以下阶段均为 CLOSED。报告负责详细数字，current docs 只保留当前结论：
 
-Clustering Ablation V1 的 post-observation、diagnostic-only 机制报告位于：
+- [ML Feature Pool MVP V1](../reports/ml_feature_pool_mvp_v1/REPORT.md)：更宽输入显示部分
+  历史增量，但 broad pool 稳定性较弱；仅为 post-observation diagnostic。
+- [Performance Optimization V1](../reports/performance_optimization_v1/REPORT.md)：保留精确
+  single-thread/float64 研究语义，拒绝不满足数值 parity 的加速方案。
+- [Research Productivity V1](../reports/research_productivity_v1/REPORT.md)：Projection/Spool
+  content-addressed cache 已实现；Fast Research 仅作资源筛查，不作 winner selection。
+- [Clustering Ablation V1](../reports/ml_clustering_ablation_v1/REPORT.md)：取消每簇单代表门槛的
+  历史证据 mixed，现有 representative gate 不变。
 
-- [`../reports/ml_clustering_ablation_v1/REPORT.md`](../reports/ml_clustering_ablation_v1/REPORT.md)
+这些结果不修改 Strategy V1、不产生 Strategy V2 authorization，也不构成 fresh OOS。
+下一项需单独授权的研究方向仅在高层标记为 Factor Universe / Data Capability Upgrade。
 
 ## Archive Map
 
@@ -107,9 +112,14 @@ Clustering Ablation V1 的 post-observation、diagnostic-only 机制报告位于
   comparison/backtest、Forward MVP 与 Qlib execution 计划和回执。
 - `_archive/08_engineering_refactor/`
   Phase 0–6 原始工程优化指南和实施计划。
+- `_archive/09_model_research_and_productivity_history/`
+  近期已完成模型研究、性能与 productivity 阶段的历史实施计划；final evidence 位于
+  `reports/`。
 
 ## Documentation Maintenance
 
+- 本轮治理 inventory、归档决策和剩余债务见
+  [Documentation Cleanup V1](../reports/documentation_cleanup_v1/REPORT.md)。
 - 新文档先判断它是当前 authority、active operational reference，还是一次性历史记录。
 - 阶段完成且结论已被当前总线吸收后，移动到 archive，并更新所有路径引用。
 - 不在 README 或 `PROJECT_CONTEXT_SUMMARY.md` 重复堆积完整历史时间线。

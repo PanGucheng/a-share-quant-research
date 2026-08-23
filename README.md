@@ -28,8 +28,11 @@ mature-label evaluation
 
 Strategy V1, historical predictions, and observed `split_003` evidence are frozen.
 `split_003` may be diagnosed but must not be reused for tuning and described as fresh
-OOS evidence. Model Diagnostic V1 and the Phase 0–6 engineering refactor are closed.
-There is no implicit engineering Phase 7.
+OOS evidence. Model Diagnostic V1, ML Feature Pool MVP V1, Performance Optimization
+V1, Research Productivity V1, Clustering Ablation V1, and the Phase 0–6 engineering
+refactor are closed. Fast Research is screening-only; the clustering representative
+gate remains unchanged. The next separately authorized research area is a high-level
+Factor Universe / Data Capability Upgrade. There is no implicit engineering Phase 7.
 
 Start with [docs/DOC_INDEX.md](docs/DOC_INDEX.md). The exact active commands and
 machine-state paths are in

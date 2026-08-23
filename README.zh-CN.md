@@ -25,8 +25,11 @@ Top50 等权 paper decision
 ```
 
 Strategy V1、历史 prediction 与已经观察的 `split_003` 均保持冻结。`split_003` 可以
-用于诊断，但不能再次用于调参后声称为新的 OOS。Model Diagnostic V1 已关闭，Phase
-0–6 工程重构也已正式收口，不存在自动延伸的工程 Phase 7。
+用于诊断，但不能再次用于调参后声称为新的 OOS。Model Diagnostic V1、ML Feature
+Pool MVP V1、Performance Optimization V1、Research Productivity V1、Clustering
+Ablation V1 与 Phase 0–6 工程重构均已关闭。Fast Research 仅用于筛查，clustering
+representative gate 保持不变。下一项需单独授权的研究方向是高层的 Factor Universe /
+Data Capability Upgrade；不存在自动延伸的工程 Phase 7。
 
 文档入口是 [docs/DOC_INDEX.md](docs/DOC_INDEX.md)；实际活动命令、时间边界和机器
 状态路径以 [docs/CURRENT_PIPELINE.md](docs/CURRENT_PIPELINE.md) 为准。

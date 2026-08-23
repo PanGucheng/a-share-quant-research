@@ -30,6 +30,16 @@
 
 `docs/_archive/` 中的计划和回执是 CLOSED/HISTORICAL/SUPERSEDED 证据，不是当前授权。
 
+## Current Data, Factor, And Model Stack
+
+- 数据：community Qlib-format A-share provider、PIT universe/Matrix v4、Labels v2、
+  tradability layer；本机路径由 ignored local config 绑定。
+- 因子：冻结 669-factor research catalog；rolling stability 与 clustering artifacts 保留
+  研究 provenance，Strategy V1 仍只消费冻结的有序 52-feature snapshot。
+- 模型：Strategy V1 为冻结 LightGBM；历史 research model protocol、candidate table、
+  preprocessing、holdout/freeze/lineage contracts 不因后续诊断而改变。
+- 组合：P01，Long Only Top50、等权、每 5 个交易日调仓；forward evidence append-only。
+
 ## Active Forward Track
 
 当前时间敏感主线：
@@ -48,7 +58,7 @@ Top50 equal-weight paper decision / execution refresh
 mature-label evaluation
 ```
 
-截至 2026-08-09：
+当前 tracked machine status 记录：
 
 - 2026-08-07 official prediction 已完成并等待标签成熟；
 - 2026-08-07 paper decision 已完成，计划执行日为 2026-08-10；
@@ -66,6 +76,31 @@ mature-label evaluation
 - Phase 0–6 工程重构已 CLOSED，最终绿色基线为
   `b46b4f614f3be5388bf7a26ebf2b035d14906f5f`；不存在隐式 Phase 7。
 - Matrix v4、raw snapshot manifest、lineage 和全部历史研究结果保持冻结。
+
+## Recent Research Conclusions
+
+- **ML Feature Pool MVP V1 — CLOSED / diagnostic-only**：strict pool 可能偏窄，较宽
+  输入有部分历史增量，但 broad pool 稳定性下降。详细数字见
+  [final report](../reports/ml_feature_pool_mvp_v1/REPORT.md)。
+- **Performance Optimization V1 — CLOSED**：保留 authoritative-compatible 的
+  single-thread/float64 语义；不满足数值 parity 的线程加速未被采用。详见
+  [final report](../reports/performance_optimization_v1/REPORT.md)。
+- **Research Productivity V1 — CLOSED**：Projection/Spool cache 已可审计复用；Fast
+  Research 只能筛掉明显无希望的 proposal，不能选 winner。详见
+  [final report](../reports/research_productivity_v1/REPORT.md)。
+- **Clustering Ablation V1 — CLOSED / diagnostic-only**：移除每簇单 representative
+  hard gate 的历史结果 mixed；新增成员确被 LightGBM 使用，但没有跨 split 一致改善，
+  所以 gate 保持不变。详见
+  [final report](../reports/ml_clustering_ablation_v1/REPORT.md)。
+
+这些已观察历史结果不能被描述为 fresh OOS，也不能授权修改 Strategy V1 或创建
+Strategy V2。
+
+## Immediate Next Research Direction
+
+Forward Track 继续具有时间优先级。下一项尚待单独计划和授权的历史研究区域是
+**Factor Universe / Data Capability Upgrade**。本占位不授权创建 Factor Universe V2、
+下载新数据、修改 factor catalog、训练模型或开展新实验。
 
 ## Environment
 

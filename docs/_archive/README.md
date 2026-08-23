@@ -25,6 +25,9 @@
 - `08_engineering_refactor/`
   Phase 0–6 工程重构的原始开放式指南与实施计划。当前权威收尾见
   [`ENGINEERING_REFACTOR_CLOSEOUT.md`](../ENGINEERING_REFACTOR_CLOSEOUT.md)。
+- `09_model_research_and_productivity_history/`
+  已完成的 ML feature-pool、性能、research productivity 与 clustering 研究线中的
+  历史实施计划。详细结果以 `reports/` 下相应 final report 为准。
 
 ## Archive Rule
 

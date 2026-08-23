@@ -14,3 +14,16 @@ Forward evidence continues to use its existing append-only paths under
 
 Adding a report does not replace the hash, receipt, or immutability contract of a
 frozen artifact or Forward prediction.
+
+## Current Report Index
+
+- [ML Feature Pool MVP V1](ml_feature_pool_mvp_v1/REPORT.md) — CLOSED,
+  post-observation historical diagnostic.
+- [Performance Optimization V1](performance_optimization_v1/REPORT.md) — CLOSED
+  engineering benchmark and exactness decisions.
+- [Research Productivity V1](research_productivity_v1/REPORT.md) — CLOSED cache and
+  Fast Research calibration; Fast remains screening-only.
+- [Clustering Ablation V1](ml_clustering_ablation_v1/REPORT.md) — CLOSED,
+  diagnostic-only mixed evidence; the representative gate remains unchanged.
+- [Documentation Cleanup V1](documentation_cleanup_v1/REPORT.md) — documentation
+  inventory, archive decisions, and validation record.

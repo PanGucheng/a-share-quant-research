@@ -98,8 +98,8 @@ split_003 information ratio:           about -1.86
 Approximate gross return in `split_003` was about 9.37%, still below the benchmark,
 so cost alone is not a sufficient explanation. Frozen LightGBM test Rank IC was
 approximately 0.078, 0.143, and 0.052 for `split_001`, `split_002`, and `split_003`.
-The immediate research question is therefore why some prediction signal remained
-while portfolio-relative performance deteriorated.
+That question motivated the now-closed historical diagnostics below; it is no longer
+the roadmap's unstarted next action.
 
 These are historical, already observed results. They are not a basis for claiming
 an unbiased final estimate or a production-ready strategy.
@@ -118,6 +118,26 @@ The Forward Track is operational and has produced the 2026-08-07 official predic
 and paper decision. Those records remain append-only; label evaluation waits for
 maturity. Exact current status and commands are maintained in
 [CURRENT_PIPELINE.md](CURRENT_PIPELINE.md).
+
+Four later stages are also complete:
+
+- **ML Feature Pool MVP V1** found some incremental historical information in wider
+  inputs, while the broad pool was less stable.
+- **Performance Optimization V1** retained authoritative-compatible execution and
+  rejected speedups that changed numerical outcomes.
+- **Research Productivity V1** established content-addressed projection/spool cache
+  reuse and froze Fast Research as screening-only, not winner selection.
+- **Clustering Ablation V1** found mixed historical evidence when removing the
+  one-representative-per-cluster gate, so the gate remains unchanged.
+
+Detailed numbers and limitations live in the linked reports in
+[DOC_INDEX.md](DOC_INDEX.md); they are not duplicated here. All four are CLOSED, and
+the observed historical diagnostics do not authorize Strategy V2.
+
+The next historical research area, after a separate user-supplied plan, is a
+high-level **Factor Universe / Data Capability Upgrade**. This roadmap entry does not
+start Factor Universe V2, change the factor catalog, acquire new data, or authorize
+model training. Genuine Forward evidence collection retains temporal priority.
 
 ## 6. Why Forward Collection Has Temporal Priority
 

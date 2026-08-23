@@ -12,7 +12,7 @@
 
 > 完成日期：2026-08-15
 >
-> 结果入口：[`reports/ml_feature_pool_mvp_v1/REPORT.md`](../reports/ml_feature_pool_mvp_v1/REPORT.md)
+> 结果入口：[`reports/ml_feature_pool_mvp_v1/REPORT.md`](../../../reports/ml_feature_pool_mvp_v1/REPORT.md)
 >
 > 完成范围：feature-only audit 与阈值冻结、9 个 development arms、9 个 pre-test
 > freezes、一次性 9-arm historical replay、固定 P01 的 0/10/20 bps 并列诊断。
