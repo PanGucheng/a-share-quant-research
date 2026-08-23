@@ -1,0 +1,44 @@
+schema_version: 1
+stage_id: ml_clustering_ablation_v1
+experiment_class: post_observation_research
+decision_authority: diagnostic_only
+authoritative_execution: false
+unbiased_final_estimate: false
+historical_test_already_observed: true
+selection_authorized: false
+strategy_v2_authorized: false
+split_ids: [split_001, split_002, split_003]
+policy_ids:
+  - strict_current_baseline
+  - all_existing_stable_core
+
+parents:
+  baseline_policy_config: configs/ml_feature_pool_mvp_v1.yaml
+  baseline_feature_manifest: outputs/ml_feature_pool_mvp_v1/current/feature_pool_manifest.csv
+  baseline_policy_manifest: outputs/ml_feature_pool_mvp_v1/current/policy_manifest.csv
+  eligibility_freeze: outputs/ml_feature_eligibility_mvp_v1/current/eligibility_freeze.json
+  eligibility_decisions: outputs/ml_feature_eligibility_mvp_v1/current/feature_eligibility_decisions.csv
+  stability_board: outputs/factor_rolling_stability_v2/current/factor_stability_board.csv
+  stability_artifact_manifest: outputs/factor_rolling_stability_v2/current/artifact_manifest.json
+  cluster_membership: outputs/factor_clustering_v2/current/factor_clusters_by_split.csv
+  cluster_representatives: outputs/factor_clustering_v2/current/representatives_by_split.csv
+  cluster_exclusions: outputs/factor_clustering_v2/current/excluded_redundant_factors_by_split.csv
+  clustering_artifact_manifest: outputs/factor_clustering_v2/current/artifact_manifest.json
+  lightgbm_config: configs/research_lightgbm_v1.yaml
+
+canary:
+  split_id: split_001
+  date_selection: evenly_spaced_within_fold
+  train_date_count: 20
+  validation_date_count: 10
+  structural_row_ids: [structure_01, structure_02]
+  checkpoint: 100
+  repeats: 2
+  test_read_budget: 0
+
+output_dir: outputs/ml_clustering_ablation_v1/current
+runtime_dir: outputs/ml_clustering_ablation_v1/runtime
+development_dir: outputs/ml_clustering_ablation_v1/development
+historical_replay_dir: outputs/ml_clustering_ablation_v1/historical_replay
+portfolio_dir: outputs/ml_clustering_ablation_v1/portfolio
+report_dir: reports/ml_clustering_ablation_v1

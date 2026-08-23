@@ -1,0 +1,4 @@
+outer_split_id,d_total_features,a_representatives,d_minus_a_nonrepresentatives,representatives_with_nonzero_split,nonrepresentatives_with_nonzero_split,nonrepresentatives_with_nonzero_gain,clusters_with_multiple_used_members
+split_001,454,45,409,33,222,222,18
+split_002,234,46,188,24,82,82,10
+split_003,209,52,157,47,140,140,21

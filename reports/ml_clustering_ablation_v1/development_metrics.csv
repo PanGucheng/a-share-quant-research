@@ -1,0 +1,10 @@
+outer_split_id,comparison_role,policy_id,feature_count,mean_daily_rank_ic,daily_rank_ic_ir,prediction_coverage,selected_candidate,execution_class
+split_001,A,strict_current_baseline,45.0,0.1403877263028546,0.8237238591640972,1.0,structure_03@800,full_development
+split_001,D,all_existing_stable_core,454.0,0.1709174397464726,0.9125939707567275,1.0,structure_04@100,full_development
+split_001,D_minus_A,D_minus_A,409.0,0.030529713443618017,0.08887011159263036,0.0,,full_development
+split_002,A,strict_current_baseline,46.0,0.0252336311290405,0.1638801298618102,1.0,structure_01@100,full_development
+split_002,D,all_existing_stable_core,234.0,0.0176531911693686,0.1104892757619944,1.0,structure_01@100,full_development
+split_002,D_minus_A,D_minus_A,188.0,-0.007580439959671899,-0.053390854099815796,0.0,,full_development
+split_003,A,strict_current_baseline,52.0,0.221618301190772,1.067217172179293,1.0,structure_04@200,full_development
+split_003,D,all_existing_stable_core,209.0,0.2365255893009029,1.1319616004066446,1.0,structure_01@400,full_development
+split_003,D_minus_A,D_minus_A,157.0,0.014907288110130895,0.06474442822735171,0.0,,full_development

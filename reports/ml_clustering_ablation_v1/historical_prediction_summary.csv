@@ -1,0 +1,5 @@
+metric,equal_split_mean_delta,split_dispersion_std,worst_split,worst_split_delta,positive_delta_split_count,split_count
+mean_daily_rank_ic,-0.003058649598679297,0.01020828843701974,split_001,-0.015195676582762399,1,3
+daily_rank_ic_ir,-0.05702669304777319,0.07886404711498654,split_001,-0.15114793377126212,1,3
+positive_ic_ratio,-0.024999999999999984,0.037728377309232224,split_001,-0.07499999999999996,1,3
+prediction_coverage,0.0,0.0,split_001,0.0,0,3

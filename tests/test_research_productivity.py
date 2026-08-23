@@ -261,11 +261,7 @@ def test_promotion_is_only_a_resource_gate() -> None:
 
 
 def test_full_development_runner_contract_remains_cache_off() -> None:
-    assert list(inspect.signature(run_development_arm).parameters) == [
-        "policy_config_path",
-        "feature_manifest_path",
-        "split_id",
-        "policy_id",
-        "development_root",
-        "runtime_root",
-    ]
+    parameters = inspect.signature(run_development_arm).parameters
+    assert "cache_root" not in parameters
+    assert parameters["execution_profile"].default == "ml_feature_pool_mvp_v1"
+    assert parameters["freeze_metadata"].default is None

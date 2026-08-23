@@ -82,6 +82,10 @@ Archive 保留证据，但不授权恢复已关闭工作。
 
 - [`../reports/ml_feature_pool_mvp_v1/REPORT.md`](../reports/ml_feature_pool_mvp_v1/REPORT.md)
 
+Clustering Ablation V1 的 post-observation、diagnostic-only 机制报告位于：
+
+- [`../reports/ml_clustering_ablation_v1/REPORT.md`](../reports/ml_clustering_ablation_v1/REPORT.md)
+
 ## Archive Map
 
 - `_archive/README.md`

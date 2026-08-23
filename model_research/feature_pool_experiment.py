@@ -7,6 +7,7 @@ import shutil
 import time
 from datetime import datetime, timezone
 from pathlib import Path
+from collections.abc import Callable
 from typing import Any
 
 import numpy as np
@@ -135,10 +136,14 @@ def run_policy_canary(
     output_dir: Path,
     policy_ids: tuple[str, ...] = POLICY_IDS,
     num_threads_override: int | None = None,
+    config_loader: Callable[[Path], dict[str, Any]] = load_policy_config,
+    allowed_policy_ids: tuple[str, ...] = POLICY_IDS,
+    execution_profile: str = "ml_feature_pool_canary_v1",
+    receipt_stage_id: str = "ml_feature_pool_mvp_v1_canary",
 ) -> dict[str, pd.DataFrame]:
     import lightgbm as lgb
 
-    config = load_policy_config(policy_config_path)
+    config = config_loader(policy_config_path)
     lightgbm_path = resolve(config["parents"]["lightgbm_config"])
     lightgbm_config = load_lightgbm_config(lightgbm_path)
     if num_threads_override is not None:
@@ -151,7 +156,7 @@ def run_policy_canary(
                 "num_threads": num_threads_override,
             },
         }
-    unknown_policy_ids = set(policy_ids) - set(POLICY_IDS)
+    unknown_policy_ids = set(policy_ids) - set(allowed_policy_ids)
     if unknown_policy_ids:
         raise ValueError(f"unknown canary policies: {sorted(unknown_policy_ids)}")
     assert_research_model_entry_artifact(
@@ -193,7 +198,7 @@ def run_policy_canary(
             raise ValueError(f"canary policy feature count mismatch: {policy_id}")
         timing = RuntimeTimingRecorder(
             execution_class="canary",
-            execution_profile="ml_feature_pool_canary_v1",
+            execution_profile=execution_profile,
             outer_split_id=split_id,
             policy_id=policy_id,
             feature_count=len(factors),
@@ -376,7 +381,7 @@ def run_policy_canary(
         frame.to_csv(output_dir / name, index=False, encoding="utf-8-sig")
     receipt = {
         "schema_version": 1,
-        "stage_id": "ml_feature_pool_mvp_v1_canary",
+        "stage_id": receipt_stage_id,
         "decision_authority": "diagnostic_only",
         "selection_authorized": False,
         "strategy_v2_authorized": False,
@@ -451,13 +456,17 @@ def run_development_arm(
     policy_id: str,
     development_root: Path,
     runtime_root: Path,
+    config_loader: Callable[[Path], dict[str, Any]] = load_policy_config,
+    allowed_policy_ids: tuple[str, ...] = POLICY_IDS,
+    execution_profile: str = "ml_feature_pool_mvp_v1",
+    freeze_metadata: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     import lightgbm as lgb
 
-    config = load_policy_config(policy_config_path)
+    config = config_loader(policy_config_path)
     if split_id not in [str(value) for value in config["split_ids"]]:
         raise ValueError(f"unknown development split: {split_id}")
-    if policy_id not in POLICY_IDS:
+    if policy_id not in allowed_policy_ids:
         raise ValueError(f"unknown development policy: {policy_id}")
     arm_dir = development_root / split_id / policy_id
     if _development_arm_complete(arm_dir):
@@ -484,7 +493,7 @@ def run_development_arm(
     thread_count = int(lightgbm_config["determinism"]["num_threads"])
     timing = RuntimeTimingRecorder(
         execution_class="full_development",
-        execution_profile="ml_feature_pool_mvp_v1",
+        execution_profile=execution_profile,
         outer_split_id=split_id,
         policy_id=policy_id,
         feature_count=len(factors),
@@ -892,6 +901,14 @@ def run_development_arm(
         "selection_authorized": False,
         "strategy_v2_authorized": False,
     }
+    if freeze_metadata:
+        collisions = set(freeze).intersection(freeze_metadata)
+        if collisions:
+            raise ValueError(
+                "freeze metadata collides with runner fields: "
+                + ", ".join(sorted(collisions))
+            )
+        freeze.update(freeze_metadata)
     freeze["freeze_id"] = "ml-feature-pool-freeze:" + canonical_hash(freeze)
     validate_pre_test_freeze(freeze)
     (staging / "freeze.json").write_text(
@@ -1032,12 +1049,15 @@ def run_coordinated_historical_replay(
     feature_manifest_path: Path,
     development_root: Path,
     replay_root: Path,
+    config_loader: Callable[[Path], dict[str, Any]] = load_policy_config,
+    policy_ids: tuple[str, ...] = POLICY_IDS,
+    execution_profile: str = "ml_feature_pool_mvp_v1",
 ) -> dict[str, pd.DataFrame]:
     import lightgbm as lgb
 
     if replay_root.exists():
         raise PermissionError("coordinated historical replay is single-release and already exists")
-    config = load_policy_config(policy_config_path)
+    config = config_loader(policy_config_path)
     lightgbm_config = load_lightgbm_config(
         resolve(config["parents"]["lightgbm_config"])
     )
@@ -1053,7 +1073,7 @@ def run_coordinated_historical_replay(
     expected_pairs = {
         (split_id, policy_id)
         for split_id in [str(value) for value in config["split_ids"]]
-        for policy_id in POLICY_IDS
+        for policy_id in policy_ids
     }
     observed_pairs = set(
         zip(
@@ -1061,8 +1081,9 @@ def run_coordinated_historical_replay(
             freeze_index["policy_id"].astype(str),
         )
     )
-    if len(freeze_index) != 9 or observed_pairs != expected_pairs:
-        raise PermissionError("historical replay requires exactly all nine frozen arms")
+    expected_arm_count = len(expected_pairs)
+    if len(freeze_index) != expected_arm_count or observed_pairs != expected_pairs:
+        raise PermissionError("historical replay requires exactly all frozen arms")
     if freeze_index["test_read_count"].sum() != 0:
         raise PermissionError("development freeze index reports pre-freeze test reads")
 
@@ -1074,15 +1095,17 @@ def run_coordinated_historical_replay(
     arm_payloads: dict[tuple[str, str], dict[str, Any]] = {}
     all_factors: set[str] = set()
     for split_id, policy_id in sorted(expected_pairs):
-        arm_dir = development_root / split_id / policy_id
-        if not _development_arm_complete(arm_dir):
-            raise PermissionError(f"development arm is incomplete: {split_id}/{policy_id}")
-        freeze_path = arm_dir / "freeze.json"
-        freeze = load_freeze_before_test(freeze_path)
         index_row = freeze_index.loc[
             freeze_index["outer_split_id"].astype(str).eq(split_id)
             & freeze_index["policy_id"].astype(str).eq(policy_id)
         ].iloc[0]
+        freeze_path = Path(str(index_row["freeze_path"]))
+        if not freeze_path.is_absolute():
+            freeze_path = (development_root / freeze_path).resolve()
+        arm_dir = freeze_path.parent
+        if not _development_arm_complete(arm_dir):
+            raise PermissionError(f"development arm is incomplete: {split_id}/{policy_id}")
+        freeze = load_freeze_before_test(freeze_path)
         if file_sha256(freeze_path) != str(index_row["freeze_sha256"]):
             raise ValueError(f"freeze index hash mismatch: {split_id}/{policy_id}")
         factors = _arm_factors(
@@ -1117,7 +1140,7 @@ def run_coordinated_historical_replay(
     audit = InputAccessAudit()
     replay_timing = RuntimeTimingRecorder(
         execution_class="historical_replay",
-        execution_profile="ml_feature_pool_mvp_v1",
+        execution_profile=execution_profile,
         execution_dtype="float64",
         thread_count=int(lightgbm_config["determinism"]["num_threads"]),
     )
@@ -1130,7 +1153,7 @@ def run_coordinated_historical_replay(
             outer_split_id=split_id,
             fold="test",
         )
-        for policy_id in POLICY_IDS:
+        for policy_id in policy_ids:
             payload = arm_payloads[(split_id, policy_id)]
             freeze = payload["freeze"]
             factors = payload["factors"]
@@ -1288,8 +1311,8 @@ def run_coordinated_historical_replay(
     daily_frame = pd.concat(daily_frames, ignore_index=True)
     receipts = pd.DataFrame(receipt_rows)
     access = pd.DataFrame(audit.rows())
-    if len(metrics_frame) != 9 or len(receipts) != 9:
-        raise AssertionError("coordinated replay did not release all nine arms")
+    if len(metrics_frame) != expected_arm_count or len(receipts) != expected_arm_count:
+        raise AssertionError("coordinated replay did not release all frozen arms")
     metrics_frame.to_csv(staging / "test_metrics.csv", index=False)
     daily_frame.to_csv(staging / "test_daily_ic.csv", index=False)
     receipts.to_csv(staging / "prediction_receipts.csv", index=False)
@@ -1298,8 +1321,11 @@ def run_coordinated_historical_replay(
     release = {
         "schema_version": 1,
         "status": "pass",
-        "released_arm_count": 9,
+        "released_arm_count": expected_arm_count,
+        "experiment_class": "post_observation_research",
         "historical_test_already_observed": True,
+        "authoritative_execution": False,
+        "unbiased_final_estimate": False,
         "decision_authority": "diagnostic_only",
         "selection_authorized": False,
         "strategy_v2_authorized": False,

@@ -1,0 +1,22 @@
+{
+  "authoritative_execution": false,
+  "bootstrap_not_run": true,
+  "clustering_parent_lineage_status": "inconsistent:universe_artifact_id",
+  "decision_authority": "diagnostic_only",
+  "deferred": [
+    "Policy E",
+    "feature-selection redesign",
+    "SHAP/permutation",
+    "model-aware selection",
+    "LightGBM retuning"
+  ],
+  "experiment_class": "post_observation_research",
+  "historical_execution_approximate": true,
+  "historical_pattern": "mixed",
+  "historical_test_already_observed": true,
+  "importance_is_diagnostic_only": true,
+  "production_winner_produced": false,
+  "selection_authorized": false,
+  "strategy_v2_authorized": false,
+  "unbiased_final_estimate": false
+}

@@ -24,14 +24,18 @@ def run_fixed_p01_comparison(
     development_root: Path,
     portfolio_root: Path,
     historical_backtest_config_path: Path,
+    policy_ids: tuple[str, ...] = POLICY_IDS,
+    split_ids: tuple[str, ...] = ("split_001", "split_002", "split_003"),
+    execution_profile: str = "ml_feature_pool_mvp_v1",
 ) -> pd.DataFrame:
     if portfolio_root.exists():
         raise FileExistsError("fixed P01 comparison already exists")
     replay_receipt = json.loads(
         (replay_root / "replay_receipt.json").read_text(encoding="utf-8")
     )
-    if replay_receipt.get("released_arm_count") != 9:
-        raise PermissionError("P01 comparison requires the complete nine-arm replay")
+    expected_arm_count = len(policy_ids) * len(split_ids)
+    if replay_receipt.get("released_arm_count") != expected_arm_count:
+        raise PermissionError("P01 comparison requires the complete coordinated replay")
     if replay_receipt.get("decision_authority") != "diagnostic_only":
         raise PermissionError("replay authority is not diagnostic_only")
     config = load_backtest_config(historical_backtest_config_path)
@@ -47,13 +51,13 @@ def run_fixed_p01_comparison(
     staging.mkdir(parents=True, exist_ok=False)
     timing = RuntimeTimingRecorder(
         execution_class="portfolio_replay",
-        execution_profile="ml_feature_pool_mvp_v1",
+        execution_profile=execution_profile,
         execution_dtype="float64",
     )
     summary_rows: list[dict[str, Any]] = []
     p01 = {"portfolio_id": "P01", "top_k": 50, "rebalance_interval": 5}
-    for split_id in ("split_001", "split_002", "split_003"):
-        for policy_id in POLICY_IDS:
+    for split_id in split_ids:
+        for policy_id in policy_ids:
             prediction_path = (
                 replay_root / "predictions" / f"{split_id}__{policy_id}.parquet"
             )
@@ -101,8 +105,9 @@ def run_fixed_p01_comparison(
                     }
                 )
     comparison = pd.DataFrame(summary_rows)
-    if len(comparison) != 27:
-        raise AssertionError("P01 comparison requires 3 splits x 3 policies x 3 costs")
+    expected_scenarios = expected_arm_count * 3
+    if len(comparison) != expected_scenarios:
+        raise AssertionError("P01 comparison scenario count mismatch")
     comparison.to_csv(staging / "portfolio_comparison.csv", index=False)
     timing.write_csv(staging / "runtime_timing.csv")
     receipt = {
@@ -113,7 +118,11 @@ def run_fixed_p01_comparison(
         "rebalance_interval": 5,
         "primary_cost_bps": 10.0,
         "secondary_cost_bps": [0.0, 20.0],
-        "scenario_count": 27,
+        "scenario_count": expected_scenarios,
+        "experiment_class": "post_observation_research",
+        "historical_test_already_observed": True,
+        "authoritative_execution": False,
+        "unbiased_final_estimate": False,
         "decision_authority": "diagnostic_only",
         "selection_authorized": False,
         "strategy_v2_authorized": False,

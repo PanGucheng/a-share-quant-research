@@ -1,0 +1,10 @@
+outer_split_id,policy_id,feature_count,cluster_count,average_members_per_cluster,nonrepresentative_count,fraction_nonrepresentatives,selected_candidate,wall_seconds,peak_rss_mib,model_size_bytes,tree_count,total_leaves,execution_class,execution_profile
+split_001,strict_current_baseline,45.0,45.0,1.0,0.0,0.0,structure_03@800,914.5337225999992,1935.40234375,1609362.0,800.0,12708.0,full_development,ml_feature_pool_mvp_v1
+split_001,all_existing_stable_core,454.0,45.0,10.088888888888889,409.0,0.9008810572687225,structure_04@100,4384.512709200004,6948.1953125,374443.0,100.0,3073.0,full_development,ml_clustering_ablation_full_v1
+split_002,strict_current_baseline,46.0,46.0,1.0,0.0,0.0,structure_01@100,1058.7338060000002,2235.94921875,195753.0,100.0,1500.0,full_development,ml_feature_pool_mvp_v1
+split_002,all_existing_stable_core,234.0,46.0,5.086956521739131,188.0,0.8034188034188035,structure_01@100,2632.269225899974,4468.3125,207989.0,100.0,1500.0,full_development,ml_clustering_ablation_full_v1
+split_003,strict_current_baseline,52.0,52.0,1.0,0.0,0.0,structure_04@200,1434.3842535000003,2812.765625,678199.0,200.0,6103.0,full_development,ml_feature_pool_mvp_v1
+split_003,all_existing_stable_core,209.0,52.0,4.019230769230769,157.0,0.7511961722488039,structure_01@400,3004.268667700002,4569.35546875,780480.0,400.0,6000.0,full_development,ml_clustering_ablation_full_v1
+split_001,D_minus_A,409.0,0.0,9.088888888888889,409.0,0.9008810572687225,not_applicable,3469.9789866000046,5012.79296875,-1234919.0,-700.0,-9635.0,comparison,D_minus_A
+split_002,D_minus_A,188.0,0.0,4.086956521739131,188.0,0.8034188034188035,not_applicable,1573.535419899974,2232.36328125,12236.0,0.0,0.0,comparison,D_minus_A
+split_003,D_minus_A,157.0,0.0,3.019230769230769,157.0,0.7511961722488039,not_applicable,1569.8844142000016,1756.58984375,102281.0,200.0,-103.0,comparison,D_minus_A

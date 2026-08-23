@@ -1,0 +1,7 @@
+outer_split_id,comparison_role,policy_id,feature_count,mean_daily_rank_ic,daily_rank_ic_ir,prediction_coverage,cold_wall_seconds,warm_wall_seconds,cold_peak_rss_mib,warm_peak_rss_mib,cold_cache_hit,warm_cache_hit,selected_candidate,promotion_status,execution_class,execution_profile
+split_001,A,strict_current_baseline,45.0,0.128424864795723,0.7560261785958144,1.0,30.72926980000921,13.604009700007737,739.62890625,629.18359375,False,True,structure_01@100,inconclusive,exploratory_fast,fast_research_v1
+split_001,D,all_existing_stable_core,454.0,0.1619520432122135,0.8405693096409371,1.0,165.61298899998656,104.412705499999,3301.98046875,3159.91796875,False,True,structure_01@100,inconclusive,exploratory_fast,fast_research_v1
+split_001,D_minus_A,D_minus_A,409.0,0.0335271784164905,0.08454313104512268,0.0,134.88371919997735,90.80869579999127,2562.3515625,2530.734375,,,,inconclusive,exploratory_fast,fast_research_v1
+split_002,A,strict_current_baseline,46.0,0.0375401382827521,0.2613968306856992,1.0,34.0163634000055,14.51653730001999,875.296875,906.671875,False,True,structure_04@100,inconclusive,exploratory_fast,fast_research_v1
+split_002,D,all_existing_stable_core,234.0,0.03251668454965,0.2202542606843932,1.0,99.5624805999978,56.10315189999528,2067.74609375,1977.38671875,False,True,structure_04@100,inconclusive,exploratory_fast,fast_research_v1
+split_002,D_minus_A,D_minus_A,188.0,-0.005023453733102097,-0.041142570001306,0.0,65.5461171999923,41.58661459997529,1192.44921875,1070.71484375,,,,inconclusive,exploratory_fast,fast_research_v1
