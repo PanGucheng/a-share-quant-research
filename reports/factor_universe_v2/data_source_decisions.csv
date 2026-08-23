@@ -1,0 +1,8 @@
+﻿decision,status,reason
+community_ohlcva_vwap,adopt,existing authoritative local price/volume/amount/VWAP backbone
+tushare_daily_basic,adopt_incrementally,"current token probe passed; adds turnover, size and value dimensions"
+tushare_financial_statements,adopt_data_layer_only,f_ann_date/ann_date support PIT; factors wait for bootstrap coverage gates
+tushare_fina_indicator,cross_check_required,ann_date available but source ratios and revisions must be reconciled to statements
+tushare_disclosure_date,cross_check_only,current table can contain actual_date backfill and is not historical database-vintage proof
+sw2021_membership,research_with_limitation,effective intervals available; historical database vintage unproven
+external_mature_factor_research,not_started,explicit user stop boundary before network factor expansion

@@ -1,0 +1,10 @@
+{
+  "stage_status": "pre_network_checkpoint_not_frozen",
+  "limitations": [
+    "Tushare probes prove current token access for small slices, not unrestricted full-market bootstrap throughput.",
+    "Fundamental and event factors are not admitted until historical bootstrap coverage and PIT canaries pass.",
+    "SW membership intervals prove effective dates, not historical database-vintage availability.",
+    "External mature-factor and A-share literature expansion was intentionally not started.",
+    "No IC, model, portfolio, Strategy V2, or winner research was performed."
+  ]
+}

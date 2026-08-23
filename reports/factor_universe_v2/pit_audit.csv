@@ -1,0 +1,7 @@
+﻿check,status,detail
+availability_not_report_period,pass,PIT layer accepts only f_ann_date/ann_date by dataset; end_date is never a fallback
+no_pre_announcement_access,pass,asof_pit_records filters information_available_date <= decision date
+revision_preservation,pass,all source rows retained with deterministic source hash and revision_sequence
+financial_announcement_order,pass,statement and ratio announcement dates before report periods fail loudly
+disclosure_schedule_vintage,limited,"actual_date is cross-check evidence only, not an authoritative historical feature"
+fundamental_factor_admission,blocked_pending_bootstrap,no fundamental factor enters the pre-network candidate catalog

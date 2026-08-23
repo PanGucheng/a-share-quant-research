@@ -86,9 +86,12 @@ Archive 保留证据，但不授权恢复已关闭工作。
   content-addressed cache 已实现；Fast Research 仅作资源筛查，不作 winner selection。
 - [Clustering Ablation V1](../reports/ml_clustering_ablation_v1/REPORT.md)：取消每簇单代表门槛的
   历史证据 mixed，现有 representative gate 不变。
+- [Factor Universe V2 — Pre-Network Checkpoint](../reports/factor_universe_v2/REPORT.md)：完成
+  历史缺失/退化审计、Tushare 真实权限探测、PIT/修订与增量缓存基础，以及本地 716
+  candidate catalog；按用户边界停止在外部成熟因子网络扩容前，尚未冻结最终 V2。
 
 这些结果不修改 Strategy V1、不产生 Strategy V2 authorization，也不构成 fresh OOS。
-下一项需单独授权的研究方向仅在高层标记为 Factor Universe / Data Capability Upgrade。
+Factor Universe V2 后续外部成熟体系扩容仍需单独继续授权。
 
 ## Archive Map
 

@@ -1,0 +1,11 @@
+﻿check,status,observed,required
+v1_factor_count,pass,669,669
+v1_factor_set_exact,pass,669,669
+v1_byte_immutable,pass,7c7f18ff419b59ac2639d332cb5d0dc8edad2cc9d5a0b8bb33b5575dddb96aaa,7c7f18ff419b59ac2639d332cb5d0dc8edad2cc9d5a0b8bb33b5575dddb96aaa
+community_ohlcva_vwap_complete,pass,"['amount', 'close', 'high', 'low', 'open', 'volume', 'vwap']","['amount', 'close', 'high', 'low', 'open', 'volume', 'vwap']"
+tushare_probe_access,pass,20,20
+local_candidate_names_unique,pass,0,0
+lineage_total,pass,716,716
+recovered_count,pass,19,19
+canonicalized_count,pass,28,28
+network_expansion_not_started,pass,0,0

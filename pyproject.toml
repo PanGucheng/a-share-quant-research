@@ -29,6 +29,7 @@ include = [
   "data_quality*",
   "data_source_audit*",
   "factor_research*",
+  "factor_universe_v2*",
   "model_research*",
   "portfolio*",
   "qlib_integration*",

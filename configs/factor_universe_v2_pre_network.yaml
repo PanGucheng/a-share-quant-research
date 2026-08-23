@@ -1,0 +1,87 @@
+schema_version: 1
+stage_id: factor_universe_v2_pre_network
+status: pre_network_checkpoint_not_frozen
+v1_inventory: outputs/full_research_factor_catalog_669_v1/current/factor_inventory.csv
+v1_catalog: outputs/full_research_factor_catalog_669_v1/current/factor_catalog_669.yaml
+alpha158_all: outputs/factor_catalog_alpha158_v1/alpha158_catalog_full158_mixed.yaml
+alpha158_promotion_audit: outputs/factor_catalog_alpha158_v1/alpha158_remaining138_promotion_audit.csv
+alpha360_all: outputs/factor_catalog_alpha360_v1/alpha360_catalog_combined360.yaml
+alpha101_all: outputs/alpha101_factor_adapter_v1/batch82/alpha101_factor_catalog_combined82.yaml
+alpha101_inventory: outputs/alpha101_factor_adapter_v1/batch82/alpha101_factor_inventory.csv
+alpha101_promotion_audit: outputs/alpha101_factor_adapter_v1/batch82/alpha101_factor_batch_promotion_audit.csv
+ta_all_eligible: outputs/ta_factor_adapter_v1/smoke/ta_factor_catalog_combined79.yaml
+ta_inventory: outputs/ta_factor_adapter_v1/smoke/ta_factor_inventory.csv
+ta_promotion_audit: outputs/ta_factor_adapter_v1/smoke/ta_factor_batch_promotion_audit.csv
+provider_inventory: outputs/data_inventory/provider_v3_6/provider_field_inventory.csv
+report_dir: reports/factor_universe_v2
+
+alpha101_missing_formula_numbers: [48, 56, 58, 59, 63, 67, 69, 70, 76, 79, 80, 82, 87, 89, 90, 91, 93, 97, 100]
+alpha101_vwap_registry_names: [alpha005, alpha011, alpha025, alpha027, alpha032, alpha036, alpha041, alpha042, alpha047, alpha050, alpha057, alpha061, alpha062, alpha064, alpha065, alpha066, alpha071, alpha072, alpha073, alpha074, alpha075, alpha077, alpha078, alpha081, alpha083, alpha084, alpha086, alpha094, alpha096, alpha098]
+
+community_capabilities:
+  - field_or_dataset: ohlcva_vwap_daily
+    provider: community_derived_qlib
+    api: local_provider
+    frequency: daily
+    history_start: provider_dependent
+    update_time: release_or_daily_update
+    PIT_semantics: same_day_market_observation
+    adjustment_semantics: raw_plus_adjclose_and_factor
+    coverage: 6106_instrument_directories_at_v3_6_audit
+    reliability: high_for_existing_history
+    recommended_use: authoritative_price_volume_amount_vwap
+  - field_or_dataset: point_in_time_instrument_intervals
+    provider: community_derived_qlib
+    api: instrument_files
+    frequency: interval
+    history_start: provider_dependent
+    update_time: release_or_daily_update
+    PIT_semantics: effective_from_to_intervals
+    adjustment_semantics: not_applicable
+    coverage: all_stock_shsz_and_major_index_universes
+    reliability: high_with_existing_universe_audits
+    recommended_use: authoritative_membership_and_listing_proxy
+
+tushare_capabilities:
+  - {api: daily_basic, doc_id: 32, frequency: daily, history_start: 1990s_provider_dependent, update_time: '15:00-17:00', pit_semantics: same_trade_date_after_close, recommended_use: turnover_size_value_daily, bootstrap_strategy: by_trade_date}
+  - {api: adj_factor, doc_id: 28, frequency: daily, history_start: full_history, update_time: daily, pit_semantics: same_trade_date_after_close_revision_sensitive, recommended_use: adjustment_cross_check, bootstrap_strategy: by_ts_code_or_trade_date}
+  - {api: moneyflow, doc_id: 170, frequency: daily, history_start: '2010', update_time: after_close, pit_semantics: same_trade_date_after_close, recommended_use: order_size_flow, bootstrap_strategy: by_trade_date}
+  - {api: income, doc_id: 33, frequency: quarterly, history_start: full_history, update_time: realtime_with_filings, pit_semantics: f_ann_date_then_ann_date, recommended_use: pit_fundamentals, bootstrap_strategy: by_ts_code}
+  - {api: balancesheet, doc_id: 36, frequency: quarterly, history_start: full_history, update_time: realtime_with_filings, pit_semantics: f_ann_date_then_ann_date, recommended_use: pit_fundamentals, bootstrap_strategy: by_ts_code}
+  - {api: cashflow, doc_id: 44, frequency: quarterly, history_start: full_history, update_time: realtime_with_filings, pit_semantics: f_ann_date_then_ann_date, recommended_use: pit_fundamentals, bootstrap_strategy: by_ts_code}
+  - {api: fina_indicator, doc_id: 79, frequency: quarterly, history_start: full_history, update_time: realtime_with_filings, pit_semantics: ann_date_only_and_revision_sensitive, recommended_use: pit_ratios_with_statement_cross_check, bootstrap_strategy: by_ts_code}
+  - {api: forecast, doc_id: 45, frequency: event, history_start: full_history, update_time: realtime, pit_semantics: ann_date, recommended_use: pit_event_candidate, bootstrap_strategy: by_ts_code}
+  - {api: express, doc_id: 46, frequency: event, history_start: full_history, update_time: realtime, pit_semantics: ann_date, recommended_use: pit_event_candidate, bootstrap_strategy: by_ts_code}
+  - {api: dividend, doc_id: 103, frequency: event, history_start: full_history, update_time: realtime, pit_semantics: ann_date_with_ex_date_separate, recommended_use: dividend_and_corporate_action, bootstrap_strategy: by_ts_code}
+  - {api: disclosure_date, doc_id: 162, frequency: event, history_start: full_history, update_time: periodic, pit_semantics: schedule_not_safe_as_historical_vintage_without_snapshot, recommended_use: cross_check_only, bootstrap_strategy: by_period}
+  - {api: stk_limit, doc_id: 183, frequency: daily, history_start: provider_dependent, update_time: '08:40', pit_semantics: known_before_open_for_trade_date, recommended_use: limit_state_and_tradability, bootstrap_strategy: by_trade_date}
+  - {api: margin, doc_id: 58, frequency: daily, history_start: provider_dependent, update_time: 'next_day_08:30', pit_semantics: previous_trade_date_available_next_morning, recommended_use: market_margin_regime, bootstrap_strategy: by_trade_date}
+  - {api: margin_detail, doc_id: 59, frequency: daily, history_start: provider_dependent, update_time: 'next_day_08:30', pit_semantics: previous_trade_date_available_next_morning, recommended_use: security_margin_behavior, bootstrap_strategy: by_trade_date}
+  - {api: block_trade, doc_id: 161, frequency: daily, history_start: provider_dependent, update_time: after_close, pit_semantics: same_trade_date_after_close, recommended_use: block_trade_behavior, bootstrap_strategy: by_trade_date}
+  - {api: top_list, doc_id: 106, frequency: daily_event, history_start: provider_dependent, update_time: after_close, pit_semantics: same_trade_date_after_close, recommended_use: abnormal_trading_behavior, bootstrap_strategy: by_trade_date}
+  - {api: top_inst, doc_id: 107, frequency: daily_event, history_start: provider_dependent, update_time: after_close, pit_semantics: same_trade_date_after_close, recommended_use: institutional_flow_event, bootstrap_strategy: by_trade_date}
+  - {api: index_classify, doc_id: 181, frequency: versioned_reference, history_start: SW2014_and_SW2021, update_time: irregular, pit_semantics: classification_version_not_database_vintage, recommended_use: taxonomy_reference, bootstrap_strategy: full_catalog}
+  - {api: index_member_all, doc_id: 335, frequency: interval, history_start: provider_dependent, update_time: irregular, pit_semantics: in_date_out_date_effective_intervals_not_vintage_proof, recommended_use: industry_membership_with_limitation, bootstrap_strategy: by_l1_and_current_history_flags}
+  - {api: hk_hold, doc_id: 188, frequency: daily, history_start: provider_dependent, update_time: after_close, pit_semantics: same_trade_date_after_close, recommended_use: northbound_holding_candidate, bootstrap_strategy: by_trade_date}
+
+probes:
+  - {api: daily_basic, parameters: {trade_date: '20250805'}}
+  - {api: adj_factor, parameters: {ts_code: 600000.SH, start_date: '20250101', end_date: '20250805'}}
+  - {api: moneyflow, parameters: {trade_date: '20250805'}}
+  - {api: income, parameters: {ts_code: 600000.SH, start_date: '20240101', end_date: '20251231'}}
+  - {api: balancesheet, parameters: {ts_code: 600000.SH, start_date: '20240101', end_date: '20251231'}}
+  - {api: cashflow, parameters: {ts_code: 600000.SH, start_date: '20240101', end_date: '20251231'}}
+  - {api: fina_indicator, parameters: {ts_code: 600000.SH, start_date: '20240101', end_date: '20251231'}}
+  - {api: forecast, parameters: {ts_code: 600000.SH, start_date: '20240101', end_date: '20251231'}}
+  - {api: express, parameters: {ts_code: 600000.SH, start_date: '20240101', end_date: '20251231'}}
+  - {api: dividend, parameters: {ts_code: 600000.SH}}
+  - {api: disclosure_date, parameters: {ts_code: 600000.SH, start_date: '20240101', end_date: '20251231'}}
+  - {api: stk_limit, parameters: {trade_date: '20250805'}}
+  - {api: margin, parameters: {trade_date: '20250805'}}
+  - {api: margin_detail, parameters: {trade_date: '20250805'}}
+  - {api: block_trade, parameters: {trade_date: '20250805'}}
+  - {api: top_list, parameters: {trade_date: '20250805'}}
+  - {api: top_inst, parameters: {trade_date: '20250805'}}
+  - {api: index_classify, parameters: {level: L1, src: SW2021}}
+  - {api: index_member_all, parameters: {l1_code: 801010.SI, is_new: 'Y'}}
+  - {api: hk_hold, parameters: {trade_date: '20240816'}}

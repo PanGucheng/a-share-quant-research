@@ -1,0 +1,6 @@
+﻿dataset,historical_calls_estimate,rows_estimate,disk_estimate,incremental_cost,bootstrap_feasibility
+daily_basic,~6000 by trade date,~25-30 million,2-5 GB parquet,1 call/trading day,throttled_and_resume_required
+moneyflow,~3900 since 2010,~18-22 million,3-7 GB parquet,1 call/trading day,throttled_and_resume_required
+four_financial_core_apis,~22000 at 5500 securities,~1-2 million,1-4 GB parquet,changed issuers/filing dates only,slow_at_2000_points_but_restartable
+events_and_reference,dataset-specific,sparse_to_medium,<2 GB initial expectation,daily/quarterly segments,prioritize_after_core_layers
+candidate_matrix_716,none_after_local_cache,same keys x 716 columns,~7% wider than 669 before fundamentals,47 additional factor columns,canary_before_materialization

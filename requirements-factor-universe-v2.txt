@@ -1,0 +1,4 @@
+pandas==2.3.3
+pyarrow==20.0.0
+tushare==1.4.29
+PyYAML>=6,<7
