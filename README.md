@@ -96,7 +96,8 @@ factor_research/  Factor evaluation and research modules.
 qlib_integration/ Qlib Exchange/Executor integration.
 configs/          Portable project and workflow configuration.
 scripts/          Active wrappers, quality runner, validators, and historical tools.
-docs/             Current authoritative and operational documentation.
+docs/             Current authority and governance documentation.
+docs/operations/  Current operational contracts used by active/frozen workflows.
 docs/_archive/    CLOSED, HISTORICAL, and SUPERSEDED plans and audits.
 outputs/          Runtime results plus preserved historical/Forward evidence.
 artifacts/        Immutable frozen machine objects.
@@ -111,7 +112,6 @@ tmp/              Ignored caches, downloads, references, and scratch data.
 - [Architecture](docs/ARCHITECTURE.md)
 - [Output policy](docs/OUTPUT_POLICY.md)
 - [CI policy](docs/CI_POLICY.md)
-- [Engineering refactor closeout](docs/ENGINEERING_REFACTOR_CLOSEOUT.md)
 - [Documentation archive](docs/_archive/README.md)
 
 Archived plans preserve project history but are not current execution instructions.

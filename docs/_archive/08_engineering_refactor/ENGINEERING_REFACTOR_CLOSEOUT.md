@@ -60,16 +60,16 @@ commit, PR, and Actions URLs.
 
 Read these documents for present work:
 
-1. [CURRENT_PIPELINE.md](CURRENT_PIPELINE.md) — active/frozen/closed entry points and
+1. [CURRENT_PIPELINE.md](../../CURRENT_PIPELINE.md) — active/frozen/closed entry points and
    commands.
-2. [ARCHITECTURE.md](ARCHITECTURE.md) — domain boundaries and dependency direction.
-3. [OUTPUT_POLICY.md](OUTPUT_POLICY.md) — runtime, artifact, report, cache, and Forward
+2. [ARCHITECTURE.md](../../ARCHITECTURE.md) — domain boundaries and dependency direction.
+3. [OUTPUT_POLICY.md](../../OUTPUT_POLICY.md) — runtime, artifact, report, cache, and Forward
    evidence placement.
-4. [CI_POLICY.md](CI_POLICY.md) — local/CI quality tiers and path classification.
-5. [ENVIRONMENT.md](ENVIRONMENT.md) — local settings, doctor, and verified runtime.
+4. [CI_POLICY.md](../../CI_POLICY.md) — local/CI quality tiers and path classification.
+5. [ENVIRONMENT.md](../../ENVIRONMENT.md) — local settings, doctor, and verified runtime.
 
 The implementation plan and original open-ended guide are historical inputs under
-[`docs/_archive/08_engineering_refactor/`](_archive/08_engineering_refactor/). They no
+[`docs/_archive/08_engineering_refactor/`](README.md). They no
 longer override the current documents above.
 
 ## Supported Commands
@@ -92,7 +92,7 @@ qlib-forward-status
 ```
 
 Exact arguments and time/evidence rules remain in
-[CURRENT_PIPELINE.md](CURRENT_PIPELINE.md).
+[CURRENT_PIPELINE.md](../../CURRENT_PIPELINE.md).
 
 ## Frozen Boundaries
 

@@ -1,6 +1,8 @@
 # Data Source Audit V2
 
-> ARCHIVED / CLOSED：审计已完成；当前数据源政策见 `../../DATA_SOURCE_DECISION.md`。
+> ARCHIVED / CLOSED：审计已完成；当前 runtime 数据源与 fallback contract 见
+> `../../operations/DAILY_DATA_UPDATE_V1.md`，首次升级 decision 保存在
+> `../02_data_layer_history/DATA_SOURCE_DECISION.md`。
 
 > 状态：已完成
 > 决策：Decision B

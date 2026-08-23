@@ -165,5 +165,5 @@ fields/schema。producer 完整文件 hash、仓库 commit 和环境版本只作
 artifact manifest 和 lineage 不适用本节，也未被该弱缓存方案修改。
 
 Phase 0–6 的历史实施记录见
-[ENGINEERING_REFACTOR_CLOSEOUT.md](ENGINEERING_REFACTOR_CLOSEOUT.md)；本文件只维护
+[`_archive/08_engineering_refactor/ENGINEERING_REFACTOR_CLOSEOUT.md`](_archive/08_engineering_refactor/ENGINEERING_REFACTOR_CLOSEOUT.md)；本文件只维护
 当前有效政策。

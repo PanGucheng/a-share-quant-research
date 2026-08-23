@@ -1,7 +1,8 @@
 # Engineering Refactor Implementation Plan
 
 > ARCHIVED / CLOSED：Phase 0–6 已在 `b46b4f6` 完成并通过 CI；本计划不再授权后续 Phase。
-> 当前工程权威状态见 `../../ENGINEERING_REFACTOR_CLOSEOUT.md`。
+> 最终历史状态见 `ENGINEERING_REFACTOR_CLOSEOUT.md`；当前 authority 从
+> `../../DOC_INDEX.md` 进入。
 
 ## 1. 目标与执行纪律
 

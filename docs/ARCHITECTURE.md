@@ -17,8 +17,8 @@ A 股量化研究仓库。Microsoft Qlib 是主要底层框架，而不是整个
 
 权威研究边界见 [PERSONAL_QUANT_RESEARCH_ROADMAP.md](PERSONAL_QUANT_RESEARCH_ROADMAP.md)，
 当前执行入口见 [CURRENT_PIPELINE.md](CURRENT_PIPELINE.md)。
-Phase 0–6 重构已经关闭，最终边界见
-[ENGINEERING_REFACTOR_CLOSEOUT.md](ENGINEERING_REFACTOR_CLOSEOUT.md)。
+Phase 0–6 重构已经关闭，不存在隐式 Phase 7；历史 closeout 保存在
+[`_archive/08_engineering_refactor/`](_archive/08_engineering_refactor/)。
 
 ## 2. 当前逻辑结构
 

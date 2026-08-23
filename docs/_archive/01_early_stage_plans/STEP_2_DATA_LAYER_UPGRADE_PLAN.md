@@ -216,7 +216,7 @@ chenditc/investment_data -> qlib_data/cn_data_community_latest
 
 ```text
 data_workspace/conversion_logs/community_data_import_YYYYMMDD.md
-docs/DATA_SOURCE_DECISION.md
+docs/_archive/02_data_layer_history/DATA_SOURCE_DECISION.md
 ```
 
 验收标准：

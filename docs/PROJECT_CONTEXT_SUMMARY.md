@@ -25,8 +25,7 @@
 1. [CURRENT_PIPELINE.md](CURRENT_PIPELINE.md) — ACTIVE/FROZEN/CLOSED 状态与命令；
 2. [ARCHITECTURE.md](ARCHITECTURE.md) — 当前模块和依赖边界；
 3. [OUTPUT_POLICY.md](OUTPUT_POLICY.md) — 输出、artifact、report、cache 和 Forward evidence；
-4. [CI_POLICY.md](CI_POLICY.md) — 本地/CI quality tiers；
-5. [ENGINEERING_REFACTOR_CLOSEOUT.md](ENGINEERING_REFACTOR_CLOSEOUT.md) — Phase 0–6 最终绿色工程基线。
+4. [CI_POLICY.md](CI_POLICY.md) — 本地/CI quality tiers。
 
 `docs/_archive/` 中的计划和回执是 CLOSED/HISTORICAL/SUPERSEDED 证据，不是当前授权。
 
@@ -74,7 +73,8 @@ mature-label evaluation
 - Model Diagnostic V1 已 CLOSED；其历史 closeout 位于
   [`_archive/07_research_program_history/MODEL_DIAGNOSTIC_V1_CLOSEOUT.md`](_archive/07_research_program_history/MODEL_DIAGNOSTIC_V1_CLOSEOUT.md)。
 - Phase 0–6 工程重构已 CLOSED，最终绿色基线为
-  `b46b4f614f3be5388bf7a26ebf2b035d14906f5f`；不存在隐式 Phase 7。
+  `b46b4f614f3be5388bf7a26ebf2b035d14906f5f`；不存在隐式 Phase 7。历史 closeout
+  位于 [`_archive/08_engineering_refactor/`](_archive/08_engineering_refactor/)。
 - Matrix v4、raw snapshot manifest、lineage 和全部历史研究结果保持冻结。
 
 ## Recent Research Conclusions

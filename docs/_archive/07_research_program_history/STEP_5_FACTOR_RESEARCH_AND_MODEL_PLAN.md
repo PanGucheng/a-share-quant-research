@@ -546,7 +546,7 @@ outputs/reports/factor_horizon_comparison_liquid2000.md
 tradability/
 scripts/run_tradability_labels.ps1
 scripts/validate_tradability_outputs.py
-docs/TRADABILITY_LABEL_LAYER.md
+docs/operations/TRADABILITY_LABEL_LAYER.md
 ```
 
 定位：

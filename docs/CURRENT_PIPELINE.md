@@ -55,7 +55,7 @@ Mature-label evaluation（成熟后独立运行）
 - `scripts/daily_update.py`（兼容包装器）
 - `daily_update/pipeline.py`（orchestration 与兼容 facade）
 - `daily_update/sources/`、`provider.py`、`features.py`、`validation.py`
-- 配套说明：[DAILY_DATA_UPDATE_V1.md](DAILY_DATA_UPDATE_V1.md)
+- 配套说明：[DAILY_DATA_UPDATE_V1.md](operations/DAILY_DATA_UPDATE_V1.md)
 
 当前命令：
 
@@ -136,7 +136,7 @@ outputs/forward/status.json
 - `scripts/run_paper_portfolio_v1.py`（兼容包装器）
 - `model_research/paper_portfolio.py`
 - `configs/strategy_v1_paper_portfolio_v1.yaml`
-- 配套说明：[STRATEGY_V1_PAPER_PORTFOLIO_V1.md](STRATEGY_V1_PAPER_PORTFOLIO_V1.md)
+- 配套说明：[STRATEGY_V1_PAPER_PORTFOLIO_V1.md](operations/STRATEGY_V1_PAPER_PORTFOLIO_V1.md)
 
 创建 decision：
 
@@ -281,10 +281,9 @@ E:\anaconda_envs\qlib_env\python.exe -m pytest -q `
 ## 9. CLOSED — Engineering Refactor
 
 Phase 0–6 工程重构已在
-`b46b4f614f3be5388bf7a26ebf2b035d14906f5f` 形成最终绿色基线并关闭。最终状态、
-验证和禁止边界见
-[ENGINEERING_REFACTOR_CLOSEOUT.md](ENGINEERING_REFACTOR_CLOSEOUT.md)。不存在隐式
-Phase 7；archive 中的旧计划不再是当前执行入口。
+`b46b4f614f3be5388bf7a26ebf2b035d14906f5f` 形成最终绿色基线并关闭。不存在隐式
+Phase 7；历史 closeout 与旧计划保存在
+[`_archive/08_engineering_refactor/`](_archive/08_engineering_refactor/)，不再是当前执行入口。
 
 当前工程基础包括：
 

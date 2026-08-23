@@ -86,7 +86,8 @@ factor_research/  因子评价与研究模块。
 qlib_integration/ Qlib Exchange/Executor 集成。
 configs/          portable project 与工作流配置。
 scripts/          活动包装器、quality runner、validators 与历史工具。
-docs/             当前权威和操作文档。
+docs/             当前 authority 与 governance 文档。
+docs/operations/  ACTIVE/FROZEN workflow 仍使用的 operational contracts。
 docs/_archive/    CLOSED、HISTORICAL、SUPERSEDED 计划与审计。
 outputs/          runtime 结果及保留的历史/Forward evidence。
 artifacts/        不可变 frozen machine objects。
@@ -101,7 +102,6 @@ tmp/              被忽略的缓存、下载、参考仓库与临时文件。
 - [架构](docs/ARCHITECTURE.md)
 - [输出政策](docs/OUTPUT_POLICY.md)
 - [CI 政策](docs/CI_POLICY.md)
-- [Phase 0–6 工程收尾](docs/ENGINEERING_REFACTOR_CLOSEOUT.md)
 - [文档归档](docs/_archive/README.md)
 
 归档计划保留项目演进证据，但不是当前执行指令。既有 manifests、receipts、lineage、

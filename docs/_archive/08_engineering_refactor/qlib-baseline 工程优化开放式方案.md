@@ -1,7 +1,7 @@
 # qlib-baseline 工程优化开放式方案
 
 > ARCHIVED / HISTORICAL：本文件是 Phase 0–6 工程重构的原始输入，不再是当前执行入口。
-> 最终状态见 `../../ENGINEERING_REFACTOR_CLOSEOUT.md`。
+> 最终状态见 `ENGINEERING_REFACTOR_CLOSEOUT.md`。
 
 ## 1. 项目背景
 

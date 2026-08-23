@@ -109,13 +109,11 @@ entry documents in order:
    governance responsibilities;
 3. `docs/OUTPUT_POLICY.md` for runtime output, frozen artifact, report, cache, and
    Forward evidence boundaries;
-4. `docs/CI_POLICY.md` for the shared local/CI quality tiers;
-5. `docs/ENGINEERING_REFACTOR_CLOSEOUT.md` for the final Phase 0–6 engineering
-   baseline and its frozen boundaries.
+4. `docs/CI_POLICY.md` for the shared local/CI quality tiers.
 
 The Phase 0–6 engineering refactor is closed at
 `b46b4f614f3be5388bf7a26ebf2b035d14906f5f`. There is no implicit Phase 7. Its
-implementation plan and original guide are historical evidence under
+closeout, implementation plan, and original guide are historical evidence under
 `docs/_archive/08_engineering_refactor/`; do not resume them as active instructions.
 A future structural change needs a concrete objective, a fresh cost/risk review, and
 explicit user authorization.
@@ -123,7 +121,8 @@ explicit user authorization.
 ## Documentation Authority
 
 - `docs/DOC_INDEX.md` is the documentation entry point. Files in the `docs/` root are
-  current authority or active operational references.
+  current authority/governance; `docs/operations/` contains current operational
+  contracts that do not belong in the top-level new-session reading set.
 - `docs/_archive/` contains CLOSED, HISTORICAL, or SUPERSEDED records. Preserve them,
   but do not treat an archived plan as permission to restart work.
 - Keep both root READMEs concise and aligned with `DOC_INDEX.md`; detailed historical

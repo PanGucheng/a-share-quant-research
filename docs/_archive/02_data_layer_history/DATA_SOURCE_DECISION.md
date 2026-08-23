@@ -139,8 +139,8 @@ This source is a good second-step candidate because:
 
 The originally proposed data-quality check against the imported provider and the
 baseline comparison were completed in later data-layer stages. Their reports and
-historical plans are indexed under [DOC_INDEX.md](DOC_INDEX.md) and
-[`_archive/02_data_layer_history/`](_archive/02_data_layer_history/). The preserved
+historical plans are indexed under [DOC_INDEX.md](../../DOC_INDEX.md) and this
+`02_data_layer_history/` archive directory. The preserved
 provider path is:
 
 ```text
@@ -149,4 +149,4 @@ E:/qlib_prj/qlib_data/cn_data_community_20260609
 
 This section records provenance; it is not a pending action or authorization to
 acquire a new provider. Current runtime source and fallback rules are defined by
-[DAILY_DATA_UPDATE_V1.md](DAILY_DATA_UPDATE_V1.md).
+[DAILY_DATA_UPDATE_V1.md](../../operations/DAILY_DATA_UPDATE_V1.md).
