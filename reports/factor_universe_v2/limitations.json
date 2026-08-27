@@ -1,10 +1,10 @@
 {
-  "stage_status": "pre_network_checkpoint_not_frozen",
+  "stage_status": "frozen_research_only",
   "limitations": [
-    "Tushare probes prove current token access for small slices, not unrestricted full-market bootstrap throughput.",
-    "Fundamental and event factors are not admitted until historical bootstrap coverage and PIT canaries pass.",
-    "SW membership intervals prove effective dates, not historical database-vintage availability.",
-    "External mature-factor and A-share literature expansion was intentionally not started.",
-    "No IC, model, portfolio, Strategy V2, or winner research was performed."
+    "Full-market Tushare bootstrap coverage is a pre-matrix gate; API probes are not misrepresented as a completed download.",
+    "Industry-relative factors are deferred until historical membership database vintages are proven.",
+    "Sparse event APIs are deferred to a separate coverage study.",
+    "Moneyflow order-size buckets are provider classifications and only proxies for investor type.",
+    "No alpha efficacy, model winner, portfolio, Strategy V2 or production switch is authorized."
   ]
 }

@@ -1,6 +1,7 @@
 ﻿dataset,historical_calls_estimate,rows_estimate,disk_estimate,incremental_cost,bootstrap_feasibility
-daily_basic,~6000 by trade date,~25-30 million,2-5 GB parquet,1 call/trading day,throttled_and_resume_required
-moneyflow,~3900 since 2010,~18-22 million,3-7 GB parquet,1 call/trading day,throttled_and_resume_required
-four_financial_core_apis,~22000 at 5500 securities,~1-2 million,1-4 GB parquet,changed issuers/filing dates only,slow_at_2000_points_but_restartable
-events_and_reference,dataset-specific,sparse_to_medium,<2 GB initial expectation,daily/quarterly segments,prioritize_after_core_layers
-candidate_matrix_716,none_after_local_cache,same keys x 716 columns,~7% wider than 669 before fundamentals,47 additional factor columns,canary_before_materialization
+daily_basic,~6000 calls by trade date,~25-30m,2-5 GB parquet,1 call/trading day,restartable bootstrap
+moneyflow,~3900 calls since 2010,~18-22m,3-7 GB parquet,1 call/trading day,restartable bootstrap
+three_statement_apis,~16500 calls at 5500 issuers,~1-2m,1-4 GB parquet,changed issuers/filing dates,throttled issuer bootstrap
+frozen_matrix_774,none after cache,same row keys x 774,~15% wider than V1; ~8% wider than 716,58 V2 columns,canary then partitioned materialization
+daily_compute,local,17 market + 12 basic + 10 flow,moderate rolling-state cache,one new date plus lookback,no full API history fetch
+quarterly_compute,local,19 PIT statement factors,small relative to daily layers,new/revised filings only,revision-aware recompute from availability date

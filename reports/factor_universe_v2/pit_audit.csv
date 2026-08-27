@@ -1,7 +1,10 @@
 ﻿check,status,detail
-availability_not_report_period,pass,PIT layer accepts only f_ann_date/ann_date by dataset; end_date is never a fallback
-no_pre_announcement_access,pass,asof_pit_records filters information_available_date <= decision date
-revision_preservation,pass,all source rows retained with deterministic source hash and revision_sequence
-financial_announcement_order,pass,statement and ratio announcement dates before report periods fail loudly
-disclosure_schedule_vintage,limited,"actual_date is cross-check evidence only, not an authoritative historical feature"
-fundamental_factor_admission,blocked_pending_bootstrap,no fundamental factor enters the pre-network candidate catalog
+availability_not_report_period,pass,only f_ann_date/ann_date establish financial availability
+no_pre_announcement_access,pass,factor computation rejects unavailable or post-decision rows
+revision_preservation,pass,source rows retain deterministic hash and revision_sequence
+financial_announcement_order,pass,announcement before report period fails loudly
+same_day_market_feature,pass,daily market/basic/moneyflow row t is explicitly usable next session
+moneyflow_units,pass,"Tushare 10,000-CNY amounts explicitly converted before normalization"
+disclosure_schedule_vintage,limited,actual_date remains cross-check-only
+industry_membership_vintage,blocked,industry-relative candidates excluded from authoritative V2
+future_data_blocked,pass,PIT selection and factor adapter both enforce availability <= decision date

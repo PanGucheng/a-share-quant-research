@@ -240,11 +240,10 @@ CLOSED 阶段只允许修复可证明的数据错误、泄漏、contract failure
 
 ## 7. EXPERIMENTAL / DEFERRED
 
-- Factor Universe V2 已完成
-  [网络扩容前检查点](../reports/factor_universe_v2/REPORT.md)：V1 669 保持冻结，形成
-  716 个本地 data-correctness candidates，并完成 Tushare 小样本权限、PIT、revision、
-  增量缓存和历史退化实现审计。该检查点暂停在外部成熟因子/学术因子网络调研前，
-  不是最终 V2 freeze，也不授权 Matrix/Model/Strategy V2；
+- Factor Universe V2 已作为 [774 因子 research-only 目录](../reports/factor_universe_v2/REPORT.md)
+  冻结：669 个 V1 原样继承，19 个 recovered，28 个 direct-VWAP canonicalized，58 个
+  成熟新增；数据 bootstrap 与 V2 Matrix/Model/Strategy 研究仍为 deferred，且不修改
+  Strategy V1 或 Forward Track；
 - KunQuant 作为未来 factor computation backend；
 - Strategy V2 / Model V2 Research Protocol；
 - shadow trading、小资金或 live trading；

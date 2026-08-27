@@ -1,8 +1,13 @@
 ﻿decision,status,reason
-community_ohlcva_vwap,adopt,existing authoritative local price/volume/amount/VWAP backbone
-tushare_daily_basic,adopt_incrementally,"current token probe passed; adds turnover, size and value dimensions"
-tushare_financial_statements,adopt_data_layer_only,f_ann_date/ann_date support PIT; factors wait for bootstrap coverage gates
-tushare_fina_indicator,cross_check_required,ann_date available but source ratios and revisions must be reconciled to statements
-tushare_disclosure_date,cross_check_only,current table can contain actual_date backfill and is not historical database-vintage proof
-sw2021_membership,research_with_limitation,effective intervals available; historical database vintage unproven
-external_mature_factor_research,not_started,explicit user stop boundary before network factor expansion
+community_ohlcva_vwap,adopt,authoritative local price/volume/amount/VWAP backbone
+tushare_daily_basic,adopt,verified token access; size/value/turnover with after-close t+1 semantics
+tushare_moneyflow,adopt,verified token access; 2010+ order-size flow with documented units
+tushare_financial_statements,adopt_pit,f_ann_date then ann_date; revisions retained; report period never availability
+tushare_fina_indicator,cross_check_only,ratios useful for QA but authoritative factors are statement-derived
+tushare_disclosure_date,cross_check_only,current actual_date can be backfilled and does not prove historical vintage
+sw2021_membership,defer,effective intervals do not establish database-vintage availability
+alpha191,reject_current_batch,unclear portable provenance/license and high overlap with V1 technical core
+joinquant_ricequant,taxonomy_only,public taxonomies reviewed; no unlicensed code copied
+barra_style,adapt_public_concepts,public factor families used; proprietary model formulas not copied
+sparse_event_apis,defer,accessible but heterogeneous history and sparse coverage need a later batch
+tradability_states,retain_as_controls,"limit/ST/suspension remain controls, not alpha features"

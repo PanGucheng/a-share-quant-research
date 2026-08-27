@@ -98,9 +98,9 @@ Strategy V2。
 
 ## Immediate Next Research Direction
 
-Forward Track 继续具有时间优先级。下一项尚待单独计划和授权的历史研究区域是
-**Factor Universe / Data Capability Upgrade**。本占位不授权创建 Factor Universe V2、
-下载新数据、修改 factor catalog、训练模型或开展新实验。
+Forward Track 继续具有时间优先级。Factor Universe V2 已冻结为 research-only 的
+774 因子目录；后续完整数据 bootstrap、V2 Matrix、多因子或模型研究仍需单独计划和授权，
+不得自动切换 Strategy V1、daily paper path 或修改 Forward evidence。
 
 ## Environment
 

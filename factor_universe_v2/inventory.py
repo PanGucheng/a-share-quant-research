@@ -355,7 +355,7 @@ def build_frozen_v2_catalog(root: Path, config: dict[str, Any]) -> pd.DataFrame:
                 "source_project": item["source_family"],
                 "source_file": "factor_universe_v2/mature_factors.py",
                 "source_function": adapter.rsplit(".", 1)[-1],
-                "source_commit": "factor_universe_v2_freeze_2026_08_27",
+                "source_commit": "e86ce5329047ba4da8a69613ef095a6fda3db6c9",
                 "license": "project_original_implementation_with_cited_public_definition",
                 "expected_direction": "watch",
                 "required_fields": item["required_fields"],

@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "status": "frozen_research_only",
+  "factor_count": 774,
+  "lineage_counts": {
+    "canonicalized": 28,
+    "legacy_v1": 669,
+    "new": 58,
+    "recovered": 19
+  },
+  "v1_catalog_sha256": "7c7f18ff419b59ac2639d332cb5d0dc8edad2cc9d5a0b8bb33b5575dddb96aaa",
+  "factor_catalog_v2_sha256": "da7b422d773c436f2c7c739ae6624ccd5b4b4ebb4cad2aca996dc98944360f67",
+  "factor_inventory_v2_sha256": "c845df96a3025da23eb3bdc741e14cb30a4c66010b34c724fac3cfcf343c29b2",
+  "factor_dependency_v2_sha256": "3c32fca0d457676fa3ca96396856af11022821615d44db19020e259ae2ce78a2",
+  "decision_time_semantics": "row_t_after_close_usable_next_trading_session",
+  "strategy_v2_authorized": false
+}

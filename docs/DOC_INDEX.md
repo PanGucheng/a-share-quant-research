@@ -86,12 +86,13 @@ Archive 保留证据，但不授权恢复已关闭工作。
   content-addressed cache 已实现；Fast Research 仅作资源筛查，不作 winner selection。
 - [Clustering Ablation V1](../reports/ml_clustering_ablation_v1/REPORT.md)：取消每簇单代表门槛的
   历史证据 mixed，现有 representative gate 不变。
-- [Factor Universe V2 — Pre-Network Checkpoint](../reports/factor_universe_v2/REPORT.md)：完成
-  历史缺失/退化审计、Tushare 真实权限探测、PIT/修订与增量缓存基础，以及本地 716
-  candidate catalog；按用户边界停止在外部成熟因子网络扩容前，尚未冻结最终 V2。
+- [Factor Universe V2](../reports/factor_universe_v2/REPORT.md)：冻结 research-only 的
+  774 因子目录；完成历史缺失/退化审计、Tushare 权限探测、PIT/修订与增量缓存、
+  外部成熟体系及 A 股研究，并新增 58 个覆盖估值、基本面、资金流与风险的信息轴。
+  该冻结不授权 Strategy V2，完整数据 bootstrap 仍是 Matrix 构建前置门槛。
 
 这些结果不修改 Strategy V1、不产生 Strategy V2 authorization，也不构成 fresh OOS。
-Factor Universe V2 后续外部成熟体系扩容仍需单独继续授权。
+Factor Universe V2 的实证 Matrix、多因子与模型研究仍需单独授权。
 
 ## Archive Map
 

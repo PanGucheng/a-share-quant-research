@@ -1,11 +1,10 @@
-﻿check,status,observed,required
-v1_factor_count,pass,669,669
-v1_factor_set_exact,pass,669,669
-v1_byte_immutable,pass,7c7f18ff419b59ac2639d332cb5d0dc8edad2cc9d5a0b8bb33b5575dddb96aaa,7c7f18ff419b59ac2639d332cb5d0dc8edad2cc9d5a0b8bb33b5575dddb96aaa
-community_ohlcva_vwap_complete,pass,"['amount', 'close', 'high', 'low', 'open', 'volume', 'vwap']","['amount', 'close', 'high', 'low', 'open', 'volume', 'vwap']"
-tushare_probe_access,pass,20,20
-local_candidate_names_unique,pass,0,0
-lineage_total,pass,716,716
-recovered_count,pass,19,19
-canonicalized_count,pass,28,28
-network_expansion_not_started,pass,0,0
+﻿check,observed,required,status
+v1_factor_count,669,669,pass
+v1_factor_set_exact,669,669,pass
+v1_byte_immutable,7c7f18ff419b59ac2639d332cb5d0dc8edad2cc9d5a0b8bb33b5575dddb96aaa,7c7f18ff419b59ac2639d332cb5d0dc8edad2cc9d5a0b8bb33b5575dddb96aaa,pass
+frozen_factor_count,774,774,pass
+factor_names_unique,0,0,pass
+new_mature_count,58,58,pass
+all_dependencies_declared,0,0,pass
+external_admitted_implemented,0,0,pass
+strategy_v2_not_authorized,False,False,pass

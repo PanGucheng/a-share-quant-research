@@ -31,9 +31,10 @@ Strategy V1, historical predictions, and observed `split_003` evidence are froze
 OOS evidence. Model Diagnostic V1, ML Feature Pool MVP V1, Performance Optimization
 V1, Research Productivity V1, Clustering Ablation V1, and the Phase 0–6 engineering
 refactor are closed. Fast Research is screening-only; the clustering representative
-gate remains unchanged. Factor Universe V2 has a completed pre-network checkpoint
-with 716 local data-correctness candidates; external mature-factor expansion has not
-started and the final V2 is not frozen. There is no implicit engineering Phase 7.
+gate remains unchanged. Factor Universe V2 is frozen as a research-only catalog of
+774 factors (669 immutable V1, 19 recovered, 28 canonicalized and 58 new mature
+factors). It does not authorize Strategy V2 or modify Forward Track. There is no
+implicit engineering Phase 7.
 
 Start with [docs/DOC_INDEX.md](docs/DOC_INDEX.md). The exact active commands and
 machine-state paths are in

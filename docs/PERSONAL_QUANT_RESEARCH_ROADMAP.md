@@ -134,10 +134,10 @@ Detailed numbers and limitations live in the linked reports in
 [DOC_INDEX.md](DOC_INDEX.md); they are not duplicated here. All four are CLOSED, and
 the observed historical diagnostics do not authorize Strategy V2.
 
-The next historical research area, after a separate user-supplied plan, is a
-high-level **Factor Universe / Data Capability Upgrade**. This roadmap entry does not
-start Factor Universe V2, change the factor catalog, acquire new data, or authorize
-model training. Genuine Forward evidence collection retains temporal priority.
+The **Factor Universe / Data Capability Upgrade** is complete as the frozen,
+research-only Factor Universe V2 catalog. Full data bootstrap, V2 matrix construction,
+multi-factor research and model training remain separately authorized future work.
+Genuine Forward evidence collection retains temporal priority.
 
 ## 6. Why Forward Collection Has Temporal Priority
 
