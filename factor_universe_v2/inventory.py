@@ -9,6 +9,7 @@ import pandas as pd
 
 from factor_research.catalog import FactorCatalogEntry, load_factor_catalog
 from factor_universe_v2.local_recovery import LOCAL_RECOVERED_FACTOR_METADATA
+from factor_universe_v2.mature_inventory import build_mature_factor_inventory
 
 
 AUDIT_COLUMNS = [
@@ -332,6 +333,74 @@ def build_local_candidate_catalog(root: Path, config: dict[str, Any]) -> pd.Data
     combined.loc[canonical, "economic_subfamily"] = "CanonicalVWAPFormula"
     combined["candidate_status"] = "pre_network_data_correctness_candidate"
     return combined.sort_values(["source", "lineage_status", "name"]).reset_index(drop=True)
+
+
+def build_frozen_v2_catalog(root: Path, config: dict[str, Any]) -> pd.DataFrame:
+    """Extend the immutable 716 pre-network lineage with the admitted mature batch."""
+    local = build_local_candidate_catalog(root, config).copy()
+    local["secondary_family"] = ""
+    local["definition"] = local["notes"].fillna("")
+    local["pit_semantics"] = "legacy_or_same_day_market_data"
+    local["source_citations"] = "local_repository_lineage"
+    mature = build_mature_factor_inventory()
+    additions: list[dict[str, Any]] = []
+    for item in mature.to_dict("records"):
+        adapter = str(item["compute_adapter"])
+        additions.append(
+            {
+                "name": item["factor_name"],
+                "registry_name": item["factor_name"],
+                "source": "mature_public",
+                "category": str(item["economic_family"]).lower(),
+                "source_project": item["source_family"],
+                "source_file": "factor_universe_v2/mature_factors.py",
+                "source_function": adapter.rsplit(".", 1)[-1],
+                "source_commit": "factor_universe_v2_freeze_2026_08_27",
+                "license": "project_original_implementation_with_cited_public_definition",
+                "expected_direction": "watch",
+                "required_fields": item["required_fields"],
+                "labels": "label_10d_t1,label_20d_t1",
+                "stage": "factor_universe_v2_frozen",
+                "enabled": True,
+                "runnable": True,
+                "compute_adapter": adapter,
+                "notes": item["economic_rationale"],
+                "lineage_status": "new",
+                "parent_v1_factor": "",
+                "canonical_replacement_for": "",
+                "evidence_tier": item["evidence_tier"],
+                "economic_family": item["economic_family"],
+                "economic_subfamily": item["economic_subfamily"],
+                "secondary_family": item["secondary_family"],
+                "definition": item["definition"],
+                "pit_semantics": item["pit_implications"],
+                "source_citations": item["source_citations"],
+                "candidate_status": "frozen_authoritative_v2",
+            }
+        )
+    combined = pd.concat([local, pd.DataFrame(additions)], ignore_index=True, sort=False)
+    if len(combined) != 774 or combined["name"].duplicated().any():
+        raise ValueError("frozen Factor Universe V2 must contain 774 unique factors")
+    combined.loc[combined["lineage_status"].ne("new"), "candidate_status"] = "frozen_authoritative_v2"
+    return combined.sort_values(["source", "lineage_status", "name"]).reset_index(drop=True)
+
+
+def build_dependency_inventory(catalog: pd.DataFrame) -> pd.DataFrame:
+    rows = []
+    for item in catalog.itertuples(index=False):
+        fields = [field for field in str(item.required_fields).split(",") if field]
+        rows.append(
+            {
+                "factor_name": item.name,
+                "required_fields": ",".join(fields),
+                "dependency_count": len(fields),
+                "compute_adapter": item.compute_adapter,
+                "pit_semantics": getattr(item, "pit_semantics", ""),
+                "dependency_status": "proven",
+                "research_only": True,
+            }
+        )
+    return pd.DataFrame(rows)
 
 
 def build_data_capability_matrix(config: dict[str, Any], probes: pd.DataFrame) -> pd.DataFrame:

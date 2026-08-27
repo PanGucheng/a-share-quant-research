@@ -1,0 +1,14 @@
+schema_version: 1
+stage_id: factor_universe_v2
+status: frozen_research_only
+base_config: configs/factor_universe_v2_pre_network.yaml
+report_dir: reports/factor_universe_v2
+output_dir: outputs/factor_universe_v2/current
+factor_count: 774
+legacy_v1_count: 669
+recovered_count: 19
+canonicalized_count: 28
+new_mature_count: 58
+decision_time_semantics: row_t_after_close_usable_next_trading_session
+fundamental_pit_semantics: latest_source_revision_with_information_available_date_lte_decision_date
+strategy_v2_authorized: false
