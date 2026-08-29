@@ -14,6 +14,7 @@ from factor_universe_v2.historical_data import (
 )
 from factor_universe_v2.pit import asof_pit_records, prepare_pit_records
 from factor_universe_v2.tushare_data import TushareSegmentStore
+from factor_universe_v2.matrix_readiness import audit_partitions
 
 
 def test_instrument_mapping_is_reversible() -> None:
@@ -118,3 +119,58 @@ def test_statement_timeline_keeps_expected_missing_fields() -> None:
     latest = events.iloc[-1]
     assert pd.isna(latest["money_cap"])
     assert latest["report_period"] == pd.Timestamp("2020-12-31")
+
+
+def test_coverage_audit_separates_usable_sparse_and_degenerate(tmp_path: Path) -> None:
+    dates = pd.date_range("2021-01-01", periods=6, freq="D")
+    frame = pd.DataFrame(
+        {
+            "datetime": dates,
+            "instrument": ["SH600000"] * 6,
+            "usable": np.arange(6, dtype=float),
+            "sparse": [1.0, np.nan, np.nan, np.nan, np.nan, np.nan],
+            "constant": [1.0] * 6,
+        }
+    )
+    path = tmp_path / "factors.parquet"
+    frame.to_parquet(path, index=False)
+    partitions = pd.DataFrame(
+        [
+            {
+                "partition_path": path.as_posix(),
+                "factors": "usable,sparse,constant",
+            }
+        ]
+    )
+    inventory = pd.DataFrame(
+        {
+            "name": ["usable", "sparse", "constant"],
+            "economic_family": ["Test"] * 3,
+            "source": ["synthetic"] * 3,
+            "lineage_status": ["new"] * 3,
+        }
+    )
+    split_ranges = pd.DataFrame(
+        [
+            {
+                "split_id": "split_001",
+                "train_start": dates[0],
+                "train_end": dates[1],
+                "validation_start": dates[2],
+                "validation_end": dates[3],
+                "test_start": dates[4],
+                "test_end": dates[5],
+            }
+        ]
+    )
+    audit = audit_partitions(
+        partitions,
+        inventory,
+        split_ranges,
+        minimum_factor_coverage=0.5,
+        minimum_month_coverage=0.5,
+        minimum_qualified_month_fraction=1.0,
+    )["factor"].set_index("factor")
+    assert bool(audit.loc["usable", "research_usable"])
+    assert audit.loc["sparse", "block_reason"] == "insufficient_historical_coverage"
+    assert audit.loc["constant", "block_reason"] == "constant_or_degenerate"

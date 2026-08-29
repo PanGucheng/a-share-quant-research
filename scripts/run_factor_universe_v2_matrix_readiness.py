@@ -94,7 +94,9 @@ def bootstrap(config: dict, scope: str, report_dir: Path) -> int:
         "bootstrap_daily_layers",
         started,
         scope=scope,
-        request_segments=len(daily_receipts),
+        segment_count=len(daily_receipts),
+        network_request_count=int((~daily_receipts["cache_hit"].astype(bool)).sum()),
+        cache_hit_count=int(daily_receipts["cache_hit"].astype(bool).sum()),
         source_rows=int(daily_receipts["row_count"].sum()),
     )
     started = time.perf_counter()
@@ -109,7 +111,9 @@ def bootstrap(config: dict, scope: str, report_dir: Path) -> int:
         "bootstrap_statement_layers",
         started,
         scope=scope,
-        request_segments=len(statement_receipts),
+        segment_count=len(statement_receipts),
+        network_request_count=int((~statement_receipts["cache_hit"].astype(bool)).sum()),
+        cache_hit_count=int(statement_receipts["cache_hit"].astype(bool).sum()),
         source_rows=int(statement_receipts["row_count"].sum()),
     )
     report_dir.mkdir(parents=True, exist_ok=True)
