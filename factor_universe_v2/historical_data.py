@@ -287,10 +287,16 @@ def statement_event_timeline(
                     }
                 )
         last_payload_hash = ""
-        for available, name, period, row in sorted(
-            events, key=lambda item: (item[0], item[1], item[2])
-        ):
-            states[name][period] = row
+        ordered_events = sorted(events, key=lambda item: (item[0], item[1], item[2]))
+        event_dates = sorted({item[0] for item in ordered_events})
+        for available in event_dates:
+            # All statements carrying the same public date become visible as one
+            # atomic daily event.  Emitting after each dataset would create
+            # artificial, order-dependent partial states at an identical time.
+            for _, name, period, row in (
+                item for item in ordered_events if item[0] == available
+            ):
+                states[name][period] = row
             common = set(states["income"]) & set(states["balancesheet"]) & set(states["cashflow"])
             if not common:
                 continue

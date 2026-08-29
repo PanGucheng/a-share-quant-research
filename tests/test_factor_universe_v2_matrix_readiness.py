@@ -102,6 +102,7 @@ def test_statement_timeline_is_revision_aware_and_no_future() -> None:
         }
     )
     aligned = align_statement_events_to_keys(keys, events)
+    assert not events.duplicated(["instrument", "information_available_date"]).any()
     assert aligned["revenue"].tolist() == [100.0, 110.0]
     assert aligned["prior_revenue"].tolist() == [80.0, 80.0]
     assert aligned["information_available_date"].le(aligned["datetime"]).all()

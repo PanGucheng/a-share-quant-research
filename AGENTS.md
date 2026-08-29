@@ -142,3 +142,10 @@ explicit user authorization.
   into the long-term target directory layout during an unrelated stage.
 - Before finalizing, confirm what was reused, what changed, what was deliberately not
   done, and whether any conclusion can influence a future strategy version.
+
+## Long-Running Task Discipline
+
+- For long downloads, builds, training runs, and full validations, avoid frequent
+  polling. Use the longest practical bounded wait, check at meaningful milestones,
+  and report only material progress, stage transitions, failures, or requests for
+  user input. Do not repeatedly fetch unchanged status merely to narrate activity.
