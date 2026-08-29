@@ -6,6 +6,9 @@
 
 - Matrix dates: `2021-02-01` to `2026-06-09`; instruments: `3983`; rows: `2,587,671`.
 - Definitions/materializable/coverage-qualified/research-usable/blocked: `774/770/769/765/9`.
+- `765 research-usable` is the global physical data-qualified candidate universe, not
+  a fixed feature whitelist for every outer split. Time-dependent eligibility and
+  selection must remain development-only and split-local.
 - Qualification requires overall coverage >= `50%`, monthly coverage >= `35%` in at least `90%` of months, plus non-constant finite values.
 - Bootstrap begins `2020-01-17`, exactly 252 provider trading sessions before the first research date; statement announcements begin `2018-01-01` to cover the prior-year comparators visible at research start.
 - The 669 V1 factors and Matrix v4 partitions are referenced byte-for-byte; no old matrix, label, split, prediction, Forward, or Strategy V1 artifact was changed.
@@ -54,8 +57,10 @@ revision's actual availability date.
   rows and correlation 0.856, but a 56.7% median relative difference; it is therefore
   supporting evidence of scale/direction only, not a claim of formula identity.
 - Of 28 direct-VWAP canonical comparisons, 24 have observed real-data differences.
-  Four have no common finite observations because their underlying Alpha101 adapters
-  are blocked; no positional relabel or fabricated value was used.
+  `alpha027_canonical_vwap_v2` has no common finite observations because its adapter
+  is blocked. `alpha062`, `alpha073`, and `alpha086` each have roughly 2.49–2.59
+  million common finite observations but are exactly equal to legacy on this history.
+  No positional relabel or fabricated value was used.
 - Runtime raw cache: 1.14 GB across 38,048 data/receipt files. New V2 partitions:
   1.07 GB. Referenced byte-immutable V1 partitions: 7.27 GB.
 - The completed restart pass validated 3,092 daily and 15,932 statement segments in
@@ -93,6 +98,20 @@ revision's actual availability date.
 - `kunquant_alpha101_alpha086_canonical_vwap_v2` — constant_or_degenerate
 - `ta_trend_psar_up` — insufficient_historical_coverage
 - `ta_volatility_kcp` — non_finite_values
+
+## Qualification semantics and closeout
+
+- Hard readiness gates are the `critical=true` rows in `contract_status.csv`. Per-factor
+  usability additionally requires materialization, temporal/overall coverage,
+  non-degeneracy and finite values. Unit checks, provider cross-checks, canonical
+  comparisons and detailed coverage distributions remain diagnostic evidence rather
+  than independent hard publication gates.
+- The ignored/local factor-month, split-fold and instrument-family audits are bound to
+  this tracked artifact by SHA-256, row count and schema in `artifact_manifest.json`.
+  Validate the complete closeout with
+  `python scripts/validate_factor_universe_v2_matrix_closeout.py`.
+- Matrix Readiness is `CLOSED`. Economic Multi-Factor Research and model research have
+  not started, and Strategy V2 remains unauthorized.
 
 ## Boundary
 

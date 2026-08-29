@@ -243,9 +243,13 @@ CLOSED 阶段只允许修复可证明的数据错误、泄漏、contract failure
 - Factor Universe V2 已完成 [774 因子 research-only 目录](../reports/factor_universe_v2/REPORT.md)
   与 [Historical Data & Matrix Readiness](../reports/factor_universe_v2_matrix_readiness/REPORT.md)：
   2021-02-01 至 2026-06-09 的 2,587,671 个 PIT keys 中，770 个定义可物化、765 个
-  research-usable、9 个明确 blocked；669 个 V1 因子分区保持字节级不变。该结果只允许
+  research-usable、9 个明确 blocked；669 个 V1 因子分区保持字节级不变，Matrix
+  Readiness 阶段现为 CLOSED。该结果只允许
   qualified list 进入后续独立的 Economic Multi-Factor Research，不修改 Strategy V1、
   Forward Track，也不授权 Strategy V2；
+- 这里的 765 个 research-usable 因子是全局物理数据合格候选集，不是所有 outer split
+  固定使用的 feature whitelist；任何带时间依赖的 eligibility、选择、IC 或模型输入仍须
+  development-only、split-local，不能利用后期 coverage/availability 决定早期 membership；
 - KunQuant 作为未来 factor computation backend；
 - Strategy V2 / Model V2 Research Protocol；
 - shadow trading、小资金或 live trading；

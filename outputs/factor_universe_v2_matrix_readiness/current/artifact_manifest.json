@@ -7,6 +7,18 @@
   "factor_count_materializable": 770,
   "factor_count_research_usable": 765,
   "factor_count_temporarily_blocked": 9,
+  "stage_lifecycle": "CLOSED",
+  "research_usable_semantics": {
+    "scope": "global_physical_data_qualified_candidate_universe",
+    "fixed_model_feature_whitelist": false,
+    "split_local_eligibility_required": true,
+    "detail": "Any time-dependent feature eligibility, factor selection, IC, sleeve qualification, or model input decision must be development-only and recomputed within each outer split without using later availability or coverage."
+  },
+  "factor_identity": {
+    "encoding": "sha256_of_sorted_utf8_factor_names_joined_with_lf",
+    "research_usable_sha256": "d0d9b37c43eb72f3a7934c7a3b9541805d210d8e3f009fcf8e578c3eb9e6d36a",
+    "temporarily_blocked_sha256": "3b1eab1c5de89bd40b0164589a427c7885948867419c48d237938c986ece95d8"
+  },
   "row_count": 2587671,
   "instrument_count": 3983,
   "date_count": 1294,
@@ -31,6 +43,49 @@
   "pit_contract": "latest_provider_revision_with_information_available_date_lte_decision_date",
   "decision_time_semantics": "row_t_after_close_usable_next_trading_session",
   "strategy_v2_authorized": false,
+  "readiness_contract_semantics": {
+    "hard_gate_source": "contract_status.csv rows where critical=true",
+    "factor_qualification_gates": [
+      "materializable",
+      "overall_coverage",
+      "qualified_month_fraction",
+      "non_constant",
+      "finite"
+    ],
+    "status_rule": "all critical contract checks pass and factor_count_research_usable is greater than the inherited V1 count of 669",
+    "diagnostic_not_hard_gate": [
+      "unit_sanity",
+      "fina_indicator_crosscheck",
+      "canonical_legacy_comparison",
+      "factor_month_coverage",
+      "factor_split_coverage",
+      "instrument_family_coverage",
+      "resource_timing"
+    ]
+  },
+  "detailed_audit_lineage": {
+    "factor_month_coverage": {
+      "path": "reports/factor_universe_v2_matrix_readiness/factor_month_coverage.csv",
+      "git_tracked": false,
+      "sha256": "aa96deba756b2169f226794c407a9b11e3515b7171823cff769299a4bcf97a53",
+      "row_count": 50310,
+      "columns": ["factor", "month", "valid_count", "row_count", "coverage", "missingness_class"]
+    },
+    "factor_split_coverage": {
+      "path": "reports/factor_universe_v2_matrix_readiness/factor_split_coverage.csv",
+      "git_tracked": false,
+      "sha256": "47d2740d24a6964e0dc32981453d758f734425bc3fff3f45e2fd494fb9738713",
+      "row_count": 6966,
+      "columns": ["factor", "split_id", "fold", "valid_count", "row_count", "coverage"]
+    },
+    "instrument_family_coverage": {
+      "path": "reports/factor_universe_v2_matrix_readiness/instrument_family_coverage.csv",
+      "git_tracked": false,
+      "sha256": "e3d39963e98924f9a4e8f7a9816aa769e65d6bc10bd8a9cee983b90618b5e31e",
+      "row_count": 55762,
+      "columns": ["instrument", "economic_family", "valid_count", "row_count", "coverage"]
+    }
+  },
   "output_file_hashes": {
     "partition_manifest.csv": "df37d30858619ab3ffec6b9537f6a85308016139c654464dd469c005dc841832",
     "factor_order.csv": "6ec61a699138c0ce42bc0eb8608c82fffe5a87de2291630ee4018ad8f8f2f4ff",
