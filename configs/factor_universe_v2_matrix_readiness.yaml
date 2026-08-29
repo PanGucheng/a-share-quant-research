@@ -8,6 +8,7 @@ universe_intervals: outputs/point_in_time_universe_v2/full_research/universe_int
 universe_manifest: outputs/point_in_time_universe_v2/full_research/artifact_manifest.json
 matrix_v4_partition_status: outputs/full_research_feature_matrix_v4/current/partition_status.csv
 matrix_v4_manifest: outputs/full_research_feature_matrix_v4/current/artifact_manifest.json
+raw_market_data_snapshot_manifest: outputs/raw_market_data_snapshot_v1/full_research_669/artifact_manifest.json
 split_ranges: outputs/purged_walk_forward_v1/full_research_669/split_date_ranges.csv
 split_manifest: outputs/purged_walk_forward_v1/full_research_669/artifact_manifest.json
 alpha101_source_path: tmp/reference_repos/KunQuant

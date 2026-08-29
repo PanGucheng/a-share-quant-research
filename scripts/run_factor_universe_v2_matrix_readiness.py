@@ -518,7 +518,25 @@ def materialize(config: dict, scope: str, paths: BuildPaths) -> int:
     pd.DataFrame(timings).to_csv(paths.report_dir / "resource_timing.csv", index=False)
     raw_manifest = {
         "schema_version": 1,
-        **raw_identity,
+        "raw_snapshot_id": canonical_hash(
+            {
+                "tushare_raw_snapshot_id": raw_identity["raw_snapshot_id"],
+                "qlib_market_sha256": file_sha256(
+                    paths.runtime_dir / f"{scope}_qlib_market.parquet"
+                ),
+            }
+        ),
+        "tushare_raw_snapshot_id": raw_identity["raw_snapshot_id"],
+        "segment_count": raw_identity["segment_count"],
+        "qlib_market_snapshot": {
+            "path": (paths.runtime_dir / f"{scope}_qlib_market.parquet").resolve().as_posix(),
+            "sha256": file_sha256(paths.runtime_dir / f"{scope}_qlib_market.parquet"),
+            "row_count": len(market_raw),
+            "provider_uri": resolve(config["provider_uri"]).as_posix(),
+            "source_snapshot_manifest_sha256": file_sha256(
+                resolve(config["raw_market_data_snapshot_manifest"])
+            ),
+        },
         "apis": source_coverage.to_dict("records"),
         "market_bootstrap_start_date": config["market_bootstrap_start_date"],
         "statement_announcement_start_date": config["statement_announcement_start_date"],
@@ -557,10 +575,14 @@ def materialize(config: dict, scope: str, paths: BuildPaths) -> int:
         "partition_identity_sha256": canonical_hash(
             partition_rows[["partition_id", "output_sha256", "factor_count", "row_count"]].to_dict("records")
         ),
-        "raw_snapshot_id": raw_identity["raw_snapshot_id"],
+        "raw_snapshot_id": raw_manifest["raw_snapshot_id"],
+        "qlib_market_snapshot_sha256": raw_manifest["qlib_market_snapshot"]["sha256"],
         "universe_manifest_sha256": file_sha256(resolve(config["universe_manifest"])),
         "split_manifest_sha256": file_sha256(resolve(config["split_manifest"])),
         "matrix_v4_manifest_sha256": file_sha256(resolve(config["matrix_v4_manifest"])),
+        "raw_market_data_snapshot_manifest_sha256": file_sha256(
+            resolve(config["raw_market_data_snapshot_manifest"])
+        ),
         "build_code_commit": git_commit(PROJECT_ROOT),
         "implementation_hashes": {
             path: file_sha256(PROJECT_ROOT / path)
