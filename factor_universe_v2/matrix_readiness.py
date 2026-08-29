@@ -705,7 +705,13 @@ def compare_canonical_to_legacy(
         joined = canonical[["datetime", "instrument", item.name]].merge(
             legacy, on=["datetime", "instrument"], how="inner", validate="one_to_one"
         )
-        pair = joined[[item.name, parent]].replace([np.inf, -np.inf], np.nan).dropna()
+        pair = (
+            joined[[item.name, parent]]
+            .apply(pd.to_numeric, errors="coerce")
+            .astype(float)
+            .replace([np.inf, -np.inf], np.nan)
+            .dropna()
+        )
         difference = pair[item.name] - pair[parent]
         rows.append(
             {
@@ -714,7 +720,13 @@ def compare_canonical_to_legacy(
                 "status": "pass" if len(pair) and difference.ne(0).any() else "no_observed_difference",
                 "common_finite_count": len(pair),
                 "different_count": int(difference.ne(0).sum()),
-                "correlation": float(pair[item.name].corr(pair[parent])) if len(pair) > 1 else np.nan,
+                "correlation": (
+                    float(pair[item.name].corr(pair[parent]))
+                    if len(pair) > 1
+                    and pair[item.name].nunique() > 1
+                    and pair[parent].nunique() > 1
+                    else np.nan
+                ),
                 "mean_absolute_difference": float(difference.abs().mean()) if len(pair) else np.nan,
             }
         )

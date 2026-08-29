@@ -14,7 +14,7 @@ from factor_universe_v2.historical_data import (
 )
 from factor_universe_v2.pit import asof_pit_records, prepare_pit_records
 from factor_universe_v2.tushare_data import TushareSegmentStore
-from factor_universe_v2.matrix_readiness import audit_partitions
+from factor_universe_v2.matrix_readiness import audit_partitions, compare_canonical_to_legacy
 
 
 def test_instrument_mapping_is_reversible() -> None:
@@ -39,6 +39,39 @@ def test_segment_store_rejects_tampered_cache(tmp_path: Path) -> None:
     data_path.write_bytes(data_path.read_bytes() + b"tampered")
     with pytest.raises(ValueError, match="hash mismatch"):
         store.validate(api="daily_basic", segment="20210104")
+
+
+def test_canonical_comparison_handles_boolean_factor_values(tmp_path: Path) -> None:
+    keys = {
+        "datetime": pd.to_datetime(["2021-01-04", "2021-01-05"]),
+        "instrument": ["SH600000", "SH600000"],
+    }
+    canonical_path = tmp_path / "canonical.parquet"
+    legacy_path = tmp_path / "legacy.parquet"
+    pd.DataFrame({**keys, "canonical_bool": [True, False]}).to_parquet(
+        canonical_path, index=False
+    )
+    pd.DataFrame({**keys, "legacy_bool": [False, False]}).to_parquet(
+        legacy_path, index=False
+    )
+    inventory = pd.DataFrame(
+        [
+            {
+                "name": "canonical_bool",
+                "lineage_status": "canonicalized",
+                "canonical_replacement_for": "legacy_bool",
+            }
+        ]
+    )
+    partitions = pd.DataFrame(
+        [{"factors": "legacy_bool", "partition_path": str(legacy_path)}]
+    )
+
+    result = compare_canonical_to_legacy(canonical_path, inventory, partitions)
+
+    assert result.loc[0, "status"] == "pass"
+    assert result.loc[0, "different_count"] == 1
+    assert result.loc[0, "mean_absolute_difference"] == pytest.approx(0.5)
 
 
 def test_same_day_update_flag_revision_wins() -> None:
