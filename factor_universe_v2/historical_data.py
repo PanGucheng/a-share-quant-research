@@ -92,6 +92,7 @@ def bootstrap_trade_date_layers(
     for api, (fields, required) in specs.items():
         for trade_date in dates:
             started = time.perf_counter()
+            cache_hit = all(path.is_file() for path in store.paths(api, trade_date))
             _, receipt = store.fetch(
                 api=api,
                 segment=trade_date,
@@ -110,6 +111,7 @@ def bootstrap_trade_date_layers(
                     "row_count": int(receipt["row_count"]),
                     "data_sha256": receipt["data_sha256"],
                     "elapsed_seconds": time.perf_counter() - started,
+                    "cache_hit": cache_hit,
                 }
             )
             if completed % progress_every == 0 or completed == total:
@@ -148,6 +150,7 @@ def bootstrap_statement_layers(
             if api != "fina_indicator":
                 required.update({"f_ann_date", "update_flag"})
             started = time.perf_counter()
+            cache_hit = all(path.is_file() for path in store.paths(api, ts_code))
             parameters = {
                 "ts_code": ts_code,
                 "start_date": announcement_start,
@@ -177,6 +180,7 @@ def bootstrap_statement_layers(
                     "row_count": int(receipt["row_count"]),
                     "data_sha256": receipt["data_sha256"],
                     "elapsed_seconds": time.perf_counter() - started,
+                    "cache_hit": cache_hit,
                 }
             )
             if completed % progress_every == 0 or completed == total:
@@ -387,6 +391,8 @@ def raw_snapshot_summary(root: Path) -> tuple[pd.DataFrame, str]:
                 "row_count": int(receipt.get("row_count", 0)),
                 "column_count": len(receipt.get("columns", [])),
                 "data_sha256": receipt.get("data_sha256"),
+                "size_bytes": data_path.stat().st_size if data_path.is_file() else 0,
+                "retrieval_time_utc": receipt.get("retrieval_time_utc"),
                 "integrity_status": "pass" if actual_hash == receipt.get("data_sha256") else "fail",
             }
         )

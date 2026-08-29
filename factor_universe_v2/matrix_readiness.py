@@ -571,16 +571,20 @@ def raw_source_coverage(
     for api in ("daily_basic", "moneyflow", *STATEMENT_FIELDS):
         part = segment_frame.loc[segment_frame["api"].eq(api)]
         expected = expected_trade_dates if api in {"daily_basic", "moneyflow"} else expected_statement_segments
+        scoped = part.loc[part["segment"].isin(expected)]
         rows.append(
             {
                 "api": api,
                 "expected_segment_count": len(expected),
-                "observed_segment_count": int(part["segment"].isin(expected).sum()),
-                "nonempty_segment_count": int(part.loc[part["segment"].isin(expected), "row_count"].gt(0).sum()),
-                "row_count": int(part.loc[part["segment"].isin(expected), "row_count"].sum()),
+                "observed_segment_count": len(scoped),
+                "nonempty_segment_count": int(scoped["row_count"].gt(0).sum()),
+                "row_count": int(scoped["row_count"].sum()),
+                "size_bytes": int(scoped["size_bytes"].sum()),
+                "first_retrieval_time_utc": scoped["retrieval_time_utc"].min(),
+                "last_retrieval_time_utc": scoped["retrieval_time_utc"].max(),
                 "integrity_pass": bool(
-                    len(part.loc[part["segment"].isin(expected)]) == len(expected)
-                    and part.loc[part["segment"].isin(expected), "integrity_status"].eq("pass").all()
+                    len(scoped) == len(expected)
+                    and scoped["integrity_status"].eq("pass").all()
                 ),
             }
         )
@@ -632,4 +636,18 @@ def compare_canonical_to_legacy(
 
 
 def timed(stage: str, started: float, **values: Any) -> dict[str, Any]:
-    return {"stage": stage, "elapsed_seconds": time.perf_counter() - started, **values}
+    try:
+        import os
+
+        import psutil
+
+        memory = psutil.Process(os.getpid()).memory_info()
+        peak_rss_mib = float(getattr(memory, "peak_wset", memory.rss)) / (1024 * 1024)
+    except Exception:  # pragma: no cover - optional resource diagnostic
+        peak_rss_mib = np.nan
+    return {
+        "stage": stage,
+        "elapsed_seconds": time.perf_counter() - started,
+        "peak_rss_mib": peak_rss_mib,
+        **values,
+    }
