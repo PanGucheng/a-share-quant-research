@@ -279,7 +279,11 @@ def _write_report(
     }
     blocked = qualification.loc[qualification["temporarily_blocked"], ["factor", "block_reason"]]
     source_lines = [
-        f"- `{row.api}`: {row.row_count:,} rows, {row.observed_segment_count}/{row.expected_segment_count} segments, integrity={row.integrity_pass}."
+        f"- `{row.api}`: {row.row_count:,} rows, "
+        f"{row.observed_segment_count}/{row.expected_segment_count} segments, "
+        f"observation={row.observation_start}..{row.observation_end}, "
+        f"availability={row.availability_start}..{row.availability_end}, "
+        f"missing availability={row.missing_availability_count}, integrity={row.integrity_pass}."
         for row in source_coverage.itertuples(index=False)
     ]
     family_lines = [
@@ -468,6 +472,9 @@ def materialize(config: dict, scope: str, paths: BuildPaths) -> int:
     source_coverage, raw_identity = raw_source_coverage(
         resolve(config["raw_runtime_dir"]), trade_segments, statement_segments
     )
+    source_coverage = source_coverage.merge(
+        supporting["raw_content_coverage"], on="api", how="left", validate="one_to_one"
+    )
     canonical_comparison = compare_canonical_to_legacy(
         runtime_scope / "canonical.parquet", inventory, partition_rows
     )
@@ -514,7 +521,22 @@ def materialize(config: dict, scope: str, paths: BuildPaths) -> int:
     fina_crosscheck.to_csv(paths.report_dir / "fina_indicator_crosscheck.csv", index=False)
     unit_sanity.to_csv(paths.report_dir / "unit_sanity.csv", index=False)
     adapter_issues.to_csv(paths.report_dir / "adapter_issues.csv", index=False)
-    supporting["revision_audit"].to_csv(paths.report_dir / "revision_audit.csv", index=False)
+    revision_audit = supporting["revision_audit"]
+    revision_audit.to_parquet(runtime_scope / "revision_audit.parquet", index=False)
+    revision_summary = (
+        revision_audit.groupby("dataset", as_index=False)
+        .agg(
+            revision_group_count=("source_row_hash", "size"),
+            same_day_multirow_group_count=("same_day_row_count", lambda value: int(value.gt(1).sum())),
+            selected_update_flag_one_count=("selected_update_flag", lambda value: int(pd.to_numeric(value, errors="coerce").eq(1).sum())),
+            first_availability=("information_available_date", "min"),
+            last_availability=("information_available_date", "max"),
+        )
+    )
+    revision_summary.to_csv(paths.report_dir / "revision_summary.csv", index=False)
+    revision_audit.loc[revision_audit["same_day_row_count"].gt(1)].head(200).to_csv(
+        paths.report_dir / "revision_examples.csv", index=False
+    )
     pd.DataFrame(timings).to_csv(paths.report_dir / "resource_timing.csv", index=False)
     raw_manifest = {
         "schema_version": 1,

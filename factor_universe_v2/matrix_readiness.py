@@ -278,6 +278,48 @@ def compute_mature_partitions(
     trade_date_segments: list[str],
     statement_segments: list[str],
 ) -> tuple[dict[str, pd.DataFrame], dict[str, pd.DataFrame]]:
+    content_rows: list[dict[str, Any]] = []
+
+    def content_coverage(
+        api: str,
+        frame: pd.DataFrame,
+        *,
+        observation_column: str,
+        availability_columns: tuple[str, ...] = (),
+    ) -> None:
+        observation = pd.to_datetime(
+            frame.get(observation_column), format="%Y%m%d", errors="coerce"
+        )
+        available = pd.Series(pd.NaT, index=frame.index, dtype="datetime64[ns]")
+        for column in availability_columns:
+            if column in frame:
+                parsed = pd.to_datetime(frame[column], format="%Y%m%d", errors="coerce")
+                available = available.where(available.notna(), parsed)
+        revision_keys = [
+            column
+            for column in ("ts_code", observation_column, "report_type", "comp_type")
+            if column in frame
+        ]
+        content_rows.append(
+            {
+                "api": api,
+                "content_row_count": len(frame),
+                "content_instrument_count": int(frame["ts_code"].nunique()),
+                "observation_start": observation.min(),
+                "observation_end": observation.max(),
+                "availability_start": available.min() if availability_columns else pd.NaT,
+                "availability_end": available.max() if availability_columns else pd.NaT,
+                "missing_availability_count": (
+                    int(available.isna().sum()) if availability_columns else 0
+                ),
+                "revision_row_count": (
+                    int(frame.duplicated(revision_keys, keep=False).sum())
+                    if revision_keys
+                    else 0
+                ),
+            }
+        )
+
     market = masked_market.copy()
     stock_return = market.groupby("instrument", sort=False)["$close"].pct_change(fill_method=None)
     market["$market_return"] = stock_return.groupby(market["datetime"]).transform("mean")
@@ -293,6 +335,7 @@ def compute_mature_partitions(
         trade_date_segments,
         required_columns=set(DAILY_BASIC_FIELDS.split(",")),
     )
+    content_coverage("daily_basic", daily_raw, observation_column="trade_date")
     daily = normalize_trade_date_frame(daily_raw)
     daily_factors = _project(
         compute_daily_basic_factors(daily), keys, list(DAILY_BASIC_FACTOR_NAMES)
@@ -304,6 +347,7 @@ def compute_mature_partitions(
         trade_date_segments,
         required_columns=set(MONEYFLOW_FIELDS.split(",")),
     )
+    content_coverage("moneyflow", money_raw, observation_column="trade_date")
     money = normalize_trade_date_frame(money_raw)
     traded = market[["datetime", "instrument", "$amount"]].rename(
         columns={"$amount": "traded_amount_cny"}
@@ -324,6 +368,12 @@ def compute_mature_partitions(
         )
         statement_frames[api] = frame
         statement_receipts.append(receipts)
+        content_coverage(
+            api,
+            frame,
+            observation_column="end_date",
+            availability_columns=("f_ann_date", "ann_date") if api != "fina_indicator" else ("ann_date",),
+        )
     events, revision_audit = statement_event_timeline(
         statement_frames["income"],
         statement_frames["balancesheet"],
@@ -357,6 +407,7 @@ def compute_mature_partitions(
             [{"check": "no_future_statement_access", "status": "pass" if no_future else "fail"}]
         ),
         "fina_indicator": statement_frames["fina_indicator"],
+        "raw_content_coverage": pd.DataFrame(content_rows),
     }
     return {
         "mature_market": market_factors,
