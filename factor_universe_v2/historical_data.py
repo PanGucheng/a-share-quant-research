@@ -138,11 +138,15 @@ def bootstrap_statement_layers(
     rows: list[dict[str, Any]] = []
     total = len(codes) * len(STATEMENT_FIELDS)
     completed = 0
-    for api, fields in STATEMENT_FIELDS.items():
-        required = {"ts_code", "ann_date", "end_date"}
-        if api != "fina_indicator":
-            required.update({"f_ann_date", "update_flag"})
-        for ts_code in codes:
+    # Rotate endpoints per issuer.  Tushare applies the 200/minute financial
+    # limit per endpoint; endpoint-major iteration can hit it even when the
+    # aggregate request pace is modest.  Interleaving keeps each endpoint at a
+    # quarter of the aggregate pace without concurrency or long blind sleeps.
+    for ts_code in codes:
+        for api, fields in STATEMENT_FIELDS.items():
+            required = {"ts_code", "ann_date", "end_date"}
+            if api != "fina_indicator":
+                required.update({"f_ann_date", "update_flag"})
             started = time.perf_counter()
             parameters = {
                 "ts_code": ts_code,
