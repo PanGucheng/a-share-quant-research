@@ -194,6 +194,31 @@ def test_segment_store_is_restartable_and_receipt_contains_no_token(tmp_path: Pa
     assert store.missing_segments("daily_basic", ["20250805", "20250806"]) == ["20250806"]
 
 
+def test_segment_store_retries_transient_errors_with_request_context(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    calls = 0
+    monkeypatch.setattr("factor_universe_v2.tushare_data.time.sleep", lambda _: None)
+
+    def request() -> pd.DataFrame:
+        nonlocal calls
+        calls += 1
+        raise RuntimeError("temporary provider failure")
+
+    store = TushareSegmentStore(tmp_path)
+    with pytest.raises(
+        RuntimeError, match=r"income:600512\.SH request failed after 5 attempts"
+    ):
+        store.fetch(
+            api="income",
+            segment="600512.SH",
+            request=request,
+            required_columns={"ts_code", "ann_date"},
+            sort_columns=["ts_code"],
+        )
+    assert calls == 5
+
+
 def test_probe_distinguishes_empty_slice_from_permission_failure(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setattr("factor_universe_v2.tushare_data.time.sleep", lambda _: None)
 

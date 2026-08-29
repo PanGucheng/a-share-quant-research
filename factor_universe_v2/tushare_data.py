@@ -119,8 +119,8 @@ class TushareSegmentStore:
         required_columns: set[str],
         sort_columns: list[str],
         public_parameters: dict[str, Any] | None = None,
-        attempts: int = 3,
-        backoff_seconds: float = 1.0,
+        attempts: int = 5,
+        backoff_seconds: float = 2.0,
     ) -> tuple[pd.DataFrame, dict[str, Any]]:
         public_parameters = dict(public_parameters or {})
         sensitive = [key for key in public_parameters if "token" in key.lower() or "secret" in key.lower()]
@@ -139,9 +139,11 @@ class TushareSegmentStore:
             try:
                 frame = request()
                 break
-            except Exception:
+            except Exception as exc:
                 if attempt + 1 == attempts:
-                    raise
+                    raise RuntimeError(
+                        f"{api}:{segment} request failed after {attempts} attempts"
+                    ) from exc
                 time.sleep(backoff_seconds * (2**attempt))
         if frame is None:
             raise RuntimeError(f"{api}:{segment} returned no frame")
