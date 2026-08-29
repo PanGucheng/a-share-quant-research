@@ -304,6 +304,7 @@ def _write_report(
                 "",
                 f"- Matrix dates: `{keys.datetime.min().date()}` to `{keys.datetime.max().date()}`; instruments: `{keys.instrument.nunique()}`; rows: `{len(keys):,}`.",
                 f"- Definitions/materializable/coverage-qualified/research-usable/blocked: `{counts['defined']}/{counts['materializable']}/{counts['coverage_qualified']}/{counts['research_usable']}/{counts['temporarily_blocked']}`.",
+                f"- Qualification requires overall coverage >= `{config['qualification']['minimum_factor_coverage']:.0%}`, monthly coverage >= `{config['qualification']['minimum_month_coverage']:.0%}` in at least `{config['qualification']['minimum_qualified_month_fraction']:.0%}` of months, plus non-constant finite values.",
                 f"- Bootstrap begins `{config['market_bootstrap_start_date']}`, exactly 252 provider trading sessions before the first research date; statement announcements begin `{config['statement_announcement_start_date']}` to cover the prior-year comparators visible at research start.",
                 "- The 669 V1 factors and Matrix v4 partitions are referenced byte-for-byte; no old matrix, label, split, prediction, Forward, or Strategy V1 artifact was changed.",
                 "",

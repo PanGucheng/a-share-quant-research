@@ -563,7 +563,42 @@ def audit_partitions(
                 instrument_accumulator.setdefault(key, [0, 0])
                 instrument_accumulator[key][0] += int(finite_count[list(positions)].sum())
                 instrument_accumulator[key][1] += len(positions) * factor_count
+    month_frame = pd.DataFrame(month_rows)
+    if not month_frame.empty:
+        month_frame["missingness_class"] = "qualified"
+        for factor, positions in month_frame.groupby("factor").groups.items():
+            part = month_frame.loc[positions]
+            nonempty = part.loc[part["valid_count"].gt(0), "month"]
+            if nonempty.empty:
+                month_frame.loc[positions, "missingness_class"] = "data_failure_candidate_no_history"
+                continue
+            first_valid = nonempty.min()
+            last_valid = nonempty.max()
+            low = part["coverage"].lt(minimum_month_coverage)
+            before = part["month"].lt(first_valid)
+            within = part["month"].between(first_valid, last_valid)
+            zero = part["valid_count"].eq(0)
+            month_frame.loc[part.index[low & before], "missingness_class"] = (
+                "expected_warmup_or_source_start"
+            )
+            month_frame.loc[part.index[low & within & zero], "missingness_class"] = (
+                "data_failure_candidate_temporal_gap"
+            )
+            month_frame.loc[part.index[low & ~(before | (within & zero))], "missingness_class"] = (
+                "expected_partial_history_or_field_missingness"
+            )
+        temporal_gaps = (
+            month_frame["missingness_class"]
+            .eq("data_failure_candidate_temporal_gap")
+            .groupby(month_frame["factor"])
+            .sum()
+        )
+    else:
+        temporal_gaps = pd.Series(dtype=int)
     factor_frame = pd.DataFrame(factor_rows).sort_values("factor").reset_index(drop=True)
+    factor_frame["temporal_gap_candidate_count"] = (
+        factor_frame["factor"].map(temporal_gaps).fillna(0).astype(int)
+    )
     family_frame = pd.DataFrame(
         [
             {
@@ -604,7 +639,7 @@ def audit_partitions(
     ).sort_values(["instrument", "economic_family"])
     return {
         "factor": factor_frame,
-        "factor_month": pd.DataFrame(month_rows),
+        "factor_month": month_frame,
         "factor_split": pd.DataFrame(split_rows),
         "family": family_frame,
         "source": source_frame,
