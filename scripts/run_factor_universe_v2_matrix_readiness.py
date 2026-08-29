@@ -328,7 +328,7 @@ def _write_report(
                 "17. The matrix covers every existing split range plus the configured label tail through 2026-06-09.",
                 "18. Bootstrap/build time, request counts, disk bytes and stage timings are recorded in `resource_timing.csv` and the manifest.",
                 "19. Daily APIs are date-segmented; issuer statements are segment-cached with receipts, integrity hashes, gap detection and revision-aware re-fetch compatibility, so incremental updates reuse the same contract.",
-                f"20. Economic Multi-Factor Research data readiness is `{'yes' if counts['research_usable'] > 669 else 'partial'}` for the qualified list only; no IC/model/winner/portfolio work occurred.",
+                f"20. Economic Multi-Factor Research data readiness is `{'yes' if matrix_status == 'research_ready_with_blocked_factors' else 'blocked'}` for the qualified list only; no IC/model/winner/portfolio work occurred.",
                 "",
                 "## Raw-source coverage",
                 "",
@@ -481,6 +481,19 @@ def materialize(config: dict, scope: str, paths: BuildPaths) -> int:
     fina_crosscheck = _fina_indicator_crosscheck(supporting)
     unit_sanity = _unit_sanity(mature, supporting)
     qualification = audits["factor"]
+    new_family_usable = (
+        qualification.loc[qualification["lineage_status"].eq("new")]
+        .groupby("economic_family")["research_usable"]
+        .sum()
+    )
+    expected_new_families = set(
+        inventory.loc[inventory["lineage_status"].eq("new"), "economic_family"].astype(str)
+    )
+    blocked_new_families = sorted(
+        family
+        for family in expected_new_families
+        if int(new_family_usable.get(family, 0)) == 0
+    )
     v1_unchanged = bool(legacy_rows["output_sha256"].eq(
         pd.read_csv(resolve(config["matrix_v4_partition_status"]))["output_sha256"].astype(str).values
     ).all())
@@ -493,6 +506,7 @@ def materialize(config: dict, scope: str, paths: BuildPaths) -> int:
             {"check": "no_future_statement_access", "status": supporting["pit_contract"].iloc[0]["status"], "critical": True, "detail": len(supporting["statement_alignment"])},
             {"check": "no_inf_factor_values", "status": "pass" if qualification["inf_count"].sum() == 0 else "fail", "critical": True, "detail": int(qualification["inf_count"].sum())},
             {"check": "canonical_direct_vwap_differs", "status": "pass" if canonical_comparison["different_count"].fillna(0).gt(0).any() else "fail", "critical": True, "detail": int(canonical_comparison["different_count"].fillna(0).sum())},
+            {"check": "all_new_economic_families_represented", "status": "pass" if not blocked_new_families else "fail", "critical": True, "detail": ",".join(blocked_new_families)},
             {"check": "strategy_v2_not_authorized", "status": "pass", "critical": True, "detail": False},
         ]
     )
