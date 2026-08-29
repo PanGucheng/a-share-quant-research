@@ -278,6 +278,7 @@ def compute_mature_partitions(
     store: TushareSegmentStore,
     trade_date_segments: list[str],
     statement_segments: list[str],
+    compute_factors: bool = True,
 ) -> tuple[dict[str, pd.DataFrame], dict[str, pd.DataFrame]]:
     content_rows: list[dict[str, Any]] = []
 
@@ -321,14 +322,18 @@ def compute_mature_partitions(
             }
         )
 
+    mature: dict[str, pd.DataFrame] = {}
     market = masked_market.copy()
-    stock_return = market.groupby("instrument", sort=False)["$close"].pct_change(fill_method=None)
-    market["$market_return"] = stock_return.groupby(market["datetime"]).transform("mean")
-    # Qlib community amount is thousand CNY.  V2 mature liquidity factors use CNY.
-    market["$amount"] = pd.to_numeric(market["$amount"], errors="coerce") * 1_000.0
-    market_factors = _project(
-        compute_market_factors(market), keys, list(MARKET_FACTOR_NAMES)
-    )
+    if compute_factors:
+        stock_return = market.groupby("instrument", sort=False)["$close"].pct_change(
+            fill_method=None
+        )
+        market["$market_return"] = stock_return.groupby(market["datetime"]).transform("mean")
+        # Qlib community amount is thousand CNY. V2 mature liquidity factors use CNY.
+        market["$amount"] = pd.to_numeric(market["$amount"], errors="coerce") * 1_000.0
+        mature["mature_market"] = _project(
+            compute_market_factors(market), keys, list(MARKET_FACTOR_NAMES)
+        )
 
     daily_raw, daily_receipts = load_segments(
         store,
@@ -338,9 +343,10 @@ def compute_mature_partitions(
     )
     content_coverage("daily_basic", daily_raw, observation_column="trade_date")
     daily = normalize_trade_date_frame(daily_raw)
-    daily_factors = _project(
-        compute_daily_basic_factors(daily), keys, list(DAILY_BASIC_FACTOR_NAMES)
-    )
+    if compute_factors:
+        mature["mature_daily_basic"] = _project(
+            compute_daily_basic_factors(daily), keys, list(DAILY_BASIC_FACTOR_NAMES)
+        )
 
     money_raw, money_receipts = load_segments(
         store,
@@ -349,14 +355,17 @@ def compute_mature_partitions(
         required_columns=set(MONEYFLOW_FIELDS.split(",")),
     )
     content_coverage("moneyflow", money_raw, observation_column="trade_date")
-    money = normalize_trade_date_frame(money_raw)
-    traded = market[["datetime", "instrument", "$amount"]].rename(
-        columns={"$amount": "traded_amount_cny"}
-    )
-    money = money.merge(traded, on=["datetime", "instrument"], how="left", validate="one_to_one")
-    money_factors = _project(
-        compute_moneyflow_factors(money), keys, list(MONEYFLOW_FACTOR_NAMES)
-    )
+    if compute_factors:
+        money = normalize_trade_date_frame(money_raw)
+        traded = market[["datetime", "instrument", "$amount"]].rename(
+            columns={"$amount": "traded_amount_cny"}
+        )
+        money = money.merge(
+            traded, on=["datetime", "instrument"], how="left", validate="one_to_one"
+        )
+        mature["mature_moneyflow"] = _project(
+            compute_moneyflow_factors(money), keys, list(MONEYFLOW_FACTOR_NAMES)
+        )
 
     statement_frames: dict[str, pd.DataFrame] = {}
     statement_receipts: list[pd.DataFrame] = []
@@ -389,11 +398,12 @@ def compute_mature_partitions(
         how="left",
         validate="one_to_one",
     )
-    eligible = aligned.loc[aligned["information_available_date"].notna()].copy()
-    fundamental_values = compute_fundamental_factors(eligible)
-    fundamental = _project(
-        fundamental_values, keys, list(FUNDAMENTAL_FACTOR_NAMES)
-    )
+    if compute_factors:
+        eligible = aligned.loc[aligned["information_available_date"].notna()].copy()
+        fundamental_values = compute_fundamental_factors(eligible)
+        mature["mature_fundamental"] = _project(
+            fundamental_values, keys, list(FUNDAMENTAL_FACTOR_NAMES)
+        )
     no_future = aligned["information_available_date"].dropna().le(aligned.loc[
         aligned["information_available_date"].notna(), "datetime"
     ]).all()
@@ -410,12 +420,7 @@ def compute_mature_partitions(
         "fina_indicator": statement_frames["fina_indicator"],
         "raw_content_coverage": pd.DataFrame(content_rows),
     }
-    return {
-        "mature_market": market_factors,
-        "mature_daily_basic": daily_factors,
-        "mature_moneyflow": money_factors,
-        "mature_fundamental": fundamental,
-    }, supporting
+    return mature, supporting
 
 
 def write_partition(path: Path, frame: pd.DataFrame, names: list[str]) -> dict[str, Any]:

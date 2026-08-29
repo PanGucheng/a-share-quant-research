@@ -353,9 +353,39 @@ def _write_report(
     )
 
 
-def materialize(config: dict, scope: str, paths: BuildPaths) -> int:
+def _existing_partition_row(
+    path: Path, inventory: pd.DataFrame, expected_rows: int
+) -> dict[str, object]:
+    import pyarrow.parquet as pq
+
+    if not path.is_file():
+        raise FileNotFoundError(f"missing materialized partition: {path}")
+    parquet = pq.ParquetFile(path)
+    columns = set(parquet.schema_arrow.names)
+    if not {"datetime", "instrument"}.issubset(columns):
+        raise ValueError(f"partition key columns missing: {path.name}")
+    names = [name for name in inventory["name"].astype(str) if name in columns]
+    if parquet.metadata.num_rows != expected_rows or len(columns) != len(names) + 2:
+        raise ValueError(f"incomplete materialized partition: {path.name}")
+    return {
+        "partition_id": path.stem,
+        "partition_path": path.resolve().as_posix(),
+        "factor_count": len(names),
+        "row_count": parquet.metadata.num_rows,
+        "output_sha256": file_sha256(path),
+        "output_size_bytes": path.stat().st_size,
+        "reused_v1": False,
+        "factors": ",".join(names),
+    }
+
+
+def materialize(
+    config: dict, scope: str, paths: BuildPaths, *, reuse_partitions: bool = False
+) -> int:
     if scope == "full" and not tracked_worktree_clean(PROJECT_ROOT):
         raise ValueError("full materialization requires committed tracked implementation changes")
+    if reuse_partitions and scope != "full":
+        raise ValueError("partition recovery is only supported for full materialization")
     intervals, research_calendar, daily_calendar = scope_inputs(config, scope)
     symbols = sorted(intervals["instrument"].unique())
     research_end = str(config["research_end_date"])
@@ -367,48 +397,59 @@ def materialize(config: dict, scope: str, paths: BuildPaths) -> int:
         raise ValueError("Factor Universe V2 freeze is not exactly 774 unique definitions")
     timings: list[dict] = []
     started = time.perf_counter()
-    market_raw = load_qlib_market(
-        resolve(config["provider_uri"]),
-        symbols,
-        start_date=str(config["market_bootstrap_start_date"]),
-        end_date=research_end,
-        cache_path=paths.runtime_dir / f"{scope}_qlib_market.parquet",
-    )
-    membership_calendar = qlib_calendar(
-        resolve(config["provider_uri"]),
-        str(config["market_bootstrap_start_date"]),
-        research_end,
-    )
-    membership_keys = build_pit_key_grid(intervals, membership_calendar)
-    masked = mask_raw_to_pit_membership(
-        market_raw,
-        membership_keys,
-        membership_start=pd.to_datetime(intervals["start_date"]).min(),
-    )
-    timings.append(timed("load_and_mask_qlib_market", started, rows=len(masked)))
+    market_path = paths.runtime_dir / f"{scope}_qlib_market.parquet"
+    if reuse_partitions:
+        import pyarrow.parquet as pq
+
+        market_row_count = pq.ParquetFile(market_path).metadata.num_rows
+        masked = pd.DataFrame()
+        timings.append(timed("reuse_materialized_partitions", started, rows=len(keys)))
+    else:
+        market_raw = load_qlib_market(
+            resolve(config["provider_uri"]),
+            symbols,
+            start_date=str(config["market_bootstrap_start_date"]),
+            end_date=research_end,
+            cache_path=market_path,
+        )
+        market_row_count = len(market_raw)
+        membership_calendar = qlib_calendar(
+            resolve(config["provider_uri"]),
+            str(config["market_bootstrap_start_date"]),
+            research_end,
+        )
+        membership_keys = build_pit_key_grid(intervals, membership_calendar)
+        masked = mask_raw_to_pit_membership(
+            market_raw,
+            membership_keys,
+            membership_start=pd.to_datetime(intervals["start_date"]).min(),
+        )
+        timings.append(timed("load_and_mask_qlib_market", started, rows=len(masked)))
     raw_store = TushareSegmentStore(resolve(config["raw_runtime_dir"]))
     trade_segments = [value.strftime("%Y%m%d") for value in daily_calendar]
     statement_segments = [qlib_to_tushare(value) for value in symbols]
-    started = time.perf_counter()
-    recovered, recovered_issues = compute_recovered(
-        masked,
-        keys,
-        provider_uri=resolve(config["provider_uri"]),
-        start_date=str(config["market_bootstrap_start_date"]),
-        end_date=research_end,
-        kunquant_path=resolve(config["alpha101_source_path"]),
-        ta_source_path=resolve(config["ta_source_path"]),
-        recovered_inventory=inventory.loc[inventory["lineage_status"].eq("recovered")],
-    )
-    timings.append(timed("materialize_recovered", started, factors=19))
-    started = time.perf_counter()
-    canonical, canonical_issues = compute_canonical(
-        masked,
-        keys,
-        inventory,
-        resolve(config["alpha101_source_path"]),
-    )
-    timings.append(timed("materialize_canonical", started, factors=28))
+    runtime_scope = paths.runtime_dir / scope
+    if not reuse_partitions:
+        started = time.perf_counter()
+        recovered, recovered_issues = compute_recovered(
+            masked,
+            keys,
+            provider_uri=resolve(config["provider_uri"]),
+            start_date=str(config["market_bootstrap_start_date"]),
+            end_date=research_end,
+            kunquant_path=resolve(config["alpha101_source_path"]),
+            ta_source_path=resolve(config["ta_source_path"]),
+            recovered_inventory=inventory.loc[inventory["lineage_status"].eq("recovered")],
+        )
+        timings.append(timed("materialize_recovered", started, factors=19))
+        started = time.perf_counter()
+        canonical, canonical_issues = compute_canonical(
+            masked,
+            keys,
+            inventory,
+            resolve(config["alpha101_source_path"]),
+        )
+        timings.append(timed("materialize_canonical", started, factors=28))
     started = time.perf_counter()
     mature, supporting = compute_mature_partitions(
         masked,
@@ -416,15 +457,56 @@ def materialize(config: dict, scope: str, paths: BuildPaths) -> int:
         store=raw_store,
         trade_date_segments=trade_segments,
         statement_segments=statement_segments,
+        compute_factors=not reuse_partitions,
     )
-    timings.append(timed("materialize_mature", started, factors=58))
-    runtime_scope = paths.runtime_dir / scope
-    new_frames = {"recovered": recovered, "canonical": canonical, **mature}
-    adapter_issues = pd.concat([recovered_issues, canonical_issues], ignore_index=True)
+    timings.append(
+        timed(
+            "load_supporting_evidence" if reuse_partitions else "materialize_mature",
+            started,
+            factors=0 if reuse_partitions else 58,
+        )
+    )
     new_rows = []
-    for partition_id, frame in new_frames.items():
-        names = [value for value in inventory["name"].astype(str) if value in frame.columns]
-        new_rows.append(write_partition(runtime_scope / f"{partition_id}.parquet", frame, names))
+    if reuse_partitions:
+        partition_ids = (
+            "recovered",
+            "canonical",
+            "mature_market",
+            "mature_daily_basic",
+            "mature_moneyflow",
+            "mature_fundamental",
+        )
+        new_rows = [
+            _existing_partition_row(runtime_scope / f"{partition_id}.parquet", inventory, len(keys))
+            for partition_id in partition_ids
+        ]
+        adapter_issues = pd.read_csv(paths.report_dir / "adapter_issues.csv")
+        mature = {
+            "mature_market": pd.read_parquet(
+                runtime_scope / "mature_market.parquet",
+                columns=["mature_amihud_illiquidity_20"],
+            ),
+            "mature_daily_basic": pd.read_parquet(
+                runtime_scope / "mature_daily_basic.parquet",
+                columns=["mature_log_total_market_cap", "mature_turnover_rate_free_float"],
+            ),
+            "mature_moneyflow": pd.read_parquet(
+                runtime_scope / "mature_moneyflow.parquet",
+                columns=["mature_net_flow_to_traded_amount"],
+            ),
+            "mature_fundamental": pd.read_parquet(
+                runtime_scope / "mature_fundamental.parquet",
+                columns=["mature_return_on_assets", "mature_book_leverage"],
+            ),
+        }
+    else:
+        new_frames = {"recovered": recovered, "canonical": canonical, **mature}
+        adapter_issues = pd.concat([recovered_issues, canonical_issues], ignore_index=True)
+        for partition_id, frame in new_frames.items():
+            names = [value for value in inventory["name"].astype(str) if value in frame.columns]
+            new_rows.append(
+                write_partition(runtime_scope / f"{partition_id}.parquet", frame, names)
+            )
     new_partition_rows = pd.DataFrame(new_rows)
     if scope == "canary":
         qualification_input = audit_partitions(
@@ -583,7 +665,7 @@ def materialize(config: dict, scope: str, paths: BuildPaths) -> int:
         "qlib_market_snapshot": {
             "path": (paths.runtime_dir / f"{scope}_qlib_market.parquet").resolve().as_posix(),
             "sha256": file_sha256(paths.runtime_dir / f"{scope}_qlib_market.parquet"),
-            "row_count": len(market_raw),
+            "row_count": market_row_count,
             "provider_uri": resolve(config["provider_uri"]).as_posix(),
             "source_snapshot_manifest_sha256": file_sha256(
                 resolve(config["raw_market_data_snapshot_manifest"])
@@ -679,7 +761,11 @@ def main() -> int:
         type=Path,
         default=Path("configs/factor_universe_v2_matrix_readiness.yaml"),
     )
-    parser.add_argument("--stage", choices=("bootstrap", "materialize", "all"), default="all")
+    parser.add_argument(
+        "--stage",
+        choices=("bootstrap", "materialize", "finalize", "all"),
+        default="all",
+    )
     parser.add_argument("--scope", choices=("canary", "full"), default="canary")
     args = parser.parse_args()
     config = load_config(resolve(args.config))
@@ -693,8 +779,10 @@ def main() -> int:
         status = bootstrap(config, args.scope, paths.report_dir)
         if status:
             return status
-    if args.stage in {"materialize", "all"}:
-        return materialize(config, args.scope, paths)
+    if args.stage in {"materialize", "finalize", "all"}:
+        return materialize(
+            config, args.scope, paths, reuse_partitions=args.stage == "finalize"
+        )
     return 0
 
 
