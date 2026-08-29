@@ -1,0 +1,41 @@
+schema_version: 1
+stage_id: factor_universe_v2_matrix_readiness
+status: authorized_data_qualification
+provider_uri: ../qlib_data/cn_data_community_20260609_derived
+factor_universe_manifest: outputs/factor_universe_v2/current/freeze_manifest.json
+factor_inventory: outputs/factor_universe_v2/current/factor_inventory_v2.csv
+universe_intervals: outputs/point_in_time_universe_v2/full_research/universe_intervals.csv
+universe_manifest: outputs/point_in_time_universe_v2/full_research/artifact_manifest.json
+matrix_v4_partition_status: outputs/full_research_feature_matrix_v4/current/partition_status.csv
+matrix_v4_manifest: outputs/full_research_feature_matrix_v4/current/artifact_manifest.json
+split_ranges: outputs/purged_walk_forward_v1/full_research_669/split_date_ranges.csv
+split_manifest: outputs/purged_walk_forward_v1/full_research_669/artifact_manifest.json
+alpha101_source_path: tmp/reference_repos/KunQuant
+alpha101_metadata_catalog: outputs/factor_catalog_alpha101_v1/kunquant_alpha101_catalog_metadata.yaml
+ta_source_path: tmp/reference_repos/ta
+research_start_date: 2021-02-01
+research_end_date: 2026-06-09
+market_bootstrap_start_date: 2020-01-17
+statement_announcement_start_date: 2018-01-01
+statement_announcement_end_date: 2026-06-09
+raw_runtime_dir: outputs/factor_universe_v2_matrix_readiness/runtime/raw
+matrix_runtime_dir: outputs/factor_universe_v2_matrix_readiness/runtime/matrix
+output_dir: outputs/factor_universe_v2_matrix_readiness/current
+report_dir: reports/factor_universe_v2_matrix_readiness
+canary:
+  instruments:
+    - SH600000
+    - SH600519
+    - SZ000001
+    - SZ000858
+    - SZ300750
+    - SH688981
+  research_end_date: 2021-04-30
+  daily_bootstrap_start_date: 2020-11-02
+qualification:
+  minimum_factor_coverage: 0.50
+  minimum_month_coverage: 0.35
+  minimum_qualified_month_fraction: 0.90
+decision_time_semantics: row_t_after_close_usable_next_trading_session
+fundamental_pit_semantics: latest_provider_revision_with_information_available_date_lte_decision_date
+strategy_v2_authorized: false

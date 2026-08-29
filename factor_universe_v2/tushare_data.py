@@ -82,6 +82,34 @@ class TushareSegmentStore:
             if not all(path.is_file() for path in self.paths(api, segment))
         ]
 
+    def validate(
+        self,
+        *,
+        api: str,
+        segment: str,
+        required_columns: set[str] | None = None,
+        public_parameters: dict[str, Any] | None = None,
+    ) -> tuple[pd.DataFrame, dict[str, Any]]:
+        """Load one cached segment only after receipt and content verification."""
+        data_path, receipt_path = self.paths(api, segment)
+        if not data_path.is_file() or not receipt_path.is_file():
+            raise FileNotFoundError(f"missing cached segment: {api}:{segment}")
+        receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
+        digest = hashlib.sha256(data_path.read_bytes()).hexdigest()
+        if receipt.get("data_sha256") != digest:
+            raise ValueError(f"cached segment hash mismatch: {api}:{segment}")
+        if receipt.get("api") != api or receipt.get("segment") != segment:
+            raise ValueError(f"cached segment receipt identity mismatch: {api}:{segment}")
+        if public_parameters is not None and receipt.get("parameters") != public_parameters:
+            raise ValueError(f"cached segment parameters mismatch: {api}:{segment}")
+        frame = pd.read_parquet(data_path)
+        missing = sorted(set(required_columns or ()) - set(frame.columns))
+        if missing:
+            raise ValueError(f"cached {api}:{segment} missing columns: {missing}")
+        if int(receipt.get("row_count", -1)) != len(frame):
+            raise ValueError(f"cached segment row-count mismatch: {api}:{segment}")
+        return frame, receipt
+
     def fetch(
         self,
         *,
@@ -100,7 +128,12 @@ class TushareSegmentStore:
             raise ValueError(f"receipt parameters contain sensitive keys: {sensitive}")
         data_path, receipt_path = self.paths(api, segment)
         if data_path.is_file() and receipt_path.is_file():
-            return pd.read_parquet(data_path), json.loads(receipt_path.read_text(encoding="utf-8"))
+            return self.validate(
+                api=api,
+                segment=segment,
+                required_columns=required_columns,
+                public_parameters=public_parameters,
+            )
         frame: pd.DataFrame | None = None
         for attempt in range(attempts):
             try:

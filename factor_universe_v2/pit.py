@@ -64,12 +64,23 @@ def prepare_pit_records(
     result["source_row_hash"] = result.apply(
         lambda row: _row_fingerprint(row, fingerprint_columns), axis=1
     )
+    # Tushare can return both the original and an updated row with the same
+    # announcement date.  ``update_flag=1`` is the newer source revision and
+    # must win before the deterministic hash tie-breaker.  The previous V2
+    # implementation only used the hash for same-day rows, which was stable but
+    # did not express the provider's revision semantics.
+    update_flag = pd.to_numeric(result.get("update_flag"), errors="coerce")
+    if isinstance(update_flag, pd.Series):
+        result["revision_priority"] = update_flag.fillna(-1).astype(int)
+    else:
+        result["revision_priority"] = -1
     revision_keys = entity + [report_period_column]
     for optional in ("report_type", "comp_type"):
         if optional in result:
             revision_keys.append(optional)
     result = result.sort_values(
-        revision_keys + ["information_available_date", "source_row_hash"],
+        revision_keys
+        + ["information_available_date", "revision_priority", "source_row_hash"],
         na_position="last",
     ).reset_index(drop=True)
     result["revision_sequence"] = result.groupby(revision_keys, dropna=False).cumcount() + 1
@@ -100,6 +111,12 @@ def asof_pit_records(
     if eligible.empty:
         return eligible
     eligible = eligible.sort_values(
-        keys + ["information_available_date", "revision_sequence", "source_row_hash"]
+        keys
+        + [
+            "information_available_date",
+            "revision_priority",
+            "revision_sequence",
+            "source_row_hash",
+        ]
     )
     return eligible.groupby(keys, dropna=False, as_index=False).tail(1).reset_index(drop=True)
