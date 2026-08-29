@@ -1,0 +1,4 @@
+stage,elapsed_seconds,peak_rss_mib,rows,factors
+reuse_materialized_partitions,0.011275300003035227,436.8046875,2587671.0,
+load_supporting_evidence,699.1162876999988,6392.12109375,,0.0
+coverage_and_missingness_audit,572.7785987000025,6392.12109375,,774.0

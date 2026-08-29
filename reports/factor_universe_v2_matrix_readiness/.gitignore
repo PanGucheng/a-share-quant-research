@@ -1,0 +1,7 @@
+# Runtime-scale evidence retained locally; compact summaries remain Git-tracked.
+canary_*
+factor_month_coverage.csv
+factor_split_coverage.csv
+instrument_family_coverage.csv
+full_daily_bootstrap_receipts.csv
+full_statement_bootstrap_receipts.csv

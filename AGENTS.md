@@ -94,9 +94,9 @@ ML Feature Pool MVP V1, Performance Optimization V1, Research Productivity V1, a
 Clustering Ablation V1 are also CLOSED. Their preserved reports are diagnostic or
 engineering evidence, not Strategy V2 authorization. Fast Research is screening-only,
 and the one-representative clustering gate remains unchanged after mixed historical
-evidence. The next historical research area, when separately authorized, is a
-high-level Factor Universe / Data Capability Upgrade; no V2 implementation plan is
-implied by this roadmap entry.
+evidence. Factor Universe V2 catalog and historical matrix readiness are complete;
+this does not by itself authorize Economic Multi-Factor Research, model training, or
+Strategy V2.
 
 ## Engineering Navigation
 

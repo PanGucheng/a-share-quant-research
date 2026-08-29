@@ -1,0 +1,3 @@
+check,status,matched_rows,median_relative_difference,correlation
+current_ratio,pass,103834,1.2062852597922207e-05,0.9999882765994431
+cash_ratio,pass,103831,0.5674001337499195,0.8557867446588487

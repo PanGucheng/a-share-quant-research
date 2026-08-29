@@ -1,0 +1,12 @@
+check,status,critical,detail
+frozen_universe_774,pass,True,774
+exact_pit_key_grid,pass,True,2587671
+v1_669_byte_immutable,pass,True,669
+raw_segment_integrity,pass,True,19024
+no_future_statement_access,pass,True,2587671
+no_inf_new_v2_factor_values,pass,True,0
+no_inf_research_usable_factor_values,pass,True,0
+legacy_v1_nonfinite_values_disclosed,pass,False,312
+canonical_direct_vwap_differs,pass,True,30547644
+all_new_economic_families_represented,pass,True,
+strategy_v2_not_authorized,pass,True,False

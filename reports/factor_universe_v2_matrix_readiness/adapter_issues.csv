@@ -1,0 +1,5 @@
+factor,adapter_status,block_reason
+kunquant_alpha101_alpha021,blocked,ValueError: result axes differ from provider axes; positional relabel forbidden
+kunquant_alpha101_alpha023,blocked,ValueError: result axes differ from provider axes; positional relabel forbidden
+kunquant_alpha101_alpha027,blocked,ValueError: result axes differ from provider axes; positional relabel forbidden
+kunquant_alpha101_alpha027_canonical_vwap_v2,blocked,ValueError: result axes differ from provider axes; positional relabel forbidden

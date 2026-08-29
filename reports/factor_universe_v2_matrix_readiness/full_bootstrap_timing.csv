@@ -1,0 +1,3 @@
+stage,elapsed_seconds,peak_rss_mib,scope,segment_count,network_request_count,cache_hit_count,source_rows
+bootstrap_daily_layers,192.0464166999991,250.44921875,full,3092,0,3092,14892898
+bootstrap_statement_layers,1489.5088032000003,262.54296875,full,15932,5280,10652,675541

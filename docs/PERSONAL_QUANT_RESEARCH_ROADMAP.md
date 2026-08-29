@@ -134,10 +134,12 @@ Detailed numbers and limitations live in the linked reports in
 [DOC_INDEX.md](DOC_INDEX.md); they are not duplicated here. All four are CLOSED, and
 the observed historical diagnostics do not authorize Strategy V2.
 
-The **Factor Universe / Data Capability Upgrade** is complete as the frozen,
-research-only Factor Universe V2 catalog. Full data bootstrap, V2 matrix construction,
-multi-factor research and model training remain separately authorized future work.
-Genuine Forward evidence collection retains temporal priority.
+The **Factor Universe / Data Capability Upgrade** and its historical matrix-readiness
+stage are complete. The PIT-qualified 2021-02-01 through 2026-06-09 matrix approves
+765 of 774 frozen definitions for later research, with nine definitions explicitly
+blocked and all 669 V1 partitions byte-immutable. Economic multi-factor research and
+model training remain separate future work; Strategy V2 is not authorized. Genuine
+Forward evidence collection retains temporal priority.
 
 ## 6. Why Forward Collection Has Temporal Priority
 

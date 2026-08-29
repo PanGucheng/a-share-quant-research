@@ -89,10 +89,14 @@ Archive 保留证据，但不授权恢复已关闭工作。
 - [Factor Universe V2](../reports/factor_universe_v2/REPORT.md)：冻结 research-only 的
   774 因子目录；完成历史缺失/退化审计、Tushare 权限探测、PIT/修订与增量缓存、
   外部成熟体系及 A 股研究，并新增 58 个覆盖估值、基本面、资金流与风险的信息轴。
-  该冻结不授权 Strategy V2，完整数据 bootstrap 仍是 Matrix 构建前置门槛。
+  该冻结不授权 Strategy V2。
+- [Factor Universe V2 Historical Data & Matrix Readiness](../reports/factor_universe_v2_matrix_readiness/REPORT.md)：
+  完成全量历史 bootstrap、严格 PIT 物化、coverage/missingness、单位及 canonical 对照；
+  774 个定义中 765 个 research-usable、9 个明确 blocked，V1 669 分区字节级不变。
 
 这些结果不修改 Strategy V1、不产生 Strategy V2 authorization，也不构成 fresh OOS。
-Factor Universe V2 的实证 Matrix、多因子与模型研究仍需单独授权。
+Factor Universe V2 的实证 Matrix 已达到 qualified-list data readiness；多因子与模型研究
+仍是独立后续阶段，Strategy V2 仍未授权。
 
 ## Archive Map
 
