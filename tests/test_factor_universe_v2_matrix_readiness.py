@@ -141,6 +141,7 @@ def test_statement_timeline_is_revision_aware_and_no_future() -> None:
     assert aligned["prior_revenue"].tolist() == [80.0, 80.0]
     assert aligned["information_available_date"].le(aligned["datetime"]).all()
     assert audit["same_day_row_count"].ge(1).all()
+    assert audit["selected_source_row_hash"].str.fullmatch(r"[0-9a-f]{64}").all()
 
 
 def test_statement_timeline_keeps_expected_missing_fields() -> None:

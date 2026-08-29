@@ -541,7 +541,7 @@ def materialize(config: dict, scope: str, paths: BuildPaths) -> int:
     revision_summary = (
         revision_audit.groupby("dataset", as_index=False)
         .agg(
-            revision_group_count=("source_row_hash", "size"),
+            revision_group_count=("ts_code", "size"),
             same_day_multirow_group_count=("same_day_row_count", lambda value: int(value.gt(1).sum())),
             selected_update_flag_one_count=("selected_update_flag", lambda value: int(pd.to_numeric(value, errors="coerce").eq(1).sum())),
             first_availability=("information_available_date", "min"),
