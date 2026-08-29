@@ -217,12 +217,14 @@ Evidence:     personal research grade
 - Performance Optimization V1；
 - Research Productivity V1（Fast Research 仅 screening-only）；
 - Clustering Ablation V1（mixed historical diagnostic，representative gate 不变）；
+- Economic Multi-Factor Research V1（765 因子经济映射、11 sleeves、7 archetypes、
+  split-local eligibility 与固定 P01 历史诊断；无稳定三段增量链，不选择 winner）；
 - 历史 Accuracy Correction、Data Source Audit 和 execution semantics 修正阶段。
 
 CLOSED 阶段只允许修复可证明的数据错误、泄漏、contract failure 或实现 bug；一般
 维护不得借机产生新策略结论。
 
-近期四个阶段的详细结论只在相应 final reports 中维护，入口见
+近期阶段的详细结论只在相应 final reports 中维护，入口见
 [DOC_INDEX.md](DOC_INDEX.md)。它们不产生 production winner、Strategy V2 authorization
 或新的 unbiased holdout estimate。
 
@@ -244,9 +246,10 @@ CLOSED 阶段只允许修复可证明的数据错误、泄漏、contract failure
   与 [Historical Data & Matrix Readiness](../reports/factor_universe_v2_matrix_readiness/REPORT.md)：
   2021-02-01 至 2026-06-09 的 2,587,671 个 PIT keys 中，770 个定义可物化、765 个
   research-usable、9 个明确 blocked；669 个 V1 因子分区保持字节级不变，Matrix
-  Readiness 阶段现为 CLOSED。该结果只允许
-  qualified list 进入后续独立的 Economic Multi-Factor Research，不修改 Strategy V1、
-  Forward Track，也不授权 Strategy V2；
+  Readiness 阶段现为 CLOSED。qualified list 已由独立的
+  [Economic Multi-Factor Research V1](../reports/economic_multi_factor_research_v1/REPORT.md)
+  完成经济映射与历史诊断；该阶段同样 CLOSED，不修改 Strategy V1、Forward Track，
+  也不授权 Strategy V2；
 - 这里的 765 个 research-usable 因子是全局物理数据合格候选集，不是所有 outer split
   固定使用的 feature whitelist；任何带时间依赖的 eligibility、选择、IC 或模型输入仍须
   development-only、split-local，不能利用后期 coverage/availability 决定早期 membership；

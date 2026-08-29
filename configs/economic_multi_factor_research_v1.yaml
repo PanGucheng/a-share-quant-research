@@ -1,0 +1,199 @@
+schema_version: 1
+stage_id: economic_multi_factor_research_v1
+experiment_class: post_observation_research
+evidence_grade: historical_diagnostic_only
+design_frozen_before_outcomes: true
+design_version: 2026-08-29.v1
+
+inputs:
+  factor_inventory: outputs/factor_universe_v2/current/factor_inventory_v2.csv
+  factor_qualification: outputs/factor_universe_v2_matrix_readiness/current/factor_qualification.csv
+  partition_manifest: outputs/factor_universe_v2_matrix_readiness/current/partition_manifest.csv
+  matrix_readiness_manifest: outputs/factor_universe_v2_matrix_readiness/current/artifact_manifest.json
+  labels: outputs/full_research_feature_matrix_v4/runtime/labels_v2.parquet
+  labels_manifest: outputs/full_research_labels_v2/current/artifact_manifest.json
+  date_assignments: outputs/research_selection_lineage_closure_v1/current/date_assignments.csv
+  split_ranges: outputs/purged_walk_forward_v1/full_research_669/split_manifest.csv
+  historical_backtest_config: configs/historical_portfolio_backtest_v1.yaml
+  literature_evidence_map: reports/economic_multi_factor_research_v1/literature_evidence_map.csv
+
+label: label_20d_t1
+development_folds: [train, validation]
+evaluation_fold: test
+
+eligibility:
+  minimum_row_coverage: 0.50
+  minimum_finite_dates: 120
+  minimum_cross_section: 100
+  minimum_qualified_date_fraction: 0.80
+  minimum_unique_values: 10
+
+construction:
+  transform: cross_sectional_percentile_rank_scaled_to_minus_one_plus_one
+  factor_aggregation: equal_weight_within_subfamily
+  subfamily_aggregation: equal_weight_within_sleeve
+  sleeve_aggregation: equal_weight_within_archetype
+  minimum_member_fraction: 0.50
+  result_driven_sign_changes_allowed: false
+  optimized_weights_allowed: false
+
+diagnostic_controls:
+  size: mature_log_total_market_cap
+  turnover: mature_turnover_rate_free_float
+  idiosyncratic_volatility: mature_idiosyncratic_volatility_60
+
+sleeves:
+  - sleeve_id: value
+    mechanism: Valuation ratios proxy a common cheapness dimension while earnings, book, sales, cash flow and distributions retain different accounting sensitivities.
+    evidence_level: strong_prior
+    intended_role: standalone_alpha_and_diversifier
+    factors:
+      - {factor: mature_earnings_yield_ttm, direction: 1, subfamily: earnings_yield, rationale: Higher positive trailing earnings yield is cheaper; CH-3 gives earnings yield special A-share relevance.}
+      - {factor: mature_earnings_to_price_pit, direction: 1, subfamily: earnings_yield, rationale: PIT statement earnings provides an announcement-timed alternative to provider TTM valuation.}
+      - {factor: mature_book_to_price, direction: 1, subfamily: book_yield, rationale: Higher book-to-price is the classic value direction, retained despite shell-value concerns.}
+      - {factor: mature_book_to_market_pit, direction: 1, subfamily: book_yield, rationale: PIT book equity is an economically distinct measurement of book value.}
+      - {factor: mature_sales_to_price_ttm, direction: 1, subfamily: sales_yield, rationale: Sales yield remains defined when earnings are weak and is not allowed to dominate by factor count.}
+      - {factor: mature_sales_to_price_pit, direction: 1, subfamily: sales_yield, rationale: PIT sales-to-price is the announcement-timed sales valuation alternative.}
+      - {factor: mature_cashflow_to_price_pit, direction: 1, subfamily: cashflow_yield, rationale: Operating cash-flow yield may add information when accrual earnings are noisy.}
+      - {factor: mature_dividend_yield_ttm, direction: 1, subfamily: payout_yield, rationale: Cash payout is a separate shareholder-yield channel.}
+
+  - sleeve_id: profitability
+    mechanism: Persistent operating efficiency and profits relative to assets or sales may signal durable business quality, but A-share evidence is mixed.
+    evidence_level: plausible_prior
+    intended_role: complementary_fundamental_information
+    factors:
+      - {factor: mature_gross_profitability, direction: 1, subfamily: asset_efficiency, rationale: Higher gross profit per asset is economically favorable.}
+      - {factor: mature_operating_profitability, direction: 1, subfamily: asset_efficiency, rationale: Operating profit per asset measures a later point in the income statement.}
+      - {factor: mature_return_on_assets, direction: 1, subfamily: asset_efficiency, rationale: Net income per asset measures bottom-line profitability.}
+      - {factor: mature_gross_margin, direction: 1, subfamily: margins, rationale: Gross margin captures pricing power and cost structure.}
+      - {factor: mature_net_margin, direction: 1, subfamily: margins, rationale: Net margin captures bottom-line conversion of revenue.}
+
+  - sleeve_id: accounting_quality
+    mechanism: Cash-backed earnings and low accrual dependence reduce the chance that reported profits overstate economic performance.
+    evidence_level: plausible_prior
+    intended_role: conditioning_and_complementary_information
+    factors:
+      - {factor: mature_cashflow_quality, direction: 1, subfamily: cash_backing, rationale: More operating cash flow per unit of earnings indicates stronger cash backing.}
+      - {factor: mature_accruals_to_assets, direction: -1, subfamily: accruals, rationale: Lower accruals are the predeclared quality direction.}
+      - {factor: mature_operating_cashflow_to_assets, direction: 1, subfamily: cash_generation, rationale: Higher operating cash generation relative to assets is favorable.}
+      - {factor: mature_cashflow_to_sales, direction: 1, subfamily: cash_generation, rationale: Higher cash conversion of sales is favorable.}
+
+  - sleeve_id: investment_growth
+    mechanism: Conservative investment and realized operating growth are competing fundamental channels rather than one mechanically signed growth family.
+    evidence_level: mixed_evidence
+    intended_role: exploratory_complementary_information
+    factors:
+      - {factor: mature_asset_growth_yoy, direction: -1, subfamily: conservative_investment, rationale: The investment anomaly predicts lower returns after aggressive asset growth.}
+      - {factor: mature_revenue_growth_yoy, direction: 1, subfamily: realized_growth, rationale: Higher realized revenue growth is the predeclared operating-growth hypothesis.}
+      - {factor: mature_net_income_growth_yoy, direction: 1, subfamily: realized_growth, rationale: Higher realized earnings growth is favorable but shares a balanced subfamily with revenue growth.}
+
+  - sleeve_id: illiquidity_premium
+    mechanism: Price impact per traded currency unit measures costly immediacy and possible illiquidity compensation.
+    evidence_level: plausible_prior
+    intended_role: alpha_with_cost_warning
+    factors:
+      - {factor: mature_amihud_illiquidity_20, direction: 1, subfamily: price_impact, rationale: Higher Amihud price impact is the predeclared gross illiquidity-premium direction; investability must be cost-tested.}
+
+  - sleeve_id: speculative_activity
+    mechanism: Unusually intense or unstable trading can reflect attention and speculative overpricing under short-sale constraints.
+    evidence_level: strong_prior
+    intended_role: standalone_alpha_with_turnover_risk
+    factors:
+      - {factor: mature_abnormal_turnover_20, direction: -1, subfamily: abnormal_turnover, rationale: Chinese evidence predicts lower future returns after abnormal turnover.}
+      - {factor: mature_amount_momentum_20, direction: -1, subfamily: abnormal_amount, rationale: Abnormal traded-value intensity is treated as a separate speculation measurement.}
+      - {factor: mature_turnover_volatility_20, direction: -1, subfamily: activity_instability, rationale: Unstable turnover is predeclared as speculative activity rather than liquidity level.}
+      - {factor: mature_volume_ratio, direction: -1, subfamily: abnormal_amount, rationale: Elevated relative volume is a second abnormal-activity measure balanced within its subfamily.}
+
+  - sleeve_id: institutional_flow
+    mechanism: Persistent large-order and aggregate net buying pressure can convey information not present in price history alone.
+    evidence_level: plausible_prior
+    intended_role: short_horizon_complementary_information
+    factors:
+      - {factor: mature_institutional_order_imbalance, direction: 1, subfamily: institutional_pressure, rationale: Large and extra-large net buying is the predeclared informative-flow direction.}
+      - {factor: mature_institutional_flow_persistence_20, direction: 1, subfamily: institutional_pressure, rationale: Persistent institutional-like pressure is distinct from the one-day level.}
+      - {factor: mature_net_flow_persistence_5, direction: 1, subfamily: aggregate_flow, rationale: Short-horizon aggregate net flow tests rapid continuation.}
+      - {factor: mature_net_flow_persistence_20, direction: 1, subfamily: aggregate_flow, rationale: Medium-horizon aggregate net flow tests persistence and is balanced with the five-day measure.}
+
+  - sleeve_id: short_term_reversal
+    mechanism: Retail-driven overreaction and temporary overnight sentiment can reverse over subsequent horizons.
+    evidence_level: strong_prior
+    intended_role: standalone_alpha_and_trading_complement
+    factors:
+      - {factor: mature_reversal_1m, direction: 1, subfamily: one_month_reversal, rationale: The stored formula is already negative prior one-month return; no post-result sign flip is permitted.}
+      - {factor: mature_overnight_return_20, direction: -1, subfamily: overnight_sentiment, rationale: High persistent overnight returns are predeclared as temporary sentiment overpricing.}
+
+  - sleeve_id: traditional_momentum
+    mechanism: Intermediate-horizon raw return continuation is tested as a competing hypothesis and is not relabeled as reversal if weak.
+    evidence_level: mixed_evidence
+    intended_role: competing_hypothesis
+    factors:
+      - {factor: mature_momentum_12_1, direction: 1, subfamily: intermediate_raw_momentum, rationale: Conventional 12-1 continuation direction is frozen despite mixed Chinese evidence.}
+
+  - sleeve_id: trend_anchor
+    mechanism: Proximity to the 52-week high may capture gradual information diffusion and anchoring separately from raw cumulative momentum.
+    evidence_level: plausible_prior
+    intended_role: complementary_price_information
+    factors:
+      - {factor: mature_high_52w, direction: 1, subfamily: price_anchor, rationale: Prices nearer their 52-week high receive the predeclared positive direction.}
+
+  - sleeve_id: low_risk_lottery
+    mechanism: Low total and residual risk, low extreme positive payoff and shallow drawdown capture defensive, lottery-preference and limits-to-arbitrage channels.
+    evidence_level: strong_prior
+    intended_role: standalone_alpha_and_risk_diversifier
+    factors:
+      - {factor: mature_idiosyncratic_volatility_60, direction: -1, subfamily: residual_risk, rationale: Lower idiosyncratic volatility is the documented A-share anomaly direction.}
+      - {factor: mature_realized_volatility_60, direction: -1, subfamily: total_risk, rationale: Lower realized volatility is the defensive direction.}
+      - {factor: mature_downside_volatility_60, direction: -1, subfamily: downside_risk, rationale: Lower adverse-return variation is the defensive direction.}
+      - {factor: mature_max_daily_return_21, direction: -1, subfamily: lottery_payoff, rationale: Lower recent MAX avoids lottery-like overpricing.}
+      - {factor: mature_market_beta_60, direction: -1, subfamily: systematic_risk, rationale: Lower market beta tests the defensive beta channel.}
+      - {factor: mature_max_drawdown_60, direction: 1, subfamily: drawdown, rationale: The stored drawdown is non-positive, so a higher value means a shallower drawdown.}
+
+archetypes:
+  - {archetype_id: value_profitability, sleeves: [value, profitability], hypothesis: Profitability may distinguish cheap durable firms from cheap weak firms.}
+  - {archetype_id: fundamental_value, sleeves: [value, profitability, accounting_quality], hypothesis: Cash-backed accounting quality may add to value plus profitability without optimizing weights.}
+  - {archetype_id: speculation_reversal, sleeves: [speculative_activity, short_term_reversal], hypothesis: Overtrading identifies overpricing while reversal measures subsequent correction.}
+  - {archetype_id: trading_mispricing, sleeves: [speculative_activity, short_term_reversal, institutional_flow], hypothesis: Informative large-order flow may separate informed pressure from retail-like overreaction.}
+  - {archetype_id: value_low_risk, sleeves: [value, low_risk_lottery], hypothesis: Cheapness and defensive/anti-lottery information may diversify distinct mispricing and risk channels.}
+  - {archetype_id: trend_flow_confirmation, sleeves: [trend_anchor, institutional_flow], hypothesis: Price anchoring accompanied by persistent informative flow may be more credible than trend alone.}
+  - {archetype_id: diversified_economic, sleeves: [value, profitability, accounting_quality, speculative_activity, short_term_reversal, low_risk_lottery, trend_anchor], hypothesis: Equal-weight economic dimensions provide a transparent broad baseline without subset or weight search.}
+
+incremental_comparisons:
+  - {base: value, added: profitability, combined: value_profitability}
+  - {base: value_profitability, added: accounting_quality, combined: fundamental_value}
+  - {base: speculative_activity, added: short_term_reversal, combined: speculation_reversal}
+  - {base: speculation_reversal, added: institutional_flow, combined: trading_mispricing}
+  - {base: value, added: low_risk_lottery, combined: value_low_risk}
+  - {base: trend_anchor, added: institutional_flow, combined: trend_flow_confirmation}
+
+portfolio_diagnostic:
+  portfolio_id: P01_FIXED_DIAGNOSTIC
+  top_k: 50
+  rebalance_interval: 5
+  initial_cash: 10000000.0
+  risk_degree: 0.95
+  lot_size: 100
+  dynamic_lot_rules: true
+  buy_commission_rate: 0.0003
+  sell_commission_rate: 0.0003
+  sell_tax_rate: 0.001
+  minimum_commission: 5.0
+  slippage_bps: 10.0
+  max_participation_rate: 0.05
+  signal_lag_trading_days: 1
+  strict_t_plus_one: true
+  historical_execution_approximate: true
+
+outputs:
+  runtime_dir: outputs/economic_multi_factor_research_v1/runtime
+  report_dir: reports/economic_multi_factor_research_v1
+
+governance:
+  historical_test_already_observed: true
+  unbiased_final_estimate: false
+  strategy_v1_changed: false
+  matrix_changed: false
+  forward_track_changed: false
+  machine_learning_used: false
+  optimized_weights_used: false
+  production_winner_selected: false
+  strategy_v2_authorized: false

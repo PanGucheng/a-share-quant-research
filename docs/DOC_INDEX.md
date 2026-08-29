@@ -78,6 +78,11 @@ Archive 保留证据，但不授权恢复已关闭工作。
 
 以下阶段均为 CLOSED。报告负责详细数字，current docs 只保留当前结论：
 
+- [Economic Multi-Factor Research V1](../reports/economic_multi_factor_research_v1/REPORT.md)：
+  将 765 个物理合格因子重构为经济机制映射，并对 11 个 sleeves、7 个有限 archetypes
+  完成 split-local、固定方向、固定 P01 的历史诊断；投机/反转关系较强但成本高，流动性
+  含显著小盘暴露，6 个预注册增量链均未在三个 split 同时通过两项互补检验。仅为
+  post-observation diagnostic，不选择 winner。
 - [ML Feature Pool MVP V1](../reports/ml_feature_pool_mvp_v1/REPORT.md)：更宽输入显示部分
   历史增量，但 broad pool 稳定性较弱；仅为 post-observation diagnostic。
 - [Performance Optimization V1](../reports/performance_optimization_v1/REPORT.md)：保留精确
@@ -96,7 +101,8 @@ Archive 保留证据，但不授权恢复已关闭工作。
 
 这些结果不修改 Strategy V1、不产生 Strategy V2 authorization，也不构成 fresh OOS。
 Factor Universe V2 的实证 Matrix 已达到 qualified-list data readiness；多因子与模型研究
-仍是独立后续阶段，Strategy V2 仍未授权。
+中的 Economic Multi-Factor Research V1 已独立完成并关闭；模型研究仍须另行授权，
+Strategy V2 仍未授权。
 
 ## Archive Map
 

@@ -17,6 +17,9 @@ frozen artifact or Forward prediction.
 
 ## Current Report Index
 
+- [Economic Multi-Factor Research V1](economic_multi_factor_research_v1/REPORT.md) —
+  CLOSED economic taxonomy, split-local sleeves/archetypes, complementarity, and fixed
+  P01 post-observation historical diagnostics; no winner or Strategy V2 authorization.
 - [ML Feature Pool MVP V1](ml_feature_pool_mvp_v1/REPORT.md) — CLOSED,
   post-observation historical diagnostic.
 - [Performance Optimization V1](performance_optimization_v1/REPORT.md) — CLOSED

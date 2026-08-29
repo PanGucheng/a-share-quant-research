@@ -1,0 +1,39 @@
+{
+  "artifact_status": "research_complete",
+  "design_frozen_before_outcomes": true,
+  "design_path": "configs/economic_multi_factor_research_v1.yaml",
+  "design_sha256": "6649b3026fb155db47c64d87fba140308d2bc24973aaafc5b31d6c15c052267f",
+  "evidence_grade": "historical_diagnostic_only",
+  "execution_complete": true,
+  "experiment_class": "post_observation_research",
+  "forward_track_changed": false,
+  "historical_test_already_observed": true,
+  "machine_learning_used": false,
+  "matrix_changed": false,
+  "output_file_hashes": {
+    "REPORT.md": "e8c7e470ea693eed1d25f241e0c5f0263d2e1f9e2fb6b6732b390f8a30ae39c2",
+    "complementarity_diagnostics.csv": "b914f89f6ca4c4b9e53da979b7ba540362e4d5a6171ceb5af901b8666333b943",
+    "daily_rank_ic.csv": "75a883389a19e661332687213027dee62f2af6c7d53b62dac7077969307d2250",
+    "economic_map.csv": "203aee878a58b65b8a622b911995f3a305727a8779907077962f99e51473ce0b",
+    "effective_sleeve_membership.csv": "af9cff18b40ac52919739a9c488c4de8b6f407637d29c0ed11c2ebf27b29c841",
+    "literature_evidence_map.csv": "b18dd86b3705564011f2538ffa5007e73c7769a84836495106fe2aca656598f6",
+    "score_correlation.csv": "4b83f1baa33737be192a953054d7431c9727c75290e0a46b981851edf752f4c1",
+    "sleeve_diagnostics.csv": "c9634e9d7656dd3a77227c231f5c18c15213e766c702ec3629b1924517cfd72a",
+    "split_local_eligibility.csv": "cb75934c4cc15a0266882707c35c03db22ef2883d84d4668307458f26702e8b9",
+    "transaction_cost_diagnostics.csv": "46c7a801ab1033cffa873d19bf91e5385861a8de4a0637bf249b6fdc078119a7"
+  },
+  "production_winner_selected": false,
+  "schema_version": 1,
+  "stage_id": "economic_multi_factor_research_v1",
+  "strategy_v1_changed": false,
+  "strategy_v2_authorized": false,
+  "trial_inventory": {
+    "archetype_count": 7,
+    "construction_variant_count": 18,
+    "optimized_weight_trials": 0,
+    "post_result_research_iterations": 0,
+    "result_driven_sign_changes": 0,
+    "sleeve_count": 11
+  },
+  "unbiased_final_estimate": false
+}

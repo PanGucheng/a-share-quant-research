@@ -119,8 +119,12 @@ and paper decision. Those records remain append-only; label evaluation waits for
 maturity. Exact current status and commands are maintained in
 [CURRENT_PIPELINE.md](CURRENT_PIPELINE.md).
 
-Four later stages are also complete:
+Five later stages are also complete:
 
+- **Economic Multi-Factor Research V1** mapped all 765 physically qualified factors
+  into economic roles and evaluated 11 sleeves plus seven finite archetypes with
+  split-local eligibility and fixed P01 diagnostics. No preregistered incremental
+  chain passed both complementarity tests across all three observed splits.
 - **ML Feature Pool MVP V1** found some incremental historical information in wider
   inputs, while the broad pool was less stable.
 - **Performance Optimization V1** retained authoritative-compatible execution and
@@ -131,14 +135,15 @@ Four later stages are also complete:
   one-representative-per-cluster gate, so the gate remains unchanged.
 
 Detailed numbers and limitations live in the linked reports in
-[DOC_INDEX.md](DOC_INDEX.md); they are not duplicated here. All four are CLOSED, and
+[DOC_INDEX.md](DOC_INDEX.md); they are not duplicated here. All five are CLOSED, and
 the observed historical diagnostics do not authorize Strategy V2.
 
 The **Factor Universe / Data Capability Upgrade** and its historical matrix-readiness
 stage are complete. The PIT-qualified 2021-02-01 through 2026-06-09 matrix approves
 765 of 774 frozen definitions for later research, with nine definitions explicitly
-blocked and all 669 V1 partitions byte-immutable. Economic multi-factor research and
-model training remain separate future work; Strategy V2 is not authorized. Genuine
+blocked and all 669 V1 partitions byte-immutable. Economic multi-factor research is
+now complete and CLOSED; model training remains separate future work, and Strategy V2
+is not authorized. Genuine
 Forward evidence collection retains temporal priority.
 
 ## 6. Why Forward Collection Has Temporal Priority

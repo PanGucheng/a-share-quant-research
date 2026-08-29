@@ -79,6 +79,11 @@ mature-label evaluation
 
 ## Recent Research Conclusions
 
+- **Economic Multi-Factor Research V1 — CLOSED / diagnostic-only**：765 个物理合格
+  因子完成经济机制映射；11 个 sleeves 与 7 个有限 archetypes 使用 split-local
+  eligibility 和固定 P01 诊断。投机/反转历史排序较强但成本高，流动性带显著小盘暴露，
+  6 个预注册增量链均未在三个 split 同时通过两项互补检验。详见
+  [final report](../reports/economic_multi_factor_research_v1/REPORT.md)。
 - **ML Feature Pool MVP V1 — CLOSED / diagnostic-only**：strict pool 可能偏窄，较宽
   输入有部分历史增量，但 broad pool 稳定性下降。详细数字见
   [final report](../reports/ml_feature_pool_mvp_v1/REPORT.md)。
@@ -99,8 +104,9 @@ Strategy V2。
 ## Immediate Next Research Direction
 
 Forward Track 继续具有时间优先级。Factor Universe V2 已冻结为 research-only 的
-774 因子目录；后续完整数据 bootstrap、V2 Matrix、多因子或模型研究仍需单独计划和授权，
-不得自动切换 Strategy V1、daily paper path 或修改 Forward evidence。
+774 因子目录，历史 bootstrap、V2 Matrix readiness 与 Economic Multi-Factor Research
+V1 均已完成并关闭。模型研究仍需单独计划和授权，不得自动切换 Strategy V1、daily
+paper path 或修改 Forward evidence。
 
 ## Environment
 

@@ -30,7 +30,9 @@ Strategy V1, historical predictions, and observed `split_003` evidence are froze
 `split_003` may be diagnosed but must not be reused for tuning and described as fresh
 OOS evidence. Model Diagnostic V1, ML Feature Pool MVP V1, Performance Optimization
 V1, Research Productivity V1, Clustering Ablation V1, and the Phase 0–6 engineering
-refactor are closed. Fast Research is screening-only; the clustering representative
+refactor are closed. Economic Multi-Factor Research V1 is also CLOSED: it mapped the
+765 qualified factors into economic roles and ran split-local, fixed-P01 historical
+diagnostics without selecting a winner. Fast Research is screening-only; the clustering representative
 gate remains unchanged. Factor Universe V2 now has a PIT-qualified historical matrix
 for 2021-02-01 through 2026-06-09: 765 of 774 frozen definitions are research-usable
 and nine remain explicitly blocked. The 669-factor V1 lineage is byte-immutable. This

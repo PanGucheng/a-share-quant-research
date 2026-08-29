@@ -27,7 +27,9 @@ Top50 等权 paper decision
 Strategy V1、历史 prediction 与已经观察的 `split_003` 均保持冻结。`split_003` 可以
 用于诊断，但不能再次用于调参后声称为新的 OOS。Model Diagnostic V1、ML Feature
 Pool MVP V1、Performance Optimization V1、Research Productivity V1、Clustering
-Ablation V1 与 Phase 0–6 工程重构均已关闭。Fast Research 仅用于筛查，clustering
+Ablation V1 与 Phase 0–6 工程重构均已关闭。Economic Multi-Factor Research V1
+也已关闭：765 个合格因子完成经济机制映射及 split-local、固定 P01 的历史诊断，未选择
+winner。Fast Research 仅用于筛查，clustering
 representative gate 保持不变。Factor Universe V2 已冻结为 research-only 的 774 因子
 目录（669 个 immutable V1、19 个 recovered、28 个 canonicalized、58 个成熟新增），
 不授权 Strategy V2，也不修改 Forward Track。不存在自动延伸的工程 Phase 7。
