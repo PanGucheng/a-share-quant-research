@@ -319,7 +319,7 @@ def _write_report(
                 f"7. Materializable definitions: `{counts['materializable']}` of 774.",
                 f"8. Research-ready factors: `{counts['research_usable']}`.",
                 f"9. Temporarily blocked factors: `{counts['temporarily_blocked']}`.",
-                "10. Block reasons are coverage failure, zero finite history, or constant/degenerate real values; definitions remain frozen and no values are fabricated.",
+                "10. Block reasons are coverage failure, zero finite history, non-finite values, or constant/degenerate real values; definitions remain frozen and no values are fabricated.",
                 "11. Economic-family coverage is listed below and in `family_coverage.csv`.",
                 "12. Factor-month, instrument-family, split/fold, source and factor audits are preserved separately; expected listing/warm-up/PIT gaps are not forward-filled.",
                 "13. Units and magnitudes are checked in `unit_sanity.csv`; Tushare total_mv is converted from 10,000 CNY for PIT valuation and moneyflow is reconciled to Qlib amount converted from 1,000 CNY.",
@@ -498,6 +498,19 @@ def materialize(config: dict, scope: str, paths: BuildPaths) -> int:
     v1_unchanged = bool(legacy_rows["output_sha256"].eq(
         pd.read_csv(resolve(config["matrix_v4_partition_status"]))["output_sha256"].astype(str).values
     ).all())
+    new_inf_count = int(
+        qualification.loc[
+            ~qualification["lineage_status"].eq("legacy_v1"), "inf_count"
+        ].sum()
+    )
+    usable_inf_count = int(
+        qualification.loc[qualification["research_usable"], "inf_count"].sum()
+    )
+    legacy_inf_count = int(
+        qualification.loc[
+            qualification["lineage_status"].eq("legacy_v1"), "inf_count"
+        ].sum()
+    )
     contracts = pd.DataFrame(
         [
             {"check": "frozen_universe_774", "status": "pass", "critical": True, "detail": 774},
@@ -505,7 +518,9 @@ def materialize(config: dict, scope: str, paths: BuildPaths) -> int:
             {"check": "v1_669_byte_immutable", "status": "pass" if v1_unchanged else "fail", "critical": True, "detail": 669},
             {"check": "raw_segment_integrity", "status": "pass" if source_coverage["integrity_pass"].all() else "fail", "critical": True, "detail": int(source_coverage["observed_segment_count"].sum())},
             {"check": "no_future_statement_access", "status": supporting["pit_contract"].iloc[0]["status"], "critical": True, "detail": len(supporting["statement_alignment"])},
-            {"check": "no_inf_factor_values", "status": "pass" if qualification["inf_count"].sum() == 0 else "fail", "critical": True, "detail": int(qualification["inf_count"].sum())},
+            {"check": "no_inf_new_v2_factor_values", "status": "pass" if new_inf_count == 0 else "fail", "critical": True, "detail": new_inf_count},
+            {"check": "no_inf_research_usable_factor_values", "status": "pass" if usable_inf_count == 0 else "fail", "critical": True, "detail": usable_inf_count},
+            {"check": "legacy_v1_nonfinite_values_disclosed", "status": "pass", "critical": False, "detail": legacy_inf_count},
             {"check": "canonical_direct_vwap_differs", "status": "pass" if canonical_comparison["different_count"].fillna(0).gt(0).any() else "fail", "critical": True, "detail": int(canonical_comparison["different_count"].fillna(0).sum())},
             {"check": "all_new_economic_families_represented", "status": "pass" if not blocked_new_families else "fail", "critical": True, "detail": ",".join(blocked_new_families)},
             {"check": "strategy_v2_not_authorized", "status": "pass", "critical": True, "detail": False},

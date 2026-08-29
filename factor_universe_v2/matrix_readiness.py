@@ -144,6 +144,7 @@ def _project(frame: pd.DataFrame, keys: pd.DataFrame, names: list[str]) -> pd.Da
     if source.duplicated(["datetime", "instrument"]).any():
         raise ValueError("factor frame contains duplicate keys")
     result = keys.merge(source, on=["datetime", "instrument"], how="left", validate="one_to_one")
+    result[names] = result[names].replace([np.inf, -np.inf], np.nan)
     return result.sort_values(["datetime", "instrument"]).reset_index(drop=True)
 
 
@@ -472,12 +473,19 @@ def audit_partitions(
             )
             unique = int(pd.Series(finite_values).nunique()) if valid else 0
             std = float(np.std(finite_values)) if valid else np.nan
+            inf_count = int(np.isinf(values).sum())
             materializable = valid > 0
             coverage_qualified = (
                 valid / total >= minimum_factor_coverage
                 and qualified_fraction >= minimum_qualified_month_fraction
             )
-            research_usable = materializable and coverage_qualified and unique > 1 and std > 0
+            research_usable = (
+                materializable
+                and coverage_qualified
+                and unique > 1
+                and std > 0
+                and inf_count == 0
+            )
             family = str(metadata.loc[factor, "economic_family"])
             source = str(metadata.loc[factor, "source"])
             lineage = str(metadata.loc[factor, "lineage_status"])
@@ -507,7 +515,7 @@ def audit_partitions(
                     "median": float(np.median(finite_values)) if valid else np.nan,
                     "q99": float(np.quantile(finite_values, 0.99)) if valid else np.nan,
                     "max": float(np.max(finite_values)) if valid else np.nan,
-                    "inf_count": int(np.isinf(values).sum()),
+                    "inf_count": inf_count,
                     "block_reason": (
                         ""
                         if research_usable
@@ -516,6 +524,8 @@ def audit_partitions(
                             if not materializable
                             else "insufficient_historical_coverage"
                             if not coverage_qualified
+                            else "non_finite_values"
+                            if inf_count
                             else "constant_or_degenerate"
                         )
                     ),

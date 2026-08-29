@@ -14,7 +14,11 @@ from factor_universe_v2.historical_data import (
 )
 from factor_universe_v2.pit import asof_pit_records, prepare_pit_records
 from factor_universe_v2.tushare_data import TushareSegmentStore
-from factor_universe_v2.matrix_readiness import audit_partitions, compare_canonical_to_legacy
+from factor_universe_v2.matrix_readiness import (
+    _project,
+    audit_partitions,
+    compare_canonical_to_legacy,
+)
 
 
 def test_instrument_mapping_is_reversible() -> None:
@@ -72,6 +76,21 @@ def test_canonical_comparison_handles_boolean_factor_values(tmp_path: Path) -> N
     assert result.loc[0, "status"] == "pass"
     assert result.loc[0, "different_count"] == 1
     assert result.loc[0, "mean_absolute_difference"] == pytest.approx(0.5)
+
+
+def test_new_v2_projection_normalizes_infinite_values_to_missing() -> None:
+    keys = pd.DataFrame(
+        {
+            "datetime": pd.to_datetime(["2021-01-04", "2021-01-05"]),
+            "instrument": ["SH600000", "SH600000"],
+        }
+    )
+    source = keys.assign(factor=[np.inf, 1.0])
+
+    result = _project(source, keys, ["factor"])
+
+    assert pd.isna(result.loc[0, "factor"])
+    assert result.loc[1, "factor"] == 1.0
 
 
 def test_same_day_update_flag_revision_wins() -> None:
@@ -164,6 +183,7 @@ def test_coverage_audit_separates_usable_sparse_and_degenerate(tmp_path: Path) -
             "usable": np.arange(6, dtype=float),
             "sparse": [1.0, np.nan, np.nan, np.nan, np.nan, np.nan],
             "constant": [1.0] * 6,
+            "nonfinite": [1.0, 2.0, 3.0, 4.0, 5.0, np.inf],
         }
     )
     path = tmp_path / "factors.parquet"
@@ -172,16 +192,16 @@ def test_coverage_audit_separates_usable_sparse_and_degenerate(tmp_path: Path) -
         [
             {
                 "partition_path": path.as_posix(),
-                "factors": "usable,sparse,constant",
+                "factors": "usable,sparse,constant,nonfinite",
             }
         ]
     )
     inventory = pd.DataFrame(
         {
-            "name": ["usable", "sparse", "constant"],
-            "economic_family": ["Test"] * 3,
-            "source": ["synthetic"] * 3,
-            "lineage_status": ["new"] * 3,
+            "name": ["usable", "sparse", "constant", "nonfinite"],
+            "economic_family": ["Test"] * 4,
+            "source": ["synthetic"] * 4,
+            "lineage_status": ["new"] * 4,
         }
     )
     split_ranges = pd.DataFrame(
@@ -208,3 +228,4 @@ def test_coverage_audit_separates_usable_sparse_and_degenerate(tmp_path: Path) -
     assert bool(audit.loc["usable", "research_usable"])
     assert audit.loc["sparse", "block_reason"] == "insufficient_historical_coverage"
     assert audit.loc["constant", "block_reason"] == "constant_or_degenerate"
+    assert audit.loc["nonfinite", "block_reason"] == "non_finite_values"
