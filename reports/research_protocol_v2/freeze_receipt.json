@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "stage_id": "research_protocol_v2",
+  "freeze_type": "protocol_design_before_model_outcomes",
+  "design_commit_sha": "343ad838b6c317ebe78c484459d88a1501251189",
+  "design_tree_sha": "6b6d90c135e7eede5ad58fdf17ea54bd3d81c3c3",
+  "design_commit_time": "2026-08-30T10:36:50+08:00",
+  "formal_model_competition_started": false,
+  "structured_ml_predictions_created": false,
+  "historical_diagnostic_tasks_executed": false,
+  "strategy_v1_changed": false,
+  "forward_track_changed": false,
+  "worktree_exclusion": "pre-existing untracked docs/Codex 开放式任务：量化研究训练流水线性能剖析与优化.md was not included",
+  "quality_summary": {
+    "protocol_targeted_tests": "13 passed",
+    "repository_pytest": "445 passed, 4 inherited Qlib runtime warnings",
+    "fast_tier": "45 passed",
+    "qlib_tier": "6 passed, 4 inherited Qlib runtime warnings",
+    "authority_report_markdown_links": "127 files passed",
+    "full_tier": "pytest passed; later inherited validator stopped on the pre-existing Factor Universe V2 Matrix Readiness non-generic manifest schema"
+  }
+}
