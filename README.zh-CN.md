@@ -46,6 +46,14 @@ daily_basic/moneyflow 的稳定尾部候选为 2016-07-01，但 PIT row-cap 与 
 仍未通过，因此继续不生成 extended Matrix。报告见
 [reports/historical_frontier_admission_v1/REPORT.md](reports/historical_frontier_admission_v1/REPORT.md)。
 
+Historical Data Authority Resolution V1 随后针对“谁是历史 authority”做了独立验证：
+Qlib interval 与 Tushare listing/namechange、Tushare/BaoStock dated presence 只能形成
+可复现候选；Tushare statements 通过 exact `period=YYYYMMDD` 分段与 offset pagination
+证明 endpoint retrieval 可穷尽，但 provider revision vintage 与 historical lifecycle
+仍未证明。因此 daily_basic/moneyflow frontier 仍是 candidate，Full V2 与 extended Matrix
+继续 blocked。报告见
+[reports/historical_data_authority_resolution_v1/REPORT.md](reports/historical_data_authority_resolution_v1/REPORT.md)。
+
 文档入口是 [docs/DOC_INDEX.md](docs/DOC_INDEX.md)；实际活动命令、时间边界和机器
 状态路径以 [docs/CURRENT_PIPELINE.md](docs/CURRENT_PIPELINE.md) 为准。
 

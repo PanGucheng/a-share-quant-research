@@ -1,0 +1,5 @@
+﻿api,issuer_count,complete_issuer_count,cap_issuer_count,retrieval_complete_rate,provider_vintage_complete,authority_status,target_key_set_equal
+balancesheet,6,6,0,1.0,False,retrieval_complete_provider_vintage_unproven,True
+cashflow,6,6,0,1.0,False,retrieval_complete_provider_vintage_unproven,True
+fina_indicator,6,6,0,1.0,False,retrieval_complete_provider_vintage_unproven,True
+income,6,6,0,1.0,False,retrieval_complete_provider_vintage_unproven,True

@@ -1,0 +1,8 @@
+﻿decision_area,status,reason
+lifecycle_authority,blocked,"Qlib interval + current Tushare metadata + dated market cross-check form a reproducible candidate, but no historical provider vintage is proven."
+survivorship_control,blocked,Current stock_basic is a snapshot; delisted/namechange evidence is not a dated membership vintage.
+statement_retrieval_completeness,pass,Segmented annual requests and offset pagination are audited; this proves endpoint retrieval completeness only.
+fundamental_pit_provider_vintage,blocked,Announcement/revision history is not independently versioned by the provider; retrieval completeness is not vintage completeness.
+daily_basic_moneyflow_frontier,not_admitted,"Candidate dates are recomputed, but authority gates remain blocked."
+full_factor_universe_v2_common_frontier,not_admitted,Lifecycle and fundamental PIT authority remain blocked.
+extended_matrix,not_generated,No new Matrix is created while authority gates are blocked.

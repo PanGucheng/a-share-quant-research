@@ -114,6 +114,10 @@ Archive 保留证据，但不授权恢复已关闭工作。
   交易日的 daily_basic/moneyflow 横截面覆盖、2010–2017 财报 PIT 完整性与 row-cap、
   Qlib 生命周期交集及 pre-2010 复权连续性；daily_basic 与 moneyflow 的稳定尾部候选
   为 2016-07-01，但 PIT/lifecycle gates 仍阻断 Full V2，未生成 extended Matrix。
+- [Historical Data Authority Resolution V1](../reports/historical_data_authority_resolution_v1/REPORT.md)：
+  对生命周期 authority 候选和财报 retrieval completeness 做独立审计；exact report-period
+  分段与 offset pagination 的 key sets 一致，但 current snapshot / provider revision vintage
+  仍无法证明，因此 frontier 继续 not admitted、extended Matrix 未生成。
 
 这些结果不修改 Strategy V1、不产生 Strategy V2 authorization，也不构成 fresh OOS。
 Factor Universe V2 的实证 Matrix 已达到 qualified-list data readiness；多因子与模型研究

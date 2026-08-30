@@ -1,0 +1,8 @@
+﻿metric,value
+security_count,6143
+candidate_cross_checked_count,6
+candidate_interval_only_count,5508
+unresolved_count,629
+rename_evidence_instrument_count,6
+historical_vintage_proven,False
+survivorship_control_status,blocked_current_snapshot_not_vintage

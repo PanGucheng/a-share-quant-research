@@ -226,6 +226,11 @@ Evidence:     personal research grade
 - Historical Frontier Admission V1（市场级 canary：28 个分层 issuer、48 个季度代表日、
   daily_basic/moneyflow 覆盖、PIT row-cap、lifecycle 交集与 adjustment continuity；
   稳定尾部候选 2016-07-01，但 PIT/lifecycle gates 阻断 Full V2，未生成 extended Matrix）；
+- Historical Data Authority Resolution V1（对 Qlib interval、Tushare stock_basic/namechange、
+  Tushare/BaoStock dated presence 做 authority reconciliation；以 exact `period=YYYYMMDD`
+  加 offset pagination 证明 2010–2017 statement endpoint retrieval 可穷尽，但 provider
+  vintage 与 historical lifecycle 仍未证明；daily_basic/moneyflow 只保留 candidate，未生成
+  extended Matrix）；
 - 历史 Accuracy Correction、Data Source Audit 和 execution semantics 修正阶段。
 
 CLOSED 阶段只允许修复可证明的数据错误、泄漏、contract failure 或实现 bug；一般

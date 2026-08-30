@@ -1,0 +1,19 @@
+schema_version: 1
+stage_id: historical_data_authority_resolution_v1
+status: research_study
+output_dir: reports/historical_data_authority_resolution_v1
+qlib_interval_file: E:/qlib_prj/qlib_data/cn_data_community_20260609_derived/instruments/all.txt
+prior_frontier_dir: reports/historical_frontier_admission_v1
+statement_start_date: 19980101
+statement_end_date: 20211231
+statement_years: [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017]
+statement_page_size: 100
+analysis_seed: 20260830
+authority_codes: [600000.SH, 000001.SZ, 600519.SH, 000858.SZ, 000002.SZ, 600036.SH]
+market_segments:
+  - [20000101, 20041231]
+  - [20050101, 20091231]
+  - [20100101, 20141231]
+  - [20150101, 20191231]
+  - [20200101, 20211231]
+minimum_market_coverage: 0.90
