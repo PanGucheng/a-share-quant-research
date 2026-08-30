@@ -1,0 +1,11 @@
+task_id,environment_id,training_history_id,train_start,train_end,validation_start,validation_end,train_dates,validation_dates,purged_dates,embargoed_dates,window_excluded_dates,selection_authority,execution_authorized
+dev_env_001__expanding,dev_env_001,expanding,2021-02-01,2023-03-29,2023-05-04,2023-06-30,522,40,21,0,0,True,False
+dev_env_001__sliding_504,dev_env_001,sliding_504,2021-03-04,2023-03-29,2023-05-04,2023-06-30,504,40,21,0,18,True,False
+dev_env_002__expanding,dev_env_002,expanding,2021-02-01,2023-06-30,2023-08-01,2023-09-22,583,39,21,0,0,True,False
+dev_env_002__sliding_504,dev_env_002,sliding_504,2021-06-03,2023-06-30,2023-08-01,2023-09-22,504,39,21,0,79,True,False
+dev_env_003__expanding,dev_env_003,expanding,2021-02-01,2023-09-22,2023-11-01,2023-12-29,643,43,21,0,0,True,False
+dev_env_003__sliding_504,dev_env_003,sliding_504,2021-08-27,2023-09-22,2023-11-01,2023-12-29,504,43,21,0,139,True,False
+dev_env_004__expanding,dev_env_004,expanding,2021-02-01,2024-01-02,2024-02-01,2024-03-28,708,35,21,0,0,True,False
+dev_env_004__sliding_504,dev_env_004,sliding_504,2021-12-07,2024-01-02,2024-02-01,2024-03-28,504,35,21,0,204,True,False
+dev_env_005__expanding,dev_env_005,expanding,2021-02-01,2024-03-28,2024-05-06,2024-06-28,764,39,21,0,0,True,False
+dev_env_005__sliding_504,dev_env_005,sliding_504,2022-03-03,2024-03-28,2024-05-06,2024-06-28,504,39,21,0,260,True,False

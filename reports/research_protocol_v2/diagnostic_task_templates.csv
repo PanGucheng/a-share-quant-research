@@ -1,0 +1,15 @@
+task_id,environment_id,training_history_id,train_start,train_end,test_start,test_end,train_dates,test_dates,purged_dates,embargoed_dates,window_excluded_dates,selection_authority,execution_authorized,authorization_condition
+diag_env_001__expanding,diag_env_001,expanding,2021-02-01,2024-07-02,2024-08-01,2024-09-25,826,38,21,0,0,False,False,development_candidate_frozen_first
+diag_env_001__sliding_504,diag_env_001,sliding_504,2022-06-07,2024-07-02,2024-08-01,2024-09-25,504,38,21,0,322,False,False,development_candidate_frozen_first
+diag_env_002__expanding,diag_env_002,expanding,2021-02-01,2024-09-25,2024-11-01,2024-12-26,885,40,21,0,0,False,False,development_candidate_frozen_first
+diag_env_002__sliding_504,diag_env_002,sliding_504,2022-08-29,2024-09-25,2024-11-01,2024-12-26,504,40,21,0,381,False,False,development_candidate_frozen_first
+diag_env_003__expanding,diag_env_003,expanding,2021-02-01,2024-12-26,2025-02-05,2025-03-31,946,39,21,0,0,False,False,development_candidate_frozen_first
+diag_env_003__sliding_504,diag_env_003,sliding_504,2022-11-30,2024-12-26,2025-02-05,2025-03-31,504,39,21,0,442,False,False,development_candidate_frozen_first
+diag_env_004__expanding,diag_env_004,expanding,2021-02-01,2025-03-31,2025-05-06,2025-06-30,1006,39,21,0,0,False,False,development_candidate_frozen_first
+diag_env_004__sliding_504,diag_env_004,sliding_504,2023-03-02,2025-03-31,2025-05-06,2025-06-30,504,39,21,0,502,False,False,development_candidate_frozen_first
+diag_env_005__expanding,diag_env_005,expanding,2021-02-01,2025-07-02,2025-08-01,2025-09-24,1068,39,21,0,0,False,False,development_candidate_frozen_first
+diag_env_005__sliding_504,diag_env_005,sliding_504,2023-06-02,2025-07-02,2025-08-01,2025-09-24,504,39,21,0,564,False,False,development_candidate_frozen_first
+diag_env_006__expanding,diag_env_006,expanding,2021-02-01,2025-09-24,2025-11-03,2025-12-30,1128,42,21,0,0,False,False,development_candidate_frozen_first
+diag_env_006__sliding_504,diag_env_006,sliding_504,2023-08-29,2025-09-24,2025-11-03,2025-12-30,504,42,21,0,624,False,False,development_candidate_frozen_first
+diag_env_007__expanding,diag_env_007,expanding,2021-02-01,2025-12-30,2026-02-02,2026-03-31,1191,36,21,0,0,False,False,development_candidate_frozen_first
+diag_env_007__sliding_504,diag_env_007,sliding_504,2023-12-04,2025-12-30,2026-02-02,2026-03-31,504,36,21,0,687,False,False,development_candidate_frozen_first

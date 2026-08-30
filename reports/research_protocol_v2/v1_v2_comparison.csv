@@ -1,0 +1,14 @@
+protocol,unit_id,training_history,usable_train_dates,usable_validation_dates,diagnostic_dates,purged_dates,embargoed_dates,selection_environment_count,diagnostic_environment_count,evidence_role
+V1,split_001,expanding,688,77,120,42,40,1,1,legacy_historical_diagnostic_anchor
+V1,split_002,expanding,808,77,124,42,40,1,1,legacy_historical_diagnostic_anchor
+V1,split_003,expanding,926,83,124,42,40,1,1,legacy_historical_diagnostic_anchor
+V2,dev_env_001__expanding,expanding,522,40,0,21,0,5,7,development_selection_authority
+V2,dev_env_001__sliding_504,sliding_504,504,40,0,21,0,5,7,development_selection_authority
+V2,dev_env_002__expanding,expanding,583,39,0,21,0,5,7,development_selection_authority
+V2,dev_env_002__sliding_504,sliding_504,504,39,0,21,0,5,7,development_selection_authority
+V2,dev_env_003__expanding,expanding,643,43,0,21,0,5,7,development_selection_authority
+V2,dev_env_003__sliding_504,sliding_504,504,43,0,21,0,5,7,development_selection_authority
+V2,dev_env_004__expanding,expanding,708,35,0,21,0,5,7,development_selection_authority
+V2,dev_env_004__sliding_504,sliding_504,504,35,0,21,0,5,7,development_selection_authority
+V2,dev_env_005__expanding,expanding,764,39,0,21,0,5,7,development_selection_authority
+V2,dev_env_005__sliding_504,sliding_504,504,39,0,21,0,5,7,development_selection_authority

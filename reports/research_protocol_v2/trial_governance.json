@@ -1,0 +1,9 @@
+{
+  "candidate_manifest_frozen_before_fit": true,
+  "development_environments_required": 5,
+  "failed_trials_count_toward_budget": true,
+  "formal_model_competition_started": false,
+  "historical_diagnostic_feedback_forbidden": true,
+  "maximum_registered_candidates_per_experiment": 8,
+  "one_axis_per_registered_experiment": true
+}

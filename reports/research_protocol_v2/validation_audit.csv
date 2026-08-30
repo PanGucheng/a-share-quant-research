@@ -1,0 +1,35 @@
+check_name,status,observed_value,required_value,severity,reason
+development_train_evaluation_label_overlap,pass,0,0,critical,Research Protocol V2 temporal and evidence-authority contract.
+development_chronological_order_failures,pass,0,0,critical,Research Protocol V2 temporal and evidence-authority contract.
+development_same_date_cross_fold,pass,0,0,critical,Research Protocol V2 temporal and evidence-authority contract.
+development_duplicate_assignment_rows,pass,0,0,critical,Research Protocol V2 temporal and evidence-authority contract.
+development_dates_outside_matrix_calendar,pass,0,0,critical,Research Protocol V2 temporal and evidence-authority contract.
+development_manifest_assignment_count_mismatches,pass,0,0,critical,Research Protocol V2 temporal and evidence-authority contract.
+diagnostic_train_evaluation_label_overlap,pass,0,0,critical,Research Protocol V2 temporal and evidence-authority contract.
+diagnostic_chronological_order_failures,pass,0,0,critical,Research Protocol V2 temporal and evidence-authority contract.
+diagnostic_same_date_cross_fold,pass,0,0,critical,Research Protocol V2 temporal and evidence-authority contract.
+diagnostic_duplicate_assignment_rows,pass,0,0,critical,Research Protocol V2 temporal and evidence-authority contract.
+diagnostic_dates_outside_matrix_calendar,pass,0,0,critical,Research Protocol V2 temporal and evidence-authority contract.
+diagnostic_manifest_assignment_count_mismatches,pass,0,0,critical,Research Protocol V2 temporal and evidence-authority contract.
+development_environment_count,pass,5,5,critical,Research Protocol V2 temporal and evidence-authority contract.
+diagnostic_environment_count,pass,7,7,critical,Research Protocol V2 temporal and evidence-authority contract.
+development_labels_before_freeze_boundary,pass,True,True,critical,Research Protocol V2 temporal and evidence-authority contract.
+development_environment_label_isolation,pass,True,True,critical,Research Protocol V2 temporal and evidence-authority contract.
+diagnostic_environment_label_isolation,pass,True,True,critical,Research Protocol V2 temporal and evidence-authority contract.
+embargoed_date_count,pass,0,0,critical,Research Protocol V2 temporal and evidence-authority contract.
+legacy_v1_selection_authority_count,pass,0,0,critical,Research Protocol V2 temporal and evidence-authority contract.
+diagnostic_selection_authority_count,pass,0,0,critical,Research Protocol V2 temporal and evidence-authority contract.
+diagnostic_execution_authorized_count,pass,0,0,critical,Research Protocol V2 temporal and evidence-authority contract.
+development_execution_authorized_count,pass,0,0,critical,Research Protocol V2 temporal and evidence-authority contract.
+matrix_authority_status,pass,research_ready_with_blocked_factors,research_ready_with_blocked_factors,critical,"Research Protocol V2 upstream, feature-scope, and determinism contract."
+matrix_stage_closed,pass,CLOSED,CLOSED,critical,"Research Protocol V2 upstream, feature-scope, and determinism contract."
+matrix_calendar_start,pass,2021-02-01,2021-02-01,critical,"Research Protocol V2 upstream, feature-scope, and determinism contract."
+matrix_calendar_end,pass,2026-06-09,2026-06-09,critical,"Research Protocol V2 upstream, feature-scope, and determinism contract."
+matrix_calendar_date_count,pass,1294,1294,critical,"Research Protocol V2 upstream, feature-scope, and determinism contract."
+labels_authority_status,pass,pass,pass,critical,"Research Protocol V2 upstream, feature-scope, and determinism contract."
+universe_authority_status,pass,pass,pass,critical,"Research Protocol V2 upstream, feature-scope, and determinism contract."
+labels_universe_alignment,pass,universe-v2:a7875d74d5119230ab5576cb245fe8b389e0dd3030606299dad6d1f0e147ccd2,universe-v2:a7875d74d5119230ab5576cb245fe8b389e0dd3030606299dad6d1f0e147ccd2,critical,"Research Protocol V2 upstream, feature-scope, and determinism contract."
+split_local_feature_eligibility_required,pass,True,True,critical,"Research Protocol V2 upstream, feature-scope, and determinism contract."
+feature_eligibility_fit_scope,pass,task_train_dates_only,task_train_dates_only,critical,"Research Protocol V2 upstream, feature-scope, and determinism contract."
+validation_test_feature_eligibility_reads_forbidden,pass,True,True,critical,"Research Protocol V2 upstream, feature-scope, and determinism contract."
+task_generation_deterministic,pass,True,True,critical,"Research Protocol V2 upstream, feature-scope, and determinism contract."

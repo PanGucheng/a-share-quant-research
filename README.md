@@ -39,6 +39,11 @@ and nine remain explicitly blocked. The 669-factor V1 lineage is byte-immutable.
 data-readiness result does not authorize Strategy V2 or modify Forward Track. There
 is no implicit engineering Phase 7.
 
+Research Protocol V2 is now frozen independently of model outcomes. Future
+Structured ML V1 selection must use its five development environments; seven finer
+historical windows and the three legacy tests remain diagnostic only. No model
+competition has started, and Strategy V2 is still unauthorized.
+
 Start with [docs/DOC_INDEX.md](docs/DOC_INDEX.md). The exact active commands and
 machine-state paths are in
 [docs/CURRENT_PIPELINE.md](docs/CURRENT_PIPELINE.md).
@@ -114,6 +119,7 @@ tmp/              Ignored caches, downloads, references, and scratch data.
 
 - [Personal research roadmap](docs/PERSONAL_QUANT_RESEARCH_ROADMAP.md)
 - [Current pipeline](docs/CURRENT_PIPELINE.md)
+- [Research Protocol V2](docs/RESEARCH_PROTOCOL_V2.md)
 - [Architecture](docs/ARCHITECTURE.md)
 - [Output policy](docs/OUTPUT_POLICY.md)
 - [CI policy](docs/CI_POLICY.md)

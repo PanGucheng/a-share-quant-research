@@ -138,6 +138,12 @@ Detailed numbers and limitations live in the linked reports in
 [DOC_INDEX.md](DOC_INDEX.md); they are not duplicated here. All five are CLOSED, and
 the observed historical diagnostics do not authorize Strategy V2.
 
+Research Protocol V2 is now frozen independently of model outcomes. It defines five
+development selection environments, seven historical diagnostic environments,
+exact label-interval purging, expanding versus 504-day sliding hypotheses, and
+candidate-count governance. Formal Structured ML V1 research remains a separate
+next stage; Strategy V1 and Forward evidence remain unchanged.
+
 The **Factor Universe / Data Capability Upgrade** and its historical matrix-readiness
 stage are complete. The PIT-qualified 2021-02-01 through 2026-06-09 matrix approves
 765 of 774 frozen definitions for later research, with nine definitions explicitly

@@ -34,6 +34,10 @@ representative gate 保持不变。Factor Universe V2 已冻结为 research-only
 目录（669 个 immutable V1、19 个 recovered、28 个 canonicalized、58 个成熟新增），
 不授权 Strategy V2，也不修改 Forward Track。不存在自动延伸的工程 Phase 7。
 
+Research Protocol V2 现已在模型结果出现前单独冻结：后续 Structured ML V1 必须只用
+5 个 development 时间环境做选择，7 个历史窗口和旧三个 test 只作诊断。协议冻结不等于
+模型竞争已经开始，也不授权 Strategy V2。
+
 文档入口是 [docs/DOC_INDEX.md](docs/DOC_INDEX.md)；实际活动命令、时间边界和机器
 状态路径以 [docs/CURRENT_PIPELINE.md](docs/CURRENT_PIPELINE.md) 为准。
 
@@ -102,6 +106,7 @@ tmp/              被忽略的缓存、下载、参考仓库与临时文件。
 
 - [个人研究路线](docs/PERSONAL_QUANT_RESEARCH_ROADMAP.md)
 - [当前 Pipeline](docs/CURRENT_PIPELINE.md)
+- [Research Protocol V2](docs/RESEARCH_PROTOCOL_V2.md)
 - [架构](docs/ARCHITECTURE.md)
 - [输出政策](docs/OUTPUT_POLICY.md)
 - [CI 政策](docs/CI_POLICY.md)

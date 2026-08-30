@@ -1,0 +1,13 @@
+check_name,status,observed_value,required_value,severity,reason
+matrix_authority_status,pass,research_ready_with_blocked_factors,research_ready_with_blocked_factors,critical,"Research Protocol V2 upstream, feature-scope, and determinism contract."
+matrix_stage_closed,pass,CLOSED,CLOSED,critical,"Research Protocol V2 upstream, feature-scope, and determinism contract."
+matrix_calendar_start,pass,2021-02-01,2021-02-01,critical,"Research Protocol V2 upstream, feature-scope, and determinism contract."
+matrix_calendar_end,pass,2026-06-09,2026-06-09,critical,"Research Protocol V2 upstream, feature-scope, and determinism contract."
+matrix_calendar_date_count,pass,1294,1294,critical,"Research Protocol V2 upstream, feature-scope, and determinism contract."
+labels_authority_status,pass,pass,pass,critical,"Research Protocol V2 upstream, feature-scope, and determinism contract."
+universe_authority_status,pass,pass,pass,critical,"Research Protocol V2 upstream, feature-scope, and determinism contract."
+labels_universe_alignment,pass,universe-v2:a7875d74d5119230ab5576cb245fe8b389e0dd3030606299dad6d1f0e147ccd2,universe-v2:a7875d74d5119230ab5576cb245fe8b389e0dd3030606299dad6d1f0e147ccd2,critical,"Research Protocol V2 upstream, feature-scope, and determinism contract."
+split_local_feature_eligibility_required,pass,True,True,critical,"Research Protocol V2 upstream, feature-scope, and determinism contract."
+feature_eligibility_fit_scope,pass,task_train_dates_only,task_train_dates_only,critical,"Research Protocol V2 upstream, feature-scope, and determinism contract."
+validation_test_feature_eligibility_reads_forbidden,pass,True,True,critical,"Research Protocol V2 upstream, feature-scope, and determinism contract."
+task_generation_deterministic,pass,True,True,critical,"Research Protocol V2 upstream, feature-scope, and determinism contract."

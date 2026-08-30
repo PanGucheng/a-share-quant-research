@@ -1,0 +1,104 @@
+schema_version: 2
+stage_id: research_protocol_v2
+protocol_identity: purged_rolling_split_v2
+status: design_freeze_candidate
+experiment_class: protocol_design_only
+evidence_policy:
+  development: selection_authority
+  historical_diagnostic: historical_diagnostic_only
+  forward: prospective_evidence_only
+
+calendar_path: ../qlib_data/cn_data_community_20260609_derived/calendars/day.txt
+matrix_start: 2021-02-01
+matrix_end: 2026-06-09
+label:
+  label_id: label_20d_t1
+  execution_lag: 1
+  holding_days: 20
+  interval: "[t+1, t+21]"
+
+development:
+  first_validation_start: 2023-05-01
+  validation_months: 2
+  step_months: 3
+  environment_count: 5
+  minimum_train_dates: 500
+  minimum_validation_dates: 30
+  selection_freeze_boundary: 2024-08-01
+  require_validation_labels_before_next_environment: true
+
+training_history_candidates:
+  - id: expanding
+    mode: expanding
+    hypothesis: Older observations retain useful statistical information.
+  - id: sliding_504
+    mode: sliding
+    safe_training_dates: 504
+    hypothesis: Roughly two trading years better represent a non-stationary market.
+
+isolation:
+  purge: exact_label_interval_overlap
+  required_gap_trading_days: 21
+  embargo_trading_days: 0
+  embargo_semantics: >-
+    No extra embargo is applied after exact interval purging. A future non-zero
+    embargo requires a separately stated dependence mechanism; it cannot duplicate
+    the label-overlap purge.
+
+historical_diagnostic:
+  first_test_start: 2024-08-01
+  test_months: 2
+  step_months: 3
+  environment_count: 7
+  minimum_test_dates: 30
+  require_test_labels_before_next_environment: true
+  experiment_class: post_observation_research
+  evidence_grade: historical_diagnostic_only
+  execution_authorized_before_development_freeze: false
+
+legacy_v1:
+  split_manifest: outputs/date_split_semantics_v1/current/split_manifest.csv
+  date_assignments: outputs/date_split_semantics_v1/current/date_assignments.csv
+  purged_dates: outputs/purged_walk_forward_v1/full_research_669/purged_dates.csv
+  embargoed_dates: outputs/purged_walk_forward_v1/full_research_669/embargoed_dates.csv
+  role: legacy_historical_diagnostic_anchor
+
+upstream_authority:
+  matrix_manifest: outputs/factor_universe_v2_matrix_readiness/current/artifact_manifest.json
+  labels_manifest: outputs/full_research_labels_v2/current/artifact_manifest.json
+  universe_manifest: outputs/point_in_time_universe_v2/full_research/artifact_manifest.json
+
+feature_eligibility:
+  global_physical_candidate_source: factor_universe_v2_matrix_readiness
+  split_local_required: true
+  fit_scope: task_train_dates_only
+  validation_or_test_eligibility_reads_forbidden: true
+  representation_definition_may_be_preregistered_globally: true
+
+model_selection:
+  primary_metric: equal_fold_mean_daily_rank_ic
+  required_views:
+    - paired_fold_delta
+    - worst_fold
+    - fold_dispersion
+    - negative_fold_count
+    - prediction_coverage
+    - failure_count
+  comparison_rule: >-
+    Compare every candidate on the same five development environments. Prefer the
+    simpler incumbent unless a challenger has positive paired mean and median fold
+    deltas, wins at least three of five folds, and does not fail any fold. Report a
+    tie or inconclusive result instead of choosing by a diagnostic window.
+  candidate_axis_policy: one_axis_per_registered_experiment
+  maximum_registered_candidates_per_experiment: 8
+  diagnostic_feedback_to_selection_forbidden: true
+  final_fit_scope: all_legal_pre_test_training_dates_after_development_freeze
+
+qlib_integration:
+  repository: ../qlib_clone
+  pinned_commit: d5379c520f66a39953bad76234a7019a72796fd0
+  rolling_gen_adopted_as_authority: false
+  rolling_gen_role: optional_downstream_task_materializer_after_project_boundaries
+  recorder_task_collector_adopted: false
+
+output_dir: reports/research_protocol_v2

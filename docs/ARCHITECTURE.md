@@ -57,6 +57,12 @@ Historical Portfolio Backtest
 Model Diagnostic V1 (closed)
 ```
 
+未来 Structured ML 的研究边界已由
+[Research Protocol V2](RESEARCH_PROTOCOL_V2.md) 冻结：项目生成器先根据 exact label
+interval 与 evidence role 产生合法 assignments，模型 runner 只能消费这些 dates；Qlib
+RollingGen 可在之后辅助物化 task，但不能替代 PIT、universe、feature eligibility 或
+selection/diagnostic authority。
+
 ## 3. 领域目录
 
 | 目录 | 当前职责 | 状态 |
@@ -75,6 +81,10 @@ Model Diagnostic V1 (closed)
 
 目录存在不代表模块处于 active 状态。版本化名称如 V1、V2、V3、V4 只表示研究历史，
 不表示最新版本一定是当前运行入口。
+
+`research_validation/research_protocol_v2.py` 是下一阶段唯一的 V2 日期生成 authority；
+旧 `purged_split.py` 和 `development_split.py` 保留为 legacy evidence reproduction，不被
+原地改写。
 
 ## 4. 依赖方向
 

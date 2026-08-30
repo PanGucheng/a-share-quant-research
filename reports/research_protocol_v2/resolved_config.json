@@ -1,0 +1,104 @@
+{
+  "calendar_path": "../qlib_data/cn_data_community_20260609_derived/calendars/day.txt",
+  "development": {
+    "environment_count": 5,
+    "first_validation_start": "2023-05-01",
+    "minimum_train_dates": 500,
+    "minimum_validation_dates": 30,
+    "require_validation_labels_before_next_environment": true,
+    "selection_freeze_boundary": "2024-08-01",
+    "step_months": 3,
+    "validation_months": 2
+  },
+  "evidence_policy": {
+    "development": "selection_authority",
+    "forward": "prospective_evidence_only",
+    "historical_diagnostic": "historical_diagnostic_only"
+  },
+  "experiment_class": "protocol_design_only",
+  "feature_eligibility": {
+    "fit_scope": "task_train_dates_only",
+    "global_physical_candidate_source": "factor_universe_v2_matrix_readiness",
+    "representation_definition_may_be_preregistered_globally": true,
+    "split_local_required": true,
+    "validation_or_test_eligibility_reads_forbidden": true
+  },
+  "historical_diagnostic": {
+    "environment_count": 7,
+    "evidence_grade": "historical_diagnostic_only",
+    "execution_authorized_before_development_freeze": false,
+    "experiment_class": "post_observation_research",
+    "first_test_start": "2024-08-01",
+    "minimum_test_dates": 30,
+    "require_test_labels_before_next_environment": true,
+    "step_months": 3,
+    "test_months": 2
+  },
+  "isolation": {
+    "embargo_semantics": "No extra embargo is applied after exact interval purging. A future non-zero embargo requires a separately stated dependence mechanism; it cannot duplicate the label-overlap purge.",
+    "embargo_trading_days": 0,
+    "purge": "exact_label_interval_overlap",
+    "required_gap_trading_days": 21
+  },
+  "label": {
+    "execution_lag": 1,
+    "holding_days": 20,
+    "interval": "[t+1, t+21]",
+    "label_id": "label_20d_t1"
+  },
+  "legacy_v1": {
+    "date_assignments": "outputs/date_split_semantics_v1/current/date_assignments.csv",
+    "embargoed_dates": "outputs/purged_walk_forward_v1/full_research_669/embargoed_dates.csv",
+    "purged_dates": "outputs/purged_walk_forward_v1/full_research_669/purged_dates.csv",
+    "role": "legacy_historical_diagnostic_anchor",
+    "split_manifest": "outputs/date_split_semantics_v1/current/split_manifest.csv"
+  },
+  "matrix_end": "2026-06-09",
+  "matrix_start": "2021-02-01",
+  "model_selection": {
+    "candidate_axis_policy": "one_axis_per_registered_experiment",
+    "comparison_rule": "Compare every candidate on the same five development environments. Prefer the simpler incumbent unless a challenger has positive paired mean and median fold deltas, wins at least three of five folds, and does not fail any fold. Report a tie or inconclusive result instead of choosing by a diagnostic window.",
+    "diagnostic_feedback_to_selection_forbidden": true,
+    "final_fit_scope": "all_legal_pre_test_training_dates_after_development_freeze",
+    "maximum_registered_candidates_per_experiment": 8,
+    "primary_metric": "equal_fold_mean_daily_rank_ic",
+    "required_views": [
+      "paired_fold_delta",
+      "worst_fold",
+      "fold_dispersion",
+      "negative_fold_count",
+      "prediction_coverage",
+      "failure_count"
+    ]
+  },
+  "output_dir": "reports/research_protocol_v2",
+  "protocol_identity": "purged_rolling_split_v2",
+  "qlib_integration": {
+    "pinned_commit": "d5379c520f66a39953bad76234a7019a72796fd0",
+    "recorder_task_collector_adopted": false,
+    "repository": "../qlib_clone",
+    "rolling_gen_adopted_as_authority": false,
+    "rolling_gen_role": "optional_downstream_task_materializer_after_project_boundaries"
+  },
+  "schema_version": 2,
+  "stage_id": "research_protocol_v2",
+  "status": "design_freeze_candidate",
+  "training_history_candidates": [
+    {
+      "hypothesis": "Older observations retain useful statistical information.",
+      "id": "expanding",
+      "mode": "expanding"
+    },
+    {
+      "hypothesis": "Roughly two trading years better represent a non-stationary market.",
+      "id": "sliding_504",
+      "mode": "sliding",
+      "safe_training_dates": 504
+    }
+  ],
+  "upstream_authority": {
+    "labels_manifest": "outputs/full_research_labels_v2/current/artifact_manifest.json",
+    "matrix_manifest": "outputs/factor_universe_v2_matrix_readiness/current/artifact_manifest.json",
+    "universe_manifest": "outputs/point_in_time_universe_v2/full_research/artifact_manifest.json"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "adopted_as_split_authority": false,
+  "decision": "retain project generator; allow optional downstream materialization only",
+  "pinned_commit": "d5379c520f66a39953bad76234a7019a72796fd0",
+  "recorder_task_collector_adopted": false,
+  "rolling_gen_available": true,
+  "supports_coarse_trunc_days": true,
+  "supports_exact_per_sample_label_intervals": false,
+  "supports_expanding": true,
+  "supports_fixed_trading_step": true,
+  "supports_project_evidence_authority": false,
+  "supports_sliding": true,
+  "task_management_decision": "defer until measured Structured ML experiment volume justifies glue",
+  "upgrade_required": false
+}

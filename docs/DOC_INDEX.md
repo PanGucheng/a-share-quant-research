@@ -31,6 +31,9 @@ Archive 保留证据，但不授权恢复已关闭工作。
   ACTIVE、FROZEN、CLOSED、LEGACY、EXPERIMENTAL 状态，Forward Track 命令与机器状态入口。
 - `PERSONAL_QUANT_RESEARCH_ROADMAP.md`
   当前研究路线与不可放松的时间隔离、holdout 和 Strategy V1/V2 边界。
+- `RESEARCH_PROTOCOL_V2.md`
+  已冻结的下一阶段时间序列研究协议；定义 development selection、historical diagnostic、
+  forward evidence、exact interval purge、训练历史候选与 Structured ML 入口门禁。
 - `ARCHITECTURE.md`
   当前领域边界、依赖方向、settings/runtime、weak cache 和保留治理职责。
 - `OUTPUT_POLICY.md`
@@ -103,6 +106,10 @@ Archive 保留证据，但不授权恢复已关闭工作。
 Factor Universe V2 的实证 Matrix 已达到 qualified-list data readiness；多因子与模型研究
 中的 Economic Multi-Factor Research V1 已独立完成并关闭；模型研究仍须另行授权，
 Strategy V2 仍未授权。
+
+Research Protocol V2 已独立完成并冻结，详细证据见
+[final report](../reports/research_protocol_v2/REPORT.md)。它只建立 Structured ML V1 的
+development 研究基础，没有启动模型竞争，也不授权 Strategy V2。
 
 ## Archive Map
 

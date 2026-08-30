@@ -23,9 +23,10 @@
 按顺序阅读：
 
 1. [CURRENT_PIPELINE.md](CURRENT_PIPELINE.md) — ACTIVE/FROZEN/CLOSED 状态与命令；
-2. [ARCHITECTURE.md](ARCHITECTURE.md) — 当前模块和依赖边界；
-3. [OUTPUT_POLICY.md](OUTPUT_POLICY.md) — 输出、artifact、report、cache 和 Forward evidence；
-4. [CI_POLICY.md](CI_POLICY.md) — 本地/CI quality tiers。
+2. [RESEARCH_PROTOCOL_V2.md](RESEARCH_PROTOCOL_V2.md) — 下一阶段模型研究的冻结时间与证据边界；
+3. [ARCHITECTURE.md](ARCHITECTURE.md) — 当前模块和依赖边界；
+4. [OUTPUT_POLICY.md](OUTPUT_POLICY.md) — 输出、artifact、report、cache 和 Forward evidence；
+5. [CI_POLICY.md](CI_POLICY.md) — 本地/CI quality tiers。
 
 `docs/_archive/` 中的计划和回执是 CLOSED/HISTORICAL/SUPERSEDED 证据，不是当前授权。
 
@@ -76,6 +77,8 @@ mature-label evaluation
   `b46b4f614f3be5388bf7a26ebf2b035d14906f5f`；不存在隐式 Phase 7。历史 closeout
   位于 [`_archive/08_engineering_refactor/`](_archive/08_engineering_refactor/)。
 - Matrix v4、raw snapshot manifest、lineage 和全部历史研究结果保持冻结。
+- Research Protocol V2 已在模型 outcomes 前冻结；5 个 development environments 可用于
+  后续选择，7 个细粒度历史环境及旧三个 test 只能诊断。正式 Structured ML 竞争尚未开始。
 
 ## Recent Research Conclusions
 
@@ -105,8 +108,9 @@ Strategy V2。
 
 Forward Track 继续具有时间优先级。Factor Universe V2 已冻结为 research-only 的
 774 因子目录，历史 bootstrap、V2 Matrix readiness 与 Economic Multi-Factor Research
-V1 均已完成并关闭。模型研究仍需单独计划和授权，不得自动切换 Strategy V1、daily
-paper path 或修改 Forward evidence。
+V1 均已完成并关闭。Research Protocol V2 已独立冻结；下一研究方向是另行启动、严格
+受该协议约束的 Structured ML V1 development，而不是继续改 split。不得自动切换
+Strategy V1、daily paper path 或修改 Forward evidence。
 
 ## Environment
 

@@ -1,0 +1,8 @@
+environment_id,sequence,nominal_start,nominal_end,test_start,test_end,test_label_end,next_environment_boundary,nominal_trading_dates,test_dates,maturity_boundary_exclusions,evidence_role,post_observation_research
+diag_env_001,1,2024-08-01,2024-09-30,2024-08-01,2024-09-25,2024-10-31,2024-11-01,41,38,3,historical_diagnostic_only,True
+diag_env_002,2,2024-11-01,2024-12-31,2024-11-01,2024-12-26,2025-01-27,2025-02-01,43,40,3,historical_diagnostic_only,True
+diag_env_003,3,2025-02-01,2025-03-31,2025-02-05,2025-03-31,2025-04-30,2025-05-01,39,39,0,historical_diagnostic_only,True
+diag_env_004,4,2025-05-01,2025-06-30,2025-05-06,2025-06-30,2025-07-29,2025-08-01,39,39,0,historical_diagnostic_only,True
+diag_env_005,5,2025-08-01,2025-09-30,2025-08-01,2025-09-24,2025-10-31,2025-11-01,43,39,4,historical_diagnostic_only,True
+diag_env_006,6,2025-11-01,2025-12-31,2025-11-03,2025-12-30,2026-01-30,2026-02-01,43,42,1,historical_diagnostic_only,True
+diag_env_007,7,2026-02-01,2026-03-31,2026-02-02,2026-03-31,2026-04-30,2026-05-01,36,36,0,historical_diagnostic_only,True

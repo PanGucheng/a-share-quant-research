@@ -1,0 +1,9 @@
+protocol,unit_id,nominal_validation_dates,usable_validation_dates,validation_label_overlap_purge_dates,validation_extra_embargo_dates,required_label_gap_trading_dates,actual_pre_boundary_feature_gap,semantic_finding
+V1,split_001,118,77,21,20,21,41,exact purge followed by same-side fixed embargo; duplicate conservatism
+V1,split_002,118,77,21,20,21,41,exact purge followed by same-side fixed embargo; duplicate conservatism
+V1,split_003,124,83,21,20,21,41,exact purge followed by same-side fixed embargo; duplicate conservatism
+V2,dev_env_001,40,40,0,0,21,21,exact interval purge only; maturity exclusions isolate adjacent evidence windows
+V2,dev_env_002,43,39,4,0,21,21,exact interval purge only; maturity exclusions isolate adjacent evidence windows
+V2,dev_env_003,43,43,0,0,21,21,exact interval purge only; maturity exclusions isolate adjacent evidence windows
+V2,dev_env_004,36,35,1,0,21,21,exact interval purge only; maturity exclusions isolate adjacent evidence windows
+V2,dev_env_005,39,39,0,0,21,21,exact interval purge only; maturity exclusions isolate adjacent evidence windows

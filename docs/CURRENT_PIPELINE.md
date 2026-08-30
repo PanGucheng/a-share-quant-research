@@ -224,6 +224,17 @@ Evidence:     personal research grade
 CLOSED 阶段只允许修复可证明的数据错误、泄漏、contract failure 或实现 bug；一般
 维护不得借机产生新策略结论。
 
+## 5.1 FROZEN — Research Protocol V2
+
+[Research Protocol V2](RESEARCH_PROTOCOL_V2.md) 已在任何 Structured ML V1 正式模型
+竞争前单独冻结。它提供 5 个 development selection environments、7 个
+`historical_diagnostic_only` environments、两个训练历史假设（expanding / 504 日
+sliding）和 exact `[t+1,t+21]` interval purge。
+
+当前只允许后续任务按该协议注册并运行 development candidate；本阶段的所有 task
+模板保持 `execution_authorized=false`。旧三个 historical tests 继续是 legacy
+diagnostic anchors，Forward Track 和 Strategy V1 均未改变。
+
 近期阶段的详细结论只在相应 final reports 中维护，入口见
 [DOC_INDEX.md](DOC_INDEX.md)。它们不产生 production winner、Strategy V2 authorization
 或新的 unbiased holdout estimate。
@@ -254,7 +265,8 @@ CLOSED 阶段只允许修复可证明的数据错误、泄漏、contract failure
   固定使用的 feature whitelist；任何带时间依赖的 eligibility、选择、IC 或模型输入仍须
   development-only、split-local，不能利用后期 coverage/availability 决定早期 membership；
 - KunQuant 作为未来 factor computation backend；
-- Strategy V2 / Model V2 Research Protocol；
+- Strategy V2；
+- Structured ML V1 正式模型竞争（Research Protocol V2 已冻结，但竞争尚未启动）；
 - shadow trading、小资金或 live trading；
 - broker gateway、服务化、调度平台和分布式工程。
 
