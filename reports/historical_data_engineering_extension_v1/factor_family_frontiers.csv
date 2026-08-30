@@ -1,0 +1,7 @@
+layer,source,factor_count,frontier_basis,frontier,tail_date_count,tail_passing_fraction,minimum_tail_coverage,admitted
+daily_basic,Tushare daily_basic market-date cache,12,90% dated market presence with 98% passing tail,2010-01-04,2732,1.0,0.9989785495403473,True
+moneyflow,Tushare moneyflow market-date cache,10,90% dated market presence with 98% passing tail,2010-01-04,2732,0.9992679355783309,0.537123745819398,True
+long_history_transparent_core,Community Qlib OHLCV/amount/VWAP + practical lifecycle,34,first non-empty practical-universe effective month,2000-11-01,2732,1.0,1.0,True
+full_price_volume_v2,Community Qlib + frozen V2 price-factor implementations,733,full 733-factor annual shards plus continuous cumulative state,2000-11-01,2732,1.0,1.0,True
+fundamental_pit,Tushare statements/revisions reconstructed by announcement date,19,monthly practical market presence with leakage-safe as-of join,2010-01-29,135,1.0,0.9973118279569892,True
+full_factor_universe_v2,"intersection of price, daily_basic, moneyflow and practical PIT",774,maximum admitted dependency-layer frontier,2010-01-29,135,0.9992679355783309,0.537123745819398,True

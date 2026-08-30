@@ -1,0 +1,6 @@
+lineage_class,factor_count,value_difference_count,extended_only_key_count,frozen_only_key_count,minimum_value_match_ratio,interpretation
+alpha101_canonicalized,5,280998,0,0,0.002105263157894737,"residual after exact frozen raw snapshots, bootstrap anchors, full parent symbol scope and PIT membership reproduction"
+alpha101_legacy,10,656036,0,0,0.0,"residual after exact frozen raw snapshots, bootstrap anchors, full parent symbol scope and PIT membership reproduction"
+exact_match,738,0,0,0,1.0,"same keys, missingness and values"
+practical_pit_fundamental,19,152,0,0,0.9994736842105263,small current-statement-vintage/revision-selection residual under leakage-safe practical PIT
+ta_legacy,2,115,0,0,0.9985131578947368,small implementation-horizon lineage residual on common keys

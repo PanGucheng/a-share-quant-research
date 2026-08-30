@@ -1,0 +1,5 @@
+dataset_hypothesis,start,end,factor_count,purpose
+H1_long_price_volume,2000-11-01,frozen parent latest date,733,maximum long price/volume history
+H2_modern_market_price_volume,2008-01-01,frozen parent latest date,733,modern A-share market-regime hypothesis
+H3_full_feature_common,2010-01-29,frozen parent latest date,774,common full-feature representation
+H4_transparent_core_subset,2000-11-01,frozen parent latest date,34,economically transparent long-history sensitivity check

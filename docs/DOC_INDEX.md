@@ -118,6 +118,13 @@ Archive 保留证据，但不授权恢复已关闭工作。
   对生命周期 authority 候选和财报 retrieval completeness 做独立审计；exact report-period
   分段与 offset pagination 的 key sets 一致，但 current snapshot / provider revision vintage
   仍无法证明，因此 frontier 继续 not admitted、extended Matrix 未生成。
+- [Historical Data Engineering Extension V1](../reports/historical_data_engineering_extension_v1/REPORT.md)：
+  采用 practical reconstructed PIT 和 practical historical universe，构建 2000-11-01 至
+  2021-01-29 的独立 Extended Matrix（8,014,460 PIT keys；733/774 分层）；分区完整性、
+  跨年度累计状态、PIT 和 universe overlap 通过。Frozen-parent overlap 的 key set 一致，
+  但 36 个因子仍有值级 lineage 差异，因此保留 `partial_extension`，未进入模型阶段。
+  原始执行要求保存在
+  [Historical Data Engineering Extension V1 plan](_archive/07_research_program_history/HISTORICAL_DATA_ENGINEERING_EXTENSION_V1_PLAN.md)。
 
 这些结果不修改 Strategy V1、不产生 Strategy V2 authorization，也不构成 fresh OOS。
 Factor Universe V2 的实证 Matrix 已达到 qualified-list data readiness；多因子与模型研究

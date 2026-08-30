@@ -54,6 +54,14 @@ Qlib interval 与 Tushare listing/namechange、Tushare/BaoStock dated presence �
 继续 blocked。报告见
 [reports/historical_data_authority_resolution_v1/REPORT.md](reports/historical_data_authority_resolution_v1/REPORT.md)。
 
+Historical Data Engineering Extension V1 现已按 practical reconstructed PIT / practical
+historical universe 口径完成独立 Extended Matrix：2000-11-01 至 2021-01-29，8,014,460
+个 PIT keys、4,913 个交易日、3,874 个 instruments，2000–2009 为 733 个价格/成交量
+因子层，2010-01-29 起为 774 因子共同层。分区完整性、跨年度 VPT/NVI/ADI/OBV 状态、
+PIT 泄漏检查和 universe overlap 均通过；与 frozen parent 的 key set 完全一致，但 36 个
+因子仍有值级 lineage 差异，因此 artifact 状态为 `partial_extension`，不启动模型阶段。
+报告见 [reports/historical_data_engineering_extension_v1/REPORT.md](reports/historical_data_engineering_extension_v1/REPORT.md)。
+
 文档入口是 [docs/DOC_INDEX.md](docs/DOC_INDEX.md)；实际活动命令、时间边界和机器
 状态路径以 [docs/CURRENT_PIPELINE.md](docs/CURRENT_PIPELINE.md) 为准。
 

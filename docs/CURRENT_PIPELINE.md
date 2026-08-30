@@ -231,6 +231,11 @@ Evidence:     personal research grade
   加 offset pagination 证明 2010–2017 statement endpoint retrieval 可穷尽，但 provider
   vintage 与 historical lifecycle 仍未证明；daily_basic/moneyflow 只保留 candidate，未生成
   extended Matrix）；
+- Historical Data Engineering Extension V1（采用 practical reconstructed PIT / practical
+  historical universe 实际构建独立 Extended Matrix；2000-11-01 至 2021-01-29 共
+  8,014,460 PIT keys，733/774 分层历史；分区、连续累计状态、PIT 与 universe overlap
+  通过，但 frozen-parent value overlap 仍有 36 因子差异，故状态为 `partial_extension`，
+  不进入 Structured ML）；
 - 历史 Accuracy Correction、Data Source Audit 和 execution semantics 修正阶段。
 
 CLOSED 阶段只允许修复可证明的数据错误、泄漏、contract failure 或实现 bug；一般
@@ -259,6 +264,13 @@ authority。Research Protocol V2 artifact 保持冻结；正式 Structured ML �
 轴已完成数量级对齐；但 statement responses 存在 row cap、早期 PIT vintage 完整性和
 corporate-action/lifecycle 语义仍未充分证明。因此只保留 frontier map，extended Matrix
 继续不生成，Protocol/model stages 继续 deferred。
+
+[Historical Data Engineering Extension V1](../reports/historical_data_engineering_extension_v1/REPORT.md)
+已将资格化证据落实为独立、可追溯的分区 Matrix：长期 price-volume 层从 2000-11-01
+开始，774 因子共同层从 2010-01-29 开始，历史端点为 frozen parent 前一交易月的
+2021-01-29。Extended Matrix 已生成且连续状态验证通过；2021-02-01 至 2021-03-31
+overlap key set 完全一致，但 Alpha101 为主的 36 个因子仍有值差异，保留为显式 blocker，
+不修改 frozen parent 或 Protocol V2，也不启动模型竞争。
 
 近期阶段的详细结论只在相应 final reports 中维护，入口见
 [DOC_INDEX.md](DOC_INDEX.md)。它们不产生 production winner、Strategy V2 authorization

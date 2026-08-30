@@ -1,0 +1,7 @@
+check,status,observed,required
+no_future_statement_access,pass,0,0
+event_availability_present,pass,0,0
+report_period_not_used_as_availability,pass,0,0
+one_effective_event_per_issuer_day,pass,0,0
+selected_event_is_latest_public_event,pass,0,0
+selected_availability_is_monotone,pass,0,0

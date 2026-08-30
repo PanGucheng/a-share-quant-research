@@ -1,0 +1,7 @@
+source,role,used_in_matrix,earliest_evidence,lineage,remaining_gap
+Community Qlib 20260609 derived,OHLCV/amount/VWAP and dated lifecycle intervals,True,2000-01-04 raw market; practical universe begins 2000-11-01,local immutable provider snapshot,not an archived daily security-master vintage
+Tushare daily_basic,12 valuation/size/turnover factors,True,2010-01-04 market-date cache,segment parquet plus request receipt,pre-2010 matrix layer not reconstructed
+Tushare moneyflow,10 order-size flow factors,True,2010-01-04 market-date cache,segment parquet plus request receipt,2007-2009 is structurally partial and no equivalent source was found
+Tushare income/balancesheet/cashflow,19 practical reconstructed PIT fundamentals,True,announcement window from 2008-01-01,issuer/API paginated cache with revision and announcement fields,today's endpoint may omit unknown historical revisions; no provider-vintage proof claimed
+BaoStock / AkShare / Tushare daily,early-history cross-source availability and adjustment canaries,False,representative early-2000s daily rows,inherited qualification reports and receipts,not substituted because no missing Qlib price field required fallback
+Frozen Factor Universe V2 Matrix,immutable 2021+ parent and overlap authority,False,2021-02-01,a6aa2d7298d13842c8112939f485a628e1b755bf03e4609276068595032a1899,"upstream revisions must be reported, never silently accepted"

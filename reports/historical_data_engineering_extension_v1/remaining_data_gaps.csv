@@ -1,0 +1,6 @@
+field_or_layer,status,affected_factors,impact
+moneyflow before 2010,not_recoverable_as_full_market_equivalent,10,excluded from pre-2010 full-feature representation
+daily_basic before 2010,not_materialized_in_v1,12,excluded from pre-2010 full-feature representation
+statement revision history before announcement cache,practical_reconstruction_only,19,no provider-vintage claim; strict no-future checks retained
+archived security-master snapshots,unavailable_but_not_required,0,practical lifecycle combines intervals and dated market presence
+frozen-parent exact value overlap,lineage_mismatch_not_silently_accepted,36,"937301 common-key values differ; concentrated in Alpha101, with small TA and practical-PIT statement-vintage residuals"
