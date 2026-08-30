@@ -101,6 +101,10 @@ Archive 保留证据，但不授权恢复已关闭工作。
 - [Factor Universe V2 Historical Data & Matrix Readiness](../reports/factor_universe_v2_matrix_readiness/REPORT.md)：
   完成全量历史 bootstrap、严格 PIT 物化、coverage/missingness、单位及 canonical 对照；
   774 个定义中 765 个 research-usable、9 个明确 blocked，V1 669 分区字节级不变。
+- [Historical Dataset & Validation Design Study V1](../reports/historical_dataset_validation_design_v1/REPORT.md)：
+  追溯 2021 起点、探测可用历史深度，并量化重叠标签 dependence、ESS 与 regime coverage。
+  40 日 validation 的时间统计信息不足；本阶段只提出 120–252 日、4–6 个较长顺序环境
+  的候选设计，并要求先扩展历史数据，没有启动 Structured ML 或修改冻结协议。
 
 这些结果不修改 Strategy V1、不产生 Strategy V2 authorization，也不构成 fresh OOS。
 Factor Universe V2 的实证 Matrix 已达到 qualified-list data readiness；多因子与模型研究
@@ -109,7 +113,9 @@ Strategy V2 仍未授权。
 
 Research Protocol V2 已独立完成并冻结，详细证据见
 [final report](../reports/research_protocol_v2/REPORT.md)。它只建立 Structured ML V1 的
-development 研究基础，没有启动模型竞争，也不授权 Strategy V2。
+development 研究基础，没有启动模型竞争，也不授权 Strategy V2。后续 Dataset &
+Validation Design Study 已证明其中的短 validation 环境不具备充分的时间统计信息；该
+结论不追改冻结 artifact，但阻止将其直接作为正式模型选择 authority。
 
 ## Archive Map
 

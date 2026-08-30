@@ -219,6 +219,8 @@ Evidence:     personal research grade
 - Clustering Ablation V1（mixed historical diagnostic，representative gate 不变）；
 - Economic Multi-Factor Research V1（765 因子经济映射、11 sleeves、7 archetypes、
   split-local eligibility 与固定 P01 历史诊断；无稳定三段增量链，不选择 winner）；
+- Historical Dataset & Validation Design Study V1（2021 起点 lineage、历史数据能力、
+  validation dependence/ESS 与 regime coverage；只形成设计候选，未选择新 split）；
 - 历史 Accuracy Correction、Data Source Audit 和 execution semantics 修正阶段。
 
 CLOSED 阶段只允许修复可证明的数据错误、泄漏、contract failure 或实现 bug；一般
@@ -234,6 +236,12 @@ sliding）和 exact `[t+1,t+21]` interval purge。
 当前只允许后续任务按该协议注册并运行 development candidate；本阶段的所有 task
 模板保持 `execution_authorized=false`。旧三个 historical tests 继续是 legacy
 diagnostic anchors，Forward Track 和 Strategy V1 均未改变。
+
+[Historical Dataset & Validation Design Study V1](../reports/historical_dataset_validation_design_v1/REPORT.md)
+在不读取 Structured ML outcomes 的前提下发现：当前 35–43 个可用日期的 development
+folds 虽满足 leakage isolation，但 temporal ESS 不足，不能直接作为正式模型竞争的选择
+authority。Research Protocol V2 artifact 保持冻结；正式 Structured ML 继续 deferred，
+后续须先完成 bounded 历史扩展，并另行预注册 120–252 日、4–6 个较长顺序环境的候选研究。
 
 近期阶段的详细结论只在相应 final reports 中维护，入口见
 [DOC_INDEX.md](DOC_INDEX.md)。它们不产生 production winner、Strategy V2 authorization
@@ -266,7 +274,8 @@ diagnostic anchors，Forward Track 和 Strategy V1 均未改变。
   development-only、split-local，不能利用后期 coverage/availability 决定早期 membership；
 - KunQuant 作为未来 factor computation backend；
 - Strategy V2；
-- Structured ML V1 正式模型竞争（Research Protocol V2 已冻结，但竞争尚未启动）；
+- Structured ML V1 正式模型竞争（Research Protocol V2 已冻结；Dataset & Validation
+  Design Study 已否定直接沿用短 folds 的统计充分性，竞争仍未启动）；
 - shadow trading、小资金或 live trading；
 - broker gateway、服务化、调度平台和分布式工程。
 

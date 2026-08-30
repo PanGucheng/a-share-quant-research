@@ -1,0 +1,15 @@
+design_question,possible_choice,supporting_evidence,project_specific_evidence,benefit,risk,confidence,recommended_status
+matrix_start,2021-02-01 is a source limit,git lineage contradicts,first introduced by full-research config then inherited,simple continuity,unnecessarily short history,high,reject
+full_feature_history,extend to 2018 first,all source layers technically cover it,current statement availability starts 2018; daily layers need backfill,lower-risk staged extension,pre-2018 PIT state still needs download,medium-high,prioritize_bounded_qualification
+full_feature_history,investigate 2015,moneyflow stable since 2010 and financial rows exist,six-issuer probe shows old reports/revisions,adds 2015 crash and more regimes,market-wide revision completeness unknown,medium,probe_before_authorize
+price_volume_history,2008/2010 modern-regime core,Qlib fields complete from 2000; official benchmarks use 2008,local provider field coverage is complete,longer comparable sample,adjustment semantics need audit,medium,investigate
+validation_length,40 days,20-day overlap implies ESS about 2.4,project HAC ESS about 2.6; current folds 35-43 days,fast iteration,selection dominated by a few temporal shocks,high,reject
+validation_length,120-252 days,HAC/block bootstrap and dependent-CV literature,IC ESS and regime coverage improve materially,more reliable paired comparison,fewer folds and slower iteration,medium-high,recommended_protocol_family
+fold_structure,4-6 sequential long blocks,"temporal samples, not stock rows, are limiting",40-day folds add little independent information,balances fold count and information,needs longer Matrix,medium,investigate_after_extension
+rolling_step,63 or 126 days as coarse hypotheses,"step should reflect decay/retrain cost, not label horizon alone",no model-decay competition has started,controls compute and overlap,not yet empirically selected,low-medium,preregister_later
+training_history,expanding incumbent,maximizes scarce time information,only about 5.3 years currently,sample efficiency,structural drift dilution,medium-high,retain_incumbent
+training_history,sliding_504,nonstationarity hypothesis only,no data-based two-year cutoff found,adaptation,throws away most already scarce regimes,high,not_supported_as_authority
+training_history,one coarse 3-4 year sliding candidate,drift exists but optimum is unknown,market/feature annual distributions move,tests adaptation without dense scan,requires longer history,medium,investigate_after_extension
+resampling,CPCV/blocked bootstrap secondary,dependent-CV and overfit literature,chronological authority already encoded by V2,path-dependence robustness,future training paths violate past-only authority,high,secondary_only
+dataset_philosophy,full-feature common history primary,fair candidate comparison,41 usable factors depend on non-price layers,representation consistency,shorter history,medium-high,primary_after_extension
+dataset_philosophy,tiered price-volume history secondary,724 usable price-core factors can go earlier,provider begins 2000,more regimes,comparison period differs,medium,separate_representation_study

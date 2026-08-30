@@ -1,0 +1,5 @@
+lineage_step,artifact,commit,date,start_date,finding
+1,configs/full_research_feature_matrix_v1.yaml,eae3f198e440cffe8259f89a8084ce2dcde39d65,2026-07-20,2021-02-01,first repository introduction; full-research engineering scope
+2,raw snapshot / universe v2 / Matrix v4 / labels v2,multiple descendants,2026-07-21..2026-07-23,2021-02-01,inherited without an independent historical-depth study
+3,Factor Universe V2 Matrix Readiness,2a4964f6d43302ad22c02c66e134f1ebb87c3016,2026-08-29,2021-02-01,qualified the inherited range; bootstrap warm-up was derived from it
+4,Research Protocol V2,343ad838b6c317ebe78c484459d88a1501251189,2026-08-30,2021-02-01,consumed Matrix boundary; did not prove its statistical adequacy

@@ -78,7 +78,9 @@ mature-label evaluation
   位于 [`_archive/08_engineering_refactor/`](_archive/08_engineering_refactor/)。
 - Matrix v4、raw snapshot manifest、lineage 和全部历史研究结果保持冻结。
 - Research Protocol V2 已在模型 outcomes 前冻结；5 个 development environments 可用于
-  后续选择，7 个细粒度历史环境及旧三个 test 只能诊断。正式 Structured ML 竞争尚未开始。
+  后续受限诊断，7 个细粒度历史环境及旧三个 test 只能诊断。后续独立的 Dataset &
+  Validation Design Study 发现 35–43 日 folds 的 temporal ESS 不足，不能直接作为正式
+  Structured ML selection authority；正式竞争尚未开始。
 
 ## Recent Research Conclusions
 
@@ -100,6 +102,10 @@ mature-label evaluation
   hard gate 的历史结果 mixed；新增成员确被 LightGBM 使用，但没有跨 split 一致改善，
   所以 gate 保持不变。详见
   [final report](../reports/ml_clustering_ablation_v1/REPORT.md)。
+- **Historical Dataset & Validation Design Study V1 — RESEARCH COMPLETE**：2021 起点是
+  工程 scope 继承，不是已证明的数据源硬限制；40 日 validation 的 market-level label
+  ESS 约 2.6。后续候选应先扩展历史，并研究 120–252 日、4–6 个较长 chronological
+  environments。详见 [final report](../reports/historical_dataset_validation_design_v1/REPORT.md)。
 
 这些已观察历史结果不能被描述为 fresh OOS，也不能授权修改 Strategy V1 或创建
 Strategy V2。
@@ -108,8 +114,10 @@ Strategy V2。
 
 Forward Track 继续具有时间优先级。Factor Universe V2 已冻结为 research-only 的
 774 因子目录，历史 bootstrap、V2 Matrix readiness 与 Economic Multi-Factor Research
-V1 均已完成并关闭。Research Protocol V2 已独立冻结；下一研究方向是另行启动、严格
-受该协议约束的 Structured ML V1 development，而不是继续改 split。不得自动切换
+V1 均已完成并关闭。Research Protocol V2 artifact 保持冻结，但 Historical Dataset &
+Validation Design Study 已证明不能直接沿用其短 folds 启动正式模型竞争。下一研究方向
+是先资格化并实施 bounded full-feature 历史扩展（优先 2018，再评估 2015），随后另行
+预注册较长 chronological validation 候选；Structured ML 仍未授权。不得自动切换
 Strategy V1、daily paper path 或修改 Forward evidence。
 
 ## Environment

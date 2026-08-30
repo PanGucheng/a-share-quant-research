@@ -1,0 +1,5 @@
+nominal_dates,approx_months,label_overlap_theory_ess,project_label_ess_hac40,individual_sleeve_ic_ess_median_hac20_40,regime_terciles_average,recommended_status,reason
+40,2,2.3988005997001505,2.62,3.8-4.0,2.25,reject_as_structured_ml_selection_authority,only a few effective temporal observations and weak regime diversity
+60,3,3.3739456419868796,3.93,5.7-6.0,2.47,diagnostic_or_latency_sensitive_only,still noise-sensitive for candidate selection
+120,6,6.3520070577856185,7.86,11.4-12.0,2.74,lower_bound_candidate_after_history_extension,first tested scale approaching double-digit effective IC dates with materially better regimes
+252,12,12.941512125534949,16.5,23.9-25.2,2.89,strong_candidate_after_history_extension,substantially more temporal information and near-complete descriptor-tercile coverage

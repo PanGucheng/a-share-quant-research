@@ -1,0 +1,4 @@
+candidate_start,additional_trading_dates,daily_layer_requests_two_apis,statement_requests_four_apis_five_year_segments,estimated_additional_raw_gib,estimated_total_matrix_gib,estimate_semantics
+2010-01-04,2442,4884,63728,1.675172079456934,20.03603772697597,"linear first-order estimate; excludes retries, revisions, compression changes, and recomputation overhead"
+2015-01-05,1230,2460,47796,0.8437598926011584,13.946850734725498,"linear first-order estimate; excludes retries, revisions, compression changes, and recomputation overhead"
+2018-01-02,498,996,31864,0.34161985895559094,10.2692229473267,"linear first-order estimate; excludes retries, revisions, compression changes, and recomputation overhead"
