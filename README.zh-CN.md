@@ -36,7 +36,9 @@ representative gate 保持不变。Factor Universe V2 已冻结为 research-only
 
 Research Protocol V2 现已在模型结果出现前单独冻结：后续 Structured ML V1 必须只用
 5 个 development 时间环境做选择，7 个历史窗口和旧三个 test 只作诊断。协议冻结不等于
-模型竞争已经开始，也不授权 Strategy V2。
+模型竞争已经开始，也不授权 Strategy V2。Maximum Historical Extension & Qualification
+V1 已完成真实多源历史探测；技术 price-volume 可至 2000，但共同 full-feature frontier
+尚未获准，未生成 extended Matrix。
 
 文档入口是 [docs/DOC_INDEX.md](docs/DOC_INDEX.md)；实际活动命令、时间边界和机器
 状态路径以 [docs/CURRENT_PIPELINE.md](docs/CURRENT_PIPELINE.md) 为准。

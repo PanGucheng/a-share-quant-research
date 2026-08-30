@@ -105,6 +105,10 @@ Archive 保留证据，但不授权恢复已关闭工作。
   追溯 2021 起点、探测可用历史深度，并量化重叠标签 dependence、ESS 与 regime coverage。
   40 日 validation 的时间统计信息不足；本阶段只提出 120–252 日、4–6 个较长顺序环境
   的候选设计，并要求先扩展历史数据，没有启动 Structured ML 或修改冻结协议。
+- [Maximum Historical Extension & Qualification V1](../reports/maximum_historical_extension_qualification_v1/REPORT.md)：
+  复用 Community Qlib、Tushare、BaoStock、AkShare 与既有缓存，完成 2000 起技术历史、
+  跨源价格/成交/复权、PIT 修订、生命周期与因子依赖层资格审计；共同 full-feature
+  frontier 尚未获准，未生成 extended Matrix。
 
 这些结果不修改 Strategy V1、不产生 Strategy V2 authorization，也不构成 fresh OOS。
 Factor Universe V2 的实证 Matrix 已达到 qualified-list data readiness；多因子与模型研究

@@ -1,0 +1,2 @@
+source,instrument_count,earliest_instrument_start,latest_instrument_end,instruments_started_by_2000,instruments_started_by_2005,instruments_started_by_2010,intervals_with_end_before_2026
+community_qlib,6106,2000-01-04,2026-06-09,925,1384,1767,566

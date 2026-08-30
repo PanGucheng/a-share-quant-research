@@ -106,6 +106,11 @@ mature-label evaluation
   工程 scope 继承，不是已证明的数据源硬限制；40 日 validation 的 market-level label
   ESS 约 2.6。后续候选应先扩展历史，并研究 120–252 日、4–6 个较长 chronological
   environments。详见 [final report](../reports/historical_dataset_validation_design_v1/REPORT.md)。
+- **Maximum Historical Extension & Qualification V1 — QUALIFICATION COMPLETE**：复用
+  Community Qlib、Tushare、BaoStock、AkShare 与既有缓存完成真实多源审计；技术
+  price-volume 可追溯至 2000-01-04，但共同 full-feature frontier 受 PIT row-cap、
+  revision、lifecycle 与 adjustment 证据限制，未生成 extended Matrix。详见
+  [final report](../reports/maximum_historical_extension_qualification_v1/REPORT.md)。
 
 这些已观察历史结果不能被描述为 fresh OOS，也不能授权修改 Strategy V1 或创建
 Strategy V2。
@@ -116,8 +121,8 @@ Forward Track 继续具有时间优先级。Factor Universe V2 已冻结为 rese
 774 因子目录，历史 bootstrap、V2 Matrix readiness 与 Economic Multi-Factor Research
 V1 均已完成并关闭。Research Protocol V2 artifact 保持冻结，但 Historical Dataset &
 Validation Design Study 已证明不能直接沿用其短 folds 启动正式模型竞争。下一研究方向
-是先资格化并实施 bounded full-feature 历史扩展（优先 2018，再评估 2015），随后另行
-预注册较长 chronological validation 候选；Structured ML 仍未授权。不得自动切换
+是继续完成最大历史 extension 的资格化与必要的独立 Matrix 构建审计（不预设年份），
+随后另行预注册较长 chronological validation 候选；Structured ML 仍未授权。不得自动切换
 Strategy V1、daily paper path 或修改 Forward evidence。
 
 ## Environment

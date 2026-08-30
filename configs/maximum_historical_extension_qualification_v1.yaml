@@ -1,0 +1,19 @@
+schema_version: 1
+stage_id: maximum_historical_extension_qualification_v1
+status: research_study
+provider_uri: E:/qlib_prj/qlib_data/cn_data_community_20260609_derived
+output_dir: reports/maximum_historical_extension_qualification_v1
+qlib_interval_file: E:/qlib_prj/qlib_data/cn_data_community_20260609_derived/instruments/all.txt
+matrix_manifest: outputs/factor_universe_v2_matrix_readiness/current/artifact_manifest.json
+factor_inventory: outputs/factor_universe_v2/current/factor_inventory_v2.csv
+factor_qualification: outputs/factor_universe_v2_matrix_readiness/current/factor_qualification.csv
+probe_years: [2000, 2005, 2007, 2010, 2015, 2018, 2020, 2021, 2024]
+probe_dates: [20000104, 20050104, 20070104, 20100104, 20150105, 20180102, 20200102, 20210201, 20240102]
+representative_codes: [600000.SH, 000001.SZ, 600519.SH, 000858.SZ, 000002.SZ, 600036.SH]
+akshare_codes: [000001, 600000, 600519]
+market_start_date: 20000101
+market_end_date: 20260609
+statement_start_date: 19980101
+statement_end_date: 20260830
+bootstrap_repetitions: 0
+analysis_seed: 20260830

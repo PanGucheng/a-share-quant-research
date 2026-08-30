@@ -1,0 +1,7 @@
+api,instrument,status,row_count,earliest_date,latest_date,elapsed_seconds,error
+baostock_history,600000.SH,success,6403,2000-01-04,2026-06-09,5.565,
+baostock_history,000001.SZ,success,6403,2000-01-04,2026-06-09,5.779,
+baostock_history,600519.SH,success,6010,2001-08-27,2026-06-09,2.985,
+baostock_history,000858.SZ,success,6403,2000-01-04,2026-06-09,2.899,
+baostock_history,000002.SZ,success,6403,2000-01-04,2026-06-09,3.767,
+baostock_history,600036.SH,success,5867,2002-04-09,2026-06-09,7.268,

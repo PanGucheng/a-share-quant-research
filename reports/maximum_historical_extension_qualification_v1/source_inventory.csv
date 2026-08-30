@@ -1,0 +1,6 @@
+source,current_role,fields_or_artifacts,qualified_role,limitation
+community_qlib,authoritative local provider,OHLCV/amount/VWAP/factor/adjclose and interval universe,price-volume backbone; lifecycle proxy,release snapshot; adjustment vintage and old corporate actions require cross-check
+Tushare,authoritative V2 raw / PIT statements,"daily, adj_factor, daily_basic, moneyflow, statements, dividend, limits, margin, lifecycle metadata",historical canary and PIT/revision audit,current API state is not a historical database vintage
+BaoStock,active Daily Update fallback,"daily K-line, status/ST, adjustment modes",independent price/volume and adjustment cross-check,field/unit semantics and full lifecycle depth need source-specific audit
+AkShare,optional read-only client,Eastmoney daily history wrapper,independent market-history spot check,network availability and upstream schema can change
+existing historical caches,frozen evidence / auxiliary,"V1/V2 raw partitions, factor matrices, reports and receipts",overlap consistency and lineage,must not be overwritten or treated as new vintages

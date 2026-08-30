@@ -221,6 +221,8 @@ Evidence:     personal research grade
   split-local eligibility 与固定 P01 历史诊断；无稳定三段增量链，不选择 winner）；
 - Historical Dataset & Validation Design Study V1（2021 起点 lineage、历史数据能力、
   validation dependence/ESS 与 regime coverage；只形成设计候选，未选择新 split）；
+- Maximum Historical Extension & Qualification V1（多源最大历史探测与 frontier qualification；
+  技术 price history 可至 2000，但共同 full-feature frontier 尚未获准，未生成 extended Matrix）；
 - 历史 Accuracy Correction、Data Source Audit 和 execution semantics 修正阶段。
 
 CLOSED 阶段只允许修复可证明的数据错误、泄漏、contract failure 或实现 bug；一般
@@ -242,6 +244,13 @@ diagnostic anchors，Forward Track 和 Strategy V1 均未改变。
 folds 虽满足 leakage isolation，但 temporal ESS 不足，不能直接作为正式模型竞争的选择
 authority。Research Protocol V2 artifact 保持冻结；正式 Structured ML 继续 deferred，
 后续须先完成 bounded 历史扩展，并另行预注册 120–252 日、4–6 个较长顺序环境的候选研究。
+
+[Maximum Historical Extension & Qualification V1](../reports/maximum_historical_extension_qualification_v1/REPORT.md)
+已实际探测 Community Qlib、Tushare、BaoStock 与 AkShare：price-volume 技术历史从
+2000-01-04 可获得，Tushare/BaoStock/Qlib 在代表性长期上市样本的 raw close/volume/amount
+轴已完成数量级对齐；但 statement responses 存在 row cap、早期 PIT vintage 完整性和
+corporate-action/lifecycle 语义仍未充分证明。因此只保留 frontier map，extended Matrix
+继续不生成，Protocol/model stages 继续 deferred。
 
 近期阶段的详细结论只在相应 final reports 中维护，入口见
 [DOC_INDEX.md](DOC_INDEX.md)。它们不产生 production winner、Strategy V2 authorization
@@ -275,7 +284,7 @@ authority。Research Protocol V2 artifact 保持冻结；正式 Structured ML �
 - KunQuant 作为未来 factor computation backend；
 - Strategy V2；
 - Structured ML V1 正式模型竞争（Research Protocol V2 已冻结；Dataset & Validation
-  Design Study 已否定直接沿用短 folds 的统计充分性，竞争仍未启动）；
+  Design 与 Maximum Historical Extension studies 均未授权启动，竞争仍未开始）；
 - shadow trading、小资金或 live trading；
 - broker gateway、服务化、调度平台和分布式工程。
 

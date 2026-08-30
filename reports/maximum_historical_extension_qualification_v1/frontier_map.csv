@@ -1,0 +1,7 @@
+data_layer,technical_start,stable_start,semantic_reliability_start,research_grade_frontier,evidence_and_limit
+price_volume,2000-01-04,2000-01-04,2000-01-04,2008/2010 candidate,Qlib binary coverage; BaoStock/AkShare/Tushare spot checks; early adjustment vintage not fully proven
+daily_basic,2000 probe,2010 probe,2010,2010 candidate,Tushare API returns early rows; market-wide completeness and field definition drift require extension audit
+moneyflow,2007 probe,2010,2010,2010 candidate,2007–2009 partial in prior receipts; stable coverage from 2010
+fundamental_pit,1998–2000 report periods,2018 announcement snapshot,2018,not yet admitted before 2018,revisions/update_flag observed; historical PIT vintage completeness not established
+lifecycle/universe,2000 interval files,2000 interval files,2010+ with canary,requires dedicated vintage audit,provider intervals and current stock_basic do not prove delisted-history availability at each past date
+corporate_actions/adjustment,2000 probe,2010 cross-source candidate,2010,requires split/dividend continuity canary before research-grade admission,

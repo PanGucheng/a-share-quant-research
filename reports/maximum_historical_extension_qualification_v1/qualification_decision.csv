@@ -1,0 +1,7 @@
+decision_area,status,reason
+technical_price_history,pass_with_limits,2000 provider coverage is real and independently spot-checkable
+stable_full_feature_history,conditional_2010_candidate,moneyflow stable from 2010; daily_basic and statements still require market-wide extension audit
+fundamental_pit_before_2018,blocked,revision rows exist but historical PIT-vintage completeness is not proven
+common_full_v2_frontier,not_yet_admitted,"must be the intersection of coverage, PIT, lifecycle, adjustment and cross-source canaries"
+extended_matrix_generation,not_generated,qualification evidence is not sufficient to create a trustworthy new Matrix
+protocol_or_model_stage,not_started,no Research Protocol redesign or Structured ML/model outcome access
