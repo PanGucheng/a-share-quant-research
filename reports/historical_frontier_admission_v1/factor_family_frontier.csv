@@ -1,0 +1,5 @@
+history_layer,earliest_reliable_materialization,defined_factors,economic_families,sources
+daily_basic_plus_price_volume,see admitted_frontiers.csv,12,"Liquidity,Size,TradingBehavior,Value",mature_public
+fundamental_pit_plus_daily_basic,blocked pre-2018,19,"CashFlow,GrowthInvestment,Leverage,Profitability,Quality,Value",mature_public
+moneyflow_plus_price_volume,see admitted_frontiers.csv,10,TradingBehavior,mature_public
+price_volume_core,2000-01-04 technical / admission blocked,733,"Liquidity,MomentumTrend,Multi,PriceTrend,Reversal,TradingBehavior,VolatilityRisk","alpha101,alpha158,alpha360,mature_public,project_basic,ta"

@@ -1,0 +1,5 @@
+﻿api,issuers,median_period_coverage,p10_period_coverage,row_cap_issuer_count,duplicate_key_issuer_count,revision_issuer_count,median_announcement_delay_days,p95_announcement_delay_days
+balancesheet,28,1.0,1.0,0,27,27,57.0,466.7499999999996
+cashflow,28,1.0,1.0,0,27,27,56.0,420.59999999999974
+fina_indicator,28,1.0,1.0,13,26,0,47.5,343.6249999999998
+income,28,1.0,1.0,0,27,27,53.0,407.79999999999995

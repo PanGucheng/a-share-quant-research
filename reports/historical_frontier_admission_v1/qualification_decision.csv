@@ -1,0 +1,8 @@
+﻿decision_area,status,reason
+market_daily_basic,blocked,minimum sampled-date coverage=0.849
+market_moneyflow,blocked,minimum sampled-date coverage=0.489
+fundamental_pit_2010_2017,blocked,p10 issuer-period coverage=1.000; row-cap issuers=13
+lifecycle_survivorship_canary,blocked,minimum Qlib/stock_basic intersection=0.892; current snapshot is not a vintage
+corporate_action_adjustment,pass,adjustment canary issuers=12; positive factors and daily overlap audited
+full_factor_universe_v2_common_frontier,not_admitted,"intersection remains blocked until PIT, lifecycle and adjustment gates all pass market-wide"
+extended_matrix,not_generated,this qualification run does not create or mutate Matrix artifacts

@@ -1,0 +1,65 @@
+schema_version: 1
+stage_id: historical_frontier_admission_v1
+status: research_study
+output_dir: reports/historical_frontier_admission_v1
+provider_uri: E:/qlib_prj/qlib_data/cn_data_community_20260609_derived
+qlib_interval_file: E:/qlib_prj/qlib_data/cn_data_community_20260609_derived/instruments/all.txt
+analysis_seed: 20260830
+sample_per_stratum: 4
+market_dates:
+  - 2010-01-04
+  - 2010-04-01
+  - 2010-07-01
+  - 2010-10-08
+  - 2011-01-04
+  - 2011-04-01
+  - 2011-07-01
+  - 2011-10-10
+  - 2012-01-04
+  - 2012-04-05
+  - 2012-07-02
+  - 2012-10-08
+  - 2013-01-04
+  - 2013-04-01
+  - 2013-07-01
+  - 2013-10-08
+  - 2014-01-02
+  - 2014-04-01
+  - 2014-07-01
+  - 2014-10-08
+  - 2015-01-05
+  - 2015-04-01
+  - 2015-07-01
+  - 2015-10-08
+  - 2016-01-04
+  - 2016-04-01
+  - 2016-07-01
+  - 2016-10-10
+  - 2017-01-03
+  - 2017-04-05
+  - 2017-07-03
+  - 2017-10-09
+  - 2018-01-02
+  - 2018-04-02
+  - 2018-07-02
+  - 2018-10-08
+  - 2019-01-02
+  - 2019-04-01
+  - 2019-07-01
+  - 2019-10-08
+  - 2020-01-02
+  - 2020-04-01
+  - 2020-07-01
+  - 2020-10-09
+  - 2021-01-04
+  - 2021-04-01
+  - 2021-07-01
+  - 2021-10-08
+statement_start_date: 20090101
+statement_end_date: 20211231
+statement_years: [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017]
+adjustment_start_date: 20000101
+adjustment_end_date: 20211231
+minimum_market_coverage: 0.90
+minimum_statement_period_coverage: 0.75
+minimum_lifecycle_intersection: 0.90

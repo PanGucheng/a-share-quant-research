@@ -111,6 +111,12 @@ mature-label evaluation
   price-volume 可追溯至 2000-01-04，但共同 full-feature frontier 受 PIT row-cap、
   revision、lifecycle 与 adjustment 证据限制，未生成 extended Matrix。详见
   [final report](../reports/maximum_historical_extension_qualification_v1/REPORT.md)。
+- **Historical Frontier Admission V1 — MARKET-LEVEL QUALIFICATION COMPLETE**：按上市
+  cohort 与 listed/delisted 状态分层抽样 28 个 issuer，并对 48 个季度代表交易日做
+  daily_basic/moneyflow 覆盖、2010–2017 statement PIT、lifecycle 交集和 adjustment
+  continuity canary。daily_basic/moneyflow 稳定尾部候选为 2016-07-01，但 PIT row-cap
+  与 lifecycle vintage 仍阻断 Full V2；未生成 extended Matrix。详见
+  [final report](../reports/historical_frontier_admission_v1/REPORT.md)。
 
 这些已观察历史结果不能被描述为 fresh OOS，也不能授权修改 Strategy V1 或创建
 Strategy V2。

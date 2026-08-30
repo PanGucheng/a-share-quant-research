@@ -109,6 +109,11 @@ Archive 保留证据，但不授权恢复已关闭工作。
   复用 Community Qlib、Tushare、BaoStock、AkShare 与既有缓存，完成 2000 起技术历史、
   跨源价格/成交/复权、PIT 修订、生命周期与因子依赖层资格审计；共同 full-feature
   frontier 尚未获准，未生成 extended Matrix。
+- [Historical Frontier Admission V1](../reports/historical_frontier_admission_v1/REPORT.md)：
+  将代表性 probe 扩展为按上市 cohort/存续状态分层的市场级 canary，审计 48 个季度
+  交易日的 daily_basic/moneyflow 横截面覆盖、2010–2017 财报 PIT 完整性与 row-cap、
+  Qlib 生命周期交集及 pre-2010 复权连续性；daily_basic 与 moneyflow 的稳定尾部候选
+  为 2016-07-01，但 PIT/lifecycle gates 仍阻断 Full V2，未生成 extended Matrix。
 
 这些结果不修改 Strategy V1、不产生 Strategy V2 authorization，也不构成 fresh OOS。
 Factor Universe V2 的实证 Matrix 已达到 qualified-list data readiness；多因子与模型研究

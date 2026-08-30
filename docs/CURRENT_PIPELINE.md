@@ -223,6 +223,9 @@ Evidence:     personal research grade
   validation dependence/ESS 与 regime coverage；只形成设计候选，未选择新 split）；
 - Maximum Historical Extension & Qualification V1（多源最大历史探测与 frontier qualification；
   技术 price history 可至 2000，但共同 full-feature frontier 尚未获准，未生成 extended Matrix）；
+- Historical Frontier Admission V1（市场级 canary：28 个分层 issuer、48 个季度代表日、
+  daily_basic/moneyflow 覆盖、PIT row-cap、lifecycle 交集与 adjustment continuity；
+  稳定尾部候选 2016-07-01，但 PIT/lifecycle gates 阻断 Full V2，未生成 extended Matrix）；
 - 历史 Accuracy Correction、Data Source Audit 和 execution semantics 修正阶段。
 
 CLOSED 阶段只允许修复可证明的数据错误、泄漏、contract failure 或实现 bug；一般

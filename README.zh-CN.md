@@ -40,6 +40,12 @@ Research Protocol V2 现已在模型结果出现前单独冻结：后续 Structu
 V1 已完成真实多源历史探测；技术 price-volume 可至 2000，但共同 full-feature frontier
 尚未获准，未生成 extended Matrix。
 
+Historical Frontier Admission V1 已进一步完成市场级准入 canary：28 个按上市 cohort 与
+存续状态分层的 issuer、48 个季度代表交易日和 2010–2017 财报 PIT 审计显示，
+daily_basic/moneyflow 的稳定尾部候选为 2016-07-01，但 PIT row-cap 与 lifecycle vintage
+仍未通过，因此继续不生成 extended Matrix。报告见
+[reports/historical_frontier_admission_v1/REPORT.md](reports/historical_frontier_admission_v1/REPORT.md)。
+
 文档入口是 [docs/DOC_INDEX.md](docs/DOC_INDEX.md)；实际活动命令、时间边界和机器
 状态路径以 [docs/CURRENT_PIPELINE.md](docs/CURRENT_PIPELINE.md) 为准。
 
