@@ -215,9 +215,11 @@ def compare_matrix_overlap(
         a = pd.to_numeric(joined.loc[common, f"{factor}_extended"], errors="coerce").to_numpy()
         b = pd.to_numeric(joined.loc[common, f"{factor}_frozen"], errors="coerce").to_numpy()
         both_nan = np.isnan(a) & np.isnan(b)
+        same_infinity = np.isinf(a) & np.isinf(b) & (np.signbit(a) == np.signbit(b))
         finite = np.isfinite(a) & np.isfinite(b)
         close = np.zeros(len(a), dtype=bool)
         close[both_nan] = True
+        close[same_infinity] = True
         close[finite] = np.isclose(
             a[finite], b[finite], atol=absolute_tolerance, rtol=relative_tolerance
         )

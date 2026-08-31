@@ -236,6 +236,10 @@ Evidence:     personal research grade
   8,014,460 PIT keys，733/774 分层历史；分区、连续累计状态、PIT 与 universe overlap
   通过，但 frozen-parent value overlap 仍有 36 因子差异，故状态为 `partial_extension`，
   不进入 Structured ML）；
+- Extended Matrix Overlap Lineage Resolution V1（对 36 个 residual 完成逐因子 root-cause
+  决策；15 个 Alpha101 采用 dated PIT rank scope，KAMA 改为因果连续状态，KCP 修复
+  infinity comparator，19 个 Fundamental residual 记录 source-window provenance；新
+  versioned Matrix 为 `lineage_resolved`，739 exact / 35 explained / 0 quarantined）；
 - 历史 Accuracy Correction、Data Source Audit 和 execution semantics 修正阶段。
 
 CLOSED 阶段只允许修复可证明的数据错误、泄漏、contract failure 或实现 bug；一般
@@ -271,6 +275,14 @@ corporate-action/lifecycle 语义仍未充分证明。因此只保留 frontier m
 2021-01-29。Extended Matrix 已生成且连续状态验证通过；2021-02-01 至 2021-03-31
 overlap key set 完全一致，但 Alpha101 为主的 36 个因子仍有值差异，保留为显式 blocker，
 不修改 frozen parent 或 Protocol V2，也不启动模型竞争。
+
+[Extended Matrix Overlap Lineage Resolution V1](../reports/extended_matrix_overlap_lineage_resolution_v1/REPORT.md)
+已关闭该 blocker：所有 36 个 residual 均完成可审计归因，未通过复制旧实现 bug 或放宽
+tolerance 强求完全一致。新 identity 为
+`extended-matrix:22fbf692d22e97a90d3b63ad1258f4867be38f5476494e27fbf68d5825cc38f0`；
+762 个分区完整性、PIT、universe 与连续状态门禁继续通过。该 artifact 已具备作为后续
+Dataset / Research Protocol redesign 输入的 lineage 条件，但 redesign 和 Structured ML
+仍须单独授权，当前均未启动。
 
 近期阶段的详细结论只在相应 final reports 中维护，入口见
 [DOC_INDEX.md](DOC_INDEX.md)。它们不产生 production winner、Strategy V2 authorization

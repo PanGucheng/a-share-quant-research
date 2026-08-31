@@ -4,6 +4,7 @@ import hashlib
 import json
 import sys
 import warnings
+from contextlib import contextmanager
 from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Any
@@ -77,6 +78,44 @@ def import_ref_alpha101(source_local_path: Path):
     from KunTestUtil import ref_alpha101
 
     return ref_alpha101
+
+
+@contextmanager
+def alpha101_rank_eligibility(
+    source_module: Any,
+    eligibility: pd.DataFrame | None,
+):
+    """Keep structural non-members out of every Alpha101 cross-sectional rank.
+
+    The upstream pandas reference sometimes fills missing intermediate values
+    before calling ``rank``.  A raw-input mask alone is therefore insufficient:
+    the fill can turn a lifecycle-ineligible, all-NaN column into a ranked zero
+    and make an earlier result depend on which future instruments happen to be
+    present on the calculation axis.  This scoped override preserves the frozen
+    formulas while enforcing the dated eligible cross-section at every rank.
+
+    ``None`` deliberately retains the legacy implementation for reproducibility
+    of immutable parent artifacts.
+    """
+
+    if eligibility is None:
+        yield
+        return
+    original_rank = source_module.rank
+
+    def eligible_rank(values: pd.DataFrame) -> pd.DataFrame:
+        mask = eligibility.reindex(
+            index=values.index,
+            columns=values.columns,
+            fill_value=False,
+        )
+        return original_rank(values.where(mask))
+
+    source_module.rank = eligible_rank
+    try:
+        yield
+    finally:
+        source_module.rank = original_rank
 
 
 def load_qlib_ohlcva(config: Alpha101SourceConfig) -> pd.DataFrame:
@@ -158,7 +197,12 @@ def load_metadata_catalog(path: Path) -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 
-def compute_alpha101_features(config: Alpha101SourceConfig, raw: pd.DataFrame) -> pd.DataFrame:
+def compute_alpha101_features(
+    config: Alpha101SourceConfig,
+    raw: pd.DataFrame,
+    *,
+    rank_eligibility: pd.DataFrame | None = None,
+) -> pd.DataFrame:
     ref_alpha101 = import_ref_alpha101(config.source_local_path)
     wide = to_wind_wide(raw)
     reference = wide["S_DQ_CLOSE"]
@@ -175,20 +219,21 @@ def compute_alpha101_features(config: Alpha101SourceConfig, raw: pd.DataFrame) -
     stock.returns = stock.close.pct_change(fill_method=None)
     metadata = load_metadata_catalog(config.metadata_catalog).set_index("factor")
     output_frames = []
-    for factor in config.selected_smoke_factors:
-        if factor not in metadata.index:
-            raise ValueError(f"Selected factor missing from metadata catalog: {factor}")
-        method_name = str(metadata.loc[factor, "registry_name"])
-        if not hasattr(stock, method_name):
-            raise ValueError(f"KunQuant reference missing method: {method_name}")
-        values = getattr(stock, method_name)()
-        if not isinstance(values, pd.DataFrame):
-            raise TypeError(f"KunQuant reference method {method_name} returned {type(values).__name__}, expected DataFrame")
-        values = values.copy()
-        assert_alpha101_axes(values, reference, method_name)
-        values = values.sort_index().sort_index(axis=1)
-        series = values.stack(future_stack=True).rename(factor)
-        output_frames.append(series)
+    with alpha101_rank_eligibility(ref_alpha101, rank_eligibility):
+        for factor in config.selected_smoke_factors:
+            if factor not in metadata.index:
+                raise ValueError(f"Selected factor missing from metadata catalog: {factor}")
+            method_name = str(metadata.loc[factor, "registry_name"])
+            if not hasattr(stock, method_name):
+                raise ValueError(f"KunQuant reference missing method: {method_name}")
+            values = getattr(stock, method_name)()
+            if not isinstance(values, pd.DataFrame):
+                raise TypeError(f"KunQuant reference method {method_name} returned {type(values).__name__}, expected DataFrame")
+            values = values.copy()
+            assert_alpha101_axes(values, reference, method_name)
+            values = values.sort_index().sort_index(axis=1)
+            series = values.stack(future_stack=True).rename(factor)
+            output_frames.append(series)
     combined = pd.concat(output_frames, axis=1).reset_index()
     combined = combined.rename(columns={"level_0": "datetime", "level_1": "instrument"})
     combined["datetime"] = pd.to_datetime(combined["datetime"])

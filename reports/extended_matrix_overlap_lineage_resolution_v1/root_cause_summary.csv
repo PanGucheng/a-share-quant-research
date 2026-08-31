@@ -1,0 +1,5 @@
+root_cause_category,factor_count,old_value_difference_count,new_value_difference_count,resolved
+explained_upstream_statement_window_residual,19,152,152,True
+frozen_and_parent_extension_implementation_bug,1,113,71857,True
+frozen_parent_implementation_bug,15,937034,975996,True
+overlap_comparator_bug,1,2,0,True

@@ -124,6 +124,13 @@ mature-label evaluation
   VPT/NVI/ADI/OBV 跨年度状态、PIT 和 universe overlap 均通过；frozen-parent overlap
   key set 一致，但 36 因子仍有值级 lineage 差异，故状态为 `partial_extension`，不得启动
   Structured ML。详见 [final report](../reports/historical_data_engineering_extension_v1/REPORT.md)。
+- **Extended Matrix Overlap Lineage Resolution V1 — LINEAGE RESOLVED**：剩余 36 个
+  overlap residual 已逐因子归因；739/774 exact、35 explained、0 quarantined。15 个
+  Alpha101 修正 dated PIT rank scope，KAMA 改为因果连续状态，KCP comparator 修复，
+  19 个 Fundamental residual 作为已公开历史 source-window 差异保留。新 Matrix identity
+  为 `extended-matrix:22fbf692d22e97a90d3b63ad1258f4867be38f5476494e27fbf68d5825cc38f0`；
+  旧 frozen 与 partial-extension 均保持 immutable。详见
+  [final report](../reports/extended_matrix_overlap_lineage_resolution_v1/REPORT.md)。
 
 这些已观察历史结果不能被描述为 fresh OOS，也不能授权修改 Strategy V1 或创建
 Strategy V2。
@@ -134,8 +141,9 @@ Forward Track 继续具有时间优先级。Factor Universe V2 已冻结为 rese
 774 因子目录，历史 bootstrap、V2 Matrix readiness 与 Economic Multi-Factor Research
 V1 均已完成并关闭。Research Protocol V2 artifact 保持冻结，但 Historical Dataset &
 Validation Design Study 已证明不能直接沿用其短 folds 启动正式模型竞争。下一研究方向
-是解决 Extended Matrix 与 frozen parent 的剩余值级 lineage 差异，并另行预注册较长
-chronological validation 候选；Structured ML 仍未授权。不得自动切换
+是以新的 lineage-resolved Extended Matrix 为输入，另行预注册较长 chronological
+validation 候选并设计 Dataset / Research Protocol redesign；当前尚未启动，Structured ML
+仍未授权。不得自动切换
 Strategy V1、daily paper path 或修改 Forward evidence。
 
 ## Environment

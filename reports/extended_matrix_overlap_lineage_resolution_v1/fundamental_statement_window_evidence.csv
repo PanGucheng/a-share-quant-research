@@ -1,0 +1,5 @@
+lineage,instrument,event_count,first_information_available_date,first_report_period,has_prior_total_assets_before_overlap
+frozen_parent,SZ300094,18,2021-02-03,2020-09-30,False
+frozen_parent,SZ002217,33,2018-04-24,2017-12-31,False
+extended,SZ300094,37,2010-06-18,2009-12-31,True
+extended,SZ002217,55,2008-01-24,2007-06-30,True

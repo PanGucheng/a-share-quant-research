@@ -62,6 +62,14 @@ PIT 泄漏检查和 universe overlap 均通过；与 frozen parent 的 key set �
 因子仍有值级 lineage 差异，因此 artifact 状态为 `partial_extension`，不启动模型阶段。
 报告见 [reports/historical_data_engineering_extension_v1/REPORT.md](reports/historical_data_engineering_extension_v1/REPORT.md)。
 
+Extended Matrix Overlap Lineage Resolution V1 已完成剩余 36 个差异的逐因子归因：
+739/774 因子精确一致，35 个 residual 全部获得可审计解释，0 个 quarantine。Alpha101
+主因是全区间 instrument 轴与 `fillna` 后横截面 rank 的 PIT scope 错误；KAMA 主因是
+`np.roll` 引入非因果初值；19 个 Fundamental residual 来自已公开 statement history 的
+source-window 差异。旧 frozen/partial-extension 均未覆盖，新 versioned Matrix identity 为
+`extended-matrix:22fbf692d22e97a90d3b63ad1258f4867be38f5476494e27fbf68d5825cc38f0`。
+报告见 [reports/extended_matrix_overlap_lineage_resolution_v1/REPORT.md](reports/extended_matrix_overlap_lineage_resolution_v1/REPORT.md)。
+
 文档入口是 [docs/DOC_INDEX.md](docs/DOC_INDEX.md)；实际活动命令、时间边界和机器
 状态路径以 [docs/CURRENT_PIPELINE.md](docs/CURRENT_PIPELINE.md) 为准。
 

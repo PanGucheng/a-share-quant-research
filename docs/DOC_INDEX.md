@@ -125,6 +125,12 @@ Archive 保留证据，但不授权恢复已关闭工作。
   但 36 个因子仍有值级 lineage 差异，因此保留 `partial_extension`，未进入模型阶段。
   原始执行要求保存在
   [Historical Data Engineering Extension V1 plan](_archive/07_research_program_history/HISTORICAL_DATA_ENGINEERING_EXTENSION_V1_PLAN.md)。
+- [Extended Matrix Overlap Lineage Resolution V1](../reports/extended_matrix_overlap_lineage_resolution_v1/REPORT.md)：
+  对剩余 36 个 overlap residual 完成逐因子 root-cause 与 action 决策；修正 Alpha101 dated
+  PIT rank scope、因果 KAMA 和 infinity comparator，接受 19 个有 provenance 的 Fundamental
+  source-window residual。新 versioned Matrix 达到 739 exact / 35 explained / 0 quarantined，
+  旧 frozen 与 partial-extension 均保持 immutable。原始执行要求保存在
+  [Extended Matrix Overlap Lineage Resolution V1 plan](_archive/07_research_program_history/EXTENDED_MATRIX_OVERLAP_LINEAGE_RESOLUTION_V1_PLAN.md)。
 
 这些结果不修改 Strategy V1、不产生 Strategy V2 authorization，也不构成 fresh OOS。
 Factor Universe V2 的实证 Matrix 已达到 qualified-list data readiness；多因子与模型研究
