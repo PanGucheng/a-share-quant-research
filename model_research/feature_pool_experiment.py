@@ -1053,10 +1053,10 @@ def run_coordinated_historical_replay(
     policy_ids: tuple[str, ...] = POLICY_IDS,
     execution_profile: str = "ml_feature_pool_mvp_v1",
 ) -> dict[str, pd.DataFrame]:
-    import lightgbm as lgb
-
     if replay_root.exists():
         raise PermissionError("coordinated historical replay is single-release and already exists")
+    import lightgbm as lgb
+
     config = config_loader(policy_config_path)
     lightgbm_config = load_lightgbm_config(
         resolve(config["parents"]["lightgbm_config"])

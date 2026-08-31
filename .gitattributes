@@ -2,6 +2,11 @@
 # Windows runtime. Recreate those exact bytes on every checkout, including CI.
 outputs/qlib_exchange_split_transparent_v1/** text eol=crlf
 
+# This frozen study records Windows CSV bytes but an LF Markdown report.
+# Preserve its manifest hashes consistently on every CI checkout.
+reports/historical_dataset_validation_design_v1/*.csv text eol=crlf
+reports/historical_dataset_validation_design_v1/*.md text eol=lf
+
 # The execution config embeds the raw SHA-256 of this canonical semantics file.
 configs/qlib_exchange_semantics_669_v1.yaml text eol=lf
 
