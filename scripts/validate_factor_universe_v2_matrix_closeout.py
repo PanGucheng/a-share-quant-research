@@ -2,14 +2,18 @@ from __future__ import annotations
 
 import hashlib
 import json
+import sys
 from pathlib import Path
 
 import pandas as pd
 
-from research_validation.lineage import build_artifact_index
-
-
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
+from research_validation.lineage import build_artifact_index  # noqa: E402
+
+
 CURRENT = PROJECT_ROOT / "outputs" / "factor_universe_v2_matrix_readiness" / "current"
 REPORTS = PROJECT_ROOT / "reports" / "factor_universe_v2_matrix_readiness"
 
