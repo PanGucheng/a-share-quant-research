@@ -8,10 +8,10 @@ protocol is ready; formal LightGBM, DoubleEnsemble, representation, hyperparamet
 or training-window competition has not started.
 
 The machine-readable design is
-[`configs/research_protocol_v2.yaml`](../configs/research_protocol_v2.yaml). Exact
+[`configs/research_protocol_v2.yaml`](../../../configs/research_protocol_v2.yaml). Exact
 date assignments, audits, source receipts, Qlib capability findings, comparison
 tables, and the final report are under
-[`reports/research_protocol_v2/`](../reports/research_protocol_v2/REPORT.md).
+[`reports/research_protocol_v2/`](../../../reports/research_protocol_v2/REPORT.md).
 
 ## Evidence authority
 

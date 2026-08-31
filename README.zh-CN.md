@@ -1,92 +1,43 @@
 # A 股量化研究框架
 
-这是一个 research-first 的个人中国 A 股量化研究框架，主要基于
-[Microsoft Qlib](https://github.com/microsoft/qlib)。Qlib 是重要的底层框架，不是整个
-项目的身份。项目用于因子、模型、组合与真实 forward 观察研究，不是生产交易系统，
-不构成投资建议。
+这是一个 personal、research-first 的中国 A 股量化研究框架，主要基于
+[Microsoft Qlib](https://github.com/microsoft/qlib)。Qlib 是底层框架，不是整个项目身份。
+项目用于因子、模型、组合与 genuine forward research，不是生产交易系统，也不构成投资建议。
 
 GitHub repository：
 [PanGucheng/a-share-quant-research](https://github.com/PanGucheng/a-share-quant-research)
 
 ## 当前状态
 
-当前具有时间优先级的活动主线是 Forward Track：
+- **ACTIVE：**具有时间优先级的 Forward Track——Daily Data Update、冻结 Strategy V1
+  prediction、paper portfolio 和成熟标签评价。
+- **FROZEN：**Strategy V1 及全部历史/Forward evidence。
+- **READY / AUTHORITY：**新 Dataset / Protocol research 使用的 canonical dataset。
+- **CLOSED：**Historical Data Engineering 与已完成历史研究阶段。
+- **NEXT / NOT STARTED：**Dataset / Research Protocol redesign。
+- **NOT AUTHORIZED：**Structured ML、Strategy V2 和 live trading。
+
+Canonical dataset：
 
 ```text
-Daily Data Update
-        ↓
-冻结 52 因子快照
-        ↓
-冻结 Strategy V1 LightGBM prediction
-        ↓
-Top50 等权 paper decision
-        ↓
-标签成熟后的独立评价
+canonical-dataset:27518ddbb28ba2b4b1247375d4e3d32d7d5be9935a5f2074dc272f84285f6423
 ```
 
-Strategy V1、历史 prediction 与已经观察的 `split_003` 均保持冻结。`split_003` 可以
-用于诊断，但不能再次用于调参后声称为新的 OOS。Model Diagnostic V1、ML Feature
-Pool MVP V1、Performance Optimization V1、Research Productivity V1、Clustering
-Ablation V1 与 Phase 0–6 工程重构均已关闭。Economic Multi-Factor Research V1
-也已关闭：765 个合格因子完成经济机制映射及 split-local、固定 P01 的历史诊断，未选择
-winner。Fast Research 仅用于筛查，clustering
-representative gate 保持不变。Factor Universe V2 已冻结为 research-only 的 774 因子
-目录（669 个 immutable V1、19 个 recovered、28 个 canonicalized、58 个成熟新增），
-不授权 Strategy V2，也不修改 Forward Track。不存在自动延伸的工程 Phase 7。
+范围为 `2010-01-29` 至 `2026-06-09`；774 个 definitions 中 765 个 research-usable，
+9 个 blocked。旧 frozen Matrix 和历史 extension 继续作为 immutable evidence，不是新研究
+默认输入。读取合同见
+[Canonical Research Dataset Authority](docs/CANONICAL_RESEARCH_DATASET.md)。
 
-Research Protocol V2 现已在模型结果出现前单独冻结：后续 Structured ML V1 必须只用
-5 个 development 时间环境做选择，7 个历史窗口和旧三个 test 只作诊断。协议冻结不等于
-模型竞争已经开始，也不授权 Strategy V2。Maximum Historical Extension & Qualification
-V1 已完成真实多源历史探测；技术 price-volume 可至 2000，但共同 full-feature frontier
-尚未获准，未生成 extended Matrix。
+Prior Research Protocol V2 是 frozen historical evidence；其中短 development environments
+不足以授权正式 Structured ML。必须先单独授权并完成 Dataset / Research Protocol redesign。
 
-Historical Frontier Admission V1 已进一步完成市场级准入 canary：28 个按上市 cohort 与
-存续状态分层的 issuer、48 个季度代表交易日和 2010–2017 财报 PIT 审计显示，
-daily_basic/moneyflow 的稳定尾部候选为 2016-07-01，但 PIT row-cap 与 lifecycle vintage
-仍未通过，因此继续不生成 extended Matrix。报告见
-[reports/historical_frontier_admission_v1/REPORT.md](reports/historical_frontier_admission_v1/REPORT.md)。
-
-Historical Data Authority Resolution V1 随后针对“谁是历史 authority”做了独立验证：
-Qlib interval 与 Tushare listing/namechange、Tushare/BaoStock dated presence 只能形成
-可复现候选；Tushare statements 通过 exact `period=YYYYMMDD` 分段与 offset pagination
-证明 endpoint retrieval 可穷尽，但 provider revision vintage 与 historical lifecycle
-仍未证明。因此 daily_basic/moneyflow frontier 仍是 candidate，Full V2 与 extended Matrix
-继续 blocked。报告见
-[reports/historical_data_authority_resolution_v1/REPORT.md](reports/historical_data_authority_resolution_v1/REPORT.md)。
-
-Historical Data Engineering Extension V1 现已按 practical reconstructed PIT / practical
-historical universe 口径完成独立 Extended Matrix：2000-11-01 至 2021-01-29，8,014,460
-个 PIT keys、4,913 个交易日、3,874 个 instruments，2000–2009 为 733 个价格/成交量
-因子层，2010-01-29 起为 774 因子共同层。分区完整性、跨年度 VPT/NVI/ADI/OBV 状态、
-PIT 泄漏检查和 universe overlap 均通过；与 frozen parent 的 key set 完全一致，但 36 个
-因子仍有值级 lineage 差异，因此 artifact 状态为 `partial_extension`，不启动模型阶段。
-报告见 [reports/historical_data_engineering_extension_v1/REPORT.md](reports/historical_data_engineering_extension_v1/REPORT.md)。
-
-Extended Matrix Overlap Lineage Resolution V1 已完成剩余 36 个差异的逐因子归因：
-739/774 因子精确一致，35 个 residual 全部获得可审计解释，0 个 quarantine。Alpha101
-主因是全区间 instrument 轴与 `fillna` 后横截面 rank 的 PIT scope 错误；KAMA 主因是
-`np.roll` 引入非因果初值；19 个 Fundamental residual 来自已公开 statement history 的
-source-window 差异。旧 frozen/partial-extension 均未覆盖，新 versioned Matrix identity 为
-`extended-matrix:22fbf692d22e97a90d3b63ad1258f4867be38f5476494e27fbf68d5825cc38f0`。
-报告见 [reports/extended_matrix_overlap_lineage_resolution_v1/REPORT.md](reports/extended_matrix_overlap_lineage_resolution_v1/REPORT.md)。
-
-Canonical Historical Dataset Assembly V1 已完成历史数据工程收尾：新的正式 research data
-authority 覆盖 2010-01-29 至 2026-06-09，定义 774 个 factors，其中 765 个 research-usable、
-9 个继续 blocked。2021+ 只重算 15 个 PIT-rank Alpha101、causal KAMA 与 19 个 Fundamental，
-其余分区引用已证明语义一致的 frozen evidence；边界、PIT、universe、state、partition 与旧 artifact
-immutability checks 全部通过。Canonical identity 为
-`canonical-dataset:27518ddbb28ba2b4b1247375d4e3d32d7d5be9935a5f2074dc272f84285f6423`，
-Historical Data Engineering 已正式 `CLOSED`。权威读取合同见
-[docs/CANONICAL_RESEARCH_DATASET.md](docs/CANONICAL_RESEARCH_DATASET.md)，完整结论见
-[reports/canonical_historical_dataset_assembly_v1/REPORT.md](reports/canonical_historical_dataset_assembly_v1/REPORT.md)。
-
-文档入口是 [docs/DOC_INDEX.md](docs/DOC_INDEX.md)；实际活动命令、时间边界和机器
-状态路径以 [docs/CURRENT_PIPELINE.md](docs/CURRENT_PIPELINE.md) 为准。
+文档从 [docs/DOC_INDEX.md](docs/DOC_INDEX.md) 开始；活动命令和状态边界以
+[docs/CURRENT_PIPELINE.md](docs/CURRENT_PIPELINE.md) 为准。
 
 ## 环境准备
 
 committed [configs/project.yaml](configs/project.yaml) 保持 portable。本机 Qlib source、
-provider 与 Daily Update cache 写入被忽略的 `configs/project.local.yaml`，模板见
+provider 和 Daily Update cache 写入 ignored `configs/project.local.yaml`；模板见
 [configs/project.local.example.yaml](configs/project.local.example.yaml)。
 
 ```powershell
@@ -95,8 +46,7 @@ python -m pip install -e .
 qlib-doctor --strict
 ```
 
-Python interpreter 属于 runtime state（`sys.executable`），不属于 Project Settings。
-Windows 工作站环境与配置优先级见 [docs/ENVIRONMENT.md](docs/ENVIRONMENT.md)。
+环境细节见 [docs/ENVIRONMENT.md](docs/ENVIRONMENT.md)。
 
 ## 活动命令
 
@@ -108,12 +58,10 @@ qlib-paper-portfolio --help
 qlib-forward-status
 ```
 
-不要仅根据上述短命令推断生产参数。prediction cutoff、Git binding、label maturity
-和 append-only 规则必须遵循 [docs/CURRENT_PIPELINE.md](docs/CURRENT_PIPELINE.md)。
+cutoff、Git binding、label maturity 和 append-only 规则见
+[CURRENT_PIPELINE.md](docs/CURRENT_PIPELINE.md)；不要从这份短命令列表推断生产参数。
 
 ## 质量命令
-
-本地与 GitHub Actions 使用同一组入口：
 
 ```powershell
 python scripts/check_quality.py fast
@@ -121,49 +69,20 @@ python scripts/check_quality.py full
 python scripts/check_quality.py qlib
 ```
 
-`fast` 是有限 Ruff 范围和重点工程测试；`full` 是完整 pytest 与既有 compact/synthetic
-validators；`qlib` 是 synthetic Qlib Exchange runtime tests。这些命令不会下载完整
-A 股数据、训练模型或运行历史回测。详细政策见 [docs/CI_POLICY.md](docs/CI_POLICY.md)。
+这些 tier 不下载完整 A 股数据、不训练模型、不运行历史回测。政策见
+[docs/CI_POLICY.md](docs/CI_POLICY.md)。
 
-## 目录结构
+## 文档入口
 
-```text
-qlib_baseline/    Settings、原子 I/O、弱缓存 helper 与活动 CLI。
-daily_update/     活动 Daily Update pipeline 与兼容 facade。
-model_research/   冻结/forward 模型和 paper portfolio 模块。
-factor_research/  因子评价与研究模块。
-qlib_integration/ Qlib Exchange/Executor 集成。
-configs/          portable project 与工作流配置。
-scripts/          活动包装器、quality runner、validators 与历史工具。
-docs/             当前 authority 与 governance 文档。
-docs/operations/  ACTIVE/FROZEN workflow 仍使用的 operational contracts。
-docs/_archive/    CLOSED、HISTORICAL、SUPERSEDED 计划与审计。
-outputs/          runtime 结果及保留的历史/Forward evidence。
-artifacts/        不可变 frozen machine objects。
-reports/          适合 Git 的紧凑人类可读证据。
-tmp/              被忽略的缓存、下载、参考仓库与临时文件。
-```
-
-## 权威文档
-
-- [个人研究路线](docs/PERSONAL_QUANT_RESEARCH_ROADMAP.md)
+- [项目上下文摘要](docs/PROJECT_CONTEXT_SUMMARY.md)
 - [当前 Pipeline](docs/CURRENT_PIPELINE.md)
-- [Canonical Research Dataset Authority](docs/CANONICAL_RESEARCH_DATASET.md)
-- [Research Protocol V2](docs/RESEARCH_PROTOCOL_V2.md)
+- [Canonical Research Dataset](docs/CANONICAL_RESEARCH_DATASET.md)
+- [个人研究路线](docs/PERSONAL_QUANT_RESEARCH_ROADMAP.md)
 - [架构](docs/ARCHITECTURE.md)
 - [输出政策](docs/OUTPUT_POLICY.md)
-- [CI 政策](docs/CI_POLICY.md)
-- [文档归档](docs/_archive/README.md)
+- [文档导航与归档地图](docs/DOC_INDEX.md)
 
-归档计划保留项目演进证据，但不是当前执行指令。既有 manifests、receipts、lineage、
-frozen artifacts 与历史 outputs 均保持不变。
-
-## 研究边界
-
-- 任何决策只能使用当时可得信息。
-- 严格隔离 train、validation、test/holdout 与 forward label evaluation。
-- 不覆盖 Strategy V1 prediction、paper decision、持仓、交易或 NAV。
-- 不把历史或 post-observation diagnosis 解释为生产 readiness。
-- 在保证研究正确性和证据边界的前提下采用最小工程设计。
+`docs/` 保存 current authority，`docs/operations/` 保存活动 operational contracts，
+`docs/_archive/` 与 `reports/` 保存 historical evidence。归档计划不是当前执行指令。
 
 仓库工作协议见 [AGENTS.md](AGENTS.md)。

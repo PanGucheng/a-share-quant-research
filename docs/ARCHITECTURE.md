@@ -68,10 +68,12 @@ Model Diagnostic V1 (closed)
 而不是直接读取 old frozen Matrix。旧 frozen、partial-extension 和 lineage-resolved artifacts
 仍是 immutable evidence；canonical assembly 通过引用或新 versioned partition 组合它们，不改写 parent。
 
-未来 Structured ML 的研究边界已由
-[Research Protocol V2](RESEARCH_PROTOCOL_V2.md) 冻结：项目生成器先根据 exact label
-interval 与 evidence role 产生合法 assignments，模型 runner 只能消费这些 dates；Qlib
-RollingGen 可在之后辅助物化 task，但不能替代 PIT、universe、feature eligibility 或
+Prior Research Protocol V2 保留为
+[frozen historical evidence](_archive/07_research_program_history/RESEARCH_PROTOCOL_V2.md)。
+其 exact label interval 与 evidence-role 实现仍可用于审计和复现，但短 development
+environments 已被证明不足以授权正式 Structured ML。下一阶段必须先以 canonical dataset
+为输入完成单独授权的 Dataset / Research Protocol redesign；Qlib RollingGen 只能在合法
+assignments 已确定后辅助物化 task，不能替代 PIT、universe、feature eligibility 或
 selection/diagnostic authority。
 
 ## 3. 领域目录
@@ -93,9 +95,9 @@ selection/diagnostic authority。
 目录存在不代表模块处于 active 状态。版本化名称如 V1、V2、V3、V4 只表示研究历史，
 不表示最新版本一定是当前运行入口。
 
-`research_validation/research_protocol_v2.py` 是下一阶段唯一的 V2 日期生成 authority；
-旧 `purged_split.py` 和 `development_split.py` 保留为 legacy evidence reproduction，不被
-原地改写。
+`research_validation/research_protocol_v2.py`、其配置和生成结果是 prior V2 的 frozen
+reproduction path，不是下一阶段 redesign authority。旧 `purged_split.py` 和
+`development_split.py` 同样只作 legacy evidence reproduction；均不原地改写。
 
 ## 4. 依赖方向
 

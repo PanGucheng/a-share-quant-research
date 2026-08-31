@@ -138,19 +138,17 @@ Detailed numbers and limitations live in the linked reports in
 [DOC_INDEX.md](DOC_INDEX.md); they are not duplicated here. All five are CLOSED, and
 the observed historical diagnostics do not authorize Strategy V2.
 
-Research Protocol V2 is now frozen independently of model outcomes. It defines five
-development selection environments, seven historical diagnostic environments,
-exact label-interval purging, expanding versus 504-day sliding hypotheses, and
-candidate-count governance. Formal Structured ML V1 research remains a separate
-next stage; Strategy V1 and Forward evidence remain unchanged.
+Research Protocol V2 was frozen independently of model outcomes and remains prior
+protocol evidence. A later Dataset & Validation Design Study found that its short
+development environments do not provide sufficient temporal information for formal
+Structured ML selection. It therefore cannot directly authorize model competition.
 
-The **Factor Universe / Data Capability Upgrade** and its historical matrix-readiness
-stage are complete. The PIT-qualified 2021-02-01 through 2026-06-09 matrix approves
-765 of 774 frozen definitions for later research, with nine definitions explicitly
-blocked and all 669 V1 partitions byte-immutable. Economic multi-factor research is
-now complete and CLOSED; model training remains separate future work, and Strategy V2
-is not authorized. Genuine
-Forward evidence collection retains temporal priority.
+Historical Data Engineering is now CLOSED. New Dataset / Protocol research must use
+the canonical dataset covering 2010-01-29 through 2026-06-09: 765 of 774 frozen
+definitions are research-usable and nine remain blocked. The next research stage is
+a separately authorized Dataset / Research Protocol redesign; it has not started.
+Structured ML and Strategy V2 remain unauthorized, while genuine Forward evidence
+collection retains temporal priority.
 
 ## 6. Why Forward Collection Has Temporal Priority
 

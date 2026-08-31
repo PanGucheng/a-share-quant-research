@@ -1,191 +1,129 @@
 # Documentation Index
 
-本文件是仓库文档的权威入口。`docs/` 顶层只保留当前 authority/governance；仍在
-执行的操作契约位于 `docs/operations/`；已完成、历史或 provenance 文档位于
-`docs/_archive/`。
+本文件是仓库文档导航入口。`docs/` 顶层只保留 current authority/governance；
+`docs/operations/` 保存活动工作流的 operational contracts；`docs/_archive/` 与
+`reports/` 保存 historical evidence。Archive 中的命令和“下一步”不构成当前授权。
 
-当前项目展示名称为 `A-Share Quant Research` / `A 股量化研究框架`，repository 为
-[PanGucheng/a-share-quant-research](https://github.com/PanGucheng/a-share-quant-research)。
-旧 repository 名 `PanGucheng/qlib-baseline` 已永久退役，不得重新创建，以免破坏
-GitHub rename redirect。
+## Recommended Reading
 
-## Authority Order
+新 Codex 会话默认只需要：
 
-发生冲突时按以下顺序判断：
+```text
+AGENTS.md
+    ↓
+PROJECT_CONTEXT_SUMMARY.md
+    ↓
+CURRENT_PIPELINE.md
+    ↓
+task-specific authority doc
+```
 
-1. `AGENTS.md` 的研究与修改纪律；
-2. 当前路线与运行入口；
-3. 当前架构、输出、CI 和环境政策；
-4. 冻结 artifacts、machine status、receipts 和 manifests；
-5. archive 中的历史计划和阶段回执。
-
-Archive 保留证据，但不授权恢复已关闭工作。
+详细历史按需追溯，不需要默认阅读所有 reports。
 
 ## Current Authority
 
-- `DOC_INDEX.md`
-  本导航入口；不与其他 current 文档竞争其具体职责。
-- `PROJECT_CONTEXT_SUMMARY.md`
-  面向新会话的紧凑上下文，不承载逐阶段历史流水账。
-- `CURRENT_PIPELINE.md`
-  ACTIVE、FROZEN、CLOSED、LEGACY、EXPERIMENTAL 状态，Forward Track 命令与机器状态入口。
-- `CANONICAL_RESEARCH_DATASET.md`
-  后续 Dataset / Protocol research 的唯一推荐 Matrix identity、effective-date 读取合同、
-  factor qualification、parent evidence 与 Historical Data Engineering CLOSED 边界。
-- `PERSONAL_QUANT_RESEARCH_ROADMAP.md`
-  当前研究路线与不可放松的时间隔离、holdout 和 Strategy V1/V2 边界。
-- `RESEARCH_PROTOCOL_V2.md`
-  已冻结的下一阶段时间序列研究协议；定义 development selection、historical diagnostic、
-  forward evidence、exact interval purge、训练历史候选与 Structured ML 入口门禁。
-- `ARCHITECTURE.md`
-  当前领域边界、依赖方向、settings/runtime、weak cache 和保留治理职责。
-- `OUTPUT_POLICY.md`
-  `outputs/`、`artifacts/`、`reports/`、`tmp/`、cache 与 official Forward evidence 的落盘政策。
-- `CI_POLICY.md`
-  本地/CI 共用的 `fast`、`full`、`qlib` 质量层及路径分类。
-- `ENVIRONMENT.md`
-  portable project settings、local override、doctor、Python/Qlib 与依赖环境。
+- [PROJECT_CONTEXT_SUMMARY.md](PROJECT_CONTEXT_SUMMARY.md) — 1–3 分钟新会话上下文。
+- [CURRENT_PIPELINE.md](CURRENT_PIPELINE.md) — ACTIVE、FROZEN、CLOSED、NEXT / NOT
+  STARTED、NOT AUTHORIZED 状态和活动命令。
+- [CANONICAL_RESEARCH_DATASET.md](CANONICAL_RESEARCH_DATASET.md) — 新 Dataset / Protocol
+  research 的唯一推荐数据 identity、effective-date 读取合同和 qualification。
+- [PERSONAL_QUANT_RESEARCH_ROADMAP.md](PERSONAL_QUANT_RESEARCH_ROADMAP.md) — Forward
+  时间优先级与 Strategy V1/V2 长期边界。
+- [ARCHITECTURE.md](ARCHITECTURE.md) — 当前领域职责、依赖方向和 frozen compatibility。
+- [OUTPUT_POLICY.md](OUTPUT_POLICY.md) — `outputs/`、`artifacts/`、`reports/`、`tmp/`
+  与 official Forward evidence 政策。
+- [CI_POLICY.md](CI_POLICY.md) — 本地/CI `fast`、`full`、`qlib` 质量层。
+- [ENVIRONMENT.md](ENVIRONMENT.md) — portable settings、local override、Python/Qlib
+  与 doctor。
+
+发生冲突时，先遵守根目录 `AGENTS.md` 的长期规则，再以 current authority 和实时 machine
+evidence 判断；历史报告与 archive 只说明当时发生了什么。
 
 ## Operational References
 
-- `operations/DAILY_DATA_UPDATE_V1.md`
-  Daily Update 数据源、发布时间、fallback、覆盖率和输出契约。
-- `operations/STRATEGY_V1_PAPER_PORTFOLIO_V1.md`
-  冻结 Strategy V1 paper decision、执行刷新、持仓和 NAV 记录规则。
-- `operations/UNIVERSE_POLICY.md`
-  A 股 universe、动态 membership 和生命周期语义。
-- `operations/TRADABILITY_LABEL_LAYER.md`
-  可交易性标签字段与 fail-closed 边界。
+- [operations/DAILY_DATA_UPDATE_V1.md](operations/DAILY_DATA_UPDATE_V1.md) — Daily
+  Update 数据源、fallback、覆盖和输出合同。
+- [operations/STRATEGY_V1_PAPER_PORTFOLIO_V1.md](operations/STRATEGY_V1_PAPER_PORTFOLIO_V1.md)
+  — 冻结 Strategy V1 paper decision、execution refresh、持仓和 NAV。
+- [operations/UNIVERSE_POLICY.md](operations/UNIVERSE_POLICY.md) — A 股 universe 与动态
+  lifecycle membership。
+- [operations/TRADABILITY_LABEL_LAYER.md](operations/TRADABILITY_LABEL_LAYER.md) —
+  tradability label 与 fail-closed 边界。
 
 ## Repository Entry Documents
 
-- `../README.md`
-  英文项目入口与最小运行导航。
-- `../README.zh-CN.md`
-  中文项目入口与最小运行导航。
-- `../data_quality/README.md`
-  数据质量模块说明。
-- `../tradability/README.md`
-  可交易性模块说明。
-- `../reports/README.md`
-  compact human-readable reports 的目录政策。
+- [../README.md](../README.md) — 英文 landing page。
+- [../README.zh-CN.md](../README.zh-CN.md) — 中文 landing page。
+- [../reports/README.md](../reports/README.md) — compact report policy 与报告入口。
+- [../data_quality/README.md](../data_quality/README.md) — 数据质量模块。
+- [../tradability/README.md](../tradability/README.md) — 可交易性模块。
 
-## Current Machine Evidence
+## Machine Evidence
 
-文档不覆盖机器状态。Forward Track 当前状态以这些 append-only 或受控文件为准：
+文档不复制实时状态。Forward Track 以以下文件为准：
 
-- `outputs/forward/status.json`
-- `outputs/forward/paper_portfolio/status.json`
-- `outputs/prospective_forward_hardening_v1/current/forward_candidate_freeze.json`
+- `outputs/forward/status.json`；
+- `outputs/forward/paper_portfolio/status.json`；
+- `outputs/prospective_forward_hardening_v1/current/forward_candidate_freeze.json`。
 
-历史研究 outputs 仍是冻结证据，但不能仅因目录名含 `current` 就视为 ACTIVE pipeline。
+Canonical dataset 的机器入口：
 
-## Completed Recent Research
+- `outputs/canonical_historical_dataset_assembly_v1/current/manifest.json`；
+- `outputs/canonical_historical_dataset_assembly_v1/current/partition_manifest.csv`；
+- `outputs/canonical_historical_dataset_assembly_v1/current/factor_lineage.csv`。
 
-以下阶段均为 CLOSED。报告负责详细数字，current docs 只保留当前结论：
+目录名含 `current` 不表示相应研究阶段仍 ACTIVE；必须结合
+[CURRENT_PIPELINE.md](CURRENT_PIPELINE.md) 判断。
 
-- [Economic Multi-Factor Research V1](../reports/economic_multi_factor_research_v1/REPORT.md)：
-  将 765 个物理合格因子重构为经济机制映射，并对 11 个 sleeves、7 个有限 archetypes
-  完成 split-local、固定方向、固定 P01 的历史诊断；投机/反转关系较强但成本高，流动性
-  含显著小盘暴露，6 个预注册增量链均未在三个 split 同时通过两项互补检验。仅为
-  post-observation diagnostic，不选择 winner。
-- [ML Feature Pool MVP V1](../reports/ml_feature_pool_mvp_v1/REPORT.md)：更宽输入显示部分
-  历史增量，但 broad pool 稳定性较弱；仅为 post-observation diagnostic。
-- [Performance Optimization V1](../reports/performance_optimization_v1/REPORT.md)：保留精确
-  single-thread/float64 研究语义，拒绝不满足数值 parity 的加速方案。
-- [Research Productivity V1](../reports/research_productivity_v1/REPORT.md)：Projection/Spool
-  content-addressed cache 已实现；Fast Research 仅作资源筛查，不作 winner selection。
-- [Clustering Ablation V1](../reports/ml_clustering_ablation_v1/REPORT.md)：取消每簇单代表门槛的
-  历史证据 mixed，现有 representative gate 不变。
-- [Factor Universe V2](../reports/factor_universe_v2/REPORT.md)：冻结 research-only 的
-  774 因子目录；完成历史缺失/退化审计、Tushare 权限探测、PIT/修订与增量缓存、
-  外部成熟体系及 A 股研究，并新增 58 个覆盖估值、基本面、资金流与风险的信息轴。
-  该冻结不授权 Strategy V2。
-- [Factor Universe V2 Historical Data & Matrix Readiness](../reports/factor_universe_v2_matrix_readiness/REPORT.md)：
-  完成全量历史 bootstrap、严格 PIT 物化、coverage/missingness、单位及 canonical 对照；
-  774 个定义中 765 个 research-usable、9 个明确 blocked，V1 669 分区字节级不变。
-- [Historical Dataset & Validation Design Study V1](../reports/historical_dataset_validation_design_v1/REPORT.md)：
-  追溯 2021 起点、探测可用历史深度，并量化重叠标签 dependence、ESS 与 regime coverage。
-  40 日 validation 的时间统计信息不足；本阶段只提出 120–252 日、4–6 个较长顺序环境
-  的候选设计，并要求先扩展历史数据，没有启动 Structured ML 或修改冻结协议。
-- [Maximum Historical Extension & Qualification V1](../reports/maximum_historical_extension_qualification_v1/REPORT.md)：
-  复用 Community Qlib、Tushare、BaoStock、AkShare 与既有缓存，完成 2000 起技术历史、
-  跨源价格/成交/复权、PIT 修订、生命周期与因子依赖层资格审计；共同 full-feature
-  frontier 尚未获准，未生成 extended Matrix。
-- [Historical Frontier Admission V1](../reports/historical_frontier_admission_v1/REPORT.md)：
-  将代表性 probe 扩展为按上市 cohort/存续状态分层的市场级 canary，审计 48 个季度
-  交易日的 daily_basic/moneyflow 横截面覆盖、2010–2017 财报 PIT 完整性与 row-cap、
-  Qlib 生命周期交集及 pre-2010 复权连续性；daily_basic 与 moneyflow 的稳定尾部候选
-  为 2016-07-01，但 PIT/lifecycle gates 仍阻断 Full V2，未生成 extended Matrix。
-- [Historical Data Authority Resolution V1](../reports/historical_data_authority_resolution_v1/REPORT.md)：
-  对生命周期 authority 候选和财报 retrieval completeness 做独立审计；exact report-period
-  分段与 offset pagination 的 key sets 一致，但 current snapshot / provider revision vintage
-  仍无法证明，因此 frontier 继续 not admitted、extended Matrix 未生成。
-- [Historical Data Engineering Extension V1](../reports/historical_data_engineering_extension_v1/REPORT.md)：
-  采用 practical reconstructed PIT 和 practical historical universe，构建 2000-11-01 至
-  2021-01-29 的独立 Extended Matrix（8,014,460 PIT keys；733/774 分层）；分区完整性、
-  跨年度累计状态、PIT 和 universe overlap 通过。Frozen-parent overlap 的 key set 一致，
-  但 36 个因子仍有值级 lineage 差异，因此保留 `partial_extension`，未进入模型阶段。
-  原始执行要求保存在
-  [Historical Data Engineering Extension V1 plan](_archive/07_research_program_history/HISTORICAL_DATA_ENGINEERING_EXTENSION_V1_PLAN.md)。
-- [Extended Matrix Overlap Lineage Resolution V1](../reports/extended_matrix_overlap_lineage_resolution_v1/REPORT.md)：
-  对剩余 36 个 overlap residual 完成逐因子 root-cause 与 action 决策；修正 Alpha101 dated
-  PIT rank scope、因果 KAMA 和 infinity comparator，接受 19 个有 provenance 的 Fundamental
-  source-window residual。新 versioned Matrix 达到 739 exact / 35 explained / 0 quarantined，
-  旧 frozen 与 partial-extension 均保持 immutable。原始执行要求保存在
-  [Extended Matrix Overlap Lineage Resolution V1 plan](_archive/07_research_program_history/EXTENDED_MATRIX_OVERLAP_LINEAGE_RESOLUTION_V1_PLAN.md)。
-- [Canonical Historical Dataset Assembly & Data Engineering Closure V1](../reports/canonical_historical_dataset_assembly_v1/REPORT.md)：
-  将 2010-01-29 至 2026-06-09 的 lineage-resolved history 与 corrected continuation 组装为
-  单一 semantics authority；2021+ 重算 15 个 Alpha101、causal KAMA 与 19 个 Fundamental，
-  其余分区引用 frozen evidence。Canonical identity 为
-  `canonical-dataset:27518ddbb28ba2b4b1247375d4e3d32d7d5be9935a5f2074dc272f84285f6423`；
-  765/774 research-usable，9 个 blocked，Historical Data Engineering 正式 CLOSED。读取合同见
-  [Canonical Research Dataset Authority](CANONICAL_RESEARCH_DATASET.md)，执行要求归档于
-  [Canonical assembly plan](_archive/07_research_program_history/CANONICAL_HISTORICAL_DATASET_ASSEMBLY_DATA_ENGINEERING_CLOSURE_V1_PLAN.md)。
+## Historical Evidence
 
-这些结果不修改 Strategy V1、不产生 Strategy V2 authorization，也不构成 fresh OOS。
-Factor Universe V2 的实证 Matrix 已达到 qualified-list data readiness；多因子与模型研究
-中的 Economic Multi-Factor Research V1 已独立完成并关闭；模型研究仍须另行授权，
-Strategy V2 仍未授权。
+### Reports
 
-Research Protocol V2 已独立完成并冻结，详细证据见
-[final report](../reports/research_protocol_v2/REPORT.md)。它只建立 Structured ML V1 的
-development 研究基础，没有启动模型竞争，也不授权 Strategy V2。后续 Dataset &
-Validation Design Study 已证明其中的短 validation 环境不具备充分的时间统计信息；该
-结论不追改冻结 artifact，但阻止将其直接作为正式模型选择 authority。
+完整研究结论、限制和小型审计证据位于 [../reports/](../reports/README.md)。当前关键
+authority 的形成过程可从以下报告按需追溯：
 
-## Archive Map
+- [Canonical Historical Dataset Assembly](../reports/canonical_historical_dataset_assembly_v1/REPORT.md)；
+- [Extended Matrix Overlap Lineage Resolution](../reports/extended_matrix_overlap_lineage_resolution_v1/REPORT.md)；
+- [Historical Data Engineering Extension](../reports/historical_data_engineering_extension_v1/REPORT.md)；
+- [Historical Dataset & Validation Design Study](../reports/historical_dataset_validation_design_v1/REPORT.md)；
+- [Research Protocol V2](../reports/research_protocol_v2/REPORT.md)；
+- [Factor Universe V2](../reports/factor_universe_v2/REPORT.md) 与
+  [Matrix Readiness](../reports/factor_universe_v2_matrix_readiness/REPORT.md)。
 
-- `_archive/README.md`
-  归档语义、目录说明和引用规则。
-- `_archive/01_early_stage_plans/`
-  初始 baseline、Step 1–4、数据与组合早期计划和回执。
-- `_archive/02_data_layer_history/`
-  首次 data-source upgrade decision、数据快照、字段验证和 provider 能力历史记录。
-- `_archive/03_factor_research_history/`
-  早期因子研究、算法审计和 V3/V4 设计。
-- `_archive/04_alpha158_history/`
-  Alpha158 catalog、evaluation、portfolio 与稳定性历史。
-- `_archive/05_open_source_factor_batches/`
-  TA、Alpha101、Alpha360、多来源 screening/judgement 历史。
-- `_archive/06_probe_and_tradeability_audits/`
-  probe、strict OOS、tradability exposure 与数据能力审计。
-- `_archive/07_research_program_history/`
-  已关闭的 full research、accuracy correction、model protocol、historical
-  comparison/backtest、Forward MVP 与 Qlib execution 计划和回执。
-- `_archive/08_engineering_refactor/`
-  CLOSED Phase 0–6 closeout、原始工程优化指南和实施计划。
-- `_archive/09_model_research_and_productivity_history/`
-  近期已完成模型研究、性能与 productivity 阶段的历史实施计划；final evidence 位于
-  `reports/`。
+这些链接用于 provenance，不把已观察结果提升为 fresh OOS 或新策略授权。
 
-## Documentation Maintenance
+### Archive Map
 
-- 本轮治理 inventory、归档决策和剩余债务见
-  [Documentation Cleanup V1](../reports/documentation_cleanup_v1/REPORT.md)。
-- 新文档先判断它是当前 authority、active operational reference，还是一次性历史记录。
-- 阶段完成且结论已被当前总线吸收后，移动到 archive，并更新所有路径引用。
-- 不在 README 或 `PROJECT_CONTEXT_SUMMARY.md` 重复堆积完整历史时间线。
-- 不删除历史研究证据；归档 Markdown 与清理 outputs/artifacts 是完全不同的操作。
-- 文档变更完成后运行全量 Markdown link audit、repository documentation check 和
-  `python scripts/check_quality.py fast`。
+[docs/_archive/ README](_archive/README.md) 解释完整分类：
+
+- `_archive/01_early_stage_plans/` — 早期总计划与基础阶段；
+- `_archive/02_data_layer_history/` — 数据层、snapshot 与 provider 历史；
+- `_archive/03_factor_research_history/` — 早期因子研究计划与审计；
+- `_archive/04_alpha158_history/` — Alpha158 catalog/evaluation 历史；
+- `_archive/05_open_source_factor_batches/` — TA/Alpha101/Alpha360 批次；
+- `_archive/06_probe_and_tradeability_audits/` — probe、strict OOS 与 exposure audits；
+- `_archive/07_research_program_history/` — 已完成 research/model/data/Forward plans，
+  包括 [frozen prior Research Protocol V2](_archive/07_research_program_history/RESEARCH_PROTOCOL_V2.md)；
+- `_archive/08_engineering_refactor/` — CLOSED Phase 0–6 工程重构；
+- `_archive/09_model_research_and_productivity_history/` — ML feature pool、性能、
+  productivity 与 clustering 计划。
+
+历史 task 完成且结论被 current authority 吸收后，其 plan 作为 provenance 归档，不再作为
+current instruction。历史 outputs、artifacts、manifests、receipts 和 lineage 不因文档归档
+而删除、移动或改写。
+
+## Current Boundary Summary
+
+- Forward Track：ACTIVE / time-priority；
+- Strategy V1：FROZEN；
+- Historical Data Engineering：CLOSED；
+- Canonical Research Dataset：READY；
+- Dataset / Research Protocol Redesign：NEXT / NOT STARTED；
+- Structured ML：NOT AUTHORIZED；
+- Strategy V2：NOT AUTHORIZED。
+
+Canonical identity：
+
+```text
+canonical-dataset:27518ddbb28ba2b4b1247375d4e3d32d7d5be9935a5f2074dc272f84285f6423
+```

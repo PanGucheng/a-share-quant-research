@@ -1,9 +1,10 @@
 # A-Share Quant Research
 
-Research-first quantitative research framework for the China A-share market, built
-primarily with [Microsoft Qlib](https://github.com/microsoft/qlib). Qlib is the main
-underlying framework, not the identity of the whole project. This repository is for
-research and education; it is not a production trading service or investment advice.
+Personal, research-first quantitative research framework for the China A-share
+market, built primarily with [Microsoft Qlib](https://github.com/microsoft/qlib).
+Qlib is the main underlying framework, not the identity of the project. This
+repository is for research and education; it is not a production trading service or
+investment advice.
 
 Repository:
 [PanGucheng/a-share-quant-research](https://github.com/PanGucheng/a-share-quant-research)
@@ -12,49 +13,38 @@ Chinese: [README.zh-CN.md](README.zh-CN.md)
 
 ## Current Status
 
-The time-sensitive active path is the Forward Track:
+- **ACTIVE:** time-sensitive Forward Track — Daily Data Update, frozen Strategy V1
+  prediction, paper portfolio, and mature-label evaluation.
+- **FROZEN:** Strategy V1 and all historical/Forward evidence.
+- **READY / AUTHORITY:** canonical research dataset for new Dataset / Protocol work.
+- **CLOSED:** Historical Data Engineering and the completed historical research stages.
+- **NEXT / NOT STARTED:** Dataset / Research Protocol redesign.
+- **NOT AUTHORIZED:** Structured ML, Strategy V2, and live trading.
+
+Canonical dataset:
 
 ```text
-Daily Data Update
-        ↓
-frozen 52-feature snapshot
-        ↓
-frozen Strategy V1 LightGBM prediction
-        ↓
-Top50 equal-weight paper decision
-        ↓
-mature-label evaluation
+canonical-dataset:27518ddbb28ba2b4b1247375d4e3d32d7d5be9935a5f2074dc272f84285f6423
 ```
 
-Strategy V1, historical predictions, and observed `split_003` evidence are frozen.
-`split_003` may be diagnosed but must not be reused for tuning and described as fresh
-OOS evidence. Model Diagnostic V1, ML Feature Pool MVP V1, Performance Optimization
-V1, Research Productivity V1, Clustering Ablation V1, and the Phase 0–6 engineering
-refactor are closed. Economic Multi-Factor Research V1 is also CLOSED: it mapped the
-765 qualified factors into economic roles and ran split-local, fixed-P01 historical
-diagnostics without selecting a winner. Fast Research is screening-only; the clustering representative
-gate remains unchanged. Factor Universe V2 now has a PIT-qualified historical matrix
-for 2021-02-01 through 2026-06-09: 765 of 774 frozen definitions are research-usable
-and nine remain explicitly blocked. The 669-factor V1 lineage is byte-immutable. This
-data-readiness result does not authorize Strategy V2 or modify Forward Track. There
-is no implicit engineering Phase 7.
+It covers `2010-01-29` through `2026-06-09`; 765 of 774 definitions are
+research-usable and 9 remain blocked. The old frozen Matrix and historical
+extensions remain immutable evidence, not default inputs for new research. See the
+[canonical dataset authority](docs/CANONICAL_RESEARCH_DATASET.md).
 
-Research Protocol V2 is now frozen independently of model outcomes. Future
-Structured ML V1 selection must use its five development environments; seven finer
-historical windows and the three legacy tests remain diagnostic only. No model
-competition has started, and Strategy V2 is still unauthorized.
+The prior Research Protocol V2 is frozen historical evidence. Its short development
+environments are not sufficient authority for formal Structured ML; a separately
+authorized Dataset / Research Protocol redesign must happen first.
 
-Start with [docs/DOC_INDEX.md](docs/DOC_INDEX.md). The exact active commands and
-machine-state paths are in
-[docs/CURRENT_PIPELINE.md](docs/CURRENT_PIPELINE.md).
+Start with [the documentation index](docs/DOC_INDEX.md). Exact commands and status
+boundaries are in [Current Pipeline](docs/CURRENT_PIPELINE.md).
 
 ## Setup
 
 The committed [configs/project.yaml](configs/project.yaml) is portable. Put local
 Qlib source, provider, and Daily Update cache paths in ignored
-`configs/project.local.yaml`, using
-[configs/project.local.example.yaml](configs/project.local.example.yaml) as the
-template.
+`configs/project.local.yaml`; use
+[configs/project.local.example.yaml](configs/project.local.example.yaml) as a template.
 
 ```powershell
 conda activate qlib_env
@@ -62,9 +52,7 @@ python -m pip install -e .
 qlib-doctor --strict
 ```
 
-The interpreter is runtime state (`sys.executable`), not a project setting. See
-[docs/ENVIRONMENT.md](docs/ENVIRONMENT.md) for the verified Windows environment and
-configuration precedence.
+Environment details: [docs/ENVIRONMENT.md](docs/ENVIRONMENT.md).
 
 ## Active Commands
 
@@ -76,13 +64,11 @@ qlib-paper-portfolio --help
 qlib-forward-status
 ```
 
-Do not infer production arguments from this short list. Follow the cutoff, Git
-binding, label-maturity, and append-only rules in
-[docs/CURRENT_PIPELINE.md](docs/CURRENT_PIPELINE.md).
+Follow cutoff, Git-binding, label-maturity, and append-only rules in
+[Current Pipeline](docs/CURRENT_PIPELINE.md); do not infer production arguments from
+this short list.
 
 ## Quality Commands
-
-Local and GitHub Actions use the same tiers:
 
 ```powershell
 python scripts/check_quality.py fast
@@ -90,52 +76,21 @@ python scripts/check_quality.py full
 python scripts/check_quality.py qlib
 ```
 
-`fast` uses a finite Ruff scope and focused engineering tests. `full` runs complete
-pytest plus the existing compact/synthetic validators. `qlib` runs synthetic Qlib
-Exchange runtime tests. These commands do not download the full A-share dataset,
-train models, or run historical backtests. See
-[docs/CI_POLICY.md](docs/CI_POLICY.md).
+These tiers do not download the full A-share dataset, train models, or run historical
+backtests. Policy: [docs/CI_POLICY.md](docs/CI_POLICY.md).
 
-## Repository Layout
+## Documentation
 
-```text
-qlib_baseline/    Settings, atomic I/O, weak-cache helpers, and active CLIs.
-daily_update/     Active Daily Update pipeline and compatibility facade.
-model_research/   Frozen/forward model and paper-portfolio modules.
-factor_research/  Factor evaluation and research modules.
-qlib_integration/ Qlib Exchange/Executor integration.
-configs/          Portable project and workflow configuration.
-scripts/          Active wrappers, quality runner, validators, and historical tools.
-docs/             Current authority and governance documentation.
-docs/operations/  Current operational contracts used by active/frozen workflows.
-docs/_archive/    CLOSED, HISTORICAL, and SUPERSEDED plans and audits.
-outputs/          Runtime results plus preserved historical/Forward evidence.
-artifacts/        Immutable frozen machine objects.
-reports/          Compact human-readable evidence intended for Git.
-tmp/              Ignored caches, downloads, references, and scratch data.
-```
-
-## Documentation Authority
-
-- [Personal research roadmap](docs/PERSONAL_QUANT_RESEARCH_ROADMAP.md)
+- [Project context summary](docs/PROJECT_CONTEXT_SUMMARY.md)
 - [Current pipeline](docs/CURRENT_PIPELINE.md)
-- [Research Protocol V2](docs/RESEARCH_PROTOCOL_V2.md)
+- [Canonical research dataset](docs/CANONICAL_RESEARCH_DATASET.md)
+- [Personal research roadmap](docs/PERSONAL_QUANT_RESEARCH_ROADMAP.md)
 - [Architecture](docs/ARCHITECTURE.md)
 - [Output policy](docs/OUTPUT_POLICY.md)
-- [CI policy](docs/CI_POLICY.md)
-- [Documentation archive](docs/_archive/README.md)
+- [Documentation index and archive map](docs/DOC_INDEX.md)
 
-Archived plans preserve project history but are not current execution instructions.
-Existing manifests, receipts, lineage, frozen artifacts, and historical outputs remain
-intact for compatibility and evidence.
-
-## Research Boundaries
-
-- Use only information available at decision time.
-- Keep train, validation, test/holdout, and forward-label evaluation time-isolated.
-- Never overwrite Strategy V1 predictions, paper decisions, positions, trades, or NAV.
-- Do not interpret historical or post-observation diagnostics as production readiness.
-- Prefer the smallest design that preserves research correctness and evidence
-  boundaries.
+`docs/` contains current authority, `docs/operations/` contains active operational
+contracts, and `docs/_archive/` plus `reports/` preserve historical evidence. Archived
+plans are not current execution instructions.
 
 The repository working agreement is [AGENTS.md](AGENTS.md).
