@@ -55,7 +55,7 @@ scripts/check_quality.py
 不执行 `ruff format`，也不 lint/format 全仓历史 scripts、factor/model research 或
 tracked outputs。
 
-`full` tier 执行完整 pytest，并逐项运行 workflow 原有的 25 个 compact/synthetic
+`full` tier 执行完整 pytest，并逐项运行 26 个 compact/synthetic 或冻结 closeout
 validators。`qlib` tier只运行 `tests/test_qlib_exchange_runtime.py`，使用测试自己创建的
 临时 synthetic provider。三个 tier 均不下载完整 A 股数据、不训练模型、不运行完整
 矩阵或历史回测。
@@ -99,9 +99,19 @@ ci-gate
 连续推送使用 workflow concurrency 自动取消同一 PR/分支的旧运行。禁止使用
 `[skip ci]` 或人工声称“只是文档”来绕过分类器。
 
+## Frozen manifest backward compatibility
+
+通用 lineage index 只索引满足当前通用 lineage schema 的 manifest。少数在 manifest-kind
+字段建立前已经关闭的 stage-specific manifest，通过
+`configs/legacy_frozen_manifest_contracts_v1.json` 以完整内容 SHA-256、Git blob、原始提交、
+stage lifecycle 和专用 closeout validator 绑定。只有内容和路径都精确匹配、且冻结输出哈希
+仍有效的登记对象才能按 non-lineage evidence 排除出通用索引；其专用 validator 仍属于
+`full` tier。未登记的新 manifest、内容被修改的历史 manifest、复制到其他路径的 manifest，
+以及缺少当前字段的新 artifact 都会 fail closed。
+
 ## 仓库设置边界
 
-截至 2026-07-25，远端 `main` 尚未启用 branch protection。Workflow 已稳定产出
-`ci-gate`，但它只有在仓库管理员以后启用分支保护并将 `ci-gate` 设为唯一 required
-check 后，才会成为 GitHub 层面的强制合并门禁。不得把可能按路径跳过的
+截至 2026-09-01，远端 `main` 使用轻量 branch protection：禁止删除和 force push，
+并将 `ci-gate` 作为唯一 required status check。个人研究仓库不要求多人 review、
+CODEOWNERS、signed commits 或 deployment approval。不得把可能按路径跳过的
 `lightweight-contracts` 或 `qlib-exchange-runtime` 单独设为 required check。

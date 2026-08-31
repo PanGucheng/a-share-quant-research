@@ -48,6 +48,7 @@ SYNTHETIC_VALIDATORS = (
     "scripts/validate_qlib_exchange_v1.py",
     "scripts/validate_full_research_trial_v1.py",
     "scripts/validate_full_research_669_v1.py",
+    "scripts/validate_factor_universe_v2_matrix_closeout.py",
     "scripts/validate_selection_integrity_receipts_v1.py",
     "scripts/validate_accuracy_correction_hard_stop_v1.py",
     "scripts/validate_data_source_audit_v2.py",

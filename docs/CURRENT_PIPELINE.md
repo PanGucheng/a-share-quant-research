@@ -239,5 +239,5 @@ python scripts/check_quality.py qlib
 ```
 
 文档变更还应运行全仓 Markdown link audit、repository documentation check 和
-`git diff --check`。若 `full` 仅因 immutable historical manifest schema blocker 失败，记录
-该 blocker，不得为了绿色而改写旧 frozen artifact。
+`git diff --check`。Immutable historical manifest 通过内容寻址的 legacy contract 与原有
+专用 closeout validator 验证；不得为了适配新 schema 而改写旧 frozen artifact。

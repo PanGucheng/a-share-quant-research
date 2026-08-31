@@ -15,6 +15,10 @@ from .profiles import Profile, ProfileType, assert_profiles_compatible, resolve_
 
 
 MANIFEST_SCHEMA_VERSION = 2
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+LEGACY_FROZEN_MANIFEST_CONTRACTS = (
+    PROJECT_ROOT / "configs" / "legacy_frozen_manifest_contracts_v1.json"
+)
 V1_REQUIRED_MANIFEST_FIELDS = frozenset(
     {
         "schema_version",
@@ -66,6 +70,38 @@ def sha256_file(path: Path) -> str:
         for chunk in iter(lambda: handle.read(1024 * 1024), b""):
             digest.update(chunk)
     return digest.hexdigest()
+
+
+def git_blob_sha1(path: Path, *, repo_root: Path | None = None) -> str:
+    if repo_root is not None:
+        result = subprocess.run(
+            ["git", "hash-object", str(path)],
+            cwd=repo_root,
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+            check=False,
+        )
+        if result.returncode == 0 and len(result.stdout.strip()) == 40:
+            return result.stdout.strip()
+    payload = path.read_bytes()
+    header = f"blob {len(payload)}\0".encode()
+    return hashlib.sha1(header + payload).hexdigest()  # noqa: S324 - Git object identity
+
+
+def git_blob_sha256(path: Path, *, repo_root: Path | None = None) -> str:
+    blob_sha1 = git_blob_sha1(path, repo_root=repo_root)
+    if repo_root is not None:
+        result = subprocess.run(
+            ["git", "cat-file", "blob", blob_sha1],
+            cwd=repo_root,
+            capture_output=True,
+            check=False,
+        )
+        if result.returncode == 0:
+            return hashlib.sha256(result.stdout).hexdigest()
+    return sha256_file(path)
 
 
 def config_sha256(config: Mapping[str, Any]) -> str:
@@ -585,12 +621,149 @@ def validate_lineage_chain(
 def build_artifact_index(outputs_root: Path) -> tuple[
     dict[str, tuple[dict[str, Any], Path]], list[LineageIssue]
 ]:
+    return build_artifact_index_with_contracts(outputs_root)
+
+
+def _load_legacy_frozen_contracts(path: Path) -> list[dict[str, Any]]:
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    if payload.get("schema_version") != 1:
+        raise ValueError("unsupported legacy frozen manifest contract schema")
+    if payload.get("contract") != "legacy_frozen_non_lineage_artifact_manifests":
+        raise ValueError("invalid legacy frozen manifest contract kind")
+    artifacts = payload.get("artifacts")
+    if not isinstance(artifacts, list):
+        raise ValueError("legacy frozen manifest contracts must be a list")
+    required = {
+        "relative_path",
+        "manifest_sha256",
+        "git_blob_sha1",
+        "introduced_commit",
+        "stage_id",
+        "manifest_schema_version",
+        "stage_lifecycle",
+        "closeout_validator",
+        "reason",
+    }
+    seen_hashes: set[str] = set()
+    seen_paths: set[str] = set()
+    for contract in artifacts:
+        if not isinstance(contract, dict) or required - set(contract):
+            raise ValueError("legacy frozen manifest contract is incomplete")
+        digest = str(contract["manifest_sha256"])
+        relative = Path(str(contract["relative_path"])).as_posix()
+        if digest in seen_hashes or relative in seen_paths:
+            raise ValueError("duplicate legacy frozen manifest contract")
+        if len(digest) != 64 or len(str(contract["git_blob_sha1"])) != 40:
+            raise ValueError("invalid legacy frozen manifest content identity")
+        if len(str(contract["introduced_commit"])) != 40:
+            raise ValueError("invalid legacy frozen manifest provenance commit")
+        seen_hashes.add(digest)
+        seen_paths.add(relative)
+    return [dict(item) for item in artifacts]
+
+
+def _legacy_frozen_manifest_issues(
+    *,
+    manifest: Mapping[str, Any],
+    path: Path,
+    outputs_root: Path,
+    contracts_by_hash: Mapping[str, Mapping[str, Any]],
+) -> tuple[bool, list[LineageIssue]]:
+    digest = git_blob_sha256(path, repo_root=outputs_root.parent)
+    contract = contracts_by_hash.get(digest)
+    if contract is None:
+        return False, []
+    stage_id = str(manifest.get("stage_id", ""))
+    issues: list[LineageIssue] = []
+    try:
+        relative = path.resolve().relative_to(outputs_root.resolve()).as_posix()
+    except ValueError:
+        relative = path.resolve().as_posix()
+    expected_values = {
+        "relative_path": relative,
+        "git_blob_sha1": git_blob_sha1(path, repo_root=outputs_root.parent),
+        "stage_id": stage_id,
+        "manifest_schema_version": manifest.get("schema_version"),
+        "stage_lifecycle": manifest.get("stage_lifecycle"),
+    }
+    for field, actual in expected_values.items():
+        if contract.get(field) != actual:
+            issues.append(
+                LineageIssue(
+                    "legacy_frozen_manifest_contract",
+                    "",
+                    f"{relative}:{field}={actual!r};expected={contract.get(field)!r}",
+                    stage_id,
+                )
+            )
+    hashes = manifest.get("output_file_hashes")
+    if not isinstance(hashes, dict) or not hashes:
+        issues.append(
+            LineageIssue(
+                "legacy_frozen_manifest_outputs",
+                "",
+                f"{relative}:missing output_file_hashes",
+                stage_id,
+            )
+        )
+    else:
+        for output_name, expected_hash in hashes.items():
+            output_path = path.parent / Path(str(output_name))
+            if not output_path.is_file():
+                reason = f"{relative}:missing output {output_name}"
+            elif sha256_file(output_path) != str(expected_hash):
+                reason = f"{relative}:hash differs for {output_name}"
+            else:
+                continue
+            issues.append(
+                LineageIssue(
+                    "legacy_frozen_manifest_outputs", "", reason, stage_id
+                )
+            )
+    return True, issues
+
+
+def build_artifact_index_with_contracts(
+    outputs_root: Path,
+    *,
+    legacy_contracts_path: Path = LEGACY_FROZEN_MANIFEST_CONTRACTS,
+) -> tuple[dict[str, tuple[dict[str, Any], Path]], list[LineageIssue]]:
     index: dict[str, tuple[dict[str, Any], Path]] = {}
     issues: list[LineageIssue] = []
+    try:
+        contracts = _load_legacy_frozen_contracts(legacy_contracts_path)
+    except (OSError, ValueError, json.JSONDecodeError) as exc:
+        return {}, [
+            LineageIssue(
+                "legacy_frozen_manifest_contract_registry", "", str(exc)
+            )
+        ]
+    contracts_by_hash = {
+        str(contract["manifest_sha256"]): contract for contract in contracts
+    }
     for path in sorted(outputs_root.rglob("artifact_manifest.json")):
         try:
-            manifest = load_artifact_manifest(path)
+            value = json.loads(path.read_text(encoding="utf-8"))
+            if not isinstance(value, dict):
+                raise ValueError("artifact manifest must be a mapping")
+            manifest = dict(value)
         except (OSError, ValueError, json.JSONDecodeError) as exc:
+            issues.append(
+                LineageIssue("artifact_index_manifest_invalid", "", f"{path}:{exc}")
+            )
+            continue
+        try:
+            validate_manifest_schema(manifest)
+        except ValueError as exc:
+            recognized, legacy_issues = _legacy_frozen_manifest_issues(
+                manifest=manifest,
+                path=path,
+                outputs_root=outputs_root,
+                contracts_by_hash=contracts_by_hash,
+            )
+            if recognized:
+                issues.extend(legacy_issues)
+                continue
             issues.append(
                 LineageIssue("artifact_index_manifest_invalid", "", f"{path}:{exc}")
             )

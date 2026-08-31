@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "contract": "legacy_frozen_non_lineage_artifact_manifests",
+  "artifacts": [
+    {
+      "relative_path": "factor_universe_v2_matrix_readiness/current/artifact_manifest.json",
+      "manifest_sha256": "5754d599e72a98e0ce71baa5366ffd95cc4d308f203cf477e0003256340f64cf",
+      "git_blob_sha1": "8bb3c2a21a20cb9860b259e3751ed3b7ec5d0b17",
+      "introduced_commit": "05d55cb072cec1eeb4503b635f2d9815d9061ede",
+      "stage_id": "factor_universe_v2_matrix_readiness",
+      "manifest_schema_version": 1,
+      "stage_lifecycle": "CLOSED",
+      "closeout_validator": "scripts/validate_factor_universe_v2_matrix_closeout.py",
+      "reason": "Frozen stage-specific closeout manifest predating a shared manifest-kind discriminator; it is not a generic lineage manifest."
+    }
+  ]
+}

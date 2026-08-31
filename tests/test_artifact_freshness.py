@@ -1,11 +1,14 @@
 from __future__ import annotations
 
+import hashlib
+import json
 import subprocess
 from datetime import datetime, timezone
 from pathlib import Path
 
 from research_validation.lineage import (
     CodeState,
+    build_artifact_index_with_contracts,
     build_artifact_manifest,
     capture_code_state,
     critical_contract_failures,
@@ -46,6 +49,135 @@ def test_v1_manifest_cannot_prove_freshness(tmp_path: Path) -> None:
         manifest.pop(field)
     issues = validate_manifest_outputs(manifest, tmp_path)
     assert {item.check_name for item in issues} == {"manifest_freshness_schema"}
+
+
+def _write_legacy_contract(
+    *, outputs: Path, manifest_path: Path, output_path: Path, contracts_path: Path
+) -> None:
+    payload = manifest_path.read_bytes()
+    manifest = json.loads(payload)
+    relative = manifest_path.relative_to(outputs).as_posix()
+    contract = {
+        "schema_version": 1,
+        "contract": "legacy_frozen_non_lineage_artifact_manifests",
+        "artifacts": [
+            {
+                "relative_path": relative,
+                "manifest_sha256": hashlib.sha256(payload).hexdigest(),
+                "git_blob_sha1": hashlib.sha1(
+                    f"blob {len(payload)}\0".encode() + payload
+                ).hexdigest(),
+                "introduced_commit": "a" * 40,
+                "stage_id": manifest["stage_id"],
+                "manifest_schema_version": manifest["schema_version"],
+                "stage_lifecycle": manifest["stage_lifecycle"],
+                "closeout_validator": "scripts/validate_fixture_closeout.py",
+                "reason": "fixture",
+            }
+        ],
+    }
+    contracts_path.write_text(json.dumps(contract), encoding="utf-8")
+    assert output_path.is_file()
+
+
+def _legacy_manifest_fixture(tmp_path: Path) -> tuple[Path, Path, Path, Path]:
+    outputs = tmp_path / "outputs"
+    directory = outputs / "legacy" / "current"
+    directory.mkdir(parents=True)
+    output = directory / "evidence.csv"
+    output.write_text("value\n1\n", encoding="utf-8")
+    manifest_path = directory / "artifact_manifest.json"
+    manifest_path.write_text(
+        json.dumps(
+            {
+                "schema_version": 1,
+                "stage_id": "legacy_stage_closeout",
+                "stage_lifecycle": "CLOSED",
+                "artifact_status": "research_ready",
+                "output_file_hashes": {
+                    output.name: hashlib.sha256(output.read_bytes()).hexdigest()
+                },
+            },
+            sort_keys=True,
+        ),
+        encoding="utf-8",
+    )
+    contracts = tmp_path / "legacy_contracts.json"
+    _write_legacy_contract(
+        outputs=outputs,
+        manifest_path=manifest_path,
+        output_path=output,
+        contracts_path=contracts,
+    )
+    return outputs, manifest_path, output, contracts
+
+
+def test_registered_legacy_frozen_non_lineage_manifest_is_valid(tmp_path: Path) -> None:
+    outputs, _, _, contracts = _legacy_manifest_fixture(tmp_path)
+    index, issues = build_artifact_index_with_contracts(
+        outputs, legacy_contracts_path=contracts
+    )
+    assert index == {}
+    assert issues == []
+
+
+def test_current_schema_manifest_remains_valid_with_legacy_contracts(tmp_path: Path) -> None:
+    outputs, _, _, contracts = _legacy_manifest_fixture(tmp_path)
+    current = outputs / "current" / "artifact_manifest.json"
+    current.parent.mkdir()
+    manifest = build_artifact_manifest(
+        stage_id="current",
+        profile=Profile("local_reference", ProfileType.REFERENCE),
+        config={},
+        output_files=[],
+        code_state=CodeState("abc", False, ""),
+        run_id="current",
+    )
+    from research_validation.lineage import write_artifact_manifest
+
+    write_artifact_manifest(current, manifest)
+    index, issues = build_artifact_index_with_contracts(
+        outputs, legacy_contracts_path=contracts
+    )
+    assert set(index) == {manifest["artifact_id"]}
+    assert issues == []
+
+
+def test_new_malformed_manifest_cannot_use_legacy_compatibility(tmp_path: Path) -> None:
+    outputs, _, _, contracts = _legacy_manifest_fixture(tmp_path)
+    malformed = outputs / "new" / "artifact_manifest.json"
+    malformed.parent.mkdir()
+    malformed.write_text(
+        json.dumps({"schema_version": 2, "stage_id": "new"}), encoding="utf-8"
+    )
+    _, issues = build_artifact_index_with_contracts(
+        outputs, legacy_contracts_path=contracts
+    )
+    assert {issue.check_name for issue in issues} == {
+        "artifact_index_manifest_invalid"
+    }
+
+
+def test_legacy_contract_is_not_a_path_or_output_bypass(tmp_path: Path) -> None:
+    outputs, manifest_path, output, contracts = _legacy_manifest_fixture(tmp_path)
+    duplicate = outputs / "copied" / "artifact_manifest.json"
+    duplicate.parent.mkdir()
+    duplicate.write_bytes(manifest_path.read_bytes())
+    _, path_issues = build_artifact_index_with_contracts(
+        outputs, legacy_contracts_path=contracts
+    )
+    assert "legacy_frozen_manifest_contract" in {
+        issue.check_name for issue in path_issues
+    }
+
+    duplicate.unlink()
+    output.write_text("value\n2\n", encoding="utf-8")
+    _, output_issues = build_artifact_index_with_contracts(
+        outputs, legacy_contracts_path=contracts
+    )
+    assert "legacy_frozen_manifest_outputs" in {
+        issue.check_name for issue in output_issues
+    }
 
 
 def _git(path: Path, *args: str) -> None:

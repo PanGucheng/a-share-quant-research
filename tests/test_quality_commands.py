@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 import subprocess
 import sys
 from pathlib import Path
@@ -40,7 +41,8 @@ def test_full_tier_reuses_pytest_and_existing_validators() -> None:
     commands = commands_for_tier("full")
     assert commands[0] == (sys.executable, "-m", "pytest", "-q")
     assert tuple(command[1] for command in commands[1:]) == SYNTHETIC_VALIDATORS
-    assert len(SYNTHETIC_VALIDATORS) == 25
+    assert len(SYNTHETIC_VALIDATORS) == 26
+    assert "scripts/validate_factor_universe_v2_matrix_closeout.py" in SYNTHETIC_VALIDATORS
     assert all(
         Path(validator).name.startswith("validate_")
         for validator in SYNTHETIC_VALIDATORS
@@ -48,6 +50,19 @@ def test_full_tier_reuses_pytest_and_existing_validators() -> None:
     assert not any(
         "train" in validator or "backtest" in validator
         for validator in SYNTHETIC_VALIDATORS
+    )
+
+
+def test_every_legacy_frozen_contract_keeps_its_closeout_validator() -> None:
+    registry = json.loads(
+        Path("configs/legacy_frozen_manifest_contracts_v1.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    assert registry["artifacts"]
+    assert all(
+        contract["closeout_validator"] in SYNTHETIC_VALIDATORS
+        for contract in registry["artifacts"]
     )
 
 
