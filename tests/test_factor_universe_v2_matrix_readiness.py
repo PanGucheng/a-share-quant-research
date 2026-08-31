@@ -19,11 +19,29 @@ from factor_universe_v2.matrix_readiness import (
     audit_partitions,
     compare_canonical_to_legacy,
 )
+from scripts import validate_factor_universe_v2_matrix_closeout as closeout
 
 
 def test_instrument_mapping_is_reversible() -> None:
     for instrument in ("SH600000", "SZ000001", "BJ430047"):
         assert tushare_to_qlib(qlib_to_tushare(instrument)) == instrument
+
+
+def test_missing_detailed_runtime_evidence_requires_a_bounded_receipt(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    monkeypatch.setattr(closeout, "PROJECT_ROOT", tmp_path)
+    receipt = {
+        "path": "reports/factor_universe_v2_matrix_readiness/detail.csv",
+        "sha256": "a" * 64,
+        "row_count": 1,
+        "columns": ["value"],
+    }
+    assert closeout.validate_detailed_audit_receipt(receipt) is False
+    with pytest.raises(AssertionError):
+        closeout.validate_detailed_audit_receipt(
+            {**receipt, "path": "reports/../outside.csv"}
+        )
 
 
 def test_segment_store_rejects_tampered_cache(tmp_path: Path) -> None:

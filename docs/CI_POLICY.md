@@ -109,6 +109,10 @@ stage lifecycle 和专用 closeout validator 绑定。只有内容和路径都�
 `full` tier。未登记的新 manifest、内容被修改的历史 manifest、复制到其他路径的 manifest，
 以及缺少当前字段的新 artifact 都会 fail closed。
 
+冻结 closeout manifest 中引用的 compact tracked outputs 在 CI 中逐哈希验证；未纳入 Git 的
+大型 detailed runtime evidence 由同一内容寻址 manifest 保存 SHA-256、行数和 schema receipt，
+本地文件存在时继续逐文件复核。CI 不为验证历史收尾而下载或重建完整研究数据。
+
 ## 仓库设置边界
 
 截至 2026-09-01，远端 `main` 使用轻量 branch protection：禁止删除和 force push，

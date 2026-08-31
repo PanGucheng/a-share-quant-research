@@ -6,6 +6,8 @@ from pathlib import Path
 
 import pandas as pd
 
+from research_validation.lineage import build_artifact_index
+
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 CURRENT = PROJECT_ROOT / "outputs" / "factor_universe_v2_matrix_readiness" / "current"
@@ -25,7 +27,28 @@ def factor_identity(values: pd.Series) -> str:
     return hashlib.sha256(payload).hexdigest()
 
 
+def validate_detailed_audit_receipt(expected: dict[str, object]) -> bool:
+    relative = Path(str(expected["path"]))
+    assert not relative.is_absolute() and ".." not in relative.parts
+    assert relative.parts[:2] == ("reports", "factor_universe_v2_matrix_readiness")
+    assert len(str(expected["sha256"])) == 64
+    assert int(expected["row_count"]) > 0
+    assert isinstance(expected["columns"], list) and expected["columns"]
+    path = PROJECT_ROOT / relative
+    if not path.is_file():
+        return False
+    frame = pd.read_csv(path)
+    assert sha256(path) == expected["sha256"]
+    assert len(frame) == expected["row_count"]
+    assert list(frame.columns) == expected["columns"]
+    return True
+
+
 def main() -> int:
+    _, lineage_issues = build_artifact_index(PROJECT_ROOT / "outputs")
+    assert not lineage_issues, pd.DataFrame(
+        [issue.__dict__ for issue in lineage_issues]
+    ).to_string(index=False)
     manifest = json.loads((CURRENT / "artifact_manifest.json").read_text(encoding="utf-8"))
     qualification = pd.read_csv(CURRENT / "factor_qualification.csv")
     contracts = pd.read_csv(CURRENT / "contract_status.csv")
@@ -60,12 +83,10 @@ def main() -> int:
     for name, expected in manifest["output_file_hashes"].items():
         assert sha256(CURRENT / name) == expected
 
-    for expected in manifest["detailed_audit_lineage"].values():
-        path = PROJECT_ROOT / expected["path"]
-        frame = pd.read_csv(path)
-        assert sha256(path) == expected["sha256"]
-        assert len(frame) == expected["row_count"]
-        assert list(frame.columns) == expected["columns"]
+    detailed_present = sum(
+        validate_detailed_audit_receipt(expected)
+        for expected in manifest["detailed_audit_lineage"].values()
+    )
 
     comparison = pd.read_csv(REPORTS / "canonical_legacy_comparison.csv")
     no_difference = comparison.loc[comparison["status"].eq("no_observed_difference")]
@@ -78,7 +99,11 @@ def main() -> int:
     assert "global physical data-qualified candidate universe" in report
     assert "a fixed feature whitelist" in report
     assert "Matrix Readiness is `CLOSED`" in report
-    print("Factor Universe V2 Matrix Readiness closeout validation passed.")
+    print(
+        "Factor Universe V2 Matrix Readiness closeout validation passed; "
+        f"detailed_runtime_evidence_present={detailed_present}/"
+        f"{len(manifest['detailed_audit_lineage'])}."
+    )
     return 0
 
 
