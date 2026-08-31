@@ -64,6 +64,10 @@ def test_every_legacy_frozen_contract_keeps_its_closeout_validator() -> None:
         contract["closeout_validator"] in SYNTHETIC_VALIDATORS
         for contract in registry["artifacts"]
     )
+    assert all(
+        Path(contract["closeout_validator"]).is_file()
+        for contract in registry["artifacts"]
+    )
 
 
 def test_qlib_tier_only_runs_synthetic_exchange_runtime_test() -> None:

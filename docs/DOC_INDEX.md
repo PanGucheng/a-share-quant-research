@@ -66,11 +66,14 @@ evidence 判断；历史报告与 archive 只说明当时发生了什么。
 - `outputs/forward/paper_portfolio/status.json`；
 - `outputs/prospective_forward_hardening_v1/current/forward_candidate_freeze.json`。
 
-Canonical dataset 的机器入口：
+Canonical dataset 的 authority 与 tracked evidence 入口：
 
-- `outputs/canonical_historical_dataset_assembly_v1/current/manifest.json`；
-- `outputs/canonical_historical_dataset_assembly_v1/current/partition_manifest.csv`；
-- `outputs/canonical_historical_dataset_assembly_v1/current/factor_lineage.csv`。
+- [CANONICAL_RESEARCH_DATASET.md](CANONICAL_RESEARCH_DATASET.md)；
+- [canonical assembly report](../reports/canonical_historical_dataset_assembly_v1/REPORT.md)。
+
+本地完整数据 assembly 还会生成 runtime-only 的 `manifest.json`、
+`partition_manifest.csv` 和 `factor_lineage.csv`；它们体积较大的 parent partitions 与 runtime
+输出不进入 Git checkout，不能作为仓库文档索引的存在性前提。
 
 目录名含 `current` 不表示相应研究阶段仍 ACTIVE；必须结合
 [CURRENT_PIPELINE.md](CURRENT_PIPELINE.md) 判断。
