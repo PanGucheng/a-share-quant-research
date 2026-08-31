@@ -70,6 +70,16 @@ source-window 差异。旧 frozen/partial-extension 均未覆盖，新 versioned
 `extended-matrix:22fbf692d22e97a90d3b63ad1258f4867be38f5476494e27fbf68d5825cc38f0`。
 报告见 [reports/extended_matrix_overlap_lineage_resolution_v1/REPORT.md](reports/extended_matrix_overlap_lineage_resolution_v1/REPORT.md)。
 
+Canonical Historical Dataset Assembly V1 已完成历史数据工程收尾：新的正式 research data
+authority 覆盖 2010-01-29 至 2026-06-09，定义 774 个 factors，其中 765 个 research-usable、
+9 个继续 blocked。2021+ 只重算 15 个 PIT-rank Alpha101、causal KAMA 与 19 个 Fundamental，
+其余分区引用已证明语义一致的 frozen evidence；边界、PIT、universe、state、partition 与旧 artifact
+immutability checks 全部通过。Canonical identity 为
+`canonical-dataset:27518ddbb28ba2b4b1247375d4e3d32d7d5be9935a5f2074dc272f84285f6423`，
+Historical Data Engineering 已正式 `CLOSED`。权威读取合同见
+[docs/CANONICAL_RESEARCH_DATASET.md](docs/CANONICAL_RESEARCH_DATASET.md)，完整结论见
+[reports/canonical_historical_dataset_assembly_v1/REPORT.md](reports/canonical_historical_dataset_assembly_v1/REPORT.md)。
+
 文档入口是 [docs/DOC_INDEX.md](docs/DOC_INDEX.md)；实际活动命令、时间边界和机器
 状态路径以 [docs/CURRENT_PIPELINE.md](docs/CURRENT_PIPELINE.md) 为准。
 
@@ -138,6 +148,7 @@ tmp/              被忽略的缓存、下载、参考仓库与临时文件。
 
 - [个人研究路线](docs/PERSONAL_QUANT_RESEARCH_ROADMAP.md)
 - [当前 Pipeline](docs/CURRENT_PIPELINE.md)
+- [Canonical Research Dataset Authority](docs/CANONICAL_RESEARCH_DATASET.md)
 - [Research Protocol V2](docs/RESEARCH_PROTOCOL_V2.md)
 - [架构](docs/ARCHITECTURE.md)
 - [输出政策](docs/OUTPUT_POLICY.md)

@@ -1,0 +1,16 @@
+factor,row_count,exact_count,close_count,difference_count,match_ratio,stable_after_date,stable_after_difference_count,stable_after_match_ratio
+kunquant_alpha101_alpha015,76000,76000,76000,0,1.0,2021-02-22,0,1.0
+kunquant_alpha101_alpha017,76000,76000,76000,0,1.0,2021-02-22,0,1.0
+kunquant_alpha101_alpha034,76000,76000,76000,0,1.0,2021-02-22,0,1.0
+kunquant_alpha101_alpha038,76000,76000,76000,0,1.0,2021-02-22,0,1.0
+kunquant_alpha101_alpha050,76000,76000,76000,0,1.0,2021-02-22,0,1.0
+kunquant_alpha101_alpha062,76000,76000,76000,0,1.0,2021-02-22,0,1.0
+kunquant_alpha101_alpha077,76000,76000,76000,0,1.0,2021-02-22,0,1.0
+kunquant_alpha101_alpha078,76000,76000,76000,0,1.0,2021-02-22,0,1.0
+kunquant_alpha101_alpha085,76000,76000,76000,0,1.0,2021-02-22,0,1.0
+kunquant_alpha101_alpha098,76000,76000,76000,0,1.0,2021-02-22,0,1.0
+kunquant_alpha101_alpha050_canonical_vwap_v2,76000,76000,76000,0,1.0,2021-02-22,0,1.0
+kunquant_alpha101_alpha062_canonical_vwap_v2,76000,76000,76000,0,1.0,2021-02-22,0,1.0
+kunquant_alpha101_alpha077_canonical_vwap_v2,76000,76000,76000,0,1.0,2021-02-22,0,1.0
+kunquant_alpha101_alpha078_canonical_vwap_v2,76000,76000,76000,0,1.0,2021-02-22,0,1.0
+kunquant_alpha101_alpha098_canonical_vwap_v2,76000,76000,76000,0,1.0,2021-02-22,0,1.0

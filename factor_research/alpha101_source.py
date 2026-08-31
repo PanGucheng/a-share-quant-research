@@ -177,7 +177,10 @@ def mask_raw_to_pit_membership(
     result["instrument"] = result["instrument"].astype(str).str.upper()
     result = result.merge(keys, on=["datetime", "instrument"], how="left", validate="many_to_one")
     mask = result["datetime"].ge(pd.Timestamp(membership_start)) & result["_pit_member"].ne(True)
-    result.loc[mask, BASE_FIELDS] = np.nan
+    # Canonical Alpha101 also consumes the provider's direct VWAP field. Keep
+    # it under the same dated membership contract as the OHLCVA inputs.
+    mask_fields = [field for field in [*BASE_FIELDS, "$vwap"] if field in result.columns]
+    result.loc[mask, mask_fields] = np.nan
     return result.drop(columns="_pit_member")
 
 

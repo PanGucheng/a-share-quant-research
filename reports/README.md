@@ -17,6 +17,9 @@ frozen artifact or Forward prediction.
 
 ## Current Report Index
 
+- [Canonical Historical Dataset Assembly & Data Engineering Closure V1](canonical_historical_dataset_assembly_v1/REPORT.md) —
+  canonical 2010-01-29 to 2026-06-09 data authority, semantic-continuity evidence,
+  and Historical Data Engineering CLOSED decision; no Protocol/model stage started.
 - [Economic Multi-Factor Research V1](economic_multi_factor_research_v1/REPORT.md) —
   CLOSED economic taxonomy, split-local sleeves/archetypes, complementarity, and fixed
   P01 post-observation historical diagnostics; no winner or Strategy V2 authorization.

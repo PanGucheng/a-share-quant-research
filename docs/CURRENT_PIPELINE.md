@@ -207,6 +207,20 @@ Evidence:     personal research grade
 
 工程等价验证只能读取或复制到临时目录，不能覆盖这些对象。
 
+### Canonical Research Dataset Authority
+
+后续 Dataset / Research Protocol research 必须显式绑定
+`canonical-dataset:27518ddbb28ba2b4b1247375d4e3d32d7d5be9935a5f2074dc272f84285f6423`，
+覆盖 `2010-01-29` 至 `2026-06-09`。机器入口为
+`outputs/canonical_historical_dataset_assembly_v1/current/manifest.json` 与
+`partition_manifest.csv`；读取时必须执行 manifest 的 effective date filters。
+
+该 dataset 统一使用 PIT-rank Alpha101、causal KAMA、practical reconstructed PIT 和 practical
+historical universe。774 个 definitions 中只有 765 个是 global physical-data-qualified candidates，
+9 个仍 blocked。旧 frozen、partial-extension 和 lineage-resolved historical Matrix 只保留为
+immutable evidence，不是新研究默认输入。完整合同见
+[Canonical Research Dataset Authority](CANONICAL_RESEARCH_DATASET.md)。
+
 ## 5. CLOSED
 
 - Historical Model Comparison V1；
@@ -240,6 +254,11 @@ Evidence:     personal research grade
   决策；15 个 Alpha101 采用 dated PIT rank scope，KAMA 改为因果连续状态，KCP 修复
   infinity comparator，19 个 Fundamental residual 记录 source-window provenance；新
   versioned Matrix 为 `lineage_resolved`，739 exact / 35 explained / 0 quarantined）；
+- Canonical Historical Dataset Assembly & Data Engineering Closure V1（组装
+  2010-01-29 至 2026-06-09 的语义连续 canonical dataset；2021+ 重算 15 个 Alpha101、
+  causal KAMA 与 19 个 Fundamental，其余只引用已证明一致的 frozen partitions；PIT、universe、
+  state、boundary、partition 和 old-artifact immutability 全通过；Historical Data Engineering
+  正式 CLOSED）；
 - 历史 Accuracy Correction、Data Source Audit 和 execution semantics 修正阶段。
 
 CLOSED 阶段只允许修复可证明的数据错误、泄漏、contract failure 或实现 bug；一般
@@ -284,6 +303,13 @@ tolerance 强求完全一致。新 identity 为
 Dataset / Research Protocol redesign 输入的 lineage 条件，但 redesign 和 Structured ML
 仍须单独授权，当前均未启动。
 
+[Canonical Historical Dataset Assembly & Data Engineering Closure V1](../reports/canonical_historical_dataset_assembly_v1/REPORT.md)
+已将上述 lineage-resolved history 与 corrected 2021–2026 continuation 组装为新的数据 authority：
+`canonical-dataset:27518ddbb28ba2b4b1247375d4e3d32d7d5be9935a5f2074dc272f84285f6423`。
+它是后续 Dataset / Protocol research 的唯一推荐 Matrix 输入；旧 artifacts 继续 immutable。
+Historical Data Engineering 已 CLOSED，只能因明确 data bug、leakage 或 provenance failure 重开。
+Dataset / Research Protocol redesign 与 Structured ML 仍未启动。
+
 近期阶段的详细结论只在相应 final reports 中维护，入口见
 [DOC_INDEX.md](DOC_INDEX.md)。它们不产生 production winner、Strategy V2 authorization
 或新的 unbiased holdout estimate。
@@ -316,7 +342,8 @@ Dataset / Research Protocol redesign 输入的 lineage 条件，但 redesign 和
 - KunQuant 作为未来 factor computation backend；
 - Strategy V2；
 - Structured ML V1 正式模型竞争（Research Protocol V2 已冻结；Dataset & Validation
-  Design 与 Maximum Historical Extension studies 均未授权启动，竞争仍未开始）；
+  Design、historical extension 和 canonical assembly 已完成数据准备，但 Dataset / Research
+  Protocol redesign 尚未单独启动，竞争仍未开始）；
 - shadow trading、小资金或 live trading；
 - broker gateway、服务化、调度平台和分布式工程。
 

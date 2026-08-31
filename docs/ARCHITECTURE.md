@@ -46,9 +46,15 @@ Append-only Forward Evidence
 历史研究链路仍保留，但不是当前开发默认入口：
 
 ```text
-Data / Universe
+Immutable historical evidence
+      +
+Lineage-resolved historical extension
+      +
+Corrected 2021–2026 continuation
       ↓
-Factor Matrix / Evaluation / Selection
+Canonical Research Dataset Authority
+      ↓
+Factor Evaluation / Selection
       ↓
 Historical Model Research
       ↓
@@ -56,6 +62,11 @@ Historical Portfolio Backtest
       ↓
 Model Diagnostic V1 (closed)
 ```
+
+任何新 Dataset / Protocol research 必须绑定
+[Canonical Research Dataset Authority](CANONICAL_RESEARCH_DATASET.md) 的 versioned identity，
+而不是直接读取 old frozen Matrix。旧 frozen、partial-extension 和 lineage-resolved artifacts
+仍是 immutable evidence；canonical assembly 通过引用或新 versioned partition 组合它们，不改写 parent。
 
 未来 Structured ML 的研究边界已由
 [Research Protocol V2](RESEARCH_PROTOCOL_V2.md) 冻结：项目生成器先根据 exact label

@@ -1,0 +1,4 @@
+key_scheme_representative,actual_row_count,declared_row_count,actual_date_count,expected_trading_date_count,missing_trading_date_count,unexpected_date_count,row_count_match,status
+alpha101_001,7814391,7814391,3969,3969,0,0,True,pass
+mature_daily_basic,7814391,7814391,3969,3969,0,0,True,pass
+mature_moneyflow,7814391,7814391,3969,3969,0,0,True,pass

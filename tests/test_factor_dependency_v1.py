@@ -93,6 +93,26 @@ def test_alpha101_raw_is_masked_outside_pit_membership() -> None:
     assert result.loc[result["instrument"].eq("SZ000001"), "$close"].isna().all()
 
 
+def test_alpha101_direct_vwap_is_masked_outside_pit_membership() -> None:
+    raw = pd.DataFrame(
+        {
+            "datetime": pd.to_datetime(["2024-01-02", "2024-01-02"]),
+            "instrument": ["SH600000", "SZ000001"],
+            "$open": [1.0, 2.0],
+            "$high": [1.0, 2.0],
+            "$low": [1.0, 2.0],
+            "$close": [1.0, 2.0],
+            "$volume": [1.0, 2.0],
+            "$amount": [1.0, 2.0],
+            "$vwap": [1.0, 2.0],
+        }
+    )
+    keys = raw.loc[raw["instrument"].eq("SH600000"), ["datetime", "instrument"]]
+    result = mask_raw_to_pit_membership(raw, keys, membership_start="2024-01-02")
+    assert result.loc[result["instrument"].eq("SH600000"), "$vwap"].notna().all()
+    assert result.loc[result["instrument"].eq("SZ000001"), "$vwap"].isna().all()
+
+
 def test_pct_change_does_not_bridge_pit_membership_gap() -> None:
     close = pd.DataFrame(
         {"SH600000": [10.0, float("nan"), 12.0]},

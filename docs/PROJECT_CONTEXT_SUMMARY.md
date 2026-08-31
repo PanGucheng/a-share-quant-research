@@ -23,10 +23,12 @@
 按顺序阅读：
 
 1. [CURRENT_PIPELINE.md](CURRENT_PIPELINE.md) — ACTIVE/FROZEN/CLOSED 状态与命令；
-2. [RESEARCH_PROTOCOL_V2.md](RESEARCH_PROTOCOL_V2.md) — 下一阶段模型研究的冻结时间与证据边界；
-3. [ARCHITECTURE.md](ARCHITECTURE.md) — 当前模块和依赖边界；
-4. [OUTPUT_POLICY.md](OUTPUT_POLICY.md) — 输出、artifact、report、cache 和 Forward evidence；
-5. [CI_POLICY.md](CI_POLICY.md) — 本地/CI quality tiers。
+2. [CANONICAL_RESEARCH_DATASET.md](CANONICAL_RESEARCH_DATASET.md) — 后续 Dataset / Protocol
+   research 的唯一推荐 Matrix identity 与读取合同；
+3. [RESEARCH_PROTOCOL_V2.md](RESEARCH_PROTOCOL_V2.md) — 下一阶段模型研究的冻结时间与证据边界；
+4. [ARCHITECTURE.md](ARCHITECTURE.md) — 当前模块和依赖边界；
+5. [OUTPUT_POLICY.md](OUTPUT_POLICY.md) — 输出、artifact、report、cache 和 Forward evidence；
+6. [CI_POLICY.md](CI_POLICY.md) — 本地/CI quality tiers。
 
 `docs/_archive/` 中的计划和回执是 CLOSED/HISTORICAL/SUPERSEDED 证据，不是当前授权。
 
@@ -131,6 +133,15 @@ mature-label evaluation
   为 `extended-matrix:22fbf692d22e97a90d3b63ad1258f4867be38f5476494e27fbf68d5825cc38f0`；
   旧 frozen 与 partial-extension 均保持 immutable。详见
   [final report](../reports/extended_matrix_overlap_lineage_resolution_v1/REPORT.md)。
+- **Canonical Historical Dataset Assembly V1 — AUTHORITY / DATA ENGINEERING CLOSED**：
+  lineage-resolved history 与 corrected continuation 已组成 2010-01-29 至 2026-06-09 的唯一
+  推荐 research input：
+  `canonical-dataset:27518ddbb28ba2b4b1247375d4e3d32d7d5be9935a5f2074dc272f84285f6423`。
+  2021+ 重算 15 个 Alpha101、causal KAMA 和 19 个 Fundamental，其他 739 个因子沿用已证明
+  一致的 semantics；765/774 research-usable，9 个 blocked。PIT、universe、state、timeline、
+  boundary、partition 与 old artifact immutability 全通过，0 unexplained mismatch。Historical
+  Data Engineering 已 CLOSED；详见 [authority](CANONICAL_RESEARCH_DATASET.md) 与
+  [final report](../reports/canonical_historical_dataset_assembly_v1/REPORT.md)。
 
 这些已观察历史结果不能被描述为 fresh OOS，也不能授权修改 Strategy V1 或创建
 Strategy V2。
@@ -141,8 +152,8 @@ Forward Track 继续具有时间优先级。Factor Universe V2 已冻结为 rese
 774 因子目录，历史 bootstrap、V2 Matrix readiness 与 Economic Multi-Factor Research
 V1 均已完成并关闭。Research Protocol V2 artifact 保持冻结，但 Historical Dataset &
 Validation Design Study 已证明不能直接沿用其短 folds 启动正式模型竞争。下一研究方向
-是以新的 lineage-resolved Extended Matrix 为输入，另行预注册较长 chronological
-validation 候选并设计 Dataset / Research Protocol redesign；当前尚未启动，Structured ML
+只能以 canonical dataset identity 为输入，另行预注册较长 chronological validation 候选并
+设计 Dataset / Research Protocol redesign；当前尚未启动，Structured ML
 仍未授权。不得自动切换
 Strategy V1、daily paper path 或修改 Forward evidence。
 

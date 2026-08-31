@@ -29,6 +29,9 @@ Archive 保留证据，但不授权恢复已关闭工作。
   面向新会话的紧凑上下文，不承载逐阶段历史流水账。
 - `CURRENT_PIPELINE.md`
   ACTIVE、FROZEN、CLOSED、LEGACY、EXPERIMENTAL 状态，Forward Track 命令与机器状态入口。
+- `CANONICAL_RESEARCH_DATASET.md`
+  后续 Dataset / Protocol research 的唯一推荐 Matrix identity、effective-date 读取合同、
+  factor qualification、parent evidence 与 Historical Data Engineering CLOSED 边界。
 - `PERSONAL_QUANT_RESEARCH_ROADMAP.md`
   当前研究路线与不可放松的时间隔离、holdout 和 Strategy V1/V2 边界。
 - `RESEARCH_PROTOCOL_V2.md`
@@ -131,6 +134,14 @@ Archive 保留证据，但不授权恢复已关闭工作。
   source-window residual。新 versioned Matrix 达到 739 exact / 35 explained / 0 quarantined，
   旧 frozen 与 partial-extension 均保持 immutable。原始执行要求保存在
   [Extended Matrix Overlap Lineage Resolution V1 plan](_archive/07_research_program_history/EXTENDED_MATRIX_OVERLAP_LINEAGE_RESOLUTION_V1_PLAN.md)。
+- [Canonical Historical Dataset Assembly & Data Engineering Closure V1](../reports/canonical_historical_dataset_assembly_v1/REPORT.md)：
+  将 2010-01-29 至 2026-06-09 的 lineage-resolved history 与 corrected continuation 组装为
+  单一 semantics authority；2021+ 重算 15 个 Alpha101、causal KAMA 与 19 个 Fundamental，
+  其余分区引用 frozen evidence。Canonical identity 为
+  `canonical-dataset:27518ddbb28ba2b4b1247375d4e3d32d7d5be9935a5f2074dc272f84285f6423`；
+  765/774 research-usable，9 个 blocked，Historical Data Engineering 正式 CLOSED。读取合同见
+  [Canonical Research Dataset Authority](CANONICAL_RESEARCH_DATASET.md)，执行要求归档于
+  [Canonical assembly plan](_archive/07_research_program_history/CANONICAL_HISTORICAL_DATASET_ASSEMBLY_DATA_ENGINEERING_CLOSURE_V1_PLAN.md)。
 
 这些结果不修改 Strategy V1、不产生 Strategy V2 authorization，也不构成 fresh OOS。
 Factor Universe V2 的实证 Matrix 已达到 qualified-list data readiness；多因子与模型研究

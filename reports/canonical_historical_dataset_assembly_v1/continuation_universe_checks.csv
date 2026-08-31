@@ -1,0 +1,7 @@
+year,frozen_key_count,practical_universe_key_count,common_key_count,frozen_only_key_count,universe_only_key_count,status
+2021,445981,445981,445981,0,0,pass
+2022,483983,483983,483983,0,0,pass
+2023,483926,483926,483926,0,0,pass
+2024,483881,483881,483881,0,0,pass
+2025,485907,485907,485907,0,0,pass
+2026,203993,203993,203993,0,0,pass
