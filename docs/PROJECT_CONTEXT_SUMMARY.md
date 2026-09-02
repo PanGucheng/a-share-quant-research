@@ -22,6 +22,10 @@
 常用 authority：
 
 - 数据输入：[CANONICAL_RESEARCH_DATASET.md](CANONICAL_RESEARCH_DATASET.md)；
+- 当前历史研究主线：
+  [LONG_HISTORY_ROBUST_CORE_FACTOR_SELECTION_V1.md](LONG_HISTORY_ROBUST_CORE_FACTOR_SELECTION_V1.md)；
+- 第一开发单元：
+  [LONG_HISTORY_CORE_FACTOR_PHASE_0_PLAN.md](LONG_HISTORY_CORE_FACTOR_PHASE_0_PLAN.md)；
 - 研究路线：[PERSONAL_QUANT_RESEARCH_ROADMAP.md](PERSONAL_QUANT_RESEARCH_ROADMAP.md)；
 - 架构：[ARCHITECTURE.md](ARCHITECTURE.md)；
 - 输出边界：[OUTPUT_POLICY.md](OUTPUT_POLICY.md)；
@@ -38,8 +42,9 @@
 | Forward Track | ACTIVE / time-priority | Daily Update、冻结 Strategy V1 prediction、paper portfolio、成熟标签评价 |
 | Strategy V1 | FROZEN | LightGBM、固定 52 因子顺序、P01 Top50 等权、每 5 个交易日调仓 |
 | Historical Data Engineering | CLOSED | 不再默认继续 extension/frontier/authority 工作 |
-| Canonical Research Dataset | READY / authority | 新 Dataset / Protocol research 的唯一推荐数据输入 |
-| Dataset / Research Protocol Redesign | NEXT / NOT STARTED | 需单独授权和预注册 |
+| Canonical Research Dataset | READY / authority | 当前长历史因子研究主线及后续 protocol work 的唯一推荐数据输入 |
+| Long-History Robust Core Factor Selection V1 | ACTIVE RESEARCH MAINLINE / PLANNING | 以 765 个 research-usable factors 提炼 Small Stable Core；当前只完成路线与 Phase 0 计划 |
+| Phase 0 Backward Replication | READY FOR IMPLEMENTATION / NOT STARTED | 冻结旧 52、mature 39、旧 roles/directions/clusters，并在 canonical early history 不调参复核 |
 | Structured ML | NOT AUTHORIZED | 不得从 prior protocol 直接启动 |
 | Strategy V2 | NOT AUTHORIZED | 需要独立 protocol、freeze date 与新 forward evidence |
 
@@ -70,8 +75,10 @@ canonical-dataset:27518ddbb28ba2b4b1247375d4e3d32d7d5be9935a5f2074dc272f84285f64
 
 Research Protocol V2 是模型 outcomes 前冻结的 prior protocol evidence，但后续 validation
 study 已证明其中 35–43 日的短 development environments 不足以充当正式 Structured ML
-selection authority。它不能被解释为“可以直接运行 Structured ML”。下一研究阶段只能是
-以 canonical dataset 为输入、单独授权的 Dataset / Research Protocol redesign；当前尚未启动。
+selection authority。它不能被解释为“可以直接运行 Structured ML”。当前历史研究主线已明确为
+以 canonical dataset 为输入的 Long-History Robust Core Factor Selection V1。该路线先做旧结论
+backward replication，再做 quality、long-history evidence、candidate board、redundancy map、
+core team selection 与 stopping rule；它不是 Structured ML 或 Strategy V2 授权。
 
 Forward Track 继续具有时间优先级，因为 genuine forward prediction/decision 不能事后回填。
 Strategy V1 的 prediction、decision、position、trade 和 NAV 保持 append-only；任何历史诊断

@@ -132,7 +132,8 @@ Five later stages are also complete:
 - **Research Productivity V1** established content-addressed projection/spool cache
   reuse and froze Fast Research as screening-only, not winner selection.
 - **Clustering Ablation V1** found mixed historical evidence when removing the
-  one-representative-per-cluster gate, so the gate remains unchanged.
+  one-representative-per-cluster gate. Its old historical outputs remain unchanged,
+  but the new core-factor route uses clustering as metadata rather than a hard gate.
 
 Detailed numbers and limitations live in the linked reports in
 [DOC_INDEX.md](DOC_INDEX.md); they are not duplicated here. All five are CLOSED, and
@@ -143,10 +144,12 @@ protocol evidence. A later Dataset & Validation Design Study found that its shor
 development environments do not provide sufficient temporal information for formal
 Structured ML selection. It therefore cannot directly authorize model competition.
 
-Historical Data Engineering is now CLOSED. New Dataset / Protocol research must use
+Historical Data Engineering is now CLOSED. New long-history factor research and any
+later protocol work must use
 the canonical dataset covering 2010-01-29 through 2026-06-09: 765 of 774 frozen
-definitions are research-usable and nine remain blocked. The next research stage is
-a separately authorized Dataset / Research Protocol redesign; it has not started.
+definitions are research-usable and nine remain blocked. The current historical
+research mainline is now Long-History Robust Core Factor Selection V1. Its route is
+adopted and Phase 0 is planned, but implementation and experiments have not started.
 Structured ML and Strategy V2 remain unauthorized, while genuine Forward evidence
 collection retains temporal priority.
 
@@ -196,7 +199,28 @@ daily checks cover trading date, instrument count, OHLC gaps, volume anomalies,
 52-feature count, and feature missing rate. It should not introduce another ingest
 governance framework.
 
-## 8. Completed Historical Research — Strategy Diagnostics V1
+## 8. Active Historical Research — Long-History Robust Core Factor Selection V1
+
+The current historical research mainline is documented in
+[LONG_HISTORY_ROBUST_CORE_FACTOR_SELECTION_V1.md](LONG_HISTORY_ROBUST_CORE_FACTOR_SELECTION_V1.md).
+It uses the canonical 2010–2026 dataset to move from 765 research-usable factors to
+the smallest defensible, tradable, economically complementary core. It does not
+expand the factor pool or start a model competition.
+
+The work proceeds through old-conclusion backward replication, a feature-quality
+gate, long-history evidence, a four-pillar robust candidate board, economic and
+redundancy metadata, a transparent marginal-contribution selector, and a
+deterministic stopping rule. Its two final sets are a Small Stable Core and a Robust
+Candidate Reserve.
+
+The first implementation unit is
+[LONG_HISTORY_CORE_FACTOR_PHASE_0_PLAN.md](LONG_HISTORY_CORE_FACTOR_PHASE_0_PLAN.md).
+It freezes the old Strategy V1 52, mature economic 39, roles, directions, selections,
+and cluster metadata and replays them on early canonical history without changing
+membership or direction. All resulting history is retrospective development
+evidence. Phase 0 implementation is not started by the documentation update.
+
+## 9. Completed Historical Research — Strategy Diagnostics V1
 
 Strategy Diagnostics is closed and does not block the Forward Track. It explains the
 historical performance change; it did not search for a better strategy. It reused
@@ -229,7 +253,7 @@ implementation bug, or append-only clarification. Its findings may inform a futu
 Model V2 Research Protocol but must not modify the frozen Strategy V1 definition.
 Benchmark constituent attribution remains unresolved/non-blocking.
 
-## 9. Phase 2 — Accumulate and Evaluate Forward Evidence
+## 10. Phase 2 — Accumulate and Evaluate Forward Evidence
 
 Once the Forward Track is operational, the normal cycle is update, predict, paper
 trade, record, and evaluate matured labels. Simple append-only or versioned CSVs for
@@ -241,14 +265,14 @@ Run Strategy V1 without adapting it to short-term results. Generate reports at u
 horizons such as 60, 120, or 250 trading days without creating a separate governance
 project for every checkpoint.
 
-## 10. Phase 3 — Research Decision
+## 11. Phase 3 — Research Decision
 
 Combine historical diagnostics with genuine forward evidence to decide whether the
 main issue is alpha decay, style exposure, portfolio construction, concentration,
 turnover/cost, or mixed/inconclusive. Neither evidence source should be forced into a
 single explanation, and observed history is not promoted back into a fresh holdout.
 
-## 11. Phase 4 — Strategy V2 If Needed
+## 12. Phase 4 — Strategy V2 If Needed
 
 Develop Strategy V2 only if the combined evidence identifies a concrete, actionable
 problem. Observed history can generate hypotheses, but V2 receives a new version and
@@ -260,14 +284,14 @@ V2 Research Protocol**. It must preregister the time-adaptation, relationship-
 non-stationarity, Size/style-conditional, and alternative-model questions before
 training. Candidate approaches are non-binding until that protocol is frozen.
 
-## 12. Phase 5 — Long-Term Validation
+## 13. Phase 5 — Long-Term Validation
 
 Shadow trading and small-capital validation are long-term possibilities, not current
 scope. Broker abstraction, order gateways, distributed monitoring, failover,
 production reconciliation services, and complex kill-switch infrastructure are
 explicitly deferred.
 
-## 13. Long-Term Repository Shape
+## 14. Long-Term Repository Shape
 
 The repository may gradually converge toward:
 
@@ -295,7 +319,7 @@ outputs/
 This is a direction, not a migration task. Existing modules should not be moved in
 bulk merely to match the diagram.
 
-## 14. Codex Development Principles
+## 15. Codex Development Principles
 
 Codex should read the relevant current architecture and results before changing it,
 reuse existing modules, and prefer simple, explainable work that answers a research
@@ -305,6 +329,8 @@ adapter, or abstraction, ask whether the present research problem truly needs it
 Every handoff should state what was reused, what changed, what was deliberately not
 done, the evidence boundary of any findings, and the next concrete research problem.
 
-This roadmap correction changes documentation priority only. It does not authorize
-implementation or execution of Daily Data Update, forward prediction, paper
-portfolio, Strategy Diagnostics, Strategy V2, or shadow trading.
+This roadmap correction adopts the long-history core-factor route and its Phase 0
+implementation plan. It does not itself execute Phase 0, authorize Phase 1–6,
+reselect factors, modify Strategy V1, start Structured ML or Strategy V2, or start
+shadow/live trading. Existing Forward operations remain governed by their active
+contracts.

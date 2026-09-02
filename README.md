@@ -16,9 +16,11 @@ Chinese: [README.zh-CN.md](README.zh-CN.md)
 - **ACTIVE:** time-sensitive Forward Track — Daily Data Update, frozen Strategy V1
   prediction, paper portfolio, and mature-label evaluation.
 - **FROZEN:** Strategy V1 and all historical/Forward evidence.
-- **READY / AUTHORITY:** canonical research dataset for new Dataset / Protocol work.
+- **READY / AUTHORITY:** canonical research dataset for the current long-history
+  factor research mainline and any later protocol work.
 - **CLOSED:** Historical Data Engineering and the completed historical research stages.
-- **NEXT / NOT STARTED:** Dataset / Research Protocol redesign.
+- **ACTIVE RESEARCH MAINLINE / PLANNING:** Long-History Robust Core Factor Selection
+  V1; Phase 0 backward replication is planned but not implemented.
 - **NOT AUTHORIZED:** Structured ML, Strategy V2, and live trading.
 
 Canonical dataset:
@@ -33,8 +35,10 @@ extensions remain immutable evidence, not default inputs for new research. See t
 [canonical dataset authority](docs/CANONICAL_RESEARCH_DATASET.md).
 
 The prior Research Protocol V2 is frozen historical evidence. Its short development
-environments are not sufficient authority for formal Structured ML; a separately
-authorized Dataset / Research Protocol redesign must happen first.
+environments are not sufficient authority for formal Structured ML. The current
+historical research mainline is the
+[Long-History Robust Core Factor Selection route](docs/LONG_HISTORY_ROBUST_CORE_FACTOR_SELECTION_V1.md),
+not model competition; all results remain retrospective development evidence.
 
 Start with [the documentation index](docs/DOC_INDEX.md). Exact commands and status
 boundaries are in [Current Pipeline](docs/CURRENT_PIPELINE.md).
@@ -84,6 +88,8 @@ backtests. Policy: [docs/CI_POLICY.md](docs/CI_POLICY.md).
 - [Project context summary](docs/PROJECT_CONTEXT_SUMMARY.md)
 - [Current pipeline](docs/CURRENT_PIPELINE.md)
 - [Canonical research dataset](docs/CANONICAL_RESEARCH_DATASET.md)
+- [Long-history robust core-factor route](docs/LONG_HISTORY_ROBUST_CORE_FACTOR_SELECTION_V1.md)
+- [Phase 0 development plan](docs/LONG_HISTORY_CORE_FACTOR_PHASE_0_PLAN.md)
 - [Personal research roadmap](docs/PERSONAL_QUANT_RESEARCH_ROADMAP.md)
 - [Architecture](docs/ARCHITECTURE.md)
 - [Output policy](docs/OUTPUT_POLICY.md)
