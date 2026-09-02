@@ -27,6 +27,9 @@ frozen artifact or Forward prediction.
   post-observation historical diagnostic.
 - [Performance Optimization V1](performance_optimization_v1/REPORT.md) — CLOSED
   engineering benchmark and exactness decisions.
+- [Performance Execution V1](performance_execution_v1/REPORT.md) — controlled real
+  1/2/4/8T evidence, qualified 8T Fast and Full execution profiles, and preserved
+  1T references.
 - [Research Productivity V1](research_productivity_v1/REPORT.md) — CLOSED cache and
   Fast Research calibration; Fast remains screening-only.
 - [Clustering Ablation V1](ml_clustering_ablation_v1/REPORT.md) — CLOSED,

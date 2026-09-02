@@ -14,6 +14,7 @@ import yaml
 from research_validation.feature_matrix import canonical_hash, file_sha256
 
 from .development_dry_run import _fit_from_spool
+from .execution_profiles import with_lightgbm_threads
 from .feature_pool_experiment import _arm_factors, _array_hash
 from .feature_pool_policy import load_policy_config
 from .inputs import InputAccessAudit, load_fold_dates
@@ -32,6 +33,7 @@ from .runtime_timing import RuntimeTimingRecorder
 
 
 FAST_PROFILE_ID = "fast_research_v1"
+FAST_MT_PROFILE_ID = "fast_research_mt_v2"
 EXECUTION_CLASS = "exploratory_fast"
 FAST_PROFILE_CONFIG_SHA256 = "d3b7d6c8b02d00132739dad2c23f1ea01d45f27d227ebb0b2f44bb3e43d83e92"
 
@@ -44,8 +46,36 @@ def load_fast_research_config(path: Path) -> dict[str, Any]:
         "production_model_selected",
         "strategy_v2_authorized",
     )
-    if config.get("profile_id") != FAST_PROFILE_ID:
-        raise ValueError("fast research profile id is not frozen v1")
+    profile_id = config.get("profile_id")
+    if profile_id == FAST_MT_PROFILE_ID:
+        parent_path = resolve(config.get("parent_profile_config", ""))
+        parent = load_fast_research_config(parent_path)
+        if canonical_hash(parent) != config.get("parent_profile_config_sha256"):
+            raise ValueError("Fast MT parent profile semantics changed")
+        if config.get("execution_class") != EXECUTION_CLASS:
+            raise ValueError("Fast MT execution class mismatch")
+        if any(config.get(field) is not False for field in required_false):
+            raise ValueError("Fast MT authority flags must all remain false")
+        threads = int(config.get("num_threads", 0))
+        if threads <= 1:
+            raise ValueError("Fast MT profile requires more than one thread")
+        fallback = config.get("single_thread_fallback", {})
+        if fallback.get("enabled") is not True:
+            raise ValueError("Fast MT profile must retain automatic 1T fallback")
+        if float(fallback.get("threshold_margin", -1)) < 0:
+            raise ValueError("Fast MT fallback threshold margin must be non-negative")
+        if not str(config.get("qualification_summary", "")).strip():
+            raise ValueError("Fast MT qualification summary is required")
+        if not str(config.get("qualification_summary_sha256", "")).strip():
+            raise ValueError("Fast MT qualification hash is required")
+        return {
+            **parent,
+            **config,
+            "profile_id": FAST_MT_PROFILE_ID,
+            "parent_profile_id": FAST_PROFILE_ID,
+        }
+    if profile_id != FAST_PROFILE_ID:
+        raise ValueError("unknown fast research profile id")
     if config.get("execution_class") != EXECUTION_CLASS:
         raise ValueError("fast research execution class mismatch")
     if any(config.get(field) is not False for field in required_false):
@@ -158,7 +188,7 @@ def _run_fast_arm(
     }
     timing = RuntimeTimingRecorder(
         execution_class=EXECUTION_CLASS,
-        execution_profile=FAST_PROFILE_ID,
+        execution_profile=str(profile["profile_id"]),
         outer_split_id=split_id,
         policy_id=policy_id,
         feature_count=len(factors),
@@ -287,7 +317,11 @@ def _run_fast_arm(
                     validation_rows=validation_data.row_count,
                 ):
                     prediction = booster.predict(
-                        validation_data.features, num_iteration=checkpoint
+                        validation_data.features,
+                        num_iteration=checkpoint,
+                        num_threads=int(
+                            lightgbm_config["determinism"]["num_threads"]
+                        ),
                     )
                 with timing.measure(
                     "validation_metrics",
@@ -316,7 +350,7 @@ def _run_fast_arm(
                         "fast_candidate_table_sha256": candidate_hash,
                         "status": "pass" if passed else "blocked",
                         "execution_class": EXECUTION_CLASS,
-                        "execution_profile": FAST_PROFILE_ID,
+                        "execution_profile": str(profile["profile_id"]),
                         "authoritative_execution": False,
                         "selection_authorized": False,
                         "production_model_selected": False,
@@ -419,8 +453,13 @@ def run_fast_research_pair(
     frozen = profile["frozen_parent_contracts"]
     if canonical_hash(lightgbm_config) != frozen["lightgbm_config_sha256"]:
         raise ValueError("fast profile LightGBM parent changed; create a new profile")
-    if int(lightgbm_config["determinism"]["num_threads"]) != int(profile["num_threads"]):
-        raise ValueError("fast profile thread count differs from deterministic model config")
+    if profile["profile_id"] == FAST_PROFILE_ID:
+        if int(lightgbm_config["determinism"]["num_threads"]) != int(profile["num_threads"]):
+            raise ValueError("fast profile thread count differs from deterministic model config")
+    else:
+        lightgbm_config = with_lightgbm_threads(
+            lightgbm_config, int(profile["num_threads"])
+        )
     if int(lightgbm_config["determinism"]["seed"]) != int(profile["seed"]):
         raise ValueError("fast profile seed differs from deterministic model config")
     if profile["execution_dtype"] != "float64":
@@ -544,7 +583,7 @@ def run_fast_research_pair(
         "changed_dimension": changed_dimension,
         "config_hash": canonical_hash(profile),
         "feature_manifest_sha256": file_sha256(feature_manifest_path),
-        "fast_execution_profile": FAST_PROFILE_ID,
+        "fast_execution_profile": str(profile["profile_id"]),
     }
     (output_dir / "proposal_manifest.json").write_text(
         json.dumps(proposal_manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8"
@@ -552,7 +591,7 @@ def run_fast_research_pair(
     receipt = {
         "schema_version": 1,
         "execution_class": EXECUTION_CLASS,
-        "execution_profile": FAST_PROFILE_ID,
+        "execution_profile": str(profile["profile_id"]),
         "authoritative_execution": False,
         "selection_authorized": False,
         "production_model_selected": False,

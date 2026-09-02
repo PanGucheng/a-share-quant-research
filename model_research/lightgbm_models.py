@@ -396,6 +396,7 @@ def run_lightgbm_canary(
                 prediction = booster.predict(
                     features,
                     num_iteration=int(candidate["num_boost_round"]),
+                    num_threads=int(config["determinism"]["num_threads"]),
                 )
                 model_text = booster.model_to_string(
                     num_iteration=int(candidate["num_boost_round"])
@@ -867,6 +868,7 @@ def run_lightgbm_development(
                     prediction = booster.predict(
                         validation_data.features,
                         num_iteration=int(checkpoint),
+                        num_threads=int(config["determinism"]["num_threads"]),
                     )
                     metrics = _validation_metrics(
                         validation_data.metadata,
@@ -934,6 +936,7 @@ def run_lightgbm_development(
             num_iteration=int(
                 selected_candidate["num_boost_round"]
             ),
+            num_threads=int(config["determinism"]["num_threads"]),
         )
         original_metric = {
             key: selected[key]

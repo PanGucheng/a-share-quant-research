@@ -1,0 +1,42 @@
+schema_version: 1
+stage_id: lightgbm_thread_determinism_audit_v1
+decision_authority: execution_protocol_evidence_only
+scientific_model_selection_authorized: false
+strategy_v2_authorized: false
+
+parents:
+  lightgbm_config: configs/research_lightgbm_v1.yaml
+  policy_config: configs/ml_feature_pool_mvp_v1.yaml
+  feature_manifest: outputs/ml_feature_pool_mvp_v1/current/feature_pool_manifest.csv
+
+thread_counts: [1, 2, 4, 8]
+repeats: 2
+folds: [train, validation]
+test_read_budget: 0
+full_authoritative_qualification: true
+fast_mt_qualification: false
+
+# Fail-closed Full qualification: complete development folds, all 16 frozen
+# candidates, and strict/conditional/broad real workloads. This is intentionally
+# expensive and is separate from the bounded default diagnostic audit.
+workloads:
+  - split_id: split_001
+    policy_id: strict_current_baseline
+    date_counts: {train: null, validation: null}
+    structural_row_ids: [structure_01, structure_02, structure_03, structure_04]
+    checkpoints: [100, 200, 400, 800]
+  - split_id: split_001
+    policy_id: current_plus_existing_conditional_signal
+    date_counts: {train: null, validation: null}
+    structural_row_ids: [structure_01, structure_02, structure_03, structure_04]
+    checkpoints: [100, 200, 400, 800]
+  - split_id: split_001
+    policy_id: broad_data_qualified
+    date_counts: {train: null, validation: null}
+    structural_row_ids: [structure_01, structure_02, structure_03, structure_04]
+    checkpoints: [100, 200, 400, 800]
+
+scientific_parity:
+  minimum_prediction_spearman: 0.9999
+  maximum_mean_rank_ic_difference: 0.0001
+  maximum_icir_difference: 0.001

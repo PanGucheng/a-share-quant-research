@@ -1,0 +1,29 @@
+{
+  "budget": {
+    "available_ram_mib": 12804.94140625,
+    "logical_cores": 16,
+    "physical_cores": 8,
+    "reserved_ram_mib": 4096.0
+  },
+  "candidate_count": 11,
+  "oversubscription_forbidden": true,
+  "purpose": "benchmark_candidates_not_authorization",
+  "schema_version": 1,
+  "workloads": [
+    {
+      "minimum_threads_per_worker": 1,
+      "name": "light",
+      "peak_rss_mib_per_worker": 4096.0
+    },
+    {
+      "minimum_threads_per_worker": 1,
+      "name": "medium",
+      "peak_rss_mib_per_worker": 8192.0
+    },
+    {
+      "minimum_threads_per_worker": 1,
+      "name": "broad",
+      "peak_rss_mib_per_worker": 17408.0
+    }
+  ]
+}

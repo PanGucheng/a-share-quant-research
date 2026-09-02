@@ -7,6 +7,9 @@ outputs/qlib_exchange_split_transparent_v1/** text eol=crlf
 reports/historical_dataset_validation_design_v1/*.csv text eol=crlf
 reports/historical_dataset_validation_design_v1/*.md text eol=lf
 
+# Performance execution profiles re-hash the exact Windows-emitted evidence bytes.
+reports/performance_execution_v1/** binary
+
 # The execution config embeds the raw SHA-256 of this canonical semantics file.
 configs/qlib_exchange_semantics_669_v1.yaml text eol=lf
 

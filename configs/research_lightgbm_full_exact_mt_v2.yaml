@@ -1,0 +1,11 @@
+schema_version: 1
+profile_id: full_research_exact_mt_v2
+reference_profile: full_research_v1_1t
+reference_config: configs/research_lightgbm_v1.yaml
+qualification_summary: reports/performance_execution_v1/full_mt_qualification_v1/summary.json
+qualification_summary_sha256: 8118acb5f6fa04a27765c8282452b1c6ea5594a02f54b619474712dd45d5b39f
+num_threads: 8
+parity_requirement: exact
+authoritative_execution: true
+scientific_model_selection_authorized: false
+strategy_v2_authorized: false

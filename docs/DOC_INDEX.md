@@ -47,6 +47,9 @@ evidence 判断；历史报告与 archive 只说明当时发生了什么。
 
 ## Operational References
 
+- [operations/PERFORMANCE_EXECUTION_PROFILES_V1.md](operations/PERFORMANCE_EXECUTION_PROFILES_V1.md)
+  — real LightGBM thread determinism audit, non-authoritative Fast MT fallback, and
+  CPU/RAM-safe worker-thread benchmark planning.
 - [operations/DAILY_DATA_UPDATE_V1.md](operations/DAILY_DATA_UPDATE_V1.md) — Daily
   Update 数据源、fallback、覆盖和输出合同。
 - [operations/STRATEGY_V1_PAPER_PORTFOLIO_V1.md](operations/STRATEGY_V1_PAPER_PORTFOLIO_V1.md)
@@ -98,6 +101,8 @@ authority 的形成过程可从以下报告按需追溯：
 - [Research Protocol V2](../reports/research_protocol_v2/REPORT.md)；
 - [Factor Universe V2](../reports/factor_universe_v2/REPORT.md) 与
   [Matrix Readiness](../reports/factor_universe_v2_matrix_readiness/REPORT.md)。
+- [Performance Execution V1](../reports/performance_execution_v1/REPORT.md) —
+  controlled thread determinism evidence and qualified Fast/Full 8T profiles.
 
 这些链接用于 provenance，不把已观察结果提升为 fresh OOS 或新策略授权。
 

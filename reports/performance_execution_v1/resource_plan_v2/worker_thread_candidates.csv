@@ -1,0 +1,12 @@
+workload_class,workers,threads_per_worker,cpu_threads_reserved,ram_mib_reserved,cpu_budget_valid,ram_budget_valid
+light,1,8,8,4096.0,True,True
+light,2,4,8,8192.0,True,True
+light,1,4,4,4096.0,True,True
+light,2,2,4,8192.0,True,True
+light,1,2,2,4096.0,True,True
+light,2,1,2,8192.0,True,True
+light,1,1,1,4096.0,True,True
+medium,1,8,8,8192.0,True,True
+medium,1,4,4,8192.0,True,True
+medium,1,2,2,8192.0,True,True
+medium,1,1,1,8192.0,True,True

@@ -1,0 +1,5 @@
+thread_count,mean_wall_seconds,speedup_vs_1t,exact_parity_all,scientific_parity_all
+1,44.58879648333308,1.0,True,True
+2,28.66210073333271,1.5556709153379797,True,True
+4,20.205707116666115,2.2067426903637166,True,True
+8,14.808345450000465,3.0110586381094775,True,True

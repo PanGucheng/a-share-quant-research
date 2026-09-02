@@ -1,0 +1,53 @@
+{
+  "audit_config_sha256": "69b49176c5f4e1340d90909c0454f9e6bc407ebb02e776322dc88457c37dc207",
+  "decision_authority": "execution_protocol_evidence_only",
+  "exact_thread_counts": [
+    1,
+    2,
+    4,
+    8
+  ],
+  "fast_mt_qualification_scope": true,
+  "fastest_exact_thread_count": 8,
+  "frozen_lightgbm_config_sha256": "58b01cf9b0507000c990738e5a36c8a7c09bf0b644383ad9a462188ef820d828",
+  "full_authoritative_eligible": false,
+  "full_authoritative_qualification_scope": false,
+  "input_identity_constant": true,
+  "lightgbm_version": "4.6.0",
+  "output_sha256": {
+    "access_audit.csv": "dd22bc19f5ddeadc23a0b4f692fe63d97c5f610f30871f2208156a1e6a6ebf52",
+    "candidate_metrics.csv": "f87dd8baf78ae25dea01dc122cc5f6bf116f38431270e3a7469fc1420e2d0cc4",
+    "input_identity.json": "2f3f91a7dcec67ac3cf11145e8c91d4859a3721623757dec84e99489a87e7b3e",
+    "parity.csv": "db87efc2f4615e6af9365600a98d1d6db04698cf84491544091b47a8b27503de",
+    "runs.csv": "4c1d6c24240708782c979237358bf7caec65f43561353d19d91e13e233c8c9b3",
+    "runtime_timing.csv": "1f95d844e0872f0b293149dd44310465edd8cb64dceb38a18e2d417e6104917c",
+    "thread_scaling.csv": "a4f18ba581c5c381092e4ddcc61ea2fdfda4632681655000ac26ae7bc1195d50"
+  },
+  "qualification_rule": "exact_parity_only",
+  "same_thread_repeats_exact": true,
+  "schema_version": 1,
+  "scientific_model_selection_authorized": false,
+  "scientifically_equivalent_thread_counts": [
+    1,
+    2,
+    4,
+    8
+  ],
+  "stage_id": "lightgbm_thread_determinism_audit_v1",
+  "strategy_v2_authorized": false,
+  "summary_sha256": "789caa091ad8c529e47430e83180c7d3a4099733cc4e8ff9475ad0995928a53b",
+  "thread_environment": {
+    "MKL_NUM_THREADS": null,
+    "NUMEXPR_NUM_THREADS": null,
+    "OMP_NUM_THREADS": null,
+    "OPENBLAS_NUM_THREADS": null
+  },
+  "workload_ids": [
+    "split_001__broad_data_qualified",
+    "split_001__current_plus_existing_conditional_signal",
+    "split_001__strict_current_baseline",
+    "split_002__broad_data_qualified",
+    "split_002__current_plus_existing_conditional_signal",
+    "split_002__strict_current_baseline"
+  ]
+}
