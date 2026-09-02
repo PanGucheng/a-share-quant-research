@@ -1,11 +1,13 @@
 # Long-History Core Factor Selection V1 — Phase 0 Development Plan
 
-> Status: **READY FOR IMPLEMENTATION / NOT STARTED**
+> Status: **CLOSED / COMPLETED**
 >
 > Scope: freeze old conclusions and perform an unchanged-membership,
 > unchanged-direction backward replication on canonical history.
 >
 > This plan does not authorize Phase 1+, factor reselection, or Strategy V1 changes.
+>
+> Closeout: [Phase 0 Report](../reports/long_history_core_factor_selection_v1/PHASE_0_REPORT.md)
 
 ## 1. Deliverable
 
@@ -322,8 +324,8 @@ Acceptance:
 2. Run Markdown link/documentation checks and `git diff --check`.
 3. Write a compact report separating backward evidence from the later Phase 1–6
    selection work.
-4. Review the full diff before any commit; commit/push only on a separate explicit
-   instruction.
+4. Review the full diff before commit and push under the repository's direct-main
+   workflow when the implementation task explicitly includes delivery.
 
 ## 9. Focused Tests
 
@@ -355,5 +357,6 @@ At minimum:
 - no model training, TopK/rebalance/horizon search, or portfolio optimization;
 - no Strategy V1 or Forward evidence mutation.
 
-Phase 0 closes only the backward-replication question. Phase 1 begins later under a
-separate implementation task after Phase 0 outputs and limitations are reviewed.
+Phase 0 closed only the backward-replication question. Phase 1 remains NOT STARTED
+and begins later under a separate implementation task after Phase 0 outputs and
+limitations are reviewed.

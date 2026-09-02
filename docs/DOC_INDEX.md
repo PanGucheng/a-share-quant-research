@@ -31,6 +31,8 @@ task-specific authority doc
   — 当前历史研究主线、Phase 0–6 范围、复用边界与完成标准。
 - [LONG_HISTORY_CORE_FACTOR_PHASE_0_PLAN.md](LONG_HISTORY_CORE_FACTOR_PHASE_0_PLAN.md)
   — 第一开发单元：旧结论冻结与不调参 backward replication 的具体实现计划。
+- [Phase 0 closeout report](../reports/long_history_core_factor_selection_v1/PHASE_0_REPORT.md)
+  — 91 因子 fixed-union、same-era reconciliation、backward portability 与限制。
 - [PERSONAL_QUANT_RESEARCH_ROADMAP.md](PERSONAL_QUANT_RESEARCH_ROADMAP.md) — Forward
   时间优先级与 Strategy V1/V2 长期边界。
 - [ARCHITECTURE.md](ARCHITECTURE.md) — 当前领域职责、依赖方向和 frozen compatibility。
@@ -125,8 +127,9 @@ current instruction。历史 outputs、artifacts、manifests、receipts 和 line
 - Strategy V1：FROZEN；
 - Historical Data Engineering：CLOSED；
 - Canonical Research Dataset：READY；
-- Long-History Robust Core Factor Selection V1：ACTIVE RESEARCH MAINLINE / PLANNING；
-- Phase 0 Backward Replication：READY FOR IMPLEMENTATION / NOT STARTED；
+- Long-History Robust Core Factor Selection V1：ACTIVE RESEARCH MAINLINE / PHASE 0 CLOSED；
+- Phase 0 Backward Replication：CLOSED / COMPLETED；
+- Phase 1 Feature Quality Gate：NOT STARTED；
 - Structured ML：NOT AUTHORIZED；
 - Strategy V2：NOT AUTHORIZED。
 

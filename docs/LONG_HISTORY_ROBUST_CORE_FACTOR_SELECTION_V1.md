@@ -1,12 +1,12 @@
 # Long-History Robust Core Factor Selection V1
 
-> Status: **ACTIVE RESEARCH MAINLINE / PLANNING**
+> Status: **ACTIVE RESEARCH MAINLINE / PHASE 0 CLOSED**
 >
-> Authorized now: route adoption, Phase 0 implementation planning, and continued
-> time-priority Forward operations.
+> Completed now: Phase 0 old-conclusion freeze, same-era reconciliation, and
+> backward replication. Phase 1 remains NOT STARTED.
 >
-> Not started by this document update: research code, historical runs, candidate
-> selection, or Core construction.
+> Not authorized by this closeout: Phase 1+, candidate selection, Core construction,
+> Structured ML, Strategy V2, or changes to frozen Strategy V1.
 
 ## 1. Objective
 
@@ -158,6 +158,8 @@ backward_portability_status
 
 The concrete implementation plan is
 [LONG_HISTORY_CORE_FACTOR_PHASE_0_PLAN.md](LONG_HISTORY_CORE_FACTOR_PHASE_0_PLAN.md).
+Phase 0 is CLOSED / COMPLETED; its results and limitations are recorded in the
+[Phase 0 report](../reports/long_history_core_factor_selection_v1/PHASE_0_REPORT.md).
 
 ### Phase 1 — Feature Quality Gate
 

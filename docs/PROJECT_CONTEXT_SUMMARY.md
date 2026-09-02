@@ -43,8 +43,9 @@
 | Strategy V1 | FROZEN | LightGBM、固定 52 因子顺序、P01 Top50 等权、每 5 个交易日调仓 |
 | Historical Data Engineering | CLOSED | 不再默认继续 extension/frontier/authority 工作 |
 | Canonical Research Dataset | READY / authority | 当前长历史因子研究主线及后续 protocol work 的唯一推荐数据输入 |
-| Long-History Robust Core Factor Selection V1 | ACTIVE RESEARCH MAINLINE / PLANNING | 以 765 个 research-usable factors 提炼 Small Stable Alpha Core，并分离 Risk / Conditioning Controls；当前只完成路线与 Phase 0 计划 |
-| Phase 0 Backward Replication | READY FOR IMPLEMENTATION / NOT STARTED | 冻结旧 52、mature 39、旧 roles/directions/clusters，并在 canonical early history 不调参复核 |
+| Long-History Robust Core Factor Selection V1 | ACTIVE RESEARCH MAINLINE / PHASE 0 CLOSED | 以 765 个 research-usable factors 提炼 Small Stable Alpha Core，并分离 Risk / Conditioning Controls；Phase 0 已完成 |
+| Phase 0 Backward Replication | CLOSED / COMPLETED | 91 因子 fixed-union、same-era reconciliation 与四时期 backward replication 已完成 |
+| Phase 1 Feature Quality Gate | NOT STARTED | 需要单独实施指令；当前未启动 |
 | Structured ML | NOT AUTHORIZED | 不得从 prior protocol 直接启动 |
 | Strategy V2 | NOT AUTHORIZED | 需要独立 protocol、freeze date 与新 forward evidence |
 

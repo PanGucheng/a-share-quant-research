@@ -149,7 +149,7 @@ later protocol work must use
 the canonical dataset covering 2010-01-29 through 2026-06-09: 765 of 774 frozen
 definitions are research-usable and nine remain blocked. The current historical
 research mainline is now Long-History Robust Core Factor Selection V1. Its route is
-adopted and Phase 0 is planned, but implementation and experiments have not started.
+adopted and Phase 0 is CLOSED / COMPLETED; Phase 1 remains NOT STARTED.
 Structured ML and Strategy V2 remain unauthorized, while genuine Forward evidence
 collection retains temporal priority.
 
@@ -221,9 +221,11 @@ It freezes the old Strategy V1 52, mature economic 39, roles, directions, select
 and cluster metadata as provenance. Actual computation is restricted to the
 deduplicated 52/39 union plus only explicitly justified extras. Strategy V1
 membership does not imply a standalone direction, and canonical same-era
-reconciliation precedes backward portability analysis. All resulting history is
-retrospective development evidence. Phase 0 implementation is not started by the
-documentation update.
+reconciliation precedes backward portability analysis. Phase 0 completed this work
+for a fixed 91-factor union; see the
+[Phase 0 report](../reports/long_history_core_factor_selection_v1/PHASE_0_REPORT.md).
+All resulting history is retrospective development evidence, and Phase 1 remains
+NOT STARTED.
 
 ## 9. Completed Historical Research — Strategy Diagnostics V1
 

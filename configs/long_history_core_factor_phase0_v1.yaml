@@ -1,0 +1,73 @@
+schema_version: 1
+stage_id: long_history_core_factor_phase0_v1
+canonical_dataset_id: canonical-dataset:27518ddbb28ba2b4b1247375d4e3d32d7d5be9935a5f2074dc272f84285f6423
+canonical_manifest: outputs/canonical_historical_dataset_assembly_v1/current/manifest.json
+partition_manifest: outputs/canonical_historical_dataset_assembly_v1/current/partition_manifest.csv
+factor_lineage: outputs/canonical_historical_dataset_assembly_v1/current/factor_lineage.csv
+provider_uri: ../qlib_data/cn_data_community_20260609_derived
+market: all
+
+strategy_v1:
+  freeze: outputs/prospective_forward_hardening_v1/current/forward_candidate_freeze.json
+  freeze_sha256: 2bf8043807f59781acb4b6962b5d53f4036bb2bee4d00eed67d618970bca0f18
+  preprocessing: artifacts/prospective_forward_candidate_v1/sha256/c89972d27ec610cf7c2598d8ccb1ecd1c227c73d0b5dc51dcf11210b57245ee7/forward_candidate_preprocessing.json
+  preprocessing_sha256: 679765a462e79a3018db3ab77170a1bc60e3114816aff23b1d8fd38d2a2e37f2
+  expected_count: 52
+  expected_feature_order_sha256: 544ee7b8f7464d5fb43c3638dfdca7ac25f2cc654b951b4c9b817499bfdd3f71
+
+economic:
+  map: reports/economic_multi_factor_research_v1/economic_map.csv
+  map_sha256: 5bde3c9868f91abb5b4b93630ea210a2b03bda52ec8b403710403dfb4f5f46c5
+  manifest: reports/economic_multi_factor_research_v1/manifest.json
+  manifest_sha256: 7371fbc29397fbe3fe3775931946442d3481615394bd0dfac93c151c699a4353
+  literature_map: reports/economic_multi_factor_research_v1/literature_evidence_map.csv
+  literature_map_sha256: a92a53322486381a8237b37d05bb463c906de9f94ea252431288153bae630044
+  expected_count: 39
+  membership_filter: selected_sleeve_member
+
+stability:
+  board: outputs/factor_rolling_stability_v2/current/factor_stability_board.csv
+  board_sha256: e6f35c5deb2de7d58f3f1d1bacfd24330bc967a424b19be807d20008bf0b37c2
+  direction_history: outputs/factor_rolling_stability_v2/current/factor_direction_history.csv
+  direction_history_sha256: 999b60636d83b023c88bcc3de5f66ffaf80846a4d5402f52e5533ae0f8185910
+  window_metrics: outputs/factor_rolling_stability_v2/current/factor_window_metrics.csv
+  window_metrics_sha256: cf5e050cdef4d4a876695169283ec6d6d18bf58593d213a856cd3468ee18e371
+  selection_history: outputs/factor_rolling_stability_v2/current/factor_selection_history.csv
+  selection_history_sha256: 1a5f23e4496c8fc64727692637a3d950b1abeb0cc005890962131f5c563f998c
+  resolved_config: outputs/factor_rolling_stability_v2/current/resolved_config.json
+  resolved_config_sha256: 8a091f887c9872a59711a575e4e35528c1f907c95ffab14dee9c533560b2fc82
+  date_assignments: outputs/development_robustness_split_v1/full_research_669/development_date_assignments.csv
+  date_assignments_sha256: 505cdfb6ef4118386dd8c90374a8032ea2bfc513fd6faa8297e6159eddaeca68
+
+clustering:
+  representatives: outputs/factor_clustering_v2/current/representatives_by_split.csv
+  representatives_sha256: bc88a60270b3ea437c0da47ea2d034f8a3d98581c8fbe2a864c8dcee62c35722
+  memberships: outputs/factor_clustering_v2/current/factor_clusters_by_split.csv
+  memberships_sha256: 8d450f03be737e7dcc7529c5d4d17fc804a24005f1bcf09ecfaf02e73b4d5aea
+
+computation:
+  expected_unique_count: 91
+  expected_union_sha256: 2735debf11e85d01260fa0c50bb41cdbb2f87866eddcc5709599f290ffc1adeb
+  explicit_extras: []
+  smoke_factor: alpha158_CORD10
+  min_cross_section_count: 20
+  min_valid_dates: 20
+
+label:
+  name: label_20d_t1
+  entry_lag_trading_days: 1
+  holding_trading_days: 20
+
+periods:
+  - {period_id: early_2010_2014, requested_start: 2010-01-29, requested_end: 2014-12-31}
+  - {period_id: mid_2015_2018, requested_start: 2015-01-01, requested_end: 2018-12-31}
+  - {period_id: preexisting_2019_2020, requested_start: 2019-01-01, requested_end: 2020-12-31}
+  - {period_id: legacy_2021_2026, requested_start: 2021-01-01, requested_end: 2026-06-09}
+
+reconciliation:
+  consistent_absolute_tolerance: 0.001
+  minor_drift_absolute_tolerance: 0.005
+
+outputs:
+  runtime_dir: outputs/long_history_core_factor_selection_v1/phase0/current
+  report: reports/long_history_core_factor_selection_v1/PHASE_0_REPORT.md

@@ -58,8 +58,9 @@ Forward Track                         ACTIVE / time-priority
 Strategy V1                          FROZEN
 Historical Data Engineering          CLOSED
 Canonical Research Dataset           READY / authority
-Long-History Robust Core Selection   ACTIVE RESEARCH MAINLINE / PLANNING
-Phase 0 Backward Replication         READY FOR IMPLEMENTATION / NOT STARTED
+Long-History Robust Core Selection   ACTIVE RESEARCH MAINLINE / PHASE 0 CLOSED
+Phase 0 Backward Replication         CLOSED / COMPLETED
+Phase 1 Feature Quality Gate         NOT STARTED
 Structured ML                        NOT AUTHORIZED
 Strategy V2                          NOT AUTHORIZED
 ```

@@ -12,8 +12,9 @@ artifact 名称中的 `current` 不自动表示 ACTIVE。
 | Canonical Research Dataset | FROZEN AUTHORITY / READY | 当前长历史因子研究主线及后续 protocol work 的唯一推荐输入 |
 | Historical Data Engineering | CLOSED | 仅因明确 data bug、leakage 或 provenance failure 重开 |
 | Prior Research Protocol V2 | FROZEN HISTORICAL EVIDENCE | 可审计复现；不可直接授权模型竞争 |
-| Long-History Robust Core Factor Selection V1 | ACTIVE RESEARCH MAINLINE / PLANNING | 当前 historical research 方向；路线已纳入，研究代码和实验尚未启动 |
-| Phase 0 Backward Replication | READY FOR IMPLEMENTATION / NOT STARTED | 冻结旧结论并在 canonical early history 不调参复核 |
+| Long-History Robust Core Factor Selection V1 | ACTIVE RESEARCH MAINLINE / PHASE 0 CLOSED | 当前 historical research 方向；Phase 0 已完成，Phase 1 尚未启动 |
+| Phase 0 Backward Replication | CLOSED / COMPLETED | 91 因子 fixed-union 的 same-era reconciliation 与 canonical backward replication 已完成 |
+| Phase 1 Feature Quality Gate | NOT STARTED | 需要单独实施指令；本轮未启动 |
 | Structured ML | NOT AUTHORIZED | 不得训练或比较候选模型 |
 | Strategy V2 | NOT AUTHORIZED | 需要独立 protocol、freeze date 与新 forward evidence |
 | Live trading | NOT AUTHORIZED | 不属于当前范围 |
@@ -203,7 +204,7 @@ data authority 吸收，不再逐项作为 current todo。
 数据错误、泄漏、contract failure 或实现 bug 重开；历史 reports 保持“当时发生了什么”，
 不因 current authority 变化而改写。
 
-## 6. ACTIVE RESEARCH MAINLINE / PLANNING — Long-History Robust Core Selection
+## 6. ACTIVE RESEARCH MAINLINE / PHASE 0 CLOSED — Long-History Robust Core Selection
 
 Prior Research Protocol V2 在模型 outcomes 前冻结，保留为
 [historical protocol evidence](_archive/07_research_program_history/RESEARCH_PROTOCOL_V2.md)。
@@ -217,19 +218,22 @@ long-history evidence、稳定性、可交易性、经济机制和组合边际�
 Small Stable Alpha Core，并把 Size、liquidity、industry、market state、tradability 等
 Risk / Conditioning Controls 作为独立对象维护。Forward Track 继续保持 ACTIVE / time-priority。
 
-当前第一开发单元是
+第一开发单元
 [Phase 0 old-conclusion freeze and backward replication](LONG_HISTORY_CORE_FACTOR_PHASE_0_PLAN.md)：
 固定 Strategy V1 52 factors、mature 39、旧 role/direction/selection/cluster metadata，未经
-重新调参地比较 `2010–2014`、`2015–2018`、`2019–2020` 与 `2021+`。文档规划已完成，代码、
-运行和研究结论尚未产生。
+重新调参地比较 `2010–2014`、`2015–2018`、`2019–2020` 与 `2021+`。该阶段已完成；91 个
+unique factors 的结果和限制见
+[Phase 0 report](../reports/long_history_core_factor_selection_v1/PHASE_0_REPORT.md)。Phase 1
+保持 NOT STARTED。
 
 当前：
 
 ```text
 route adopted = true
-phase 0 implementation started = false
-historical results produced = false
+phase 0 completed = true
+historical results produced = true
 old membership or direction changed = false
+phase 1 started = false
 Structured ML started = false
 Strategy V1 changed = false
 Strategy V2 authorized = false
