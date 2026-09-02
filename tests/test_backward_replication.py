@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-import copy
+import json
 from pathlib import Path
 
 import numpy as np
@@ -16,9 +16,14 @@ from factor_research.backward_replication import (
     compute_union_daily_ic,
     daily_rank_ic,
     enforce_label_maturity,
+    file_sha256,
     load_phase0_config,
     preflight_phase0,
     reconcile_same_era,
+)
+from research_validation.canonical_dataset import (
+    canonical_dataset_identity,
+    canonical_hash,
 )
 
 
@@ -28,7 +33,195 @@ CONFIG = ROOT / "configs" / "long_history_core_factor_phase0_v1.yaml"
 
 @pytest.fixture(scope="module")
 def verified_inputs():
+    canonical_manifest = ROOT / "outputs/canonical_historical_dataset_assembly_v1/current/manifest.json"
+    if not canonical_manifest.is_file():
+        pytest.skip("local frozen Phase 0 parent evidence is not tracked in Git")
     return preflight_phase0(load_phase0_config(CONFIG), root=ROOT)
+
+
+def _write_phase0_fixture(root: Path) -> dict:
+    def write_json(name: str, payload: dict) -> Path:
+        path = root / name
+        path.write_text(json.dumps(payload), encoding="utf-8")
+        return path
+
+    def write_csv(name: str, rows: list[dict]) -> Path:
+        path = root / name
+        pd.DataFrame(rows).to_csv(path, index=False)
+        return path
+
+    partition_manifest = pd.DataFrame(
+        [
+            {
+                "segment_id": "segment",
+                "partition_id": "partition",
+                "effective_start": "2020-01-01",
+                "effective_end": "2020-12-31",
+                "output_sha256": "fixture",
+                "row_count": 1,
+                "factor_count": 2,
+                "lineage_action": "fixture",
+                "factors": "economic_x,strategy_x",
+            }
+        ]
+    )
+    factor_lineage = pd.DataFrame(
+        [
+            {
+                "factor": factor,
+                "authoritative_semantics": "fixture",
+                "historical_action": "fixture",
+                "continuation_action": "fixture",
+                "research_usable": True,
+            }
+            for factor in ["economic_x", "strategy_x"]
+        ]
+    )
+    partition_path = root / "partition_manifest.csv"
+    lineage_path = root / "factor_lineage.csv"
+    partition_manifest.to_csv(partition_path, index=False)
+    factor_lineage.to_csv(lineage_path, index=False)
+    identity = canonical_dataset_identity(partition_manifest, factor_lineage)
+    manifest_path = write_json("canonical_manifest.json", {"canonical_dataset_id": identity})
+
+    features = ["strategy_x"]
+    feature_hash = canonical_hash(features)
+    preprocessing_path = write_json("preprocessing.json", {"feature_names": features})
+    freeze_path = write_json(
+        "freeze.json", {"factor_count": 1, "feature_order_sha256": feature_hash}
+    )
+    economic_map_path = write_csv(
+        "economic_map.csv",
+        [
+            {
+                "factor": "economic_x",
+                "research_role": "selected_sleeve_member",
+                "sleeve_id": "fixture_sleeve",
+                "expected_direction": 1,
+                "mechanism": "fixture",
+            }
+        ],
+    )
+    economic_manifest_path = write_json("economic_manifest.json", {"fixture": True})
+    literature_path = write_csv("literature.csv", [{"fixture": True}])
+    board_path = write_csv(
+        "board.csv",
+        [
+            {
+                "outer_split_id": "outer",
+                "factor": "strategy_x",
+                "frozen_direction": -1,
+                "stability_role": "fixture",
+            }
+        ],
+    )
+    history_row = {
+        "outer_split_id": "outer",
+        "inner_split_id": "inner",
+        "factor": "strategy_x",
+        "frozen_direction": -1,
+    }
+    direction_path = write_csv("direction.csv", [history_row])
+    window_path = write_csv("window.csv", [history_row])
+    selection_path = write_csv(
+        "selection.csv", [{**history_row, "selected": True, "selection_reason": "fixture"}]
+    )
+    resolved_path = write_json("resolved.json", {"fixture": True})
+    assignments_path = write_csv("assignments.csv", [{"fixture": True}])
+    representatives_path = write_csv(
+        "representatives.csv",
+        [
+            {
+                "outer_split_id": "outer",
+                "cluster_id": "cluster",
+                "factor": "strategy_x",
+                "is_representative": True,
+            }
+        ],
+    )
+    memberships_path = write_csv(
+        "memberships.csv",
+        [{"outer_split_id": "outer", "factor": "strategy_x", "cluster_id": "cluster"}],
+    )
+
+    def source(path: Path) -> dict[str, str]:
+        return {"path": str(path), "sha256": file_sha256(path)}
+
+    fixture_sources = {
+        "freeze": source(freeze_path),
+        "preprocessing": source(preprocessing_path),
+        "economic_map": source(economic_map_path),
+        "economic_manifest": source(economic_manifest_path),
+        "literature": source(literature_path),
+        "board": source(board_path),
+        "direction": source(direction_path),
+        "window": source(window_path),
+        "selection": source(selection_path),
+        "resolved": source(resolved_path),
+        "assignments": source(assignments_path),
+        "representatives": source(representatives_path),
+        "memberships": source(memberships_path),
+    }
+    return {
+        "canonical_dataset_id": identity,
+        "canonical_manifest": str(manifest_path),
+        "partition_manifest": str(partition_path),
+        "factor_lineage": str(lineage_path),
+        "strategy_v1": {
+            "freeze": fixture_sources["freeze"]["path"],
+            "freeze_sha256": fixture_sources["freeze"]["sha256"],
+            "preprocessing": fixture_sources["preprocessing"]["path"],
+            "preprocessing_sha256": fixture_sources["preprocessing"]["sha256"],
+            "expected_count": 1,
+            "expected_feature_order_sha256": feature_hash,
+        },
+        "economic": {
+            "map": fixture_sources["economic_map"]["path"],
+            "map_sha256": fixture_sources["economic_map"]["sha256"],
+            "manifest": fixture_sources["economic_manifest"]["path"],
+            "manifest_sha256": fixture_sources["economic_manifest"]["sha256"],
+            "literature_map": fixture_sources["literature"]["path"],
+            "literature_map_sha256": fixture_sources["literature"]["sha256"],
+            "expected_count": 1,
+            "membership_filter": "selected_sleeve_member",
+        },
+        "stability": {
+            "board": fixture_sources["board"]["path"],
+            "board_sha256": fixture_sources["board"]["sha256"],
+            "direction_history": fixture_sources["direction"]["path"],
+            "direction_history_sha256": fixture_sources["direction"]["sha256"],
+            "window_metrics": fixture_sources["window"]["path"],
+            "window_metrics_sha256": fixture_sources["window"]["sha256"],
+            "selection_history": fixture_sources["selection"]["path"],
+            "selection_history_sha256": fixture_sources["selection"]["sha256"],
+            "resolved_config": fixture_sources["resolved"]["path"],
+            "resolved_config_sha256": fixture_sources["resolved"]["sha256"],
+            "date_assignments": fixture_sources["assignments"]["path"],
+            "date_assignments_sha256": fixture_sources["assignments"]["sha256"],
+        },
+        "clustering": {
+            "representatives": fixture_sources["representatives"]["path"],
+            "representatives_sha256": fixture_sources["representatives"]["sha256"],
+            "memberships": fixture_sources["memberships"]["path"],
+            "memberships_sha256": fixture_sources["memberships"]["sha256"],
+        },
+        "computation": {
+            "expected_unique_count": 2,
+            "expected_union_sha256": canonical_hash(["economic_x", "strategy_x"]),
+            "explicit_extras": [],
+        },
+    }
+
+
+def test_synthetic_preflight_is_self_contained(tmp_path: Path) -> None:
+    inputs = preflight_phase0(_write_phase0_fixture(tmp_path), root=ROOT)
+    assert inputs.computation_universe["factor"].tolist() == [
+        "economic_x",
+        "strategy_x",
+    ]
+    strategy = inputs.computation_universe.set_index("factor").loc["strategy_x"]
+    assert strategy["direction_authority"] == "inherited_from_rolling_stability"
+    assert inputs.inventory["computation_included"].all()
 
 
 def test_preflight_counts_and_no_factor_read(verified_inputs) -> None:
@@ -44,8 +237,8 @@ def test_preflight_counts_and_no_factor_read(verified_inputs) -> None:
     assert strategy_rows["direction_status"].eq("unsigned_membership").all()
 
 
-def test_wrong_identity_fails_before_factor_read() -> None:
-    config = copy.deepcopy(load_phase0_config(CONFIG))
+def test_wrong_identity_fails_before_factor_read(tmp_path: Path) -> None:
+    config = _write_phase0_fixture(tmp_path)
     config["canonical_dataset_id"] = "canonical-dataset:wrong"
     called = False
 
@@ -65,8 +258,10 @@ def test_wrong_identity_fails_before_factor_read() -> None:
         ("economic", "expected_count", "mature economic factor count drift"),
     ],
 )
-def test_count_drift_fails(section: str, expected_key: str, message: str) -> None:
-    config = copy.deepcopy(load_phase0_config(CONFIG))
+def test_count_drift_fails(
+    tmp_path: Path, section: str, expected_key: str, message: str
+) -> None:
+    config = _write_phase0_fixture(tmp_path)
     config[section][expected_key] += 1
     with pytest.raises(ValueError, match=message):
         preflight_phase0(config, root=ROOT)
