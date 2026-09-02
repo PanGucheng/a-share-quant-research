@@ -210,15 +210,20 @@ expand the factor pool or start a model competition.
 The work proceeds through old-conclusion backward replication, a feature-quality
 gate, long-history evidence, a four-pillar robust candidate board, economic and
 redundancy metadata, a transparent marginal-contribution selector, and a
-deterministic stopping rule. Its two final sets are a Small Stable Core and a Robust
-Candidate Reserve.
+deterministic stopping rule. Its primary outputs are a **Small Stable Alpha Core**,
+a Robust Candidate Reserve, and a separate Risk / Conditioning Controls inventory;
+Size, liquidity, industry, market-state, tradability, and other Risk / Conditioning
+Controls remain a separate inventory and do not need standalone alpha.
 
 The first implementation unit is
 [LONG_HISTORY_CORE_FACTOR_PHASE_0_PLAN.md](LONG_HISTORY_CORE_FACTOR_PHASE_0_PLAN.md).
 It freezes the old Strategy V1 52, mature economic 39, roles, directions, selections,
-and cluster metadata and replays them on early canonical history without changing
-membership or direction. All resulting history is retrospective development
-evidence. Phase 0 implementation is not started by the documentation update.
+and cluster metadata as provenance. Actual computation is restricted to the
+deduplicated 52/39 union plus only explicitly justified extras. Strategy V1
+membership does not imply a standalone direction, and canonical same-era
+reconciliation precedes backward portability analysis. All resulting history is
+retrospective development evidence. Phase 0 implementation is not started by the
+documentation update.
 
 ## 9. Completed Historical Research — Strategy Diagnostics V1
 

@@ -214,7 +214,8 @@ isolation，但 temporal ESS 不足，不能直接作为正式 Structured ML sel
 [Long-History Robust Core Factor Selection V1](LONG_HISTORY_ROBUST_CORE_FACTOR_SELECTION_V1.md)。
 它使用 canonical 2010–2026 dataset，从 765 个 research-usable factors 中通过 quality、
 long-history evidence、稳定性、可交易性、经济机制和组合边际贡献，提炼尽可能小的
-Small Stable Core。Forward Track 继续保持 ACTIVE / time-priority。
+Small Stable Alpha Core，并把 Size、liquidity、industry、market state、tradability 等
+Risk / Conditioning Controls 作为独立对象维护。Forward Track 继续保持 ACTIVE / time-priority。
 
 当前第一开发单元是
 [Phase 0 old-conclusion freeze and backward replication](LONG_HISTORY_CORE_FACTOR_PHASE_0_PLAN.md)：

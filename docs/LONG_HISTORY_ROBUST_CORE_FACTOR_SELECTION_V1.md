@@ -15,11 +15,13 @@ mainline is no longer a generic Dataset / Research Protocol redesign and is not 
 model competition. It is:
 
 > From the 765 research-usable factors, identify the smallest maintainable set of
-> long-history, stable, interpretable, mutually useful, and tradable core factors.
+> long-history, stable, interpretable, mutually useful, and tradable alpha factors.
 
-The target output is a **Small Stable Core Factor Set plus complete research
-evidence**, not Strategy V2. The work must answer what each retained factor adds to
-the team and what is lost if it is removed.
+The target output is a **Small Stable Alpha Core plus complete research evidence**,
+not Strategy V2. The work must answer what each retained alpha factor adds to the
+team and what is lost if it is removed. Risk, conditioning, neutralization, market
+state, and tradability controls remain a separate research object; lack of
+standalone alpha does not remove a useful control from future research.
 
 Canonical input identity:
 
@@ -89,15 +91,45 @@ Phase 5 — core team selector
         ↓
 Phase 6 — stopping rule and sensitivity
         ↓
-Small Stable Core + Robust Candidate Reserve
+Small Stable Alpha Core + Robust Candidate Reserve
 ```
 
 ### Phase 0 — Old-conclusion freeze and backward replication
 
 Freeze the Strategy V1 52-factor set, 39 mature economic factors, old stability
 roles and directions, old economic sleeves, old selected/rejected decisions, and
-old clustering representatives. Replay them on canonical early history without
-changing membership or direction.
+old clustering representatives. The stability, selection, rejection, monitor,
+conditional, and cluster records are provenance metadata; loading them does not
+place their roughly 669-factor historical universe into Phase 0 computation.
+
+The default Phase 0 computation universe is the deduplicated union of:
+
+- frozen Strategy V1 52-factor membership;
+- the 39 mature economic factors; and
+- only a small number of explicitly allowlisted extras that have a concrete frozen
+  historical conclusion and a documented inclusion reason.
+
+The actual computation universe, count, source membership, and inclusion reason
+must be written before factor values are loaded. Old rejected/monitor/conditional
+factors and cluster members remain metadata-only unless explicitly allowlisted.
+Phase 0 must not become a 669- or 765-factor run.
+
+Strategy V1 membership is not a standalone signed-alpha claim. Each inventory row
+must carry `direction_status` and `direction_authority`. Valid authorities include
+`inherited_from_rolling_stability`, `economic_predeclared`, and
+`unsigned_membership`. If no prior authority exists, `old_direction` is null,
+backward results may not infer it, frozen-direction metrics are not interpreted,
+and standalone direction is `not_comparable`.
+
+Phase 0 has two ordered analyses:
+
+1. **Same-Era Reconciliation** — compare old recorded evidence with a canonical
+   replay over the same documented era and record metric-definition, factor-semantic,
+   universe, and direction compatibility. Outcomes include `consistent`,
+   `small_semantic_drift`, `material_data_semantic_change`, and `not_comparable`.
+2. **Backward Portability** — only after reconciliation, compare canonical recent
+   evidence with canonical early history, keeping data/semantic change separate
+   from temporal instability.
 
 Compare at least `2010–2014`, `2015–2018`, `2019–2020`, and the original `2021+`
 era. Calendar and label maturity may trim actual signal dates, but boundaries may
@@ -111,11 +143,17 @@ factor
 old_source
 old_role
 old_direction
+direction_status
+direction_authority
+computation_inclusion_reason
+old_metric
+canonical_same_era_metric
+reconciliation_status
 early_period_ic
 mid_period_ic
 recent_period_ic
 direction_consistency
-old_vs_new_interpretation
+backward_portability_status
 ```
 
 The concrete implementation plan is
@@ -205,14 +243,21 @@ For `Core(N) + candidate X`, compare paired changes in:
 - Size, liquidity, microcap, and concentration exposure.
 
 Forward greedy selection may be used, but admission must be a multi-objective
-marginal improvement, not optimization of a single metric.
+marginal improvement, not optimization of a single metric. Greedy construction is
+itself a potential data-mining surface, so admission requires stable improvement
+across historical environments: period-wise paired marginal evaluation,
+worst-period behavior, and leave-one-environment-out robustness. Full-history
+aggregate improvement alone may not admit a factor. The selector must identify
+factors that repeatedly improve the team, not the ex-post optimal 2010–2026
+combination.
 
 ### Phase 6 — Stopping Rule and Sensitivity
 
 Generate a deterministic marginal-benefit/core-size curve. Do not predetermine a
 target count. Stop when consecutive additions provide little predictive, worst-period,
 net-spread, or stability improvement relative to turnover, complexity, instability,
-and redundancy.
+and redundancy. Stopping thresholds must be declared independently of the desired
+Core size and may not be tuned until a preferred count appears.
 
 At minimum inspect sizes such as `1, 2, 3, 5, 8, 12, ...`, while retaining the full
 sequential trace. Run focused sensitivity checks that preserve the declared horizon,
@@ -220,15 +265,20 @@ periods, costs, directions, and evidence boundary.
 
 ## 5. Required Final Outputs
 
-1. **Small Stable Core** — small, stable, interpretable, economically complementary,
-   and tradable; the only candidate input to a future separately authorized Strategy
-   V2 research stage.
+1. **Small Stable Alpha Core** — a small, stable, interpretable, economically
+   complementary, and tradable set whose primary role is expected-return prediction;
+   it is the alpha candidate input to a future separately authorized Strategy V2
+   research stage.
 2. **Robust Candidate Reserve** — quality-passing factors with useful evidence that
    did not earn a place in the Core. It is not a 765-factor active ML pool.
-3. **Old-versus-new comparison** — Strategy V1 52 factors, 39 mature factors, old
+3. **Risk / Conditioning Controls** — a separate inventory for Size, liquidity,
+   industry, market state, tradability, and other neutralization, risk-control,
+   conditional-modeling, or exposure-monitoring variables. These controls do not
+   need standalone alpha and are not counted as Alpha Core members.
+4. **Old-versus-new comparison** — Strategy V1 52 factors, 39 mature factors, old
    rejected factors, and the independent mechanisms contributed by Alpha101,
    Alpha158, Alpha360, and TA.
-4. **Core-size and marginal-contribution evidence** — every admission and stopping
+5. **Core-size and marginal-contribution evidence** — every admission and stopping
    decision must be reproducible and explainable.
 
 The remaining factors stay in Factor Universe V2 without becoming Strategy V2
@@ -245,10 +295,12 @@ Focus tests on:
 5. period and calendar alignment;
 6. no promotion of historical/observed evidence to fresh holdout;
 7. pillar aggregation and reason codes;
-8. paired `Core(N)` versus `Core(N+1)` comparison;
-9. deterministic stopping;
-10. clustering metadata never auto-deleting `N-1`;
-11. Strategy V1 artifacts never being modified.
+8. period-wise paired `Core(N)` versus `Core(N+1)` comparison;
+9. leave-one-environment-out admission robustness;
+10. deterministic stopping with no target-size tuning;
+11. clustering metadata never auto-deleting `N-1`;
+12. Alpha Core membership remaining separate from risk/conditioning controls;
+13. Strategy V1 artifacts never being modified.
 
 ## 7. Completion Criteria
 
@@ -260,7 +312,8 @@ The stage is complete only when it can answer:
 - whether any old rejected factors are rediscovered and why;
 - how predictive and trading value change as core size grows;
 - where marginal benefit becomes negligible;
-- which factors form the Small Stable Core; and
+- which factors form the Small Stable Alpha Core;
+- which non-alpha variables remain Risk / Conditioning Controls; and
 - for every core factor, what the team loses if it is removed.
 
 Only after this stage closes may a separate decision authorize a simple
