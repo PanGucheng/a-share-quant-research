@@ -63,7 +63,7 @@ Historical Portfolio Backtest
 Model Diagnostic V1 (closed)
 ```
 
-任何新 Dataset / Protocol research 必须绑定
+任何新 long-history factor research 或后续 protocol work 必须绑定
 [Canonical Research Dataset Authority](CANONICAL_RESEARCH_DATASET.md) 的 versioned identity，
 而不是直接读取 old frozen Matrix。旧 frozen、partial-extension 和 lineage-resolved artifacts
 仍是 immutable evidence；canonical assembly 通过引用或新 versioned partition 组合它们，不改写 parent。
@@ -71,8 +71,10 @@ Model Diagnostic V1 (closed)
 Prior Research Protocol V2 保留为
 [frozen historical evidence](_archive/07_research_program_history/RESEARCH_PROTOCOL_V2.md)。
 其 exact label interval 与 evidence-role 实现仍可用于审计和复现，但短 development
-environments 已被证明不足以授权正式 Structured ML。下一阶段必须先以 canonical dataset
-为输入完成单独授权的 Dataset / Research Protocol redesign；Qlib RollingGen 只能在合法
+environments 已被证明不足以授权正式 Structured ML。当前 historical research 主线是
+[Long-History Robust Core Factor Selection V1](LONG_HISTORY_ROBUST_CORE_FACTOR_SELECTION_V1.md)，
+先以 canonical dataset 做 backward replication、quality、long-history stability、tradability
+与 core marginal contribution；它不授权 Structured ML。Qlib RollingGen 只能在合法
 assignments 已确定后辅助物化 task，不能替代 PIT、universe、feature eligibility 或
 selection/diagnostic authority。
 

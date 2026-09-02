@@ -25,8 +25,12 @@ task-specific authority doc
 - [PROJECT_CONTEXT_SUMMARY.md](PROJECT_CONTEXT_SUMMARY.md) — 1–3 分钟新会话上下文。
 - [CURRENT_PIPELINE.md](CURRENT_PIPELINE.md) — ACTIVE、FROZEN、CLOSED、NEXT / NOT
   STARTED、NOT AUTHORIZED 状态和活动命令。
-- [CANONICAL_RESEARCH_DATASET.md](CANONICAL_RESEARCH_DATASET.md) — 新 Dataset / Protocol
-  research 的唯一推荐数据 identity、effective-date 读取合同和 qualification。
+- [CANONICAL_RESEARCH_DATASET.md](CANONICAL_RESEARCH_DATASET.md) — 当前长历史因子研究主线及
+  后续 protocol work 的唯一推荐数据 identity、effective-date 读取合同和 qualification。
+- [LONG_HISTORY_ROBUST_CORE_FACTOR_SELECTION_V1.md](LONG_HISTORY_ROBUST_CORE_FACTOR_SELECTION_V1.md)
+  — 当前历史研究主线、Phase 0–6 范围、复用边界与完成标准。
+- [LONG_HISTORY_CORE_FACTOR_PHASE_0_PLAN.md](LONG_HISTORY_CORE_FACTOR_PHASE_0_PLAN.md)
+  — 第一开发单元：旧结论冻结与不调参 backward replication 的具体实现计划。
 - [PERSONAL_QUANT_RESEARCH_ROADMAP.md](PERSONAL_QUANT_RESEARCH_ROADMAP.md) — Forward
   时间优先级与 Strategy V1/V2 长期边界。
 - [ARCHITECTURE.md](ARCHITECTURE.md) — 当前领域职责、依赖方向和 frozen compatibility。
@@ -121,7 +125,8 @@ current instruction。历史 outputs、artifacts、manifests、receipts 和 line
 - Strategy V1：FROZEN；
 - Historical Data Engineering：CLOSED；
 - Canonical Research Dataset：READY；
-- Dataset / Research Protocol Redesign：NEXT / NOT STARTED；
+- Long-History Robust Core Factor Selection V1：ACTIVE RESEARCH MAINLINE / PLANNING；
+- Phase 0 Backward Replication：READY FOR IMPLEMENTATION / NOT STARTED；
 - Structured ML：NOT AUTHORIZED；
 - Strategy V2：NOT AUTHORIZED。
 

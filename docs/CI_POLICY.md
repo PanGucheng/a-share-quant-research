@@ -90,7 +90,7 @@ scripts/ci/**
 ## Stable gate
 
 `ci-gate` 接受有意跳过的重型 job，但任何适用 job 的 failure/cancellation 都会使
-门禁失败。分支保护应只要求：
+最终 CI 汇总失败。无论它是否被配置为 branch-protection required check，最终状态名保持：
 
 ```text
 ci-gate
@@ -115,7 +115,13 @@ stage lifecycle 和专用 closeout validator 绑定。只有内容和路径都�
 
 ## 仓库设置边界
 
-截至 2026-09-01，远端 `main` 使用轻量 branch protection：禁止删除和 force push，
-并将 `ci-gate` 作为唯一 required status check。个人研究仓库不要求多人 review、
-CODEOWNERS、signed commits 或 deployment approval。不得把可能按路径跳过的
-`lightweight-contracts` 或 `qlib-exchange-runtime` 单独设为 required check。
+本仓库采用个人研究开发模式。普通研究实现、bugfix、文档和小型重构默认直接围绕
+`main` 完成修改、本地/CI 检查、完整 diff 审阅、commit 与 push，不强制 feature branch
+或 PR。`research-validation-ci` 同时监听 PR 与 `main` push，因此取消 mandatory status
+check 不取消 CI，也不允许用 `[skip ci]` 绕过分类器。
+
+大型或高风险重构、长期并行实验、需要保留的竞争路线、可能破坏 frozen/Forward/canonical
+authority 的工作，以及用户明确要求隔离的任务，仍应使用 feature branch/PR。个人研究仓库
+不要求多人 review、CODEOWNERS、signed commits 或 deployment approval。若未来重新启用
+branch protection，只应要求 `ci-gate`；不得把可能按路径跳过的 `lightweight-contracts`
+或 `qlib-exchange-runtime` 单独设为 required check。

@@ -9,10 +9,11 @@ artifact 名称中的 `current` 不自动表示 ACTIVE。
 |---|---|---|
 | Forward Track | ACTIVE / time-priority | 日常 update、冻结 prediction、paper refresh、成熟标签评价 |
 | Strategy V1 | FROZEN | 运行、验证；不得重训或修改定义 |
-| Canonical Research Dataset | FROZEN AUTHORITY / READY | 新 Dataset / Protocol research 的唯一推荐输入 |
+| Canonical Research Dataset | FROZEN AUTHORITY / READY | 当前长历史因子研究主线及后续 protocol work 的唯一推荐输入 |
 | Historical Data Engineering | CLOSED | 仅因明确 data bug、leakage 或 provenance failure 重开 |
 | Prior Research Protocol V2 | FROZEN HISTORICAL EVIDENCE | 可审计复现；不可直接授权模型竞争 |
-| Dataset / Research Protocol Redesign | NEXT / NOT STARTED | 需单独任务授权与预注册 |
+| Long-History Robust Core Factor Selection V1 | ACTIVE RESEARCH MAINLINE / PLANNING | 当前 historical research 方向；路线已纳入，研究代码和实验尚未启动 |
+| Phase 0 Backward Replication | READY FOR IMPLEMENTATION / NOT STARTED | 冻结旧结论并在 canonical early history 不调参复核 |
 | Structured ML | NOT AUTHORIZED | 不得训练或比较候选模型 |
 | Strategy V2 | NOT AUTHORIZED | 需要独立 protocol、freeze date 与新 forward evidence |
 | Live trading | NOT AUTHORIZED | 不属于当前范围 |
@@ -202,25 +203,40 @@ data authority 吸收，不再逐项作为 current todo。
 数据错误、泄漏、contract failure 或实现 bug 重开；历史 reports 保持“当时发生了什么”，
 不因 current authority 变化而改写。
 
-## 6. NEXT / NOT STARTED — Dataset And Protocol Redesign
+## 6. ACTIVE RESEARCH MAINLINE / PLANNING — Long-History Robust Core Selection
 
 Prior Research Protocol V2 在模型 outcomes 前冻结，保留为
 [historical protocol evidence](_archive/07_research_program_history/RESEARCH_PROTOCOL_V2.md)。
 后续 Dataset & Validation Design Study 已证明其短 development environments 虽满足 leakage
 isolation，但 temporal ESS 不足，不能直接作为正式 Structured ML selection authority。
 
-下一研究阶段是单独授权的 Dataset / Research Protocol redesign。它必须以 canonical dataset
-identity 为输入，重新预注册 validation/training-history hypotheses 和 evidence roles。当前：
+当前 historical research 主线已调整为
+[Long-History Robust Core Factor Selection V1](LONG_HISTORY_ROBUST_CORE_FACTOR_SELECTION_V1.md)。
+它使用 canonical 2010–2026 dataset，从 765 个 research-usable factors 中通过 quality、
+long-history evidence、稳定性、可交易性、经济机制和组合边际贡献，提炼尽可能小的
+Small Stable Alpha Core，并把 Size、liquidity、industry、market state、tradability 等
+Risk / Conditioning Controls 作为独立对象维护。Forward Track 继续保持 ACTIVE / time-priority。
+
+当前第一开发单元是
+[Phase 0 old-conclusion freeze and backward replication](LONG_HISTORY_CORE_FACTOR_PHASE_0_PLAN.md)：
+固定 Strategy V1 52 factors、mature 39、旧 role/direction/selection/cluster metadata，未经
+重新调参地比较 `2010–2014`、`2015–2018`、`2019–2020` 与 `2021+`。文档规划已完成，代码、
+运行和研究结论尚未产生。
+
+当前：
 
 ```text
-redesign started = false
+route adopted = true
+phase 0 implementation started = false
+historical results produced = false
+old membership or direction changed = false
 Structured ML started = false
-model outcomes read for redesign = false
 Strategy V1 changed = false
 Strategy V2 authorized = false
 ```
 
-本状态只说明“下一步是什么”，不授权设计 windows、运行 ESS study、训练模型或创建 Protocol V3。
+路线中的全部 2010–2026 结果均为 retrospective development evidence，不得包装为 fresh OOS。
+本状态不授权 Phase 1–6、模型训练、TopK/调仓/horizon 搜索或 Strategy V2。
 
 ## 7. LEGACY / EXPERIMENTAL
 

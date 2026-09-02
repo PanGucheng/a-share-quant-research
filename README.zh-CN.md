@@ -12,9 +12,10 @@ GitHub repository：
 - **ACTIVE：**具有时间优先级的 Forward Track——Daily Data Update、冻结 Strategy V1
   prediction、paper portfolio 和成熟标签评价。
 - **FROZEN：**Strategy V1 及全部历史/Forward evidence。
-- **READY / AUTHORITY：**新 Dataset / Protocol research 使用的 canonical dataset。
+- **READY / AUTHORITY：**当前长历史因子研究主线及后续 protocol work 使用的 canonical dataset。
 - **CLOSED：**Historical Data Engineering 与已完成历史研究阶段。
-- **NEXT / NOT STARTED：**Dataset / Research Protocol redesign。
+- **ACTIVE RESEARCH MAINLINE / PLANNING：**Long-History Robust Core Factor
+  Selection V1；Phase 0 backward replication 已规划、尚未实现。
 - **NOT AUTHORIZED：**Structured ML、Strategy V2 和 live trading。
 
 Canonical dataset：
@@ -29,7 +30,9 @@ canonical-dataset:27518ddbb28ba2b4b1247375d4e3d32d7d5be9935a5f2074dc272f84285f64
 [Canonical Research Dataset Authority](docs/CANONICAL_RESEARCH_DATASET.md)。
 
 Prior Research Protocol V2 是 frozen historical evidence；其中短 development environments
-不足以授权正式 Structured ML。必须先单独授权并完成 Dataset / Research Protocol redesign。
+不足以授权正式 Structured ML。当前历史研究主线是
+[Long-History Robust Core Factor Selection V1](docs/LONG_HISTORY_ROBUST_CORE_FACTOR_SELECTION_V1.md)，
+不是模型竞赛；其 2010–2026 结果均属于 retrospective development evidence。
 
 文档从 [docs/DOC_INDEX.md](docs/DOC_INDEX.md) 开始；活动命令和状态边界以
 [docs/CURRENT_PIPELINE.md](docs/CURRENT_PIPELINE.md) 为准。
@@ -77,6 +80,8 @@ python scripts/check_quality.py qlib
 - [项目上下文摘要](docs/PROJECT_CONTEXT_SUMMARY.md)
 - [当前 Pipeline](docs/CURRENT_PIPELINE.md)
 - [Canonical Research Dataset](docs/CANONICAL_RESEARCH_DATASET.md)
+- [长历史稳健核心因子路线](docs/LONG_HISTORY_ROBUST_CORE_FACTOR_SELECTION_V1.md)
+- [Phase 0 第一开发计划](docs/LONG_HISTORY_CORE_FACTOR_PHASE_0_PLAN.md)
 - [个人研究路线](docs/PERSONAL_QUANT_RESEARCH_ROADMAP.md)
 - [架构](docs/ARCHITECTURE.md)
 - [输出政策](docs/OUTPUT_POLICY.md)

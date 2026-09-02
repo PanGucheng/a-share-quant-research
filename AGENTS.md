@@ -58,7 +58,8 @@ Forward Track                         ACTIVE / time-priority
 Strategy V1                          FROZEN
 Historical Data Engineering          CLOSED
 Canonical Research Dataset           READY / authority
-Dataset / Research Protocol Redesign NEXT / NOT STARTED
+Long-History Robust Core Selection   ACTIVE RESEARCH MAINLINE / PLANNING
+Phase 0 Backward Replication         READY FOR IMPLEMENTATION / NOT STARTED
 Structured ML                        NOT AUTHORIZED
 Strategy V2                          NOT AUTHORIZED
 ```
@@ -66,7 +67,9 @@ Strategy V2                          NOT AUTHORIZED
 The prior Research Protocol V2 is frozen historical evidence. Later validation
 study showed that its short development environments are not sufficient selection
 authority for formal Structured ML. Do not run model competition from that protocol
-without a separately authorized Dataset / Research Protocol redesign.
+without a separately authorized later protocol. The current historical research
+mainline is the long-history robust core-factor route; all of its 2010–2026 results
+are retrospective development evidence and do not change Strategy V1.
 
 ## Documentation Navigation
 
@@ -79,6 +82,10 @@ For a new session, read only what the task needs, starting with:
 Task-specific authorities:
 
 - canonical dataset: `docs/CANONICAL_RESEARCH_DATASET.md`;
+- current historical research mainline:
+  `docs/LONG_HISTORY_ROBUST_CORE_FACTOR_SELECTION_V1.md`;
+- first implementation unit:
+  `docs/LONG_HISTORY_CORE_FACTOR_PHASE_0_PLAN.md`;
 - research roadmap: `docs/PERSONAL_QUANT_RESEARCH_ROADMAP.md`;
 - documentation map: `docs/DOC_INDEX.md`;
 - architecture: `docs/ARCHITECTURE.md`;
@@ -117,3 +124,18 @@ Before handoff, review the complete diff, confirm frozen/current boundaries, run
 proportionate tests, and check documentation links when docs changed. State what was
 reused, changed, deliberately not done, and whether any conclusion may influence a
 future strategy version.
+
+## Default Git Workflow
+
+This is a personal research repository. Ordinary research implementation, bug fixes,
+documentation, and small refactors default to:
+
+```text
+main → edit → proportionate local/CI checks → review full diff → commit → push
+```
+
+A feature branch or pull request is optional and should be used when the work is a
+large or high-risk refactor, requires long-lived parallel experiments, preserves two
+competing research routes, may damage frozen/Forward/canonical authority, or the user
+explicitly requests branch/PR isolation. Removing branch protection does not weaken
+the correctness, immutability, testing, diff-review, or evidence-boundary rules above.
