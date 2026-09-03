@@ -694,6 +694,7 @@ def _materialize_fold(
     output_dir: Path,
     name: str,
     keep_metadata: bool,
+    timing_recorder: Any | None = None,
 ) -> _MaterializedFold:
     row_count = sum(_parquet_row_count(path) for path in spool_paths)
     features = np.lib.format.open_memmap(
@@ -717,7 +718,7 @@ def _materialize_fold(
     )
     metadata_frames: list[pd.DataFrame] = []
     offset = 0
-    for path in spool_paths:
+    for batch_index, path in enumerate(spool_paths):
         columns = [
             "datetime",
             "instrument",
@@ -726,17 +727,51 @@ def _materialize_fold(
             "__weight",
             *factors,
         ]
-        frame = pd.read_parquet(path, columns=columns)
+        read_timing = (
+            timing_recorder.measure(
+                "materialization_parquet_read",
+                fold=name,
+                batch_index=batch_index,
+            )
+            if timing_recorder is not None
+            else nullcontext({})
+        )
+        with read_timing as timing_payload:
+            frame = pd.read_parquet(path, columns=columns)
+            timing_payload["output_rows"] = len(frame)
         length = len(frame)
-        features[offset : offset + length] = preprocessing.transform(
-            frame[factors].to_numpy(dtype=float)
+        transform_timing = (
+            timing_recorder.measure(
+                "preprocessing_transform",
+                fold=name,
+                batch_index=batch_index,
+                output_rows=length,
+            )
+            if timing_recorder is not None
+            else nullcontext({})
         )
-        target[offset : offset + length] = frame["__target"].to_numpy(
-            dtype=float
+        with transform_timing:
+            transformed = preprocessing.transform(
+                frame[factors].to_numpy(dtype=float)
+            )
+        write_timing = (
+            timing_recorder.measure(
+                "materialization_memmap_write",
+                fold=name,
+                batch_index=batch_index,
+                output_rows=length,
+            )
+            if timing_recorder is not None
+            else nullcontext({})
         )
-        weights[offset : offset + length] = frame["__weight"].to_numpy(
-            dtype=float
-        )
+        with write_timing:
+            features[offset : offset + length] = transformed
+            target[offset : offset + length] = frame["__target"].to_numpy(
+                dtype=float
+            )
+            weights[offset : offset + length] = frame["__weight"].to_numpy(
+                dtype=float
+            )
         if keep_metadata:
             metadata_frames.append(
                 frame[["datetime", "instrument", "__label"]]

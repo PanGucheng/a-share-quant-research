@@ -12,12 +12,14 @@ from model_research.execution_profiles import with_lightgbm_threads
 from model_research.fast_research import load_fast_research_config
 from model_research.full_execution import (
     load_full_execution_profile,
+    qualified_accelerated_full_profile,
     qualified_full_execution_config,
 )
 from model_research.resource_scheduler import (
     ResourceBudget,
     WorkloadClass,
     candidate_worker_thread_plans,
+    workload_classes_from_evidence,
 )
 from model_research.thread_determinism import (
     _candidate_order,
@@ -64,6 +66,14 @@ def test_real_audit_and_fast_mt_profiles_are_non_authoritative() -> None:
     )
     assert full["num_threads"] == 8
     assert full["parity_requirement"] == "exact"
+    accelerated_config, accelerated_options, accelerated_evidence = (
+        qualified_accelerated_full_profile(
+            Path("configs/full_research_accelerated_v3.yaml")
+        )
+    )
+    assert accelerated_config["determinism"]["num_threads"] == 8
+    assert accelerated_options["preprocessing_factor_batch_size"] == 128
+    assert accelerated_evidence["acceleration"]["exact_parity"] is True
 
 
 def test_tree_leaf_comparison_and_divergence_classification() -> None:
@@ -124,6 +134,23 @@ def test_resource_plans_never_oversubscribe_cpu_or_ram() -> None:
     assert plans
     assert all(row.cpu_budget_valid and row.ram_budget_valid for row in plans)
     assert all(row.workers == 1 for row in plans)
+
+
+def test_resource_scheduler_derives_rss_from_measured_profile() -> None:
+    evidence = pd.DataFrame(
+        {
+            "profile_id": ["cache_warm", "cache_warm", "baseline_cache_off"],
+            "policy_id": ["strict", "broad", "broad"],
+            "peak_rss_mib": [1200.0, 9000.0, 9500.0],
+        }
+    )
+    workloads = workload_classes_from_evidence(
+        evidence, profile_id="cache_warm", safety_multiplier=1.2
+    )
+    assert [(row.name, row.peak_rss_mib_per_worker) for row in workloads] == [
+        ("broad", 10800.0),
+        ("strict", 1440.0),
+    ]
 
 
 def test_full_mt_runner_rejects_nonqualifying_evidence(tmp_path: Path) -> None:

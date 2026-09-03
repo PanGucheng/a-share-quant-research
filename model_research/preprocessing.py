@@ -63,9 +63,13 @@ class WeightedPreprocessingFit:
         all_missing = np.isnan(result).all(axis=1)
         if all_missing.any():
             raise ValueError("all-NaN rows must be excluded before transform")
-        for index in range(result.shape[1]):
-            missing = np.isnan(result[:, index])
-            result[missing, index] = self.medians[index]
+        missing = np.isnan(result)
+        if missing.any():
+            np.copyto(
+                result,
+                np.broadcast_to(self.medians, result.shape),
+                where=missing,
+            )
         return (result - self.means) / np.sqrt(self.variances)
 
 

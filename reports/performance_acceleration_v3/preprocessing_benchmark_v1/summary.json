@@ -1,0 +1,24 @@
+{
+  "factor_count": 659,
+  "full_mt_qualification_sha256": "8118acb5f6fa04a27765c8282452b1c6ea5594a02f54b619474712dd45d5b39f",
+  "output_sha256": {
+    "benchmark_runs.csv": "1bc14d7e9523ef2e9ef43068efe79f7a7df43cb8d99d07ec37c6afe1484651cb",
+    "benchmark_summary.csv": "47c1452f4efadd65e762da8c424867da69ffc795f06d8529c907d46de1226dac"
+  },
+  "policy_id": "broad_data_qualified",
+  "projection_cache_key": "a3dc070902699709120eaf66ee2110ca475359f4c603d3f5df3bdeaf4c3df729",
+  "reference_preprocessing_sha256": "b504756114d1fe718eff7496c10a5f0efd10ef87053446ea11810cbc2759d245",
+  "schema_version": 1,
+  "stage_id": "full_preprocessing_benchmark_v3",
+  "status": "pass",
+  "summary_sha256": "e0b70f2a9460edadbc44781b5553f822ff2009182b63ccf3e5a84eac654e2c82",
+  "winner": {
+    "exact_parity": true,
+    "factor_batch_size": 128,
+    "mean_cpu_seconds": 205.421875,
+    "mean_wall_seconds": 39.43619074999879,
+    "median_workers": 8,
+    "min_wall_seconds": 39.42735130000074,
+    "peak_rss_mib": 2657.2890625
+  }
+}

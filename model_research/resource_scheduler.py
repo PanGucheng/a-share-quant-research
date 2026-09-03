@@ -4,6 +4,8 @@ import math
 from dataclasses import asdict, dataclass
 from typing import Iterable
 
+import pandas as pd
+
 
 @dataclass(frozen=True)
 class ResourceBudget:
@@ -82,3 +84,32 @@ def candidate_worker_thread_plans(
             row.workers,
         ),
     )
+
+
+def workload_classes_from_evidence(
+    evidence: pd.DataFrame,
+    *,
+    profile_id: str,
+    safety_multiplier: float = 1.15,
+) -> list[WorkloadClass]:
+    required = {"profile_id", "policy_id", "peak_rss_mib"}
+    if not required.issubset(evidence.columns):
+        raise ValueError("resource evidence is missing required columns")
+    if safety_multiplier < 1.0:
+        raise ValueError("resource evidence safety multiplier cannot be below one")
+    selected = evidence.loc[evidence["profile_id"].astype(str).eq(profile_id)].copy()
+    if selected.empty:
+        raise ValueError("resource evidence does not contain the requested profile")
+    selected["peak_rss_mib"] = pd.to_numeric(selected["peak_rss_mib"], errors="raise")
+    rows = []
+    for policy_id, group in selected.groupby("policy_id", sort=True):
+        peak = float(group["peak_rss_mib"].max())
+        if not math.isfinite(peak) or peak <= 0:
+            raise ValueError("resource evidence contains invalid peak RSS")
+        rows.append(
+            WorkloadClass(
+                name=str(policy_id),
+                peak_rss_mib_per_worker=peak * safety_multiplier,
+            )
+        )
+    return rows

@@ -1,0 +1,15 @@
+schema_version: 1
+profile_id: full_research_accelerated_v3
+reference_profile: full_research_exact_mt_v2
+reference_execution_profile: configs/research_lightgbm_full_exact_mt_v2.yaml
+qualification_summary: reports/performance_acceleration_v3/full_qualification_v1/summary.json
+qualification_summary_sha256: ee973ee354750ae9ebc08c0449ae9bb0e50d780e13475127bd620f660d0b1c56
+num_threads: 8
+preprocessing_factor_batch_size: 128
+preprocessing_median_workers: 8
+projection_cache_root: tmp/research_acceleration_v3/projection_spool_cache
+preprocessing_cache_root: tmp/research_acceleration_v3/preprocessing_fit_cache
+parity_requirement: exact
+authoritative_execution: false
+scientific_model_selection_authorized: false
+strategy_v2_authorized: false

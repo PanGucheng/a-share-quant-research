@@ -192,3 +192,87 @@ def qualified_full_execution_profile(
     if summary["summary_sha256"] != profile["qualification_summary_sha256"]:
         raise ValueError("Full execution profile qualification hash changed")
     return config, summary
+
+
+def qualified_accelerated_full_profile(
+    profile_path: Path,
+) -> tuple[dict[str, Any], dict[str, Any], dict[str, Any]]:
+    """Load V3 only when both V2 thread and V3 exact-cache evidence are intact."""
+    from .protocol import resolve
+
+    profile = yaml.safe_load(profile_path.read_text(encoding="utf-8"))
+    if profile.get("profile_id") != "full_research_accelerated_v3":
+        raise ValueError("unexpected accelerated Full execution profile")
+    if profile.get("reference_profile") != "full_research_exact_mt_v2":
+        raise ValueError("accelerated Full reference profile changed")
+    if profile.get("parity_requirement") != "exact":
+        raise ValueError("accelerated Full must require exact parity")
+    if profile.get("authoritative_execution") is not False:
+        raise ValueError("accelerated Full profile must remain non-authoritative")
+    if profile.get("scientific_model_selection_authorized") is not False:
+        raise ValueError("accelerated execution cannot authorize scientific selection")
+    if profile.get("strategy_v2_authorized") is not False:
+        raise ValueError("accelerated execution cannot authorize Strategy V2")
+    config, thread_summary = qualified_full_execution_profile(
+        resolve(profile["reference_execution_profile"])
+    )
+    summary_path = resolve(profile["qualification_summary"])
+    summary = json.loads(summary_path.read_text(encoding="utf-8"))
+    recorded_hash = summary.pop("summary_sha256", None)
+    if recorded_hash != canonical_hash(summary):
+        raise ValueError("accelerated Full qualification summary hash is invalid")
+    summary["summary_sha256"] = recorded_hash
+    if recorded_hash != profile.get("qualification_summary_sha256"):
+        raise ValueError("accelerated Full qualification hash changed")
+    if (
+        summary.get("stage_id") != "full_research_acceleration_v3_qualification"
+        or summary.get("status") != "pass"
+        or summary.get("exact_parity") is not True
+    ):
+        raise ValueError("accelerated Full qualification did not pass")
+    for field in (
+        "projection_spool_cache_eligible",
+        "preprocessing_fit_cache_eligible",
+        "selected_prediction_reuse_eligible",
+        "vectorized_transform_eligible",
+    ):
+        if summary.get(field) is not True:
+            raise ValueError(f"accelerated Full qualification missing {field}")
+    required_outputs = {
+        "parity.csv",
+        "resource_summary.csv",
+        "runtime_timing.csv",
+        "stage_breakdown.csv",
+    }
+    if set(summary.get("output_sha256", {})) != required_outputs:
+        raise ValueError("accelerated Full qualification output inventory is incomplete")
+    for name, expected in summary["output_sha256"].items():
+        output = summary_path.parent / name
+        if not output.is_file() or file_sha256(output) != expected:
+            raise ValueError(f"accelerated Full qualification output changed: {name}")
+    import pandas as pd
+
+    parity = pd.read_csv(summary_path.parent / "parity.csv")
+    expected_scope = {
+        (policy_id, profile_id)
+        for policy_id in (
+            "strict_current_baseline",
+            "current_plus_existing_conditional_signal",
+            "broad_data_qualified",
+        )
+        for profile_id in ("baseline_cache_off", "cache_cold", "cache_warm")
+    }
+    observed_scope = set(
+        zip(parity["policy_id"].astype(str), parity["profile_id"].astype(str))
+    )
+    if observed_scope != expected_scope or not parity["exact_parity"].eq(True).all():
+        raise ValueError("accelerated Full parity scope is incomplete")
+    execution = {
+        "projection_cache_root": str(profile["projection_cache_root"]),
+        "preprocessing_cache_root": str(profile["preprocessing_cache_root"]),
+        "preprocessing_factor_batch_size": int(profile["preprocessing_factor_batch_size"]),
+        "preprocessing_median_workers": int(profile["preprocessing_median_workers"]),
+        "reuse_selected_prediction": True,
+        "detailed_materialization_timing": True,
+    }
+    return config, execution, {"thread": thread_summary, "acceleration": summary}

@@ -6,6 +6,7 @@ import gc
 import shutil
 import time
 from datetime import datetime, timezone
+from dataclasses import dataclass
 from pathlib import Path
 from collections.abc import Callable
 from typing import Any
@@ -48,6 +49,22 @@ from .targets import eligible_daily_cross_sectional_rank_centered
 from .development_dry_run import _date_batches
 from .linear_test_release import _daily_ic_frame, _load_preprocessing
 from .runtime_timing import RuntimeTimingRecorder
+from .research_cache import (
+    get_or_build_preprocessing_fit,
+    get_or_build_projection_spools,
+)
+
+
+@dataclass(frozen=True)
+class FullDevelopmentExecutionOptions:
+    execution_profile: str = "ml_feature_pool_mvp_v1"
+    projection_cache_root: Path | None = None
+    preprocessing_cache_root: Path | None = None
+    preprocessing_factor_batch_size: int = 16
+    preprocessing_median_workers: int = 1
+    reuse_selected_prediction: bool = False
+    detailed_materialization_timing: bool = False
+    lightgbm_config: dict[str, Any] | None = None
 
 
 def canary_candidates(
@@ -460,6 +477,7 @@ def run_development_arm(
     allowed_policy_ids: tuple[str, ...] = POLICY_IDS,
     execution_profile: str = "ml_feature_pool_mvp_v1",
     freeze_metadata: dict[str, Any] | None = None,
+    execution_options: FullDevelopmentExecutionOptions | None = None,
 ) -> dict[str, Any]:
     import lightgbm as lgb
 
@@ -474,7 +492,12 @@ def run_development_arm(
     if arm_dir.exists():
         raise FileExistsError(f"incomplete development arm requires manual review: {arm_dir}")
 
-    lightgbm_config = load_lightgbm_config(
+    options = execution_options or FullDevelopmentExecutionOptions(
+        execution_profile=execution_profile
+    )
+    if execution_options is not None and execution_profile != "ml_feature_pool_mvp_v1":
+        raise ValueError("execution profile must be supplied in execution_options")
+    lightgbm_config = options.lightgbm_config or load_lightgbm_config(
         resolve(config["parents"]["lightgbm_config"])
     )
     protocol_manifest_path = resolve(lightgbm_config["protocol_manifest"])
@@ -493,7 +516,7 @@ def run_development_arm(
     thread_count = int(lightgbm_config["determinism"]["num_threads"])
     timing = RuntimeTimingRecorder(
         execution_class="full_development",
-        execution_profile=execution_profile,
+        execution_profile=options.execution_profile,
         outer_split_id=split_id,
         policy_id=policy_id,
         feature_count=len(factors),
@@ -527,34 +550,80 @@ def run_development_arm(
     staging.mkdir(parents=True, exist_ok=False)
     started = time.perf_counter()
     audit = InputAccessAudit()
-    train_spools, train_receipt = _spool_fold(
-        protocol_config=protocol_config,
-        resolution=resolution,
-        matrix=matrix,
-        split_id=split_id,
-        fold="train",
-        dates=train_dates,
-        factors=factors,
-        output_dir=runtime_dir,
-        audit=audit,
-        timing_recorder=timing,
-    )
-    validation_spools, validation_receipt = _spool_fold(
-        protocol_config=protocol_config,
-        resolution=resolution,
-        matrix=matrix,
-        split_id=split_id,
-        fold="validation",
-        dates=validation_dates,
-        factors=factors,
-        output_dir=runtime_dir,
-        audit=audit,
-        timing_recorder=timing,
-    )
+    if options.projection_cache_root is None:
+        train_spools, train_receipt = _spool_fold(
+            protocol_config=protocol_config,
+            resolution=resolution,
+            matrix=matrix,
+            split_id=split_id,
+            fold="train",
+            dates=train_dates,
+            factors=factors,
+            output_dir=runtime_dir,
+            audit=audit,
+            timing_recorder=timing,
+        )
+        validation_spools, validation_receipt = _spool_fold(
+            protocol_config=protocol_config,
+            resolution=resolution,
+            matrix=matrix,
+            split_id=split_id,
+            fold="validation",
+            dates=validation_dates,
+            factors=factors,
+            output_dir=runtime_dir,
+            audit=audit,
+            timing_recorder=timing,
+        )
+        projection_cache = {"train": None, "validation": None}
+    else:
+        labels_path = _labels_runtime_path(protocol_config, resolution)
+        projection_cache = {
+            fold: get_or_build_projection_spools(
+                cache_root=options.projection_cache_root,
+                protocol_config=protocol_config,
+                resolution=resolution,
+                matrix=matrix,
+                split_id=split_id,
+                fold=fold,
+                dates=dates,
+                factors=factors,
+                labels_path=labels_path,
+                audit=audit,
+                timing_recorder=timing,
+            )
+            for fold, dates in (
+                ("train", train_dates),
+                ("validation", validation_dates),
+            )
+        }
+        train_spools = list(projection_cache["train"].spool_paths)
+        validation_spools = list(projection_cache["validation"].spool_paths)
+        train_receipt = projection_cache["train"].eligibility_receipt
+        validation_receipt = projection_cache["validation"].eligibility_receipt
     if audit.test_read_count:
         raise AssertionError("development arm read test payload before freeze")
-    with timing.measure("preprocessing_fit", fold="train"):
-        train_preprocessing = _fit_from_spool(train_spools, factors)
+    if options.preprocessing_cache_root is None:
+        with timing.measure("preprocessing_fit", fold="train", cache_hit=False):
+            train_preprocessing = _fit_from_spool(
+                train_spools,
+                factors,
+                factor_batch_size=options.preprocessing_factor_batch_size,
+                median_workers=options.preprocessing_median_workers,
+            )
+        train_preprocessing_cache = None
+    else:
+        train_preprocessing_cache = get_or_build_preprocessing_fit(
+            cache_root=options.preprocessing_cache_root,
+            spool_paths=train_spools,
+            factors=factors,
+            fit_scope="train",
+            preprocessing_config=protocol_config["preprocessing"],
+            factor_batch_size=options.preprocessing_factor_batch_size,
+            median_workers=options.preprocessing_median_workers,
+            timing_recorder=timing,
+        )
+        train_preprocessing = train_preprocessing_cache.preprocessing
     with timing.measure("train_transform", fold="train") as timing_payload:
         train_data = _materialize_fold(
             spool_paths=train_spools,
@@ -563,6 +632,7 @@ def run_development_arm(
             output_dir=runtime_dir,
             name="train",
             keep_metadata=False,
+            timing_recorder=(timing if options.detailed_materialization_timing else None),
         )
         timing_payload["output_rows"] = train_data.row_count
         timing_payload["train_rows"] = train_data.row_count
@@ -574,11 +644,24 @@ def run_development_arm(
             output_dir=runtime_dir,
             name="validation",
             keep_metadata=True,
+            timing_recorder=(timing if options.detailed_materialization_timing else None),
         )
         timing_payload["output_rows"] = validation_data.row_count
         timing_payload["validation_rows"] = validation_data.row_count
     if validation_data.metadata is None:
         raise AssertionError("development validation metadata missing")
+    preparation_identity = {
+        "feature_order_sha256": canonical_hash(factors),
+        "train_feature_sha256": _array_hash(train_data.features),
+        "train_target_sha256": _array_hash(train_data.target),
+        "train_weight_sha256": _array_hash(train_data.weights),
+        "validation_feature_sha256": _array_hash(validation_data.features),
+        "validation_target_sha256": _array_hash(validation_data.target),
+        "validation_weight_sha256": _array_hash(validation_data.weights),
+        "train_preprocessing_sha256": canonical_hash(
+            _preprocessing_payload(train_preprocessing)
+        ),
+    }
     dataset_identity = canonical_hash(
         {
             "outer_split_id": split_id,
@@ -624,6 +707,8 @@ def run_development_arm(
         .to_dict("records")
     )
     metric_rows: list[dict[str, Any]] = []
+    selected_search_prediction: np.ndarray | None = None
+    selected_search_candidate_sha256 = ""
     peak_rss = 0.0
     for structural in lightgbm_config["structural_rows"]:
         checkpoints = [
@@ -664,7 +749,9 @@ def run_development_arm(
                     dataset_identity_sha256=dataset_identity,
                 ):
                     prediction = booster.predict(
-                        validation_data.features, num_iteration=checkpoint
+                        validation_data.features,
+                        num_iteration=checkpoint,
+                        num_threads=thread_count,
                     )
                 with timing.measure(
                     "validation_metrics",
@@ -698,6 +785,18 @@ def run_development_arm(
                         "decision_authority": "diagnostic_only",
                     }
                 )
+                if options.reuse_selected_prediction:
+                    interim_selected = select_lightgbm_candidate(
+                        pd.DataFrame(metric_rows)
+                    )
+                    interim_sha = str(interim_selected["candidate_sha256"])
+                    if interim_sha != selected_search_candidate_sha256:
+                        if interim_sha != str(candidate["candidate_sha256"]):
+                            raise AssertionError(
+                                "incremental candidate selection changed to a prior non-winner"
+                            )
+                        selected_search_prediction = np.array(prediction, copy=True)
+                        selected_search_candidate_sha256 = interim_sha
         training_timing["peak_rss_mib"] = sampler.peak_mb
         peak_rss = max(peak_rss, sampler.peak_mb)
         del booster
@@ -711,30 +810,40 @@ def run_development_arm(
     )
     validation_search_hash = canonical_hash(metrics_frame.to_dict("records"))
 
-    with timing.measure(
-        "selected_model_retraining",
-        structural_row_id=selected_candidate["structural_row_id"],
-        candidate_sha256=selected_candidate["candidate_sha256"],
-        boosting_round=int(selected_candidate["num_boost_round"]),
-        train_rows=train_data.row_count,
-        cache_hit=True,
-        dataset_identity_sha256=dataset_identity,
-    ):
-        selected_booster = lgb.train(
-            _training_params(lightgbm_config, selected_candidate),
-            train_dataset,
-            num_boost_round=int(selected_candidate["num_boost_round"]),
-        )
-    with timing.measure(
-        "selected_model_prediction",
-        candidate_sha256=selected_candidate["candidate_sha256"],
-        boosting_round=int(selected_candidate["num_boost_round"]),
-        validation_rows=validation_data.row_count,
-    ):
-        selected_prediction = selected_booster.predict(
-            validation_data.features,
-            num_iteration=int(selected_candidate["num_boost_round"]),
-        )
+    if options.reuse_selected_prediction:
+        if (
+            selected_search_prediction is None
+            or selected_search_candidate_sha256
+            != str(selected_candidate["candidate_sha256"])
+        ):
+            raise AssertionError("selected candidate prediction was not retained")
+        selected_prediction = selected_search_prediction
+    else:
+        with timing.measure(
+            "selected_model_retraining",
+            structural_row_id=selected_candidate["structural_row_id"],
+            candidate_sha256=selected_candidate["candidate_sha256"],
+            boosting_round=int(selected_candidate["num_boost_round"]),
+            train_rows=train_data.row_count,
+            cache_hit=True,
+            dataset_identity_sha256=dataset_identity,
+        ):
+            selected_booster = lgb.train(
+                _training_params(lightgbm_config, selected_candidate),
+                train_dataset,
+                num_boost_round=int(selected_candidate["num_boost_round"]),
+            )
+        with timing.measure(
+            "selected_model_prediction",
+            candidate_sha256=selected_candidate["candidate_sha256"],
+            boosting_round=int(selected_candidate["num_boost_round"]),
+            validation_rows=validation_data.row_count,
+        ):
+            selected_prediction = selected_booster.predict(
+                validation_data.features,
+                num_iteration=int(selected_candidate["num_boost_round"]),
+                num_threads=thread_count,
+            )
     mutated = validation_data.metadata.copy()
     mutated["__label"] = mutated.groupby("datetime", sort=False)["__label"].transform(
         lambda values: values.iloc[::-1].to_numpy()
@@ -751,21 +860,49 @@ def run_development_arm(
     mutation_pass = canonical_hash(original_metric) != canonical_hash(mutated_metric)
     if not mutation_pass:
         raise AssertionError("validation label mutation did not change metrics")
+    mutation_identity = {
+        "selected_prediction_sha256": _array_hash(selected_prediction),
+        "original_metric_sha256": canonical_hash(original_metric),
+        "mutated_metric_sha256": canonical_hash(mutated_metric),
+        "mutation_pass": True,
+    }
     train_row_count = train_data.row_count
     validation_row_count = validation_data.row_count
     del (
-        selected_booster,
         selected_prediction,
         mutated,
         train_dataset,
         train_data,
         validation_data,
     )
+    if not options.reuse_selected_prediction:
+        del selected_booster
     gc.collect()
 
     combined_spools = train_spools + validation_spools
-    with timing.measure("preprocessing_fit", fold="train_plus_validation"):
-        final_preprocessing = _fit_from_spool(combined_spools, factors)
+    if options.preprocessing_cache_root is None:
+        with timing.measure(
+            "preprocessing_fit", fold="train_plus_validation", cache_hit=False
+        ):
+            final_preprocessing = _fit_from_spool(
+                combined_spools,
+                factors,
+                factor_batch_size=options.preprocessing_factor_batch_size,
+                median_workers=options.preprocessing_median_workers,
+            )
+        final_preprocessing_cache = None
+    else:
+        final_preprocessing_cache = get_or_build_preprocessing_fit(
+            cache_root=options.preprocessing_cache_root,
+            spool_paths=combined_spools,
+            factors=factors,
+            fit_scope="train_plus_validation",
+            preprocessing_config=protocol_config["preprocessing"],
+            factor_batch_size=options.preprocessing_factor_batch_size,
+            median_workers=options.preprocessing_median_workers,
+            timing_recorder=timing,
+        )
+        final_preprocessing = final_preprocessing_cache.preprocessing
     with timing.measure(
         "final_train_validation_transform", fold="train_plus_validation"
     ) as timing_payload:
@@ -776,6 +913,7 @@ def run_development_arm(
             output_dir=runtime_dir,
             name="final",
             keep_metadata=False,
+            timing_recorder=(timing if options.detailed_materialization_timing else None),
         )
         timing_payload["output_rows"] = final_data.row_count
     final_dataset_identity = canonical_hash(
@@ -792,6 +930,16 @@ def run_development_arm(
                 ),
             },
             "fit_scope": "train_plus_validation",
+        }
+    )
+    preparation_identity.update(
+        {
+            "final_feature_sha256": _array_hash(final_data.features),
+            "final_target_sha256": _array_hash(final_data.target),
+            "final_weight_sha256": _array_hash(final_data.weights),
+            "final_preprocessing_sha256": canonical_hash(
+                _preprocessing_payload(final_preprocessing)
+            ),
         }
     )
     with timing.measure(
@@ -842,6 +990,21 @@ def run_development_arm(
         preprocessing_path.write_text(
             json.dumps(preprocessing_payload, indent=2, sort_keys=True) + "\n",
             encoding="utf-8",
+        )
+        importance_rows = []
+        for importance_type in ("gain", "split"):
+            values = final_booster.feature_importance(importance_type=importance_type)
+            importance_rows.extend(
+                {
+                    "importance_type": importance_type,
+                    "factor": factor,
+                    "feature_order": feature_order,
+                    "importance": float(value),
+                }
+                for feature_order, (factor, value) in enumerate(zip(factors, values))
+            )
+        pd.DataFrame(importance_rows).to_csv(
+            staging / "feature_importance.csv", index=False
         )
     environment = json.loads(
         resolve(
@@ -946,6 +1109,26 @@ def run_development_arm(
                 "peak_rss_mib": peak_rss,
                 "wall_seconds": time.perf_counter() - started,
                 "test_read_count": audit.test_read_count,
+                "projection_cache_train_status": (
+                    projection_cache["train"].cache_status
+                    if projection_cache["train"] is not None
+                    else "off"
+                ),
+                "projection_cache_validation_status": (
+                    projection_cache["validation"].cache_status
+                    if projection_cache["validation"] is not None
+                    else "off"
+                ),
+                "preprocessing_cache_train_status": (
+                    train_preprocessing_cache.cache_status
+                    if train_preprocessing_cache is not None
+                    else "off"
+                ),
+                "preprocessing_cache_final_status": (
+                    final_preprocessing_cache.cache_status
+                    if final_preprocessing_cache is not None
+                    else "off"
+                ),
             }
         ]
     )
@@ -962,6 +1145,7 @@ def run_development_arm(
         "selected_hyperparameters.json",
         "resource_summary.csv",
         "runtime_timing.csv",
+        "feature_importance.csv",
     ]
     receipt = {
         "schema_version": 1,
@@ -974,6 +1158,26 @@ def run_development_arm(
         "decision_authority": "diagnostic_only",
         "selection_authorized": False,
         "strategy_v2_authorized": False,
+        "execution_profile": options.execution_profile,
+        "preparation_identity": preparation_identity,
+        "projection_cache_keys": {
+            fold: value.cache_key if value is not None else None
+            for fold, value in projection_cache.items()
+        },
+        "preprocessing_cache_keys": {
+            "train": (
+                train_preprocessing_cache.cache_key
+                if train_preprocessing_cache is not None
+                else None
+            ),
+            "train_plus_validation": (
+                final_preprocessing_cache.cache_key
+                if final_preprocessing_cache is not None
+                else None
+            ),
+        },
+        "selected_prediction_reused": options.reuse_selected_prediction,
+        "mutation_identity": mutation_identity,
         "output_sha256": {
             name: file_sha256(staging / name) for name in output_names
         },

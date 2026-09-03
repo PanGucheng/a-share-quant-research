@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import shutil
 import time
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 from typing import Any
 
@@ -75,6 +76,7 @@ def _fit_from_spool(
     factors: list[str],
     *,
     factor_batch_size: int = DEFAULT_SPOOL_FACTOR_BATCH_SIZE,
+    median_workers: int = 1,
 ) -> WeightedPreprocessingFit:
     if not spool_paths:
         raise ValueError("preprocessing requires at least one spool")
@@ -82,6 +84,8 @@ def _fit_from_spool(
         raise ValueError("preprocessing requires at least one factor")
     if factor_batch_size < 1:
         raise ValueError("factor_batch_size must be positive")
+    if median_workers < 1:
+        raise ValueError("median_workers must be positive")
 
     weight_parts: list[np.ndarray] = []
     row_counts: list[int] = []
@@ -107,11 +111,19 @@ def _fit_from_spool(
             matrix[~np.isfinite(matrix)] = np.nan
             matrices.append(matrix)
 
-        for local_index, factor_index in enumerate(range(start, stop)):
-            median_array[factor_index] = stable_weighted_median(
+        def fit_median(local_index: int) -> float:
+            return stable_weighted_median(
                 np.concatenate([matrix[:, local_index] for matrix in matrices]),
                 all_weights,
             )
+
+        local_indices = list(range(stop - start))
+        if median_workers == 1:
+            batch_median_values = [fit_median(index) for index in local_indices]
+        else:
+            with ThreadPoolExecutor(max_workers=median_workers) as executor:
+                batch_median_values = list(executor.map(fit_median, local_indices))
+        median_array[start:stop] = batch_median_values
 
         batch_medians = median_array[start:stop]
         for matrix, weights in zip(matrices, weight_parts, strict=True):

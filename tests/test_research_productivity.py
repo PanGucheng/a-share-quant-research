@@ -5,6 +5,7 @@ import json
 from pathlib import Path
 from types import SimpleNamespace
 
+import numpy as np
 import pandas as pd
 import pytest
 import yaml
@@ -21,7 +22,9 @@ from model_research.feature_pool_experiment import run_development_arm
 from model_research.inputs import InputAccessAudit
 from model_research.linear_models import _validation_metrics
 from model_research.research_cache import (
+    build_preprocessing_fit_identity,
     build_projection_spool_identity,
+    get_or_build_preprocessing_fit,
     get_or_build_projection_spools,
 )
 
@@ -200,6 +203,60 @@ def test_projection_cache_forbids_test_scope(tmp_path: Path) -> None:
             factors=["f1"],
             labels_path=labels,
         )
+
+
+def test_preprocessing_fit_cache_is_exact_scope_bound_and_corruption_safe(
+    tmp_path: Path,
+) -> None:
+    _, _, _, _ = _fake_context(tmp_path)
+    spool_dir = tmp_path / "spools"
+    spool_dir.mkdir()
+    spools, _ = _fake_spool_fold(
+        protocol_config={},
+        resolution=None,
+        matrix=None,
+        split_id="split_001",
+        fold="train",
+        dates=pd.date_range("2024-01-01", periods=3),
+        factors=["f1", "f2"],
+        output_dir=spool_dir,
+        audit=InputAccessAudit(),
+        timing_recorder=None,
+    )
+    cache_root = tmp_path / "preprocessing_cache"
+    arguments = {
+        "cache_root": cache_root,
+        "spool_paths": spools,
+        "factors": ["f1", "f2"],
+        "fit_scope": "train",
+        "preprocessing_config": {"imputation": "weighted_median"},
+        "factor_batch_size": 2,
+    }
+    first = get_or_build_preprocessing_fit(**arguments)
+    second = get_or_build_preprocessing_fit(**arguments)
+    assert first.cache_hit is False
+    assert second.cache_hit is True
+    np.testing.assert_array_equal(first.preprocessing.medians, second.preprocessing.medians)
+    np.testing.assert_array_equal(first.preprocessing.means, second.preprocessing.means)
+    np.testing.assert_array_equal(first.preprocessing.variances, second.preprocessing.variances)
+
+    train_key = build_preprocessing_fit_identity(
+        **{key: value for key, value in arguments.items() if key != "cache_root"}
+    )["cache_key"]
+    final_key = build_preprocessing_fit_identity(
+        **{
+            key: ("train_plus_validation" if key == "fit_scope" else value)
+            for key, value in arguments.items()
+            if key != "cache_root"
+        }
+    )["cache_key"]
+    assert train_key != final_key
+
+    payload = second.manifest_path.parent / "preprocessing.npz"
+    payload.write_bytes(payload.read_bytes() + b"corrupt")
+    rebuilt = get_or_build_preprocessing_fit(**arguments)
+    assert rebuilt.cache_status == "corrupt_rebuilt"
+    np.testing.assert_array_equal(first.preprocessing.medians, rebuilt.preprocessing.medians)
 
 
 def test_fast_profile_is_versioned_non_authoritative_and_test_inaccessible(

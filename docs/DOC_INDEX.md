@@ -50,6 +50,9 @@ evidence 判断；历史报告与 archive 只说明当时发生了什么。
 - [operations/PERFORMANCE_EXECUTION_PROFILES_V1.md](operations/PERFORMANCE_EXECUTION_PROFILES_V1.md)
   — real LightGBM thread determinism audit, non-authoritative Fast MT fallback, and
   CPU/RAM-safe worker-thread benchmark planning.
+- [Research Compute Acceleration V3 report](../reports/performance_acceleration_v3/REPORT.md)
+  — Full data-preparation and preprocessing cache qualification, cold preprocessing
+  benchmark, exact parity, and resource decisions.
 - [operations/DAILY_DATA_UPDATE_V1.md](operations/DAILY_DATA_UPDATE_V1.md) — Daily
   Update 数据源、fallback、覆盖和输出合同。
 - [operations/STRATEGY_V1_PAPER_PORTFOLIO_V1.md](operations/STRATEGY_V1_PAPER_PORTFOLIO_V1.md)

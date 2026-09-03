@@ -12,6 +12,7 @@ from model_research.resource_scheduler import (
     ResourceBudget,
     WorkloadClass,
     candidate_worker_thread_plans,
+    workload_classes_from_evidence,
 )
 
 
@@ -30,6 +31,9 @@ def main() -> None:
     parser.add_argument("--medium-rss-mib", type=float, default=8192.0)
     parser.add_argument("--broad-rss-mib", type=float, default=17408.0)
     parser.add_argument("--thread-counts", type=int, nargs="+", default=[1, 2, 4, 8])
+    parser.add_argument("--evidence")
+    parser.add_argument("--evidence-profile", default="cache_warm")
+    parser.add_argument("--rss-safety-multiplier", type=float, default=1.15)
     args = parser.parse_args()
     output_dir = _resolve(args.output_dir)
     if output_dir.exists():
@@ -42,9 +46,17 @@ def main() -> None:
         reserved_ram_mib=float(args.reserved_ram_mib),
     )
     workloads = (
-        WorkloadClass("light", float(args.light_rss_mib)),
-        WorkloadClass("medium", float(args.medium_rss_mib)),
-        WorkloadClass("broad", float(args.broad_rss_mib)),
+        workload_classes_from_evidence(
+            pd.read_csv(_resolve(args.evidence)),
+            profile_id=args.evidence_profile,
+            safety_multiplier=float(args.rss_safety_multiplier),
+        )
+        if args.evidence
+        else [
+            WorkloadClass("light", float(args.light_rss_mib)),
+            WorkloadClass("medium", float(args.medium_rss_mib)),
+            WorkloadClass("broad", float(args.broad_rss_mib)),
+        ]
     )
     rows = [
         plan.to_dict()
@@ -59,6 +71,15 @@ def main() -> None:
         "purpose": "benchmark_candidates_not_authorization",
         "budget": budget.__dict__,
         "workloads": [value.__dict__ for value in workloads],
+        "resource_evidence": (
+            {
+                "path": _resolve(args.evidence).as_posix(),
+                "profile_id": args.evidence_profile,
+                "rss_safety_multiplier": args.rss_safety_multiplier,
+            }
+            if args.evidence
+            else None
+        ),
         "oversubscription_forbidden": True,
         "candidate_count": len(rows),
     }

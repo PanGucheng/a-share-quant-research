@@ -1,0 +1,34 @@
+{
+  "authoritative_execution": false,
+  "cache_disk_bytes": {
+    "preprocessing_fit": 1116264,
+    "projection_spool": 6730054331
+  },
+  "exact_parity": true,
+  "output_sha256": {
+    "parity.csv": "156cd61f8974a7b9f51969a057c5ca477d4dd72ec0eb3c350ba7c5ddf3a2995e",
+    "resource_summary.csv": "b6a017fb69fa5234f91a83501bb3f929a3114e7b52f435bbd4c44138c137c6b1",
+    "runtime_timing.csv": "60b0ac4d9809a13e6642e8b38dab7b25a6879f726a8a9a8e8f733ed691c15cd4",
+    "stage_breakdown.csv": "4260bd1f17993c8ad34bf589614e450be3626f93591e08579a5d5fbcdcbb75d9"
+  },
+  "policies": [
+    "strict_current_baseline",
+    "current_plus_existing_conditional_signal",
+    "broad_data_qualified"
+  ],
+  "preprocessing_fit_cache_eligible": true,
+  "profiles": [
+    "baseline_cache_off",
+    "cache_cold",
+    "cache_warm"
+  ],
+  "projection_spool_cache_eligible": true,
+  "schema_version": 1,
+  "scientific_model_selection_authorized": false,
+  "selected_prediction_reuse_eligible": true,
+  "stage_id": "full_research_acceleration_v3_qualification",
+  "status": "pass",
+  "strategy_v2_authorized": false,
+  "summary_sha256": "ee973ee354750ae9ebc08c0449ae9bb0e50d780e13475127bd620f660d0b1c56",
+  "vectorized_transform_eligible": true
+}

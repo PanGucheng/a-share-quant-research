@@ -1,0 +1,10 @@
+policy_id,profile_id,exact_parity,first_divergence
+strict_current_baseline,baseline_cache_off,True,none
+strict_current_baseline,cache_cold,True,none
+strict_current_baseline,cache_warm,True,none
+current_plus_existing_conditional_signal,baseline_cache_off,True,none
+current_plus_existing_conditional_signal,cache_cold,True,none
+current_plus_existing_conditional_signal,cache_warm,True,none
+broad_data_qualified,baseline_cache_off,True,none
+broad_data_qualified,cache_cold,True,none
+broad_data_qualified,cache_warm,True,none

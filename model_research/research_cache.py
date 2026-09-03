@@ -9,6 +9,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
+import numpy as np
 import pandas as pd
 import pyarrow.parquet as pq
 
@@ -17,12 +18,15 @@ from research_validation.feature_matrix import canonical_hash, file_sha256
 
 from .inputs import InputAccessAudit, _project_features, _read_partition_dates
 from .linear_models import _spool_fold
-from .preprocessing import daily_equal_weights
+from .development_dry_run import _fit_from_spool
+from .preprocessing import WeightedPreprocessingFit, daily_equal_weights, stable_weighted_median
 from .targets import eligible_daily_cross_sectional_rank_centered
 
 
 CACHE_SCHEMA_VERSION = 1
 CACHE_IMPLEMENTATION = "development_projection_spool_cache_v1"
+PREPROCESSING_CACHE_SCHEMA_VERSION = 1
+PREPROCESSING_CACHE_IMPLEMENTATION = "weighted_preprocessing_fit_cache_v1"
 ALLOWED_FOLDS = {"train", "validation"}
 
 
@@ -30,6 +34,16 @@ ALLOWED_FOLDS = {"train", "validation"}
 class ProjectionSpoolCacheResult:
     spool_paths: tuple[Path, ...]
     eligibility_receipt: pd.DataFrame
+    cache_key: str
+    cache_hit: bool
+    cache_status: str
+    manifest_path: Path
+    disk_bytes: int
+
+
+@dataclass(frozen=True)
+class PreprocessingFitCacheResult:
+    preprocessing: WeightedPreprocessingFit
     cache_key: str
     cache_hit: bool
     cache_status: str
@@ -308,4 +322,204 @@ def get_or_build_projection_spools(
         cache_status=cache_status,
         manifest_path=entry / "cache_manifest.json",
         disk_bytes=sum(int(row["size_bytes"]) for row in manifest["spools"]),
+    )
+
+
+def _array_sha256(value: np.ndarray) -> str:
+    array = np.ascontiguousarray(np.asarray(value))
+    import hashlib
+
+    digest = hashlib.sha256()
+    digest.update(str(array.dtype).encode("ascii"))
+    digest.update(str(array.shape).encode("ascii"))
+    digest.update(array.tobytes())
+    return digest.hexdigest()
+
+
+def build_preprocessing_fit_identity(
+    *,
+    spool_paths: list[Path],
+    factors: list[str],
+    fit_scope: str,
+    preprocessing_config: dict[str, Any],
+    factor_batch_size: int,
+    median_workers: int = 1,
+    dtype: str = "float64",
+) -> dict[str, Any]:
+    if not spool_paths:
+        raise ValueError("preprocessing cache requires at least one spool")
+    if not factors or len(factors) != len(set(factors)):
+        raise ValueError("preprocessing cache requires a non-empty unique feature order")
+    if fit_scope not in {"train", "train_plus_validation"}:
+        raise ValueError("preprocessing cache fit scope is invalid")
+    if factor_batch_size < 1:
+        raise ValueError("preprocessing cache factor batch size must be positive")
+    spools = _spool_receipts(spool_paths)
+    identity = {
+        "cache_schema_version": PREPROCESSING_CACHE_SCHEMA_VERSION,
+        "cache_implementation": PREPROCESSING_CACHE_IMPLEMENTATION,
+        "preprocessing_implementation_sha256": normalized_callable_ast_hash(
+            _fit_from_spool, stable_weighted_median
+        ),
+        "fit_scope": fit_scope,
+        "feature_order": factors,
+        "feature_order_sha256": canonical_hash(factors),
+        "spools": spools,
+        "spool_grid_sha256": canonical_hash(spools),
+        "row_key_grid_sha256": canonical_hash(
+            [row["row_key_sha256"] for row in spools]
+        ),
+        "weight_and_target_identity": [row["sha256"] for row in spools],
+        "preprocessing_config_sha256": canonical_hash(preprocessing_config),
+        "factor_batch_size": int(factor_batch_size),
+        "median_workers": int(median_workers),
+        "weighted_median_algorithm": "stable_weighted_median_v1",
+        "dtype": str(dtype),
+    }
+    identity["cache_key"] = canonical_hash(identity)
+    return identity
+
+
+def _load_preprocessing_entry(
+    entry: Path, identity: dict[str, Any]
+) -> tuple[bool, dict[str, Any], WeightedPreprocessingFit | None]:
+    manifest_path = entry / "cache_manifest.json"
+    payload_path = entry / "preprocessing.npz"
+    if not manifest_path.is_file() or not payload_path.is_file():
+        return False, {}, None
+    try:
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        if manifest.get("identity") != identity:
+            return False, manifest, None
+        if file_sha256(payload_path) != manifest.get("payload_file_sha256"):
+            return False, manifest, None
+        with np.load(payload_path, allow_pickle=False) as payload:
+            medians = np.asarray(payload["medians"], dtype=np.float64)
+            means = np.asarray(payload["means"], dtype=np.float64)
+            variances = np.asarray(payload["variances"], dtype=np.float64)
+        expected = manifest.get("array_sha256", {})
+        if {
+            "medians": _array_sha256(medians),
+            "means": _array_sha256(means),
+            "variances": _array_sha256(variances),
+        } != expected:
+            return False, manifest, None
+        if any(len(value) != len(identity["feature_order"]) for value in (medians, means, variances)):
+            return False, manifest, None
+        preprocessing = WeightedPreprocessingFit(
+            feature_names=tuple(identity["feature_order"]),
+            medians=medians,
+            means=means,
+            variances=variances,
+        )
+        return True, manifest, preprocessing
+    except (KeyError, TypeError, ValueError, OSError, json.JSONDecodeError):
+        return False, {}, None
+
+
+def get_or_build_preprocessing_fit(
+    *,
+    cache_root: Path,
+    spool_paths: list[Path],
+    factors: list[str],
+    fit_scope: str,
+    preprocessing_config: dict[str, Any],
+    factor_batch_size: int = 16,
+    median_workers: int = 1,
+    timing_recorder: Any | None = None,
+    dtype: str = "float64",
+) -> PreprocessingFitCacheResult:
+    identity = build_preprocessing_fit_identity(
+        spool_paths=spool_paths,
+        factors=factors,
+        fit_scope=fit_scope,
+        preprocessing_config=preprocessing_config,
+        factor_batch_size=factor_batch_size,
+        median_workers=median_workers,
+        dtype=dtype,
+    )
+    cache_root = cache_root.resolve()
+    cache_root.mkdir(parents=True, exist_ok=True)
+    entry = cache_root / str(identity["cache_key"])
+    validation = (
+        timing_recorder.measure(
+            "preprocessing_fit_cache_validation",
+            fold=fit_scope,
+            cache_key=identity["cache_key"],
+        )
+        if timing_recorder is not None
+        else nullcontext({})
+    )
+    with validation as timing_payload:
+        valid, manifest, preprocessing = _load_preprocessing_entry(entry, identity)
+        timing_payload["cache_hit"] = valid
+    if valid and preprocessing is not None:
+        return PreprocessingFitCacheResult(
+            preprocessing=preprocessing,
+            cache_key=str(identity["cache_key"]),
+            cache_hit=True,
+            cache_status="hit",
+            manifest_path=entry / "cache_manifest.json",
+            disk_bytes=int(manifest["payload_size_bytes"]),
+        )
+    cache_status = "miss"
+    if entry.exists():
+        if entry.resolve().parent != cache_root:
+            raise ValueError("preprocessing cache corruption target escaped cache root")
+        shutil.rmtree(entry)
+        cache_status = "corrupt_rebuilt"
+    staging = cache_root / f".build-{identity['cache_key']}-{uuid.uuid4().hex}"
+    staging.mkdir(parents=False, exist_ok=False)
+    try:
+        fit_timing = (
+            timing_recorder.measure(
+                "preprocessing_fit",
+                fold=fit_scope,
+                cache_hit=False,
+                factor_batch_size=factor_batch_size,
+                median_workers=median_workers,
+            )
+            if timing_recorder is not None
+            else nullcontext({})
+        )
+        with fit_timing:
+            preprocessing = _fit_from_spool(
+                spool_paths,
+                factors,
+                factor_batch_size=factor_batch_size,
+                median_workers=median_workers,
+            )
+        payload_path = staging / "preprocessing.npz"
+        np.savez(
+            payload_path,
+            medians=preprocessing.medians,
+            means=preprocessing.means,
+            variances=preprocessing.variances,
+        )
+        manifest = {
+            "schema_version": PREPROCESSING_CACHE_SCHEMA_VERSION,
+            "identity": identity,
+            "payload_file_sha256": file_sha256(payload_path),
+            "payload_size_bytes": payload_path.stat().st_size,
+            "array_sha256": {
+                "medians": _array_sha256(preprocessing.medians),
+                "means": _array_sha256(preprocessing.means),
+                "variances": _array_sha256(preprocessing.variances),
+            },
+            "cache_provenance": {"immutable": True, "content_addressed": True},
+        }
+        (staging / "cache_manifest.json").write_text(
+            json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+        )
+        os.replace(staging, entry)
+    finally:
+        if staging.exists():
+            shutil.rmtree(staging)
+    return PreprocessingFitCacheResult(
+        preprocessing=preprocessing,
+        cache_key=str(identity["cache_key"]),
+        cache_hit=False,
+        cache_status=cache_status,
+        manifest_path=entry / "cache_manifest.json",
+        disk_bytes=int(manifest["payload_size_bytes"]),
     )

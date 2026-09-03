@@ -145,6 +145,33 @@ def test_runtime_timing_recorder_writes_required_context(tmp_path: Path) -> None
     assert timing.loc[0, "output_rows"] == 123
     assert timing.loc[0, "wall_seconds"] >= 0
     assert timing.loc[0, "cpu_seconds"] >= 0
+    assert timing.loc[0, "cpu_core_equivalent"] >= 0
+    assert timing.loc[0, "read_bytes"] >= 0
+    assert timing.loc[0, "write_bytes"] >= 0
+
+
+def test_vectorized_transform_matches_frozen_column_loop_exactly() -> None:
+    rng = np.random.default_rng(20260903)
+    values = rng.normal(size=(251, 13))
+    values[::5, 2] = np.nan
+    values[::7, 8] = np.inf
+    medians = rng.normal(size=13)
+    means = rng.normal(size=13)
+    variances = rng.uniform(0.1, 3.0, size=13)
+    preprocessing = WeightedPreprocessingFit(
+        feature_names=tuple(f"f{index}" for index in range(13)),
+        medians=medians,
+        means=means,
+        variances=variances,
+    )
+    legacy = np.asarray(values, dtype=float).copy()
+    legacy[~np.isfinite(legacy)] = np.nan
+    for index in range(legacy.shape[1]):
+        missing = np.isnan(legacy[:, index])
+        legacy[missing, index] = medians[index]
+    legacy = (legacy - means) / np.sqrt(variances)
+
+    np.testing.assert_array_equal(preprocessing.transform(values), legacy)
 
 
 def test_lightgbm_max_round_checkpoint_predictions_match_independent_fits() -> None:

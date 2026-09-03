@@ -1,0 +1,10 @@
+profile_id,outer_split_id,policy_id,factor_count,train_rows,validation_rows,final_fit_rows,peak_rss_mib,wall_seconds,test_read_count,projection_cache_train_status,projection_cache_validation_status,preprocessing_cache_train_status,preprocessing_cache_final_status
+baseline_cache_off,split_001,strict_current_baseline,45,1372311,153643,1525954,1256.0078125,246.62855419999687,0,off,off,off,off
+cache_cold,split_001,strict_current_baseline,45,1372311,153643,1525954,1365.15234375,227.7487574999977,0,miss,miss,miss,miss
+cache_warm,split_001,strict_current_baseline,45,1372311,153643,1525954,1208.4765625,171.67063799999596,0,hit,hit,hit,hit
+baseline_cache_off,split_001,current_plus_existing_conditional_signal,100,1372311,153643,1525954,2234.3671875,481.1706854000004,0,off,off,off,off
+cache_cold,split_001,current_plus_existing_conditional_signal,100,1372311,153643,1525954,2465.96875,409.31392239999695,0,miss,miss,miss,miss
+cache_warm,split_001,current_plus_existing_conditional_signal,100,1372311,153643,1525954,2359.6796875,304.3586292999971,0,hit,hit,hit,hit
+baseline_cache_off,split_001,broad_data_qualified,659,1372311,153643,1525954,9001.5078125,1955.1404595999995,0,off,off,off,off
+cache_cold,split_001,broad_data_qualified,659,1372311,153643,1525954,9035.38671875,1647.1548572000029,0,miss,miss,miss,miss
+cache_warm,split_001,broad_data_qualified,659,1372311,153643,1525954,9156.8671875,1499.379213399996,0,hit,hit,hit,hit
