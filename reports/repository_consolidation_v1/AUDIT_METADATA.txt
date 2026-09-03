@@ -1,0 +1,4 @@
+generated_at_utc=2026-09-03T07:04:09.825221+00:00
+root=E:\qlib_prj\qlib_baseline
+tracked_files=4478
+scanned_files=4776

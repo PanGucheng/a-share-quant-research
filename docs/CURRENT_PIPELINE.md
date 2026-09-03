@@ -187,6 +187,12 @@ canonical-dataset:27518ddbb28ba2b4b1247375d4e3d32d7d5be9935a5f2074dc272f84285f64
 
 ## 5. CLOSED — Historical Research And Engineering
 
+Performance Optimization Program: **CLOSED** at Accelerated Full V3.
+The current execution baselines are `fast_research_mt_v2` for screening and
+`full_research_accelerated_v3` for Full preparation/performance work. Phase H
+outer-worker contention benchmarking was intentionally not pursued; reopen this
+program only if measured runtime again becomes a material research blocker.
+
 Historical Data Engineering 已正式 `CLOSED`。其 qualification、frontier admission、authority
 resolution、engineering extension、overlap lineage resolution 和 canonical assembly 已被最终
 data authority 吸收，不再逐项作为 current todo。

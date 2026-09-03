@@ -19,6 +19,8 @@ Chinese: [README.zh-CN.md](README.zh-CN.md)
 - **READY / AUTHORITY:** canonical research dataset for the current long-history
   factor research mainline and any later protocol work.
 - **CLOSED:** Historical Data Engineering and the completed historical research stages.
+- **PERFORMANCE CLOSED:** Fast `fast_research_mt_v2`; Full `full_research_accelerated_v3`.
+  Phase H outer-worker benchmarking was intentionally not pursued.
 - **ACTIVE RESEARCH MAINLINE / PHASE 0 CLOSED:** Long-History Robust Core Factor
   Selection V1; Phase 0 backward replication is completed and Phase 1 is not started.
 - **NOT AUTHORIZED:** Structured ML, Strategy V2, and live trading.

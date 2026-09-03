@@ -48,8 +48,8 @@ evidence 判断；历史报告与 archive 只说明当时发生了什么。
 ## Operational References
 
 - [operations/PERFORMANCE_EXECUTION_PROFILES_V1.md](operations/PERFORMANCE_EXECUTION_PROFILES_V1.md)
-  — real LightGBM thread determinism audit, non-authoritative Fast MT fallback, and
-  CPU/RAM-safe worker-thread benchmark planning.
+  — current Fast/Full execution usage; the performance program is CLOSED and its
+  historical plans are archived under `_archive/09_model_research_and_productivity_history/`.
 - [Research Compute Acceleration V3 report](../reports/performance_acceleration_v3/REPORT.md)
   — Full data-preparation and preprocessing cache qualification, cold preprocessing
   benchmark, exact parity, and resource decisions.
@@ -67,6 +67,9 @@ evidence 判断；历史报告与 archive 只说明当时发生了什么。
 - [../README.md](../README.md) — 英文 landing page。
 - [../README.zh-CN.md](../README.zh-CN.md) — 中文 landing page。
 - [../reports/README.md](../reports/README.md) — compact report policy 与报告入口。
+- [../reports/INDEX.md](../reports/INDEX.md) — current, pinned, and historical report map。
+- [../configs/README.md](../configs/README.md) — active versus pinned configuration map。
+- [../scripts/README.md](../scripts/README.md) — active entrypoints versus maintenance tools。
 - [../data_quality/README.md](../data_quality/README.md) — 数据质量模块。
 - [../tradability/README.md](../tradability/README.md) — 可交易性模块。
 

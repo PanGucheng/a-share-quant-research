@@ -14,6 +14,8 @@ GitHub repository：
 - **FROZEN：**Strategy V1 及全部历史/Forward evidence。
 - **READY / AUTHORITY：**当前长历史因子研究主线及后续 protocol work 使用的 canonical dataset。
 - **CLOSED：**Historical Data Engineering 与已完成历史研究阶段。
+- **性能工程已关闭：**Fast 使用 `fast_research_mt_v2`，Full 使用
+  `full_research_accelerated_v3`；Phase H outer-worker benchmark 按设计未继续。
 - **ACTIVE RESEARCH MAINLINE / PHASE 0 CLOSED：**Long-History Robust Core Factor
   Selection V1；Phase 0 backward replication 已完成，Phase 1 尚未启动。
 - **NOT AUTHORIZED：**Structured ML、Strategy V2 和 live trading。

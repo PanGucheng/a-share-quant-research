@@ -1,5 +1,10 @@
 # Performance Execution Profiles V1
 
+> Program status: **CLOSED**. This document is the compact operational contract for
+> the qualified Fast V2 and Full V3 execution profiles. Historical qualification
+> plans and closeout context are archived in
+> `docs/_archive/09_model_research_and_productivity_history/`.
+
 ## Status And Boundary
 
 This is an execution-protocol engineering contract. It does not start Structured
@@ -18,9 +23,10 @@ real-input identity and parity audit
 versioned performance evidence
 ```
 
-No Full multi-thread profile is enabled by default. A Full profile is eligible only
-when the fail-closed qualification audit reports exact parity across the complete
-configured scope.
+No profile in this document grants scientific model-selection or Strategy authority.
+The default Full performance/development profile is `full_research_accelerated_v3`;
+its exact qualification and reference chain are pinned by the profile YAML and V3
+report. `full_research_exact_mt_v2` remains the exact execution reference.
 
 ## Repository Audit Conclusion
 
