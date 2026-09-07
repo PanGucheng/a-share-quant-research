@@ -19,6 +19,14 @@ artifact 名称中的 `current` 不自动表示 ACTIVE。
 | Strategy V2 | NOT AUTHORIZED | 需要独立 protocol、freeze date 与新 forward evidence |
 | Live trading | NOT AUTHORIZED | 不属于当前范围 |
 
+拟议下一开发计划：
+[Long-History Multi-Evaluator Screening MVP](LONG_HISTORY_MULTI_EVALUATOR_SCREENING_MVP_PLAN.md)
+处于 **PROPOSED / 待实施指令**，是现行 Long-History Robust Core 路线的收缩执行建议，
+不是第二条 ACTIVE 主线。建议先以 20D 完成 Phase 2A Evidence/Candidate Board V0，
+再独立安排 10D/其他 Phase 2B 增强；原路线的 Core team、最终经济组合及复杂停止规则
+不在该 MVP 内，未被宣布完成。原 Phase 0 仍 CLOSED，Phase 1 仍 NOT STARTED；本次文档
+修订不授权研究运行。提案入口也列于 [DOC_INDEX](DOC_INDEX.md)。
+
 机器实时状态以以下文件为准：
 
 - `outputs/forward/status.json`；

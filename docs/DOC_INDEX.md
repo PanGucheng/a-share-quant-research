@@ -45,12 +45,13 @@ task-specific authority doc
 发生冲突时，先遵守根目录 `AGENTS.md` 的长期规则，再以 current authority 和实时 machine
 evidence 判断；历史报告与 archive 只说明当时发生了什么。
 
-## Proposed Development Plans
+## Proposed / Next Development Plans
 
 - [LONG_HISTORY_MULTI_EVALUATOR_SCREENING_MVP_PLAN.md](LONG_HISTORY_MULTI_EVALUATOR_SCREENING_MVP_PLAN.md)
-  — 2010–2023 长历史多体系因子重新筛选开发计划与实际 main 审计；仅计划，尚未实施。
-  包含 canonical 输入、三 evaluator parity、locked confirmation、Evidence/Candidate Board、
-  阶段验收与计算预算；不替代现行 authority，也不授权模型训练。
+  — **PROPOSED / 待实施指令**；原 Long-History Robust Core 路线的拟议收缩执行方案，
+  不替代现行 authority。区分 shared parity 与 backend-native screening；20D Phase 2A
+  先交付 Evidence/Candidate Board V0，10D Phase 2B 后补。2024–2026 仅为 Held-aside
+  Recent Diagnostic。本次仅修订计划，不授权运行、组合设计或模型训练。
 
 ## Operational References
 
