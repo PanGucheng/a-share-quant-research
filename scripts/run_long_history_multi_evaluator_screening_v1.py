@@ -37,6 +37,8 @@ from factor_research.long_history_screening import (
     preflight,
     read_factor,
     sha256_file,
+    audit_feature_quality,
+    bounded_price_cache,
 )
 from qlib_baseline.settings import load_settings
 
@@ -83,7 +85,14 @@ def native_modules() -> tuple[dict, dict]:
 
 
 def run(
-    config: dict, out: Path, *, smoke: bool, extended: bool = False, long_smoke: bool = False
+    config: dict,
+    out: Path,
+    *,
+    smoke: bool,
+    extended: bool = False,
+    long_smoke: bool = False,
+    quality_audit: bool = False,
+    price_cache: bool = False,
 ) -> dict:
     # Exclusive new run directories preserve prior evidence, including failures.
     out.mkdir(parents=True, exist_ok=False)
@@ -172,6 +181,9 @@ def run(
         )
         # Metadata audit is not the complete Phase 0 feature/PIT audit.
         status["phase0_status"] = "metadata_pass_sample_audit_pending"
+        if quality_audit:
+            audit_feature_quality(partitions, inventory, calendar, phase0 / "quality")
+            status["phase0_status"] = "feature_quality_pass_PIT_review_pending"
         if not smoke:
             return status
         smoke_dir = out / "smoke"
@@ -232,15 +244,30 @@ def run(
             values = read_factor(
                 partitions, factor, signal_dates[0], signal_dates[-1], access=access
             )
-            prices = normalize_keys(
-                D.features(
-                    sorted(values.instrument.unique()),
-                    ["$close"],
-                    start_time=mapping.entry_date.min(),
-                    end_time=mapping.exit_date.max(),
-                    freq="day",
+
+            def price_loader(symbols, left, right):
+                return D.features(
+                    symbols, ["$close"], start_time=left, end_time=right, freq="day"
                 ).reset_index()
-            )
+
+            cache_status = "disabled"
+            if price_cache:
+                prices, cache_status = bounded_price_cache(
+                    settings.qlib_provider,
+                    sorted(values.instrument.unique()),
+                    mapping.entry_date.min(),
+                    mapping.exit_date.max(),
+                    ROOT / "tmp/long_history_multi_evaluator_screening_v1/prices",
+                    price_loader,
+                )
+            else:
+                prices = normalize_keys(
+                    price_loader(
+                        sorted(values.instrument.unique()),
+                        mapping.entry_date.min(),
+                        mapping.exit_date.max(),
+                    )
+                )
             if (
                 prices.empty
                 or not prices.datetime.between(
@@ -257,6 +284,7 @@ def run(
                     "requested_end": str(mapping.exit_date.max().date()),
                     "rows": len(prices),
                     "slice_hash": frame_hash(prices),
+                    "cache_status": cache_status,
                 }
             )
             labels = exact_primary_labels(values[KEYS], prices, calendar)
@@ -382,6 +410,14 @@ def main() -> int:
         action="store_true",
         help="Six fixed factors across full mature development in year chunks",
     )
+    parser.add_argument(
+        "--quality-audit",
+        action="store_true",
+        help="Read development-only factor partitions without labels",
+    )
+    parser.add_argument(
+        "--price-cache", action="store_true", help="Use content-checked development price cache"
+    )
     args = parser.parse_args()
     if not args.run_id or any(
         c not in "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-"
@@ -395,6 +431,8 @@ def main() -> int:
         smoke=args.smoke or args.extended_smoke or args.long_smoke,
         extended=args.extended_smoke,
         long_smoke=args.long_smoke,
+        quality_audit=args.quality_audit,
+        price_cache=args.price_cache,
     )
     print(json.dumps(result, ensure_ascii=False, indent=2))
     return 1 if "blocked" in result.get("phase1_status", "") else 0

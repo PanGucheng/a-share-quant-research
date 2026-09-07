@@ -1,0 +1,31 @@
+{
+  "scope": "six factor real smoke; same IO workload with sidecar cache, not production throughput qualification",
+  "exact_metric_files": 48,
+  "cold_status": {
+    "primary_mvp_status": "in_progress",
+    "phase0_status": "metadata_and_label_sample_pass_full_feature_audit_pending",
+    "phase1_status": "minimal_smoke_pass_extended_pending",
+    "enrichment_status": "not_started",
+    "held_aside_recent_diagnostic_accessed": false,
+    "phase2a_status": "not_started",
+    "required_next": "Complete feature/PIT boundary audit, resolve native failures, extended 24-factor/era smoke and resource/profile freeze before full",
+    "elapsed_seconds": 39.858424500002
+  },
+  "hit_status": {
+    "primary_mvp_status": "in_progress",
+    "phase0_status": "metadata_and_label_sample_pass_full_feature_audit_pending",
+    "phase1_status": "minimal_smoke_pass_extended_pending",
+    "enrichment_status": "not_started",
+    "held_aside_recent_diagnostic_accessed": false,
+    "phase2a_status": "not_started",
+    "required_next": "Complete feature/PIT boundary audit, resolve native failures, extended 24-factor/era smoke and resource/profile freeze before full",
+    "elapsed_seconds": 29.609567399995285
+  },
+  "cold_access_cache_status": {
+    "hit": 5,
+    "miss": 1
+  },
+  "hit_access_cache_status": {
+    "hit": 6
+  }
+}

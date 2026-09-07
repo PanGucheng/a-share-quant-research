@@ -1,0 +1,10 @@
+{
+  "workers": 2,
+  "backend": "ThreadPoolExecutor",
+  "scope": "six real factors,60 signal dates,shared preloaded inputs,native compute only",
+  "exact_metric_comparisons": 48,
+  "status": "pass",
+  "native_wall_seconds": 3.9854408000028343,
+  "parquet_freq_metadata": "not compared; exact date values and all metric values compared",
+  "not_certified": "full-run throughput or multi-process IO/cache concurrency"
+}

@@ -1,0 +1,284 @@
+{
+  "scope": "8 lexicographically first canonical instruments per window; proper historical/continuation event parents; not full raw statement recertification; causal opening events may precede 2010",
+  "initial_probe_limitation": "Continuation merged event inventory omitted SH600005/SH600007 in 2010. Rechecked against actual historical event parent, not treating absent continuation events as historical missingness.",
+  "rows": [
+    {
+      "start": "2010-01-29",
+      "end": "2010-05-31",
+      "instruments": [
+        "SH600000",
+        "SH600004",
+        "SH600005",
+        "SH600006",
+        "SH600007",
+        "SH600008",
+        "SH600009",
+        "SH600010"
+      ],
+      "keys": 640,
+      "event_path": "outputs\\historical_data_engineering_extension_v1\\runtime\\statement_events.parquet",
+      "events": 82,
+      "compared_finite_rows": 640,
+      "finite_mask_mismatch": 0,
+      "maximum_roa_difference": 0.0,
+      "availability_checks": [
+        {
+          "check": "no_future_statement_access",
+          "status": "pass",
+          "observed": 0,
+          "required": 0
+        },
+        {
+          "check": "event_availability_present",
+          "status": "pass",
+          "observed": 0,
+          "required": 0
+        },
+        {
+          "check": "report_period_not_used_as_availability",
+          "status": "pass",
+          "observed": 0,
+          "required": 0
+        },
+        {
+          "check": "one_effective_event_per_issuer_day",
+          "status": "pass",
+          "observed": 0,
+          "required": 0
+        },
+        {
+          "check": "selected_event_is_latest_public_event",
+          "status": "pass",
+          "observed": 0,
+          "required": 0
+        },
+        {
+          "check": "selected_availability_is_monotone",
+          "status": "pass",
+          "observed": 0,
+          "required": 0
+        }
+      ],
+      "event_slice_hash": "6d4863ba34c4effb9ccad8be92e1d4107c4f77166fc7717dd3f9058487fd3e46"
+    },
+    {
+      "start": "2021-01-04",
+      "end": "2021-01-29",
+      "instruments": [
+        "SH600000",
+        "SH600004",
+        "SH600006",
+        "SH600008",
+        "SH600009",
+        "SH600010",
+        "SH600011",
+        "SH600015"
+      ],
+      "keys": 160,
+      "event_path": "outputs\\historical_data_engineering_extension_v1\\runtime\\statement_events.parquet",
+      "events": 407,
+      "compared_finite_rows": 160,
+      "finite_mask_mismatch": 0,
+      "maximum_roa_difference": 0.0,
+      "availability_checks": [
+        {
+          "check": "no_future_statement_access",
+          "status": "pass",
+          "observed": 0,
+          "required": 0
+        },
+        {
+          "check": "event_availability_present",
+          "status": "pass",
+          "observed": 0,
+          "required": 0
+        },
+        {
+          "check": "report_period_not_used_as_availability",
+          "status": "pass",
+          "observed": 0,
+          "required": 0
+        },
+        {
+          "check": "one_effective_event_per_issuer_day",
+          "status": "pass",
+          "observed": 0,
+          "required": 0
+        },
+        {
+          "check": "selected_event_is_latest_public_event",
+          "status": "pass",
+          "observed": 0,
+          "required": 0
+        },
+        {
+          "check": "selected_availability_is_monotone",
+          "status": "pass",
+          "observed": 0,
+          "required": 0
+        }
+      ],
+      "event_slice_hash": "a70b1d8917f1f6156e583998a96fa1c773979ea5476a1d178cb32ece82d6c995"
+    },
+    {
+      "start": "2021-02-01",
+      "end": "2021-03-31",
+      "instruments": [
+        "SH600000",
+        "SH600004",
+        "SH600006",
+        "SH600008",
+        "SH600009",
+        "SH600010",
+        "SH600011",
+        "SH600015"
+      ],
+      "keys": 304,
+      "event_path": "outputs\\canonical_historical_dataset_assembly_v1\\runtime\\fundamental\\merged_statement_events.parquet",
+      "events": 411,
+      "compared_finite_rows": 304,
+      "finite_mask_mismatch": 0,
+      "maximum_roa_difference": 0.0,
+      "availability_checks": [
+        {
+          "check": "no_future_statement_access",
+          "status": "pass",
+          "observed": 0,
+          "required": 0
+        },
+        {
+          "check": "event_availability_present",
+          "status": "pass",
+          "observed": 0,
+          "required": 0
+        },
+        {
+          "check": "report_period_not_used_as_availability",
+          "status": "pass",
+          "observed": 0,
+          "required": 0
+        },
+        {
+          "check": "one_effective_event_per_issuer_day",
+          "status": "pass",
+          "observed": 0,
+          "required": 0
+        },
+        {
+          "check": "selected_event_is_latest_public_event",
+          "status": "pass",
+          "observed": 0,
+          "required": 0
+        },
+        {
+          "check": "selected_availability_is_monotone",
+          "status": "pass",
+          "observed": 0,
+          "required": 0
+        }
+      ],
+      "event_slice_hash": "c71d93ead45dafc51103a457855b0802b80065e4413279756172b84d2d58654e"
+    },
+    {
+      "start": "2023-01-03",
+      "end": "2023-05-31",
+      "instruments": [
+        "SH600000",
+        "SH600004",
+        "SH600006",
+        "SH600008",
+        "SH600009",
+        "SH600010",
+        "SH600011",
+        "SH600015"
+      ],
+      "keys": 784,
+      "event_path": "outputs\\canonical_historical_dataset_assembly_v1\\runtime\\fundamental\\merged_statement_events.parquet",
+      "events": 479,
+      "compared_finite_rows": 784,
+      "finite_mask_mismatch": 0,
+      "maximum_roa_difference": 0.0,
+      "availability_checks": [
+        {
+          "check": "no_future_statement_access",
+          "status": "pass",
+          "observed": 0,
+          "required": 0
+        },
+        {
+          "check": "event_availability_present",
+          "status": "pass",
+          "observed": 0,
+          "required": 0
+        },
+        {
+          "check": "report_period_not_used_as_availability",
+          "status": "pass",
+          "observed": 0,
+          "required": 0
+        },
+        {
+          "check": "one_effective_event_per_issuer_day",
+          "status": "pass",
+          "observed": 0,
+          "required": 0
+        },
+        {
+          "check": "selected_event_is_latest_public_event",
+          "status": "pass",
+          "observed": 0,
+          "required": 0
+        },
+        {
+          "check": "selected_availability_is_monotone",
+          "status": "pass",
+          "observed": 0,
+          "required": 0
+        }
+      ],
+      "event_slice_hash": "0f96f7d2785c59edf4b022ce64ac4b50476561bbe9b8e94b524783a41c0379b7"
+    }
+  ],
+  "access": [
+    {
+      "kind": "factor",
+      "factor": "mature_return_on_assets",
+      "path": "E:/qlib_prj/qlib_baseline/outputs/historical_data_engineering_extension_v1/runtime/matrix/2010/mature_fundamental.parquet",
+      "requested_start": "2010-01-29",
+      "requested_end": "2010-05-31",
+      "rows": 123860,
+      "slice_hash": "50d6b5c99699f3069a108580ee97227a09faba4b01ea2e3bfd3962f11ee33a68",
+      "declared_parent_sha256": "9ef7ed4fdd43f37ed75653e17f08f200eaa13a1ea5feee158b9bbbee73d3a018"
+    },
+    {
+      "kind": "factor",
+      "factor": "mature_return_on_assets",
+      "path": "E:/qlib_prj/qlib_baseline/outputs/historical_data_engineering_extension_v1/runtime/matrix/2021/mature_fundamental.parquet",
+      "requested_start": "2021-01-04",
+      "requested_end": "2021-01-29",
+      "rows": 40000,
+      "slice_hash": "0b76e6dad7bcbe339ae1df68625fe0e42ce965315182f087a321ddd684166fc0",
+      "declared_parent_sha256": "464c2cafc850436229201ba25e80812b8113ee3198eec4879deeb7823ac0e500"
+    },
+    {
+      "kind": "factor",
+      "factor": "mature_return_on_assets",
+      "path": "E:/qlib_prj/qlib_baseline/outputs/canonical_historical_dataset_assembly_v1/runtime/continuation/2021/mature_fundamental.parquet",
+      "requested_start": "2021-02-01",
+      "requested_end": "2021-03-31",
+      "rows": 76000,
+      "slice_hash": "df2d03526580bef7f5586ab8daca9341ab916cf0c3d2ecd639b12a74449d495b",
+      "declared_parent_sha256": "e9e0b182896858e4d54b225eb0ac543b3a423e013cb24c036674024c02c37c90"
+    },
+    {
+      "kind": "factor",
+      "factor": "mature_return_on_assets",
+      "path": "E:/qlib_prj/qlib_baseline/outputs/canonical_historical_dataset_assembly_v1/runtime/continuation/2023/mature_fundamental.parquet",
+      "requested_start": "2023-01-03",
+      "requested_end": "2023-05-31",
+      "rows": 195960,
+      "slice_hash": "07369df2dae24e82c9ff4b3189ffa6539170a84a81b99164501e5ebbf7de30b6",
+      "declared_parent_sha256": "a609a00a928b43437da9ebfb83809d5258c0f5f8335832c8cabcdf6c0516cc76"
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "status": "provisional; not a full-run authorization gate",
+  "workers_measured": 1,
+  "some_wall_time_overlapped_other_smoke": true,
+  "peak_working_set_bytes": 1036165120,
+  "full_linear_hours_repeating_both_native_calls": 40.8260542897498,
+  "primary_estimate_hours_low": 20.4130271448749,
+  "primary_estimate_hours_mid": 30.61954071731235,
+  "primary_estimate_hours_high": 40.8260542897498,
+  "limitations": [
+    "one full-history factor per source is not median/p95 source evidence",
+    "rough lower estimate halves replay-inclusive time although IO is not duplicated",
+    "no cache hit/cold IO separation",
+    "two-worker synthetic correctness is not real throughput qualification"
+  ],
+  "measurements": [
+    {
+      "factor": "alpha158_BETA20",
+      "source": "alpha158",
+      "source_factor_count": 158,
+      "year_units": 14,
+      "measured_seconds_with_two_native_executions": 188.02207540000018,
+      "source_linear_seconds_with_replay": 29707.487913200028
+    },
+    {
+      "factor": "alpha360_CLOSE1",
+      "source": "alpha360",
+      "source_factor_count": 358,
+      "year_units": 14,
+      "measured_seconds_with_two_native_executions": 197.6037531999973,
+      "source_linear_seconds_with_replay": 70742.14364559903
+    },
+    {
+      "factor": "kunquant_alpha101_alpha015",
+      "source": "alpha101",
+      "source_factor_count": 97,
+      "year_units": 14,
+      "measured_seconds_with_two_native_executions": 182.91670420000446,
+      "source_linear_seconds_with_replay": 17742.920307400433
+    },
+    {
+      "factor": "mature_book_to_market_pit",
+      "source": "mature_public",
+      "source_factor_count": 58,
+      "year_units": 14,
+      "measured_seconds_with_two_native_executions": 183.4062582000006,
+      "source_linear_seconds_with_replay": 10637.562975600034
+    },
+    {
+      "factor": "rev_5",
+      "source": "project_basic",
+      "source_factor_count": 15,
+      "year_units": 14,
+      "measured_seconds_with_two_native_executions": 182.9602520000044,
+      "source_linear_seconds_with_replay": 2744.403780000066
+    },
+    {
+      "factor": "ta_momentum_kama",
+      "source": "ta",
+      "source_factor_count": 79,
+      "year_units": 14,
+      "measured_seconds_with_two_native_executions": 194.9275546999961,
+      "source_linear_seconds_with_replay": 15399.276821299693
+    }
+  ]
+}

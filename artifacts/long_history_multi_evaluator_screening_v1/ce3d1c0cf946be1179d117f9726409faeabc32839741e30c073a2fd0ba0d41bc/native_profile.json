@@ -1,0 +1,69 @@
+{
+  "scope": "primary_native_profile_only; not candidate rules or full run completion",
+  "canonical_dataset_id": "canonical-dataset:27518ddbb28ba2b4b1247375d4e3d32d7d5be9935a5f2074dc272f84285f6423",
+  "label": "label_20d_t1",
+  "universe": "canonical_practical_raw",
+  "analysis_direction": "raw until candidate-rule freeze",
+  "required_primary_metrics": {
+    "alphalens": [
+      "daily_rank_ic",
+      "daily_quantile_return_demeaned_false"
+    ],
+    "jqfactor": [
+      "daily_rank_ic",
+      "factor_returns_demeaned_true_group_adjust_false"
+    ],
+    "qlib": [
+      "daily_rank_ic",
+      "daily_pearson_ic",
+      "daily_long_short_return_quantile_0_2"
+    ]
+  },
+  "parity": {
+    "atol": 1e-12,
+    "rtol": 0,
+    "native_empty_calendar_padding": "preserved raw; verified empty extras excluded from trading-date comparison"
+  },
+  "data_undefined": "unavailable; runtime failures block full",
+  "optional_not_required": [
+    "10D",
+    "alpha_beta",
+    "turnover",
+    "autocorrelation",
+    "secondary_universe"
+  ],
+  "qualification_runs": [
+    "extended_eras_20260907",
+    "long_six_20260907",
+    "final_regression_20260907"
+  ],
+  "native_provenance": {
+    "alphalens": {
+      "utils": "c61c8c0fc4c847c3eb156250a7c44e3efb5fc126b8a1da5d33927250688cb05f",
+      "performance": "3438e3e5c3b0e74a18dff6ffe32070c53f654f75537d38d6bc59d709a74c775c"
+    },
+    "jqfactor": {
+      "compat": "d897a00178f5be13807ddedc5e5411f4862ce9bc1858569973043db17a977dcf",
+      "utils": "cf279bc8632eae41641c8c82ec0464a821c386dcbd84957c4934e0a2d01d41af",
+      "prepare": "d56a7b5a90ef328249f8d172329a13c336fd1599de898e052611eb812bfcf32c",
+      "performance": "bca01c4d75b9aebace84b15c89ff96a7cecf68fa9b63dcb0709afab12ac818ec"
+    },
+    "jqfactor_compatibility": {
+      "original": "factor_data.groupby(grouper)['factor']",
+      "replacement": "factor_data.groupby(grouper, group_keys=False)['factor']",
+      "supported_group_adjust": false,
+      "patched_function_sha256": "d25b499cec8dca4a5f66478d1c550927f3caf67f71e9ac9b7c3d3562f291bf55"
+    },
+    "qlib": {
+      "file": "E:\\qlib_prj\\qlib_clone\\qlib\\contrib\\eva\\alpha.py",
+      "sha256": "4015bf16f7f46e721d8be46a7a1f6636adf8011db04b1bcc48f72715fa0d2bf2"
+    },
+    "dependencies": {
+      "pandas": "2.3.3",
+      "numpy": "2.2.6",
+      "scipy": "1.15.3",
+      "qlib": "0.1.dev6"
+    }
+  },
+  "full_execution_gate": "still pending complete feature quality and resumable primary orchestration; this file alone does not start full"
+}

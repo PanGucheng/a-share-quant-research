@@ -470,3 +470,169 @@ def primary_fdr(
             row.update(status="unavailable", reason=str(exc))
         rows.append(row)
     return apply_fdr(pd.DataFrame(rows), alpha=0.05)
+
+
+def bounded_price_cache(
+    provider: Path, instruments: list[str], start: Any, end: Any, cache_dir: Path, loader: Any
+) -> tuple[pd.DataFrame, str]:
+    """Reuse the repository weak-cache format, adding content-integrity checks.
+
+    Source binary hashing can touch storage bytes outside the date range, but
+    only bounded loader output may enter the cached research frame.
+    """
+    from qlib_baseline.cache import (
+        build_cache_fingerprint,
+        cache_path,
+        cache_metadata_path,
+        read_dataframe_cache,
+        write_dataframe_cache,
+        normalized_callable_ast_hash,
+    )
+
+    left, right = development_range(start, end)
+    symbols = sorted(set(str(s).upper() for s in instruments))
+    if not symbols:
+        raise ValueError("empty price instrument request")
+    sources = {}
+    for symbol in symbols:
+        path = provider / "features" / symbol.lower() / "close.day.bin"
+        if not path.is_file():
+            raise FileNotFoundError(f"missing price source: {symbol}")
+        sources[symbol] = sha256_file(path)
+    fingerprint = build_cache_fingerprint(
+        "long_history_screening_close",
+        data={
+            "provider": str(provider.resolve()),
+            "close_sha256": sources,
+            "calendar_sha256": sha256_file(provider / "calendars/day.txt"),
+        },
+        computation={
+            "field": "$close",
+            "frequency": "day",
+            "qlib_version": __import__("qlib").__version__,
+            "loader_ast": normalized_callable_ast_hash(loader, normalize_keys),
+            "output": "normalized keys, native close",
+        },
+        request={"start": str(left), "end": str(right), "instruments": symbols},
+    )
+    path = cache_path(cache_dir, "close", fingerprint)
+    cached = read_dataframe_cache(path, fingerprint)
+    if cached is not None:
+        metadata = json.loads(cache_metadata_path(path).read_text(encoding="utf-8"))
+        if metadata.get("diagnostics", {}).get("logical_content_hash") != frame_hash(cached):
+            raise ValueError("price cache content corrupted")
+        frame = normalize_keys(cached)
+        cache_status = "hit"
+    else:
+        if path.exists() or cache_metadata_path(path).exists():
+            raise ValueError("price cache incomplete or invalid; rebuild explicitly")
+        frame = normalize_keys(loader(symbols, left, right))
+        cache_status = "miss"
+    if (
+        frame.empty
+        or not frame.datetime.between(left, right).all()
+        or not set(frame.instrument) <= set(symbols)
+    ):
+        raise ValueError("price cache/loader violated request")
+    if cache_status == "miss":
+        write_dataframe_cache(
+            path, frame, fingerprint, diagnostics={"logical_content_hash": frame_hash(frame)}
+        )
+    return frame, cache_status
+
+
+def audit_feature_quality(
+    partitions: pd.DataFrame, inventory: pd.DataFrame, calendar: pd.DatetimeIndex, output: Path
+) -> pd.DataFrame:
+    """Feature-only annual profiles, with bounded partition reads and checkpoints.
+
+    No labels, old eligibility statistics, or recent values enter this audit.
+    Each chunk checkpoint is diagnostic only; it is not an unchecked cache.
+    """
+    output.mkdir(parents=True, exist_ok=False)
+    allowed = set(inventory.loc[inventory.research_usable, "factor"])
+    all_rows, access = [], []
+    for number, row in enumerate(partitions.to_dict("records")):
+        factors = sorted(allowed.intersection(str(row["factors"]).split(",")))
+        left = max(START, pd.Timestamp(row["effective_start"]))
+        right = min(END, pd.Timestamp(row["effective_end"]))
+        if not factors or left > right:
+            continue
+        for year in range(left.year, right.year + 1):
+            lo, hi = max(left, pd.Timestamp(year, 1, 1)), min(right, pd.Timestamp(year, 12, 31))
+            bounded = {**row, "effective_start": lo, "effective_end": hi}
+            frame = normalize_keys(read_effective_partition(bounded, columns=factors))
+            if frame.empty or not frame.datetime.isin(calendar).all():
+                raise ValueError("quality audit empty partition or impossible trading dates")
+            if not frame.datetime.between(lo, hi).all():
+                raise ValueError("quality reader violated development window")
+            print(f"Quality {number}/{len(partitions)} {row['partition_id']} {year}", flush=True)
+            chunk = []
+            for factor in factors:
+                values = pd.to_numeric(frame[factor], errors="raise")
+                finite = np.isfinite(values)
+                finite_dates = frame.loc[finite, "datetime"]
+                daily = frame.loc[finite].groupby("datetime")[factor].agg(["count", "nunique"])
+                chunk.append(
+                    {
+                        "factor": factor,
+                        "year": year,
+                        "partition_id": row["partition_id"],
+                        "segment_id": row["segment_id"],
+                        "read_start": lo,
+                        "read_end": hi,
+                        "rows": len(frame),
+                        "finite_count": int(finite.sum()),
+                        "missing_count": int(values.isna().sum()),
+                        "infinite_count": int(np.isinf(values).sum()),
+                        "finite_dates": int(finite_dates.nunique()),
+                        "observed_dates": frame.datetime.nunique(),
+                        "first_finite_date": finite_dates.min(),
+                        "last_finite_date": finite_dates.max(),
+                        "constant_dates": int(daily["nunique"].eq(1).sum()),
+                        "min_count_variable_dates": int(
+                            (daily["count"].ge(50) & daily["nunique"].gt(1)).sum()
+                        ),
+                        "coverage_denominator": "canonical_partition_rows; not all historical A shares",
+                    }
+                )
+            pd.DataFrame(chunk).to_csv(output / f"chunk_{number:04d}_{year}.csv", index=False)
+            all_rows.extend(chunk)
+            access.append(
+                {
+                    "path": row["partition_path"],
+                    "start": lo,
+                    "end": hi,
+                    "rows": len(frame),
+                    "factors": len(factors),
+                    "keys_hash": frame_hash(frame[KEYS]),
+                }
+            )
+            pd.DataFrame(access).to_csv(output / "access_audit.csv", index=False)
+    detail = pd.DataFrame(all_rows)
+    if set(detail.factor) != allowed:
+        raise ValueError("feature audit omitted planned factors")
+    annual = detail.groupby(["factor", "year"], as_index=False).agg(
+        rows=("rows", "sum"),
+        finite_count=("finite_count", "sum"),
+        missing_count=("missing_count", "sum"),
+        infinite_count=("infinite_count", "sum"),
+        finite_dates=("finite_dates", "sum"),
+        observed_dates=("observed_dates", "sum"),
+        first_finite_date=("first_finite_date", "min"),
+        last_finite_date=("last_finite_date", "max"),
+        constant_dates=("constant_dates", "sum"),
+        min_count_variable_dates=("min_count_variable_dates", "sum"),
+    )
+    annual["coverage"] = annual.finite_count / annual.rows
+    annual.to_csv(output / "feature_quality_annual.csv", index=False)
+    annual.groupby("factor", as_index=False).agg(
+        rows=("rows", "sum"),
+        finite_count=("finite_count", "sum"),
+        missing_count=("missing_count", "sum"),
+        infinite_count=("infinite_count", "sum"),
+        first_finite_date=("first_finite_date", "min"),
+        last_finite_date=("last_finite_date", "max"),
+        min_count_variable_dates=("min_count_variable_dates", "sum"),
+    ).to_csv(output / "feature_quality_full.csv", index=False)
+    return annual

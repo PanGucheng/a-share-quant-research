@@ -1,0 +1,210 @@
+{
+  "scope": "synthetic AR(1) null only; not empirical factor evidence or a general calibration certificate",
+  "ar_coefficient": 0.6,
+  "trials": 32,
+  "dates": 3361,
+  "injected_gap": [
+    1000,
+    1009
+  ],
+  "block_length": 20,
+  "bootstrap_samples": 1000,
+  "seed": 20260907,
+  "two_sided": true,
+  "p_value_resolution": 0.000999000999000999,
+  "p_le_0_05_count": 3,
+  "rows": [
+    {
+      "trial": 0,
+      "raw_p_value": 0.2597402597402597,
+      "segments": 2,
+      "observations": 3351
+    },
+    {
+      "trial": 1,
+      "raw_p_value": 0.33266733266733267,
+      "segments": 2,
+      "observations": 3351
+    },
+    {
+      "trial": 2,
+      "raw_p_value": 0.6033966033966034,
+      "segments": 2,
+      "observations": 3351
+    },
+    {
+      "trial": 3,
+      "raw_p_value": 0.22677322677322678,
+      "segments": 2,
+      "observations": 3351
+    },
+    {
+      "trial": 4,
+      "raw_p_value": 0.008991008991008992,
+      "segments": 2,
+      "observations": 3351
+    },
+    {
+      "trial": 5,
+      "raw_p_value": 0.2677322677322677,
+      "segments": 2,
+      "observations": 3351
+    },
+    {
+      "trial": 6,
+      "raw_p_value": 0.21678321678321677,
+      "segments": 2,
+      "observations": 3351
+    },
+    {
+      "trial": 7,
+      "raw_p_value": 0.8221778221778222,
+      "segments": 2,
+      "observations": 3351
+    },
+    {
+      "trial": 8,
+      "raw_p_value": 0.7302697302697303,
+      "segments": 2,
+      "observations": 3351
+    },
+    {
+      "trial": 9,
+      "raw_p_value": 0.2137862137862138,
+      "segments": 2,
+      "observations": 3351
+    },
+    {
+      "trial": 10,
+      "raw_p_value": 0.02097902097902098,
+      "segments": 2,
+      "observations": 3351
+    },
+    {
+      "trial": 11,
+      "raw_p_value": 0.7672327672327672,
+      "segments": 2,
+      "observations": 3351
+    },
+    {
+      "trial": 12,
+      "raw_p_value": 0.7222777222777222,
+      "segments": 2,
+      "observations": 3351
+    },
+    {
+      "trial": 13,
+      "raw_p_value": 0.6363636363636364,
+      "segments": 2,
+      "observations": 3351
+    },
+    {
+      "trial": 14,
+      "raw_p_value": 0.9790209790209791,
+      "segments": 2,
+      "observations": 3351
+    },
+    {
+      "trial": 15,
+      "raw_p_value": 0.951048951048951,
+      "segments": 2,
+      "observations": 3351
+    },
+    {
+      "trial": 16,
+      "raw_p_value": 0.8191808191808192,
+      "segments": 2,
+      "observations": 3351
+    },
+    {
+      "trial": 17,
+      "raw_p_value": 0.04895104895104895,
+      "segments": 2,
+      "observations": 3351
+    },
+    {
+      "trial": 18,
+      "raw_p_value": 0.6873126873126874,
+      "segments": 2,
+      "observations": 3351
+    },
+    {
+      "trial": 19,
+      "raw_p_value": 0.9210789210789211,
+      "segments": 2,
+      "observations": 3351
+    },
+    {
+      "trial": 20,
+      "raw_p_value": 0.8301698301698301,
+      "segments": 2,
+      "observations": 3351
+    },
+    {
+      "trial": 21,
+      "raw_p_value": 0.3126873126873127,
+      "segments": 2,
+      "observations": 3351
+    },
+    {
+      "trial": 22,
+      "raw_p_value": 0.5984015984015985,
+      "segments": 2,
+      "observations": 3351
+    },
+    {
+      "trial": 23,
+      "raw_p_value": 0.3916083916083916,
+      "segments": 2,
+      "observations": 3351
+    },
+    {
+      "trial": 24,
+      "raw_p_value": 0.8011988011988012,
+      "segments": 2,
+      "observations": 3351
+    },
+    {
+      "trial": 25,
+      "raw_p_value": 0.8361638361638362,
+      "segments": 2,
+      "observations": 3351
+    },
+    {
+      "trial": 26,
+      "raw_p_value": 0.972027972027972,
+      "segments": 2,
+      "observations": 3351
+    },
+    {
+      "trial": 27,
+      "raw_p_value": 0.3946053946053946,
+      "segments": 2,
+      "observations": 3351
+    },
+    {
+      "trial": 28,
+      "raw_p_value": 0.10789210789210789,
+      "segments": 2,
+      "observations": 3351
+    },
+    {
+      "trial": 29,
+      "raw_p_value": 0.5724275724275725,
+      "segments": 2,
+      "observations": 3351
+    },
+    {
+      "trial": 30,
+      "raw_p_value": 0.057942057942057944,
+      "segments": 2,
+      "observations": 3351
+    },
+    {
+      "trial": 31,
+      "raw_p_value": 0.24275724275724275,
+      "segments": 2,
+      "observations": 3351
+    }
+  ]
+}

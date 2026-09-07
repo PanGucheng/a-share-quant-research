@@ -14,7 +14,7 @@ artifact 名称中的 `current` 不自动表示 ACTIVE。
 | Prior Research Protocol V2 | FROZEN HISTORICAL EVIDENCE | 可审计复现；不可直接授权模型竞争 |
 | Long-History Robust Core Factor Selection V1 | ACTIVE RESEARCH MAINLINE / PHASE 0 CLOSED | 当前 historical research 方向；Phase 0 已完成；MVP 契约与 smoke 实施中 |
 | Phase 0 Backward Replication | CLOSED / COMPLETED | 91 因子 fixed-union 的 same-era reconciliation 与 canonical backward replication 已完成 |
-| Phase 1 Feature Quality Gate | IN PROGRESS / MVP scope | 受限读取和样本质量检查已启动，全库质量尚未完成 |
+| Phase 1 Feature Quality Gate | IN PROGRESS / MVP scope | 全库 feature-only 质量表已完成；尚未形成正式筛选 Board |
 | Structured ML | NOT AUTHORIZED | 不得训练或比较候选模型 |
 | Strategy V2 | NOT AUTHORIZED | 需要独立 protocol、freeze date 与新 forward evidence |
 | Live trading | NOT AUTHORIZED | 不属于当前范围 |
@@ -22,7 +22,7 @@ artifact 名称中的 `current` 不自动表示 ACTIVE。
 当前实施方案：
 [Long-History Multi-Evaluator Screening MVP](LONG_HISTORY_MULTI_EVALUATOR_SCREENING_MVP_PLAN.md)
 已于 2026-09-07 获用户实施指令，是现行主线的收缩执行方案。先完成 20D V0 并 STOP
-人工审阅；10D 增强独立后移。当前处于契约审计与原生 smoke，尚未全量筛选。
+人工审阅；10D 增强独立后移。受限输入/全库质量审计、原生短窗与 6 因子全历史 smoke 已完成；正式全量编排尚未完成。
 原 Phase 0 保持 CLOSED；原 Phase 1 的质量工作纳入 MVP 推进，尚未验收完成。
 Core team、最终经济组合、近期诊断及模型训练仍不在本轮范围。
 运行命令与验收进度见 [实施报告](../reports/long_history_multi_evaluator_screening_v1/IMPLEMENTATION_PROGRESS.md)。
