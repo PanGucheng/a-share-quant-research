@@ -12,20 +12,20 @@ artifact 名称中的 `current` 不自动表示 ACTIVE。
 | Canonical Research Dataset | FROZEN AUTHORITY / READY | 当前长历史因子研究主线及后续 protocol work 的唯一推荐输入 |
 | Historical Data Engineering | CLOSED | 仅因明确 data bug、leakage 或 provenance failure 重开 |
 | Prior Research Protocol V2 | FROZEN HISTORICAL EVIDENCE | 可审计复现；不可直接授权模型竞争 |
-| Long-History Robust Core Factor Selection V1 | ACTIVE RESEARCH MAINLINE / PHASE 0 CLOSED | 当前 historical research 方向；Phase 0 已完成，Phase 1 尚未启动 |
+| Long-History Robust Core Factor Selection V1 | ACTIVE RESEARCH MAINLINE / PHASE 0 CLOSED | 当前 historical research 方向；Phase 0 已完成；MVP 契约与 smoke 实施中 |
 | Phase 0 Backward Replication | CLOSED / COMPLETED | 91 因子 fixed-union 的 same-era reconciliation 与 canonical backward replication 已完成 |
-| Phase 1 Feature Quality Gate | NOT STARTED | 需要单独实施指令；本轮未启动 |
+| Phase 1 Feature Quality Gate | IN PROGRESS / MVP scope | 受限读取和样本质量检查已启动，全库质量尚未完成 |
 | Structured ML | NOT AUTHORIZED | 不得训练或比较候选模型 |
 | Strategy V2 | NOT AUTHORIZED | 需要独立 protocol、freeze date 与新 forward evidence |
 | Live trading | NOT AUTHORIZED | 不属于当前范围 |
 
-拟议下一开发计划：
+当前实施方案：
 [Long-History Multi-Evaluator Screening MVP](LONG_HISTORY_MULTI_EVALUATOR_SCREENING_MVP_PLAN.md)
-处于 **PROPOSED / 待实施指令**，是现行 Long-History Robust Core 路线的收缩执行建议，
-不是第二条 ACTIVE 主线。建议先以 20D 完成 Phase 2A Evidence/Candidate Board V0，
-再独立安排 10D/其他 Phase 2B 增强；原路线的 Core team、最终经济组合及复杂停止规则
-不在该 MVP 内，未被宣布完成。原 Phase 0 仍 CLOSED，Phase 1 仍 NOT STARTED；本次文档
-修订不授权研究运行。提案入口也列于 [DOC_INDEX](DOC_INDEX.md)。
+已于 2026-09-07 获用户实施指令，是现行主线的收缩执行方案。先完成 20D V0 并 STOP
+人工审阅；10D 增强独立后移。当前处于契约审计与原生 smoke，尚未全量筛选。
+原 Phase 0 保持 CLOSED；原 Phase 1 的质量工作纳入 MVP 推进，尚未验收完成。
+Core team、最终经济组合、近期诊断及模型训练仍不在本轮范围。
+运行命令与验收进度见 [实施报告](../reports/long_history_multi_evaluator_screening_v1/IMPLEMENTATION_PROGRESS.md)。
 
 机器实时状态以以下文件为准：
 
@@ -237,8 +237,7 @@ Risk / Conditioning Controls 作为独立对象维护。Forward Track 继续保�
 固定 Strategy V1 52 factors、mature 39、旧 role/direction/selection/cluster metadata，未经
 重新调参地比较 `2010–2014`、`2015–2018`、`2019–2020` 与 `2021+`。该阶段已完成；91 个
 unique factors 的结果和限制见
-[Phase 0 report](../reports/long_history_core_factor_selection_v1/PHASE_0_REPORT.md)。Phase 1
-保持 NOT STARTED。
+[Phase 0 report](../reports/long_history_core_factor_selection_v1/PHASE_0_REPORT.md)。Phase 1 质量工作现纳入已授权 MVP，尚未完成。
 
 当前：
 
@@ -247,14 +246,14 @@ route adopted = true
 phase 0 completed = true
 historical results produced = true
 old membership or direction changed = false
-phase 1 started = false
+phase 1 started = true (MVP quality scope)
 Structured ML started = false
 Strategy V1 changed = false
 Strategy V2 authorized = false
 ```
 
 路线中的全部 2010–2026 结果均为 retrospective development evidence，不得包装为 fresh OOS。
-本状态不授权 Phase 1–6、模型训练、TopK/调仓/horizon 搜索或 Strategy V2。
+后续实施仅按 MVP 推进至 V0 审阅；不授权 Core/组合、模型训练、TopK/调仓/horizon 搜索或 Strategy V2。
 
 ## 7. LEGACY / EXPERIMENTAL
 

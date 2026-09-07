@@ -1,8 +1,10 @@
 # 长历史多体系因子重新筛选：开发计划与仓库审计
 
-状态：**PROPOSED / Next Development Plan；尚未授权实施或运行**。编写及定向修订日期：2026-09-07。
+状态：**IMPLEMENTING / 用户已于 2026-09-07 授权按计划实施**。Primary MVP 尚未完成。
 
-本计划依据用户提供的《长历史多体系因子重新筛选：仓库审计与开发计划制定》及后续修订意见，结合实际仓库制定。附件中的执行性描述作为需求材料处理；本次用户授权是审阅意见并修订文档，不是启动其中的开发、筛选、模型训练或近期诊断。
+当前已实现受限读取、精确日历标签、共同 IC/分桶样本和原生最小 smoke；跨时期验证正在推进。实施记录见 [初始实施报告](../reports/long_history_multi_evaluator_screening_v1/IMPLEMENTATION_PROGRESS.md)。
+
+本计划依据用户提供的《长历史多体系因子重新筛选：仓库审计与开发计划制定》及后续修订意见，结合实际仓库制定。附件作为需求材料处理；后续用户明确要求按计划开始实施，现授权推进至 primary V0 人工审阅停止点。近期诊断、组合设计及模型训练仍不在本轮范围。
 
 建议先完成 **2010–2023、765 因子、三套评价器共用输入、仅以 20D 为筛选 horizon 的 Primary Screening MVP**：先完成 parity，再取得 backend-native evidence、一次性冻结候选规则，交付 Evidence Board V0 / Candidate Board V0 并供人工审阅。10D 与非必要诊断单列为 Phase 2B，不阻止首轮交付。复用成熟评价函数，不扩因子池、不设计人工加权总分、不自动选 Top 50。
 
@@ -98,7 +100,7 @@ Canonical 已统一修复 15 个 Alpha101、KAMA 和 19 个 fundamental 的跨�
 | 目标是否直接 Core | 原路线还包括四 pillar/grade/Pareto、Core team、停止规则 | 本 MVP 收缩为 evidence → candidate → 人工审阅；Core/组合/模型移后 |
 | Fast 8T 是否直接覆盖 | 已认证的 8T 是 LightGBM/Fast/Full 模型执行路径 | 复用缓存/确定性经验，不能宣称三个 Python evaluator 已获 8T exact-parity 认证 |
 
-本计划的 Phase 0–4 是 **MVP 自己的工作包编号**，不表示重新打开原路线已关闭的 Phase 0。它是原 Long-History Robust Core 路线的一项拟议收缩执行方案，不是第二条已授权主线。原路线的 feature quality 尚未开始，economic/redundancy、Core team、stopping-rule 工作也没有因本次修订而完成；其中非必要全量诊断与 Core/组合工作在本 MVP 中后移。后续获得实施指令时再同步当前路线的状态/范围，本次只修订 proposed 导航。
+本计划的 Phase 0–4 是 **MVP 自己的工作包编号**，不表示重新打开原路线已关闭的 Phase 0。它是原 Long-History Robust Core 路线的一项拟议收缩执行方案，不是第二条已授权主线。原路线的 feature quality 尚未开始，economic/redundancy、Core team、stopping-rule 工作也没有因本次修订而完成；其中非必要全量诊断与 Core/组合工作在本 MVP 中后移。2026-09-07 已获实施指令，当前路线导航现已同步为 IMPLEMENTING；本节其余内容保留修订时的范围说明。
 
 ## B. Proposed Research Contract
 
@@ -202,7 +204,7 @@ Primary family 是本次冻结的 765 因子库存中所有可检验 20D/full/ra
 
 ## D. Phased Development Plan
 
-下面为后续实施工作包；本次交付不运行其中任何阶段。
+下面为已授权的实施工作包；阶段是否完成以实际验收和实施报告为准。
 
 **Primary 交付顺序：Phase 0 → Phase 1 → Phase 2A 主计算 → Phase 3 Evidence Board V0 → Phase 4 规则冻结/Candidate Board V0 → STOP 人工审阅。** 为保留原计划结构，Phase 3/4 继续作为 Board 与规则的工作包名称，但它们属于 Phase 2A 的交付收尾，不是等待 Phase 2B 后才开始的新阶段。只有主计算、Board 和候选收尾均完成，才将 `primary_mvp_status=complete`；不得仅有 metrics 就宣布 2A 里程碑完成。
 
@@ -216,7 +218,7 @@ Phase 2B 在 primary V0 可审阅后独立安排；可以停在 V0 先获得反�
 
 工作：绑定 commit/data identity、765 清单及 9 blocked、原生源码版本；建立只有 development 的读取路径；导出 label date map；确认 practical raw keys；仅做 feature-only profile；冻结三层时期、检验方法、输入 mask、metric definitions 和资源上限。明确 `phase2a_required` 与 `phase2b_optional` 任务清单，不默认遍历 V4 的全部 steps。抽取少量 canonical 行做精确日历标签核对，检查分区交接、fundamental availability 和 factor 起始缺失。
 
-拟新增路径：`configs/long_history_multi_evaluator_screening_v1.yaml`、`scripts/run_long_history_multi_evaluator_screening_v1.py`、小型编排模块。这些路径目前是设计，不是已有可执行命令。
+拟新增路径：`configs/long_history_multi_evaluator_screening_v1.yaml`、`scripts/run_long_history_multi_evaluator_screening_v1.py`、小型编排模块。这些路径已建立；当前 CLI 支持 metadata preflight、最小和跨时期短窗 smoke，尚不支持 full/candidate 执行。
 
 产物：`resolved_config.json`、`input_identity.json`、`factor_inventory.csv`、`feature_quality.csv`、`label_date_map.parquet`、`universe_contract.json`、`metric_definitions.json`、`access_audit.csv`、`job_inventory.csv`。
 
@@ -323,7 +325,7 @@ Primary 两级 smoke：先 6 因子×20D×3 backend×60 个交易日用于接口
 
 留置期防护分为：输入文件/分区日期 allowlist、读取 filters、label exit 断言、candidate schema 列 allowlist 和 synthetic mutation test。历史 metadata/manifest 可能描述全 canonical 范围，允许作为身份读取；不允许把近期诊断区间的因子值、收益、coverage、旧 outcome 或含该段的方向结论作为新规则输入。若 parquet 物理上含跨界 row group，允许必要字节校验，但有效输出行与后续计算必须受 filters 限制；记录这种存储与研究读取的区别。
 
-本次仅文档变更执行 [CI 政策](CI_POLICY.md) 的 docs/repository 快速检查和本地链接检查；上述研究测试属于后续开发验收，不在撰写计划时启动全量计算。
+计划撰写阶段只执行文档检查；现实施阶段按 [CI 政策](CI_POLICY.md) 运行比例适当的研究测试、完整仓库验证与 Qlib runtime 检查，结果见实施报告。
 
 ## F. Compute Plan
 
@@ -419,4 +421,4 @@ Primary MVP 的硬停止条件是数据/标签/样本/PIT 错误、主 backend p
 
 未机械采纳全部指标作为首轮必需项，也不通过三组人为不同的 Rank IC threshold 制造分歧。现有原生函数的最小 profiles 见 B4；2A 的 Board/规则沿用 Phase 3/4 工作包完成，避免重复建立一个提前筛选器或第二轮候选冻结。
 
-本次复核未发现相对初版的新代码变更或新近证实的数据运行故障。仍存在的实施缺口是 canonical 受限入口、精确日历标签接入、adapter 单 horizon/mask 一致性、Qlib-native wrapper 补齐，以及 jqfactor 必需函数的兼容性。进一步明确：V4 runner 当前默认执行多项 steps，若不增加最小 required/optional step 选择，单在文档拆 2A/2B 不能实际节省计算。这些是 Phase 0/1 和薄编排入口应解决的已有能力缺口，不是重新扩建研究框架的理由。全部仍待实际 smoke 验收，本次只改文档。
+本次复核未发现相对初版的新代码变更或新近证实的数据运行故障。仍存在的实施缺口是 canonical 受限入口、精确日历标签接入、adapter 单 horizon/mask 一致性、Qlib-native wrapper 补齐，以及 jqfactor 必需函数的兼容性。进一步明确：V4 runner 当前默认执行多项 steps，若不增加最小 required/optional step 选择，单在文档拆 2A/2B 不能实际节省计算。这些是 Phase 0/1 和薄编排入口应解决的已有能力缺口，不是重新扩建研究框架的理由。以上为修订时的审计结论；后续实施与实际 smoke 结果单独记录于实施报告，不回改历史审计事实。

@@ -1,0 +1,64 @@
+schema_version: 1
+canonical_dataset_id: canonical-dataset:27518ddbb28ba2b4b1247375d4e3d32d7d5be9935a5f2074dc272f84285f6423
+canonical_root: outputs/canonical_historical_dataset_assembly_v1/current
+development_start: '2010-01-29'
+development_end: '2023-12-29'
+primary_label: label_20d_t1
+entry_lag: 1
+holding_days: 20
+min_count: 50
+quantiles: 5
+parity_atol: 1.0e-12
+universe: canonical_practical_raw
+bootstrap:
+  method: gap_aware_moving_block_mean_test
+  block_length: 20
+  samples: 1000
+  seed: 20260907
+  alternative: two_sided
+  family: all_765_primary_full_raw
+  corrections: [BH, BY]
+signal_eras:
+  A: ['2010-01-29', '2014-12-31']
+  B: ['2015-01-01', '2017-12-31']
+  C: ['2018-01-01', '2020-12-31']
+  D: ['2021-01-01', '2023-12-29']
+resources:
+  workers: 1
+  inner_threads: 1
+smoke:
+  # Selected from source/family/lineage, before reading new alpha evidence.
+  start: '2021-01-04'
+  trading_days: 60
+  minimal_factors:
+    - rev_5
+    - alpha158_BETA20
+    - alpha360_CLOSE1
+    - ta_momentum_kama
+    - kunquant_alpha101_alpha015
+    - mature_book_to_market_pit
+  representative_factors:
+    - rev_5
+    - std_20
+    - amount_mean_20
+    - alpha158_BETA20
+    - alpha158_ROC20
+    - alpha158_CORR20
+    - alpha158_VSTD20
+    - alpha360_CLOSE1
+    - alpha360_VOLUME1
+    - alpha360_VWAP1
+    - ta_momentum_kama
+    - ta_volatility_atr
+    - ta_volume_cmf
+    - ta_momentum_rsi
+    - kunquant_alpha101_alpha015
+    - kunquant_alpha101_alpha017
+    - kunquant_alpha101_alpha005
+    - kunquant_alpha101_alpha005_canonical_vwap_v2
+    - mature_book_to_market_pit
+    - mature_return_on_assets
+    - mature_log_total_market_cap
+    - mature_momentum_12_1
+    - mature_amihud_illiquidity_20
+    - mature_asset_growth_yoy
