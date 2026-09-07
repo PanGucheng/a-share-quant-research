@@ -1,11 +1,30 @@
 import subprocess
 import sys
+import json
 
 import numpy as np
 import pandas as pd
 import pytest
 
 from scripts import run_long_history_primary_full as runner
+
+
+def test_scheduling_migration_preserves_baseline_and_rejects_research_drift(tmp_path):
+    key = "scripts/run_long_history_primary_full.py"
+    old = {"implementation_hashes": {key: runner.LEGACY_RUNNER_SHA256, "labels.py": "fixed"},
+           "prices": "fixed", "bootstrap": {"samples": 1000}}
+    digest = runner.bind_contract(tmp_path, old)
+    original = (tmp_path / "contract.json").read_bytes()
+    new = {**old, "implementation_hashes": {**old["implementation_hashes"], key: "new-scheduler"}}
+    assert runner.bind_contract(tmp_path, new, compatible_runner_hashes=(runner.LEGACY_RUNNER_SHA256,)) == digest
+    assert (tmp_path / "contract.json").read_bytes() == original
+    execution = json.loads((tmp_path / "execution/new-scheduler.json").read_text())
+    assert execution["baseline_contract_hash"] == digest
+    for field, value in (("prices", "changed"), ("bootstrap", {"samples": 10})):
+        with pytest.raises(ValueError, match="beyond qualified"):
+            runner.bind_contract(tmp_path, {**new, field: value}, compatible_runner_hashes=(runner.LEGACY_RUNNER_SHA256,))
+    with pytest.raises(ValueError, match="contract changed"):
+        runner.bind_contract(tmp_path, new)
 
 
 def test_resume_requires_unchanged_contract_and_detects_output_corruption(tmp_path):

@@ -5,6 +5,9 @@ from __future__ import annotations
 
 import argparse
 from contextlib import contextmanager
+from concurrent.futures import ProcessPoolExecutor, wait, FIRST_COMPLETED
+import multiprocessing
+import signal
 import json
 import os
 from pathlib import Path
@@ -19,6 +22,7 @@ for variable in ("OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS", "MKL_NUM_THREADS"):
 
 import pandas as pd
 import numpy as np
+import psutil
 import yaml
 
 from factor_research.long_history_screening import (
@@ -35,7 +39,7 @@ PROFILE = "ce3d1c0cf946be1179d117f9726409faeabc32839741e30c073a2fd0ba0d41bc"
 
 
 @contextmanager
-def run_lock(path):
+def run_lock(path, *, blocking=False):
     """OS lock is released even on abrupt process death; never delete the lock file."""
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("a+b") as handle:
@@ -46,10 +50,17 @@ def run_lock(path):
         handle.seek(0)
         if os.name == "nt":
             import msvcrt
-            msvcrt.locking(handle.fileno(), msvcrt.LK_NBLCK, 1)
+            while True:
+                try:
+                    msvcrt.locking(handle.fileno(), msvcrt.LK_NBLCK, 1)
+                    break
+                except OSError:
+                    if not blocking:
+                        raise
+                    time.sleep(0.1)
         else:
             import fcntl
-            fcntl.flock(handle, fcntl.LOCK_EX | fcntl.LOCK_NB)
+            fcntl.flock(handle, fcntl.LOCK_EX | (0 if blocking else fcntl.LOCK_NB))
         try:
             yield
         finally:
@@ -60,13 +71,29 @@ def run_lock(path):
                 fcntl.flock(handle, fcntl.LOCK_UN)
 
 
-def bind_contract(out, contract):
+def bind_contract(out, contract, *, compatible_runner_hashes=()):
     path = out / "contract.json"
     # Compare JSON-normalized data, including paths/timestamps.
     normalized = json.loads(json.dumps(contract, default=str))
     if path.exists():
-        if json.loads(path.read_text(encoding="utf-8")) != normalized:
-            raise ValueError("run contract changed; preserve this run and use a new run-id")
+        previous = json.loads(path.read_text(encoding="utf-8"))
+        if previous != normalized:
+            runner = "scripts/run_long_history_primary_full.py"
+            adjusted = json.loads(json.dumps(previous))
+            prior_hash = adjusted.get("implementation_hashes", {}).get(runner)
+            if prior_hash not in compatible_runner_hashes:
+                raise ValueError("run contract changed; preserve this run and use a new run-id")
+            adjusted["implementation_hashes"][runner] = normalized["implementation_hashes"][runner]
+            if adjusted != normalized:
+                raise ValueError("run contract changed beyond qualified scheduling-only migration")
+            # Keep the old contract and receipts immutable; append execution provenance.
+            atomic_write_json(out / "execution" / f"{normalized['implementation_hashes'][runner]}.json", {
+                "baseline_contract_hash": canonical_hash(previous),
+                "prior_runner_sha256": prior_hash,
+                "current_runner_sha256": normalized["implementation_hashes"][runner],
+                "compatibility": "qualified process scheduling change; all other contract fields identical",
+            })
+        normalized = previous
     else:
         if (out / "chunks").exists():
             raise ValueError("chunks exist without their run contract")
@@ -153,7 +180,105 @@ def aggregate(out, inventory, calendar, config, contract_hash):
     }, contract_hash)
 
 
-def run_full(config, out, max_new_jobs=None, rebuild_chunk=None):
+
+# Only the scheduler changes; each process executes the same isolated single-factor arithmetic.
+_WORKER = {}
+LEGACY_RUNNER_SHA256 = "1507f37f74c0458a7bc4a927309fcdd3ab109293339fa2539616fd29bcca634c"
+
+
+def init_worker(config, out, partitions, calendar, contract_hash):
+    settings = load_settings(project_root=ROOT)
+    if settings.qlib_source:
+        sys.path.insert(0, str(settings.qlib_source))
+    # Parent handles Ctrl+C and drains at most the bounded in-flight jobs.
+    if multiprocessing.current_process().name != "MainProcess":
+        signal.signal(signal.SIGINT, signal.SIG_IGN)
+    import qlib
+    import pyarrow
+    from qlib.config import C, REG_CN
+    qlib.init(provider_uri=str(settings.qlib_provider), region=REG_CN)
+    C.kernels, C.joblib_backend = 1, "sequential"
+    pyarrow.set_cpu_count(1)
+    modules, _ = native_modules()
+    _WORKER.update(config=config, out=out, partitions=partitions, calendar=calendar,
+                   contract_hash=contract_hash, settings=settings, modules=modules,
+                   dates=label_map(calendar).dropna(subset=["exit_date"]), labels=(None, None, None),
+                   runner_sha256=sha256_file(Path(__file__)))
+
+
+def compute_job(job):
+    year, factor = job
+    out = _WORKER["out"]
+    # Also protects against an orphan worker still finishing after parent death.
+    with run_lock(out / "job_locks" / str(year) / f"{factor}.lock"):
+        return compute_job_locked(year, factor)
+
+
+def compute_job_locked(year, factor):
+    from qlib.data import D
+    config, out, partitions, calendar, contract_hash, settings, modules = (
+        _WORKER[key] for key in ("config", "out", "partitions", "calendar", "contract_hash", "settings", "modules"))
+    mapping = _WORKER["dates"].loc[_WORKER["dates"].datetime.dt.year == year]
+    target = out / "chunks" / str(year) / factor
+    tick, access = time.perf_counter(), []
+    values = read_factor(partitions, factor, mapping.datetime.min(), mapping.datetime.max(), access=access)
+    if not values.datetime.isin(mapping.datetime).all():
+        raise ValueError("factor contains non-signal dates")
+    key_hash = frame_hash(values[KEYS])
+    shared_key_hash, shared_labels, price_audit = _WORKER["labels"]
+    if key_hash != shared_key_hash:
+        def loader(symbols, left, right):
+            return D.features(symbols, ["$close"], start_time=left, end_time=right, freq="day").reset_index()
+        cache_lock = canonical_hash([sorted(values.instrument.unique()), str(mapping.entry_date.min()), str(mapping.exit_date.max())])
+        with run_lock(ROOT / "tmp/long_history_multi_evaluator_screening_v1/prices" / f"{cache_lock}.lock", blocking=True):
+            prices, cache_status = bounded_price_cache(
+                settings.qlib_provider, sorted(values.instrument.unique()),
+                mapping.entry_date.min(), mapping.exit_date.max(),
+                ROOT / "tmp/long_history_multi_evaluator_screening_v1/prices", loader)
+        shared_labels = exact_primary_labels(values[KEYS], prices, calendar)
+        price_audit = {"requested_start": mapping.entry_date.min(), "requested_end": mapping.exit_date.max(),
+                       "slice_hash": frame_hash(prices), "cache_status": cache_status,
+                       "label_hash": frame_hash(shared_labels)}
+        shared_key_hash = key_hash
+        _WORKER["labels"] = (shared_key_hash, shared_labels, price_audit)
+        del prices
+    merged = values.merge(shared_labels[[*KEYS, LABEL]], on=KEYS, validate="one_to_one")
+    ic, quantile, masks = common_samples(merged, factor, min_count=config["min_count"])
+    if ic.empty:
+        results, receipt = {}, {"parity_status": "unavailable", "native_status": {},
+                               "reason": "no_definable_daily_samples"}
+    else:
+        results, receipt = native_primary_smoke(ic, quantile, modules, atol=config["parity_atol"])
+    if any(value.startswith("failed:") for value in receipt["native_status"].values()):
+        raise ValueError(f"required native metric failed: {receipt}")
+    if "alphalens_quantile" in results:
+        raw = results["alphalens_quantile"]
+        wide = raw.iloc[:, 0].unstack("factor_quantile")
+        expected_dates = pd.DatetimeIndex(quantile.datetime.unique()).sort_values()
+        if (set(wide.columns) != set(range(1, 6))
+                or not wide.index.equals(expected_dates)
+                or not np.isfinite(wide.to_numpy()).all()):
+            raise ValueError("required quantile output lost bins/dates or produced nonfinite values")
+    stage = out / "staging" / uuid.uuid4().hex
+    stage.mkdir(parents=True)
+    masks.to_csv(stage / "daily_sample_status.csv", index=False)
+    atomic_write_json(stage / "access.json", {"factor": access, "price": price_audit})
+    for name, result in results.items():
+        if isinstance(result, pd.Series):
+            result = result.to_frame(name=name)
+        result.to_parquet(stage / f"{name}.parquet")
+    receipt = publish_chunk(stage, target, {**receipt, "factor": factor, "year": year,
+                  "signal_start": mapping.datetime.min(), "signal_end": mapping.datetime.max(),
+                  "max_label_exit_date": mapping.exit_date.max(), "factor_hash": frame_hash(values),
+                  "key_hash": key_hash, "candidate_status": "not_evaluated",
+                  "execution_runner_sha256": _WORKER["runner_sha256"], "worker_pid": os.getpid(),
+                  "wall_seconds": time.perf_counter() - tick}, contract_hash)
+    memory = psutil.Process().memory_info()
+    return {"job": f"{year}/{factor}", "worker_pid": os.getpid(),
+            "wall_seconds": receipt["wall_seconds"], "rss_bytes": memory.rss,
+            "peak_working_set_bytes": getattr(memory, "peak_wset", memory.rss)}
+
+def run_full(config, out, max_new_jobs=None, rebuild_chunk=None, workers=1, verify_parallel=False):
     out.mkdir(parents=True, exist_ok=True)
     with run_lock(out / "run.lock"):
         settings = load_settings(project_root=ROOT)
@@ -194,7 +319,15 @@ def run_full(config, out, max_new_jobs=None, rebuild_chunk=None):
                                      for name in ("FEATURE_QUALITY_SUMMARY.json", "FEATURE_QUALITY_FULL.csv",
                                                   "PIT_SAMPLE_AUDIT.json", "BLOCK_EQUIVALENCE.csv")},
         }
-        contract_hash = bind_contract(out, contract)
+        if verify_parallel:
+            contract["verification_scope"] = "fixed 24 representative factors in 2010 and 2023; no aggregate/FDR"
+        contract_hash = bind_contract(out, contract, compatible_runner_hashes=(LEGACY_RUNNER_SHA256,))
+        execution_id = uuid.uuid4().hex
+        atomic_write_json(out / "execution" / f"invocation-{execution_id}.json", {
+            "workers": workers, "inner_threads": 1, "pid": os.getpid(),
+            "runner_sha256": contract["implementation_hashes"]["scripts/run_long_history_primary_full.py"],
+            "baseline_contract_hash": contract_hash, "verify_parallel": verify_parallel,
+        })
         if rebuild_chunk is not None:
             year, factor = rebuild_chunk.split("/")
             if year not in map(str, range(2010, 2024)) or factor not in set(inventory.loc[inventory.research_usable, "factor"]):
@@ -211,15 +344,15 @@ def run_full(config, out, max_new_jobs=None, rebuild_chunk=None):
                 (out / "aggregate").rename(archive / "aggregate")
             target.rename(archive / f"{year}-{factor}")
             atomic_write_json(archive / "rebuild.json", {"requested_chunk": rebuild_chunk})
-        import qlib
-        from qlib.config import C, REG_CN
-        from qlib.data import D
-        qlib.init(provider_uri=str(settings.qlib_provider), region=REG_CN)
-        C.kernels, C.joblib_backend = 1, "sequential"
-        dates = label_map(calendar).dropna(subset=["exit_date"])
+        all_jobs = [(year, factor) for year in range(2010, 2024)
+                    for factor in inventory.loc[inventory.research_usable, "factor"]]
+        if verify_parallel:
+            all_jobs = [(year, factor) for year in (2010, 2023)
+                        for factor in config["smoke"]["representative_factors"]]
         completed, newly_done = 0, 0
-        status = {"primary_mvp_status": "in_progress", "total_chunks": 765 * 14,
+        status = {"primary_mvp_status": "in_progress", "total_chunks": len(all_jobs),
                   "pid": os.getpid(), "contract_hash": contract_hash,
+                  "workers": workers, "inner_threads": 1, "verification_only": verify_parallel,
                   "held_aside_recent_diagnostic_accessed": False}
 
         def progress(state, **extra):
@@ -229,75 +362,64 @@ def run_full(config, out, max_new_jobs=None, rebuild_chunk=None):
 
         try:
             progress("running")
-            for year in range(2010, 2024):
-                mapping = dates.loc[dates.datetime.dt.year == year]
-                shared_key_hash, shared_labels, price_audit = None, None, None
-                for factor in inventory.loc[inventory.research_usable, "factor"]:
-                    target = out / "chunks" / str(year) / factor
-                    if completed_chunk(target, contract_hash) is not None:
-                        completed += 1
-                        continue
-                    if max_new_jobs is not None and newly_done >= max_new_jobs:
-                        progress("paused_job_limit", current_job=None)
-                        return status
-                    job = f"{year}/{factor}"
-                    progress("running", current_job=job)
-                    print(f"[{completed}/{765 * 14}] {job}", flush=True)
-                    tick, access = time.perf_counter(), []
-                    values = read_factor(partitions, factor, mapping.datetime.min(), mapping.datetime.max(), access=access)
-                    if not values.datetime.isin(mapping.datetime).all():
-                        raise ValueError("factor contains non-signal dates")
-                    key_hash = frame_hash(values[KEYS])
-                    if key_hash != shared_key_hash:
-                        def loader(symbols, left, right):
-                            return D.features(symbols, ["$close"], start_time=left, end_time=right, freq="day").reset_index()
-                        prices, cache_status = bounded_price_cache(
-                            settings.qlib_provider, sorted(values.instrument.unique()),
-                            mapping.entry_date.min(), mapping.exit_date.max(),
-                            ROOT / "tmp/long_history_multi_evaluator_screening_v1/prices", loader)
-                        shared_labels = exact_primary_labels(values[KEYS], prices, calendar)
-                        price_audit = {"requested_start": mapping.entry_date.min(), "requested_end": mapping.exit_date.max(),
-                                       "slice_hash": frame_hash(prices), "cache_status": cache_status,
-                                       "label_hash": frame_hash(shared_labels)}
-                        shared_key_hash = key_hash
-                        del prices
-                    merged = values.merge(shared_labels[[*KEYS, LABEL]], on=KEYS, validate="one_to_one")
-                    ic, quantile, masks = common_samples(merged, factor, min_count=config["min_count"])
-                    if ic.empty:
-                        results, receipt = {}, {"parity_status": "unavailable", "native_status": {},
-                                               "reason": "no_definable_daily_samples"}
-                    else:
-                        results, receipt = native_primary_smoke(ic, quantile, modules, atol=config["parity_atol"])
-                    if any(value.startswith("failed:") for value in receipt["native_status"].values()):
-                        raise ValueError(f"required native metric failed: {receipt}")
-                    if "alphalens_quantile" in results:
-                        raw = results["alphalens_quantile"]
-                        wide = raw.iloc[:, 0].unstack("factor_quantile")
-                        expected_dates = pd.DatetimeIndex(quantile.datetime.unique()).sort_values()
-                        if (set(wide.columns) != set(range(1, 6))
-                                or not wide.index.equals(expected_dates)
-                                or not np.isfinite(wide.to_numpy()).all()):
-                            raise ValueError("required quantile output lost bins/dates or produced nonfinite values")
-                    stage = out / "staging" / uuid.uuid4().hex
-                    stage.mkdir(parents=True)
-                    masks.to_csv(stage / "daily_sample_status.csv", index=False)
-                    atomic_write_json(stage / "access.json", {"factor": access, "price": price_audit})
-                    for name, result in results.items():
-                        if isinstance(result, pd.Series):
-                            result = result.to_frame(name=name)
-                        result.to_parquet(stage / f"{name}.parquet")
-                    publish_chunk(stage, target, {**receipt, "factor": factor, "year": year,
-                                  "signal_start": mapping.datetime.min(), "signal_end": mapping.datetime.max(),
-                                  "max_label_exit_date": mapping.exit_date.max(), "factor_hash": frame_hash(values),
-                                  "key_hash": key_hash, "candidate_status": "not_evaluated",
-                                  "wall_seconds": time.perf_counter() - tick}, contract_hash)
+            pending_jobs = []
+            for year, factor in all_jobs:
+                if completed_chunk(out / "chunks" / str(year) / factor, contract_hash) is not None:
                     completed += 1
-                    newly_done += 1
-                    progress("running")
+                else:
+                    pending_jobs.append((year, factor))
+            selected = pending_jobs if max_new_jobs is None else pending_jobs[:max_new_jobs]
+            progress("running", active_jobs=[], current_job=None)
+            tick = time.perf_counter()
+            resources = []
+
+            def record(result):
+                nonlocal completed, newly_done
+                completed += 1
+                newly_done += 1
+                resources.append(result)
+                print(f"[{completed}/{len(all_jobs)}] completed {result['job']} (worker {result['worker_pid']})", flush=True)
+                progress("running", current_job=result["job"])
+
+            initargs = (config, out, partitions, calendar, contract_hash)
+            if selected and workers == 1:
+                init_worker(*initargs)
+                for job in selected:
+                    progress("running", active_jobs=[f"{job[0]}/{job[1]}"])
+                    record(compute_job(job))
+            elif selected:
+                pool = ProcessPoolExecutor(max_workers=workers, mp_context=multiprocessing.get_context("spawn"),
+                                           initializer=init_worker, initargs=initargs)
+                futures, remaining = {}, iter(selected)
+                try:
+                    while True:
+                        # Keep at most one running/queued job per worker; no large frame pickling.
+                        while len(futures) < workers:
+                            job = next(remaining, None)
+                            if job is None:
+                                break
+                            futures[pool.submit(compute_job, job)] = job
+                        if not futures:
+                            break
+                        progress("running", active_jobs=[f"{j[0]}/{j[1]}" for j in futures.values()])
+                        done, _ = wait(futures, timeout=1, return_when=FIRST_COMPLETED)
+                        for future in done:
+                            futures.pop(future)
+                            record(future.result())
+                finally:
+                    pool.shutdown(wait=True, cancel_futures=True)
+            atomic_write_json(out / "execution" / f"timing-{execution_id}.json", {
+                "workers": workers, "elapsed_compute_seconds": time.perf_counter() - tick,
+                "new_chunks": newly_done, "resources": resources,
+            })
+            if len(selected) < len(pending_jobs) or verify_parallel:
+                progress("verification_complete" if verify_parallel and len(selected) == len(pending_jobs)
+                         else "paused_job_limit", current_job=None, active_jobs=[])
+                return status
             progress("aggregating", current_job="primary_fdr_and_period_metrics")
             if completed_chunk(out / "aggregate", contract_hash) is None:
                 aggregate(out, inventory, calendar, config, contract_hash)
-            progress("computation_complete_review_pending", current_job=None)
+            progress("computation_complete_review_pending", current_job=None, active_jobs=[])
             return status
         except BaseException as exc:
             progress("interrupted" if isinstance(exc, KeyboardInterrupt) else "failed",
@@ -308,6 +430,8 @@ def run_full(config, out, max_new_jobs=None, rebuild_chunk=None):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--run-id", required=True)
+    parser.add_argument("--workers", type=int, choices=(1, 2, 4, 8), default=1)
+    parser.add_argument("--verify-parallel", action="store_true", help="Only fixed 24 factors in 2010/2023; isolated verification run")
     parser.add_argument("--max-new-jobs", type=int, help="Pause after this many new chunks; same command without limit resumes")
     parser.add_argument("--rebuild-chunk", help="Explicitly preserve and rebuild one completed year/factor chunk")
     args = parser.parse_args()
@@ -319,7 +443,7 @@ def main():
         parser.error("rebuild-chunk requires year/factor")
     config = yaml.safe_load((ROOT / "configs/long_history_multi_evaluator_screening_v1.yaml").read_text())
     result = run_full(config, ROOT / "outputs/long_history_multi_evaluator_screening_v1" / args.run_id,
-                      args.max_new_jobs, args.rebuild_chunk)
+                      args.max_new_jobs, args.rebuild_chunk, args.workers, args.verify_parallel)
     print(json.dumps(result, ensure_ascii=False, indent=2))
 
 

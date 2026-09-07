@@ -52,7 +52,7 @@
 
 完整仓库检查通过 **526 tests** 及所有现有 synthetic validators；最新定向检查 **15 tests** 通过。Fast 检查 46 tests、Qlib runtime 6 tests 通过。依赖仍有既有 deprecation/runtime warnings。新增保护已用最终 6 因子真实回归验证。
 
-尚未完成：正式 765 全量评价/FDR、Evidence Board V0、一次性规则冻结和 Candidate Board V0。全量恢复入口及其小规模验证见下节，正式运行选择单 worker、数值库单线程。PIT 抽查、分块/两 worker 指标等价性、价格缓存完整性和 required metric profile 已有上述证据；这些不等于全量执行完成，更不能写 `primary_mvp_status=complete`。
+尚未完成：正式 765 全量评价/FDR、Evidence Board V0、一次性规则冻结和 Candidate Board V0。全量恢复入口及其小规模验证见下节；初始单 worker 任务已由用户启动并在完成 94 单元后结束，现按用户要求增加进程并行。PIT 抽查、分块/两 worker 指标等价性、价格缓存完整性和 required metric profile 已有上述证据；这些不等于全量执行完成，更不能写 `primary_mvp_status=complete`。
 
 近期诊断访问保持 false。10D、Core/经济组合、模型和 Strategy V2 均未启动；原 Phase 0 backward replication 与冻结 Strategy V1 未改动。
 
@@ -87,7 +87,7 @@ python scripts/run_long_history_multi_evaluator_screening_v1.py --run-id cache_n
 
 ```powershell
 Set-Location E:\qlib_prj\qlib_baseline
-& E:\anaconda_envs\qlib_env\python.exe -u scripts/run_long_history_primary_full.py --run-id primary_full_20260907 2>&1 | Tee-Object -FilePath tmp/long_history_primary_full_20260907.log -Append
+& E:\anaconda_envs\qlib_env\python.exe -u scripts/run_long_history_primary_full.py --run-id primary_full_20260907 --workers 8 2>&1 | Tee-Object -FilePath tmp/long_history_primary_full_20260907.log -Append
 ```
 
 中断后重新执行同一条命令即可恢复。不要加 `--max-new-jobs`，不要在运行期间更新本次绑定的研究代码或数据。此独立终端启动的计算不依赖 Codex 对话；关闭 Codex 后仍可运行，但须保留该终端并保持计算机开机、不休眠。关闭终端、关机或重启可能结束进程，之后可恢复。它只执行已实现的 Python 工作，不会在 Codex 关闭后自行继续开发或制定候选规则。
@@ -102,3 +102,27 @@ Get-Content E:\qlib_prj\qlib_baseline\tmp\long_history_primary_full_20260907.log
 `status.json` 含当前单元、已核验完成数、总数、PID 与更新时间；初始化合同核对和最终 bootstrap 期间可能暂时没有逐单元更新。此前 20–41 小时估算置信度低；新入口的共享标签减少重复计算，但两个单元不足以重新承诺全量耗时。
 
 成功终点为 `execution_status=computation_complete_review_pending`，同时 `primary_mvp_status` 仍为 `in_progress`。`aggregate/` 保存 `period_metrics.csv/parquet`、`primary_fdr.csv`、factor inventory、job receipts 和文件哈希。随后由 Codex检查完整证据、完善 Evidence Board、一次性制定并冻结候选规则，生成 Candidate Board V0，再交用户人工审阅；此命令不自动制定规则，也不访问 2024+ 诊断或训练模型。
+
+## 进程并行提速（2026-09-07）
+
+用户已停止初始任务并要求提速，随后明确要求直接测试 8 个进程。新增 `--workers 1/2/4/8`，由主进程调度、独立工作进程计算。每个进程的数值库与 Arrow 计算线程均为 1；一次最多派发与 worker 数相同的单元，不传输整张因子表，进程内按 key hash 复用标签。价格缓存建造与读取使用互斥锁，单元目录另有锁防止孤立进程与恢复任务同时写入。原生指标、标签、分桶、样本规则、年份边界、FDR 和汇总计算均保持原定义。
+
+并行结果按完成顺序落盘，日志顺序允许交错。`status.json` 新增 `workers`、`inner_threads`、`active_jobs`；原 `current_job` 在并行时表示最近完成的单元，正在计算的单元以 `active_jobs` 为准。正常按一次 Ctrl+C 后，主进程停止派发并等待当前少量单元结束再退出；若强制结束进程，恢复时重新核验磁盘完成记录。
+
+为复用用户已完成的 94 个单元，只允许已知旧 runner SHA-256 `1507f37f74c0458a7bc4a927309fcdd3ab109293339fa2539616fd29bcca634c` 的调度版本迁移，且除该 runner 哈希外，输入合同的每个字段必须相同。原 `contract.json` 和旧单元 receipt 不改写；`execution/` 追加旧合同与新执行源码的对应记录、每次实际 worker 数和耗时。配置中的初始 `resources.workers=1` 保留作原合同追溯，实际资源由 CLI 明确覆盖并记录；这不改变研究参数。其他实现、数据或规则变化仍拒绝复用。
+
+`--verify-parallel` 只计算预先固定的 24 个代表因子在 2010/2023 的 48 个单元，用独立合同和目录隔离，不计算正式 FDR、不表示 primary complete。正式启动命令不应添加该参数。
+
+实测结果见 [进程并行验证](PARALLEL_PROCESS_SMOKE.json)：
+
+| 工作进程 | 同一批 48 单元耗时 | 相对单进程观测加速 |
+| --- | ---: | ---: |
+| 1 | 201.98 秒 | 1.00× |
+| 2 | 114.20 秒 | 1.77× |
+| 8 | 65.31 秒 | 3.09× |
+
+两进程与八进程各有 376 份原生 Parquet、48 份日样本状态与全部输入/mask/status receipt 和单进程 exact 一致；2010 年 ATR 无可定义样本，三次一致标为 unavailable。八进程按秒采样的进程组 RSS 合计峰值约 4.53 GiB、系统剩余内存最低约 5.64 GiB、CPU 合计最高约 801%（一个逻辑核心为 100%）。RSS 合计含共享页，离散采样不保证捕获瞬时峰值。
+
+耗时包含工作进程初始化、IO、标签、计算和落盘，未包括共同输入身份核对、全量汇总与 FDR。单进程/两进程曾建造价格缓存，八进程命中缓存，因此 3.09× 是这轮端到端观测加速，不是控制所有缓存条件后的纯并行效率。代码哈希逐轮保存：单进程基准后只补充 receipt 执行来源字段，两进程基准后只扩展 CLI 接受 8；数值计算未改变。
+
+已在原 `primary_full_20260907` 上使用 `--workers 8 --max-new-jobs 8` 验证续跑：原合同与 94 个旧 receipt 字节未变，仅新增 8 个完成单元，目前 **102/10,710，paused_job_limit**，测试进程已退出。用户执行上方命令（不加限额参数）即可从现有结果继续，无需从头计算。完整检查 **530 tests**、Fast 46 tests、Qlib runtime 6 tests 通过；正式全量仍未完成。

@@ -22,7 +22,7 @@ artifact 名称中的 `current` 不自动表示 ACTIVE。
 当前实施方案：
 [Long-History Multi-Evaluator Screening MVP](LONG_HISTORY_MULTI_EVALUATOR_SCREENING_MVP_PLAN.md)
 已于 2026-09-07 获用户实施指令，是现行主线的收缩执行方案。先完成 20D V0 并 STOP
-人工审阅；10D 增强独立后移。受限输入/全库质量审计、原生短窗与 6 因子全历史 smoke 已完成；全量断点续跑入口已实现，等待用户在独立 PowerShell 启动正式计算。全量结果与 Board 尚未完成。
+人工审阅；10D 增强独立后移。受限输入/全库质量审计、原生短窗与 6 因子全历史 smoke 已完成；用户已启动全量后暂停，现增加进程并行并保留已完成结果，新的独立 PowerShell 命令见实施报告。全量结果与 Board 尚未完成。
 原 Phase 0 保持 CLOSED；原 Phase 1 的质量工作纳入 MVP 推进，尚未验收完成。
 Core team、最终经济组合、近期诊断及模型训练仍不在本轮范围。
 运行命令与验收进度见 [实施报告](../reports/long_history_multi_evaluator_screening_v1/IMPLEMENTATION_PROGRESS.md)。

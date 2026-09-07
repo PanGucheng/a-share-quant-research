@@ -1,0 +1,71 @@
+{
+  "scope": "24 fixed representative factors x full mature years 2010 and 2023; all development-only; no full candidate evidence",
+  "runs": [
+    {
+      "workers": 1,
+      "run_id": "parallel_bench_w1_20260907",
+      "completed_chunks": 48,
+      "compute_wall_seconds": 201.98011399999814,
+      "max_worker_peak_GiB": 0.7599105834960938,
+      "runner_sha256": "60a1121ed1fd665363d6027c7f617fcc682b64902876c845683210d7f8d9189e",
+      "unavailable_jobs": [
+        "2010/ta_volatility_atr"
+      ]
+    },
+    {
+      "workers": 2,
+      "run_id": "parallel_bench_w2_20260907",
+      "completed_chunks": 48,
+      "compute_wall_seconds": 114.19881529999839,
+      "max_worker_peak_GiB": 0.7676010131835938,
+      "runner_sha256": "8e7054d70ba65f263271acb9372d1163ab4f2debcbf361aba6fa05623fc889f1",
+      "unavailable_jobs": [
+        "2010/ta_volatility_atr"
+      ]
+    },
+    {
+      "workers": 8,
+      "run_id": "parallel_bench_w8_20260907",
+      "completed_chunks": 48,
+      "compute_wall_seconds": 65.31181520000246,
+      "max_worker_peak_GiB": 0.7715034484863281,
+      "runner_sha256": "78dd5b87654db9153358729c5ccc8d7c755347af8e55209c06c7011acc8efd8c",
+      "unavailable_jobs": [
+        "2010/ta_volatility_atr"
+      ]
+    }
+  ],
+  "comparisons_against_one_worker": {
+    "2": {
+      "exact_native_files": 376,
+      "exact_daily_sample_files": 48,
+      "matching_input_mask_and_status_receipts": 48
+    },
+    "8": {
+      "exact_native_files": 376,
+      "exact_daily_sample_files": 48,
+      "matching_input_mask_and_status_receipts": 48
+    }
+  },
+  "observed_8_worker_speedup": 3.0925509171882664,
+  "resource_samples": 32,
+  "sampled_peak_process_tree_RSS_GiB": 4.533634185791016,
+  "sampled_min_available_RAM_GiB": 5.641166687011719,
+  "sampled_peak_CPU_one_core_100": 801.3,
+  "limitations": [
+    "Timings include worker initialization, I/O, labels, calculation and writes, but exclude common input identity binding and final full FDR/aggregation.",
+    "Sequential and two-worker runs constructed price caches; eight-worker run hit them. Speedup is observed end-to-end, not isolated parallel efficiency.",
+    "24 factors and two years are not a full throughput benchmark.",
+    "Process-tree RSS sum includes shared pages; one-second sampling may miss brief peaks.",
+    "Sequential baseline predates receipt-only execution provenance fields; two-worker run predates CLI acceptance of 8. Per-run code hashes retained; numerical arithmetic is unchanged."
+  ],
+  "migration": {
+    "run_id": "primary_full_20260907",
+    "old_contract_and_94_receipts_byte_identical": true,
+    "newly_computed_chunks": 8,
+    "completed_chunks": 102,
+    "execution_status": "paused_job_limit"
+  },
+  "recommended_workers": 8,
+  "held_aside_recent_diagnostic_accessed": false
+}
