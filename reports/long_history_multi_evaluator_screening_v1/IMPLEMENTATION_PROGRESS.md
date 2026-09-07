@@ -15,7 +15,7 @@
 
 ## 实际运行
 
-运行数据在 ignored `outputs/long_history_multi_evaluator_screening_v1/`；每次使用新 run_id，不覆盖历史产物。
+运行数据在 ignored `outputs/long_history_multi_evaluator_screening_v1/`；smoke 每次使用新 run_id。新增 full 入口使用固定 run_id 恢复同一任务，不覆盖已完成单元。
 
 | Run ID | 目的与结果 |
 | --- | --- |
@@ -52,7 +52,7 @@
 
 完整仓库检查通过 **526 tests** 及所有现有 synthetic validators；最新定向检查 **15 tests** 通过。Fast 检查 46 tests、Qlib runtime 6 tests 通过。依赖仍有既有 deprecation/runtime warnings。新增保护已用最终 6 因子真实回归验证。
 
-尚未完成：正式全量任务恢复与缓存损坏后的受影响批次重建、真实全量执行资源选择、正式 765 全量评价/FDR、Evidence Board V0、一次性规则冻结和 Candidate Board V0。PIT 抽查、分块/两 worker 指标等价性、价格缓存完整性和 required metric profile 已有上述证据；这些不等于全量执行链验收，更不能写 `primary_mvp_status=complete`。
+尚未完成：正式 765 全量评价/FDR、Evidence Board V0、一次性规则冻结和 Candidate Board V0。全量恢复入口及其小规模验证见下节，正式运行选择单 worker、数值库单线程。PIT 抽查、分块/两 worker 指标等价性、价格缓存完整性和 required metric profile 已有上述证据；这些不等于全量执行完成，更不能写 `primary_mvp_status=complete`。
 
 近期诊断访问保持 false。10D、Core/经济组合、模型和 Strategy V2 均未启动；原 Phase 0 backward replication 与冻结 Strategy V1 未改动。
 
@@ -69,4 +69,36 @@ python scripts/run_long_history_multi_evaluator_screening_v1.py --run-id quality
 python scripts/run_long_history_multi_evaluator_screening_v1.py --run-id cache_new --smoke --price-cache
 ```
 
-当前入口没有 full/candidate 子命令。完整计划及停止点见 [开发计划](../../docs/LONG_HISTORY_MULTI_EVALUATOR_SCREENING_MVP_PLAN.md)。
+以上入口保留为 audit/smoke。完整计划及停止点见 [开发计划](../../docs/LONG_HISTORY_MULTI_EVALUATOR_SCREENING_MVP_PLAN.md)。
+
+## 全量计算与独立终端交接（2026-09-07）
+
+新增 [全量 CLI](../../scripts/run_long_history_primary_full.py)，复用上述受限读取、价格缓存、精确标签、原生评价函数与 FDR。全量为 765 因子 × 14 年 = 10,710 个单元，每个单元计算三套原生指标；同年度 key hash 一致时共用标签。所有年度完成后才计算 19 个时期视图和单一 765 家族的 bootstrap/BH/BY。
+
+每个单元先写 staging，再以目录重命名发布完整 receipt。恢复时逐文件核对哈希；输入配置、原生源码/依赖、相关实现、价格源内容或 canonical parent 大小/修改时间变化时拒绝混用旧结果。Canonical 大分区继续继承 assembly 的完整性认证，未重新逐字节扫描；stat 绑定不是防范恶意保留大小和时间戳篡改的认证。价格源完整性哈希可能触及近期存储字节，实际加载及计算数据仍不超过 2023-12-29。
+
+同一 run_id 使用操作系统锁；正常退出或进程结束会释放锁，磁盘上的 `run.lock` 无需删除。强制结束时未发布的 staging 保留作诊断，重启只重算未完成单元。损坏的已完成单元会报错，不会静默当作缺失或 p=1；可用 `--rebuild-chunk 年份/因子名` 明确归档原单元和依赖汇总后重算。该选项仅用于工程重建，不改变研究规则。若整个输入合同发生变化，应保留旧 run，重新选择 run_id。
+
+实际小规模验证见 [编排验证记录](ORCHESTRATION_SMOKE.json)：`orchestration_resume_20260907` 首次完成两个 2010 年单元，第二次只新增第三个；显式重建将旧单元归档，并仅重算指定的一个单元；`alpha158_BETA20 / 2010` 的八份原生结果与此前 `long_six_20260907` 及重建前结果 exact 一致。暂停使用 `--max-new-jobs`，没有缩小正式库存或将部分运行标为完成。Synthetic tests 覆盖合同变化、结果改值损坏、跨进程互斥、缺年度任务拒绝汇总、原始日序列与分桶汇总。
+
+本次完整检查 529 tests 与现有 synthetic validators 通过；Fast 46 tests、Qlib runtime 6 tests 通过。完整计算及 765 因子真实 FDR 尚未运行。
+
+用户要求自行启动长任务。请从 Windows 开始菜单或 Windows Terminal 新开 **独立 PowerShell**，执行：
+
+```powershell
+Set-Location E:\qlib_prj\qlib_baseline
+& E:\anaconda_envs\qlib_env\python.exe -u scripts/run_long_history_primary_full.py --run-id primary_full_20260907 2>&1 | Tee-Object -FilePath tmp/long_history_primary_full_20260907.log -Append
+```
+
+中断后重新执行同一条命令即可恢复。不要加 `--max-new-jobs`，不要在运行期间更新本次绑定的研究代码或数据。此独立终端启动的计算不依赖 Codex 对话；关闭 Codex 后仍可运行，但须保留该终端并保持计算机开机、不休眠。关闭终端、关机或重启可能结束进程，之后可恢复。它只执行已实现的 Python 工作，不会在 Codex 关闭后自行继续开发或制定候选规则。
+
+在另一个 PowerShell 查看进度：
+
+```powershell
+Get-Content E:\qlib_prj\qlib_baseline\outputs\long_history_multi_evaluator_screening_v1\primary_full_20260907\status.json
+Get-Content E:\qlib_prj\qlib_baseline\tmp\long_history_primary_full_20260907.log -Tail 20
+```
+
+`status.json` 含当前单元、已核验完成数、总数、PID 与更新时间；初始化合同核对和最终 bootstrap 期间可能暂时没有逐单元更新。此前 20–41 小时估算置信度低；新入口的共享标签减少重复计算，但两个单元不足以重新承诺全量耗时。
+
+成功终点为 `execution_status=computation_complete_review_pending`，同时 `primary_mvp_status` 仍为 `in_progress`。`aggregate/` 保存 `period_metrics.csv/parquet`、`primary_fdr.csv`、factor inventory、job receipts 和文件哈希。随后由 Codex检查完整证据、完善 Evidence Board、一次性制定并冻结候选规则，生成 Candidate Board V0，再交用户人工审阅；此命令不自动制定规则，也不访问 2024+ 诊断或训练模型。

@@ -1,0 +1,22 @@
+{
+  "scope": "bounded orchestration validation only; full 765 computation not started",
+  "run_id": "orchestration_resume_20260907",
+  "contract_hash": "102cb353b115c42637ac36bc6abf347d2caa0faf0e27694c424133d16acfee1a",
+  "initial_completed_chunks": 2,
+  "resume_completed_chunks": 3,
+  "resume_new_chunks": 1,
+  "explicit_rebuild_preserved_old_chunk": true,
+  "rebuild_new_chunks": 1,
+  "exact_native_files_against_prior_long_smoke_and_preserved_chunk": [
+    "alphalens_ic.parquet",
+    "alphalens_quantile.parquet",
+    "jqfactor_ic.parquet",
+    "jqfactor_returns.parquet",
+    "qlib_cross_section_mean.parquet",
+    "qlib_ic.parquet",
+    "qlib_long_short.parquet",
+    "qlib_pearson.parquet"
+  ],
+  "held_aside_recent_diagnostic_accessed": false,
+  "runner_sha256": "9a49758b1a074793ef297cc06aea4164cb9b8ebb7f286b369743bb78680b9a2f"
+}
