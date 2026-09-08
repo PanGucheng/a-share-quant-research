@@ -1,8 +1,8 @@
 # Candidate Consolidation / Redundancy V0.5 开发计划
 
-日期：2026-09-08。状态：**仓库审计与方案完成；实施尚未启动**。
+日期：2026-09-08。状态：**用户已授权实施；P0/P1 与可恢复日证据入口正在落地**。实施结果和运行命令见 [实施进度](../reports/candidate_consolidation_v0_5/IMPLEMENTATION_PROGRESS.md)。以下研究边界继续生效。
 
-本计划依据用户提供的《Candidate Consolidation - Redundancy V0.5 预研与规划任务》，结合远端最新 `main` 制定。审计基线为 `26715329cb51170b6f47580824137fa97d07565f`，已执行 `git fetch origin` 并确认本地与远端一致。附件中的算法、阈值和流程作为设计输入评估；本次用户请求是制定计划，不据此执行大规模 consolidation。
+本计划依据用户提供的《Candidate Consolidation - Redundancy V0.5 预研与规划任务》，结合当时远端最新 `main` 制定。初版审计基线为 `26715329cb51170b6f47580824137fa97d07565f`，后在 `b4ed882` 收敛复用方案。附件中的算法、阈值和流程作为设计输入评估；初版仅获规划授权，当前实施授权见K及实施进度。
 
 建议采用：**全库存语义审计 → 494 工作因子的精确每日横截面相似性 → 跨时期结构检查 → 数值分组与经济解释 → 不使用收益排名的代表提案 → 人工审阅停止点**。不预设最终因子数量。V0.5 输出信息结构和提案，不发布最终 Core，也不删除库存。
 
@@ -341,7 +341,7 @@ V0.5不新建通用符号计算系统。先用明确的字段/算子/窗口描�
 
 ## K. STOP POINT 与成功标准
 
-本次到此完成**规划**，不执行P0–P4全量开发/计算。后续用户授权实施此计划后，工作按P0–P4推进；P4生成Representative Proposal Board后停止，不自动进入10D、2024+、Core、经济组合、LightGBM、Structured ML、TopK/调仓优化或Strategy V2。遇到数据correctness blocker只诊断并说明影响，不自行改写Primary或重新筛选。
+用户于2026-09-08明确要求“请按照计划开始实施”，已授权按P0–P4推进。长时间全量执行按用户此前偏好交付外部PowerShell命令；P4生成Representative Proposal Board后停止，不自动进入10D、2024+、Core、经济组合、LightGBM、Structured ML、TopK/调仓优化或Strategy V2。遇到数据correctness blocker只诊断并说明影响，不自行改写Primary或重新筛选。
 
 验收按可解释性与可重现性，不按压缩数量：确定性重复/实证同序/近似家族分开计数；全部active成员可追溯；跨Era不稳定及overlap不足显式展示；每簇有机制或明确unresolved；代表规则无label；765库存和Primary冻结字节保持；人工能优先看group摘要并展开每个成员。
 
@@ -383,4 +383,4 @@ V0.5不新建通用符号计算系统。先用明确的字段/算子/窗口描�
 | 24 关系编码 | C/J：relation_type+evidence_status+mask/sign/domain |
 | 25 库存保留 | B/G/J/K：774/765/494分层映射，所有成员保留且无删除 |
 
-本次规划验证：远端基线、冻结Board hash、成员数量与来源、taxonomy覆盖、runtime日期/尺寸元数据、既有年度质量数据及两个synthetic单日测时。未读取真实factor矩阵进行新consolidation，未运行聚类/代表选择，未读取2024+数据值。纯文档变更按仓库docs检查路径交付。
+初版规划阶段验证（不代表当前实施状态）：远端基线、冻结Board hash、成员数量与来源、taxonomy覆盖、runtime日期/尺寸元数据、既有年度质量数据及两个synthetic单日测时。当时未读取真实factor矩阵进行新consolidation，未运行聚类/代表选择，未读取2024+数据值；初版按纯文档检查路径交付。当前实现和真实canary按代码完整检查路径验证，详见实施进度。

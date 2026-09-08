@@ -16,7 +16,7 @@ artifact 名称中的 `current` 不自动表示 ACTIVE。
 | Phase 0 Backward Replication | CLOSED / COMPLETED | 91 因子 fixed-union 的 same-era reconciliation 与 canonical backward replication 已完成 |
 | Phase 1 Feature Quality Gate | COMPLETE / MVP quality scope | 本轮全库质量与样本审计完成，不等于完整可交易性认证 |
 | Primary 20D Screening MVP | COMPLETE / STOP FOR HUMAN REVIEW | Evidence/Candidate Board V0、冻结规则与完整765家族FDR已交付 |
-| Candidate Consolidation / Redundancy V0.5 | PLANNING COMPLETE / IMPLEMENTATION NOT STARTED | 已核验494工作集并完成实施计划及开源/现有代码复用收敛审计；尚未开展全量相似性、聚类及代表提案 |
+| Candidate Consolidation / Redundancy V0.5 | IMPLEMENTATION ACTIVE | 已授权P0–P4；正在完成P0/P1与可恢复日证据入口；全量汇总、聚类及代表提案待后续 |
 | Structured ML | NOT AUTHORIZED | 不得训练或比较候选模型 |
 | Strategy V2 | NOT AUTHORIZED | 需要独立 protocol、freeze date 与新 forward evidence |
 | Live trading | NOT AUTHORIZED | 不属于当前范围 |
@@ -29,7 +29,7 @@ artifact 名称中的 `current` 不自动表示 ACTIVE。
 Core team、最终经济组合、近期诊断及模型训练仍不在本轮范围。
 交付见 [V0审阅报告](../reports/long_history_multi_evaluator_screening_v1/REPORT.md)；执行历史见 [实施记录](../reports/long_history_multi_evaluator_screening_v1/IMPLEMENTATION_PROGRESS.md)。
 用户随后授权因子审阅，已交付[Codex辅助审阅意见](../reports/long_history_multi_evaluator_screening_v1/review_v0/REVIEW.md)。765行建议已完成，用户决策待定。
-2026-09-08按用户新请求完成[Candidate Consolidation / Redundancy V0.5计划](CANDIDATE_CONSOLIDATION_REDUNDANCY_V0_5_PLAN.md)：基于远端main审计现有工具，核验494工作集，明确feature-only相似性、经济/暴露注释、label-free代表政策、开源算法复用边界及计算验收。当前仅规划完成，未启动全量计算；后续实施以代表提案人工审阅为停止点。
+2026-09-08用户授权实施[Candidate Consolidation / Redundancy V0.5计划](CANDIDATE_CONSOLIDATION_REDUNDANCY_V0_5_PLAN.md)。当前进展及外部计算命令统一见[实施进度](../reports/candidate_consolidation_v0_5/IMPLEMENTATION_PROGRESS.md)；以代表提案人工审阅为停止点。
 本轮完成状态与哈希见 `outputs/long_history_multi_evaluator_screening_v1/primary_full_20260907/primary/run_manifest.json`。
 
 机器实时状态以以下文件为准：

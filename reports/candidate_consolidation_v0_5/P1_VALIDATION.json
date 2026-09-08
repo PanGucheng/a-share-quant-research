@@ -1,0 +1,78 @@
+{
+  "canary": {
+    "active_count": 494,
+    "column_count_including_controls": 494,
+    "contract_hash": "8d25590be0ef9aad996bae83253b0ad51b938c79825e79af54f524898b411c04",
+    "dates": [
+      "2010-01-29",
+      "2012-07-18",
+      "2014-12-31",
+      "2015-01-05",
+      "2016-07-05",
+      "2017-12-29",
+      "2018-01-02",
+      "2019-07-05",
+      "2020-12-31",
+      "2021-01-04",
+      "2022-07-06",
+      "2023-12-29"
+    ],
+    "full_eta_status": "requires_caution_single_day_io_and_oracle_overhead",
+    "held_aside_recent_diagnostic_accessed": false,
+    "largest_worker_rss_sampled_bytes": 478547968,
+    "max_oracle_abs_error": 4.440892098500626e-16,
+    "new_parallel_jobs": 12,
+    "new_serial_jobs": 12,
+    "one_vs_eight": "bitwise_equal_including_nan",
+    "parallel_wall_seconds": 117.69216360000428,
+    "serial_kernel_seconds": 81.77760099996522,
+    "serial_oracle_seconds": 342.23536110002897,
+    "serial_wall_seconds": 484.9764794000075,
+    "status": "pass",
+    "timings_include_oracle": true,
+    "timings_valid_for_fresh_comparison": true
+  },
+  "checks": {
+    "fast_tests": 46,
+    "full_tests": 552,
+    "full_validators": 26
+  },
+  "code_hashes": {
+    "factor_research/candidate_consolidation.py": "a0999113510e954ed486094801a39e0a0a999d88e37f2f01ce83e009a0b6708e",
+    "factor_research/factor_clustering.py": "af56fd7219b87ad1f782c7445205fda4698593908eaca8b5edcfe223eca6dc8c",
+    "factor_research/factor_similarity.py": "ffec2a35046191e14fd89245ddee45c42118205384ea35f3b13a8bf320135b90",
+    "factor_research/long_history_screening.py": "68244a456cb2d8480b20ce7b8c18c927b87b2d5ed1ecc189483bb980204a229a",
+    "model_research/feature_eligibility.py": "a8cb2caa223d8076691d2b8231cb162b8e369deebe54fc004f43131757168864",
+    "qlib_baseline/io.py": "bbd39151c1a9210caada39ab6ffcfccb8e73eb7371f11722ca380e4348ee706f",
+    "research_validation/canonical_dataset.py": "f16f1ca06efbba4024c26ab2833adffb1c7277a403e0e26868afa4d825bab032",
+    "scripts/run_candidate_consolidation_v0_5.py": "8c207ceedd5542b1da6d1c61a3ae0e3fde4439456fa1a06b3004dcc0b9b22cf8"
+  },
+  "config_hash": "b0e0871860976d87299115a7611d99a81450271b2b472aa4aa85f901eae86cb6",
+  "frozen_primary_files_verified": 20,
+  "month_reader_profile": {
+    "columns": 494,
+    "contract_hash": "8d25590be0ef9aad996bae83253b0ad51b938c79825e79af54f524898b411c04",
+    "days": 21,
+    "eight_workers_projected_rss_bytes": 7767883776,
+    "end": "2023-12-29",
+    "purpose": "bounded month reader and alias memory calibration only, no full pairwise run",
+    "read_seconds": 12.45641230000183,
+    "recent_values_accessed": false,
+    "rows": 42000,
+    "rss_peak_50ms_bytes": 970985472,
+    "start": "2023-12-01",
+    "wall_seconds": 12.86497560000862
+  },
+  "no_oracle_parallel_ideal_hours": 0.9521799525975868,
+  "notes": [
+    "Serial canary overlapped local CI checks; timings are calibration, not a dedicated benchmark.",
+    "Parallel jobs include pandas oracle; full production omits it after qualification.",
+    "Month memory projection is an estimate, not measured aggregate eight-month RSS.",
+    "Full daily evidence, Full/Era aggregation and representative proposal are not yet run."
+  ],
+  "npy_byte_hash_parity": "all 72 serial/parallel file pairs identical",
+  "parallel_kernel_seconds_sum": 97.30141680003726,
+  "parallel_read_seconds_sum": 73.77192429997376,
+  "run_id": "consolidation_20260908_v2",
+  "stage": "P0_foundation_P1_canary_daily_runner"
+}

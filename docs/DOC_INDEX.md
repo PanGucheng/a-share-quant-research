@@ -48,7 +48,9 @@ evidence 判断；历史报告与 archive 只说明当时发生了什么。
 ## Current Development Plans
 
 - [CANDIDATE_CONSOLIDATION_REDUNDANCY_V0_5_PLAN.md](CANDIDATE_CONSOLIDATION_REDUNDANCY_V0_5_PLAN.md)
-  — **PLANNING COMPLETE / IMPLEMENTATION NOT STARTED**；765语义审计、494工作集、feature-only冗余与代表提案计划，含仓库复用审计、计算预算和人工停止点。
+  — **IMPLEMENTATION ACTIVE**；765语义审计、494工作集、feature-only冗余与代表提案计划，含仓库复用审计、计算预算和人工停止点。
+- [Candidate Consolidation V0.5 实施进度](../reports/candidate_consolidation_v0_5/IMPLEMENTATION_PROGRESS.md)
+  — P0/P1验证、运行证据、外部计算与恢复命令；后续Full/Era汇总及代表提案状态。
 - [LONG_HISTORY_MULTI_EVALUATOR_SCREENING_MVP_PLAN.md](LONG_HISTORY_MULTI_EVALUATOR_SCREENING_MVP_PLAN.md)
   — **PRIMARY V0 COMPLETE / STOP FOR HUMAN REVIEW**；原 Long-History Robust Core 路线的收缩执行方案，
   不替代现行 authority。区分 shared parity 与 backend-native screening；20D Phase 2A

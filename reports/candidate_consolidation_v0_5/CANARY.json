@@ -1,0 +1,33 @@
+{
+  "active_count": 494,
+  "column_count_including_controls": 494,
+  "contract_hash": "8d25590be0ef9aad996bae83253b0ad51b938c79825e79af54f524898b411c04",
+  "dates": [
+    "2010-01-29",
+    "2012-07-18",
+    "2014-12-31",
+    "2015-01-05",
+    "2016-07-05",
+    "2017-12-29",
+    "2018-01-02",
+    "2019-07-05",
+    "2020-12-31",
+    "2021-01-04",
+    "2022-07-06",
+    "2023-12-29"
+  ],
+  "full_eta_status": "requires_caution_single_day_io_and_oracle_overhead",
+  "held_aside_recent_diagnostic_accessed": false,
+  "largest_worker_rss_sampled_bytes": 478547968,
+  "max_oracle_abs_error": 4.440892098500626e-16,
+  "new_parallel_jobs": 12,
+  "new_serial_jobs": 12,
+  "one_vs_eight": "bitwise_equal_including_nan",
+  "parallel_wall_seconds": 117.69216360000428,
+  "serial_kernel_seconds": 81.77760099996522,
+  "serial_oracle_seconds": 342.23536110002897,
+  "serial_wall_seconds": 484.9764794000075,
+  "status": "pass",
+  "timings_include_oracle": true,
+  "timings_valid_for_fresh_comparison": true
+}

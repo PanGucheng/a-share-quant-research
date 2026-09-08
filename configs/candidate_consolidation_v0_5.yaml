@@ -1,0 +1,23 @@
+schema_version: 1
+canonical_dataset_id: canonical-dataset:27518ddbb28ba2b4b1247375d4e3d32d7d5be9935a5f2074dc272f84285f6423
+canonical_root: outputs/canonical_historical_dataset_assembly_v1/current
+development_start: '2010-01-29'
+development_end: '2023-12-29'
+minimum_pair_observations: 50
+parity_atol: 1.0e-12
+engine: grouped
+controls:
+  - mature_log_total_market_cap
+  - mature_turnover_mean_20
+  - amount_mean_20
+  - mature_amihud_illiquidity_20
+  - mature_realized_volatility_60
+# Diagnostic configuration precedes full observations; no target compression count.
+diagnostics:
+  valid_date_fraction: 0.8
+  common_coverage_q10: 0.5
+  sign_consistency: 0.95
+  similarity_levels: [0.995, 0.95, 0.85, 0.70]
+  rationale: Require broad dated and cross-sectional support; display all fixed levels.
+price_control_status: pending_bounded_units_audit
+industry_control_status: unavailable_for_development
