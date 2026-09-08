@@ -2,7 +2,29 @@
 
 2026-09-08用户授权开始实施；本文件为后续会话恢复入口。
 
-## 最新状态：结果已审阅，代表层需要修订
+## 最新状态：V0.5.1修订完成，停止供人工审阅
+
+2026-09-09完成用户授权的修订。当前入口：[V0.5.1报告](v0_5_1/REPORT.md)、[494行提案](v0_5_1/representative_proposal_board.csv)、[1976行逐层变更](v0_5_1/proposal_changes.csv)。原版及独立审阅保留为历史证据。
+
+- 复用原日Spearman、Full/Era汇总和聚类；新代码独立放在 `factor_research/candidate_consolidation_revision.py`，旧receipt绑定代码保持不变。
+- 462项active具有明确机制、窗口和量纲；32项Alpha101仍需实现语义复核。TA解析固定源码的实际构造参数和输出方法，KAMA采用canonical因果实现与2000-01-04 anchor；PIT/TTM与不同风险估计器保留不同身份。移除运行说明构造的公式复杂度排序。
+- 旧104条跨层级条件替代全部逐条审阅：60条暂缓、44条保留机制/窗口差异。新近似替代为0条，不表示没有数值冗余；代表资格要求同机制同窗口同量纲并通过原定Full/四Era可比、q10与符号条件，没有按压缩数量放宽规则。五组精确等值关系单独登记，保留全部因子身份。
+- 每层61项暂缓：32项语义、23项provider价格尺度、3项事件/状态、3项递归缺失质量问题。单例展示可比/未知pair计数，不把未知当独立信息。
+- ATR及ADX +/- 已完成合成缺失传播实验和2013年三只股票的九组真实核对；沿用300交易日warmup与PIT mask，数值/缺失模式零差异。SH600000、SH600004各一个原始缺口足以传播到2013年全期；SZ300087的有限值控制样本也一致。此为有界归因，不声称解释全市场每个缺口，不修写canonical或Primary。
+- 价格尺度审计记录了TA输入和输出量纲，原始价格到provider存储值的完整处理链仍未核定；相关提案继续暂缓。没有新增价格control或用近期数据回填行业暴露。
+
+产物位于 `outputs/candidate_consolidation_v0_5/consolidation_20260908_v2/proposal_v0_5_1/`；新版receipt独立绑定输出，原版报告/28份runtime文件和Primary20份文件逐hash保持。用户无需重跑全量命令。
+
+独立产物复核已通过：765/494身份、四层1976行、旧104条关系、其中29条非严格稳定、五组精确关系及九组真实重放。交付检查：新增9项有针对性的回归测试；fast 46项、full 564项及26个验证器、Qlib synthetic runtime 6项全部通过；变更文件的Markdown链接、索引、大小与diff检查通过。仍以人工审阅为停止点，无最终Core、组合、模型或Strategy V2。
+
+重现入口（仅在需要新版本时使用独立revision-id；已有版本拒绝覆盖）：
+
+```powershell
+Set-Location E:\qlib_prj\qlib_baseline
+& E:\anaconda_envs\qlib_env\python.exe -u scripts/revise_candidate_consolidation_v0_5_1.py --run-id consolidation_20260908_v2 --revision-id v0_5_1_reproduction
+```
+
+## 前次状态：结果审阅发现代表层需要修订（已处理，未决限制见上）
 
 2026-09-08按用户要求完成[独立结果审阅](review_v1/REVIEW.md)。数值证据保留；五组精确重复建议登记关系，尚未执行替换。代表层存在未知窗口/量纲被当作相同语义、跨Era与overlap状态未衔接资格的问题：四层级104条条件替代提案中29条未获严格稳定关系支持，详细对照见[审阅附表](review_v1/conditional_alias_review.json)。下一步建议补真实公式参数与代表规则，复用现有汇总生成新版本，无需重跑全量日相关。原Board、policy、receipt与Primary保持封存，不进入Core或模型。
 

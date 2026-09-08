@@ -1,0 +1,25 @@
+{
+  "authority": "proposal_only_user_decision_pending_no_core",
+  "exact_alias": "register_sealed_development_equality_keep_all_identities",
+  "formula_complexity": "removed_unreliable_metadata_proxy",
+  "levels": [
+    0.995,
+    0.95,
+    0.85,
+    0.7
+  ],
+  "low_coverage": "annotation_no_new_numeric_cut_three_reviewed_recursive_indicators_deferred",
+  "pair_requirement": "Full_and_A_B_C_D_comparable_median_and_q10_ge_level_sign_consistency_ge_0.95_same_sign",
+  "price_level": "deferred_pending_provider_scale_provenance",
+  "priority": [
+    "resolved_semantics_units_horizon",
+    "same_mechanism_horizon_units",
+    "worst_era_coverage_desc",
+    "full_coverage_desc",
+    "infinite_fraction_asc",
+    "medoid_distance_asc",
+    "factor_id_asc"
+  ],
+  "unknown_semantics": "deferred_never_equal_by_unknown_string",
+  "version": "v0_5_1"
+}

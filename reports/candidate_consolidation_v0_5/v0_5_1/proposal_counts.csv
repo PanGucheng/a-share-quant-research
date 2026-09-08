@@ -1,0 +1,13 @@
+level,proposal_role,members
+0.7,deferred,61
+0.7,retain_semantic_or_horizon_variant,407
+0.7,retain_unmerged_with_unknown_pairs,26
+0.85,deferred,61
+0.85,retain_semantic_or_horizon_variant,384
+0.85,retain_unmerged_with_unknown_pairs,49
+0.95,deferred,61
+0.95,retain_semantic_or_horizon_variant,333
+0.95,retain_unmerged_with_unknown_pairs,100
+0.995,deferred,61
+0.995,retain_semantic_or_horizon_variant,140
+0.995,retain_unmerged_with_unknown_pairs,293

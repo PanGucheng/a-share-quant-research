@@ -1,0 +1,15 @@
+{
+  "active": 494,
+  "active_semantics_resolved": 462,
+  "active_unresolved_semantics": 32,
+  "exact_groups_registered": 5,
+  "held_aside_recent_diagnostic_accessed": false,
+  "level_rows": 1976,
+  "new_conditional_alias_rows": 0,
+  "old_alias_rows_reviewed": 104,
+  "original_proposal_hashes_unchanged": true,
+  "primary_files_unchanged": 20,
+  "real_diagnostic_comparisons": 9,
+  "real_diagnostic_mismatches": 0,
+  "semantic_rows": 765
+}

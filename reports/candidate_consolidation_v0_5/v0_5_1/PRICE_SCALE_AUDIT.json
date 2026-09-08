@@ -1,0 +1,15 @@
+{
+  "decision": "do_not_construct_nominal_price_control_from_unverified_close; defer provider-price replacement",
+  "new_price_control_computed": false,
+  "next_required_evidence": "provider source/adjustment receipt or development-date raw-price reconciliation including stock-specific scaling",
+  "not_verified": [
+    "provider-specific original-price to stored-price scale chain",
+    "whether scale factors are comparable across stocks on the same date"
+  ],
+  "status": "unresolved_replacement_deferred",
+  "verified": [
+    "TA receives provider OHLC without cross-sectional demeaning or nominal-price reconstruction in ta_batch",
+    "EMA/SMA/channel levels retain provider price units; widths and event outputs are separate methods",
+    "KAMA uses canonical causal implementation and anchored state"
+  ]
+}

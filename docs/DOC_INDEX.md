@@ -55,6 +55,8 @@ evidence 判断；历史报告与 archive 只说明当时发生了什么。
   — 494行四层级提案、5组全期精确重复、时期稳定性、经济/风险注释与明确缺项；等待人工审阅。
 - [Candidate Consolidation V0.5 结果审阅与待修订项](../reports/candidate_consolidation_v0_5/review_v1/REVIEW.md)
   — 数值证据保留；真实窗口/量纲与跨Era代表资格衔接需修订，附104条条件替代关系审阅。
+- [Candidate Consolidation V0.5.1 修订提案](../reports/candidate_consolidation_v0_5/v0_5_1/REPORT.md)
+  — 当前版本：494身份保留、旧104条条件替代逐条修订、五组精确重复登记、低覆盖有界真实复核；原版保持封存。
 - [LONG_HISTORY_MULTI_EVALUATOR_SCREENING_MVP_PLAN.md](LONG_HISTORY_MULTI_EVALUATOR_SCREENING_MVP_PLAN.md)
   — **PRIMARY V0 COMPLETE / STOP FOR HUMAN REVIEW**；原 Long-History Robust Core 路线的收缩执行方案，
   不替代现行 authority。区分 shared parity 与 backend-native screening；20D Phase 2A

@@ -1,0 +1,22 @@
+{
+  "hashes": {
+    "factor_research\\factor_library.py": "1c12ca437fa404bcd19027ed61e88523f867ad5ea660e5ec9c445c85f0d79f36",
+    "factor_universe_v2\\historical_data.py": "87c6de02c47308d5229b0d522db6a7123f1f9e199152618a5ce2930bd32e6430",
+    "factor_universe_v2\\mature_factors.py": "a98538090178b290a5f09f525e3205702e566097726e8266f9cb21840ef9d0e9",
+    "outputs\\canonical_historical_dataset_assembly_v1\\current\\factor_lineage.csv": "1d655cd0b099fdfd4317ec295821f897266ef42d3a0b7e6047e21348d461460b",
+    "outputs\\canonical_historical_dataset_assembly_v1\\current\\partition_manifest.csv": "ef7bc044a34904159733a7f4540f47c87ce3191a8224757cc2757167cd0cd9af",
+    "research_validation\\overlap_lineage.py": "c59c80b03fa17b9e4f55eed47b4f4d38ede0251fd1331619205cde28b10a1be8",
+    "scripts\\run_canonical_historical_dataset_assembly_v1.py": "50cd8f7b0f8c40f6f10d8c80f69d1c7f525fa055218387de027d9abf0416ffd3",
+    "scripts\\run_full_research_feature_matrix_v1.py": "8f1860ad9ac992fbcd2505c7598ea44eea650f973a3ac4e251fa39226d2dfe2c",
+    "scripts\\run_historical_data_engineering_extension_v1.py": "6b13756b2bf306ba6a86e84f0f1cf4666c7f41b28ccf6aedc193b7315d25edb7",
+    "tmp\\reference_repos\\ta\\ta\\__init__.py": "1e2dfe6c0e8d47790e41fd34f1fbcbfb352e5fba9b9bca817c69f38a56719296",
+    "tmp\\reference_repos\\ta\\ta\\momentum.py": "e2593ae19986fae7aaa5b842004c12acad03fd99cecc7f8832a5ed829ac51767",
+    "tmp\\reference_repos\\ta\\ta\\others.py": "1bc9a4d9bd3971088be57d753183ed93331bd9b3202818bcce783fb5386fbdc0",
+    "tmp\\reference_repos\\ta\\ta\\trend.py": "11b561e55daf4db14823b10b4d50be2cf09913dfd6939b0a8665edee3404f210",
+    "tmp\\reference_repos\\ta\\ta\\utils.py": "721f6f3a140dd3bfb2fc5253b4898348a44f91275cf9d2ea85f9596e822c1414",
+    "tmp\\reference_repos\\ta\\ta\\volatility.py": "647678eec5e0d195179d6d4993d1054f12540f469db538f313290c2496299b95",
+    "tmp\\reference_repos\\ta\\ta\\volume.py": "79106e89f5410aaabda31b0c8390db208c085442358ae59a0c7e77e5bcff5a22",
+    "tmp\\reference_repos\\ta\\ta\\wrapper.py": "ac03e6fc777121d9d569a0be8015bb9600fd2d61adc052aace207afd6c54acdc"
+  },
+  "ta_commit": "a890410710a6e483c9ba08da7f3dd5089e4b9dff"
+}

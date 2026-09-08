@@ -1,0 +1,43 @@
+{
+  "canonical_slices": [
+    {
+      "columns": [
+        "ta_trend_adx_neg",
+        "ta_trend_adx_pos"
+      ],
+      "end": "2013-12-31",
+      "parent_sha256": "d8361ad744d7c208e12eba2d5aae536da54a6d6c55231d8878692eb5d4b35e1a",
+      "path": "E:/qlib_prj/qlib_baseline/outputs/extended_matrix_overlap_lineage_resolution_v1/runtime/historical/2013/ta_001.parquet",
+      "rows": 475975,
+      "slice_hash": "3135078ea9ff0120d4ac5a6818f2db6775515d26dab06aa71f23d54320eeba96",
+      "start": "2013-01-01"
+    },
+    {
+      "columns": [
+        "ta_volatility_atr"
+      ],
+      "end": "2013-12-31",
+      "parent_sha256": "a94fc565ac0ab61afe867fe2fc03396a9a65b221f63e81d4cd344a51c3cd4e8f",
+      "path": "E:/qlib_prj/qlib_baseline/outputs/historical_data_engineering_extension_v1/runtime/matrix/2013/ta_003.parquet",
+      "rows": 475975,
+      "slice_hash": "c80afcd57a2efd324f0b04702008238891090ad7b51ec6c001fce06045aada53",
+      "start": "2013-01-01"
+    }
+  ],
+  "intervals_sha256": "0861e00ad30cc83ef135a6844aaf904306820ea44852dc77867f4b237370a903",
+  "masked_slice_hash": "1dc423069cd9f7e40c11bc45b27d052adcee81c3362bc454ed82e6be8dd2232d",
+  "raw_end": "2013-12-31",
+  "raw_fields": [
+    "$high",
+    "$low",
+    "$close"
+  ],
+  "raw_slice_hash": "1dc423069cd9f7e40c11bc45b27d052adcee81c3362bc454ed82e6be8dd2232d",
+  "raw_start": "2011-10-13",
+  "selection": "2013 alphabetic first two ATR all-missing stocks and first ATR >200 finite-row control",
+  "symbols": [
+    "SH600000",
+    "SH600004",
+    "SZ300087"
+  ]
+}

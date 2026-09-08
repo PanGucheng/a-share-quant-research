@@ -16,7 +16,7 @@ artifact 名称中的 `current` 不自动表示 ACTIVE。
 | Phase 0 Backward Replication | CLOSED / COMPLETED | 91 因子 fixed-union 的 same-era reconciliation 与 canonical backward replication 已完成 |
 | Phase 1 Feature Quality Gate | COMPLETE / MVP quality scope | 本轮全库质量与样本审计完成，不等于完整可交易性认证 |
 | Primary 20D Screening MVP | COMPLETE / STOP FOR HUMAN REVIEW | Evidence/Candidate Board V0、冻结规则与完整765家族FDR已交付 |
-| Candidate Consolidation / Redundancy V0.5 | PROPOSAL REVIEWED / REVISION NEEDED | 数值证据保留；代表层需修订窗口/量纲及跨Era、overlap资格衔接，见[结果审阅](../reports/candidate_consolidation_v0_5/review_v1/REVIEW.md)；无最终Core |
+| Candidate Consolidation / Redundancy V0.5.1 | REVISED PROPOSAL DELIVERED / STOP FOR HUMAN REVIEW | [修订提案](../reports/candidate_consolidation_v0_5/v0_5_1/REPORT.md)已接入真实窗口/量纲与严格Full/Era证据；五组精确重复登记、低覆盖样本复核完成；价格尺度等未决项保留，无最终Core |
 | Structured ML | NOT AUTHORIZED | 不得训练或比较候选模型 |
 | Strategy V2 | NOT AUTHORIZED | 需要独立 protocol、freeze date 与新 forward evidence |
 | Live trading | NOT AUTHORIZED | 不属于当前范围 |

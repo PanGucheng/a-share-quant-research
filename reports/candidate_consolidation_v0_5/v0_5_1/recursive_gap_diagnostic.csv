@@ -1,0 +1,13 @@
+factor,case,tail_start_index,tail_rows,tail_finite
+ta_volatility_atr,complete,100,60,60
+ta_trend_adx_pos,complete,100,60,60
+ta_trend_adx_neg,complete,100,60,60
+ta_trend_ema_fast,complete,100,60,60
+ta_volatility_atr,single_internal_gap,100,60,0
+ta_trend_adx_pos,single_internal_gap,100,60,0
+ta_trend_adx_neg,single_internal_gap,100,60,0
+ta_trend_ema_fast,single_internal_gap,100,60,60
+ta_volatility_atr,leading_gap,100,60,60
+ta_trend_adx_pos,leading_gap,100,60,60
+ta_trend_adx_neg,leading_gap,100,60,60
+ta_trend_ema_fast,leading_gap,100,60,60
