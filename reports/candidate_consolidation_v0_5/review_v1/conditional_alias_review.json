@@ -1,0 +1,1772 @@
+{
+  "scope": "read-only review overlay; no replacement authority; no Core selection",
+  "source_receipt_sha256": "1daadcffbbd50627090b92749df0c972ea2ef68534494a433df5b233f69c0189",
+  "row_count": 104,
+  "rows": [
+    {
+      "level": 0.995,
+      "factor": "corr_ret_amount_20",
+      "proposed_representative": "corr_ret_volume_20",
+      "pair_relation": "no_stable_redundancy",
+      "factor_horizon": "name_window_20",
+      "representative_horizon": "name_window_20",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "no_stable_redundancy",
+        "unresolved_units"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.995,
+      "factor": "ta_momentum_kama",
+      "proposed_representative": "ta_trend_ema_fast",
+      "pair_relation": "stable_redundancy",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.995,
+      "factor": "ta_trend_ema_slow",
+      "proposed_representative": "ta_trend_ichimoku_b",
+      "pair_relation": "regime_dependent",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "regime_dependent",
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.995,
+      "factor": "ta_trend_ichimoku_a",
+      "proposed_representative": "ta_trend_ichimoku_b",
+      "pair_relation": "regime_dependent",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "regime_dependent",
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.995,
+      "factor": "ta_trend_ichimoku_base",
+      "proposed_representative": "ta_trend_ichimoku_b",
+      "pair_relation": "regime_dependent",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "regime_dependent",
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.995,
+      "factor": "ta_trend_ichimoku_conv",
+      "proposed_representative": "ta_trend_ema_fast",
+      "pair_relation": "stable_redundancy",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.995,
+      "factor": "ta_trend_sma_slow",
+      "proposed_representative": "ta_trend_ichimoku_b",
+      "pair_relation": "regime_dependent",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "regime_dependent",
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.995,
+      "factor": "ta_volatility_bbh",
+      "proposed_representative": "ta_volatility_kch",
+      "pair_relation": "stable_redundancy",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.995,
+      "factor": "ta_volatility_dch",
+      "proposed_representative": "ta_volatility_kch",
+      "pair_relation": "stable_redundancy",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.995,
+      "factor": "ta_volatility_dcl",
+      "proposed_representative": "ta_volatility_bbm",
+      "pair_relation": "stable_redundancy",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.995,
+      "factor": "ta_volatility_dcm",
+      "proposed_representative": "ta_volatility_bbm",
+      "pair_relation": "stable_redundancy",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.995,
+      "factor": "ta_volatility_kcc",
+      "proposed_representative": "ta_volatility_kch",
+      "pair_relation": "stable_redundancy",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.995,
+      "factor": "ta_volatility_kcl",
+      "proposed_representative": "ta_volatility_kch",
+      "pair_relation": "stable_redundancy",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.95,
+      "factor": "amplitude_20",
+      "proposed_representative": "mature_parkinson_volatility_20",
+      "pair_relation": "stable_redundancy",
+      "factor_horizon": "name_window_20",
+      "representative_horizon": "name_window_20",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "unresolved_units"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.95,
+      "factor": "corr_ret_amount_20",
+      "proposed_representative": "corr_ret_volume_20",
+      "pair_relation": "stable_redundancy",
+      "factor_horizon": "name_window_20",
+      "representative_horizon": "name_window_20",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "unresolved_units"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.95,
+      "factor": "mature_book_to_price",
+      "proposed_representative": "mature_book_to_market_pit",
+      "pair_relation": "stable_redundancy",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.95,
+      "factor": "mature_sales_to_price_pit",
+      "proposed_representative": "mature_sales_to_price_ttm",
+      "pair_relation": "regime_dependent",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "regime_dependent",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.95,
+      "factor": "ta_momentum_ao",
+      "proposed_representative": "ta_trend_macd",
+      "pair_relation": "insufficient_overlap",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "insufficient_overlap",
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.95,
+      "factor": "ta_momentum_kama",
+      "proposed_representative": "ta_trend_ema_fast",
+      "pair_relation": "stable_redundancy",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.95,
+      "factor": "ta_trend_ema_slow",
+      "proposed_representative": "ta_trend_ema_fast",
+      "pair_relation": "stable_redundancy",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.95,
+      "factor": "ta_trend_ichimoku_a",
+      "proposed_representative": "ta_trend_ema_fast",
+      "pair_relation": "stable_redundancy",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.95,
+      "factor": "ta_trend_ichimoku_b",
+      "proposed_representative": "ta_trend_ema_fast",
+      "pair_relation": "stable_redundancy",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.95,
+      "factor": "ta_trend_ichimoku_base",
+      "proposed_representative": "ta_trend_ema_fast",
+      "pair_relation": "stable_redundancy",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.95,
+      "factor": "ta_trend_ichimoku_conv",
+      "proposed_representative": "ta_trend_ema_fast",
+      "pair_relation": "stable_redundancy",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.95,
+      "factor": "ta_trend_kst",
+      "proposed_representative": "ta_momentum_ppo_signal",
+      "pair_relation": "insufficient_overlap",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "insufficient_overlap",
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.95,
+      "factor": "ta_trend_sma_slow",
+      "proposed_representative": "ta_trend_ema_fast",
+      "pair_relation": "stable_redundancy",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.95,
+      "factor": "ta_trend_trix",
+      "proposed_representative": "ta_momentum_ppo_signal",
+      "pair_relation": "regime_dependent",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "regime_dependent",
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.95,
+      "factor": "ta_trend_vortex_ind_neg",
+      "proposed_representative": "ta_trend_vortex_ind_diff",
+      "pair_relation": "stable_redundancy",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.95,
+      "factor": "ta_volatility_bbh",
+      "proposed_representative": "ta_volatility_kcl",
+      "pair_relation": "stable_redundancy",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.95,
+      "factor": "ta_volatility_bbm",
+      "proposed_representative": "ta_volatility_kcl",
+      "pair_relation": "stable_redundancy",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.95,
+      "factor": "ta_volatility_dch",
+      "proposed_representative": "ta_volatility_kcl",
+      "pair_relation": "stable_redundancy",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.95,
+      "factor": "ta_volatility_dcl",
+      "proposed_representative": "ta_volatility_kcl",
+      "pair_relation": "stable_redundancy",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.95,
+      "factor": "ta_volatility_dcm",
+      "proposed_representative": "ta_volatility_kcl",
+      "pair_relation": "stable_redundancy",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.95,
+      "factor": "ta_volatility_kcc",
+      "proposed_representative": "ta_volatility_kcl",
+      "pair_relation": "stable_redundancy",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.95,
+      "factor": "ta_volatility_kch",
+      "proposed_representative": "ta_volatility_kcl",
+      "pair_relation": "stable_redundancy",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.85,
+      "factor": "amount_mean_20",
+      "proposed_representative": "amount_std_20",
+      "pair_relation": "stable_redundancy",
+      "factor_horizon": "name_window_20",
+      "representative_horizon": "name_window_20",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "unresolved_units"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.85,
+      "factor": "amplitude_20",
+      "proposed_representative": "mature_parkinson_volatility_20",
+      "pair_relation": "stable_redundancy",
+      "factor_horizon": "name_window_20",
+      "representative_horizon": "name_window_20",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "unresolved_units"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.85,
+      "factor": "corr_ret_amount_20",
+      "proposed_representative": "corr_ret_volume_20",
+      "pair_relation": "stable_redundancy",
+      "factor_horizon": "name_window_20",
+      "representative_horizon": "name_window_20",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "unresolved_units"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.85,
+      "factor": "mature_book_to_price",
+      "proposed_representative": "mature_book_to_market_pit",
+      "pair_relation": "stable_redundancy",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.85,
+      "factor": "mature_earnings_yield_ttm",
+      "proposed_representative": "mature_earnings_to_price_pit",
+      "pair_relation": "no_stable_redundancy",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "no_stable_redundancy",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.85,
+      "factor": "mature_idiosyncratic_volatility_60",
+      "proposed_representative": "mature_realized_volatility_60",
+      "pair_relation": "regime_dependent",
+      "factor_horizon": "name_window_60",
+      "representative_horizon": "name_window_60",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "regime_dependent",
+        "unresolved_units"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.85,
+      "factor": "mature_sales_to_price_pit",
+      "proposed_representative": "mature_sales_to_price_ttm",
+      "pair_relation": "stable_redundancy",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.85,
+      "factor": "ta_momentum_ao",
+      "proposed_representative": "ta_trend_macd",
+      "pair_relation": "insufficient_overlap",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "insufficient_overlap",
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.85,
+      "factor": "ta_momentum_kama",
+      "proposed_representative": "ta_trend_ema_fast",
+      "pair_relation": "stable_redundancy",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.85,
+      "factor": "ta_momentum_pvo_signal",
+      "proposed_representative": "ta_momentum_pvo",
+      "pair_relation": "regime_dependent",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "regime_dependent",
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.85,
+      "factor": "ta_momentum_tsi",
+      "proposed_representative": "ta_momentum_ppo",
+      "pair_relation": "regime_dependent",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "regime_dependent",
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.85,
+      "factor": "ta_trend_aroon_up",
+      "proposed_representative": "ta_trend_aroon_ind",
+      "pair_relation": "no_stable_redundancy",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "no_stable_redundancy",
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.85,
+      "factor": "ta_trend_ema_slow",
+      "proposed_representative": "ta_trend_ema_fast",
+      "pair_relation": "stable_redundancy",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.85,
+      "factor": "ta_trend_ichimoku_a",
+      "proposed_representative": "ta_trend_ema_fast",
+      "pair_relation": "stable_redundancy",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.85,
+      "factor": "ta_trend_ichimoku_b",
+      "proposed_representative": "ta_trend_ema_fast",
+      "pair_relation": "stable_redundancy",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.85,
+      "factor": "ta_trend_ichimoku_base",
+      "proposed_representative": "ta_trend_ema_fast",
+      "pair_relation": "stable_redundancy",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.85,
+      "factor": "ta_trend_ichimoku_conv",
+      "proposed_representative": "ta_trend_ema_fast",
+      "pair_relation": "stable_redundancy",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.85,
+      "factor": "ta_trend_kst",
+      "proposed_representative": "ta_momentum_ppo_signal",
+      "pair_relation": "insufficient_overlap",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "insufficient_overlap",
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.85,
+      "factor": "ta_trend_kst_sig",
+      "proposed_representative": "ta_momentum_ppo_signal",
+      "pair_relation": "insufficient_overlap",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "insufficient_overlap",
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.85,
+      "factor": "ta_trend_macd_diff",
+      "proposed_representative": "ta_momentum_ppo_hist",
+      "pair_relation": "no_stable_redundancy",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "no_stable_redundancy",
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.85,
+      "factor": "ta_trend_sma_slow",
+      "proposed_representative": "ta_trend_ema_fast",
+      "pair_relation": "stable_redundancy",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.85,
+      "factor": "ta_trend_trix",
+      "proposed_representative": "ta_momentum_ppo_signal",
+      "pair_relation": "stable_redundancy",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.85,
+      "factor": "ta_trend_vortex_ind_neg",
+      "proposed_representative": "ta_trend_vortex_ind_diff",
+      "pair_relation": "stable_redundancy",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.85,
+      "factor": "ta_trend_vortex_ind_pos",
+      "proposed_representative": "ta_trend_vortex_ind_diff",
+      "pair_relation": "stable_redundancy",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.85,
+      "factor": "ta_volatility_bbh",
+      "proposed_representative": "ta_volatility_kcl",
+      "pair_relation": "stable_redundancy",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.85,
+      "factor": "ta_volatility_bbm",
+      "proposed_representative": "ta_volatility_kcl",
+      "pair_relation": "stable_redundancy",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.85,
+      "factor": "ta_volatility_dch",
+      "proposed_representative": "ta_volatility_kcl",
+      "pair_relation": "stable_redundancy",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.85,
+      "factor": "ta_volatility_dcl",
+      "proposed_representative": "ta_volatility_kcl",
+      "pair_relation": "stable_redundancy",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.85,
+      "factor": "ta_volatility_dcm",
+      "proposed_representative": "ta_volatility_kcl",
+      "pair_relation": "stable_redundancy",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.85,
+      "factor": "ta_volatility_kcc",
+      "proposed_representative": "ta_volatility_kcl",
+      "pair_relation": "stable_redundancy",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.85,
+      "factor": "ta_volatility_kch",
+      "proposed_representative": "ta_volatility_kcl",
+      "pair_relation": "stable_redundancy",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.7,
+      "factor": "amount_mean_20",
+      "proposed_representative": "amount_std_20",
+      "pair_relation": "stable_redundancy",
+      "factor_horizon": "name_window_20",
+      "representative_horizon": "name_window_20",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "unresolved_units"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.7,
+      "factor": "amplitude_20",
+      "proposed_representative": "mature_parkinson_volatility_20",
+      "pair_relation": "stable_redundancy",
+      "factor_horizon": "name_window_20",
+      "representative_horizon": "name_window_20",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "unresolved_units"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.7,
+      "factor": "corr_ret_amount_20",
+      "proposed_representative": "corr_ret_volume_20",
+      "pair_relation": "stable_redundancy",
+      "factor_horizon": "name_window_20",
+      "representative_horizon": "name_window_20",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "unresolved_units"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.7,
+      "factor": "mature_book_to_price",
+      "proposed_representative": "mature_book_to_market_pit",
+      "pair_relation": "stable_redundancy",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.7,
+      "factor": "mature_earnings_yield_ttm",
+      "proposed_representative": "mature_earnings_to_price_pit",
+      "pair_relation": "regime_dependent",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "regime_dependent",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.7,
+      "factor": "mature_idiosyncratic_volatility_60",
+      "proposed_representative": "mature_realized_volatility_60",
+      "pair_relation": "regime_dependent",
+      "factor_horizon": "name_window_60",
+      "representative_horizon": "name_window_60",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "regime_dependent",
+        "unresolved_units"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.7,
+      "factor": "mature_sales_to_price_pit",
+      "proposed_representative": "mature_sales_to_price_ttm",
+      "pair_relation": "stable_redundancy",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.7,
+      "factor": "std_20",
+      "proposed_representative": "mature_parkinson_volatility_20",
+      "pair_relation": "stable_redundancy",
+      "factor_horizon": "name_window_20",
+      "representative_horizon": "name_window_20",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "unresolved_units"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.7,
+      "factor": "ta_momentum_ao",
+      "proposed_representative": "ta_trend_macd",
+      "pair_relation": "insufficient_overlap",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "insufficient_overlap",
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.7,
+      "factor": "ta_momentum_kama",
+      "proposed_representative": "ta_trend_ema_fast",
+      "pair_relation": "stable_redundancy",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.7,
+      "factor": "ta_momentum_pvo_signal",
+      "proposed_representative": "ta_momentum_pvo",
+      "pair_relation": "stable_redundancy",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.7,
+      "factor": "ta_momentum_tsi",
+      "proposed_representative": "ta_momentum_ppo",
+      "pair_relation": "stable_redundancy",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.7,
+      "factor": "ta_trend_aroon_up",
+      "proposed_representative": "ta_trend_aroon_ind",
+      "pair_relation": "regime_dependent",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "regime_dependent",
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.7,
+      "factor": "ta_trend_cci",
+      "proposed_representative": "ta_momentum_rsi",
+      "pair_relation": "regime_dependent",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "regime_dependent",
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.7,
+      "factor": "ta_trend_ema_slow",
+      "proposed_representative": "ta_trend_ema_fast",
+      "pair_relation": "stable_redundancy",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.7,
+      "factor": "ta_trend_ichimoku_a",
+      "proposed_representative": "ta_trend_ema_fast",
+      "pair_relation": "stable_redundancy",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.7,
+      "factor": "ta_trend_ichimoku_b",
+      "proposed_representative": "ta_trend_ema_fast",
+      "pair_relation": "stable_redundancy",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.7,
+      "factor": "ta_trend_ichimoku_base",
+      "proposed_representative": "ta_trend_ema_fast",
+      "pair_relation": "stable_redundancy",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.7,
+      "factor": "ta_trend_ichimoku_conv",
+      "proposed_representative": "ta_trend_ema_fast",
+      "pair_relation": "stable_redundancy",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.7,
+      "factor": "ta_trend_kst",
+      "proposed_representative": "ta_momentum_ppo_signal",
+      "pair_relation": "insufficient_overlap",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "insufficient_overlap",
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.7,
+      "factor": "ta_trend_kst_diff",
+      "proposed_representative": "ta_momentum_ppo_hist",
+      "pair_relation": "insufficient_overlap",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "insufficient_overlap",
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.7,
+      "factor": "ta_trend_kst_sig",
+      "proposed_representative": "ta_momentum_ppo_signal",
+      "pair_relation": "insufficient_overlap",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "insufficient_overlap",
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.7,
+      "factor": "ta_trend_macd_diff",
+      "proposed_representative": "ta_momentum_ppo_hist",
+      "pair_relation": "regime_dependent",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "regime_dependent",
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.7,
+      "factor": "ta_trend_macd_signal",
+      "proposed_representative": "ta_trend_macd",
+      "pair_relation": "stable_redundancy",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.7,
+      "factor": "ta_trend_sma_slow",
+      "proposed_representative": "ta_trend_ema_fast",
+      "pair_relation": "stable_redundancy",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.7,
+      "factor": "ta_trend_trix",
+      "proposed_representative": "ta_momentum_ppo_signal",
+      "pair_relation": "stable_redundancy",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.7,
+      "factor": "ta_trend_vortex_ind_diff",
+      "proposed_representative": "ta_momentum_rsi",
+      "pair_relation": "stable_redundancy",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.7,
+      "factor": "ta_trend_vortex_ind_neg",
+      "proposed_representative": "ta_momentum_rsi",
+      "pair_relation": "stable_redundancy",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.7,
+      "factor": "ta_trend_vortex_ind_pos",
+      "proposed_representative": "ta_momentum_rsi",
+      "pair_relation": "regime_dependent",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "regime_dependent",
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.7,
+      "factor": "ta_volatility_bbh",
+      "proposed_representative": "ta_volatility_kcl",
+      "pair_relation": "stable_redundancy",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.7,
+      "factor": "ta_volatility_bbm",
+      "proposed_representative": "ta_volatility_kcl",
+      "pair_relation": "stable_redundancy",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.7,
+      "factor": "ta_volatility_dch",
+      "proposed_representative": "ta_volatility_kcl",
+      "pair_relation": "stable_redundancy",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.7,
+      "factor": "ta_volatility_dcl",
+      "proposed_representative": "ta_volatility_kcl",
+      "pair_relation": "stable_redundancy",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.7,
+      "factor": "ta_volatility_dcm",
+      "proposed_representative": "ta_volatility_kcl",
+      "pair_relation": "stable_redundancy",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.7,
+      "factor": "ta_volatility_dcp",
+      "proposed_representative": "ta_volatility_bbp",
+      "pair_relation": "stable_redundancy",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.7,
+      "factor": "ta_volatility_dcw",
+      "proposed_representative": "ta_volatility_kcw",
+      "pair_relation": "no_stable_redundancy",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "no_stable_redundancy",
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.7,
+      "factor": "ta_volatility_kcc",
+      "proposed_representative": "ta_volatility_kcl",
+      "pair_relation": "stable_redundancy",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    },
+    {
+      "level": 0.7,
+      "factor": "ta_volatility_kch",
+      "proposed_representative": "ta_volatility_kcl",
+      "pair_relation": "stable_redundancy",
+      "factor_horizon": "unspecified",
+      "representative_horizon": "unspecified",
+      "factor_units": "unresolved",
+      "representative_units": "unresolved",
+      "review_flags": [
+        "smoke_note_in_formula_field",
+        "unresolved_units",
+        "unspecified_horizon"
+      ],
+      "review_disposition": "defer_alias_pending_reconciliation",
+      "user_decision": "pending"
+    }
+  ]
+}
