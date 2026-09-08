@@ -45,7 +45,8 @@
 | Canonical Research Dataset | READY / authority | 当前长历史因子研究主线及后续 protocol work 的唯一推荐数据输入 |
 | Long-History Robust Core Factor Selection V1 | ACTIVE RESEARCH MAINLINE / PHASE 0 CLOSED | 以 765 个 research-usable factors 提炼 Small Stable Alpha Core，并分离 Risk / Conditioning Controls；Phase 0 已完成 |
 | Phase 0 Backward Replication | CLOSED / COMPLETED | 91 因子 fixed-union、same-era reconciliation 与四时期 backward replication 已完成 |
-| Phase 1 Feature Quality Gate | IN PROGRESS / MVP scope | 已授权按多体系 MVP 推进，契约与 smoke 实施中，尚未完成 |
+| Phase 1 Feature Quality Gate | COMPLETE / MVP quality scope | 本轮质量审计完成；不等于可交易性认证 |
+| Primary 20D Screening MVP | COMPLETE / STOP FOR HUMAN REVIEW | 765行Evidence/Candidate Board、三体系规则与FDR已交付 |
 | Structured ML | NOT AUTHORIZED | 不得从 prior protocol 直接启动 |
 | Strategy V2 | NOT AUTHORIZED | 需要独立 protocol、freeze date 与新 forward evidence |
 
@@ -72,7 +73,7 @@ canonical-dataset:27518ddbb28ba2b4b1247375d4e3d32d7d5be9935a5f2074dc272f84285f64
 机器入口和 effective-date 读取合同见
 [CANONICAL_RESEARCH_DATASET.md](CANONICAL_RESEARCH_DATASET.md)。
 
-当前收缩实施依据：[多体系筛选 MVP](LONG_HISTORY_MULTI_EVALUATOR_SCREENING_MVP_PLAN.md)；20D V0 后人工审阅，2024+ 近期诊断、Core/组合及模型均不在本轮范围。
+当前收缩实施依据：[多体系筛选 MVP](LONG_HISTORY_MULTI_EVALUATOR_SCREENING_MVP_PLAN.md)；2026-09-08已交付[V0审阅报告](../reports/long_history_multi_evaluator_screening_v1/REPORT.md)，现在STOP人工审阅。2024+近期诊断、Core/组合及模型均未运行且不在本轮范围。
 
 ## Research Boundary
 

@@ -60,14 +60,16 @@ Historical Data Engineering          CLOSED
 Canonical Research Dataset           READY / authority
 Long-History Robust Core Selection   ACTIVE RESEARCH MAINLINE / PHASE 0 CLOSED
 Phase 0 Backward Replication         CLOSED / COMPLETED
-Phase 1 Feature Quality Gate         IN PROGRESS / MVP contract and smoke
+Phase 1 Feature Quality Gate         COMPLETE / MVP quality scope
+Primary 20D Screening MVP            COMPLETE / STOP FOR HUMAN REVIEW
 Structured ML                        NOT AUTHORIZED
 Strategy V2                          NOT AUTHORIZED
 ```
 
 The user authorized the narrowed implementation in
 `docs/LONG_HISTORY_MULTI_EVALUATOR_SCREENING_MVP_PLAN.md` on 2026-09-07.
-Proceed through primary 20D V0 and stop for human review. Recent diagnostic,
+Primary 20D V0 was delivered on 2026-09-08; see
+`reports/long_history_multi_evaluator_screening_v1/REPORT.md`. Stop for human review. Recent diagnostic,
 Core/portfolio construction and model training are outside this MVP.
 
 The prior Research Protocol V2 is frozen historical evidence. Later validation

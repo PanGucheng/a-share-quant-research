@@ -1,0 +1,137 @@
+{
+  "canonical_dataset_id": "canonical-dataset:27518ddbb28ba2b4b1247375d4e3d32d7d5be9935a5f2074dc272f84285f6423",
+  "checks": {
+    "fast_pytest_passed": 46,
+    "full_pytest_passed": 538,
+    "full_validators": "passed",
+    "isolated_candidate_replay": "CANDIDATE_REPLAY.json",
+    "qlib_runtime_pytest_passed": 6,
+    "raw_recompute": "BOARD_RAW_RECOMPUTE.json"
+  },
+  "completed_at": "2026-09-08T08:07:14.503670+08:00",
+  "counts": {
+    "agreement": {
+      "0/3": 206,
+      "1/3": 43,
+      "2/3": 159,
+      "3/3": 332,
+      "incomplete": 25
+    },
+    "backend_pass": {
+      "alphalens": 336,
+      "jqfactor": 492,
+      "qlib": 535
+    },
+    "blocked": 9,
+    "candidate_union": 537,
+    "completed_chunks": 10710,
+    "definitions": 774,
+    "research_usable": 765
+  },
+  "enrichment_status": "not_started",
+  "execution_status": "primary_v0_complete_stop_for_human_review",
+  "export_policy": "candidate board and evidence board preserve sealed bytes; backend lists, union and review queue are compact column projections; union is not final Core",
+  "file_hashes": {
+    "artifacts/long_history_multi_evaluator_screening_v1/26559c272310fd361fcb0c8de4b658b77946058241e4bf26ede281a71d64950b/candidate_rule_freeze.json": "e2e92eb0c4860e7afde1d51f77eced7eb72ee84b34b31dbfc772d2ab8c9d0649",
+    "artifacts/long_history_multi_evaluator_screening_v1/26559c272310fd361fcb0c8de4b658b77946058241e4bf26ede281a71d64950b/candidate_rule_rationale.md": "951d76035c76d4bc6b206f4a358391e9f60158932d340db749e29b9d08dad31e",
+    "artifacts/long_history_multi_evaluator_screening_v1/26559c272310fd361fcb0c8de4b658b77946058241e4bf26ede281a71d64950b/candidate_rules.yaml": "693c209a3c6d114501e0b36a49af70a0596162425c03a44440b0f303fb8fc2d0",
+    "reports/long_history_multi_evaluator_screening_v1/BOARD_RAW_RECOMPUTE.json": "5954800243029e4d43178ce286c8725f3a58f4e14aa66f3e9ba651719cd9dea4",
+    "reports/long_history_multi_evaluator_screening_v1/CANDIDATE_REPLAY.json": "e9a847ec95295660f11fa31e23f0fc6160e45abd1a6c62a6b78e4337d8cfe083",
+    "reports/long_history_multi_evaluator_screening_v1/CANDIDATE_V0_RECEIPT.json": "765c766956e4aa76438045b6bd8d8935510ffbb79838c19d2d74d37c577a50aa",
+    "reports/long_history_multi_evaluator_screening_v1/EVIDENCE_V0_RECEIPT.json": "253943e17d01b45b2e8744e51040984e892529c131e78093b4b6ca2ffd553eca",
+    "reports/long_history_multi_evaluator_screening_v1/REPORT.md": "8278dc2666edb0816baba2d2d843a74ae1677089a1d4ab2aeacd709a6361b1d1",
+    "reports/long_history_multi_evaluator_screening_v1/alphalens_candidates.csv": "03287714b9f120941ad1bc730204396e9ce7a6fae722890e57fa264df2d8f457",
+    "reports/long_history_multi_evaluator_screening_v1/candidate_board.csv": "edca91b2a8f3a5e54ffd9a8c1b69037f70832c1a8ec745a2dae02e2ceec7ca80",
+    "reports/long_history_multi_evaluator_screening_v1/candidate_factors.csv": "3d1b44e68e2c9d66c3fbc4c4709804d77125cb240b8a990dfeed0af7e7948146",
+    "reports/long_history_multi_evaluator_screening_v1/factor_evidence_board.csv": "15c93777cb6cebc19c660a73ee0c6e926099bdfce4730eebe885c5e57ba5b06a",
+    "reports/long_history_multi_evaluator_screening_v1/factor_inventory.csv": "637851080a14c648d6db03aea29ad3c7595818e9ab2b6d88f3458593af50a2e9",
+    "reports/long_history_multi_evaluator_screening_v1/jqfactor_candidates.csv": "532c3673f8b55d7d0d211ca632f726f1c8ce93d6853c4145877264085474faca",
+    "reports/long_history_multi_evaluator_screening_v1/multiple_testing.csv": "e9258f3f7873ba5663c144ff5714f425e8343e573aaced591b71adadba2a9a61",
+    "reports/long_history_multi_evaluator_screening_v1/primary_metric_distributions.csv": "0ed9e0115e70e0f697eadcb79a1c1828ad4ce64ffd4c11fe61103a70184aac20",
+    "reports/long_history_multi_evaluator_screening_v1/qlib_candidates.csv": "38770858c202f4ddad35f3611bf82a4e1284de63bb948e645fb94f8d12202a7e",
+    "reports/long_history_multi_evaluator_screening_v1/review_queue.csv": "d184e41c0a1f7e6e9696fe1e38d72381945c726977c52aa2785d36fcfe935b44",
+    "reports/long_history_multi_evaluator_screening_v1/robustness_annotations.csv": "6fdafeabfd445a247f3b66b23b7f0117138b5fcedf9f3d5a0849db29b68aa236",
+    "reports/long_history_multi_evaluator_screening_v1/source_agreement.csv": "d3d3c9415083ee986e8c07d8c0361e6990cf8065b9e027cb95ef25cc373eeef2"
+  },
+  "held_aside_recent_diagnostic_accessed": false,
+  "input_contract_hash": "e6b5b09fe25c52942550c90bdf137642fb43000c6afc618779ecfcf5e5a20eba",
+  "primary_mvp_status": "complete",
+  "rule_id": "26559c272310fd361fcb0c8de4b658b77946058241e4bf26ede281a71d64950b",
+  "run_id": "primary_full_20260907",
+  "stage_content_ids": {
+    "candidate_v0": "f0105414de4c16e917f320d452e5f48bf42bc32b27300d7f3d87984105662b07",
+    "delivery_v0": "717cc46688ba2dde1a26ebc3142f8e3e01faf3970cf56204324420acee23c7c1",
+    "evidence_v0": "167a574167f61c49afb15f507ea6dd99de3b8e05b8c47f2988d6dcb9ef402c87"
+  },
+  "stage_receipts": {
+    "candidate_v0": {
+      "agreement_counts": {
+        "0/3": 206,
+        "1/3": 43,
+        "2/3": 159,
+        "3/3": 332,
+        "incomplete": 25
+      },
+      "candidate_code_sha256": "f077a1b41a2aeda90012c7a5f115694448add5a7d22bb1a8fdeaf2bb552db871",
+      "candidate_export_policy": "union of backend pass lists; not a final factor pool",
+      "content_id": "f0105414de4c16e917f320d452e5f48bf42bc32b27300d7f3d87984105662b07",
+      "deterministic_replay": "exact_pass",
+      "enrichment_status": "not_started",
+      "evidence_content_id": "167a574167f61c49afb15f507ea6dd99de3b8e05b8c47f2988d6dcb9ef402c87",
+      "factors": 765,
+      "file_hashes": {
+        "alphalens_candidates.csv": "c583dbc7e7dce2674d4eb60c2db42a2b552b1d2980345a75f4c892a2f75704c5",
+        "candidate_board.csv": "edca91b2a8f3a5e54ffd9a8c1b69037f70832c1a8ec745a2dae02e2ceec7ca80",
+        "candidate_board.parquet": "3a9487284b918df3d1fc864c80892668f1be5a044f43eabfcf6f41ad99685b13",
+        "candidate_factors.csv": "034999fcb143f957148e194dbfed02a36d1f044b6e63b84f3071fb204d539721",
+        "jqfactor_candidates.csv": "523742f64028105c6aedf7c1505e27fd15eca68a4c1ea4c25596d11492917e61",
+        "metric_level_reasons.csv": "a91fca85b4a352c08fde65810c26360a0014bf6745ba5561aaf82b02bd7842a6",
+        "qlib_candidates.csv": "b7e00bd278e6036e4472af8825da4c42932d3b071f69dc5c98efd1be36abe70a",
+        "review_queue.csv": "9eaff3b13419f9e66b950583d429c28eaa4c29f1b549d176c9d7da55def25a7f",
+        "robustness_annotations.csv": "6fdafeabfd445a247f3b66b23b7f0117138b5fcedf9f3d5a0849db29b68aa236"
+      },
+      "held_aside_recent_diagnostic_accessed": false,
+      "primary_mvp_status": "complete",
+      "rule_id": "26559c272310fd361fcb0c8de4b658b77946058241e4bf26ede281a71d64950b",
+      "stage": "candidate_v0_stop_for_human_review"
+    },
+    "delivery_v0": {
+      "content_id": "717cc46688ba2dde1a26ebc3142f8e3e01faf3970cf56204324420acee23c7c1",
+      "file_hashes": {
+        "data_quality_by_period.csv": "9b7a9d8d28476433ce5f255f1f38a703c7056c464f28ff8b487172c0f832eb3e",
+        "factor_evidence_table.parquet": "544a06fe42ebcadca9f310ec38a26ec69d247200f466e50a274246a9d6263c75",
+        "label_date_map.parquet": "093daf4cd9530a62a1c077f325d77abb5abe78648e6ed6173dce398edba3a768"
+      },
+      "held_aside_recent_diagnostic_accessed": false,
+      "source_evidence_content_id": "167a574167f61c49afb15f507ea6dd99de3b8e05b8c47f2988d6dcb9ef402c87",
+      "stage": "primary_descriptive_delivery"
+    },
+    "evidence_v0": {
+      "board_code_sha256": "bbb03bef2c72cb1a19d9a994d1bc693b56a8daf9e9c6930152e6dabe26f08197",
+      "content_id": "167a574167f61c49afb15f507ea6dd99de3b8e05b8c47f2988d6dcb9ef402c87",
+      "contract_hash": "e6b5b09fe25c52942550c90bdf137642fb43000c6afc618779ecfcf5e5a20eba",
+      "economic_description_sha256": "5bde3c9868f91abb5b4b93630ea210a2b03bda52ec8b403710403dfb4f5f46c5",
+      "factors": 765,
+      "file_hashes": {
+        "batch_status.csv": "50367523f473805c1e00f94e135e7eb20b8f002e5a9b78d8e647d8c1aa8e6b06",
+        "daily_sample_counts_by_year.csv": "5c15f90be45a164d17adabd83ecc1e003360f5f602473932c3e8bcf1318205c2",
+        "data_quality_by_year.csv": "ee709cbb0a6ba381f3ef45363e7adcd28d64cb650ecb91540a0167e666b56932",
+        "factor_evidence_board.csv": "15c93777cb6cebc19c660a73ee0c6e926099bdfce4730eebe885c5e57ba5b06a",
+        "factor_evidence_board.parquet": "f55e141a36db3f3b9428b8e2a919fc4a9734792c316763f7cd8293d67cef4ca4",
+        "factor_inventory.csv": "637851080a14c648d6db03aea29ad3c7595818e9ab2b6d88f3458593af50a2e9",
+        "factor_period_metrics.parquet": "71b17c8b212868f99eb87e8f88015996da7cfbe9fae3fa7cdb168cba690b9094",
+        "metric_definitions.json": "983ebdcad6d419ed2f966b53149d11865a4e58e6abb4228f98711e3f13bdd9c8",
+        "multiple_testing.csv": "e9258f3f7873ba5663c144ff5714f425e8343e573aaced591b71adadba2a9a61",
+        "primary_metric_distributions.csv": "0ed9e0115e70e0f697eadcb79a1c1828ad4ce64ffd4c11fe61103a70184aac20"
+      },
+      "held_aside_recent_diagnostic_accessed": false,
+      "input_aggregate_receipt_sha256": "8c192b803a0082fda053021b63b1bedaf3611fcd5c77b87883933df6bffa5b64",
+      "max_rank_ic_difference": 1.1102230246251565e-16,
+      "run_id": "primary_full_20260907",
+      "stage": "evidence_before_candidate_rules",
+      "unavailable_annual_chunks": 16,
+      "verified_chunks": 10710
+    }
+  },
+  "stop_for_human_review": true
+}

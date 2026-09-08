@@ -3,10 +3,11 @@
 > Status: **ACTIVE RESEARCH MAINLINE / PHASE 0 CLOSED**
 >
 > Completed now: Phase 0 old-conclusion freeze, same-era reconciliation, and
-> backward replication. Phase 1 quality work is now IN PROGRESS within the
+> backward replication. MVP quality work and primary 20D V0 are COMPLETE within the
 > [authorized screening MVP](LONG_HISTORY_MULTI_EVALUATOR_SCREENING_MVP_PLAN.md).
 >
-> User instruction on 2026-09-07 authorizes MVP implementation through primary V0 review.
+> Primary V0 was delivered on 2026-09-08: [review report](../reports/long_history_multi_evaluator_screening_v1/REPORT.md).
+> STOP FOR HUMAN REVIEW; broader Core selection is not complete.
 > Still outside this implementation: Core construction,
 > Structured ML, Strategy V2, or changes to frozen Strategy V1.
 

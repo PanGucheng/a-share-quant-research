@@ -1,0 +1,31 @@
+{
+  "agreement_counts": {
+    "0/3": 206,
+    "1/3": 43,
+    "2/3": 159,
+    "3/3": 332,
+    "incomplete": 25
+  },
+  "candidate_code_sha256": "f077a1b41a2aeda90012c7a5f115694448add5a7d22bb1a8fdeaf2bb552db871",
+  "candidate_export_policy": "union of backend pass lists; not a final factor pool",
+  "content_id": "f0105414de4c16e917f320d452e5f48bf42bc32b27300d7f3d87984105662b07",
+  "deterministic_replay": "exact_pass",
+  "enrichment_status": "not_started",
+  "evidence_content_id": "167a574167f61c49afb15f507ea6dd99de3b8e05b8c47f2988d6dcb9ef402c87",
+  "factors": 765,
+  "file_hashes": {
+    "alphalens_candidates.csv": "c583dbc7e7dce2674d4eb60c2db42a2b552b1d2980345a75f4c892a2f75704c5",
+    "candidate_board.csv": "edca91b2a8f3a5e54ffd9a8c1b69037f70832c1a8ec745a2dae02e2ceec7ca80",
+    "candidate_board.parquet": "3a9487284b918df3d1fc864c80892668f1be5a044f43eabfcf6f41ad99685b13",
+    "candidate_factors.csv": "034999fcb143f957148e194dbfed02a36d1f044b6e63b84f3071fb204d539721",
+    "jqfactor_candidates.csv": "523742f64028105c6aedf7c1505e27fd15eca68a4c1ea4c25596d11492917e61",
+    "metric_level_reasons.csv": "a91fca85b4a352c08fde65810c26360a0014bf6745ba5561aaf82b02bd7842a6",
+    "qlib_candidates.csv": "b7e00bd278e6036e4472af8825da4c42932d3b071f69dc5c98efd1be36abe70a",
+    "review_queue.csv": "9eaff3b13419f9e66b950583d429c28eaa4c29f1b549d176c9d7da55def25a7f",
+    "robustness_annotations.csv": "6fdafeabfd445a247f3b66b23b7f0117138b5fcedf9f3d5a0849db29b68aa236"
+  },
+  "held_aside_recent_diagnostic_accessed": false,
+  "primary_mvp_status": "complete",
+  "rule_id": "26559c272310fd361fcb0c8de4b658b77946058241e4bf26ede281a71d64950b",
+  "stage": "candidate_v0_stop_for_human_review"
+}

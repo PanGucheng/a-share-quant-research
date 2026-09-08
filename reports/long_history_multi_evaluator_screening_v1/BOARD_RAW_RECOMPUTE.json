@@ -1,0 +1,42 @@
+{
+  "checks": [
+    {
+      "factor": "rev_5",
+      "raw_to_period_rows": 247,
+      "period_recompute": "pass_atol_1e-15",
+      "bootstrap_recompute": "pass_atol_1e-15"
+    },
+    {
+      "factor": "alpha158_BETA20",
+      "raw_to_period_rows": 247,
+      "period_recompute": "pass_atol_1e-15",
+      "bootstrap_recompute": "pass_atol_1e-15"
+    },
+    {
+      "factor": "alpha360_CLOSE1",
+      "raw_to_period_rows": 247,
+      "period_recompute": "pass_atol_1e-15",
+      "bootstrap_recompute": "pass_atol_1e-15"
+    },
+    {
+      "factor": "ta_momentum_kama",
+      "raw_to_period_rows": 247,
+      "period_recompute": "pass_atol_1e-15",
+      "bootstrap_recompute": "pass_atol_1e-15"
+    },
+    {
+      "factor": "kunquant_alpha101_alpha015",
+      "raw_to_period_rows": 247,
+      "period_recompute": "pass_atol_1e-15",
+      "bootstrap_recompute": "pass_atol_1e-15"
+    },
+    {
+      "factor": "mature_book_to_market_pit",
+      "raw_to_period_rows": 247,
+      "period_recompute": "pass_atol_1e-15",
+      "bootstrap_recompute": "pass_atol_1e-15"
+    }
+  ],
+  "scope": "six predeclared representatives; all 13 metrics x 19 periods; primary bootstrap repeated with original seed",
+  "all_765_BH_BY_recomputed_in_evidence_builder": true
+}

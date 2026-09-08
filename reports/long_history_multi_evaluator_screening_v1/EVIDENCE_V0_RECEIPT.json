@@ -1,0 +1,26 @@
+{
+  "board_code_sha256": "bbb03bef2c72cb1a19d9a994d1bc693b56a8daf9e9c6930152e6dabe26f08197",
+  "content_id": "167a574167f61c49afb15f507ea6dd99de3b8e05b8c47f2988d6dcb9ef402c87",
+  "contract_hash": "e6b5b09fe25c52942550c90bdf137642fb43000c6afc618779ecfcf5e5a20eba",
+  "economic_description_sha256": "5bde3c9868f91abb5b4b93630ea210a2b03bda52ec8b403710403dfb4f5f46c5",
+  "factors": 765,
+  "file_hashes": {
+    "batch_status.csv": "50367523f473805c1e00f94e135e7eb20b8f002e5a9b78d8e647d8c1aa8e6b06",
+    "daily_sample_counts_by_year.csv": "5c15f90be45a164d17adabd83ecc1e003360f5f602473932c3e8bcf1318205c2",
+    "data_quality_by_year.csv": "ee709cbb0a6ba381f3ef45363e7adcd28d64cb650ecb91540a0167e666b56932",
+    "factor_evidence_board.csv": "15c93777cb6cebc19c660a73ee0c6e926099bdfce4730eebe885c5e57ba5b06a",
+    "factor_evidence_board.parquet": "f55e141a36db3f3b9428b8e2a919fc4a9734792c316763f7cd8293d67cef4ca4",
+    "factor_inventory.csv": "637851080a14c648d6db03aea29ad3c7595818e9ab2b6d88f3458593af50a2e9",
+    "factor_period_metrics.parquet": "71b17c8b212868f99eb87e8f88015996da7cfbe9fae3fa7cdb168cba690b9094",
+    "metric_definitions.json": "983ebdcad6d419ed2f966b53149d11865a4e58e6abb4228f98711e3f13bdd9c8",
+    "multiple_testing.csv": "e9258f3f7873ba5663c144ff5714f425e8343e573aaced591b71adadba2a9a61",
+    "primary_metric_distributions.csv": "0ed9e0115e70e0f697eadcb79a1c1828ad4ce64ffd4c11fe61103a70184aac20"
+  },
+  "held_aside_recent_diagnostic_accessed": false,
+  "input_aggregate_receipt_sha256": "8c192b803a0082fda053021b63b1bedaf3611fcd5c77b87883933df6bffa5b64",
+  "max_rank_ic_difference": 1.1102230246251565e-16,
+  "run_id": "primary_full_20260907",
+  "stage": "evidence_before_candidate_rules",
+  "unavailable_annual_chunks": 16,
+  "verified_chunks": 10710
+}

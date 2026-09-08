@@ -18,3 +18,16 @@ configs/qlib_exchange_semantics_669_v1.yaml text eol=lf
 # receive checkout-time newline conversion.
 artifacts/prospective_forward_candidate_v1/** binary
 outputs/external_pit_style_data_v1/current/external_pit_style_data.parquet filter=lfs diff=lfs merge=lfs -text
+
+# Primary V0 freeze binds exact report/rule bytes; keep its new exports portable.
+artifacts/long_history_multi_evaluator_screening_v1/26559c272310fd361fcb0c8de4b658b77946058241e4bf26ede281a71d64950b/** -text whitespace=trailing-space,space-before-tab,cr-at-eol
+reports/long_history_multi_evaluator_screening_v1/[a-z]*.csv -text whitespace=trailing-space,space-before-tab,cr-at-eol
+reports/long_history_multi_evaluator_screening_v1/REPORT.md -text whitespace=trailing-space,space-before-tab,cr-at-eol
+reports/long_history_multi_evaluator_screening_v1/PRIMARY_V0_MANIFEST.json -text whitespace=trailing-space,space-before-tab,cr-at-eol
+reports/long_history_multi_evaluator_screening_v1/EVIDENCE_V0_RECEIPT.json -text whitespace=trailing-space,space-before-tab,cr-at-eol
+reports/long_history_multi_evaluator_screening_v1/CANDIDATE_V0_RECEIPT.json -text whitespace=trailing-space,space-before-tab,cr-at-eol
+reports/long_history_multi_evaluator_screening_v1/BOARD_RAW_RECOMPUTE.json -text whitespace=trailing-space,space-before-tab,cr-at-eol
+reports/long_history_multi_evaluator_screening_v1/CANDIDATE_REPLAY.json -text whitespace=trailing-space,space-before-tab,cr-at-eol
+factor_research/long_history_boards.py text eol=lf
+factor_research/long_history_candidates.py text eol=lf
+scripts/build_long_history_boards.py text eol=lf

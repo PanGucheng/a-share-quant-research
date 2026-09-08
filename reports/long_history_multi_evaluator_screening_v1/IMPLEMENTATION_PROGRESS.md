@@ -1,6 +1,6 @@
 # Long-History Multi-Evaluator MVP：实施进度
 
-状态：**IMPLEMENTING；Primary V0 尚未完成**。用户于 2026-09-07 明确授权按计划实施。
+最新状态：**PRIMARY V0 COMPLETE / STOP FOR HUMAN REVIEW**，2026-09-08。[审阅报告](REPORT.md)和两张765行Board已交付。用户于2026-09-07授权实施；下列运行记录保留各阶段当时的状态与测试数量。
 实施基线：`f951f55c3626919b6c0e5cf94ff540d7bcb71358`（已核对远端 main）。
 
 ## 已实现
@@ -126,3 +126,13 @@ Get-Content E:\qlib_prj\qlib_baseline\tmp\long_history_primary_full_20260907.log
 耗时包含工作进程初始化、IO、标签、计算和落盘，未包括共同输入身份核对、全量汇总与 FDR。单进程/两进程曾建造价格缓存，八进程命中缓存，因此 3.09× 是这轮端到端观测加速，不是控制所有缓存条件后的纯并行效率。代码哈希逐轮保存：单进程基准后只补充 receipt 执行来源字段，两进程基准后只扩展 CLI 接受 8；数值计算未改变。
 
 已在原 `primary_full_20260907` 上使用 `--workers 8 --max-new-jobs 8` 验证续跑：原合同与 94 个旧 receipt 字节未变，仅新增 8 个完成单元，目前 **102/10,710，paused_job_limit**，测试进程已退出。用户执行上方命令（不加限额参数）即可从现有结果继续，无需从头计算。完整检查 **530 tests**、Fast 46 tests、Qlib runtime 6 tests 通过；正式全量仍未完成。
+
+## Primary V0交付（2026-09-08）
+
+用户的八进程任务已完成10,710单元，续跑主计算8873秒。全部完成文件重新验证哈希、访问日期与样本计数；16个年度单元数据不可定义，无原生运行失败。全期765个Rank IC假设均可检验，BH/BY校正全部复算；六个预声明代表因子的13指标×19时期和bootstrap从原始日序列复算通过。
+
+先封存不含候选判断的Evidence Board和总体分布，再一次性冻结规则 `26559c272310fd361fcb0c8de4b658b77946058241e4bf26ede281a71d64950b`，最后生成Candidate Board。结果为332个3/3、159个2/3、43个1/3、206个0/3、25个incomplete。两张Board均765行，9个blocked留在774定义inventory。
+
+候选抽取仅使用封存primary证据和冻结规则；缺少raw、aggregate及全部enrichment/近期文件时，9份候选产物仍可按文件hash精确重放。完整检查538 tests、Fast 46 tests、Qlib runtime 6 tests通过。新增入口为 `scripts/build_long_history_boards.py`，详细文件及复现约束见[审阅报告](REPORT.md)。
+
+全量计算已结束，无需继续执行前述启动命令。当前状态以 `primary_full_20260907/primary/run_manifest.json` 为准。10D、近期诊断、数值去重/聚类、Core/组合、模型均未启动；这些不是已完成的primary V0内容。本轮严格停在人工审阅。

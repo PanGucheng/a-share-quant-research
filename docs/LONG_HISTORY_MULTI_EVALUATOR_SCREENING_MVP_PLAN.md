@@ -1,8 +1,8 @@
 # 长历史多体系因子重新筛选：开发计划与仓库审计
 
-状态：**IMPLEMENTING / 用户已于 2026-09-07 授权按计划实施**。Primary MVP 尚未完成。
+状态：**PRIMARY V0 COMPLETE / STOP FOR HUMAN REVIEW**。用户于2026-09-07授权实施，2026-09-08完成本轮primary交付；10D enrichment尚未开始。
 
-当前已完成受限读取、精确日历标签、765 因子质量审计、24 因子跨时期及 6 因子全历史原生 smoke；全量已由用户启动后暂停，现完成 8 进程提速与旧结果续跑验证，等待用户按新命令继续。全量结果与 Board 尚未完成。实施记录见 [实施报告](../reports/long_history_multi_evaluator_screening_v1/IMPLEMENTATION_PROGRESS.md)。
+已完成受限读取、精确日历标签、质量与原生smoke、全量10,710单元、765家族FDR、Evidence Board和一次性规则冻结后的Candidate Board V0。交付与限制见[V0审阅报告](../reports/long_history_multi_evaluator_screening_v1/REPORT.md)，执行历史见[实施记录](../reports/long_history_multi_evaluator_screening_v1/IMPLEMENTATION_PROGRESS.md)。以下审计与开发计划保留原制定语境，后续阶段未因V0交付而自动获授权。
 
 本计划依据用户提供的《长历史多体系因子重新筛选：仓库审计与开发计划制定》及后续修订意见，结合实际仓库制定。附件作为需求材料处理；后续用户明确要求按计划开始实施，现授权推进至 primary V0 人工审阅停止点。近期诊断、组合设计及模型训练仍不在本轮范围。
 

@@ -1,0 +1,9 @@
+{
+  "status": "exact_file_hash_pass",
+  "files": 9,
+  "candidate_content_id": "f0105414de4c16e917f320d452e5f48bf42bc32b27300d7f3d87984105662b07",
+  "input": "sealed evidence and frozen rules only",
+  "raw_chunks_absent": true,
+  "aggregate_absent": true,
+  "enrichment_and_recent_files_absent": true
+}

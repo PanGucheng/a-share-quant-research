@@ -1,0 +1,251 @@
+rule_version: primary_20d_candidate_v0_20260908
+primary_label: label_20d_t1
+selection_period:
+- '2010-01-29'
+- '2023-12-29'
+direction_policy: sign_of_full_development_qlib_rank_ic
+direction_origin: development_data_derived_not_economic_prior
+input_columns:
+- factor
+- canonical_factor_id
+- source
+- economic_family
+- authoritative_semantics
+- lineage_hash
+- rows
+- finite_count
+- missing_count
+- infinite_count
+- coverage
+- first_finite_date
+- last_finite_date
+- min_count_variable_dates
+- primary_family
+- economic_subfamily
+- mechanism
+- evidence_level
+- definition
+- fdr_status
+- raw_p_value
+- fdr_bh_q_value
+- fdr_by_q_value
+- observation_count
+- eligible_segment_count
+- contiguous_segment_count
+- eligible_block_count
+- alphalens_ic__mean
+- alphalens_ic__median
+- alphalens_ic__std
+- alphalens_ic__mean_std_ratio
+- alphalens_ic__positive_ratio
+- alphalens_ic__valid_dates
+- jqfactor_ic__mean
+- jqfactor_ic__median
+- jqfactor_ic__std
+- jqfactor_ic__mean_std_ratio
+- jqfactor_ic__positive_ratio
+- jqfactor_ic__valid_dates
+- qlib_ic__mean
+- qlib_ic__median
+- qlib_ic__std
+- qlib_ic__mean_std_ratio
+- qlib_ic__positive_ratio
+- qlib_ic__valid_dates
+- qlib_pearson__mean
+- qlib_pearson__median
+- qlib_pearson__std
+- qlib_pearson__mean_std_ratio
+- qlib_pearson__positive_ratio
+- qlib_pearson__valid_dates
+- jqfactor_returns__mean
+- jqfactor_returns__median
+- jqfactor_returns__std
+- jqfactor_returns__mean_std_ratio
+- jqfactor_returns__positive_ratio
+- jqfactor_returns__valid_dates
+- qlib_long_short__mean
+- qlib_long_short__median
+- qlib_long_short__std
+- qlib_long_short__mean_std_ratio
+- qlib_long_short__positive_ratio
+- qlib_long_short__valid_dates
+- qlib_cross_section_mean__mean
+- qlib_cross_section_mean__median
+- qlib_cross_section_mean__std
+- qlib_cross_section_mean__mean_std_ratio
+- qlib_cross_section_mean__positive_ratio
+- qlib_cross_section_mean__valid_dates
+- alphalens_q1__mean
+- alphalens_q1__median
+- alphalens_q1__std
+- alphalens_q1__mean_std_ratio
+- alphalens_q1__positive_ratio
+- alphalens_q1__valid_dates
+- alphalens_q2__mean
+- alphalens_q2__median
+- alphalens_q2__std
+- alphalens_q2__mean_std_ratio
+- alphalens_q2__positive_ratio
+- alphalens_q2__valid_dates
+- alphalens_q3__mean
+- alphalens_q3__median
+- alphalens_q3__std
+- alphalens_q3__mean_std_ratio
+- alphalens_q3__positive_ratio
+- alphalens_q3__valid_dates
+- alphalens_q4__mean
+- alphalens_q4__median
+- alphalens_q4__std
+- alphalens_q4__mean_std_ratio
+- alphalens_q4__positive_ratio
+- alphalens_q4__valid_dates
+- alphalens_q5__mean
+- alphalens_q5__median
+- alphalens_q5__std
+- alphalens_q5__mean_std_ratio
+- alphalens_q5__positive_ratio
+- alphalens_q5__valid_dates
+- alphalens_q5_minus_q1__mean
+- alphalens_q5_minus_q1__median
+- alphalens_q5_minus_q1__std
+- alphalens_q5_minus_q1__mean_std_ratio
+- alphalens_q5_minus_q1__positive_ratio
+- alphalens_q5_minus_q1__valid_dates
+- alphalens_quantile_monotonicity_raw
+- annual_qualified_years
+- annual_direction_agreement
+- annual_ic_sequence_raw
+- era_ic_sequence_raw
+- era_count_available
+- max_absolute_era_contribution_share
+- worst_directional_era_mean
+- worst_leave_one_era_out_directional_mean
+- era_A_mean_raw
+- era_A_valid_dates
+- era_A_ic_sum_raw
+- era_B_mean_raw
+- era_B_valid_dates
+- era_B_ic_sum_raw
+- era_C_mean_raw
+- era_C_valid_dates
+- era_C_ic_sum_raw
+- era_D_mean_raw
+- era_D_valid_dates
+- era_D_ic_sum_raw
+- jqfactor_return_qualified_years
+- jqfactor_return_annual_direction_agreement
+- evidence_scope
+- direction_origin_preview
+- parity_status
+- native_profile_limited
+- alphalens_candidate_status
+- jqfactor_candidate_status
+- qlib_candidate_status
+- native_disagreement
+- secondary_universe_status
+- microcap_exposure_status
+- turnover_status
+- numeric_duplicate_clustering_status
+- auxiliary_10d_status
+- canonical_signal_rows
+- finite_pairs
+- ic_samples
+- quantile_samples
+- ic_dates
+- quantile_dates
+- ic_sample_coverage
+- quantile_sample_coverage
+- raw_path_template
+- period_metrics_path
+- legacy_duplicate_relations
+shared_conditions:
+- id: minimum_1260_ic_dates
+  column: qlib_ic__valid_dates
+  transform: raw
+  operator: ge
+  threshold: 1260
+- id: minimum_five_qualified_years
+  column: annual_qualified_years
+  transform: raw
+  operator: ge
+  threshold: 5
+- id: absolute_mean_rank_ic_002
+  column: qlib_ic__mean
+  transform: absolute
+  operator: ge
+  threshold: 0.02
+- id: annual_ic_agreement_070
+  column: annual_direction_agreement
+  transform: raw
+  operator: ge
+  threshold: 0.7
+- id: primary_BH_q_005
+  column: fdr_bh_q_value
+  transform: raw
+  operator: le
+  threshold: 0.05
+backends:
+  alphalens:
+  - id: minimum_1260_quantile_dates
+    column: alphalens_q5_minus_q1__valid_dates
+    transform: raw
+    operator: ge
+    threshold: 1260
+  - id: positive_directional_quantile_spread
+    column: alphalens_q5_minus_q1__mean
+    transform: direction
+    operator: gt
+    threshold: 0
+  - id: directional_quantile_monotonicity_080
+    column: alphalens_quantile_monotonicity_raw
+    transform: direction
+    operator: ge
+    threshold: 0.8
+  jqfactor:
+  - id: minimum_1260_weighted_return_dates
+    column: jqfactor_returns__valid_dates
+    transform: raw
+    operator: ge
+    threshold: 1260
+  - id: positive_directional_weighted_return
+    column: jqfactor_returns__mean
+    transform: direction
+    operator: gt
+    threshold: 0
+  - id: minimum_five_weighted_return_years
+    column: jqfactor_return_qualified_years
+    transform: raw
+    operator: ge
+    threshold: 5
+  - id: weighted_return_annual_agreement_060
+    column: jqfactor_return_annual_direction_agreement
+    transform: raw
+    operator: ge
+    threshold: 0.6
+  qlib:
+  - id: minimum_1260_long_short_dates
+    column: qlib_long_short__valid_dates
+    transform: raw
+    operator: ge
+    threshold: 1260
+  - id: positive_directional_Pearson
+    column: qlib_pearson__mean
+    transform: direction
+    operator: gt
+    threshold: 0
+  - id: positive_directional_long_short
+    column: qlib_long_short__mean
+    transform: direction
+    operator: gt
+    threshold: 0
+annotations:
+  annual_agreement_below: 0.7
+  era_absolute_contribution_above: 0.6
+  sample_coverage_below: 0.8
+  by_q_above: 0.05
+missing_policy: any required nonfinite metric or undefined direction => unavailable;
+  otherwise any failed condition => fail; unavailable => incomplete agreement
+agreement_policy: all three available => pass_count/3; otherwise incomplete; frameworks
+  are correlated, not independent confirmations
+export_policy: union of backend pass lists for review, no top-N or final core pool
+enrichment_policy: 10D and recent diagnostics never enter primary rules

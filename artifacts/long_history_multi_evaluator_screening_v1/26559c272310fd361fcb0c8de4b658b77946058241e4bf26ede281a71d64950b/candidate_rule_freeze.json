@@ -1,0 +1,14 @@
+{
+  "rule_version": "primary_20d_candidate_v0_20260908",
+  "frozen_at": "2026-09-08T07:28:27.941027",
+  "evidence_content_id": "167a574167f61c49afb15f507ea6dd99de3b8e05b8c47f2988d6dcb9ef402c87",
+  "input_contract_hash": "e6b5b09fe25c52942550c90bdf137642fb43000c6afc618779ecfcf5e5a20eba",
+  "candidate_code_sha256": "f077a1b41a2aeda90012c7a5f115694448add5a7d22bb1a8fdeaf2bb552db871",
+  "file_hashes": {
+    "candidate_rules.yaml": "693c209a3c6d114501e0b36a49af70a0596162425c03a44440b0f303fb8fc2d0",
+    "candidate_rule_rationale.md": "951d76035c76d4bc6b206f4a358391e9f60158932d340db749e29b9d08dad31e"
+  },
+  "candidate_counts_observed_before_freeze": false,
+  "held_aside_recent_diagnostic_accessed": false,
+  "rule_id": "26559c272310fd361fcb0c8de4b658b77946058241e4bf26ede281a71d64950b"
+}

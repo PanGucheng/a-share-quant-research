@@ -48,11 +48,12 @@ evidence 判断；历史报告与 archive 只说明当时发生了什么。
 ## Current Development Plans
 
 - [LONG_HISTORY_MULTI_EVALUATOR_SCREENING_MVP_PLAN.md](LONG_HISTORY_MULTI_EVALUATOR_SCREENING_MVP_PLAN.md)
-  — **IMPLEMENTING / 已授权实施**；原 Long-History Robust Core 路线的收缩执行方案，
+  — **PRIMARY V0 COMPLETE / STOP FOR HUMAN REVIEW**；原 Long-History Robust Core 路线的收缩执行方案，
   不替代现行 authority。区分 shared parity 与 backend-native screening；20D Phase 2A
   先交付 Evidence/Candidate Board V0，10D Phase 2B 后补。2024–2026 仅为 Held-aside
-  Recent Diagnostic。当前契约与 smoke 实施中，尚未完成 V0；组合设计与模型训练不在范围内。
-- [初始实施报告](../reports/long_history_multi_evaluator_screening_v1/IMPLEMENTATION_PROGRESS.md) — 实际检查、运行入口和剩余工作。
+  Recent Diagnostic。V0已于2026-09-08交付；10D尚未运行，组合设计与模型训练不在范围内。
+- [Primary V0审阅报告](../reports/long_history_multi_evaluator_screening_v1/REPORT.md) — Evidence/Candidate Board、冻结规则、统计限制及人工审阅停止点。
+- [实施记录](../reports/long_history_multi_evaluator_screening_v1/IMPLEMENTATION_PROGRESS.md) — 检查、运行入口和实施历史。
 
 ## Operational References
 
@@ -149,7 +150,7 @@ current instruction。历史 outputs、artifacts、manifests、receipts 和 line
 - Canonical Research Dataset：READY；
 - Long-History Robust Core Factor Selection V1：ACTIVE RESEARCH MAINLINE / PHASE 0 CLOSED；
 - Phase 0 Backward Replication：CLOSED / COMPLETED；
-- Phase 1 Feature Quality Gate：IN PROGRESS / MVP scope；
+- Phase 1 Feature Quality Gate：COMPLETE / MVP quality scope；Primary V0：COMPLETE / STOP FOR HUMAN REVIEW；
 - Structured ML：NOT AUTHORIZED；
 - Strategy V2：NOT AUTHORIZED。
 

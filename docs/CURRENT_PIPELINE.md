@@ -12,20 +12,22 @@ artifact 名称中的 `current` 不自动表示 ACTIVE。
 | Canonical Research Dataset | FROZEN AUTHORITY / READY | 当前长历史因子研究主线及后续 protocol work 的唯一推荐输入 |
 | Historical Data Engineering | CLOSED | 仅因明确 data bug、leakage 或 provenance failure 重开 |
 | Prior Research Protocol V2 | FROZEN HISTORICAL EVIDENCE | 可审计复现；不可直接授权模型竞争 |
-| Long-History Robust Core Factor Selection V1 | ACTIVE RESEARCH MAINLINE / PHASE 0 CLOSED | 当前 historical research 方向；Phase 0 已完成；MVP 契约与 smoke 实施中 |
+| Long-History Robust Core Factor Selection V1 | ACTIVE RESEARCH MAINLINE / V0 REVIEW | Phase 0 已完成；primary V0 已交付，等待人工审阅 |
 | Phase 0 Backward Replication | CLOSED / COMPLETED | 91 因子 fixed-union 的 same-era reconciliation 与 canonical backward replication 已完成 |
-| Phase 1 Feature Quality Gate | IN PROGRESS / MVP scope | 全库 feature-only 质量表已完成；尚未形成正式筛选 Board |
+| Phase 1 Feature Quality Gate | COMPLETE / MVP quality scope | 本轮全库质量与样本审计完成，不等于完整可交易性认证 |
+| Primary 20D Screening MVP | COMPLETE / STOP FOR HUMAN REVIEW | Evidence/Candidate Board V0、冻结规则与完整765家族FDR已交付 |
 | Structured ML | NOT AUTHORIZED | 不得训练或比较候选模型 |
 | Strategy V2 | NOT AUTHORIZED | 需要独立 protocol、freeze date 与新 forward evidence |
 | Live trading | NOT AUTHORIZED | 不属于当前范围 |
 
 当前实施方案：
 [Long-History Multi-Evaluator Screening MVP](LONG_HISTORY_MULTI_EVALUATOR_SCREENING_MVP_PLAN.md)
-已于 2026-09-07 获用户实施指令，是现行主线的收缩执行方案。先完成 20D V0 并 STOP
-人工审阅；10D 增强独立后移。受限输入/全库质量审计、原生短窗与 6 因子全历史 smoke 已完成；用户已启动全量后暂停，现增加进程并行并保留已完成结果，新的独立 PowerShell 命令见实施报告。全量结果与 Board 尚未完成。
-原 Phase 0 保持 CLOSED；原 Phase 1 的质量工作纳入 MVP 推进，尚未验收完成。
+已于 2026-09-07 获用户实施指令，是现行主线的收缩执行方案。2026-09-08 已完成20D V0并 STOP
+人工审阅；10D增强尚未运行。10,710个单元与765家族FDR完成，三体系规则一次冻结；332个3/3、159个2/3、43个1/3、206个0/3、25个incomplete。
+原 Phase 0 保持 CLOSED；本轮MVP质量审计完成。候选列表不是最终Core或可交易组合。
 Core team、最终经济组合、近期诊断及模型训练仍不在本轮范围。
-运行命令与验收进度见 [实施报告](../reports/long_history_multi_evaluator_screening_v1/IMPLEMENTATION_PROGRESS.md)。
+交付见 [V0审阅报告](../reports/long_history_multi_evaluator_screening_v1/REPORT.md)；执行历史见 [实施记录](../reports/long_history_multi_evaluator_screening_v1/IMPLEMENTATION_PROGRESS.md)。
+本轮完成状态与哈希见 `outputs/long_history_multi_evaluator_screening_v1/primary_full_20260907/primary/run_manifest.json`。
 
 机器实时状态以以下文件为准：
 
@@ -237,7 +239,7 @@ Risk / Conditioning Controls 作为独立对象维护。Forward Track 继续保�
 固定 Strategy V1 52 factors、mature 39、旧 role/direction/selection/cluster metadata，未经
 重新调参地比较 `2010–2014`、`2015–2018`、`2019–2020` 与 `2021+`。该阶段已完成；91 个
 unique factors 的结果和限制见
-[Phase 0 report](../reports/long_history_core_factor_selection_v1/PHASE_0_REPORT.md)。Phase 1 质量工作现纳入已授权 MVP，尚未完成。
+[Phase 0 report](../reports/long_history_core_factor_selection_v1/PHASE_0_REPORT.md)。Phase 1 的MVP质量范围及primary V0已完成，当前停在人工审阅。
 
 当前：
 
@@ -247,13 +249,15 @@ phase 0 completed = true
 historical results produced = true
 old membership or direction changed = false
 phase 1 started = true (MVP quality scope)
+MVP quality completed = true
+primary V0 delivered = true (STOP FOR HUMAN REVIEW)
 Structured ML started = false
 Strategy V1 changed = false
 Strategy V2 authorized = false
 ```
 
 路线中的全部 2010–2026 结果均为 retrospective development evidence，不得包装为 fresh OOS。
-后续实施仅按 MVP 推进至 V0 审阅；不授权 Core/组合、模型训练、TopK/调仓/horizon 搜索或 Strategy V2。
+当前已到MVP V0人工审阅停止点；不自动继续Core/组合、近期诊断、模型训练、TopK/调仓/horizon搜索或Strategy V2。
 
 ## 7. LEGACY / EXPERIMENTAL
 
