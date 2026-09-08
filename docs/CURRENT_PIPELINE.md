@@ -27,6 +27,7 @@ artifact 名称中的 `current` 不自动表示 ACTIVE。
 原 Phase 0 保持 CLOSED；本轮MVP质量审计完成。候选列表不是最终Core或可交易组合。
 Core team、最终经济组合、近期诊断及模型训练仍不在本轮范围。
 交付见 [V0审阅报告](../reports/long_history_multi_evaluator_screening_v1/REPORT.md)；执行历史见 [实施记录](../reports/long_history_multi_evaluator_screening_v1/IMPLEMENTATION_PROGRESS.md)。
+用户随后授权因子审阅，已交付[Codex辅助审阅意见](../reports/long_history_multi_evaluator_screening_v1/review_v0/REVIEW.md)。765行建议已完成，用户决策待定；后续语义、冗余和暴露诊断仅为建议，尚未执行。
 本轮完成状态与哈希见 `outputs/long_history_multi_evaluator_screening_v1/primary_full_20260907/primary/run_manifest.json`。
 
 机器实时状态以以下文件为准：

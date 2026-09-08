@@ -53,6 +53,7 @@ evidence 判断；历史报告与 archive 只说明当时发生了什么。
   先交付 Evidence/Candidate Board V0，10D Phase 2B 后补。2024–2026 仅为 Held-aside
   Recent Diagnostic。V0已于2026-09-08交付；10D尚未运行，组合设计与模型训练不在范围内。
 - [Primary V0审阅报告](../reports/long_history_multi_evaluator_screening_v1/REPORT.md) — Evidence/Candidate Board、冻结规则、统计限制及人工审阅停止点。
+- [Primary V0因子审阅意见](../reports/long_history_multi_evaluator_screening_v1/review_v0/REVIEW.md) — 用户授权的Codex辅助审阅；765行建议、语义/冗余线索和待决策事项，不改变冻结候选。
 - [实施记录](../reports/long_history_multi_evaluator_screening_v1/IMPLEMENTATION_PROGRESS.md) — 检查、运行入口和实施历史。
 
 ## Operational References

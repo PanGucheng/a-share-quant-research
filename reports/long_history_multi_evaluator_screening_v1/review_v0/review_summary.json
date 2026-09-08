@@ -1,0 +1,25 @@
+{
+  "status": "assistant_review_complete_user_decision_pending",
+  "primary_modified": false,
+  "held_aside_recent_diagnostic_accessed": false,
+  "new_factor_evaluation_run": false,
+  "counts": {
+    "保留研究价值_待去重与暴露检查": 302,
+    "当前20D候选研究不优先推进": 206,
+    "保留分歧审阅": 159,
+    "降低连续Alpha研究优先级": 43,
+    "有条件保留_暂缓升级": 30,
+    "证据不完整且现有规则不支持优先推进": 22,
+    "保留结构专项审阅": 3
+  },
+  "factors": 765,
+  "blocked": 9,
+  "same_expression_groups": 8,
+  "proxy_semantics_pairs_usable": 26,
+  "source_board_sha256": "edca91b2a8f3a5e54ffd9a8c1b69037f70832c1a8ec745a2dae02e2ceec7ca80",
+  "source_manifest_sha256": "67ac147987c74b9fb1d429e3dab23888ec362f57a55b788c90471397631e6f65",
+  "source_annual_quality_sha256": "ee709cbb0a6ba381f3ef45363e7adcd28d64cb650ecb91540a0167e666b56932",
+  "rule_id": "26559c272310fd361fcb0c8de4b658b77946058241e4bf26ede281a71d64950b",
+  "review_method": "Existing agreement/flags route every factor; definitions and named case notes provide qualitative review. No new pass thresholds, ranking or final pool.",
+  "opposite_annual_periods_definition": "all available annual means opposite to frozen direction; not restricted to >=126-day qualified years; descriptive only"
+}

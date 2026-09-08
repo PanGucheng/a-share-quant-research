@@ -1,0 +1,9 @@
+expression,factors,agreements,evidence,action
+$high/$close,alpha158_HIGH0;alpha360_HIGH0,1/3;1/3,same_recorded_expression_not_full_raw_equality,retain_aliases_compare_before_representative_selection
+$low/$close,alpha158_LOW0;alpha360_LOW0,2/3;2/3,same_recorded_expression_not_full_raw_equality,retain_aliases_compare_before_representative_selection
+$open/$close,alpha158_OPEN0;alpha360_OPEN0,0/3;0/3,same_recorded_expression_not_full_raw_equality,retain_aliases_compare_before_representative_selection
+$vwap/$close,alpha158_VWAP0;alpha360_VWAP0,0/3;0/3,same_recorded_expression_not_full_raw_equality,retain_aliases_compare_before_representative_selection
+"Ref($close, 10)/$close",alpha158_ROC10;alpha360_CLOSE10,2/3;2/3,same_recorded_expression_not_full_raw_equality,retain_aliases_compare_before_representative_selection
+"Ref($close, 20)/$close",alpha158_ROC20;alpha360_CLOSE20,3/3;3/3,same_recorded_expression_not_full_raw_equality,retain_aliases_compare_before_representative_selection
+"Ref($close, 30)/$close",alpha158_ROC30;alpha360_CLOSE30,3/3;3/3,same_recorded_expression_not_full_raw_equality,retain_aliases_compare_before_representative_selection
+"Ref($close, 5)/$close",alpha158_ROC5;alpha360_CLOSE5,2/3;2/3,same_recorded_expression_not_full_raw_equality,retain_aliases_compare_before_representative_selection

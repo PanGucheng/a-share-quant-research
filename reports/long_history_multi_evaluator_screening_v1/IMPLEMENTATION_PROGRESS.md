@@ -1,6 +1,8 @@
 # Long-History Multi-Evaluator MVP：实施进度
 
 最新状态：**PRIMARY V0 COMPLETE / STOP FOR HUMAN REVIEW**，2026-09-08。[审阅报告](REPORT.md)和两张765行Board已交付。用户于2026-09-07授权实施；下列运行记录保留各阶段当时的状态与测试数量。
+
+后续：用户授权因子审阅，现已交付[Codex辅助审阅意见](review_v0/REVIEW.md)及765行建议。302个保留研究价值、30个有条件保留、159个分歧审阅；其余按原证据分流。用户最终决定仍待定，冻结primary结果未改，未启动额外诊断、Core或模型。
 实施基线：`f951f55c3626919b6c0e5cf94ff540d7bcb71358`（已核对远端 main）。
 
 ## 已实现
