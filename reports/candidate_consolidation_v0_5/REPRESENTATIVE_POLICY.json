@@ -1,0 +1,24 @@
+{
+  "authority": "proposal_only_all_levels_parallel_no_final_core",
+  "exposure": "annotation_only",
+  "horizon_variants": "retain_separate_strata",
+  "levels": [
+    0.995,
+    0.95,
+    0.85,
+    0.7
+  ],
+  "no_outcome_inputs": true,
+  "priority": [
+    "unresolved_conflict_deferred",
+    "same_mechanism_and_horizon",
+    "worst_era_feature_coverage_desc",
+    "full_feature_coverage_desc",
+    "infinite_fraction_asc",
+    "formula_token_count_asc",
+    "feature_medoid_distance_asc",
+    "factor_id_asc"
+  ],
+  "unknown_semantics": "deferred",
+  "version": "v0_5_label_free_1"
+}

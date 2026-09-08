@@ -1,0 +1,39 @@
+{
+  "complete_linkage_diameter_all_levels": "pass",
+  "fast_tests": 46,
+  "frozen_primary_files": 20,
+  "full_tests": 555,
+  "independent_real_pair_pandas_median_quantile_replay": "pass",
+  "proposal_roles_by_level": {
+    "0.7": {
+      "conditional_alias_proposal": 38,
+      "deferred": 35,
+      "proposed_representative": 48,
+      "retain_horizon_or_semantic_variant": 373
+    },
+    "0.85": {
+      "conditional_alias_proposal": 31,
+      "deferred": 35,
+      "proposed_representative": 70,
+      "retain_horizon_or_semantic_variant": 358
+    },
+    "0.95": {
+      "conditional_alias_proposal": 22,
+      "deferred": 35,
+      "proposed_representative": 115,
+      "retain_horizon_or_semantic_variant": 322
+    },
+    "0.995": {
+      "conditional_alias_proposal": 13,
+      "deferred": 35,
+      "proposed_representative": 306,
+      "retain_horizon_or_semantic_variant": 140
+    }
+  },
+  "report_and_runtime_hashes": "pass",
+  "risk_rows": 12350,
+  "semantic_rows": 765,
+  "status": "pass",
+  "validators": 26,
+  "working_set_rows": 494
+}

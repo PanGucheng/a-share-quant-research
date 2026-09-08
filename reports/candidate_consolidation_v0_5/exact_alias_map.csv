@@ -1,0 +1,11 @@
+factor,canonical_representation_proposal,relation_type,evidence_status,month_count,mask_equal,definition_scope
+alpha158_LOW0,alpha158_LOW0,exact_duplicate,empirically_verified_all_months,168,True,2010-01-29..2023-12-29 canonical key axis; not universal formula proof
+alpha360_LOW0,alpha158_LOW0,exact_duplicate,empirically_verified_all_months,168,True,2010-01-29..2023-12-29 canonical key axis; not universal formula proof
+alpha158_ROC10,alpha158_ROC10,exact_duplicate,empirically_verified_all_months,168,True,2010-01-29..2023-12-29 canonical key axis; not universal formula proof
+alpha360_CLOSE10,alpha158_ROC10,exact_duplicate,empirically_verified_all_months,168,True,2010-01-29..2023-12-29 canonical key axis; not universal formula proof
+alpha158_ROC20,alpha158_ROC20,exact_duplicate,empirically_verified_all_months,168,True,2010-01-29..2023-12-29 canonical key axis; not universal formula proof
+alpha360_CLOSE20,alpha158_ROC20,exact_duplicate,empirically_verified_all_months,168,True,2010-01-29..2023-12-29 canonical key axis; not universal formula proof
+alpha158_ROC30,alpha158_ROC30,exact_duplicate,empirically_verified_all_months,168,True,2010-01-29..2023-12-29 canonical key axis; not universal formula proof
+alpha360_CLOSE30,alpha158_ROC30,exact_duplicate,empirically_verified_all_months,168,True,2010-01-29..2023-12-29 canonical key axis; not universal formula proof
+alpha158_ROC5,alpha158_ROC5,exact_duplicate,empirically_verified_all_months,168,True,2010-01-29..2023-12-29 canonical key axis; not universal formula proof
+alpha360_CLOSE5,alpha158_ROC5,exact_duplicate,empirically_verified_all_months,168,True,2010-01-29..2023-12-29 canonical key axis; not universal formula proof

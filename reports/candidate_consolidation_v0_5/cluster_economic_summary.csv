@@ -1,0 +1,814 @@
+level,cluster_id,members,mechanisms,horizons,unresolved_members
+0.7,01314af9e4417c3d0bc9,1,"[""mixed_formula_information""]","[""unspecified""]",1
+0.7,01fcac5bb765d95e8467,1,"[""mixed_formula_information""]","[""unspecified""]",1
+0.7,084d1953fa6e95c9d420,40,"[""alpha158_ma"", ""alpha158_qtlu"", ""alpha158_rank"", ""alpha158_roc"", ""alpha158_rsv"", ""alpha158_sumd"", ""alpha158_sumn"", ""alpha158_sump"", ""historical_close_to_current_close_ratio"", ""historical_high_to_current_close_ratio"", ""historical_low_to_current_close_ratio"", ""historical_open_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio"", ""return_continuation""]","[""lag_28"", ""lag_29"", ""lag_30"", ""lag_31"", ""lag_32"", ""lag_33"", ""unspecified"", ""window_30"", ""window_60""]",0
+0.7,090683173fb01cdf2ee3,1,"[""return_continuation""]","[""unspecified""]",0
+0.7,096b65b04803e28136e0,1,"[""mixed_formula_information""]","[""unspecified""]",1
+0.7,0b4afbeca84160affc0b,2,"[""alpha158_corr""]","[""window_20"", ""window_30""]",0
+0.7,0d32654d4acac8673d96,2,"[""alpha158_imin"", ""return_continuation""]","[""unspecified"", ""window_30""]",0
+0.7,1303cc6a38ccb52763b5,3,"[""alpha158_vsumd"", ""alpha158_vsumn"", ""alpha158_vsump""]","[""window_60""]",0
+0.7,18df133f20e21603ea37,1,"[""mixed_formula_information""]","[""unspecified""]",1
+0.7,1b16596826f868178bb4,2,"[""mixed_formula_information"", ""within_day_price_formation""]","[""unspecified""]",2
+0.7,1b38bfa13b0c49a9bec0,1,"[""mixed_formula_information""]","[""unspecified""]",1
+0.7,1b68000d27572f51cedb,2,"[""mixed_formula_information""]","[""unspecified""]",2
+0.7,1c5454bddbd0899a96cc,1,"[""Low total and residual risk, low extreme positive payoff and shallow drawdown capture defensive, lottery-preference and limits-to-arbitrage channels.""]","[""name_window_60""]",0
+0.7,1e206f5b67fa299dde6c,4,"[""alpha158_resi"", ""return_continuation""]","[""unspecified"", ""window_60""]",0
+0.7,1e4d503306f15d3a7192,10,"[""alpha158_ma"", ""alpha158_qtld"", ""alpha158_rank"", ""historical_close_to_current_close_ratio"", ""historical_high_to_current_close_ratio"", ""historical_low_to_current_close_ratio"", ""historical_open_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_5"", ""lag_6"", ""window_10""]",0
+0.7,1f29a4164dbaa92e277d,1,"[""alpha158_corr""]","[""window_60""]",0
+0.7,1f6e793d220fb2ea30d9,1,"[""alpha158_std""]","[""window_5""]",0
+0.7,259358b995af78733bce,1,"[""mixed_formula_information""]","[""unspecified""]",1
+0.7,267261053d03d587f853,3,"[""Unusually intense or unstable trading can reflect attention and speculative overpricing under short-sale constraints."", ""liquidity_or_speculative_activity""]","[""name_window_20"", ""unspecified""]",0
+0.7,274fe06e351439162ade,2,"[""return_continuation""]","[""unspecified""]",0
+0.7,2783a85af99f4aedfd9e,1,"[""alpha158_cord""]","[""window_10""]",0
+0.7,28f83ec655f723919f67,1,"[""intraday_kup""]","[""same_day""]",0
+0.7,306dd709e0cf9595b3eb,64,"[""Retail-driven overreaction and temporary overnight sentiment can reverse over subsequent horizons."", ""alpha158_roc"", ""alpha158_sumd"", ""alpha158_sumn"", ""alpha158_sump"", ""historical_close_to_current_close_ratio"", ""historical_high_to_current_close_ratio"", ""historical_low_to_current_close_ratio"", ""historical_open_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio"", ""normalized_price_slope"", ""return_continuation"", ""within_day_price_formation""]","[""lag_17"", ""lag_18"", ""lag_19"", ""lag_20"", ""lag_21"", ""lag_22"", ""lag_23"", ""lag_24"", ""lag_25"", ""lag_26"", ""lag_27"", ""name_window_1"", ""name_window_20"", ""window_20"", ""window_30""]",0
+0.7,312802d1df6967429110,1,"[""Low total and residual risk, low extreme positive payoff and shallow drawdown capture defensive, lottery-preference and limits-to-arbitrage channels.""]","[""name_window_21""]",0
+0.7,37c60535286cdbb7c959,2,"[""alpha158_cntd"", ""alpha158_cntp""]","[""window_30""]",0
+0.7,3d6080105dd630377426,1,"[""Valuation ratios proxy a common cheapness dimension while earnings, book, sales, cash flow and distributions retain different accounting sensitivities.""]","[""unspecified""]",0
+0.7,3d98f2e823046ee142e9,1,"[""alpha158_cord""]","[""window_5""]",0
+0.7,3db9cdc608d812db8352,3,"[""alpha158_vsumd"", ""alpha158_vsumn"", ""alpha158_vsump""]","[""window_30""]",0
+0.7,41154db95b8742a5acdb,1,"[""mixed_formula_information""]","[""unspecified""]",1
+0.7,414dee373d3aad690f3a,1,"[""liquidity_or_speculative_activity""]","[""name_window_20""]",0
+0.7,45689d8e05088884c616,1,"[""realized_or_residual_risk""]","[""unspecified""]",0
+0.7,496b9558f6b15d4d6131,1,"[""alpha158_imin""]","[""window_60""]",0
+0.7,4d67c4edaacfd610ed74,7,"[""alpha158_ma"", ""alpha158_qtld"", ""historical_close_to_current_close_ratio"", ""historical_low_to_current_close_ratio"", ""historical_open_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_2"", ""lag_3"", ""window_5""]",0
+0.7,50ef5790d359c06b271d,1,"[""alpha158_std""]","[""window_10""]",0
+0.7,511395e662969568f545,5,"[""realized_or_residual_risk""]","[""name_window_20"", ""unspecified""]",0
+0.7,55751743b948d82b74c7,2,"[""mixed_formula_information"", ""within_day_price_formation""]","[""unspecified""]",2
+0.7,55e13bfb6fbc57412205,1,"[""short_horizon_overreaction""]","[""name_window_20_5""]",0
+0.7,57eec38f5d9f31f5a342,4,"[""alpha158_min"", ""alpha158_qtld""]","[""window_20"", ""window_30"", ""window_60""]",0
+0.7,5ca708fd43182b9ac5fd,1,"[""liquidity_or_speculative_activity""]","[""unspecified""]",0
+0.7,647a9c7389b55ace354d,1,"[""scale_float_and_shell_value""]","[""unspecified""]",0
+0.7,67a0a5f4dd2913c3a06a,1,"[""alpha158_cord""]","[""window_60""]",0
+0.7,738ad154f76a225a4975,2,"[""Low total and residual risk, low extreme positive payoff and shallow drawdown capture defensive, lottery-preference and limits-to-arbitrage channels.""]","[""name_window_60""]",0
+0.7,77e239308bd79de59266,1,"[""mixed_formula_information""]","[""unspecified""]",1
+0.7,7847175d945034f1c480,1,"[""channel_breakout_event""]","[""unspecified""]",1
+0.7,7b4dfd3f8df991082587,2,"[""mixed_formula_information""]","[""unspecified""]",2
+0.7,7d64adc6acc93b1ac26c,3,"[""return_continuation""]","[""unspecified""]",0
+0.7,84391ffdaf5f0b018af3,2,"[""mixed_formula_information"", ""within_day_price_formation""]","[""unspecified""]",2
+0.7,86e297b45108bcc4082a,1,"[""mixed_formula_information""]","[""unspecified""]",1
+0.7,88dafc1e34f55dfda573,2,"[""alpha158_imax"", ""alpha158_imxd""]","[""window_20""]",0
+0.7,8c2606b757de204d5264,1,"[""return_continuation""]","[""unspecified""]",0
+0.7,9192c7bac61afdb7dc30,2,"[""Valuation ratios proxy a common cheapness dimension while earnings, book, sales, cash flow and distributions retain different accounting sensitivities.""]","[""unspecified""]",0
+0.7,92c40f0abfbc5fb71e00,1,"[""mixed_formula_information""]","[""unspecified""]",1
+0.7,992e32cd1014806a6b26,1,"[""mixed_formula_information""]","[""unspecified""]",1
+0.7,9df67f90fa34b907a6a3,1,"[""intraday_klow""]","[""same_day""]",0
+0.7,a5010696b15afc8d4fc0,1,"[""liquidity_or_speculative_activity""]","[""unspecified""]",0
+0.7,a56083e52f9d12f04a8d,1,"[""mixed_formula_information""]","[""unspecified""]",1
+0.7,a8654e76f40053b17b59,2,"[""mixed_formula_information""]","[""unspecified""]",2
+0.7,a913f2956452b98932ad,2,"[""alpha158_cord""]","[""window_20"", ""window_30""]",0
+0.7,ab1aa211315bbd8dbd8f,1,"[""alpha158_corr""]","[""window_5""]",0
+0.7,acc9e81f3effa8438b3a,1,"[""return_continuation""]","[""unspecified""]",1
+0.7,ad1034067c984367899a,2,"[""alpha158_low"", ""historical_low_to_current_close_ratio""]","[""lag_0"", ""window_0""]",0
+0.7,ae04e0ae67e94a6da19b,1,"[""return_continuation""]","[""unspecified""]",0
+0.7,b41da2774aca50f79669,1,"[""return_continuation""]","[""unspecified""]",0
+0.7,b688a2e44a76ff1046be,4,"[""alpha158_imax"", ""alpha158_imxd"", ""return_continuation""]","[""unspecified"", ""window_30""]",0
+0.7,b7629c155c3211cfaec5,26,"[""alpha158_roc"", ""alpha158_sumd"", ""alpha158_sumn"", ""alpha158_sump"", ""historical_close_to_current_close_ratio"", ""historical_high_to_current_close_ratio"", ""historical_low_to_current_close_ratio"", ""historical_open_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio"", ""normalized_price_slope"", ""return_continuation""]","[""lag_10"", ""lag_7"", ""lag_8"", ""lag_9"", ""name_window_10"", ""window_10""]",0
+0.7,bd1af0eae690e27c404a,3,"[""Price impact per traded currency unit measures costly immediacy and possible illiquidity compensation."", ""liquidity_or_speculative_activity""]","[""name_window_20""]",0
+0.7,c3d8620de09032791bb7,2,"[""alpha158_imax"", ""alpha158_imxd""]","[""window_60""]",0
+0.7,d5f57684274e9e6b64f9,1,"[""alpha158_max""]","[""window_5""]",0
+0.7,d9616667058381ef68dc,1,"[""alpha158_corr""]","[""window_10""]",0
+0.7,db558c6b76c50e9f37fa,1,"[""lottery_preference""]","[""name_window_60""]",0
+0.7,db5a1111fb1d7e8cd7b7,1,"[""historical_low_to_current_close_ratio""]","[""lag_1""]",0
+0.7,dc7dc4ccc1bcc1a729c0,48,"[""alpha158_ma"", ""alpha158_qtld"", ""alpha158_qtlu"", ""alpha158_rank"", ""alpha158_rsv"", ""historical_close_to_current_close_ratio"", ""historical_high_to_current_close_ratio"", ""historical_low_to_current_close_ratio"", ""historical_open_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio"", ""price_anchor"", ""realized_or_residual_risk"", ""return_continuation""]","[""lag_11"", ""lag_12"", ""lag_13"", ""lag_14"", ""lag_15"", ""lag_16"", ""unspecified"", ""window_20"", ""window_30""]",0
+0.7,e115e0847fcea6d4eb6f,3,"[""alpha158_vsumd"", ""alpha158_vsumn"", ""alpha158_vsump""]","[""window_20""]",0
+0.7,e1a260bb204eaea400ff,2,"[""Valuation ratios proxy a common cheapness dimension while earnings, book, sales, cash flow and distributions retain different accounting sensitivities.""]","[""unspecified""]",0
+0.7,e61e8bbb58b85dba1401,84,"[""historical_close_to_current_close_ratio"", ""historical_high_to_current_close_ratio"", ""historical_low_to_current_close_ratio"", ""historical_open_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio"", ""return_continuation""]","[""lag_34"", ""lag_35"", ""lag_36"", ""lag_37"", ""lag_38"", ""lag_39"", ""lag_40"", ""lag_41"", ""lag_42"", ""lag_43"", ""lag_44"", ""lag_45"", ""lag_46"", ""lag_47"", ""lag_48"", ""lag_49"", ""unspecified""]",0
+0.7,e78db82f934455b4d4fd,1,"[""within_day_price_formation""]","[""unspecified""]",1
+0.7,e88b0b2e8560b3953d66,55,"[""alpha158_roc"", ""alpha158_sumd"", ""alpha158_sumn"", ""alpha158_sump"", ""historical_close_to_current_close_ratio"", ""historical_high_to_current_close_ratio"", ""historical_low_to_current_close_ratio"", ""historical_open_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio"", ""normalized_price_slope""]","[""lag_50"", ""lag_51"", ""lag_52"", ""lag_53"", ""lag_54"", ""lag_55"", ""lag_56"", ""lag_57"", ""lag_58"", ""lag_59"", ""window_60""]",0
+0.7,eb39fdabbcbce4adc47b,2,"[""liquidity_or_speculative_activity"", ""within_day_price_formation""]","[""name_window_20"", ""unspecified""]",0
+0.7,eb7fd8acd5dd7e59b452,2,"[""liquidity_or_speculative_activity""]","[""name_window_20""]",0
+0.7,ec24da66ac1559d1336f,1,"[""intraday_klen""]","[""same_day""]",0
+0.7,ed238e002c5beff52395,2,"[""alpha158_min""]","[""window_10"", ""window_5""]",0
+0.7,ed504586af73b9136812,1,"[""alpha158_imin""]","[""window_20""]",0
+0.7,efee6ca6a996a2e9c410,22,"[""liquidity_or_speculative_activity"", ""mixed_formula_information"", ""price_anchor"", ""realized_or_residual_risk"", ""return_continuation"", ""within_day_price_formation""]","[""unspecified""]",4
+0.7,f22f88eafce32e494f2e,1,"[""mixed_formula_information""]","[""unspecified""]",1
+0.7,f4e137554b107f04c14c,1,"[""mixed_formula_information""]","[""unspecified""]",1
+0.7,f894f72ff462e07b1347,1,"[""channel_breakout_event""]","[""unspecified""]",1
+0.7,f8d122331fb4d300409a,2,"[""Valuation ratios proxy a common cheapness dimension while earnings, book, sales, cash flow and distributions retain different accounting sensitivities.""]","[""unspecified""]",0
+0.7,fa937901a22cc797a2ac,1,"[""return_continuation""]","[""unspecified""]",0
+0.7,fbcfce924ce2b3e665d6,13,"[""alpha158_roc"", ""historical_close_to_current_close_ratio"", ""historical_high_to_current_close_ratio"", ""historical_low_to_current_close_ratio"", ""historical_open_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio"", ""mixed_formula_information"", ""normalized_price_slope"", ""return_continuation"", ""short_horizon_overreaction""]","[""lag_3"", ""lag_4"", ""lag_5"", ""name_window_5"", ""unspecified"", ""window_5""]",1
+0.85,04bb0bb1b47e9d933fe1,1,"[""return_continuation""]","[""unspecified""]",0
+0.85,05a5e07ccb42b446712c,1,"[""return_continuation""]","[""unspecified""]",1
+0.85,088ee2aa453ebc20cda6,1,"[""mixed_formula_information""]","[""unspecified""]",1
+0.85,0c2f61077a39a0d119cb,1,"[""mixed_formula_information""]","[""unspecified""]",1
+0.85,0ea703d9c7528e585a4a,1,"[""alpha158_imax""]","[""window_60""]",0
+0.85,0ea75c2af358cad5a82c,1,"[""alpha158_min""]","[""window_10""]",0
+0.85,0f2d2c1c659e838d03e9,1,"[""mixed_formula_information""]","[""unspecified""]",1
+0.85,0f34420bf6deb7a69f7c,40,"[""historical_close_to_current_close_ratio"", ""historical_high_to_current_close_ratio"", ""historical_low_to_current_close_ratio"", ""historical_open_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_42"", ""lag_43"", ""lag_44"", ""lag_45"", ""lag_46"", ""lag_47"", ""lag_48"", ""lag_49""]",0
+0.85,10ab03ef9cf7699ad71e,7,"[""alpha158_roc"", ""historical_close_to_current_close_ratio"", ""historical_high_to_current_close_ratio"", ""historical_open_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio"", ""return_continuation"", ""short_horizon_overreaction""]","[""lag_4"", ""lag_5"", ""name_window_5"", ""window_5""]",0
+0.85,11d5ba29f76765ccf8f5,2,"[""mixed_formula_information"", ""within_day_price_formation""]","[""unspecified""]",2
+0.85,132e383a3c692ba1089e,1,"[""alpha158_cord""]","[""window_30""]",0
+0.85,13d23ecc45a37049b2e6,3,"[""alpha158_vsumd"", ""alpha158_vsumn"", ""alpha158_vsump""]","[""window_30""]",0
+0.85,15ab88f85c5d919cc327,1,"[""alpha158_std""]","[""window_10""]",0
+0.85,18049a99624b8600fa68,1,"[""mixed_formula_information""]","[""unspecified""]",1
+0.85,1a56020529c6d64d6b19,1,"[""within_day_price_formation""]","[""name_window_20""]",0
+0.85,1b87df472e386a2274ae,1,"[""alpha158_corr""]","[""window_10""]",0
+0.85,1c87baddb1ca72c9f1f5,1,"[""alpha158_imxd""]","[""window_20""]",0
+0.85,2053539fc90ad09b7b4a,1,"[""Price impact per traded currency unit measures costly immediacy and possible illiquidity compensation.""]","[""name_window_20""]",0
+0.85,20e222bac9c9d8a31ddd,1,"[""return_continuation""]","[""unspecified""]",0
+0.85,2166aa8a701058a0e676,1,"[""mixed_formula_information""]","[""unspecified""]",1
+0.85,2459ae027bbeb4794e4e,1,"[""lottery_preference""]","[""name_window_60""]",0
+0.85,26b702c5f914f1192a09,3,"[""return_continuation""]","[""unspecified""]",0
+0.85,2857a87c99d5e649be37,1,"[""alpha158_corr""]","[""window_30""]",0
+0.85,2abf9b23f15ee1b48ab9,1,"[""Low total and residual risk, low extreme positive payoff and shallow drawdown capture defensive, lottery-preference and limits-to-arbitrage channels.""]","[""name_window_60""]",0
+0.85,2cd8ec2f71b681c8a2d8,4,"[""alpha158_ma"", ""alpha158_qtlu"", ""alpha158_rank"", ""alpha158_rsv""]","[""window_60""]",0
+0.85,2cf2e4c7943d89b5b2db,4,"[""alpha158_ma"", ""alpha158_qtld"", ""historical_low_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_3"", ""window_5""]",0
+0.85,2d5ace017a64dafb19fc,2,"[""return_continuation""]","[""unspecified""]",0
+0.85,2dbd2f1072dd16970ce5,2,"[""mixed_formula_information"", ""within_day_price_formation""]","[""unspecified""]",2
+0.85,2e80607f11ab659a8b88,2,"[""return_continuation""]","[""unspecified""]",0
+0.85,2f04615f80fcda08db78,1,"[""return_continuation""]","[""unspecified""]",0
+0.85,31131cd63637fe2141e3,3,"[""historical_close_to_current_close_ratio"", ""historical_low_to_current_close_ratio"", ""historical_open_to_current_close_ratio""]","[""lag_2"", ""lag_3""]",0
+0.85,3264e4bdfea99cf9e3e7,21,"[""liquidity_or_speculative_activity"", ""mixed_formula_information"", ""price_anchor"", ""realized_or_residual_risk"", ""return_continuation""]","[""unspecified""]",3
+0.85,333854b667bd90f28686,2,"[""alpha158_qtld""]","[""window_20"", ""window_30""]",0
+0.85,34f23fccb4dbd1fe28cb,10,"[""historical_close_to_current_close_ratio"", ""historical_high_to_current_close_ratio"", ""historical_low_to_current_close_ratio"", ""historical_open_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_15"", ""lag_16""]",0
+0.85,35dc446b1a90ac517df3,2,"[""alpha158_cntd"", ""alpha158_cntp""]","[""window_30""]",0
+0.85,37dd125492439f052e5d,1,"[""return_continuation""]","[""unspecified""]",0
+0.85,3859a9b13ef5e5156f66,1,"[""mixed_formula_information""]","[""unspecified""]",1
+0.85,3947a64400c86cab4da5,1,"[""alpha158_imxd""]","[""window_30""]",0
+0.85,3c9d146255f1a20e730a,1,"[""realized_or_residual_risk""]","[""name_window_20""]",0
+0.85,3d6c4f7613faeb6ae9df,1,"[""historical_low_to_current_close_ratio""]","[""lag_1""]",0
+0.85,3fea0971bd24591c59a3,1,"[""mixed_formula_information""]","[""unspecified""]",1
+0.85,45bcdb395f43240d95fc,1,"[""return_continuation""]","[""unspecified""]",0
+0.85,49c8a41e8afed3ae75e4,4,"[""alpha158_rank"", ""realized_or_residual_risk"", ""return_continuation""]","[""unspecified"", ""window_20"", ""window_30""]",0
+0.85,4c1c08d3dcfc0ff40558,40,"[""historical_close_to_current_close_ratio"", ""historical_high_to_current_close_ratio"", ""historical_low_to_current_close_ratio"", ""historical_open_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_34"", ""lag_35"", ""lag_36"", ""lag_37"", ""lag_38"", ""lag_39"", ""lag_40"", ""lag_41""]",0
+0.85,4d038426683be578092e,1,"[""alpha158_imin""]","[""window_20""]",0
+0.85,4e7dab8c1e04ddf597a2,1,"[""Valuation ratios proxy a common cheapness dimension while earnings, book, sales, cash flow and distributions retain different accounting sensitivities.""]","[""unspecified""]",0
+0.85,50eec6d2709cbfe99824,1,"[""realized_or_residual_risk""]","[""unspecified""]",0
+0.85,51aae1f3d735c9419f3b,1,"[""mixed_formula_information""]","[""unspecified""]",1
+0.85,51eebe34ff4681e7a9d7,7,"[""historical_close_to_current_close_ratio"", ""historical_high_to_current_close_ratio"", ""historical_low_to_current_close_ratio"", ""historical_open_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_5"", ""lag_6""]",0
+0.85,53a96f21bf2a26604ddc,3,"[""alpha158_vsumd"", ""alpha158_vsumn"", ""alpha158_vsump""]","[""window_60""]",0
+0.85,55b3cca360caca79cb38,1,"[""mixed_formula_information""]","[""unspecified""]",1
+0.85,5747fe37574b3e22e149,16,"[""alpha158_roc"", ""alpha158_sumd"", ""alpha158_sumn"", ""alpha158_sump"", ""historical_close_to_current_close_ratio"", ""historical_high_to_current_close_ratio"", ""historical_low_to_current_close_ratio"", ""historical_open_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_57"", ""lag_58"", ""lag_59"", ""window_60""]",0
+0.85,58e3632eb0bc9ea84af1,1,"[""within_day_price_formation""]","[""unspecified""]",1
+0.85,5b8fc308d2e9977261c4,2,"[""Unusually intense or unstable trading can reflect attention and speculative overpricing under short-sale constraints."", ""liquidity_or_speculative_activity""]","[""name_window_20""]",0
+0.85,5bda4ea1edbf84b2c299,1,"[""alpha158_imxd""]","[""window_60""]",0
+0.85,5d0a2536eadffa31c504,1,"[""alpha158_imax""]","[""window_30""]",0
+0.85,64ff92670d1fc7a450a0,1,"[""alpha158_corr""]","[""window_5""]",0
+0.85,652d3278c0814e5e26ad,1,"[""mixed_formula_information""]","[""unspecified""]",1
+0.85,65ee45bf83ffe981ce03,39,"[""historical_close_to_current_close_ratio"", ""historical_high_to_current_close_ratio"", ""historical_low_to_current_close_ratio"", ""historical_open_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio"", ""normalized_price_slope""]","[""lag_50"", ""lag_51"", ""lag_52"", ""lag_53"", ""lag_54"", ""lag_55"", ""lag_56"", ""lag_57"", ""window_60""]",0
+0.85,68130b84ceb34fcc5b4c,3,"[""alpha158_vsumd"", ""alpha158_vsumn"", ""alpha158_vsump""]","[""window_20""]",0
+0.85,69c1b696c1fed3e685b3,10,"[""historical_close_to_current_close_ratio"", ""historical_high_to_current_close_ratio"", ""historical_low_to_current_close_ratio"", ""historical_open_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_22"", ""lag_23""]",0
+0.85,6d045d4a5a5a1e25a76d,1,"[""liquidity_or_speculative_activity""]","[""name_window_20""]",0
+0.85,6d7e26d9fb12d6d1f05f,1,"[""Low total and residual risk, low extreme positive payoff and shallow drawdown capture defensive, lottery-preference and limits-to-arbitrage channels.""]","[""name_window_21""]",0
+0.85,6e373ca8c4c51161c94a,2,"[""mixed_formula_information""]","[""unspecified""]",2
+0.85,6e8b881c5b29083f2cd9,2,"[""alpha158_low"", ""historical_low_to_current_close_ratio""]","[""lag_0"", ""window_0""]",0
+0.85,6ecdf74759887a6c3d0c,1,"[""alpha158_imin""]","[""window_30""]",0
+0.85,73842c5f575b4db6651f,2,"[""return_continuation""]","[""unspecified""]",0
+0.85,760344d19d910c88a231,3,"[""alpha158_ma"", ""alpha158_qtlu"", ""return_continuation""]","[""unspecified"", ""window_30""]",0
+0.85,798363c80e47957ecb6e,1,"[""mixed_formula_information""]","[""unspecified""]",1
+0.85,7ad7bdd9a681975845d4,34,"[""alpha158_roc"", ""alpha158_sumd"", ""alpha158_sumn"", ""alpha158_sump"", ""historical_close_to_current_close_ratio"", ""historical_high_to_current_close_ratio"", ""historical_low_to_current_close_ratio"", ""historical_open_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_28"", ""lag_29"", ""lag_30"", ""lag_31"", ""lag_32"", ""lag_33"", ""window_30""]",0
+0.85,802716de7f5d647f7782,5,"[""historical_close_to_current_close_ratio"", ""historical_high_to_current_close_ratio"", ""historical_low_to_current_close_ratio"", ""historical_open_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_7""]",0
+0.85,8177082aee57c085c90f,1,"[""return_continuation""]","[""unspecified""]",0
+0.85,829505393e3921348650,1,"[""mixed_formula_information""]","[""unspecified""]",1
+0.85,82dcac43bacce3fc3661,1,"[""return_continuation""]","[""unspecified""]",0
+0.85,85c3918a22d6e0e6b04f,1,"[""intraday_klow""]","[""same_day""]",0
+0.85,87c29bb2c96acbf308ec,1,"[""alpha158_resi""]","[""window_60""]",0
+0.85,8b9c10f1738d819a3a5c,21,"[""historical_close_to_current_close_ratio"", ""historical_high_to_current_close_ratio"", ""historical_low_to_current_close_ratio"", ""historical_open_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio"", ""normalized_price_slope""]","[""lag_24"", ""lag_25"", ""lag_26"", ""lag_27"", ""window_30""]",0
+0.85,8ccde5fb72eecef5052d,1,"[""mixed_formula_information""]","[""unspecified""]",1
+0.85,8d110530703aea79c47f,3,"[""realized_or_residual_risk""]","[""name_window_20"", ""unspecified""]",0
+0.85,8e056b8e792abdcbc303,1,"[""alpha158_cord""]","[""window_10""]",0
+0.85,905f9b38c98ec0289930,1,"[""liquidity_or_speculative_activity""]","[""unspecified""]",0
+0.85,925df0f0e6025cbe8c08,2,"[""Valuation ratios proxy a common cheapness dimension while earnings, book, sales, cash flow and distributions retain different accounting sensitivities.""]","[""unspecified""]",0
+0.85,928e1187c1f60f1539a1,1,"[""mixed_formula_information""]","[""unspecified""]",1
+0.85,92de1d9fafb10d19e62d,1,"[""intraday_klen""]","[""same_day""]",0
+0.85,99abecbf5573d836c0b3,10,"[""historical_close_to_current_close_ratio"", ""historical_high_to_current_close_ratio"", ""historical_low_to_current_close_ratio"", ""historical_open_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_13"", ""lag_14""]",0
+0.85,9b1b698befa55b67587a,1,"[""mixed_formula_information""]","[""unspecified""]",1
+0.85,9bd859cd4f410c55cb68,1,"[""alpha158_min""]","[""window_5""]",0
+0.85,9c8ea301d328a2cd7d32,5,"[""historical_close_to_current_close_ratio"", ""historical_low_to_current_close_ratio"", ""historical_open_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio"", ""normalized_price_slope""]","[""lag_3"", ""lag_4"", ""window_5""]",0
+0.85,9cc5eb2d4a7f36654fa4,1,"[""mixed_formula_information""]","[""unspecified""]",1
+0.85,9cd7b139f95035d8e150,2,"[""liquidity_or_speculative_activity""]","[""name_window_20""]",0
+0.85,9e11780a6380bc9e2907,1,"[""return_continuation""]","[""unspecified""]",0
+0.85,9e359c111ed97df2f5b9,3,"[""alpha158_rsv"", ""realized_or_residual_risk""]","[""unspecified"", ""window_20"", ""window_30""]",0
+0.85,9e80a35d40a36195ce83,1,"[""mixed_formula_information""]","[""unspecified""]",1
+0.85,a0bd5f69ec2dc4510cbc,2,"[""Low total and residual risk, low extreme positive payoff and shallow drawdown capture defensive, lottery-preference and limits-to-arbitrage channels.""]","[""name_window_60""]",0
+0.85,a545df54283b7b075786,1,"[""mixed_formula_information""]","[""unspecified""]",1
+0.85,acac013a5a2e88814f49,2,"[""alpha158_min""]","[""window_20"", ""window_30""]",0
+0.85,af3edcd28e343b4afd92,1,"[""realized_or_residual_risk""]","[""unspecified""]",0
+0.85,b0c74239f353ee5ed5bb,1,"[""alpha158_std""]","[""window_5""]",0
+0.85,b3733a70b7e7cecb1829,1,"[""intraday_kup""]","[""same_day""]",0
+0.85,b855fce0089e165b279c,3,"[""alpha158_ma"", ""alpha158_qtld"", ""alpha158_rank""]","[""window_10""]",0
+0.85,b980b27129a2ddcd1297,1,"[""liquidity_or_speculative_activity""]","[""unspecified""]",0
+0.85,bb481ade170e7b1644f5,2,"[""return_continuation""]","[""unspecified""]",0
+0.85,bcd4ae7bacdde4eb3250,2,"[""Valuation ratios proxy a common cheapness dimension while earnings, book, sales, cash flow and distributions retain different accounting sensitivities.""]","[""unspecified""]",0
+0.85,c398c20da83e349dc94a,15,"[""alpha158_roc"", ""alpha158_sumd"", ""alpha158_sumn"", ""alpha158_sump"", ""historical_close_to_current_close_ratio"", ""historical_high_to_current_close_ratio"", ""historical_low_to_current_close_ratio"", ""historical_open_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio"", ""return_continuation""]","[""lag_10"", ""lag_9"", ""name_window_10"", ""window_10""]",0
+0.85,c4dbe0246bbbd990fe3d,1,"[""channel_breakout_event""]","[""unspecified""]",1
+0.85,ca009d62ffb4e38d4f51,1,"[""alpha158_imin""]","[""window_60""]",0
+0.85,ce1953d5155d1b3d4166,1,"[""alpha158_corr""]","[""window_20""]",0
+0.85,ce29dc1c621b9fb31c07,1,"[""alpha158_cord""]","[""window_20""]",0
+0.85,cfc2852027b8fa833e78,1,"[""alpha158_corr""]","[""window_60""]",0
+0.85,d051b694375e548a949d,1,"[""alpha158_imax""]","[""window_20""]",0
+0.85,d19a1d0786470217e2b9,2,"[""alpha158_min"", ""alpha158_qtld""]","[""window_60""]",0
+0.85,d5a17e2d5b78a507fac1,1,"[""alpha158_cord""]","[""window_5""]",0
+0.85,d644a456a9384bc1a7a8,16,"[""Retail-driven overreaction and temporary overnight sentiment can reverse over subsequent horizons."", ""alpha158_roc"", ""alpha158_sumd"", ""alpha158_sumn"", ""alpha158_sump"", ""historical_close_to_current_close_ratio"", ""historical_high_to_current_close_ratio"", ""historical_low_to_current_close_ratio"", ""historical_open_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio"", ""return_continuation""]","[""lag_20"", ""lag_21"", ""name_window_1"", ""name_window_20"", ""window_20""]",0
+0.85,d6cf451f24db9f37b0b2,2,"[""return_continuation""]","[""unspecified""]",0
+0.85,d7490ce3acaa68a626b7,1,"[""scale_float_and_shell_value""]","[""unspecified""]",0
+0.85,d7b0da1631c945081ac7,1,"[""mixed_formula_information""]","[""unspecified""]",1
+0.85,d7b9777e0f6ceefffbc1,6,"[""historical_close_to_current_close_ratio"", ""historical_high_to_current_close_ratio"", ""historical_low_to_current_close_ratio"", ""historical_open_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio"", ""normalized_price_slope""]","[""lag_8"", ""window_10""]",0
+0.85,e26457b832e3441af5a0,1,"[""liquidity_or_speculative_activity""]","[""unspecified""]",0
+0.85,e7b56d64b308b6a6b331,2,"[""alpha158_ma"", ""alpha158_qtlu""]","[""window_20""]",0
+0.85,e8dba402804c78bfb93c,2,"[""liquidity_or_speculative_activity""]","[""name_window_20""]",0
+0.85,ea11cb9d6f9260164797,4,"[""return_continuation""]","[""unspecified""]",0
+0.85,eb48adede1d110d99114,1,"[""channel_breakout_event""]","[""unspecified""]",1
+0.85,eba6840e806de72e6b05,1,"[""short_horizon_overreaction""]","[""name_window_20_5""]",0
+0.85,ee1914b04993cbfcfdf0,1,"[""alpha158_cord""]","[""window_60""]",0
+0.85,ef028779b8e249020429,2,"[""mixed_formula_information"", ""within_day_price_formation""]","[""unspecified""]",2
+0.85,f1260a1077021ff345c4,1,"[""alpha158_max""]","[""window_5""]",0
+0.85,f36b4c760b9ed9892335,1,"[""within_day_price_formation""]","[""unspecified""]",1
+0.85,f36e408233a08a518210,1,"[""liquidity_or_speculative_activity""]","[""unspecified""]",0
+0.85,fafdb752083a2a6a32c4,2,"[""Valuation ratios proxy a common cheapness dimension while earnings, book, sales, cash flow and distributions retain different accounting sensitivities.""]","[""unspecified""]",0
+0.85,fb1d02df222563a817aa,16,"[""historical_close_to_current_close_ratio"", ""historical_high_to_current_close_ratio"", ""historical_low_to_current_close_ratio"", ""historical_open_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio"", ""normalized_price_slope""]","[""lag_17"", ""lag_18"", ""lag_19"", ""window_20""]",0
+0.85,fbebd930c9eb3e21e9e7,11,"[""historical_close_to_current_close_ratio"", ""historical_high_to_current_close_ratio"", ""historical_low_to_current_close_ratio"", ""historical_open_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio"", ""price_anchor""]","[""lag_11"", ""lag_12"", ""unspecified""]",0
+0.85,ff71c050b7473ffadb39,1,"[""within_day_price_formation""]","[""name_window_20""]",0
+0.95,010440c6dde61ca109da,1,"[""mixed_formula_information""]","[""unspecified""]",1
+0.95,0119a5d12159986ff7d7,10,"[""historical_close_to_current_close_ratio"", ""historical_high_to_current_close_ratio"", ""historical_low_to_current_close_ratio"", ""historical_open_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_36"", ""lag_37""]",0
+0.95,02852084f330f943e1ef,3,"[""historical_close_to_current_close_ratio"", ""historical_high_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_9""]",0
+0.95,03a8f38bcb75fcad2a55,1,"[""return_continuation""]","[""unspecified""]",0
+0.95,08e08bd1979c863b7302,1,"[""channel_breakout_event""]","[""unspecified""]",1
+0.95,0d495298578d1efc9d18,1,"[""alpha158_cord""]","[""window_5""]",0
+0.95,0d78cc8063a80cad4131,2,"[""historical_low_to_current_close_ratio"", ""historical_open_to_current_close_ratio""]","[""lag_10""]",0
+0.95,0d8192eab90b072b7d78,5,"[""historical_close_to_current_close_ratio"", ""historical_high_to_current_close_ratio"", ""historical_low_to_current_close_ratio"", ""historical_open_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_15""]",0
+0.95,139a45fbd384ad1ac167,10,"[""historical_close_to_current_close_ratio"", ""historical_high_to_current_close_ratio"", ""historical_low_to_current_close_ratio"", ""historical_open_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_52"", ""lag_53""]",0
+0.95,146615a931b89bfd22d2,1,"[""mixed_formula_information""]","[""unspecified""]",1
+0.95,15d66f5e3d72aa9d1fe0,2,"[""historical_high_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_6""]",0
+0.95,1616cfafba93fd4d742a,1,"[""return_continuation""]","[""unspecified""]",0
+0.95,18549a84594ba3a19eaa,10,"[""historical_close_to_current_close_ratio"", ""historical_high_to_current_close_ratio"", ""historical_low_to_current_close_ratio"", ""historical_open_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_48"", ""lag_49""]",0
+0.95,18f6eae7c23d7f5b60a1,5,"[""historical_close_to_current_close_ratio"", ""historical_high_to_current_close_ratio"", ""historical_low_to_current_close_ratio"", ""historical_open_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_13""]",0
+0.95,192a849fd03ec415749d,1,"[""mixed_formula_information""]","[""unspecified""]",1
+0.95,19bbc5d7522ccaacd769,1,"[""mixed_formula_information""]","[""unspecified""]",1
+0.95,19d76af8d6af6bbd435d,10,"[""historical_close_to_current_close_ratio"", ""historical_high_to_current_close_ratio"", ""historical_low_to_current_close_ratio"", ""historical_open_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_34"", ""lag_35""]",0
+0.95,1ade7e498559a042d3a3,1,"[""historical_low_to_current_close_ratio""]","[""lag_2""]",0
+0.95,1d1ccc056dca02694e18,1,"[""alpha158_rank""]","[""window_60""]",0
+0.95,1d6828e275dacdfd9dc6,1,"[""normalized_price_slope""]","[""window_30""]",0
+0.95,1da777bc7cfd3e928def,1,"[""realized_or_residual_risk""]","[""name_window_20""]",0
+0.95,20501ddc91d3dd72f7a4,1,"[""mixed_formula_information""]","[""unspecified""]",1
+0.95,22e7188a127f738976bd,1,"[""within_day_price_formation""]","[""unspecified""]",1
+0.95,23809097381c7914fa2e,1,"[""alpha158_rank""]","[""window_30""]",0
+0.95,240a46d2ca9b414a6f3a,2,"[""mixed_formula_information"", ""within_day_price_formation""]","[""unspecified""]",2
+0.95,24166f99f7dc090d0c8d,1,"[""Valuation ratios proxy a common cheapness dimension while earnings, book, sales, cash flow and distributions retain different accounting sensitivities.""]","[""unspecified""]",0
+0.95,26125719bd2fa2e774a2,18,"[""historical_close_to_current_close_ratio"", ""historical_high_to_current_close_ratio"", ""historical_low_to_current_close_ratio"", ""historical_open_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_54"", ""lag_55"", ""lag_56"", ""lag_57""]",0
+0.95,26c07d46d38336844056,7,"[""alpha158_roc"", ""historical_close_to_current_close_ratio"", ""historical_high_to_current_close_ratio"", ""historical_low_to_current_close_ratio"", ""historical_open_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio"", ""return_continuation""]","[""lag_20"", ""name_window_20"", ""window_20""]",0
+0.95,26d9a7d152ec948b54ee,1,"[""intraday_kup""]","[""same_day""]",0
+0.95,27a1ae499e85fa73c4e2,1,"[""return_continuation""]","[""unspecified""]",0
+0.95,2814b13cf3cfa2e3a7c7,10,"[""historical_close_to_current_close_ratio"", ""historical_high_to_current_close_ratio"", ""historical_low_to_current_close_ratio"", ""historical_open_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_42"", ""lag_43""]",0
+0.95,2c1b7a073bb7eee3e9c9,1,"[""return_continuation""]","[""unspecified""]",0
+0.95,2ca59647a619fb84db87,1,"[""alpha158_qtld""]","[""window_60""]",0
+0.95,2eea6dde012349bd98a0,1,"[""mixed_formula_information""]","[""unspecified""]",1
+0.95,2f9bdc33bf13c84d2b85,1,"[""liquidity_or_speculative_activity""]","[""unspecified""]",0
+0.95,3134d6d108dc4366370e,1,"[""return_continuation""]","[""unspecified""]",0
+0.95,328b3fd312d9efd68c91,1,"[""alpha158_resi""]","[""window_60""]",0
+0.95,33389f2a485e7fe8c4d8,1,"[""lottery_preference""]","[""name_window_60""]",0
+0.95,33f599c66c9a3959eb2f,2,"[""historical_low_to_current_close_ratio"", ""historical_open_to_current_close_ratio""]","[""lag_8""]",0
+0.95,348acb083a97f38304b9,3,"[""historical_close_to_current_close_ratio"", ""historical_high_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_11""]",0
+0.95,374543bdc17da3f85944,1,"[""mixed_formula_information""]","[""unspecified""]",1
+0.95,37a13d1a27ad3aa322d1,1,"[""alpha158_cord""]","[""window_30""]",0
+0.95,37af2c0500711c444fd8,1,"[""mixed_formula_information""]","[""unspecified""]",1
+0.95,38486f452ab32ec20be7,1,"[""Valuation ratios proxy a common cheapness dimension while earnings, book, sales, cash flow and distributions retain different accounting sensitivities.""]","[""unspecified""]",0
+0.95,39bbfe029066e00926c1,1,"[""mixed_formula_information""]","[""unspecified""]",1
+0.95,3aaecc97907d9b56f229,1,"[""short_horizon_overreaction""]","[""name_window_20_5""]",0
+0.95,3d5fbeca91476ca0ec51,3,"[""alpha158_vsumd"", ""alpha158_vsumn"", ""alpha158_vsump""]","[""window_20""]",0
+0.95,3dc9e51c9b37e7dbb8ef,1,"[""mixed_formula_information""]","[""unspecified""]",1
+0.95,3e5859bb1ae344622ffc,2,"[""Valuation ratios proxy a common cheapness dimension while earnings, book, sales, cash flow and distributions retain different accounting sensitivities.""]","[""unspecified""]",0
+0.95,3feeac74d6a6e78183e9,4,"[""historical_close_to_current_close_ratio"", ""historical_high_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio"", ""price_anchor""]","[""lag_12"", ""unspecified""]",0
+0.95,3ff8a9a99d1904268d5a,1,"[""return_continuation""]","[""unspecified""]",0
+0.95,40f47512e87a53769bd3,2,"[""realized_or_residual_risk"", ""return_continuation""]","[""unspecified""]",0
+0.95,41bdbca241aab511b201,2,"[""historical_close_to_current_close_ratio"", ""historical_open_to_current_close_ratio""]","[""lag_5"", ""lag_6""]",0
+0.95,42b9c19210affd8ddc7f,1,"[""liquidity_or_speculative_activity""]","[""unspecified""]",0
+0.95,43ba89ad95767f536798,3,"[""alpha158_vsumd"", ""alpha158_vsumn"", ""alpha158_vsump""]","[""window_30""]",0
+0.95,443b571127b2ec76b73d,1,"[""return_continuation""]","[""unspecified""]",0
+0.95,454dfdfed16b7fb74477,2,"[""mixed_formula_information"", ""within_day_price_formation""]","[""unspecified""]",2
+0.95,45dcbf509a2dc0c414c4,1,"[""mixed_formula_information""]","[""unspecified""]",1
+0.95,4775896fe00baa361f93,5,"[""historical_close_to_current_close_ratio"", ""historical_high_to_current_close_ratio"", ""historical_low_to_current_close_ratio"", ""historical_open_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_19""]",0
+0.95,48aa63980fab84c9e37a,1,"[""Low total and residual risk, low extreme positive payoff and shallow drawdown capture defensive, lottery-preference and limits-to-arbitrage channels.""]","[""name_window_60""]",0
+0.95,48fe5a7775cfaab17bc6,1,"[""mixed_formula_information""]","[""unspecified""]",1
+0.95,4b0a55ca55582752a142,1,"[""scale_float_and_shell_value""]","[""unspecified""]",0
+0.95,4bc4fecdde240cfdaf85,1,"[""alpha158_min""]","[""window_30""]",0
+0.95,4cf5546667e57cd70fa6,5,"[""historical_close_to_current_close_ratio"", ""historical_high_to_current_close_ratio"", ""historical_low_to_current_close_ratio"", ""historical_open_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_14""]",0
+0.95,4e31f53de96f4fe76409,1,"[""alpha158_max""]","[""window_5""]",0
+0.95,4f4724d28de02af01da1,1,"[""alpha158_qtld""]","[""window_5""]",0
+0.95,51f480d926c5439af4e6,1,"[""return_continuation""]","[""unspecified""]",0
+0.95,52ce13d4c0b7b017bca3,1,"[""Low total and residual risk, low extreme positive payoff and shallow drawdown capture defensive, lottery-preference and limits-to-arbitrage channels.""]","[""name_window_60""]",0
+0.95,54d1fe97e5589b098955,1,"[""return_continuation""]","[""unspecified""]",0
+0.95,57e76b2aa396beca8047,3,"[""alpha158_sumd"", ""alpha158_sumn"", ""alpha158_sump""]","[""window_60""]",0
+0.95,5a4fedf0c096265871a5,1,"[""Low total and residual risk, low extreme positive payoff and shallow drawdown capture defensive, lottery-preference and limits-to-arbitrage channels.""]","[""name_window_21""]",0
+0.95,5b65bde2c2d327eb3085,1,"[""realized_or_residual_risk""]","[""unspecified""]",0
+0.95,5e245a8261fa0091f7f5,1,"[""return_continuation""]","[""unspecified""]",0
+0.95,606f3f7b79b6888414b8,1,"[""alpha158_imax""]","[""window_60""]",0
+0.95,610c94e335ea403f8089,5,"[""historical_close_to_current_close_ratio"", ""historical_high_to_current_close_ratio"", ""historical_low_to_current_close_ratio"", ""historical_open_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_25""]",0
+0.95,654e1918dda895fd41b3,3,"[""historical_close_to_current_close_ratio"", ""historical_open_to_current_close_ratio"", ""normalized_price_slope""]","[""lag_3"", ""lag_4"", ""window_5""]",0
+0.95,67728e5781d734fb1a1b,1,"[""return_continuation""]","[""unspecified""]",0
+0.95,67ace6fbca8d42640ab8,1,"[""Price impact per traded currency unit measures costly immediacy and possible illiquidity compensation.""]","[""name_window_20""]",0
+0.95,682dd1cdce705d3b4c08,1,"[""normalized_price_slope""]","[""window_10""]",0
+0.95,687536b7e6b2f3329e2c,1,"[""alpha158_imin""]","[""window_30""]",0
+0.95,68deb3342485271a8235,5,"[""alpha158_roc"", ""historical_close_to_current_close_ratio"", ""historical_high_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio"", ""return_continuation""]","[""lag_10"", ""name_window_10"", ""window_10""]",0
+0.95,6925bc5a09a02bded0f5,1,"[""alpha158_imax""]","[""window_20""]",0
+0.95,695e482b6e8b4adf0ec3,1,"[""alpha158_imxd""]","[""window_60""]",0
+0.95,6a32affd24f3b2e4c837,1,"[""liquidity_or_speculative_activity""]","[""name_window_20""]",0
+0.95,6b05b7d62e5cb0568aab,1,"[""alpha158_ma""]","[""window_10""]",0
+0.95,6f1c0711a84c1462a4a8,1,"[""liquidity_or_speculative_activity""]","[""unspecified""]",0
+0.95,7124ee6071f7a02d1193,1,"[""alpha158_std""]","[""window_10""]",0
+0.95,72be48e7eef52752b78b,1,"[""alpha158_qtld""]","[""window_30""]",0
+0.95,72e4754e1808c9711664,1,"[""alpha158_qtlu""]","[""window_60""]",0
+0.95,72edb9557f3919da8c80,2,"[""liquidity_or_speculative_activity""]","[""name_window_20""]",0
+0.95,746cf6d53ce5701f6c91,1,"[""intraday_klen""]","[""same_day""]",0
+0.95,74872fd6d2e2cefa31e3,1,"[""realized_or_residual_risk""]","[""unspecified""]",0
+0.95,75d7e0dd5742c892bba4,1,"[""alpha158_cord""]","[""window_20""]",0
+0.95,76104535fe7a2f1f2de0,2,"[""mixed_formula_information"", ""within_day_price_formation""]","[""unspecified""]",2
+0.95,76463d6d3635e26a397f,5,"[""historical_close_to_current_close_ratio"", ""historical_high_to_current_close_ratio"", ""historical_low_to_current_close_ratio"", ""historical_open_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_24""]",0
+0.95,783d104ae822de3d410f,1,"[""return_continuation""]","[""unspecified""]",0
+0.95,7ac25fbdd6d3adfe7169,1,"[""return_continuation""]","[""unspecified""]",0
+0.95,7bc40bbcf1bb3cc9515d,1,"[""within_day_price_formation""]","[""unspecified""]",1
+0.95,7bfbfb8744bb215da763,1,"[""alpha158_rank""]","[""window_20""]",0
+0.95,7c87da6c37f06abd362a,1,"[""alpha158_imin""]","[""window_60""]",0
+0.95,7dd21faf0e8120f884c5,1,"[""return_continuation""]","[""unspecified""]",0
+0.95,7e3a42ece612bc550b0a,1,"[""alpha158_min""]","[""window_60""]",0
+0.95,7eddb9d31590178b5e79,1,"[""alpha158_min""]","[""window_10""]",0
+0.95,7fa0cff3279565cc9663,1,"[""mixed_formula_information""]","[""unspecified""]",1
+0.95,818eff8fd93ce094e6a2,1,"[""alpha158_corr""]","[""window_30""]",0
+0.95,8249de9fd7d941c9fbe6,10,"[""historical_close_to_current_close_ratio"", ""historical_high_to_current_close_ratio"", ""historical_low_to_current_close_ratio"", ""historical_open_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_44"", ""lag_45""]",0
+0.95,885e023b7ee6a6980743,1,"[""return_continuation""]","[""unspecified""]",0
+0.95,899276f28486c25726c5,2,"[""alpha158_rsv"", ""realized_or_residual_risk""]","[""unspecified"", ""window_20""]",0
+0.95,8ad9547c41ab7bf07ddd,1,"[""liquidity_or_speculative_activity""]","[""name_window_20""]",0
+0.95,8b786d0b186bfa60c553,3,"[""historical_close_to_current_close_ratio"", ""historical_high_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_7""]",0
+0.95,8d97261e959a28732f3c,1,"[""Valuation ratios proxy a common cheapness dimension while earnings, book, sales, cash flow and distributions retain different accounting sensitivities.""]","[""unspecified""]",0
+0.95,939764fb69f9760e9f7b,1,"[""normalized_price_slope""]","[""window_60""]",0
+0.95,94f242cb9acdb53c1532,2,"[""historical_low_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_4""]",0
+0.95,952baf86051d8bea6cae,1,"[""alpha158_cntp""]","[""window_30""]",0
+0.95,957e44f0d279c7d75a9a,1,"[""alpha158_corr""]","[""window_5""]",0
+0.95,97579789a904a6255f78,5,"[""alpha158_roc"", ""historical_close_to_current_close_ratio"", ""historical_open_to_current_close_ratio"", ""return_continuation"", ""short_horizon_overreaction""]","[""lag_4"", ""lag_5"", ""name_window_5"", ""window_5""]",0
+0.95,98a123c907d0d1c3841f,1,"[""liquidity_or_speculative_activity""]","[""unspecified""]",0
+0.95,9952d1912045f85c57a9,3,"[""alpha158_sumd"", ""alpha158_sumn"", ""alpha158_sump""]","[""window_20""]",0
+0.95,9c705929f3daf5f4d669,1,"[""alpha158_ma""]","[""window_30""]",0
+0.95,9c7302c0e5ffb148680a,5,"[""historical_close_to_current_close_ratio"", ""historical_high_to_current_close_ratio"", ""historical_low_to_current_close_ratio"", ""historical_open_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_16""]",0
+0.95,9d11fe2b7e5231c1892e,2,"[""historical_low_to_current_close_ratio"", ""historical_open_to_current_close_ratio""]","[""lag_12""]",0
+0.95,9ee5e2dec2b95c07f39d,1,"[""mixed_formula_information""]","[""unspecified""]",1
+0.95,a06b551e0969a2bf0981,1,"[""alpha158_imax""]","[""window_30""]",0
+0.95,a0c465ad0e1243f6d8bf,5,"[""historical_close_to_current_close_ratio"", ""historical_high_to_current_close_ratio"", ""historical_low_to_current_close_ratio"", ""historical_open_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_17""]",0
+0.95,a0cc06e032968bdc3ccf,1,"[""alpha158_rank""]","[""window_10""]",0
+0.95,a1489f3a2e39d65531c4,1,"[""alpha158_std""]","[""window_5""]",0
+0.95,a2854e4f9bc320479b60,2,"[""alpha158_low"", ""historical_low_to_current_close_ratio""]","[""lag_0"", ""window_0""]",0
+0.95,a2d1a924f5fc0e215038,1,"[""alpha158_corr""]","[""window_10""]",0
+0.95,a371273fd2074d9a278b,1,"[""normalized_price_slope""]","[""window_20""]",0
+0.95,a4056442525084bdf5b5,1,"[""channel_breakout_event""]","[""unspecified""]",1
+0.95,a50b5c9c1840156537f4,1,"[""mixed_formula_information""]","[""unspecified""]",1
+0.95,a57b0dd3dd119034bd0c,1,"[""intraday_klow""]","[""same_day""]",0
+0.95,a606a096dc8f0b7a3abf,1,"[""mixed_formula_information""]","[""unspecified""]",1
+0.95,a7233228b56a454ec507,1,"[""mixed_formula_information""]","[""unspecified""]",1
+0.95,a7fbb75b889b8efd2021,1,"[""alpha158_imin""]","[""window_20""]",0
+0.95,a843ec43f3299d9e2e77,1,"[""alpha158_rsv""]","[""window_30""]",0
+0.95,aa3d8fb03aff0452da6a,10,"[""historical_close_to_current_close_ratio"", ""historical_high_to_current_close_ratio"", ""historical_low_to_current_close_ratio"", ""historical_open_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_40"", ""lag_41""]",0
+0.95,aaba38ad25e361d42b7b,5,"[""historical_close_to_current_close_ratio"", ""historical_high_to_current_close_ratio"", ""historical_low_to_current_close_ratio"", ""historical_open_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_23""]",0
+0.95,ab871b25367ba7b1a7c7,10,"[""historical_close_to_current_close_ratio"", ""historical_high_to_current_close_ratio"", ""historical_low_to_current_close_ratio"", ""historical_open_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_50"", ""lag_51""]",0
+0.95,abcb39d6433b8afd507a,1,"[""alpha158_cord""]","[""window_60""]",0
+0.95,ac219d870aee34fcb105,1,"[""alpha158_corr""]","[""window_60""]",0
+0.95,ac5bc2620a60f76b2ea0,21,"[""liquidity_or_speculative_activity"", ""mixed_formula_information"", ""price_anchor"", ""realized_or_residual_risk"", ""return_continuation""]","[""unspecified""]",3
+0.95,ad0a840e4f9e0584489f,1,"[""alpha158_imxd""]","[""window_30""]",0
+0.95,b04732aa712d61709ba7,2,"[""historical_low_to_current_close_ratio"", ""historical_open_to_current_close_ratio""]","[""lag_11""]",0
+0.95,b0ea6698549c55ca6ff5,1,"[""mixed_formula_information""]","[""unspecified""]",1
+0.95,b19da01b19441c8adcb2,5,"[""historical_close_to_current_close_ratio"", ""historical_high_to_current_close_ratio"", ""historical_low_to_current_close_ratio"", ""historical_open_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_22""]",0
+0.95,b3cff2ec39c6610409a0,1,"[""alpha158_ma""]","[""window_20""]",0
+0.95,b6e1823bcf0ae915061a,2,"[""historical_high_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_5""]",0
+0.95,b703bc6e3ba9f1ff132b,1,"[""alpha158_min""]","[""window_5""]",0
+0.95,b822f5c40355786aa2e8,2,"[""return_continuation""]","[""unspecified""]",0
+0.95,bcb622cbeda4305b1d36,1,"[""return_continuation""]","[""unspecified""]",1
+0.95,bd34cc5be5fc78f5fad8,11,"[""alpha158_roc"", ""historical_close_to_current_close_ratio"", ""historical_high_to_current_close_ratio"", ""historical_low_to_current_close_ratio"", ""historical_open_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_30"", ""lag_31"", ""window_30""]",0
+0.95,bded87163fed4a9fb332,10,"[""historical_close_to_current_close_ratio"", ""historical_high_to_current_close_ratio"", ""historical_low_to_current_close_ratio"", ""historical_open_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_38"", ""lag_39""]",0
+0.95,be114a5b4fc6a3a3964c,1,"[""alpha158_cntd""]","[""window_30""]",0
+0.95,be7d867052c4348015f9,6,"[""Retail-driven overreaction and temporary overnight sentiment can reverse over subsequent horizons."", ""historical_close_to_current_close_ratio"", ""historical_high_to_current_close_ratio"", ""historical_low_to_current_close_ratio"", ""historical_open_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_21"", ""name_window_1""]",0
+0.95,c127e8ab7555cb928863,1,"[""mixed_formula_information""]","[""unspecified""]",1
+0.95,c193906f1e22e8582eda,3,"[""alpha158_sumd"", ""alpha158_sumn"", ""alpha158_sump""]","[""window_10""]",0
+0.95,c1a67f226618d8806abd,2,"[""historical_low_to_current_close_ratio"", ""historical_open_to_current_close_ratio""]","[""lag_9""]",0
+0.95,c3c184d5e017126418cb,2,"[""historical_close_to_current_close_ratio"", ""historical_open_to_current_close_ratio""]","[""lag_2"", ""lag_3""]",0
+0.95,c72885dd3f1ce1a78f16,1,"[""liquidity_or_speculative_activity""]","[""name_window_20""]",0
+0.95,c807163f896e6d1b8c57,1,"[""Low total and residual risk, low extreme positive payoff and shallow drawdown capture defensive, lottery-preference and limits-to-arbitrage channels.""]","[""name_window_60""]",0
+0.95,c923747db6f9067be042,2,"[""historical_low_to_current_close_ratio"", ""historical_open_to_current_close_ratio""]","[""lag_7""]",0
+0.95,c9661f47c4971f2f2fbf,1,"[""alpha158_imxd""]","[""window_20""]",0
+0.95,ca20cc5e482d281d393b,1,"[""alpha158_qtlu""]","[""window_20""]",0
+0.95,ca53b9dc1c3b8ff8904f,1,"[""liquidity_or_speculative_activity""]","[""name_window_20""]",0
+0.95,ca76105abc946917f690,1,"[""Unusually intense or unstable trading can reflect attention and speculative overpricing under short-sale constraints.""]","[""name_window_20""]",0
+0.95,cc4777fa6fc9a5f9feea,13,"[""alpha158_roc"", ""historical_close_to_current_close_ratio"", ""historical_high_to_current_close_ratio"", ""historical_low_to_current_close_ratio"", ""historical_open_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_57"", ""lag_58"", ""lag_59"", ""window_60""]",0
+0.95,d18607793b10513d7c92,1,"[""alpha158_qtld""]","[""window_20""]",0
+0.95,d384188047b007876638,2,"[""Valuation ratios proxy a common cheapness dimension while earnings, book, sales, cash flow and distributions retain different accounting sensitivities.""]","[""unspecified""]",0
+0.95,d3a6be10cb3e2b92a146,5,"[""historical_close_to_current_close_ratio"", ""historical_high_to_current_close_ratio"", ""historical_low_to_current_close_ratio"", ""historical_open_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_18""]",0
+0.95,d4bfc5abb71b2854488c,1,"[""alpha158_qtld""]","[""window_10""]",0
+0.95,d52781349b77fcb88d47,1,"[""within_day_price_formation""]","[""name_window_20""]",0
+0.95,d540755afad2b7361e9a,1,"[""mixed_formula_information""]","[""unspecified""]",1
+0.95,d9752d00df548f627439,1,"[""return_continuation""]","[""unspecified""]",0
+0.95,dafb76234d81cda0f516,10,"[""historical_close_to_current_close_ratio"", ""historical_high_to_current_close_ratio"", ""historical_low_to_current_close_ratio"", ""historical_open_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_26"", ""lag_27""]",0
+0.95,dd3a084657f04673ea64,1,"[""alpha158_corr""]","[""window_20""]",0
+0.95,ddf4b116d0be6091a5b3,1,"[""historical_low_to_current_close_ratio""]","[""lag_3""]",0
+0.95,de8d013823420235cf92,3,"[""alpha158_vsumd"", ""alpha158_vsumn"", ""alpha158_vsump""]","[""window_60""]",0
+0.95,df6e6cebd187a393c4e9,1,"[""return_continuation""]","[""unspecified""]",0
+0.95,e0b93e5b5907a91b96d8,10,"[""historical_close_to_current_close_ratio"", ""historical_high_to_current_close_ratio"", ""historical_low_to_current_close_ratio"", ""historical_open_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_28"", ""lag_29""]",0
+0.95,e4b08206906026a54081,1,"[""alpha158_ma""]","[""window_5""]",0
+0.95,e581876fe1c1bcb55c1a,1,"[""alpha158_rsv""]","[""window_60""]",0
+0.95,e7019b0c67ff9632f66e,1,"[""historical_low_to_current_close_ratio""]","[""lag_1""]",0
+0.95,e8a638214decadf069e9,1,"[""return_continuation""]","[""unspecified""]",0
+0.95,ecb03b3cc52cd1a6372e,3,"[""historical_close_to_current_close_ratio"", ""historical_high_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_8""]",0
+0.95,eeefe3a1b5115eec5789,2,"[""realized_or_residual_risk""]","[""name_window_20""]",0
+0.95,efd9eecfa15bb79f2d77,2,"[""return_continuation""]","[""unspecified""]",0
+0.95,f2146bac13724395f014,1,"[""historical_vwap_to_current_close_ratio""]","[""lag_3""]",0
+0.95,f2950e3f45a0089c790b,1,"[""alpha158_qtlu""]","[""window_30""]",0
+0.95,f3d8643e4a7562faeef6,10,"[""historical_close_to_current_close_ratio"", ""historical_high_to_current_close_ratio"", ""historical_low_to_current_close_ratio"", ""historical_open_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_46"", ""lag_47""]",0
+0.95,f54e5e62df1e43ff212a,1,"[""alpha158_ma""]","[""window_60""]",0
+0.95,f5d2dba0f492ddc794d1,3,"[""alpha158_sumd"", ""alpha158_sumn"", ""alpha158_sump""]","[""window_30""]",0
+0.95,f7aedb877cf6a252c2d2,1,"[""within_day_price_formation""]","[""name_window_20""]",0
+0.95,f8bb4c7720f217c4a701,1,"[""alpha158_cord""]","[""window_10""]",0
+0.95,fa2890a2cc225368682d,10,"[""historical_close_to_current_close_ratio"", ""historical_high_to_current_close_ratio"", ""historical_low_to_current_close_ratio"", ""historical_open_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_32"", ""lag_33""]",0
+0.95,fbaab174b1d30cd2da92,1,"[""mixed_formula_information""]","[""unspecified""]",1
+0.95,fc53b630fdef94c9cc74,1,"[""historical_low_to_current_close_ratio""]","[""lag_5""]",0
+0.95,fd72b786f0a7eb93f4f6,1,"[""return_continuation""]","[""unspecified""]",0
+0.95,fe1cc9ff0bea07cd0ac3,3,"[""return_continuation""]","[""unspecified""]",0
+0.95,febb61b5c06cca0eaf32,2,"[""historical_low_to_current_close_ratio"", ""historical_open_to_current_close_ratio""]","[""lag_6""]",0
+0.95,ff0060069786e02a2fc9,1,"[""realized_or_residual_risk""]","[""unspecified""]",0
+0.95,ff382c63050eae78fd72,1,"[""alpha158_min""]","[""window_20""]",0
+0.995,001c3dcf6b9a48f57a67,1,"[""alpha158_min""]","[""window_5""]",0
+0.995,0023c4fe77b52c52b7f2,13,"[""liquidity_or_speculative_activity"", ""mixed_formula_information"", ""price_anchor"", ""realized_or_residual_risk"", ""return_continuation""]","[""unspecified""]",3
+0.995,01b40219ad52f369ade9,1,"[""historical_low_to_current_close_ratio""]","[""lag_50""]",0
+0.995,021c9f985e366e0de673,1,"[""historical_vwap_to_current_close_ratio""]","[""lag_6""]",0
+0.995,0346c930b6da9feb2eb5,1,"[""historical_high_to_current_close_ratio""]","[""lag_44""]",0
+0.995,04c44cc1db242bf454ac,1,"[""historical_open_to_current_close_ratio""]","[""lag_22""]",0
+0.995,04d099c0d6f80a9931d2,1,"[""alpha158_rsv""]","[""window_60""]",0
+0.995,05dfc03e5438877ddcb0,1,"[""historical_low_to_current_close_ratio""]","[""lag_28""]",0
+0.995,05f31a2908653bfcd522,1,"[""historical_open_to_current_close_ratio""]","[""lag_11""]",0
+0.995,06e4724c13eac8d534a2,1,"[""historical_low_to_current_close_ratio""]","[""lag_35""]",0
+0.995,09b333d1eced136ffe86,1,"[""alpha158_ma""]","[""window_10""]",0
+0.995,0a4619b74e630e60cf86,1,"[""return_continuation""]","[""unspecified""]",0
+0.995,0a69c31621660d21e772,3,"[""historical_close_to_current_close_ratio"", ""historical_high_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_57""]",0
+0.995,0c76d277d07fd3d6ec5d,1,"[""historical_open_to_current_close_ratio""]","[""lag_38""]",0
+0.995,0d58d8b65be7711016a7,1,"[""historical_vwap_to_current_close_ratio""]","[""lag_18""]",0
+0.995,0ddfd1c7c63a283494ac,1,"[""Unusually intense or unstable trading can reflect attention and speculative overpricing under short-sale constraints.""]","[""name_window_20""]",0
+0.995,0e7baeaf172d53e7c8a5,2,"[""historical_close_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_33""]",0
+0.995,0f31a580edef05f30e7e,1,"[""historical_close_to_current_close_ratio""]","[""lag_16""]",0
+0.995,1020f2d34ce4536fe8b7,1,"[""historical_close_to_current_close_ratio""]","[""lag_6""]",0
+0.995,109daa6c9ef8dfbf4020,3,"[""alpha158_roc"", ""historical_close_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_30"", ""window_30""]",0
+0.995,118affab4565dc571f1e,1,"[""historical_open_to_current_close_ratio""]","[""lag_30""]",0
+0.995,129217575f32e4ed8122,2,"[""historical_close_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_31""]",0
+0.995,12fcc6d40c570b0c286b,1,"[""normalized_price_slope""]","[""window_10""]",0
+0.995,141d63ff2986f956d32a,1,"[""lottery_preference""]","[""name_window_60""]",0
+0.995,146ef802bb1424ba5fe1,1,"[""historical_low_to_current_close_ratio""]","[""lag_52""]",0
+0.995,1549bc57fb7959d8c2e9,1,"[""return_continuation""]","[""unspecified""]",0
+0.995,15bccdda56f44d6c954e,1,"[""historical_low_to_current_close_ratio""]","[""lag_20""]",0
+0.995,164c4496e5931b3dd4f2,1,"[""historical_open_to_current_close_ratio""]","[""lag_49""]",0
+0.995,16e4d7eba6abdba5fa60,1,"[""mixed_formula_information""]","[""unspecified""]",1
+0.995,1733a3b5823eac999a5c,1,"[""historical_open_to_current_close_ratio""]","[""lag_47""]",0
+0.995,181131f17bd479b9b42d,2,"[""historical_close_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_26""]",0
+0.995,1836f8f695d5feb1be16,2,"[""mixed_formula_information"", ""within_day_price_formation""]","[""unspecified""]",2
+0.995,18cb3ba6311442251e84,1,"[""historical_low_to_current_close_ratio""]","[""lag_9""]",0
+0.995,19268328b54e82b3c381,1,"[""alpha158_min""]","[""window_60""]",0
+0.995,19cc2c431527aa1a06d8,2,"[""historical_close_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_37""]",0
+0.995,1acdb566b64828ed3252,1,"[""historical_low_to_current_close_ratio""]","[""lag_3""]",0
+0.995,1bf52e624e1d24d242db,1,"[""liquidity_or_speculative_activity""]","[""name_window_20""]",0
+0.995,1cb5ae70952107981baf,1,"[""alpha158_imxd""]","[""window_60""]",0
+0.995,1d3d85b9844b52c461c0,1,"[""mixed_formula_information""]","[""unspecified""]",1
+0.995,1dd74b76ddcdb3a9dc51,1,"[""historical_low_to_current_close_ratio""]","[""lag_38""]",0
+0.995,1f7b8d8a08594ad5cba6,1,"[""mixed_formula_information""]","[""unspecified""]",1
+0.995,208cec3d0edfc0423e49,1,"[""channel_breakout_event""]","[""unspecified""]",1
+0.995,211e7adc00e4c8056bb6,1,"[""liquidity_or_speculative_activity""]","[""name_window_20""]",0
+0.995,21af19e53c7b130cc690,1,"[""alpha158_ma""]","[""window_30""]",0
+0.995,21c094d991d549b915d5,1,"[""historical_close_to_current_close_ratio""]","[""lag_22""]",0
+0.995,2446ce5e7eb869bcd22d,1,"[""normalized_price_slope""]","[""window_30""]",0
+0.995,25a316b552ab38763c96,1,"[""historical_vwap_to_current_close_ratio""]","[""lag_13""]",0
+0.995,25df1203dd31f63bf6ea,2,"[""historical_close_to_current_close_ratio"", ""price_anchor""]","[""lag_12"", ""unspecified""]",0
+0.995,2601402b2ea0651598b4,1,"[""historical_high_to_current_close_ratio""]","[""lag_9""]",0
+0.995,268aa2b53f9b2846b8cb,1,"[""alpha158_qtlu""]","[""window_20""]",0
+0.995,26b66b84e2eac97ca67c,3,"[""alpha158_vsumd"", ""alpha158_vsumn"", ""alpha158_vsump""]","[""window_20""]",0
+0.995,270aab90881e94505cc8,3,"[""historical_close_to_current_close_ratio"", ""historical_high_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_47""]",0
+0.995,27b46a52df377305dd47,1,"[""historical_high_to_current_close_ratio""]","[""lag_13""]",0
+0.995,28000ec70892021d8d79,1,"[""historical_open_to_current_close_ratio""]","[""lag_44""]",0
+0.995,28089b6967d19f6e1f6b,1,"[""liquidity_or_speculative_activity""]","[""name_window_20""]",0
+0.995,283c0a8bed4026efdb61,1,"[""alpha158_imxd""]","[""window_20""]",0
+0.995,2873c831d867c4625a01,3,"[""historical_close_to_current_close_ratio"", ""historical_high_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_50""]",0
+0.995,2a1bb7de677b626226ff,1,"[""historical_high_to_current_close_ratio""]","[""lag_32""]",0
+0.995,2a62888350c0cb56a22f,1,"[""normalized_price_slope""]","[""window_5""]",0
+0.995,2a6ff4627ffc914b3150,1,"[""alpha158_min""]","[""window_20""]",0
+0.995,2a9d3eb0b5c2356f4e90,2,"[""historical_high_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_58""]",0
+0.995,2aec0839a35e00bc3892,3,"[""alpha158_vsumd"", ""alpha158_vsumn"", ""alpha158_vsump""]","[""window_30""]",0
+0.995,2afcd506038b98c69f9f,1,"[""historical_vwap_to_current_close_ratio""]","[""lag_11""]",0
+0.995,2b3d002537add8ed85bd,1,"[""historical_open_to_current_close_ratio""]","[""lag_35""]",0
+0.995,2c2c5d00fa09f776c52f,1,"[""Valuation ratios proxy a common cheapness dimension while earnings, book, sales, cash flow and distributions retain different accounting sensitivities.""]","[""unspecified""]",0
+0.995,2d4502e2f22dcb12866c,1,"[""within_day_price_formation""]","[""unspecified""]",1
+0.995,2d45ac0065c78fe0521c,2,"[""historical_close_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_42""]",0
+0.995,2e89265f61e9bec55479,3,"[""historical_close_to_current_close_ratio"", ""historical_high_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_56""]",0
+0.995,2e96f96db9531bd84be2,1,"[""historical_vwap_to_current_close_ratio""]","[""lag_19""]",0
+0.995,2f45337e1200e80092db,1,"[""historical_open_to_current_close_ratio""]","[""lag_6""]",0
+0.995,34289b567c616668a802,1,"[""return_continuation""]","[""unspecified""]",0
+0.995,34a4f2f432a22139e30a,1,"[""historical_low_to_current_close_ratio""]","[""lag_43""]",0
+0.995,3504209659e6ebf5243e,1,"[""historical_high_to_current_close_ratio""]","[""lag_25""]",0
+0.995,358d75208b12edd6d8c3,3,"[""alpha158_roc"", ""historical_close_to_current_close_ratio"", ""return_continuation""]","[""lag_20"", ""name_window_20"", ""window_20""]",0
+0.995,3590b6e33d625ead7e5a,3,"[""historical_close_to_current_close_ratio"", ""historical_high_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_55""]",0
+0.995,36978b099b13f35c9f78,1,"[""historical_high_to_current_close_ratio""]","[""lag_19""]",0
+0.995,3708276b86a4eb3e271e,1,"[""return_continuation""]","[""unspecified""]",0
+0.995,38a53942a7d1a86a3315,2,"[""historical_low_to_current_close_ratio"", ""historical_open_to_current_close_ratio""]","[""lag_55""]",0
+0.995,39078be26c126a16253f,2,"[""historical_close_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_25""]",0
+0.995,39109e47b99eddcb5949,2,"[""historical_low_to_current_close_ratio"", ""historical_open_to_current_close_ratio""]","[""lag_56""]",0
+0.995,3913794b10f341b31c2b,1,"[""historical_low_to_current_close_ratio""]","[""lag_51""]",0
+0.995,3b9f92617f7a6ea88d27,1,"[""historical_vwap_to_current_close_ratio""]","[""lag_17""]",0
+0.995,3d00a10a5c56fa277785,1,"[""historical_open_to_current_close_ratio""]","[""lag_43""]",0
+0.995,3d12abf43135c5f27ba1,1,"[""historical_vwap_to_current_close_ratio""]","[""lag_12""]",0
+0.995,3d1a6972aefeff2ca797,1,"[""historical_low_to_current_close_ratio""]","[""lag_24""]",0
+0.995,3f5763e9f7dd83663199,2,"[""liquidity_or_speculative_activity""]","[""name_window_20""]",0
+0.995,4028d26cac60a63a0651,1,"[""historical_high_to_current_close_ratio""]","[""lag_31""]",0
+0.995,4030626c1e875f6499cc,2,"[""alpha158_roc"", ""historical_open_to_current_close_ratio""]","[""lag_59"", ""window_60""]",0
+0.995,40e6ee1256b835ca4a2f,1,"[""historical_high_to_current_close_ratio""]","[""lag_23""]",0
+0.995,4106bed86fd7a6b1eed4,1,"[""historical_high_to_current_close_ratio""]","[""lag_8""]",0
+0.995,41251dab2d34c0b17b15,1,"[""historical_low_to_current_close_ratio""]","[""lag_1""]",0
+0.995,41636a749bf9d0000b37,1,"[""historical_open_to_current_close_ratio""]","[""lag_41""]",0
+0.995,4178e6d8867d185ce07d,1,"[""Low total and residual risk, low extreme positive payoff and shallow drawdown capture defensive, lottery-preference and limits-to-arbitrage channels.""]","[""name_window_60""]",0
+0.995,41eb086ec42546f58afa,1,"[""alpha158_imin""]","[""window_20""]",0
+0.995,42a4dbef3c0dd43a0de6,1,"[""historical_vwap_to_current_close_ratio""]","[""lag_16""]",0
+0.995,42d0b6aff9772aedbe12,1,"[""historical_low_to_current_close_ratio""]","[""lag_45""]",0
+0.995,43305fe4e331fe26c38b,2,"[""historical_close_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_43""]",0
+0.995,43823a0576d9f1221e30,3,"[""historical_close_to_current_close_ratio"", ""historical_high_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_59""]",0
+0.995,43fe79ec07ee0c58f7ce,1,"[""historical_high_to_current_close_ratio""]","[""lag_24""]",0
+0.995,441d65ed10f07afea38c,1,"[""alpha158_qtld""]","[""window_30""]",0
+0.995,457896c4d0dc7def40d3,1,"[""historical_low_to_current_close_ratio""]","[""lag_2""]",0
+0.995,458b410f60bc42aa91d7,3,"[""alpha158_sumd"", ""alpha158_sumn"", ""alpha158_sump""]","[""window_10""]",0
+0.995,4674117d6926f847877f,1,"[""historical_open_to_current_close_ratio""]","[""lag_8""]",0
+0.995,46cbb80459d7150dd337,1,"[""historical_high_to_current_close_ratio""]","[""lag_33""]",0
+0.995,485b903bd2e2ef697d02,1,"[""historical_vwap_to_current_close_ratio""]","[""lag_15""]",0
+0.995,487d1e21ff9853417ad0,1,"[""historical_high_to_current_close_ratio""]","[""lag_21""]",0
+0.995,4a7132f860686375a0d3,2,"[""mixed_formula_information"", ""within_day_price_formation""]","[""unspecified""]",2
+0.995,4ab09a58fe75a7272217,1,"[""historical_vwap_to_current_close_ratio""]","[""lag_22""]",0
+0.995,4b1e4c10cd819ec38598,1,"[""intraday_kup""]","[""same_day""]",0
+0.995,4b2192a6d9ebea83e86e,1,"[""historical_high_to_current_close_ratio""]","[""lag_43""]",0
+0.995,4b648b6cae2527f11cfd,1,"[""return_continuation""]","[""unspecified""]",0
+0.995,4bd5e26e45acc58f5420,2,"[""historical_close_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_36""]",0
+0.995,4cf19a32e1114da14ecb,1,"[""realized_or_residual_risk""]","[""name_window_20""]",0
+0.995,4d089b9ec2eec6bbfc4a,1,"[""realized_or_residual_risk""]","[""name_window_20""]",0
+0.995,4d8c7d623ae7fb6b07c4,1,"[""within_day_price_formation""]","[""name_window_20""]",0
+0.995,4e10915579a6f8148d94,1,"[""historical_vwap_to_current_close_ratio""]","[""lag_8""]",0
+0.995,4f07a867832fb1e5f3bf,1,"[""alpha158_cord""]","[""window_10""]",0
+0.995,4f8d55f9df820e7c7284,1,"[""alpha158_imax""]","[""window_30""]",0
+0.995,4ff0b9d2dc21deee3469,1,"[""mixed_formula_information""]","[""unspecified""]",1
+0.995,50059b888163ab66aee1,1,"[""mixed_formula_information""]","[""unspecified""]",1
+0.995,50f4e2b35efc16fca9d4,1,"[""historical_high_to_current_close_ratio""]","[""lag_39""]",0
+0.995,51258ce4be61a78db270,1,"[""historical_open_to_current_close_ratio""]","[""lag_29""]",0
+0.995,51b703ae4cf9bdbe0dbd,1,"[""mixed_formula_information""]","[""unspecified""]",1
+0.995,52b845fdc3901cfabd83,1,"[""historical_low_to_current_close_ratio""]","[""lag_33""]",0
+0.995,52cbcc1e7aa4ed5b78e6,1,"[""historical_low_to_current_close_ratio""]","[""lag_30""]",0
+0.995,530384cde46c2129a31a,2,"[""historical_close_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_38""]",0
+0.995,548aa251e470c1a24415,1,"[""Low total and residual risk, low extreme positive payoff and shallow drawdown capture defensive, lottery-preference and limits-to-arbitrage channels.""]","[""name_window_21""]",0
+0.995,54c83998eeac17845b43,1,"[""return_continuation""]","[""unspecified""]",0
+0.995,5513ccc59f2e87ad6e73,1,"[""historical_open_to_current_close_ratio""]","[""lag_24""]",0
+0.995,55adf27ee110a274758a,1,"[""historical_high_to_current_close_ratio""]","[""lag_26""]",0
+0.995,57bc08940da95f84d88a,1,"[""historical_low_to_current_close_ratio""]","[""lag_21""]",0
+0.995,5803605e0c7779bab549,1,"[""return_continuation""]","[""unspecified""]",0
+0.995,58afb3de956d8bd0822e,1,"[""historical_high_to_current_close_ratio""]","[""lag_6""]",0
+0.995,59228537b3482834928d,1,"[""historical_open_to_current_close_ratio""]","[""lag_10""]",0
+0.995,59ec6277b2c38af0bef2,1,"[""historical_vwap_to_current_close_ratio""]","[""lag_21""]",0
+0.995,5a1294d667e1e4495db8,1,"[""alpha158_ma""]","[""window_5""]",0
+0.995,5b0d3fef240a6459f7f0,1,"[""Valuation ratios proxy a common cheapness dimension while earnings, book, sales, cash flow and distributions retain different accounting sensitivities.""]","[""unspecified""]",0
+0.995,5b852bcedbadc5eea352,1,"[""historical_close_to_current_close_ratio""]","[""lag_8""]",0
+0.995,5beb2314b44077cc90db,1,"[""historical_open_to_current_close_ratio""]","[""lag_46""]",0
+0.995,5c4871a5af3b1c69b752,1,"[""alpha158_imxd""]","[""window_30""]",0
+0.995,5c4e3993b9d2d6fe759d,1,"[""historical_open_to_current_close_ratio""]","[""lag_34""]",0
+0.995,5c7f90c4a1ff8337c374,1,"[""historical_low_to_current_close_ratio""]","[""lag_47""]",0
+0.995,5da88ac4bc6131745127,1,"[""historical_low_to_current_close_ratio""]","[""lag_31""]",0
+0.995,5dd31285948d79a0ce96,1,"[""alpha158_resi""]","[""window_60""]",0
+0.995,5e6d2ad2656feca9c247,1,"[""mixed_formula_information""]","[""unspecified""]",1
+0.995,5e8abf32fed9363dcdbe,1,"[""return_continuation""]","[""unspecified""]",0
+0.995,5ec198603b5cbda9ec23,2,"[""mixed_formula_information"", ""within_day_price_formation""]","[""unspecified""]",2
+0.995,612c738bfcc8b8028555,1,"[""historical_open_to_current_close_ratio""]","[""lag_5""]",0
+0.995,6182bca166436bf26274,1,"[""mixed_formula_information""]","[""unspecified""]",1
+0.995,61bff22d7dffad914ca7,1,"[""historical_close_to_current_close_ratio""]","[""lag_17""]",0
+0.995,621f894fed12b93ca949,1,"[""historical_open_to_current_close_ratio""]","[""lag_31""]",0
+0.995,629b459ea056edcb338c,1,"[""realized_or_residual_risk""]","[""name_window_20""]",0
+0.995,639fae6a65758640d4e3,1,"[""mixed_formula_information""]","[""unspecified""]",1
+0.995,641d894642cacf2e1e63,1,"[""return_continuation""]","[""unspecified""]",0
+0.995,644fe6b02ad7526f7335,1,"[""historical_close_to_current_close_ratio""]","[""lag_15""]",0
+0.995,64977f7e393bf818973d,1,"[""historical_low_to_current_close_ratio""]","[""lag_49""]",0
+0.995,67016bb2c1805286e087,1,"[""historical_low_to_current_close_ratio""]","[""lag_14""]",0
+0.995,6721dcc9baa649345f7f,1,"[""mixed_formula_information""]","[""unspecified""]",1
+0.995,6819f17426b15a6aaddf,1,"[""historical_low_to_current_close_ratio""]","[""lag_27""]",0
+0.995,684d40643479fe56cf83,1,"[""alpha158_rank""]","[""window_20""]",0
+0.995,6902e3a26f3a758d6204,1,"[""historical_low_to_current_close_ratio""]","[""lag_13""]",0
+0.995,69684d8d7d22367f1a5c,1,"[""historical_high_to_current_close_ratio""]","[""lag_41""]",0
+0.995,699ec0ac8a5ca56bf61a,1,"[""return_continuation""]","[""unspecified""]",0
+0.995,6ac3d5e9ccb70d974bcb,1,"[""alpha158_max""]","[""window_5""]",0
+0.995,6b3de5bfc866a0cb6b00,1,"[""historical_low_to_current_close_ratio""]","[""lag_42""]",0
+0.995,6b96441dc99abc512f57,1,"[""liquidity_or_speculative_activity""]","[""unspecified""]",0
+0.995,6c518a1831435b36bd0c,1,"[""historical_open_to_current_close_ratio""]","[""lag_18""]",0
+0.995,6cd93057366b847f2ac8,2,"[""historical_close_to_current_close_ratio"", ""historical_open_to_current_close_ratio""]","[""lag_57"", ""lag_58""]",0
+0.995,6d40e78a131cbc9d0e6d,1,"[""return_continuation""]","[""unspecified""]",0
+0.995,704c8d1b868c8ab5dfcd,1,"[""alpha158_rank""]","[""window_60""]",0
+0.995,708453d85a7ae204b4b2,1,"[""historical_low_to_current_close_ratio""]","[""lag_41""]",0
+0.995,70d695c0466b6ce16dfe,1,"[""alpha158_qtld""]","[""window_20""]",0
+0.995,70dc3bf4c1a363dcbd44,1,"[""alpha158_imax""]","[""window_60""]",0
+0.995,70f0204e4b59a48895f6,1,"[""return_continuation""]","[""unspecified""]",0
+0.995,70f70d61d915d910d721,1,"[""short_horizon_overreaction""]","[""name_window_20_5""]",0
+0.995,7193e6035babf4afc193,1,"[""historical_high_to_current_close_ratio""]","[""lag_37""]",0
+0.995,722a91a2464476bd3879,1,"[""historical_low_to_current_close_ratio""]","[""lag_6""]",0
+0.995,74bdd8d5509e4291c465,1,"[""historical_low_to_current_close_ratio""]","[""lag_32""]",0
+0.995,75051713182f887b0b83,1,"[""return_continuation""]","[""unspecified""]",0
+0.995,758a464652054052923e,1,"[""return_continuation""]","[""unspecified""]",0
+0.995,75cee712b75bbcbc2ff2,1,"[""historical_low_to_current_close_ratio""]","[""lag_8""]",0
+0.995,7660a1402f710c1a6ad4,1,"[""historical_low_to_current_close_ratio""]","[""lag_22""]",0
+0.995,775fca1fbd5138a0dc49,1,"[""historical_low_to_current_close_ratio""]","[""lag_46""]",0
+0.995,77de8075b5a50a3d11f3,1,"[""within_day_price_formation""]","[""name_window_20""]",0
+0.995,79057194ab3e099f2a8b,1,"[""return_continuation""]","[""unspecified""]",0
+0.995,798fba25053b6a13390e,1,"[""historical_open_to_current_close_ratio""]","[""lag_3""]",0
+0.995,79952df2992578df6a64,1,"[""return_continuation""]","[""unspecified""]",0
+0.995,7a24f910d284d2000a87,1,"[""historical_low_to_current_close_ratio""]","[""lag_4""]",0
+0.995,7bbee534468d4839e0d3,1,"[""historical_low_to_current_close_ratio""]","[""lag_59""]",0
+0.995,7bedb07cd4439301ab02,1,"[""historical_low_to_current_close_ratio""]","[""lag_12""]",0
+0.995,7cca7726802188cf252f,1,"[""historical_open_to_current_close_ratio""]","[""lag_16""]",0
+0.995,7cd089fe935ec604ce24,1,"[""realized_or_residual_risk""]","[""unspecified""]",0
+0.995,7d8f646bd55a94c7526f,1,"[""alpha158_corr""]","[""window_20""]",0
+0.995,7e540e74e6ee9db83a15,1,"[""historical_low_to_current_close_ratio""]","[""lag_34""]",0
+0.995,7e94364880118cb84fed,1,"[""alpha158_qtlu""]","[""window_30""]",0
+0.995,7f3c916e92ce16207739,1,"[""historical_open_to_current_close_ratio""]","[""lag_15""]",0
+0.995,7f428e3964e0f3d887b4,1,"[""historical_low_to_current_close_ratio""]","[""lag_37""]",0
+0.995,7f985eb448e830e130fa,1,"[""historical_close_to_current_close_ratio""]","[""lag_14""]",0
+0.995,7f98d713a07e53a1b104,2,"[""historical_close_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_39""]",0
+0.995,800c01e2c6dc62635a2c,1,"[""liquidity_or_speculative_activity""]","[""name_window_20""]",0
+0.995,805969ad8578b1e3472e,1,"[""historical_low_to_current_close_ratio""]","[""lag_36""]",0
+0.995,808219408c7bad9e2471,1,"[""historical_low_to_current_close_ratio""]","[""lag_29""]",0
+0.995,81bfc98903edd5e52981,2,"[""historical_close_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_35""]",0
+0.995,81c1bd9715c51f9bdc67,1,"[""historical_high_to_current_close_ratio""]","[""lag_5""]",0
+0.995,82bcce09bc2024dba8bd,1,"[""alpha158_min""]","[""window_10""]",0
+0.995,831d98108cef82725869,1,"[""mixed_formula_information""]","[""unspecified""]",1
+0.995,836bea986a82cb98f025,2,"[""historical_low_to_current_close_ratio"", ""historical_open_to_current_close_ratio""]","[""lag_58""]",0
+0.995,83c3ab7fe46dbc2c850b,1,"[""alpha158_qtld""]","[""window_60""]",0
+0.995,851fe3bee73c15486432,1,"[""Price impact per traded currency unit measures costly immediacy and possible illiquidity compensation.""]","[""name_window_20""]",0
+0.995,860b4d060e2db9cf0c88,1,"[""historical_high_to_current_close_ratio""]","[""lag_22""]",0
+0.995,8754630351bc153fc9bd,1,"[""historical_vwap_to_current_close_ratio""]","[""lag_3""]",0
+0.995,8794e046868fc68d9130,1,"[""historical_low_to_current_close_ratio""]","[""lag_39""]",0
+0.995,87f9b20220583b84dee3,1,"[""historical_open_to_current_close_ratio""]","[""lag_28""]",0
+0.995,8803e694e320e13c4477,1,"[""historical_open_to_current_close_ratio""]","[""lag_9""]",0
+0.995,883799231fd35942ddb9,2,"[""historical_close_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_27""]",0
+0.995,88924a19acdc16a7aab6,1,"[""return_continuation""]","[""unspecified""]",0
+0.995,8ad4cc82f49af2928685,1,"[""realized_or_residual_risk""]","[""unspecified""]",0
+0.995,8ae2fbf6f712e7fcc5e6,1,"[""historical_vwap_to_current_close_ratio""]","[""lag_20""]",0
+0.995,8b1b8a3355693cfef9d2,1,"[""alpha158_cord""]","[""window_5""]",0
+0.995,8d3644d99bdfce0ca18c,3,"[""historical_close_to_current_close_ratio"", ""historical_high_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_52""]",0
+0.995,8de8f28d1ea1c41cfc54,1,"[""historical_open_to_current_close_ratio""]","[""lag_4""]",0
+0.995,9226cf5da77330476c1d,1,"[""alpha158_ma""]","[""window_60""]",0
+0.995,92b16e27b7289d31b2d8,2,"[""historical_low_to_current_close_ratio"", ""historical_open_to_current_close_ratio""]","[""lag_54""]",0
+0.995,92cb9e44cbb37c1ca493,1,"[""historical_vwap_to_current_close_ratio""]","[""lag_7""]",0
+0.995,92ddb93a2cb7504c23ba,1,"[""alpha158_cord""]","[""window_30""]",0
+0.995,9400ab941585b39bdcc1,1,"[""mixed_formula_information""]","[""unspecified""]",1
+0.995,94edb0b08782464e3777,1,"[""normalized_price_slope""]","[""window_20""]",0
+0.995,950ed9cf0b71ae184e18,1,"[""mixed_formula_information""]","[""unspecified""]",1
+0.995,95626cd700881db07ef8,1,"[""historical_high_to_current_close_ratio""]","[""lag_30""]",0
+0.995,95847fb1c3cfae1841e2,1,"[""historical_low_to_current_close_ratio""]","[""lag_25""]",0
+0.995,95a8cc8666682250b7a3,1,"[""return_continuation""]","[""unspecified""]",1
+0.995,963aaa8c7e25d871466f,3,"[""alpha158_roc"", ""historical_close_to_current_close_ratio"", ""return_continuation""]","[""lag_10"", ""name_window_10"", ""window_10""]",0
+0.995,967539051fecb0a01e35,1,"[""alpha158_imax""]","[""window_20""]",0
+0.995,97a90b9c5d46f2c944cc,3,"[""alpha158_sumd"", ""alpha158_sumn"", ""alpha158_sump""]","[""window_20""]",0
+0.995,97e4aae8caf1c38e274e,1,"[""historical_open_to_current_close_ratio""]","[""lag_26""]",0
+0.995,996c165a7ad99cefa71a,1,"[""alpha158_qtlu""]","[""window_60""]",0
+0.995,99981275f78b11604537,1,"[""historical_open_to_current_close_ratio""]","[""lag_52""]",0
+0.995,99cc2fba2c9e935b421d,1,"[""mixed_formula_information""]","[""unspecified""]",1
+0.995,9a0e3adf7cf0d296d487,1,"[""alpha158_cntp""]","[""window_30""]",0
+0.995,9ac05d83c3191c9b3332,1,"[""historical_open_to_current_close_ratio""]","[""lag_14""]",0
+0.995,9be17b9f88e6f597809b,1,"[""historical_vwap_to_current_close_ratio""]","[""lag_5""]",0
+0.995,9beed40886ca039402d5,1,"[""historical_low_to_current_close_ratio""]","[""lag_57""]",0
+0.995,9c99f15bdf3176395c77,1,"[""historical_vwap_to_current_close_ratio""]","[""lag_10""]",0
+0.995,9cea1235c4eba854a20e,1,"[""historical_high_to_current_close_ratio""]","[""lag_46""]",0
+0.995,9e215464f5adef45f703,1,"[""historical_high_to_current_close_ratio""]","[""lag_11""]",0
+0.995,9e64cc2e295bfcf4f0c1,2,"[""Retail-driven overreaction and temporary overnight sentiment can reverse over subsequent horizons."", ""historical_close_to_current_close_ratio""]","[""lag_21"", ""name_window_1""]",0
+0.995,9e6e3e2a25a93cf9ffb6,1,"[""historical_close_to_current_close_ratio""]","[""lag_7""]",0
+0.995,9f292e1b417a9433e07f,1,"[""historical_high_to_current_close_ratio""]","[""lag_35""]",0
+0.995,9f6f09145909854e78cd,1,"[""Valuation ratios proxy a common cheapness dimension while earnings, book, sales, cash flow and distributions retain different accounting sensitivities.""]","[""unspecified""]",0
+0.995,9fefd07ad21a772f5bed,1,"[""Low total and residual risk, low extreme positive payoff and shallow drawdown capture defensive, lottery-preference and limits-to-arbitrage channels.""]","[""name_window_60""]",0
+0.995,a0f9321c0296140244ae,1,"[""historical_open_to_current_close_ratio""]","[""lag_48""]",0
+0.995,a10058de7a8e37ff58c7,1,"[""mixed_formula_information""]","[""unspecified""]",1
+0.995,a3bf45255d020a6585af,1,"[""return_continuation""]","[""unspecified""]",0
+0.995,a49cf24859025c6696e4,2,"[""historical_close_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_40""]",0
+0.995,a57a964cfcef2780130d,1,"[""historical_low_to_current_close_ratio""]","[""lag_7""]",0
+0.995,a57fc0dd3ede3a735bc9,1,"[""alpha158_corr""]","[""window_10""]",0
+0.995,a61822b58e18eb20ed4a,1,"[""historical_vwap_to_current_close_ratio""]","[""lag_9""]",0
+0.995,a61c39df1c3aa23482ed,1,"[""historical_high_to_current_close_ratio""]","[""lag_18""]",0
+0.995,a63b2524dc2709595376,1,"[""return_continuation""]","[""unspecified""]",0
+0.995,a6e21389c5091f194a7b,1,"[""liquidity_or_speculative_activity""]","[""unspecified""]",0
+0.995,a70fe0069b49a04e334b,1,"[""liquidity_or_speculative_activity""]","[""unspecified""]",0
+0.995,a728edfe6318fa28c84c,1,"[""Low total and residual risk, low extreme positive payoff and shallow drawdown capture defensive, lottery-preference and limits-to-arbitrage channels.""]","[""name_window_60""]",0
+0.995,a746d7ea32f94efe24d1,1,"[""historical_high_to_current_close_ratio""]","[""lag_20""]",0
+0.995,a7d29ec1593b64cb89bb,2,"[""alpha158_low"", ""historical_low_to_current_close_ratio""]","[""lag_0"", ""window_0""]",0
+0.995,a8257c0f2abf5ced2c56,2,"[""historical_close_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_34""]",0
+0.995,a8d89e02400765b4b7c5,1,"[""historical_low_to_current_close_ratio""]","[""lag_18""]",0
+0.995,aa0edb60ff93e8cbdb5d,1,"[""historical_open_to_current_close_ratio""]","[""lag_37""]",0
+0.995,aa147706b6f37c98e718,1,"[""historical_high_to_current_close_ratio""]","[""lag_45""]",0
+0.995,ae9976767ab8ebdaf3f9,1,"[""alpha158_cntd""]","[""window_30""]",0
+0.995,aed31557c0b7e01cb60c,1,"[""historical_low_to_current_close_ratio""]","[""lag_17""]",0
+0.995,af1e245f6e56d4709b06,2,"[""historical_close_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_44""]",0
+0.995,af2450b93a401873f3a0,2,"[""historical_close_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_29""]",0
+0.995,af978cb0c9447a675683,1,"[""historical_low_to_current_close_ratio""]","[""lag_23""]",0
+0.995,b067806ca732b09822b3,1,"[""alpha158_imin""]","[""window_60""]",0
+0.995,b09765b4937b3eb19449,1,"[""historical_open_to_current_close_ratio""]","[""lag_27""]",0
+0.995,b11e77dd9047ec10282f,1,"[""historical_low_to_current_close_ratio""]","[""lag_11""]",0
+0.995,b1397db4abd68e6ce73b,1,"[""historical_open_to_current_close_ratio""]","[""lag_25""]",0
+0.995,b2ed0017f62f475056cc,1,"[""historical_open_to_current_close_ratio""]","[""lag_32""]",0
+0.995,b702894686ea328a34dd,1,"[""alpha158_corr""]","[""window_5""]",0
+0.995,b7806c7a975b4ca6537b,1,"[""historical_open_to_current_close_ratio""]","[""lag_2""]",0
+0.995,b837c2f5c25ef604e084,1,"[""mixed_formula_information""]","[""unspecified""]",1
+0.995,b8851a6d67d703a2233f,1,"[""mixed_formula_information""]","[""unspecified""]",1
+0.995,b8a53a9e9249b570380c,1,"[""historical_close_to_current_close_ratio""]","[""lag_11""]",0
+0.995,b8f3c9093edca45a8388,1,"[""historical_open_to_current_close_ratio""]","[""lag_45""]",0
+0.995,b92f287d0965d59ec7fc,1,"[""within_day_price_formation""]","[""unspecified""]",1
+0.995,bbb5bbab8d8fc500c589,1,"[""historical_open_to_current_close_ratio""]","[""lag_13""]",0
+0.995,bbefefa0fe381565e5ca,1,"[""historical_vwap_to_current_close_ratio""]","[""lag_14""]",0
+0.995,bd213f69200b47b9f248,1,"[""historical_high_to_current_close_ratio""]","[""lag_40""]",0
+0.995,be56df1ab92268009497,1,"[""historical_open_to_current_close_ratio""]","[""lag_17""]",0
+0.995,bf7af0682d97e0a2b4b7,1,"[""historical_open_to_current_close_ratio""]","[""lag_36""]",0
+0.995,bf9e179f4851012e1aac,1,"[""historical_high_to_current_close_ratio""]","[""lag_7""]",0
+0.995,c1080ec8aaea7a367c23,1,"[""historical_open_to_current_close_ratio""]","[""lag_23""]",0
+0.995,c127ae9a3551f23ea2c1,2,"[""historical_close_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_46""]",0
+0.995,c280d8714b748ca92ed7,1,"[""historical_open_to_current_close_ratio""]","[""lag_51""]",0
+0.995,c4527ea9c91b055d3616,1,"[""historical_vwap_to_current_close_ratio""]","[""lag_23""]",0
+0.995,c468404ea5fc3e65edf1,1,"[""mixed_formula_information""]","[""unspecified""]",1
+0.995,c50f7f0975b1760a5c91,2,"[""historical_close_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_45""]",0
+0.995,c51c9e7c70356696ffeb,1,"[""alpha158_min""]","[""window_30""]",0
+0.995,c55c2ace0a541577175a,1,"[""mixed_formula_information""]","[""unspecified""]",1
+0.995,c5c2279889353b96306d,1,"[""alpha158_ma""]","[""window_20""]",0
+0.995,c60d267958733d9341d3,1,"[""intraday_klen""]","[""same_day""]",0
+0.995,c6e1bdb112c357ea3f27,1,"[""alpha158_cord""]","[""window_60""]",0
+0.995,c7a37a0937ce0ce43909,1,"[""historical_high_to_current_close_ratio""]","[""lag_42""]",0
+0.995,caf59ad025dfa8353d55,1,"[""historical_low_to_current_close_ratio""]","[""lag_10""]",0
+0.995,cb20b2ca5bc3735caf00,1,"[""historical_open_to_current_close_ratio""]","[""lag_42""]",0
+0.995,cc7a888d934c2457a387,1,"[""historical_open_to_current_close_ratio""]","[""lag_12""]",0
+0.995,cc99e622d5c3fa2d5ed9,2,"[""alpha158_rsv"", ""realized_or_residual_risk""]","[""unspecified"", ""window_20""]",0
+0.995,cd3988748d4c9fffb34b,1,"[""historical_low_to_current_close_ratio""]","[""lag_26""]",0
+0.995,cdad79daa48318f8b357,3,"[""historical_close_to_current_close_ratio"", ""historical_high_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_54""]",0
+0.995,cdb825b3b03d50254c68,2,"[""historical_low_to_current_close_ratio"", ""historical_open_to_current_close_ratio""]","[""lag_53""]",0
+0.995,cde26c63e0b027cd9d11,1,"[""historical_close_to_current_close_ratio""]","[""lag_13""]",0
+0.995,cded97c992a82adc7401,1,"[""historical_open_to_current_close_ratio""]","[""lag_19""]",0
+0.995,ce4411bf34c689130567,1,"[""alpha158_imin""]","[""window_30""]",0
+0.995,ce68d97c56fc7ed9626c,1,"[""historical_low_to_current_close_ratio""]","[""lag_19""]",0
+0.995,cf03be3726c9f855cc13,1,"[""alpha158_std""]","[""window_5""]",0
+0.995,cf32e3c752b81cd24172,1,"[""historical_high_to_current_close_ratio""]","[""lag_36""]",0
+0.995,cf67895c38d3e798a504,1,"[""return_continuation""]","[""unspecified""]",0
+0.995,d01d091f629f220567f7,1,"[""intraday_klow""]","[""same_day""]",0
+0.995,d02105cf9ebd98387d4b,1,"[""historical_close_to_current_close_ratio""]","[""lag_23""]",0
+0.995,d1882d657075ba48a56b,1,"[""historical_open_to_current_close_ratio""]","[""lag_39""]",0
+0.995,d19860acc1a8add3bab6,3,"[""alpha158_vsumd"", ""alpha158_vsumn"", ""alpha158_vsump""]","[""window_60""]",0
+0.995,d28d4e8b638681c78f7d,1,"[""historical_low_to_current_close_ratio""]","[""lag_15""]",0
+0.995,d2daa33daa1bae7ddcb8,1,"[""alpha158_corr""]","[""window_30""]",0
+0.995,d3340a4f727143f3c047,1,"[""return_continuation""]","[""unspecified""]",0
+0.995,d371e3512e5b3b29b3fe,1,"[""historical_high_to_current_close_ratio""]","[""lag_27""]",0
+0.995,d592ff8809b35ae23d92,1,"[""alpha158_corr""]","[""window_60""]",0
+0.995,d6482cd1e6d457402afc,1,"[""return_continuation""]","[""unspecified""]",0
+0.995,d788148bf1ef3da17441,3,"[""historical_close_to_current_close_ratio"", ""historical_high_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_49""]",0
+0.995,d86e631a7bb930c44afa,1,"[""return_continuation""]","[""unspecified""]",0
+0.995,d987aca76407a9029e56,1,"[""mixed_formula_information""]","[""unspecified""]",1
+0.995,da138bd37d16059cbe41,1,"[""return_continuation""]","[""unspecified""]",0
+0.995,dc4742514c889238a8c8,1,"[""historical_high_to_current_close_ratio""]","[""lag_17""]",0
+0.995,dca3495eeb65dbf1322c,1,"[""historical_open_to_current_close_ratio""]","[""lag_21""]",0
+0.995,dd158e093b1f242a9689,2,"[""historical_close_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_28""]",0
+0.995,dd30a1c0e3a21a564d4a,1,"[""historical_close_to_current_close_ratio""]","[""lag_19""]",0
+0.995,de0447dfb5648c1dffa8,1,"[""normalized_price_slope""]","[""window_60""]",0
+0.995,def065bb3ca7dcb81164,1,"[""return_continuation""]","[""unspecified""]",0
+0.995,dfaea578e30f18192ae3,1,"[""historical_open_to_current_close_ratio""]","[""lag_40""]",0
+0.995,e05fe7adae4fa67e9f70,1,"[""historical_close_to_current_close_ratio""]","[""lag_9""]",0
+0.995,e0c7e4f14d5cd95a5bf5,1,"[""historical_close_to_current_close_ratio""]","[""lag_4""]",0
+0.995,e0dca8a556950403261a,1,"[""alpha158_rsv""]","[""window_30""]",0
+0.995,e0f44476aa3956908f9e,8,"[""realized_or_residual_risk"", ""return_continuation""]","[""unspecified""]",0
+0.995,e2d3454b99a524ec2a24,1,"[""realized_or_residual_risk""]","[""unspecified""]",0
+0.995,e3d60641ad8e6c1d41b3,1,"[""historical_close_to_current_close_ratio""]","[""lag_3""]",0
+0.995,e4db0944b44de1180856,2,"[""historical_close_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_41""]",0
+0.995,e53d162b70a230d27913,1,"[""channel_breakout_event""]","[""unspecified""]",1
+0.995,e61a509958c7ab3e5ef5,1,"[""historical_high_to_current_close_ratio""]","[""lag_29""]",0
+0.995,e739b5450a4f43fc57d5,1,"[""historical_low_to_current_close_ratio""]","[""lag_40""]",0
+0.995,e8548fc02cb366880fc4,1,"[""historical_high_to_current_close_ratio""]","[""lag_34""]",0
+0.995,e9872021511d1ad38ee7,1,"[""historical_high_to_current_close_ratio""]","[""lag_16""]",0
+0.995,ea287b76c19b188a3c9a,1,"[""historical_open_to_current_close_ratio""]","[""lag_20""]",0
+0.995,ea8e938315114ae2fb75,1,"[""historical_high_to_current_close_ratio""]","[""lag_15""]",0
+0.995,eabd55ce6dfad643998b,1,"[""historical_vwap_to_current_close_ratio""]","[""lag_4""]",0
+0.995,ebb5d681d08c28adf5f2,1,"[""historical_high_to_current_close_ratio""]","[""lag_14""]",0
+0.995,ebf24dbc642dbcc18fad,1,"[""historical_open_to_current_close_ratio""]","[""lag_33""]",0
+0.995,ec581dd8fb2fab0d1f2b,1,"[""alpha158_std""]","[""window_10""]",0
+0.995,ede7867065f4a48ecd6e,1,"[""alpha158_rank""]","[""window_30""]",0
+0.995,edf76a11fffb3c0f64bb,3,"[""alpha158_sumd"", ""alpha158_sumn"", ""alpha158_sump""]","[""window_30""]",0
+0.995,ee6867eeec2efe315cca,3,"[""historical_close_to_current_close_ratio"", ""historical_high_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_48""]",0
+0.995,f0802552698149a58494,1,"[""historical_open_to_current_close_ratio""]","[""lag_7""]",0
+0.995,f1604058807fbf7599f7,3,"[""alpha158_sumd"", ""alpha158_sumn"", ""alpha158_sump""]","[""window_60""]",0
+0.995,f195364bbafbfde6e09a,1,"[""realized_or_residual_risk""]","[""unspecified""]",0
+0.995,f2642e0f33656a1b13af,1,"[""return_continuation""]","[""unspecified""]",0
+0.995,f2cee8df3f93f3e6e6d8,2,"[""historical_close_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_32""]",0
+0.995,f2e035016e01d878e878,1,"[""historical_low_to_current_close_ratio""]","[""lag_16""]",0
+0.995,f2eb5618cea2975fc76d,1,"[""historical_close_to_current_close_ratio""]","[""lag_18""]",0
+0.995,f413c0dc13488bc40935,1,"[""Valuation ratios proxy a common cheapness dimension while earnings, book, sales, cash flow and distributions retain different accounting sensitivities.""]","[""unspecified""]",0
+0.995,f4b71a77e9eebacd374b,1,"[""scale_float_and_shell_value""]","[""unspecified""]",0
+0.995,f5b80ddd6e05e6ece026,2,"[""historical_close_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_24""]",0
+0.995,f6054281d17b805d634b,1,"[""historical_high_to_current_close_ratio""]","[""lag_38""]",0
+0.995,f6bf23d675dfb9340db4,4,"[""alpha158_roc"", ""historical_close_to_current_close_ratio"", ""return_continuation"", ""short_horizon_overreaction""]","[""lag_5"", ""name_window_5"", ""window_5""]",0
+0.995,f6defa2c00bcefe17ff0,1,"[""mixed_formula_information""]","[""unspecified""]",1
+0.995,f792fc8d6fa54d5f72bd,1,"[""liquidity_or_speculative_activity""]","[""unspecified""]",0
+0.995,f808bc018cf711aeb657,1,"[""Valuation ratios proxy a common cheapness dimension while earnings, book, sales, cash flow and distributions retain different accounting sensitivities.""]","[""unspecified""]",0
+0.995,f81f8c01f99e2bcf6ea2,1,"[""historical_high_to_current_close_ratio""]","[""lag_12""]",0
+0.995,f83cce056b97e3c68cae,1,"[""historical_high_to_current_close_ratio""]","[""lag_28""]",0
+0.995,f8e32e45d2e42b253b99,1,"[""historical_high_to_current_close_ratio""]","[""lag_10""]",0
+0.995,fa268cead9eff3de4840,1,"[""historical_open_to_current_close_ratio""]","[""lag_50""]",0
+0.995,fae392325731509ffd03,1,"[""Valuation ratios proxy a common cheapness dimension while earnings, book, sales, cash flow and distributions retain different accounting sensitivities.""]","[""unspecified""]",0
+0.995,fb2a557bc098b77cc95a,1,"[""alpha158_rank""]","[""window_10""]",0
+0.995,fb7557c9568196899c11,1,"[""alpha158_qtld""]","[""window_10""]",0
+0.995,fb819172ab5b538ff6ec,1,"[""historical_low_to_current_close_ratio""]","[""lag_5""]",0
+0.995,fbab3007895e6567cb07,1,"[""Valuation ratios proxy a common cheapness dimension while earnings, book, sales, cash flow and distributions retain different accounting sensitivities.""]","[""unspecified""]",0
+0.995,fd24d9fa8c6fdb48d314,3,"[""historical_close_to_current_close_ratio"", ""historical_high_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_51""]",0
+0.995,fe7bfcef6a2746bb747f,1,"[""historical_low_to_current_close_ratio""]","[""lag_48""]",0
+0.995,fea3522443f841bf57d0,1,"[""historical_low_to_current_close_ratio""]","[""lag_44""]",0
+0.995,ff3822e7db613ded91bd,1,"[""return_continuation""]","[""unspecified""]",0
+0.995,ff47388823cb8e7f9d27,1,"[""alpha158_qtld""]","[""window_5""]",0
+0.995,ff5ada582a8e125d788a,3,"[""historical_close_to_current_close_ratio"", ""historical_high_to_current_close_ratio"", ""historical_vwap_to_current_close_ratio""]","[""lag_53""]",0
+0.995,ff9b8d9eac0ea545aaad,1,"[""alpha158_cord""]","[""window_20""]",0

@@ -1,6 +1,6 @@
 # Candidate Consolidation / Redundancy V0.5 开发计划
 
-日期：2026-09-08。状态：**用户已授权实施；P0/P1 与可恢复日证据入口正在落地**。实施结果和运行命令见 [实施进度](../reports/candidate_consolidation_v0_5/IMPLEMENTATION_PROGRESS.md)。以下研究边界继续生效。
+日期：2026-09-08。状态：**代表提案已交付，STOP FOR HUMAN REVIEW；价格单位与行业暴露缺项显式保留**。实施结果见 [实施进度](../reports/candidate_consolidation_v0_5/IMPLEMENTATION_PROGRESS.md) 和 [代表提案报告](../reports/candidate_consolidation_v0_5/REPORT.md)。以下研究边界继续生效。
 
 本计划依据用户提供的《Candidate Consolidation - Redundancy V0.5 预研与规划任务》，结合当时远端最新 `main` 制定。初版审计基线为 `26715329cb51170b6f47580824137fa97d07565f`，后在 `b4ed882` 收敛复用方案。附件中的算法、阈值和流程作为设计输入评估；初版仅获规划授权，当前实施授权见K及实施进度。
 

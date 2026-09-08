@@ -1,0 +1,63 @@
+{
+  "active": 494,
+  "code_hashes": {
+    "factor_research/candidate_consolidation_proposals.py": "135b91c5e3234108232db4145ece892ac95e6ab177340917c31c3085221a5799",
+    "scripts/build_candidate_consolidation_proposals_v0_5.py": "da0bb16f6dd966e770cd2bdece940cf59e4131437c50bf0387e548d4fc6a5420"
+  },
+  "daily_contract_hash": "8d25590be0ef9aad996bae83253b0ad51b938c79825e79af54f524898b411c04",
+  "exact_group_members": 10,
+  "exact_groups": 5,
+  "limits": {
+    "industry": "unavailable_for_development",
+    "price_level": "unavailable_units_not_verified_for_this_provider",
+    "scope": "feature_only_not_independent_alpha",
+    "semantic_review": "rule_assisted_reconciliation_not_expert_signoff"
+  },
+  "policy_hash": "225358453a8da444947cda6bfc8098df7bdc9235c0d0d1c4f0c659d5fba2479b",
+  "report_hashes": {
+    "REPORT.md": "5b38b569e5b41e22724464de980c4676887ddfb09412efc72062f47dc68ada11",
+    "REPRESENTATIVE_POLICY.json": "90e6170b337871a5be9947f540ab9e57ce149b62859a4213f9a2e563ff63a35a",
+    "cluster_counts.csv": "3a50c96f64e01222d91e824550bd65bcafb147525e6ac923ec19fd0dae808bf5",
+    "cluster_economic_summary.csv": "75a53040a666f4982c716883f277cc978ee3a3aa7ae45a254ba44a371ae655d6",
+    "cluster_stability.csv": "35381258e66a04468f471daea5fe504c0a24f703937651eb7f9e8e8316853f0c",
+    "economic_semantic_review.csv": "b223ecda5c866687fa510e7fdf1b82c14fedb9dcc4534bcac296cb1aa2112f7d",
+    "exact_alias_map.csv": "5264f4120bb8fe09454195e6a17cd7a03846e00251db51100d7c8f82f742355f",
+    "feature_quality.csv": "40fa5dd17aa968075fb4ed9d5012a0c467643aa6e265bbc3fb867a643cdb554d",
+    "representative_proposal_board.csv": "66d2adbd88167b64e133c0258338159ab2fabea7fdd1e9ed72f7bcff2fe2e15f",
+    "risk_exposure_full.csv": "890db8950dc8124cb7a1299da56d401984bdba0dd92ad54fc6ead8905cc69cf5",
+    "stable_pair_counts.csv": "4b3dc7f0ac2c17af9936e3260c88578c53986ffec3a975ff5d8af7d183cd9ef4"
+  },
+  "runtime_hashes": {
+    "cluster_membership.parquet": "72543423d96aa898eb8414d7ea55a90d3cabb499248b69fcc1ae3930955df883",
+    "cluster_risk_exposure.parquet": "75f8f1c32254df96d429b772b87f48587f9371523e081ea323a9ffb93fd9e114",
+    "complete_linkage_A.npy": "877d86d44375854e2048a9119487b4405b362d225247f2598396e3c23f31c3f7",
+    "complete_linkage_B.npy": "bbad26dd00dc8b8af86d99d1a15104a1a63d09c2f13465287c26a0eee01448b3",
+    "complete_linkage_C.npy": "392eb45f6e0feb7376d59639effa841e9a26c63b2bfae1d841eeabb59ff98550",
+    "complete_linkage_D.npy": "d7eb7267f460e9afea3e8a9711dee857d0a6bd09525cd89527c24daec216c58a",
+    "complete_linkage_Full.npy": "f185f61935cc3b4146dfbde75c59cec7289d427bec482198abc563c11409aee0",
+    "complete_linkage_LOO_A.npy": "08eaebe0bdef4b3aede66828080d7df57eba641f205846ec5e18ce4d1a09ad01",
+    "complete_linkage_LOO_B.npy": "38166322007aaeba5744ef482194383915b678f525d39b9aa50af7c31e929589",
+    "complete_linkage_LOO_C.npy": "2fb7c23ddd07b88461f3e80d0b5ecd91cb1d3b17d5c5399b0924df912666cd13",
+    "complete_linkage_LOO_D.npy": "1495c7d50393142ff21ab110cc5ad4d0c5a385fbc2462d13ffd04521fbcc7a54",
+    "complete_linkage_Stable.npy": "da8c5df78dbff5e3fd2771622f2a86917c9ce9dbaed01bc9590d03347b6d5de9",
+    "distance_A.parquet": "ea8bf035e4701162ebc419b2279d46a5b0b796a116a3e6b08daef861124f9a95",
+    "distance_B.parquet": "d8f5fdd8eaadea04a64a5a748166ca5b5ff52cd70f55491c3ec8bf7da72d2e65",
+    "distance_C.parquet": "f7d4056e973a5e4877c8a12cac83a1fa310db053087a69a83a40a93b546ffa57",
+    "distance_D.parquet": "41b944fd93860268ef499b1f449fadff17f0c3d2ec358a5018ddab50ce04ac51",
+    "distance_Full.parquet": "ccd2133f3987c402e603b256a1bc762a10151179bf2e46596ba9868702357c00",
+    "distance_LOO_A.parquet": "40ef48a40661d9fe967fd8191c4cfb2176bc64d96f201f41ddc75ea72082da41",
+    "distance_LOO_B.parquet": "ca39c5c69ede74b4cd123a013f3cc27725a8ecece19e6b63030e202253ffe1a0",
+    "distance_LOO_C.parquet": "b5b83528d74a4c6efcb6d517f253cbcb5f75d20986dc6721e5eb88857757c52f",
+    "distance_LOO_D.parquet": "f3dcc72e1ad936f1dff55c2945b1d6d889a51d8432ee4ad85f2b2734d5632ce6",
+    "distance_Stable.parquet": "14a610d567889adad8b92122914fb476b63e53b8a3d0d93ab6e721f83a260a28",
+    "pair_relations_0.7.parquet": "f612e6f9c594dd1d384265727b1dc1a38c23c15fd2f7a529f54b90e3f952631d",
+    "pair_relations_0.85.parquet": "6a2e91235f9ecbb0291184b5f55c72acd3e0983fd344ce7ab558a48026db5e0f",
+    "pair_relations_0.95.parquet": "d9309c090dea4be3c6e5b65defe242e487380393a7d978d68b9c3ae567d6b78b",
+    "pair_relations_0.995.parquet": "ea03570312f61a80f39f991f23eb4303e3fa41b472378fee37b422fc3d6d5a85",
+    "representative_policy_details.parquet": "c853bfcff3d79c8ba205d19a95352196716e2dea3958452dbaa5bbbb1b978d66",
+    "risk_exposure_annotations.parquet": "34efcf22a5a51299d046e99abf83d0ee354636dce879a4be41f3525526e9ec4e"
+  },
+  "semantic_rows": 765,
+  "status": "representative_proposal_stop_for_human_review",
+  "summary_contract_hash": "aae5e339462bc6af64eae6173f5686711f24198a0003d47142db102a57597fb0"
+}

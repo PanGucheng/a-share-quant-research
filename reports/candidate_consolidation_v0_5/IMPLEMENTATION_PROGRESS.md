@@ -2,7 +2,23 @@
 
 2026-09-08用户授权开始实施；本文件为后续会话恢复入口。
 
-## 当前交付范围
+## 最新状态：代表提案已交付，停止供人工审阅
+
+用户已完成全量计算：168/168个月份、3382日，墙钟3735.6秒（约62分钟）。本轮逐hash验证全部日证据，完成121,771 pairs的Full、A/B/C/D、LOO_A/B/C/D共9个精确统计视图，汇总用时约16.2分钟；未重算Primary或全量日Spearman。
+
+已生成[代表提案报告](REPORT.md)及[494行代表提案表](representative_proposal_board.csv)、[765行语义审阅](economic_semantic_review.csv)、[精确重复关系](exact_alias_map.csv)。四个相似度等级.995/.95/.85/.70的Full complete簇数分别390/202/132/89，不把任一数字解释为最终入池数量。全期精确重复有5组10成员，均为Alpha158与Alpha360对应项；该数字仅针对494工作集，不能与初始765语义库存中的8对表达式线索直接比较。
+
+五个canonical风险controls的Full/四Era注释共12,350行；包含自比较身份标记，不把自相关当风险发现。10个距离视图（含保守Stable）及完整SciPy linkage、局部average对照、跨Era/LOO稳定性、cluster风险汇总、四层级pair状态和代表排序明细保存在 `outputs/candidate_consolidation_v0_5/consolidation_20260908_v2/proposal_v1/`。
+
+所有层级均有35项因子因语义/状态mask问题暂缓；窗口或机制不同的成员保留身份。代表政策在解释聚类输出前写入[政策文件](REPRESENTATIVE_POLICY.json)，没有使用IC、收益或模型表现。`representation_sign`只描述特征相对表示的全期符号，不修改Primary方向，也不自动授权替换。完整语义表属于规则辅助审阅，仍需用户审阅，不冒充专家逐项签字。
+
+**明确缺项**：价格暴露未计算，因为尚未验证该community-derived provider的价格单位和归一化溯源。审计本机Qlib `scripts/data_collector/yahoo/collector.py::_manual_adj_data` 可见按单只股票首日close归一化的实现，说明不能仅凭字段名把provider close当作横截面名义价格；这不是对当前provider处理链的证明。因此本次保持unavailable，而不加入意义未确认的control。行业仍缺少开发期覆盖。两项作为提案限制保留，不用近期值回填。
+
+验收：[PROPOSAL_VALIDATION.json](PROPOSAL_VALIDATION.json)。555项完整测试、46项fast测试、26个验证器通过；独立pandas复核真实pair的全期中位数/分位数通过；所有层级complete簇内最大距离满足cut，494/765成员不丢失，12,350暴露行及整数样本计数schema通过；[产物receipt](PROPOSAL_RECEIPT.json)绑定报告和runtime文件hash。原Primary20份冻结文件逐hash不变。
+
+后续停止在人工审阅，不自动进入Core、组合、10D、近期诊断、模型或Strategy V2。下列初期进度和全量命令保留为执行历史；**本次全量已完成，无需重跑**。
+
+## P0/P1初期交付范围（历史）
 
 - 固定774库存、765研究可用、494 active；通过原Primary Board hash与20份冻结文件hash验证输入。
 - 774行语义基础表采用既有map白名单列，补价格斜率、历史/当前价格比、二元事件注释。其余继承语义仍标需复核，不能声称765项人工语义审阅已全部完成。
@@ -12,7 +28,7 @@
 - 新独立runner：固定12日canary、1/8进程、月分片、OS锁、原子发布、receipt校验、恢复与状态输出。
 - 日证据包含rho、共同样本数、缺失原因、各因子finite/inf计数、每日universe规模、读取slice hash及当次日期范围内exact alias。局部alias不等于全期可替代关系。
 
-## 当前边界与剩余工作
+## P0/P1交付时的后续工作（现已推进，缺项见上）
 
 本轮入口的 `full` 只执行开发期全量**日证据**，不声称整个V0.5完成。之后还需P2的Full/Era精确分块汇总，P3的跨Era/LOO稳定性、数值簇与经济/暴露解释，以及P4的全部494行label-free代表提案。价格control的复权/单位审计尚待完成；行业仍为开发期不可用。五个既有canonical controls已加入同一个内核；control_only不扩大494工作集。
 
