@@ -68,6 +68,25 @@ Candidate Board SHA256: edca91b2a8f3a5e54ffd9a8c1b69037f70832c1a8ec745a2dae02e2c
 
 旧 exposure capability audit 报告“provider无市值/行业字段”、旧实时快照收集失败，不能推导为今天整个项目没有市值数据。canonical中的市值、换手及波动因子已经有2010–2023数据。反之，后来的 external PIT style产物虽然具备行业join，但日期元数据仅覆盖2024-08-01至2026-02-04的368日，不能拿来填本轮开发期。
 
+### A4. 开源与现有代码的收敛审计（本轮新增）
+
+用户补充方案的核心判断成立：通用算法交给成熟库，项目只维护 canonical 面板语义、pair-specific mask、Era 聚合和证据 provenance。审计后的复用边界如下；这不会改变 765/494、2010–2023 或 feature-only 主路线。
+
+| 能力 | 决策 | 具体边界 |
+|---|---|---|
+| SciPy `squareform` / `linkage` / `fcluster` / `cut_tree` / `dendrogram` | **直接调用** | 层次聚类、切簇和可视化不自研；继续复用 `factor_clustering.py` 的 wrapper，补齐 complete/average、singleton、有限性、输入排序和未知距离测试 |
+| scikit-learn `AgglomerativeClustering` / `FeatureAgglomeration` | **参考，不进主 runtime** | 可用于独立 parity/toy-data 对照；当前 SciPy 已满足距离矩阵合同，不为第二套聚类 API 增加依赖 |
+| pandas / SciPy Spearman | **reference/oracle** | 用于 pairwise reference、ties/NaN/constant parity；不能直接替代 pair-specific 交集、Era、coverage 和 effective-date 适配层 |
+| Feature-engine `DropCorrelatedFeatures` 等 | **参考/oracle only** | 只借鉴 label-free coverage、缺失、简洁性代表思路；其 samples×features 合同无法表达每日横截面、逐对 mask、PIT 和 Era，不新增 runtime 依赖，也不使用 target correlation/model performance |
+| Riskfolio-Lib | **不采用正式依赖** | 其 dependence/cluster diagnostics 可作方法参考；canonical daily panel、pair mask 和 Era 仍由本项目产出，SciPy 已足够完成主聚类，避免扩大依赖面 |
+| MlFinLab / Clustered Feature Importance | **仅参考公开方法** | 不复制受限代码；当前不做 cluster-level importance、模型、收益或 SHAP |
+| `canonical_dataset.py`、`feature_eligibility._content_hash`、`factor_similarity.py`、`factor_clustering.py`、现有 receipt/atomic/resume | **direct reuse + small extension** | 复用边界读取、键/日期校验、数值 hash、已有日相关和 SciPy wrapper、执行可靠性；仅补多列流式读取、mask/overlap/Era/schema 与新入口，不修改冻结 Primary runner |
+| 新增 custom code | **必须自研的最小层** | 一个 bounded multi-factor reader、精确 pairwise daily Spearman adapter/kernel、Full/Era streaming reducer、语义/暴露/代表政策 assembler；不新建 manager、registry、clustering 或 feature-selection framework |
+
+因此，正式依赖仍只使用仓库现有 SciPy/pandas/NumPy 环境；**不新增 Feature-engine、Riskfolio-Lib 或 MlFinLab**。开源库负责成熟数学实现，项目负责金融面板的数据合同，不能为适配库 API 而 flatten 全局 complete-case 或丢失日期等权、PIT 和 overlap 证据。
+
+P1 canary 必须增加三类 oracle parity：①显式交集重排的 reference 与 `scipy.stats.spearmanr`、`pandas.DataFrame.corr(method="spearman")` 在 ties、NaN、binary、constant 上对照；②现有 wrapper 与 SciPy 直接 `linkage/fcluster` 对照 complete/average；③ exact、递减单调、mask 冲突、近似随机列的 duplicate/alias synthetic 对照。Parity 仅验证实现，不改变主研究语义。
+
 ## B. Consolidation Research Contract
 
 | 项目 | 合同 |
@@ -285,7 +304,9 @@ V0.5不新建通用符号计算系统。先用明确的字段/算子/窗口描�
 | P3 结构与解释 | complete主视图、average局部对照、Era/LOO稳定性；经济修订；固定风险controls | 不导入labels；unknown不被称独立；family与cluster分开 |
 | P4 代表提案 | 冻结label-free排序、全部494行proposal board、group摘要、原始证据hash复核 | **STOP FOR HUMAN REVIEW**；无自动Core/模型入口 |
 
-开发粒度建议为2–4个可审阅提交：合同与synthetic；多列reader与canary；全量runner/汇总；结构解释与提案。预计开发及审阅3–5个工作日量级，实际取决于mask内核及canonical对齐问题；这是排期估计，不能替代canary证据。
+开发粒度建议收敛为2–4个可审阅提交：合同与 oracle/synthetic；多列 reader、pairwise kernel 与 canary；全量 runner/汇总；结构解释与提案。新增核心算法代码预计为少量 adapter/kernel 加 reducer，聚类、Spearman 数学、hash、receipt 和 taxonomy 均复用现有实现。依赖安装为零；若仓库环境缺少 SciPy/pandas/NumPy，应修复环境锁定而非在项目内重写算法。
+
+按个人研究项目的成本尺度，实施排期可从原先宽泛的3–5个工作日收敛为约2–4个工作日开发与审阅：P0/P1约半至一天，P2约一天（取决于真实 mask 分布和 I/O），P3/P4约半至一天。该估计不包含全量运行墙钟时间；真实 8-worker canary 前不承诺 full ETA。若 canary 显示 pair-mask fallback 过多，只优化批次/读取和 reducer，不降低精度或改变样本合同。
 
 先用少量新文件承载独立入口：建议 `factor_research/candidate_consolidation.py`、`scripts/run_candidate_consolidation_v0_5.py`、一个YAML及集中测试；复杂度增长后再分离numerical/semantics模块，不引入新manager或注册框架。保留已有历史入口与冻结文件。以上文件名为拟建，不是已存在命令。
 
