@@ -48,9 +48,11 @@ evidence 判断；历史报告与 archive 只说明当时发生了什么。
 ## Current Development Plans
 
 - [RESEARCH_PROTOCOL_V3_MVP_PLAN.md](RESEARCH_PROTOCOL_V3_MVP_PLAN.md)
-  — **P0–P2 COMPLETE / STOP FOR HUMAN REVIEW**；九个年度精确fold、765项P1审计及固定模型工程canary已完成；完整池资源资格与P3竞争仍未解锁。
+  — **RECOMPUTED / ENGINEERING VERIFIED / STOP FOR REVIEW**；P0/P1及两折8/494列重算和预测复核完成，P3仍未解锁。
 - [Research Protocol V3-MVP实施进度](../reports/research_protocol_v3_mvp/IMPLEMENTATION_PROGRESS.md)
   — P0–P2运行状态、样本计数、canary资源和阻塞项。
+- [V3提交审阅与重算记录](../reports/research_protocol_v3_mvp/AUDIT_20260909.md)
+  — 0c4b041、948d2f0、9f201e2的逐文件核验、修复与证据边界。
 
 - [CANDIDATE_CONSOLIDATION_REDUNDANCY_V0_5_PLAN.md](CANDIDATE_CONSOLIDATION_REDUNDANCY_V0_5_PLAN.md)
   — **PROPOSAL DELIVERED / STOP FOR HUMAN REVIEW**；765语义审阅、494工作集、feature-only冗余与代表提案计划，计算结果与缺项见实施进度。

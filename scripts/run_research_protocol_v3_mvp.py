@@ -6,11 +6,13 @@ import argparse
 from concurrent.futures import ProcessPoolExecutor, as_completed
 import gc
 import json
+import importlib.metadata
 import os
 import multiprocessing
 from pathlib import Path
 import re
 import sys
+import subprocess
 import time
 import uuid
 
@@ -27,7 +29,9 @@ import yaml
 from factor_research.candidate_consolidation import verify_primary
 from factor_research.long_history_screening import KEYS, LABEL, sha256_file
 from model_research.long_history_inputs import read_features, read_keys, read_labels, feature_profile, combine_profiles
-from model_research.long_history_walk_forward import prepare_training_batch, fit_arrays, predict
+from model_research.long_history_walk_forward import (
+    prepare_training_batch, fit_arrays, predict, fit_sequences, Float64FileSequence,
+)
 from model_research.linear_models import _MemorySampler
 from qlib_baseline.io import atomic_write_json
 from qlib_baseline.settings import load_settings
@@ -40,7 +44,8 @@ CODE = ['scripts/run_research_protocol_v3_mvp.py', 'research_validation/research
         'research_validation/canonical_dataset.py', 'research_validation/purged_split.py',
         'research_validation/labels.py', 'factor_research/long_history_screening.py',
         'model_research/targets.py', 'model_research/preprocessing.py', 'qlib_baseline/io.py',
-        'scripts/run_candidate_consolidation_v0_5.py']
+        'scripts/run_candidate_consolidation_v0_5.py', 'model_research/linear_models.py',
+        'qlib_baseline/settings.py', 'scripts/revalidate_research_protocol_v3.py']
 
 
 def write_csv(path, frame):
@@ -48,7 +53,7 @@ def write_csv(path, frame):
 
 
 def publish(folder, contract_hash, writer):
-    if folder.exists() and (folder / 'receipt.json').exists() and completed_chunk(folder, contract_hash):
+    if completed_chunk(folder, contract_hash):
         return
     folder.parent.mkdir(parents=True, exist_ok=True)
     stage = folder.parent / ('.' + folder.name + '_' + uuid.uuid4().hex)
@@ -59,6 +64,25 @@ def publish(folder, contract_hash, writer):
     atomic_write_json(stage / 'receipt.json', dict(status='complete', contract_hash=contract_hash,
                                                  file_hashes=files, wall_seconds=time.perf_counter() - tick))
     stage.replace(folder)
+
+
+def runtime_identity():
+    import qlib
+    source = Path(qlib.__file__).resolve().parents[1]
+    commit = subprocess.run(['git', '-C', str(source), 'rev-parse', 'HEAD'],
+                            capture_output=True, text=True, check=True).stdout.strip()
+    dirty = subprocess.run(['git', '-C', str(source), 'status', '--porcelain'],
+                           capture_output=True, text=True, check=True).stdout
+    runtime_dirty = subprocess.run(['git', '-C', str(source), 'status', '--porcelain', '--', 'qlib'],
+                                   capture_output=True, text=True, check=True).stdout
+    if runtime_dirty:
+        raise ValueError('Qlib runtime source must be clean for a recomputation contract')
+    return dict(python=sys.version, qlib_commit=commit,
+                qlib_runtime_clean=True, qlib_other_worktree_status=dirty,
+                packages={n: importlib.metadata.version(n) for n in
+                          ['numpy', 'pandas', 'pyarrow', 'lightgbm', 'pyqlib', 'scipy', 'psutil']},
+                threads={n: os.environ[n] for n in
+                         ['OMP_NUM_THREADS', 'OPENBLAS_NUM_THREADS', 'MKL_NUM_THREADS', 'NUMEXPR_NUM_THREADS']})
 
 
 def bind(config, out, provider):
@@ -85,7 +109,9 @@ def bind(config, out, provider):
                    (ROOT / 'reports/candidate_consolidation_v0_5/v0_5_1').iterdir() if p.is_file()})
     working_path = ROOT / 'reports/candidate_consolidation_v0_5/working_set.csv'
     frozen[str(working_path.relative_to(ROOT))] = sha256_file(working_path)
-    contract = dict(config=config, code_hashes={p: sha256_file(ROOT / p) for p in CODE},
+    contract = dict(config=config, runtime=runtime_identity(),
+                    execution=dict(wide_storage='monthly_float64_sequence', wide_memory_budget_gib=12),
+                    code_hashes={p: sha256_file(ROOT / p) for p in CODE},
                     canonical_metadata={p.name: sha256_file(p) for p in
                                         [base / 'manifest.json', base / 'partition_manifest.csv', base / 'factor_lineage.csv']},
                     frozen_evidence=frozen, provider=str(provider),
@@ -226,7 +252,16 @@ def cached_training_labels(out, protocol, fold_id, days):
     boundary = protocol['folds'].set_index('fold_id').loc[fold_id, 'evaluation_start']
     if result.exit_date.isna().any() or result.exit_date.ge(boundary).any():
         raise ValueError('cached labels not available before annual fit')
+    if (result.duplicated(KEYS).any()
+            or not pd.DatetimeIndex(result.datetime.unique()).equals(pd.DatetimeIndex(days))):
+        raise ValueError('cached label keys or dates missing/duplicated')
     return result
+
+
+def require_audit(out, contract_hash, years):
+    for folder in [out / 'p0', out / 'p1', *[out / 'audit' / str(y) for y in years]]:
+        if not completed_chunk(folder, contract_hash):
+            raise ValueError(f'verified audit required: {folder}')
 
 
 def canary(stage, fold_id, out, config, partitions, protocol):
@@ -253,7 +288,8 @@ def canary(stage, fold_id, out, config, partitions, protocol):
             features = read_features(partitions, factors, selected, access=access,
                                      protocol=protocol, fold_id=fold_id, role='train')
             labels = cached_training_labels(out, protocol, fold_id, selected)
-            x, y, w, receipt = prepare_training_batch(features, labels, factors, protocol=protocol, fold_id=fold_id)
+            x, y, w, receipt = prepare_training_batch(features, labels, factors, protocol=protocol,
+                                                     fold_id=fold_id, minimum_pairs=config['minimum_daily_pairs'])
             end = position + len(y)
             matrix[position:end], target[position:end], weights[position:end] = x, y, w
             position = end
@@ -291,37 +327,74 @@ def canary(stage, fold_id, out, config, partitions, protocol):
 
 
 def wide_canary(stage, fold_id, out, config, partitions, protocol):
-    """494-column bounded canary using float32 disk-backed storage."""
+    """Recompute all training values in float64; no imported audit or float32 cache."""
     factors = sorted(pd.read_csv(ROOT / 'reports/candidate_consolidation_v0_5/working_set.csv').factor)
+    eligible = pd.read_csv(out / 'p1/feature_eligibility.csv')
+    eligible = eligible[(eligible.fold_id == fold_id) & eligible.eligible]
+    if len(factors) != 494 or len(set(factors)) != 494 or not set(factors) <= set(eligible.factor):
+        raise ValueError('wide pool is not the registered train-eligible 494 identities')
     days = training_dates(protocol, fold_id)
-    rows_capacity = int(pd.read_csv(out / 'p1/sample_counts.csv').query(
-        "fold_id == @fold_id and role == 'train'")['keys'].iloc[0])
-    mmap_path = stage / 'features.float32.memmap'
-    matrix = np.memmap(mmap_path, mode='w+', dtype='float32', shape=(rows_capacity, len(factors)))
-    target = np.empty(rows_capacity, dtype='float32'); weights = np.empty(rows_capacity, dtype='float32')
-    access, receipts, position = [], [], 0
+    access, receipts, sequences, targets, weights = [], [], [], [], []
     tick = time.perf_counter()
-    with _MemorySampler() as sampler:
-        for year in sorted(set(days.year)):
-            selected = days[days.year == year]
-            features = read_features(partitions, factors, selected, access=access, protocol=protocol,
-                                     fold_id=fold_id, role='train')
-            labels = cached_training_labels(out, protocol, fold_id, selected)
-            x, y, w, receipt = prepare_training_batch(features, labels, factors,
-                                                      protocol=protocol, fold_id=fold_id)
-            end = position + len(y)
-            matrix[position:end] = x.astype('float32', copy=False)
-            target[position:end] = y; weights[position:end] = w
-            position = end; receipts.append(dict(year=int(year), **receipt))
-            del features, labels, x, y, w; gc.collect()
-        matrix.flush()
-        model = fit_arrays(matrix[:position], target[:position], weights[:position], factors,
-                           fold_id=fold_id, config=config)
-    del matrix, target, weights; gc.collect()
+    try:
+        with _MemorySampler() as sampler:
+            for month in days.to_period('M').unique():
+                selected = days[days.to_period('M') == month]
+                features = read_features(partitions, factors, selected, access=access, protocol=protocol,
+                                         fold_id=fold_id, role='train')
+                labels = cached_training_labels(out, protocol, fold_id, selected)
+                x, y, w, receipt = prepare_training_batch(features, labels, factors,
+                    protocol=protocol, fold_id=fold_id, minimum_pairs=config['minimum_daily_pairs'])
+                path = stage / f'train_{month}.float64'
+                x.tofile(path)
+                sequences.append(Float64FileSequence(path, len(factors)))
+                targets.append(y)
+                weights.append(w)
+                receipts.append(dict(month=str(month), **receipt))
+                print(f'{fold_id}: prepared {month}, rows={len(y)}', flush=True)
+                del features, labels, x
+                gc.collect()
+            prepare_seconds = time.perf_counter() - tick
+            model = fit_sequences(sequences, np.concatenate(targets), np.concatenate(weights), factors,
+                                  fold_id=fold_id, config=config)
+            model.booster.save_model(str(stage / 'model.txt'))
+            import lightgbm as lgb
+            restored = lgb.Booster(model_file=str(stage / 'model.txt'))
+            source = protocol['assignments']
+            evaluation = pd.DatetimeIndex(source.loc[
+                (source.fold_id == fold_id) & (source.role == 'predict'), 'datetime'])
+            predictions = []
+            tick = time.perf_counter()
+            for month in evaluation.to_period('M').unique():
+                selected = evaluation[evaluation.to_period('M') == month]
+                frame = read_features(partitions, factors, selected, access=access,
+                                      protocol=protocol, fold_id=fold_id, role='predict')
+                pred = predict(model, frame, protocol=protocol)
+                daily = pd.concat([predict(model, part, protocol=protocol)
+                                  for _, part in frame.groupby('datetime')], ignore_index=True)
+                if not pred.equals(daily):
+                    raise ValueError('wide month/day prediction parity failed')
+                original = model.booster
+                model.booster = restored
+                if not pred.equals(predict(model, frame, protocol=protocol)):
+                    raise ValueError('saved wide model prediction parity failed')
+                model.booster = original
+                predictions.append(pred)
+                del frame
+            predictions = pd.concat(predictions, ignore_index=True)
+            predictions.to_parquet(stage / 'engineering_predictions.parquet', index=False)
+            predict_seconds = time.perf_counter() - tick
+    finally:
+        for seq in sequences:
+            seq.close()
     resource = dict(model.receipt)
-    resource.update(storage='float32_disk_memmap', feature_count=len(factors), fit_rows=position,
-        peak_rss_mib=sampler.peak_mb, prepare_seconds=time.perf_counter()-tick,
-        full_width_resource_qualified=True, engineering_only=True, batch_receipts=receipts)
+    resource.update(storage='monthly_float64_sequence', feature_count=len(factors),
+        peak_rss_mib=sampler.peak_mb, prepare_seconds=prepare_seconds, predict_seconds=predict_seconds,
+        prediction_rows=len(predictions), prediction_coverage=float(predictions.score.notna().mean()),
+        predicted_dates=int(predictions.datetime.nunique()), monthly_daily_exact_parity=True,
+        saved_model_exact_parity=True, memory_budget_gib=12,
+        fold_resource_within_budget=bool(sampler.peak_mb <= 12 * 1024),
+        full_width_resource_qualified=False, engineering_only=True, batch_receipts=receipts)
     atomic_write_json(stage / 'resource.json', resource)
     atomic_write_json(stage / 'access.json', {'access': access})
 
@@ -334,8 +407,8 @@ def finalize(out, config, contract_hash):
     samples = pd.read_csv(out / 'p1/sample_counts.csv')
     if samples.dates_below_100.dropna().gt(0).any():
         raise ValueError('some dates lack sufficient finite labels')
-    atomic_write_json(out / 'status.json', dict(status='p0_p2_complete_stop_for_review',
-                                              protocol_ready=True, pool_experiment_ready=False,
+    atomic_write_json(out / 'status.json', dict(status='p0_p2_recomputed_pending_review',
+                                              protocol_ready=False, pool_experiment_ready=False,
                                               full_width_resource_qualified=False,
                                               held_recent_accessed=False, competition_started=False,
                                               contract_hash=contract_hash))
@@ -347,6 +420,7 @@ def main():
     parser.add_argument('--stage', choices=['prepare', 'audit', 'canary', 'wide-canary', 'finalize', 'all'], default='prepare')
     parser.add_argument('--workers', type=int, choices=range(1, 5), default=4,
                         help='Independent audit years only; model fits stay sequential with 8 threads')
+    parser.add_argument('--wide-fold', choices=['annual_2015', 'annual_2023'], default='annual_2015')
     args = parser.parse_args()
     if not re.fullmatch(r'[A-Za-z0-9_-]+', args.run_id):
         raise ValueError('invalid run-id')
@@ -381,21 +455,25 @@ def main():
             aggregate_audit(out, protocol, contract_hash)
             atomic_write_json(out / 'status.json', dict(status='p1_complete', contract_hash=contract_hash))
         if args.stage in ['canary', 'all']:
-            if not completed_chunk(out / 'p1', contract_hash):
-                raise ValueError('P1 required before canary')
-            for year in range(2010, 2024):
-                if not completed_chunk(out / 'audit' / str(year), contract_hash):
-                    raise ValueError('incomplete audit')
             for fold_id in config['canary_folds']:
+                require_audit(out, contract_hash, sorted(set(training_dates(protocol, fold_id).year)))
                 atomic_write_json(out / 'status.json', dict(status='resource_canary', fold_id=fold_id, contract_hash=contract_hash))
                 publish(out / 'canary' / fold_id, contract_hash,
                         lambda stage, f=fold_id: canary(stage, f, out, config, partitions, protocol))
         if args.stage == 'wide-canary':
-            if not (out / 'p1/feature_eligibility.csv').exists():
-                raise ValueError('P1 feature eligibility is required before wide canary')
-            fold_id = 'annual_2015'
-            publish(out / 'wide_canary' / fold_id, contract_hash,
-                    lambda stage: wide_canary(stage, fold_id, out, config, partitions, protocol))
+            fold_id = args.wide_fold
+            require_audit(out, contract_hash, sorted(set(training_dates(protocol, fold_id).year)))
+            atomic_write_json(out / 'status.json', dict(status='wide_recomputation_running',
+                                                       fold_id=fold_id, contract_hash=contract_hash))
+            try:
+                publish(out / 'wide_canary' / fold_id, contract_hash,
+                        lambda stage: wide_canary(stage, fold_id, out, config, partitions, protocol))
+            except Exception as error:
+                atomic_write_json(out / 'status.json', dict(status='wide_recomputation_failed',
+                    fold_id=fold_id, contract_hash=contract_hash, error_type=type(error).__name__, error=str(error)))
+                raise
+            atomic_write_json(out / 'status.json', dict(status='wide_fold_recomputed_pending_review',
+                fold_id=fold_id, contract_hash=contract_hash, full_width_resource_qualified=False))
         if args.stage in ['finalize', 'all']:
             finalize(out, config, contract_hash)
 

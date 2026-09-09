@@ -17,7 +17,7 @@ artifact 名称中的 `current` 不自动表示 ACTIVE。
 | Phase 1 Feature Quality Gate | COMPLETE / MVP quality scope | 本轮全库质量与样本审计完成，不等于完整可交易性认证 |
 | Primary 20D Screening MVP | COMPLETE / STOP FOR HUMAN REVIEW | Evidence/Candidate Board V0、冻结规则与完整765家族FDR已交付 |
 | Candidate Consolidation / Redundancy V0.5.1 | REVISED PROPOSAL DELIVERED / STOP FOR HUMAN REVIEW | [修订提案](../reports/candidate_consolidation_v0_5/v0_5_1/REPORT.md)已接入真实窗口/量纲与严格Full/Era证据；五组精确重复登记、低覆盖样本复核完成；价格尺度等未决项保留，无最终Core |
-| Research Protocol V3-MVP | P0–P2 COMPLETE / STOP FOR HUMAN REVIEW | [实施进度](../reports/research_protocol_v3_mvp/IMPLEMENTATION_PROGRESS.md)：9折、765项P1审计及固定8列P2 canary完成；pool experiment未解锁，完整池资源资格待审 |
+| Research Protocol V3-MVP | RECOMPUTED / ENGINEERING VERIFIED / STOP FOR REVIEW | [实施进度](../reports/research_protocol_v3_mvp/IMPLEMENTATION_PROGRESS.md)：P0/P1及两折8/494列重算验证完成，最大折494列4.55GiB；旧宽表声明撤回，P3未解锁 |
 | Structured ML | NOT AUTHORIZED | 不得训练或比较候选模型 |
 | Strategy V2 | NOT AUTHORIZED | 需要独立 protocol、freeze date 与新 forward evidence |
 | Live trading | NOT AUTHORIZED | 不属于当前范围 |

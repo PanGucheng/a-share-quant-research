@@ -73,6 +73,12 @@ canary fits are authorized; P3 feature-pool competition, recent diagnostic repla
 and Strategy V2 remain outside that authorization. Resume from
 `reports/research_protocol_v3_mvp/IMPLEMENTATION_PROGRESS.md`.
 
+The user subsequently requested a complete audit of commits `0c4b041`, `948d2f0`,
+and `9f201e2` and fresh recomputation of their results. Fresh P0-P2 results and both
+494-column engineering canaries are now verified in the V3 REPORT.md; old wide-run
+qualification claims remain withdrawn. P3 is still not authorized. Preserve all original run
+directories and receipts; never repair a contract mismatch by rewriting a receipt.
+
 The user authorized the narrowed implementation in
 `docs/LONG_HISTORY_MULTI_EVALUATOR_SCREENING_MVP_PLAN.md` on 2026-09-07.
 Primary 20D V0 was delivered on 2026-09-08; see

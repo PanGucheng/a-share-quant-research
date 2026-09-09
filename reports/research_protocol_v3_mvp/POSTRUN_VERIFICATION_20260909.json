@@ -1,0 +1,338 @@
+{
+  "run_id": "v3_recompute_audit_20260909_v1",
+  "contract_hash": "a73a2a504c7e13d92273837c22d4bc087ac31190d1dc0d1aed7365f74671858e",
+  "checked_chunks": {
+    "p0": {
+      "receipt_sha256": "542e1bab14324eb8b546fd8358bdd21ce0403564c7aeb607aef14bcc9b8ca280",
+      "files": 5
+    },
+    "p1": {
+      "receipt_sha256": "aa6c28f3849c16cac1b9593adfbd6c70c60825f01c4b9ede2bfbd0786cb5855d",
+      "files": 3
+    },
+    "audit/2010": {
+      "receipt_sha256": "31a3c734dd0bb5a7aabedfb974c9c6c24dac59555b513082d2865b2958059952",
+      "files": 8
+    },
+    "audit/2011": {
+      "receipt_sha256": "49d2701684b697e37eaa85694ff0f74d6f8f9be50898b48a8919de1c51e4c380",
+      "files": 8
+    },
+    "audit/2012": {
+      "receipt_sha256": "aaa593940a0202d3c9eaeca355714d0cb39f80df8d3ecf7da8c1f9bcc20b4745",
+      "files": 8
+    },
+    "audit/2013": {
+      "receipt_sha256": "2c804a88e0120974e27d186e910c38e3b32c7dc49734d476b79b929a984a7dba",
+      "files": 8
+    },
+    "audit/2014": {
+      "receipt_sha256": "0c31fbedced322c3436d565d7be04e7cde1746d8bbc838b3b18d27ae21240045",
+      "files": 8
+    },
+    "audit/2015": {
+      "receipt_sha256": "a0ad9c767c8584fbd3d18860562acb77a1d857c35c73177e203c4369dfae8584",
+      "files": 8
+    },
+    "audit/2016": {
+      "receipt_sha256": "d60c1143d01795f1beb2629b6f138334c2d37f6fc659d527b97235578b1d4293",
+      "files": 8
+    },
+    "audit/2017": {
+      "receipt_sha256": "1074fce2244bd8dc19090f46c24e2ae6437e6d2681c6293555be3d7867375629",
+      "files": 8
+    },
+    "audit/2018": {
+      "receipt_sha256": "92455e4362acba2aa46caeee9cac86b617473a49bada6e4a84d48f102d38ff30",
+      "files": 8
+    },
+    "audit/2019": {
+      "receipt_sha256": "a52b82767cbed660e7db24846b9647ace77aa9bd87e38947f48c6dffbd583b76",
+      "files": 8
+    },
+    "audit/2020": {
+      "receipt_sha256": "69086c5d16f2be3852981322d74804f7760f66d785f3172d0595c8b09bf72761",
+      "files": 8
+    },
+    "audit/2021": {
+      "receipt_sha256": "018ed17fd4723632a978022044f5d5e622bc2beb78504322deefdae984e26bad",
+      "files": 8
+    },
+    "audit/2022": {
+      "receipt_sha256": "55968e33eeaf2c32f988460bbcf72662447fe2c8202ec0759b6a2393f073668f",
+      "files": 8
+    },
+    "audit/2023": {
+      "receipt_sha256": "faad4eb45e4dda481f3532a79c808b393a16da58b9823cd0ca81a306f19f32c8",
+      "files": 6
+    },
+    "canary/annual_2015": {
+      "receipt_sha256": "7f6b2e2aa4c38514d0764d92958cb99de64052a445eca0c74031ac7f8ad85cc9",
+      "files": 4
+    },
+    "canary/annual_2023": {
+      "receipt_sha256": "02643d93512d12de927fac6b269e9cab4cd862a8cf1f2656d82125986a8613bd",
+      "files": 4
+    },
+    "wide_canary/annual_2015": {
+      "receipt_sha256": "bf09c3cb220e156dc7c15297dd7cc5e5de54f96dbbcd1112f47d73d3f0f4dd54",
+      "files": 64
+    },
+    "wide_canary/annual_2023": {
+      "receipt_sha256": "97e30d373233c4e4570972e47ca83c357cc144f38c662ca57be203c32caa78cc",
+      "files": 160
+    },
+    "revalidation_probe": {
+      "receipt_sha256": "7cad84295bbdd36889deee9211682ed3f0913336b5632ab1edde768e89abd5a0",
+      "files": 6
+    },
+    "revalidation_probe_summary": {
+      "receipt_sha256": "d40a03a10fec5c5d2e3644bdd57e2d1ea47cc58d40b3d49111408e7bd97acf6a",
+      "files": 1
+    },
+    "revalidation_verify_summary": {
+      "receipt_sha256": "4e6305c09d4b7d1ed14f93630c7c6b29cca374e496563d9d6eed5b31653ab6bf",
+      "files": 1
+    }
+  },
+  "checked_partition_files": 480,
+  "checked_price_files": 6106,
+  "calendar_oracle": [
+    {
+      "year": 2015,
+      "train_dates": 1172,
+      "prediction_dates": 244,
+      "scored_dates": 244,
+      "last_train": "2014-12-02"
+    },
+    {
+      "year": 2016,
+      "train_dates": 1416,
+      "prediction_dates": 244,
+      "scored_dates": 244,
+      "last_train": "2015-12-02"
+    },
+    {
+      "year": 2017,
+      "train_dates": 1660,
+      "prediction_dates": 244,
+      "scored_dates": 244,
+      "last_train": "2016-12-01"
+    },
+    {
+      "year": 2018,
+      "train_dates": 1904,
+      "prediction_dates": 243,
+      "scored_dates": 243,
+      "last_train": "2017-11-30"
+    },
+    {
+      "year": 2019,
+      "train_dates": 2147,
+      "prediction_dates": 244,
+      "scored_dates": 244,
+      "last_train": "2018-11-29"
+    },
+    {
+      "year": 2020,
+      "train_dates": 2391,
+      "prediction_dates": 243,
+      "scored_dates": 243,
+      "last_train": "2019-12-02"
+    },
+    {
+      "year": 2021,
+      "train_dates": 2634,
+      "prediction_dates": 243,
+      "scored_dates": 243,
+      "last_train": "2020-12-02"
+    },
+    {
+      "year": 2022,
+      "train_dates": 2877,
+      "prediction_dates": 242,
+      "scored_dates": 242,
+      "last_train": "2021-12-02"
+    },
+    {
+      "year": 2023,
+      "train_dates": 3119,
+      "prediction_dates": 242,
+      "scored_dates": 221,
+      "last_train": "2022-12-01"
+    }
+  ],
+  "count_check": {
+    "recounted_rows": 27,
+    "annual_audits": 14
+  },
+  "old_new_tables": {
+    "p0/assignments.csv": "exact_table_equality",
+    "p0/folds.csv": "exact_table_equality",
+    "p0/intervals.csv": "exact_table_equality",
+    "p0/purged.csv": "exact_table_equality",
+    "p0/sliding_preview.csv": "exact_table_equality",
+    "p1/feature_eligibility.csv": "exact_table_equality",
+    "p1/pool_counts.csv": "exact_table_equality",
+    "p1/sample_counts.csv": "exact_table_equality",
+    "audit/2010/daily_keys.csv": "exact_table_equality",
+    "audit/2010/daily_labels.csv": "exact_table_equality",
+    "audit/2010/full_profile.csv": "exact_table_equality",
+    "audit/2010/keys.parquet": "exact_table_equality",
+    "audit/2010/labels.parquet": "exact_table_equality",
+    "audit/2010/prefix_profile.csv": "exact_table_equality",
+    "audit/2011/daily_keys.csv": "exact_table_equality",
+    "audit/2011/daily_labels.csv": "exact_table_equality",
+    "audit/2011/full_profile.csv": "exact_table_equality",
+    "audit/2011/keys.parquet": "exact_table_equality",
+    "audit/2011/labels.parquet": "exact_table_equality",
+    "audit/2011/prefix_profile.csv": "exact_table_equality",
+    "audit/2012/daily_keys.csv": "exact_table_equality",
+    "audit/2012/daily_labels.csv": "exact_table_equality",
+    "audit/2012/full_profile.csv": "exact_table_equality",
+    "audit/2012/keys.parquet": "exact_table_equality",
+    "audit/2012/labels.parquet": "exact_table_equality",
+    "audit/2012/prefix_profile.csv": "exact_table_equality",
+    "audit/2013/daily_keys.csv": "exact_table_equality",
+    "audit/2013/daily_labels.csv": "exact_table_equality",
+    "audit/2013/full_profile.csv": "exact_table_equality",
+    "audit/2013/keys.parquet": "exact_table_equality",
+    "audit/2013/labels.parquet": "exact_table_equality",
+    "audit/2013/prefix_profile.csv": "exact_table_equality",
+    "audit/2014/daily_keys.csv": "exact_table_equality",
+    "audit/2014/daily_labels.csv": "exact_table_equality",
+    "audit/2014/full_profile.csv": "exact_table_equality",
+    "audit/2014/keys.parquet": "exact_table_equality",
+    "audit/2014/labels.parquet": "exact_table_equality",
+    "audit/2014/prefix_profile.csv": "exact_table_equality",
+    "audit/2015/daily_keys.csv": "exact_table_equality",
+    "audit/2015/daily_labels.csv": "exact_table_equality",
+    "audit/2015/full_profile.csv": "exact_table_equality",
+    "audit/2015/keys.parquet": "exact_table_equality",
+    "audit/2015/labels.parquet": "exact_table_equality",
+    "audit/2015/prefix_profile.csv": "exact_table_equality",
+    "audit/2016/daily_keys.csv": "exact_table_equality",
+    "audit/2016/daily_labels.csv": "exact_table_equality",
+    "audit/2016/full_profile.csv": "exact_table_equality",
+    "audit/2016/keys.parquet": "exact_table_equality",
+    "audit/2016/labels.parquet": "exact_table_equality",
+    "audit/2016/prefix_profile.csv": "exact_table_equality",
+    "audit/2017/daily_keys.csv": "exact_table_equality",
+    "audit/2017/daily_labels.csv": "exact_table_equality",
+    "audit/2017/full_profile.csv": "exact_table_equality",
+    "audit/2017/keys.parquet": "exact_table_equality",
+    "audit/2017/labels.parquet": "exact_table_equality",
+    "audit/2017/prefix_profile.csv": "exact_table_equality",
+    "audit/2018/daily_keys.csv": "exact_table_equality",
+    "audit/2018/daily_labels.csv": "exact_table_equality",
+    "audit/2018/full_profile.csv": "exact_table_equality",
+    "audit/2018/keys.parquet": "exact_table_equality",
+    "audit/2018/labels.parquet": "exact_table_equality",
+    "audit/2018/prefix_profile.csv": "exact_table_equality",
+    "audit/2019/daily_keys.csv": "exact_table_equality",
+    "audit/2019/daily_labels.csv": "exact_table_equality",
+    "audit/2019/full_profile.csv": "exact_table_equality",
+    "audit/2019/keys.parquet": "exact_table_equality",
+    "audit/2019/labels.parquet": "exact_table_equality",
+    "audit/2019/prefix_profile.csv": "exact_table_equality",
+    "audit/2020/daily_keys.csv": "exact_table_equality",
+    "audit/2020/daily_labels.csv": "exact_table_equality",
+    "audit/2020/full_profile.csv": "exact_table_equality",
+    "audit/2020/keys.parquet": "exact_table_equality",
+    "audit/2020/labels.parquet": "exact_table_equality",
+    "audit/2020/prefix_profile.csv": "exact_table_equality",
+    "audit/2021/daily_keys.csv": "exact_table_equality",
+    "audit/2021/daily_labels.csv": "exact_table_equality",
+    "audit/2021/full_profile.csv": "exact_table_equality",
+    "audit/2021/keys.parquet": "exact_table_equality",
+    "audit/2021/labels.parquet": "exact_table_equality",
+    "audit/2021/prefix_profile.csv": "exact_table_equality",
+    "audit/2022/daily_keys.csv": "exact_table_equality",
+    "audit/2022/daily_labels.csv": "exact_table_equality",
+    "audit/2022/full_profile.csv": "exact_table_equality",
+    "audit/2022/keys.parquet": "exact_table_equality",
+    "audit/2022/labels.parquet": "exact_table_equality",
+    "audit/2022/prefix_profile.csv": "exact_table_equality",
+    "audit/2023/daily_keys.csv": "exact_table_equality",
+    "audit/2023/daily_labels.csv": "exact_table_equality",
+    "audit/2023/keys.parquet": "exact_table_equality",
+    "audit/2023/labels.parquet": "exact_table_equality"
+  },
+  "models": [
+    {
+      "kind": "canary",
+      "fold_id": "annual_2015",
+      "feature_count": 8,
+      "fit_rows": 2090742,
+      "model_sha256": "199c7bf93f1c0216d0afe88e9529c145d2862f3b81f177fbe8eb26a858caa4fb",
+      "replayed_rows": 487993,
+      "replayed_dates": 244,
+      "all_saved_predictions_exact": true,
+      "old_model_equal": true,
+      "coverage": 0.948786150621013,
+      "peak_rss_gib": 0.6144294738769531,
+      "fit_seconds": 2.401115299999219,
+      "prepare_seconds": 22.30493000000024,
+      "dataset_seconds": 0.2216539000000921,
+      "predict_seconds": 5.46515730000101,
+      "wall_seconds": 30.74086669999997
+    },
+    {
+      "kind": "canary",
+      "fold_id": "annual_2023",
+      "feature_count": 8,
+      "fit_rows": 5788028,
+      "model_sha256": "c728c7e4fb4d95e3542c440bfc5a1f912ae6ca71154d8a8a4bc5e2877a2d081b",
+      "replayed_rows": 483926,
+      "replayed_dates": 242,
+      "all_saved_predictions_exact": true,
+      "old_model_equal": true,
+      "coverage": 0.9999338741873758,
+      "peak_rss_gib": 1.0885238647460938,
+      "fit_seconds": 5.911337000001367,
+      "prepare_seconds": 64.8274977000001,
+      "dataset_seconds": 0.5382993999992323,
+      "predict_seconds": 6.102709400000094,
+      "wall_seconds": 77.87008539999988
+    },
+    {
+      "kind": "wide_canary",
+      "fold_id": "annual_2015",
+      "feature_count": 494,
+      "fit_rows": 2091683,
+      "model_sha256": "434143b8affed11b0e7027f6e2870340bbe018bdcee6861b7e5434b1937d3573",
+      "replayed_rows": 487993,
+      "replayed_dates": 244,
+      "all_saved_predictions_exact": true,
+      "old_model_equal": null,
+      "coverage": 1.0,
+      "peak_rss_gib": 2.6037864685058594,
+      "fit_seconds": 32.462809099999504,
+      "prepare_seconds": 515.6023081999992,
+      "dataset_seconds": 76.52074720000019,
+      "predict_seconds": 123.07241260000046,
+      "wall_seconds": 758.8708876000001
+    },
+    {
+      "kind": "wide_canary",
+      "fold_id": "annual_2023",
+      "feature_count": 494,
+      "fit_rows": 5790153,
+      "model_sha256": "de96c02edf27077c10e3c56dd7e6fb19cf45569f0be40bb1a539f0da53b317fa",
+      "replayed_rows": 483926,
+      "replayed_dates": 242,
+      "all_saved_predictions_exact": true,
+      "old_model_equal": null,
+      "coverage": 1.0,
+      "peak_rss_gib": 4.545803070068359,
+      "fit_seconds": 86.41035440000087,
+      "prepare_seconds": 1401.2237689000012,
+      "dataset_seconds": 153.45673139999963,
+      "predict_seconds": 118.67381490000116,
+      "wall_seconds": 1800.0101902000006
+    }
+  ],
+  "scope": "P0-P2 engineering verification only; no IC, returns, model selection or recent replay",
+  "remaining_scope": "No full 36-fit pool experiment or all-history independent label oracle",
+  "verification_script_sha256": "dc58ef1de535a53face83ae7a2555a0bcc0597432781e10b93c65489553328d9"
+}

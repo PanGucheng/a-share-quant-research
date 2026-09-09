@@ -11,7 +11,13 @@ Research: `run_fast_research_mt_v2.py`, `run_research_lightgbm_full_mt_v2.py`,
 Research Protocol V3-MVP: `run_research_protocol_v3_mvp.py` implements the authorized
 P0-P2 prepare/audit/canary/finalize stages. Audit years may run in four processes;
 engineering model fits stay sequential with eight LightGBM threads. `wide-canary`
-uses a float32 disk memmap for the 494-column first-fold resource check. This runner
+uses monthly float64 files and LightGBM Sequence for the 494-column resource check.
+Old wide-run claims are withdrawn; fresh recomputation is verified in the V3 report.
+`revalidate_research_protocol_v3.py` provides an independent calendar oracle, a
+bounded real-data probe, and post-recomputation receipt/count checks.
+`verify_research_protocol_v3_postrun.py` reloads all four saved models and checks
+every saved prediction against canonical features, writing separate review evidence.
+This runner
 does not expose pool competition or recent diagnostic execution.
 
 ## Pinned Maintenance / Qualification

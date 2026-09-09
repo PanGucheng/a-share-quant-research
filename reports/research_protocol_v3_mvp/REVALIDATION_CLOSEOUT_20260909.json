@@ -1,0 +1,21 @@
+{
+  "run_id": "v3_recompute_audit_20260909_v1",
+  "contract_hash": "a73a2a504c7e13d92273837c22d4bc087ac31190d1dc0d1aed7365f74671858e",
+  "protocol_engineering_review": "passed_after_fresh_recomputation",
+  "wide_resource_review": {
+    "status": "passed",
+    "scope": "494 columns, annual_2015 and annual_2023, fixed float64/100 rounds/8 threads",
+    "budget_gib": 12,
+    "peak_rss_gib": {
+      "annual_2015": 2.6037864685058594,
+      "annual_2023": 4.545803070068359
+    }
+  },
+  "pool_experiment_ready": false,
+  "competition_authorized": false,
+  "recent_replay_authorized": false,
+  "old_wide_qualification_claims": "withdrawn",
+  "original_run_receipts_modified": false,
+  "verification_sha256": "5fea12185d0b926c11137b90fbc4c7fbed16a87ca4633b167fc6b7c5b5e434d5",
+  "checks_sha256": "3d74cafd4bbe494fd16519559d0a3aace4c6132fdb3f307d4ad2430708e04f6c"
+}

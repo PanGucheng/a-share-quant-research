@@ -1,0 +1,1187 @@
+{
+  "scope_commits": [
+    "0c4b041",
+    "948d2f0",
+    "9f201e2"
+  ],
+  "old_results_status": "suspended_pending_fresh_recomputation",
+  "runs": [
+    {
+      "run": "v3_mvp_20260909",
+      "contract_hash": "46e6df75833e6b83a02c64b757811c92e884d1b5b33eae961aaff62ebe4696d7",
+      "chunks": [
+        {
+          "path": "audit/2010",
+          "contract_matches": true,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": [
+            "contract_hash",
+            "file_hashes",
+            "wall_seconds"
+          ]
+        },
+        {
+          "path": "p0",
+          "contract_matches": true,
+          "files": 5,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": [
+            "contract_hash",
+            "wall_seconds"
+          ]
+        }
+      ],
+      "missing_existing_top_level_receipts": []
+    },
+    {
+      "run": "v3_mvp_20260909_v2",
+      "contract_hash": "6a3189ca60450d9cba7a37833c3a732f965de1e053d8dcf567d5beb25cb71682",
+      "chunks": [
+        {
+          "path": "audit/2010",
+          "contract_matches": true,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": []
+        },
+        {
+          "path": "audit/2011",
+          "contract_matches": true,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": []
+        },
+        {
+          "path": "audit/2012",
+          "contract_matches": true,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": []
+        },
+        {
+          "path": "audit/2013",
+          "contract_matches": true,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": []
+        },
+        {
+          "path": "audit/2014",
+          "contract_matches": true,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": []
+        },
+        {
+          "path": "audit/2015",
+          "contract_matches": true,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": []
+        },
+        {
+          "path": "audit/2016",
+          "contract_matches": true,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": []
+        },
+        {
+          "path": "audit/2017",
+          "contract_matches": true,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": []
+        },
+        {
+          "path": "audit/2018",
+          "contract_matches": true,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": []
+        },
+        {
+          "path": "audit/2019",
+          "contract_matches": true,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": []
+        },
+        {
+          "path": "audit/2020",
+          "contract_matches": true,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": []
+        },
+        {
+          "path": "audit/2021",
+          "contract_matches": true,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": []
+        },
+        {
+          "path": "audit/2022",
+          "contract_matches": true,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": []
+        },
+        {
+          "path": "audit/2023",
+          "contract_matches": true,
+          "files": 6,
+          "file_set_matches": true,
+          "bad_hashes": []
+        },
+        {
+          "path": "canary/annual_2015",
+          "contract_matches": true,
+          "files": 4,
+          "file_set_matches": true,
+          "bad_hashes": []
+        },
+        {
+          "path": "canary/annual_2023",
+          "contract_matches": true,
+          "files": 4,
+          "file_set_matches": true,
+          "bad_hashes": []
+        },
+        {
+          "path": "p0",
+          "contract_matches": true,
+          "files": 5,
+          "file_set_matches": true,
+          "bad_hashes": []
+        },
+        {
+          "path": "p1",
+          "contract_matches": true,
+          "files": 3,
+          "file_set_matches": true,
+          "bad_hashes": []
+        }
+      ],
+      "missing_existing_top_level_receipts": []
+    },
+    {
+      "run": "v3_mvp_wide2023_20260909",
+      "contract_hash": "7272a3ef5955de57df19ba5e8ed8bee9ff1a4d3fadecf4488008b4ed0af9dcd4",
+      "chunks": [
+        {
+          "path": "audit/2010",
+          "contract_matches": false,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": []
+        },
+        {
+          "path": "audit/2011",
+          "contract_matches": false,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": []
+        },
+        {
+          "path": "audit/2012",
+          "contract_matches": false,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": []
+        },
+        {
+          "path": "audit/2013",
+          "contract_matches": false,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": []
+        },
+        {
+          "path": "audit/2014",
+          "contract_matches": false,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": []
+        },
+        {
+          "path": "audit/2015",
+          "contract_matches": false,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": []
+        },
+        {
+          "path": "audit/2016",
+          "contract_matches": false,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": []
+        },
+        {
+          "path": "audit/2017",
+          "contract_matches": false,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": []
+        },
+        {
+          "path": "audit/2018",
+          "contract_matches": false,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": []
+        },
+        {
+          "path": "audit/2019",
+          "contract_matches": false,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": []
+        },
+        {
+          "path": "audit/2020",
+          "contract_matches": false,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": []
+        },
+        {
+          "path": "audit/2021",
+          "contract_matches": false,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": []
+        },
+        {
+          "path": "audit/2022",
+          "contract_matches": false,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": []
+        },
+        {
+          "path": "audit/2023",
+          "contract_matches": false,
+          "files": 6,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": []
+        },
+        {
+          "path": "p0",
+          "contract_matches": true,
+          "files": 5,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": [
+            "contract_hash",
+            "wall_seconds"
+          ]
+        },
+        {
+          "path": "p1",
+          "contract_matches": false,
+          "files": 3,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": []
+        }
+      ],
+      "missing_existing_top_level_receipts": []
+    },
+    {
+      "run": "v3_mvp_wide2_20260909",
+      "contract_hash": "de1a876be70c8e753d3cd3d3e7707221cffc7c068937420a956e70a07654f718",
+      "chunks": [
+        {
+          "path": "audit/2010",
+          "contract_matches": false,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": []
+        },
+        {
+          "path": "audit/2011",
+          "contract_matches": false,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": []
+        },
+        {
+          "path": "audit/2012",
+          "contract_matches": false,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": []
+        },
+        {
+          "path": "audit/2013",
+          "contract_matches": false,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": []
+        },
+        {
+          "path": "audit/2014",
+          "contract_matches": false,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": []
+        },
+        {
+          "path": "audit/2015",
+          "contract_matches": false,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": []
+        },
+        {
+          "path": "audit/2016",
+          "contract_matches": false,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": []
+        },
+        {
+          "path": "audit/2017",
+          "contract_matches": false,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": []
+        },
+        {
+          "path": "audit/2018",
+          "contract_matches": false,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": []
+        },
+        {
+          "path": "audit/2019",
+          "contract_matches": false,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": []
+        },
+        {
+          "path": "audit/2020",
+          "contract_matches": false,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": []
+        },
+        {
+          "path": "audit/2021",
+          "contract_matches": false,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": []
+        },
+        {
+          "path": "audit/2022",
+          "contract_matches": false,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": []
+        },
+        {
+          "path": "audit/2023",
+          "contract_matches": false,
+          "files": 6,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": []
+        },
+        {
+          "path": "p0",
+          "contract_matches": true,
+          "files": 5,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": [
+            "contract_hash",
+            "wall_seconds"
+          ]
+        },
+        {
+          "path": "p1",
+          "contract_matches": false,
+          "files": 3,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": []
+        }
+      ],
+      "missing_existing_top_level_receipts": []
+    },
+    {
+      "run": "v3_mvp_wide3_20260909",
+      "contract_hash": "1469d222317072431cf9d00c1b50649754eedeb560b9d17107120bcd08a7e6cb",
+      "chunks": [
+        {
+          "path": "audit/2010",
+          "contract_matches": false,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": []
+        },
+        {
+          "path": "audit/2011",
+          "contract_matches": false,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": []
+        },
+        {
+          "path": "audit/2012",
+          "contract_matches": false,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": []
+        },
+        {
+          "path": "audit/2013",
+          "contract_matches": false,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": []
+        },
+        {
+          "path": "audit/2014",
+          "contract_matches": false,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": []
+        },
+        {
+          "path": "audit/2015",
+          "contract_matches": false,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": []
+        },
+        {
+          "path": "audit/2016",
+          "contract_matches": false,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": []
+        },
+        {
+          "path": "audit/2017",
+          "contract_matches": false,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": []
+        },
+        {
+          "path": "audit/2018",
+          "contract_matches": false,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": []
+        },
+        {
+          "path": "audit/2019",
+          "contract_matches": false,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": []
+        },
+        {
+          "path": "audit/2020",
+          "contract_matches": false,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": []
+        },
+        {
+          "path": "audit/2021",
+          "contract_matches": false,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": []
+        },
+        {
+          "path": "audit/2022",
+          "contract_matches": false,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": []
+        },
+        {
+          "path": "audit/2023",
+          "contract_matches": false,
+          "files": 6,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": []
+        },
+        {
+          "path": "p0",
+          "contract_matches": true,
+          "files": 5,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": [
+            "contract_hash",
+            "wall_seconds"
+          ]
+        },
+        {
+          "path": "p1",
+          "contract_matches": false,
+          "files": 3,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": []
+        }
+      ],
+      "missing_existing_top_level_receipts": []
+    },
+    {
+      "run": "v3_mvp_wide4_20260909",
+      "contract_hash": "1469d222317072431cf9d00c1b50649754eedeb560b9d17107120bcd08a7e6cb",
+      "chunks": [
+        {
+          "path": "audit/2010",
+          "contract_matches": false,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": []
+        },
+        {
+          "path": "audit/2011",
+          "contract_matches": false,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": []
+        },
+        {
+          "path": "audit/2012",
+          "contract_matches": false,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": []
+        },
+        {
+          "path": "audit/2013",
+          "contract_matches": false,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": []
+        },
+        {
+          "path": "audit/2014",
+          "contract_matches": false,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": []
+        },
+        {
+          "path": "audit/2015",
+          "contract_matches": false,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": []
+        },
+        {
+          "path": "audit/2016",
+          "contract_matches": false,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": []
+        },
+        {
+          "path": "audit/2017",
+          "contract_matches": false,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": []
+        },
+        {
+          "path": "audit/2018",
+          "contract_matches": false,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": []
+        },
+        {
+          "path": "audit/2019",
+          "contract_matches": false,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": []
+        },
+        {
+          "path": "audit/2020",
+          "contract_matches": false,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": []
+        },
+        {
+          "path": "audit/2021",
+          "contract_matches": false,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": []
+        },
+        {
+          "path": "audit/2022",
+          "contract_matches": false,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": []
+        },
+        {
+          "path": "audit/2023",
+          "contract_matches": false,
+          "files": 6,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": []
+        },
+        {
+          "path": "p0",
+          "contract_matches": true,
+          "files": 5,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": [
+            "contract_hash",
+            "wall_seconds"
+          ]
+        },
+        {
+          "path": "p1",
+          "contract_matches": false,
+          "files": 3,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": []
+        }
+      ],
+      "missing_existing_top_level_receipts": []
+    },
+    {
+      "run": "v3_mvp_wide5_20260909",
+      "contract_hash": "a224a1af501c3c868b4f58b0a43cdeffb58922b91342ab195ec48b7354573850",
+      "chunks": [
+        {
+          "path": "audit/2010",
+          "contract_matches": false,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": []
+        },
+        {
+          "path": "audit/2011",
+          "contract_matches": false,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": []
+        },
+        {
+          "path": "audit/2012",
+          "contract_matches": false,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": []
+        },
+        {
+          "path": "audit/2013",
+          "contract_matches": false,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": []
+        },
+        {
+          "path": "audit/2014",
+          "contract_matches": false,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": []
+        },
+        {
+          "path": "audit/2015",
+          "contract_matches": false,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": []
+        },
+        {
+          "path": "audit/2016",
+          "contract_matches": false,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": []
+        },
+        {
+          "path": "audit/2017",
+          "contract_matches": false,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": []
+        },
+        {
+          "path": "audit/2018",
+          "contract_matches": false,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": []
+        },
+        {
+          "path": "audit/2019",
+          "contract_matches": false,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": []
+        },
+        {
+          "path": "audit/2020",
+          "contract_matches": false,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": []
+        },
+        {
+          "path": "audit/2021",
+          "contract_matches": false,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": []
+        },
+        {
+          "path": "audit/2022",
+          "contract_matches": false,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": []
+        },
+        {
+          "path": "audit/2023",
+          "contract_matches": false,
+          "files": 6,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": []
+        },
+        {
+          "path": "p0",
+          "contract_matches": true,
+          "files": 5,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": [
+            "contract_hash",
+            "wall_seconds"
+          ]
+        },
+        {
+          "path": "p1",
+          "contract_matches": false,
+          "files": 3,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": []
+        },
+        {
+          "path": "wide_canary/annual_2015",
+          "contract_matches": true,
+          "files": 3,
+          "file_set_matches": true,
+          "bad_hashes": []
+        }
+      ],
+      "missing_existing_top_level_receipts": []
+    },
+    {
+      "run": "v3_mvp_wide_20260909",
+      "contract_hash": "7545c1cd3a7f52201488036b474421f4193265228cab319a2d9fe0e1c130ca36",
+      "chunks": [
+        {
+          "path": "audit/2010",
+          "contract_matches": true,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": [
+            "contract_hash"
+          ]
+        },
+        {
+          "path": "audit/2011",
+          "contract_matches": true,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": [
+            "contract_hash"
+          ]
+        },
+        {
+          "path": "audit/2012",
+          "contract_matches": true,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": [
+            "contract_hash"
+          ]
+        },
+        {
+          "path": "audit/2013",
+          "contract_matches": true,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": [
+            "contract_hash"
+          ]
+        },
+        {
+          "path": "audit/2014",
+          "contract_matches": true,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": [
+            "contract_hash"
+          ]
+        },
+        {
+          "path": "audit/2015",
+          "contract_matches": true,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": [
+            "contract_hash"
+          ]
+        },
+        {
+          "path": "audit/2016",
+          "contract_matches": true,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": [
+            "contract_hash"
+          ]
+        },
+        {
+          "path": "audit/2017",
+          "contract_matches": true,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": [
+            "contract_hash"
+          ]
+        },
+        {
+          "path": "audit/2018",
+          "contract_matches": true,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": [
+            "contract_hash"
+          ]
+        },
+        {
+          "path": "audit/2019",
+          "contract_matches": true,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": [
+            "contract_hash"
+          ]
+        },
+        {
+          "path": "audit/2020",
+          "contract_matches": true,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": [
+            "contract_hash"
+          ]
+        },
+        {
+          "path": "audit/2021",
+          "contract_matches": true,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": [
+            "contract_hash"
+          ]
+        },
+        {
+          "path": "audit/2022",
+          "contract_matches": true,
+          "files": 8,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": [
+            "contract_hash"
+          ]
+        },
+        {
+          "path": "audit/2023",
+          "contract_matches": true,
+          "files": 6,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": [
+            "contract_hash"
+          ]
+        }
+      ],
+      "missing_existing_top_level_receipts": [
+        "p0",
+        "p1"
+      ]
+    },
+    {
+      "run": "v3_recompute_audit_20260909_v1",
+      "contract_hash": "a73a2a504c7e13d92273837c22d4bc087ac31190d1dc0d1aed7365f74671858e",
+      "chunks": [
+        {
+          "path": "p0",
+          "contract_matches": true,
+          "files": 5,
+          "file_set_matches": true,
+          "bad_hashes": [],
+          "parent_receipt_changed_fields": [
+            "contract_hash",
+            "wall_seconds"
+          ]
+        },
+        {
+          "path": "revalidation_probe",
+          "contract_matches": true,
+          "files": 6,
+          "file_set_matches": true,
+          "bad_hashes": []
+        },
+        {
+          "path": "revalidation_probe_summary",
+          "contract_matches": true,
+          "files": 1,
+          "file_set_matches": true,
+          "bad_hashes": []
+        }
+      ],
+      "missing_existing_top_level_receipts": []
+    }
+  ],
+  "fresh_probe": {
+    "dense_sequence_model_exact": true,
+    "end": "2020-01-15 00:00:00",
+    "excluded_probe_only": [],
+    "fit_rows": 19955,
+    "fitted_columns": 494,
+    "full_width_resource_qualified": false,
+    "label_oracle_exact": true,
+    "model_sha256": "632dfe30411e8fa84c548b8e9cae299595a8ee562e383d05432a3635fba31a18",
+    "receipt": {
+      "fit_keys_hash": "07e62f74fc8ac9ff6cb705077753c3b34023c01bceafee29b05aa20857239c19",
+      "fit_rows": 19955,
+      "input_rows": 20000,
+      "min_daily_fit_pairs": 1993
+    },
+    "requested_columns": 494,
+    "start": "2020-01-02 00:00:00"
+  },
+  "fresh_calendar_oracle": {
+    "calendar": [
+      {
+        "last_train": "2014-12-02",
+        "prediction_dates": 244,
+        "scored_dates": 244,
+        "train_dates": 1172,
+        "year": 2015
+      },
+      {
+        "last_train": "2015-12-02",
+        "prediction_dates": 244,
+        "scored_dates": 244,
+        "train_dates": 1416,
+        "year": 2016
+      },
+      {
+        "last_train": "2016-12-01",
+        "prediction_dates": 244,
+        "scored_dates": 244,
+        "train_dates": 1660,
+        "year": 2017
+      },
+      {
+        "last_train": "2017-11-30",
+        "prediction_dates": 243,
+        "scored_dates": 243,
+        "train_dates": 1904,
+        "year": 2018
+      },
+      {
+        "last_train": "2018-11-29",
+        "prediction_dates": 244,
+        "scored_dates": 244,
+        "train_dates": 2147,
+        "year": 2019
+      },
+      {
+        "last_train": "2019-12-02",
+        "prediction_dates": 243,
+        "scored_dates": 243,
+        "train_dates": 2391,
+        "year": 2020
+      },
+      {
+        "last_train": "2020-12-02",
+        "prediction_dates": 243,
+        "scored_dates": 243,
+        "train_dates": 2634,
+        "year": 2021
+      },
+      {
+        "last_train": "2021-12-02",
+        "prediction_dates": 242,
+        "scored_dates": 242,
+        "train_dates": 2877,
+        "year": 2022
+      },
+      {
+        "last_train": "2022-12-01",
+        "prediction_dates": 242,
+        "scored_dates": 221,
+        "train_dates": 3119,
+        "year": 2023
+      }
+    ],
+    "status": "bounded_probe_complete_full_recomputation_pending"
+  },
+  "fresh_runtime": {
+    "packages": {
+      "lightgbm": "4.6.0",
+      "numpy": "2.2.6",
+      "pandas": "2.3.3",
+      "psutil": "7.2.2",
+      "pyarrow": "23.0.1",
+      "pyqlib": "0.1.dev6",
+      "scipy": "1.15.3"
+    },
+    "python": "3.10.19 | packaged by Anaconda, Inc. | (main, Oct 21 2025, 16:41:31) [MSC v.1929 64 bit (AMD64)]",
+    "qlib_commit": "d5379c520f66a39953bad76234a7019a72796fd0",
+    "qlib_other_worktree_status": " M examples/benchmarks/LightGBM/workflow_config_lightgbm_Alpha158_csi500.yaml\n",
+    "qlib_runtime_clean": true,
+    "threads": {
+      "MKL_NUM_THREADS": "1",
+      "NUMEXPR_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1"
+    }
+  },
+  "checks": {
+    "targeted": {
+      "log": "tmp/v3_revalidation_targeted.log",
+      "sha256": "d0d409ac3b18489a60594fa141c033363c4fe522c697ff54eb6cc01369979b04"
+    },
+    "fast": {
+      "log": "tmp/v3_revalidation_fast.log",
+      "sha256": "583f877c2f639efe06359c2019c4d1c092dbd96f8871e8942f320b3b59004613"
+    },
+    "full": {
+      "log": "tmp/v3_revalidation_full.log",
+      "sha256": "e4ccb4d21e2e440f0a8022d9efa2f083f1e080d8b944822273c51e33bdc6eb1f"
+    },
+    "qlib": {
+      "log": "tmp/v3_revalidation_qlib.log",
+      "sha256": "f75e0c1ef921020e4fd03928b972e15913f6704289000429c5758a4346ad73c5"
+    }
+  },
+  "check_counts": {
+    "targeted": 21,
+    "fast": 46,
+    "full_pytest": 585,
+    "qlib": 6,
+    "full_validators": 26
+  },
+  "recomputed_full_p1": false,
+  "recomputed_full_canaries": false,
+  "recomputed_full_wide_folds": false
+}

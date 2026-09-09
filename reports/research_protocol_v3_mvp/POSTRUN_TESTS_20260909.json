@@ -1,0 +1,26 @@
+{
+  "checks": {
+    "fast": {
+      "pytest_passed": 46,
+      "log": "tmp\\v3_postrun_fast.log",
+      "sha256": "2ed5055eb00e4618dcfbc195b28bfe5db975ca00478e6a5a46a5613ed285b63c"
+    },
+    "full": {
+      "pytest_passed": 585,
+      "log": "tmp\\v3_postrun_full.log",
+      "sha256": "6fd14f45043f50dc619df4c8f7bdb4d95cf3d106c13a7e935f0eda80f846f538"
+    },
+    "qlib": {
+      "pytest_passed": 6,
+      "log": "tmp\\v3_postrun_qlib.log",
+      "sha256": "1611b48915a1cdddacd83a47e347160df6831f98c24b2afbabe4e53fad79eac7"
+    },
+    "validators": {
+      "completed": 26,
+      "exit_code": 0,
+      "log": "tmp\\v3_postrun_validators.log",
+      "sha256": "7ac2f07d2aafa90fc05462106d9c73a0a64ea0d99b34a0e78072bfdb04d1b6f1"
+    }
+  },
+  "note": "Full pytest completed before interruption; all 26 validators were restarted separately and exited successfully. Prediction replay is recorded separately."
+}

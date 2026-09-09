@@ -1,28 +1,39 @@
-# Research Protocol V3-MVP P0–P2 验收报告
+# Research Protocol V3-MVP 重算与运行后验证报告
 
-状态：`P0–P2 COMPLETE / STOP FOR HUMAN REVIEW`。运行：`v3_mvp_20260909_v2`；contract hash：`6a3189ca60450d9cba7a37833c3a732f965de1e053d8dcf567d5beb25cb71682`。
+状态：`P0–P2 RECOMPUTED / ENGINEERING VERIFIED / STOP FOR HUMAN REVIEW`。
+运行：`v3_recompute_audit_20260909_v1`；合同SHA-256：`a73a2a504c7e13d92273837c22d4bc087ac31190d1dc0d1aed7365f74671858e`。
 
-## 结果
+本报告替代旧验收结论。旧宽表合同错配及资格声明仍撤回，详见[逐提交审阅](AUDIT_20260909.md)。
+本次证据来自用户在独立目录完成的重算，以及随后重新加载模型、读取canonical特征完成的运行后验证。
 
-- P0 物化2015–2023九个年度fold；预测日2,189，开发期成熟评价日2,168；每折exact purge 21个边界训练signal，额外embargo为0。
-- P1 完成2010–2023共14个年份、765项research-usable因子的分批feature-only审计；训练有限标签合计按折分别为2,091,683至5,790,153，所有fold每日最低有限标签对数930以上，未出现少于100对的训练或评价日。
-- P1身份诊断：physical 765、broad working set 494、strict 3-of-3 332。Baseline与Human/Economic池仍未冻结，不能启动四池比较。
-- P2固定LightGBM 4.6.0、100轮、8线程、原生NaN；2015和2023工程canary均完成annual fit、整年/按月预测parity和模型receipt。2015 peak RSS约622MiB、fit约2.1s；2023 peak RSS约1,111MiB、fit约5.3s。
+## 核验结果
 
-## 阻塞与边界
+- 严格验证23个完成单元、358个文件，合同、回执、文件集合和内容哈希匹配；运行代码与已绑定合同一致。
+- 复核480个相关canonical分区、6106个价格文件、日历、canonical元数据、冻结上游证据和运行环境。文件哈希核验不等于读取近期值做研究。
+- 实际日历独立oracle重现9折、2189个预测日、2168个成熟评分日；从新生成的逐行标签/键重新核对27项样本汇总。
+- P0/P1及年度审计共90张新旧数据表精确一致（不比较访问日志与耗时）；两项8列canary的模型哈希及预测也与旧结果一致。旧结果仅作诊断对照，未作为新运行缓存。
+- 重新加载四个保存模型，不调用runner的predict封装，从canonical特征独立重算全部1,943,838条预测，逐键、逐值及缺失原因全部精确一致；未读取预测标签。
+- P1各折最低可估计列数为physical 765、Broad 494、Strict 332；仍是最小可估计性，不是经济质量或历史事前可知性认证。
 
-2015八列工程canary预测覆盖94.8786%，低于计划95%年度coverage提示线；2023为99.9934%。这是所选诊断列在早期数据的覆盖结果，不能推断完整池，也不能通过删除该年绕过。`full_width_resource_qualified=false`：494列最大折原始float64矩阵约22.5GiB，当前约28GiB物理内存不足以把完整矩阵并行复制；未取得完整池资源资格。
+## 实测资源
 
-因此最终状态为：`protocol_ready=true`、`pool_experiment_ready=false`。本轮没有读取2024+值、计算IC/收益/importance、选择winner、运行P3或近期诊断。P2 canary是工程验收，不是模型表现证据。
+| 模型 | 折 | 有效训练行 | 采样峰值RSS GiB | fit秒 | 单元总耗时秒 | 预测覆盖 |
+|---|---|---:|---:|---:|---:|---:|
+| 8列 | 2015 | 2,090,742 | 0.61 | 2.4 | 30.7 | 94.8786% |
+| 8列 | 2023 | 5,788,028 | 1.09 | 5.9 | 77.9 | 99.9934% |
+| 494列 | 2015 | 2,091,683 | 2.60 | 32.5 | 758.9 | 100.0000% |
+| 494列 | 2023 | 5,790,153 | 4.55 | 86.4 | 1800.0 | 100.0000% |
 
-在用户清理内存后重试，494列首折wide canary已通过：float32磁盘memmap、按年读取、单次LightGBM构建，2,091,683行、100轮、fit约29.5秒，实测peak RSS约21.6GiB。该结果说明工程优化可行，但峰值仍接近本机物理内存上限；最大折（2023）尚未测量，因此`full_width_resource_qualified`仅对首折工程canary成立，不能外推全量36次fit。
+四项模型均为固定100轮、8线程。宽表采用float64按月文件和Sequence，保留494身份和完整训练历史，未调参、截断大数或静默改缺失。
+首折与最大折均低于事前12GiB RSS审阅预算，且模型保存/重载和全年预测通过。该结论只覆盖本配置下这两项工程任务，不能外推四池36次fit、其他机器或无限内存上界。
+8列2015覆盖94.8786%仍低于95%提示线；它是诊断列缺失的结果，不代表宽表覆盖不足，也不据此改变年份或特征。
 
-## 证据入口
+## 检查、记录与边界
 
-- 机器状态：[status.json](../../outputs/research_protocol_v3_mvp/v3_mvp_20260909_v2/status.json)
-- P0折表：[folds.csv](../../outputs/research_protocol_v3_mvp/v3_mvp_20260909_v2/p0/folds.csv)
-- P1样本计数：[sample_counts.csv](../../outputs/research_protocol_v3_mvp/v3_mvp_20260909_v2/p1/sample_counts.csv)
-- P1资格汇总：[feature_eligibility.csv](../../outputs/research_protocol_v3_mvp/v3_mvp_20260909_v2/p1/feature_eligibility.csv)
-- P2资源：[annual_2015/resource.json](../../outputs/research_protocol_v3_mvp/v3_mvp_20260909_v2/canary/annual_2015/resource.json)、[annual_2023/resource.json](../../outputs/research_protocol_v3_mvp/v3_mvp_20260909_v2/canary/annual_2023/resource.json)
-
-全部运行输出为本机runtime，未提交大型parquet、模型或逐样本label到Git；上游Canonical、Primary、Consolidation和Forward证据未修改。
+- 本轮fast 46、full pytest 585（8个warnings）、Qlib 6（4个warnings）通过；26个validators全部通过。完整pytest后因会话中断，26个validators单独重新执行并成功退出。
+- [运行后完整验证记录](POSTRUN_VERIFICATION_20260909.json)保存每个回执SHA、对照表范围、模型SHA、预测复核及资源；[检查日志索引](POSTRUN_TESTS_20260909.json)保存日志SHA。
+- [初审机器快照](REVALIDATION_EVIDENCE_20260909.json)记录重算前状态，不是当前完成状态。
+- 原运行的status/resource/receipt全部保留，不把其中pending-review或false字段直接改成成功。当前审阅结论见本报告及[审阅结论记录](REVALIDATION_CLOSEOUT_20260909.json)。
+- 当前结论：P0–P2工程重算验证完成；首折及最大折494列资源验证通过；pool experiment未就绪、未授权。Baseline/Human池仍未冻结。
+- 标签端点独立双实现oracle仍仅覆盖此前10日真实probe；不能宣称全历史标签已由两个独立引擎重建。
+- 无IC、收益、importance、模型选择、近期评价或Strategy V2；不产生策略胜出结论。原Canonical、Primary、Consolidation与Forward证据未改写。

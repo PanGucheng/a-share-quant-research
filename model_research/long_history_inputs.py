@@ -39,8 +39,10 @@ def read_features(partitions, factors, dates, *, access, protocol=None, fold_id=
                            fold_id=fold_id, columns=cols, start=str(selected.min()),
                            end=str(selected.max()), rows=len(frame), slice_hash=frame_hash(frame),
                            parent_sha256=row['output_sha256'], path=row['partition_path']))
+        indexed = frame.set_index(KEYS)
         for col in cols:
-            pieces[col].append(frame.set_index(KEYS)[col])
+            # Detach just this column; never retain a full partition copy per Series.
+            pieces[col].append(indexed[col].copy())
     axis, output = None, {}
     for name in names:
         if not pieces[name]:
@@ -62,7 +64,8 @@ def read_features(partitions, factors, dates, *, access, protocol=None, fold_id=
 def read_keys(partitions, dates, *, access):
     """Use one factor's physical partitions, project only keys."""
     dates = pd.DatetimeIndex(dates)
-    if dates.empty or dates.min() < START or dates.max() > END:
+    if (dates.empty or dates.hasnans or dates.has_duplicates or not dates.is_monotonic_increasing
+            or dates.min() < START or dates.max() > END):
         raise ValueError('keys outside development')
     selected = partitions[partitions.factors.str.split(',').apply(lambda v: 'alpha158_BETA10' in v)]
     pieces = []

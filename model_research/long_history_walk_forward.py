@@ -3,6 +3,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 import hashlib
+from pathlib import Path
 import time
 
 import lightgbm as lgb
@@ -55,19 +56,81 @@ class FrozenAnnualModel:
 
 
 def fit_arrays(matrix, target, weights, factors, *, fold_id, config):
+    if matrix.dtype != np.float64:
+        raise ValueError('V3 requires float64 feature input; lossy casts are not qualified')
+    return _fit_data(matrix, [matrix], target, weights, factors, fold_id=fold_id, config=config)
+
+
+class Float64FileSequence(lgb.Sequence):
+    """Read bounded rows from a closed, immutable raw float64 block without mmap."""
+
+    batch_size = 4096
+
+    def __init__(self, path, columns):
+        self.path, self.columns = Path(path), columns
+        size = self.path.stat().st_size
+        if columns <= 0 or size == 0 or size % (8 * columns):
+            raise ValueError('invalid float64 block dimensions')
+        self.rows = size // (8 * columns)
+        self.handle = self.path.open('rb')
+
+    def __len__(self):
+        return self.rows
+
+    def __getitem__(self, index):
+        scalar = isinstance(index, (int, np.integer))
+        if scalar:
+            start, stop = int(index), int(index) + 1
+        elif isinstance(index, slice) and index.step in (None, 1):
+            start, stop, _ = index.indices(self.rows)
+        else:
+            raise TypeError('only integer or contiguous slice supported')
+        if not 0 <= start < stop <= self.rows:
+            raise IndexError('float64 block row outside bounds')
+        self.handle.seek(start * self.columns * 8)
+        result = np.fromfile(self.handle, dtype=np.float64, count=(stop - start) * self.columns)
+        if result.size != (stop - start) * self.columns:
+            raise ValueError('truncated float64 block')
+        result = result.reshape(stop - start, self.columns)
+        return result[0] if scalar else result
+
+    def close(self):
+        self.handle.close()
+
+
+def fit_sequences(sequences, target, weights, factors, *, fold_id, config):
+    if not sequences or sum(map(len, sequences)) != len(target):
+        raise ValueError('invalid sequence row count')
+    return _fit_data(sequences, sequences, target, weights, factors, fold_id=fold_id, config=config)
+
+
+def _fit_data(data, blocks, target, weights, factors, *, fold_id, config):
     if config['early_stopping'] is not False or config['competition_authorized'] is not False:
         raise ValueError('P2 fixed-model contract required')
     if lgb.__version__ != config['lightgbm_version']:
         raise ValueError('LightGBM version differs from frozen configuration')
-    if len(factors) == 0 or len(set(factors)) != len(factors) or matrix.shape != (len(target), len(factors)):
+    if (len(factors) == 0 or len(set(factors)) != len(factors)
+            or len(weights) != len(target) or target.ndim != 1 or weights.ndim != 1):
         raise ValueError('invalid training matrix/feature identity')
     if len(target) == 0 or not np.isfinite(target).all() or not np.isfinite(weights).all() or (weights <= 0).any():
         raise ValueError('invalid target/weights')
-    if np.isinf(matrix).any() or np.isnan(matrix).all(axis=0).any() or np.isnan(matrix).all(axis=1).any():
-        raise ValueError('invalid all-empty training rows/columns or infinity')
+    finite_columns = np.zeros(len(factors), dtype=bool)
+    rows = 0
+    for block in blocks:
+        for start in range(0, len(block), 4096):
+            batch = block[start:min(start + 4096, len(block))]
+            if batch.ndim != 2 or batch.shape[1] != len(factors) or batch.dtype != np.float64:
+                raise ValueError('invalid float64 feature shape')
+            finite = np.isfinite(batch)
+            if np.isinf(batch).any() or not finite.any(axis=1).all():
+                raise ValueError('invalid all-empty training rows/columns or infinity')
+            finite_columns |= finite.any(axis=0)
+            rows += len(batch)
+    if rows != len(target) or not finite_columns.all():
+        raise ValueError('invalid row count or empty training columns')
     tick = time.perf_counter()
-    dataset = lgb.Dataset(matrix, label=target, weight=weights, feature_name=list(factors),
-                          params=config['model_params'], free_raw_data=False)
+    dataset = lgb.Dataset(data, label=target, weight=weights, feature_name=list(factors),
+                          params=config['model_params'], free_raw_data=True)
     dataset.construct()
     construct_seconds = time.perf_counter() - tick
     tick = time.perf_counter()
