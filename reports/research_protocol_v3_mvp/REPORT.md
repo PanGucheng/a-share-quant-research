@@ -15,7 +15,7 @@
 
 因此最终状态为：`protocol_ready=true`、`pool_experiment_ready=false`。本轮没有读取2024+值、计算IC/收益/importance、选择winner、运行P3或近期诊断。P2 canary是工程验收，不是模型表现证据。
 
-已尝试的494列优化（float32磁盘memmap、按年读取、单次构建）在首折2010年首批读取阶段因系统内存分配失败中止，未产生模型或性能结论。该失败仅说明当前机器峰值不足，不改变P0–P2正式验收结果。
+在用户清理内存后重试，494列首折wide canary已通过：float32磁盘memmap、按年读取、单次LightGBM构建，2,091,683行、100轮、fit约29.5秒，实测peak RSS约21.6GiB。该结果说明工程优化可行，但峰值仍接近本机物理内存上限；最大折（2023）尚未测量，因此`full_width_resource_qualified`仅对首折工程canary成立，不能外推全量36次fit。
 
 ## 证据入口
 

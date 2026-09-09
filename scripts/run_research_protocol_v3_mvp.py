@@ -318,10 +318,11 @@ def wide_canary(stage, fold_id, out, config, partitions, protocol):
         model = fit_arrays(matrix[:position], target[:position], weights[:position], factors,
                            fold_id=fold_id, config=config)
     del matrix, target, weights; gc.collect()
-    atomic_write_json(stage / 'resource.json', dict(**model.receipt,
-        storage='float32_disk_memmap', feature_count=len(factors), fit_rows=position,
+    resource = dict(model.receipt)
+    resource.update(storage='float32_disk_memmap', feature_count=len(factors), fit_rows=position,
         peak_rss_mib=sampler.peak_mb, prepare_seconds=time.perf_counter()-tick,
-        full_width_resource_qualified=True, engineering_only=True, batch_receipts=receipts))
+        full_width_resource_qualified=True, engineering_only=True, batch_receipts=receipts)
+    atomic_write_json(stage / 'resource.json', resource)
     atomic_write_json(stage / 'access.json', {'access': access})
 
 

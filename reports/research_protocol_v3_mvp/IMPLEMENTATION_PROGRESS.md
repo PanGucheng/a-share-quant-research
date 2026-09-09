@@ -38,6 +38,6 @@ P2两项固定8列工程canary均通过100轮、annual fit、整年/按月预测
 
 随后新增了`wide-canary`路径：按年读取、float32磁盘memmap、单次LightGBM构建，目标是减少完整494列的内存峰值。首折实际运行在2010年首批读取阶段因系统内存分配失败中止（当时可用内存约7.5GiB；错误仅需再分配约2.7MiB），没有产生可用模型或性能结论。失败运行目录`v3_mvp_wide3_20260909`仅为工程诊断，不改变正式`v3_mvp_20260909_v2`状态。
 
-结论：float32/memmap能降低最终矩阵占用，但不能消除Parquet到DataFrame、键索引和LightGBM Dataset构造的瞬时峰值；在当前机器上不能宣称494列资源可行。下一次优化应改为更小列批次的直接写入/Arrow或外部排序，并先做单年内存canary；不得通过缩短历史、删除列或并发多个8线程fit解决。
+用户清理内存后，用独立`v3_mvp_wide5_20260909`重试成功：494列首折2,091,683行、float32 memmap、100轮fit约29.5秒、peak RSS约21.6GiB，未发生失败。结论：float32/memmap确实降低了最终矩阵占用，但首折峰值仍接近本机物理内存上限；最大折2023尚未测量，故不能外推全量36次fit。下一步若继续，应先测最大折并控制单fit顺序，不得通过缩短历史、删除列或并发多个8线程fit解决。
 
 完整检查：V3 targeted 13、fast 46、full 575、Qlib 6全部通过（保留既有warnings）。最终运行状态为`p0_p2_complete_stop_for_review`，`protocol_ready=true`、`pool_experiment_ready=false`、`full_width_resource_qualified=false`；未读取近期值，未计算IC/收益/importance，未启动竞争。
