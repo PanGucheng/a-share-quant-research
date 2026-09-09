@@ -15,6 +15,8 @@
 
 因此最终状态为：`protocol_ready=true`、`pool_experiment_ready=false`。本轮没有读取2024+值、计算IC/收益/importance、选择winner、运行P3或近期诊断。P2 canary是工程验收，不是模型表现证据。
 
+已尝试的494列优化（float32磁盘memmap、按年读取、单次构建）在首折2010年首批读取阶段因系统内存分配失败中止，未产生模型或性能结论。该失败仅说明当前机器峰值不足，不改变P0–P2正式验收结果。
+
 ## 证据入口
 
 - 机器状态：[status.json](../../outputs/research_protocol_v3_mvp/v3_mvp_20260909_v2/status.json)

@@ -48,7 +48,7 @@ def write_csv(path, frame):
 
 
 def publish(folder, contract_hash, writer):
-    if completed_chunk(folder, contract_hash):
+    if folder.exists() and (folder / 'receipt.json').exists() and completed_chunk(folder, contract_hash):
         return
     folder.parent.mkdir(parents=True, exist_ok=True)
     stage = folder.parent / ('.' + folder.name + '_' + uuid.uuid4().hex)
@@ -290,6 +290,41 @@ def canary(stage, fold_id, out, config, partitions, protocol):
     atomic_write_json(stage / 'access.json', {'access': access})
 
 
+def wide_canary(stage, fold_id, out, config, partitions, protocol):
+    """494-column bounded canary using float32 disk-backed storage."""
+    factors = sorted(pd.read_csv(ROOT / 'reports/candidate_consolidation_v0_5/working_set.csv').factor)
+    days = training_dates(protocol, fold_id)
+    rows_capacity = int(pd.read_csv(out / 'p1/sample_counts.csv').query(
+        "fold_id == @fold_id and role == 'train'")['keys'].iloc[0])
+    mmap_path = stage / 'features.float32.memmap'
+    matrix = np.memmap(mmap_path, mode='w+', dtype='float32', shape=(rows_capacity, len(factors)))
+    target = np.empty(rows_capacity, dtype='float32'); weights = np.empty(rows_capacity, dtype='float32')
+    access, receipts, position = [], [], 0
+    tick = time.perf_counter()
+    with _MemorySampler() as sampler:
+        for year in sorted(set(days.year)):
+            selected = days[days.year == year]
+            features = read_features(partitions, factors, selected, access=access, protocol=protocol,
+                                     fold_id=fold_id, role='train')
+            labels = cached_training_labels(out, protocol, fold_id, selected)
+            x, y, w, receipt = prepare_training_batch(features, labels, factors,
+                                                      protocol=protocol, fold_id=fold_id)
+            end = position + len(y)
+            matrix[position:end] = x.astype('float32', copy=False)
+            target[position:end] = y; weights[position:end] = w
+            position = end; receipts.append(dict(year=int(year), **receipt))
+            del features, labels, x, y, w; gc.collect()
+        matrix.flush()
+        model = fit_arrays(matrix[:position], target[:position], weights[:position], factors,
+                           fold_id=fold_id, config=config)
+    del matrix, target, weights; gc.collect()
+    atomic_write_json(stage / 'resource.json', dict(**model.receipt,
+        storage='float32_disk_memmap', feature_count=len(factors), fit_rows=position,
+        peak_rss_mib=sampler.peak_mb, prepare_seconds=time.perf_counter()-tick,
+        full_width_resource_qualified=True, engineering_only=True, batch_receipts=receipts))
+    atomic_write_json(stage / 'access.json', {'access': access})
+
+
 def finalize(out, config, contract_hash):
     for path in [out / 'p0', out / 'p1', *[out / 'audit' / str(y) for y in range(2010, 2024)],
                  *[out / 'canary' / f for f in config['canary_folds']]]:
@@ -308,7 +343,7 @@ def finalize(out, config, contract_hash):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--run-id', default='v3_mvp_20260909')
-    parser.add_argument('--stage', choices=['prepare', 'audit', 'canary', 'finalize', 'all'], default='prepare')
+    parser.add_argument('--stage', choices=['prepare', 'audit', 'canary', 'wide-canary', 'finalize', 'all'], default='prepare')
     parser.add_argument('--workers', type=int, choices=range(1, 5), default=4,
                         help='Independent audit years only; model fits stay sequential with 8 threads')
     args = parser.parse_args()
@@ -354,6 +389,12 @@ def main():
                 atomic_write_json(out / 'status.json', dict(status='resource_canary', fold_id=fold_id, contract_hash=contract_hash))
                 publish(out / 'canary' / fold_id, contract_hash,
                         lambda stage, f=fold_id: canary(stage, f, out, config, partitions, protocol))
+        if args.stage == 'wide-canary':
+            if not (out / 'p1/feature_eligibility.csv').exists():
+                raise ValueError('P1 feature eligibility is required before wide canary')
+            fold_id = 'annual_2015'
+            publish(out / 'wide_canary' / fold_id, contract_hash,
+                    lambda stage: wide_canary(stage, fold_id, out, config, partitions, protocol))
         if args.stage in ['finalize', 'all']:
             finalize(out, config, contract_hash)
 
