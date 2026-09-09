@@ -47,6 +47,9 @@ evidence 判断；历史报告与 archive 只说明当时发生了什么。
 
 ## Current Development Plans
 
+- [RESEARCH_PROTOCOL_V3_MVP_PLAN.md](RESEARCH_PROTOCOL_V3_MVP_PLAN.md)
+  — **PLAN DELIVERED / IMPLEMENTATION NOT STARTED**；九个年度精确fold、canonical键数审计、单模型冻结、split-local资格及近期隔离；尚未启动模型训练。
+
 - [CANDIDATE_CONSOLIDATION_REDUNDANCY_V0_5_PLAN.md](CANDIDATE_CONSOLIDATION_REDUNDANCY_V0_5_PLAN.md)
   — **PROPOSAL DELIVERED / STOP FOR HUMAN REVIEW**；765语义审阅、494工作集、feature-only冗余与代表提案计划，计算结果与缺项见实施进度。
 - [Candidate Consolidation V0.5 实施进度](../reports/candidate_consolidation_v0_5/IMPLEMENTATION_PROGRESS.md)
