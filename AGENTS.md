@@ -79,6 +79,13 @@ and `9f201e2` and fresh recomputation of their results. Fresh P0-P2 results and 
 qualification claims remain withdrawn. P3 is still not authorized. Preserve all original run
 directories and receipts; never repair a contract mismatch by rewriting a receipt.
 
+The user subsequently authorized Broad494 then Strict332 model/prediction precompute
+for all nine annual folds 2015–2023, using the f2f3fc3 float64 Sequence authority,
+followed by independent saved-model prediction replay. This is a bounded exception
+for fixed-model precomputation, not outcome evaluation or pool competition. No
+2024+ value access is permitted. Long execution is user-run only; see
+`docs/V3_PREDICTION_PRECOMPUTE_RUNBOOK.md` for commands and verification limits.
+
 The user authorized the narrowed implementation in
 `docs/LONG_HISTORY_MULTI_EVALUATOR_SCREENING_MVP_PLAN.md` on 2026-09-07.
 Primary 20D V0 was delivered on 2026-09-08; see

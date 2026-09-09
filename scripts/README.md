@@ -32,3 +32,9 @@ Their names do not imply a current backlog.
 `repository_consolidation_audit_v1.py` produces the repository inventory and
 reference graph. No script is automatically deleted by this audit; dead-code
 candidates require a separate, evidence-backed review.
+
+## V3 nine-fold model/prediction precompute
+
+`precompute_research_protocol_v3.ps1` runs Broad494 precompute/replay then Strict332
+precompute/replay, 2015–2023 only. User-run long jobs; no outcome evaluation or pool
+comparison. See [runbook](../docs/V3_PREDICTION_PRECOMPUTE_RUNBOOK.md).
