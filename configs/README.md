@@ -6,6 +6,7 @@ configuration based on its version suffix.
 
 ## Active Entry Profiles
 
+- `research_protocol_v3_mvp.yaml` (authorized P0-P2; no pool competition/recent replay)
 - `project.yaml`, `project.local.example.yaml`
 - `fast_research_mt_v2.yaml` (screening execution)
 - `full_research_accelerated_v3.yaml` (performance/development execution)

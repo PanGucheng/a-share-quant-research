@@ -1,0 +1,60 @@
+schema_version: 1
+stage: research_protocol_v3_mvp
+canonical_dataset_id: canonical-dataset:27518ddbb28ba2b4b1247375d4e3d32d7d5be9935a5f2074dc272f84285f6423
+canonical_root: outputs/canonical_historical_dataset_assembly_v1/current
+calendar_sha256: fd7cf1436bbc2d497171aaae139c2deedaf649c2d6b20b66c8e1a544de305b60
+development_end: '2023-12-29'
+label: label_20d_t1
+entry_lag: 1
+holding_days: 20
+extra_embargo: 0
+history: expanding
+sliding_sensitivity_enabled: false
+early_stopping: false
+model_id: v3_mvp_lgbm_structure01_100
+lightgbm_version: '4.6.0'
+num_boost_round: 100
+minimum_daily_pairs: 100
+minimum_annual_prediction_coverage: 0.95
+model_params:
+  objective: regression
+  metric: l2
+  boosting_type: gbdt
+  device_type: cpu
+  num_leaves: 15
+  max_depth: 4
+  min_data_in_leaf: 100
+  learning_rate: 0.03
+  lambda_l1: 0.0
+  lambda_l2: 1.0
+  feature_fraction: 0.8
+  bagging_fraction: 1.0
+  bagging_freq: 0
+  deterministic: true
+  force_col_wise: true
+  seed: 20260725
+  feature_fraction_seed: 20260725
+  bagging_seed: 20260725
+  data_random_seed: 20260725
+  num_threads: 8
+  feature_pre_filter: false
+  use_missing: true
+  zero_as_missing: false
+  max_bin: 255
+  min_data_in_bin: 3
+  bin_construct_sample_cnt: 200000
+  verbosity: -1
+# Engineering fixtures, not a proposed economic/competition pool. Frozen before fit.
+canary_folds: [annual_2015, annual_2023]
+canary_features:
+  - alpha158_BETA10
+  - alpha158_ROC5
+  - alpha158_STD20
+  - amount_mean_20
+  - mature_log_total_market_cap
+  - mature_realized_volatility_60
+  - mature_turnover_mean_20
+  - ta_volatility_atr
+canary_memory_budget_gib: 5
+competition_authorized: false
+recent_diagnostic_authorized: false

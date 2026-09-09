@@ -66,6 +66,13 @@ Structured ML                        NOT AUTHORIZED
 Strategy V2                          NOT AUTHORIZED
 ```
 
+On 2026-09-09 the user separately authorized Research Protocol V3-MVP P0-P2 in
+`docs/RESEARCH_PROTOCOL_V3_MVP_PLAN.md`: annual calendar assignments, development-only
+feature/label-availability audits, and fixed-model engineering canaries. These bounded
+canary fits are authorized; P3 feature-pool competition, recent diagnostic replay,
+and Strategy V2 remain outside that authorization. Resume from
+`reports/research_protocol_v3_mvp/IMPLEMENTATION_PROGRESS.md`.
+
 The user authorized the narrowed implementation in
 `docs/LONG_HISTORY_MULTI_EVALUATOR_SCREENING_MVP_PLAN.md` on 2026-09-07.
 Primary 20D V0 was delivered on 2026-09-08; see

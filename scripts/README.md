@@ -8,6 +8,11 @@ Daily/Forward: `daily_update.py`, `run_forward_prediction_v1.py`,
 Research: `run_fast_research_mt_v2.py`, `run_research_lightgbm_full_mt_v2.py`,
 `run_long_history_core_factor_phase0_v1.py`, and `check_quality.py`.
 
+Research Protocol V3-MVP: `run_research_protocol_v3_mvp.py` implements the authorized
+P0-P2 prepare/audit/canary/finalize stages. Audit years may run in four processes;
+engineering model fits stay sequential with eight LightGBM threads. This runner
+does not expose pool competition or recent diagnostic execution.
+
 ## Pinned Maintenance / Qualification
 
 `audit_lightgbm_thread_determinism_v1.py`,

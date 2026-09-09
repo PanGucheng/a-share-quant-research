@@ -47,7 +47,7 @@
 | Phase 0 Backward Replication | CLOSED / COMPLETED | 91 因子 fixed-union、same-era reconciliation 与四时期 backward replication 已完成 |
 | Phase 1 Feature Quality Gate | COMPLETE / MVP quality scope | 本轮质量审计完成；不等于可交易性认证 |
 | Primary 20D Screening MVP | COMPLETE / STOP FOR HUMAN REVIEW | 765行Evidence/Candidate Board、三体系规则与FDR已交付 |
-| Research Protocol V3-MVP | PLAN DELIVERED / IMPLEMENTATION NOT STARTED | [正式计划](RESEARCH_PROTOCOL_V3_MVP_PLAN.md)：2015–2023年度purged walk-forward；已核验日历与键数，未训练 |
+| Research Protocol V3-MVP | P0–P2 COMPLETE / STOP FOR HUMAN REVIEW | [实施进度](../reports/research_protocol_v3_mvp/IMPLEMENTATION_PROGRESS.md)：9折、765项P1审计及固定8列P2 canary完成；pool experiment未解锁 |
 | Structured ML | NOT AUTHORIZED | 不得从 prior protocol 直接启动 |
 | Strategy V2 | NOT AUTHORIZED | 需要独立 protocol、freeze date 与新 forward evidence |
 
