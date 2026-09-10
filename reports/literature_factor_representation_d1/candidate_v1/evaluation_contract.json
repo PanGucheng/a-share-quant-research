@@ -1,0 +1,33 @@
+{
+  "alpha": 0.05,
+  "bootstrap": {
+    "cannot_cross_calendar_gaps": true,
+    "kind": "moving_block",
+    "primary": 20,
+    "resamples": 1000,
+    "seed": 20260909,
+    "sensitivity": 40,
+    "shared_date_indices": true
+  },
+  "contrasts": [
+    "S-B",
+    "R-B",
+    "C-B",
+    "H-B",
+    "C-R",
+    "H-C"
+  ],
+  "correction": "single_Holm_family",
+  "hac": {
+    "kernel": "Bartlett",
+    "primary": 20,
+    "sensitivity": 40
+  },
+  "no_model_or_threshold_sweep": true,
+  "noninferiority_enabled": false,
+  "outcomes_authorized": false,
+  "samples": "all_five_arms_same_keys_and_dates",
+  "sidedness": "two-sided",
+  "statistic": "paired_daily_IC_delta",
+  "status": "future_contract_only_not_executable"
+}

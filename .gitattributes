@@ -31,3 +31,7 @@ reports/long_history_multi_evaluator_screening_v1/CANDIDATE_REPLAY.json -text wh
 factor_research/long_history_boards.py text eol=lf
 factor_research/long_history_candidates.py text eol=lf
 scripts/build_long_history_boards.py text eol=lf
+
+# D1 diagnostic packets use LF-normalized hashes; pin the linked plan's text too.
+docs/LITERATURE_GROUNDED_FACTOR_COMPRESSION_PLAN.md text eol=lf
+reports/literature_factor_representation_d1/** text eol=lf

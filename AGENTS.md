@@ -86,6 +86,15 @@ for fixed-model precomputation, not outcome evaluation or pool competition. No
 2024+ value access is permitted. Long execution is user-run only; see
 `docs/V3_PREDICTION_PRECOMPUTE_RUNBOOK.md` for commands and verification limits.
 
+On 2026-09-10 the user authorized committing the revised literature representation
+plan, then implementing D1. Plan revision is committed as `b877ad3`. D1 may inspect
+formula/lineage metadata and development-only feature structure, build diagnostic
+R/C/H recipes, and validate against an independent synthetic/naive oracle. It may
+not train R/C/H models, read sealed outcomes, or access 2024+ research values.
+Long structural scans are user-run. A passing implementation/canary does not
+finalize rank/missing policy or authorize D2; resume from
+`reports/literature_factor_representation_d1/REPORT.md`.
+
 The user authorized the narrowed implementation in
 `docs/LONG_HISTORY_MULTI_EVALUATOR_SCREENING_MVP_PLAN.md` on 2026-09-07.
 Primary 20D V0 was delivered on 2026-09-08; see

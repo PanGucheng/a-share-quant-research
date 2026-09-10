@@ -863,3 +863,38 @@ GKX 作者发表版及补充一手资料检索；没有把未获全文的补充�
 
 意见评估完成时状态：PLAN V0.2 REVISED / D1 NOT STARTED / D2–D3 NOT AUTHORIZED。
 随后用户授权先提交计划、再实施 D1；实施状态由单独交付记录更新，不追改原审计快照。
+
+## 22. D1 实施约束与当前唯一诊断配方
+
+用户随后明确要求“调整完计划后提交，然后实施 D1”。V0.2 先以 `b877ad3`
+提交并推送；D1 交付记录见 [D1 实施报告](../reports/literature_factor_representation_d1/REPORT.md)。
+本节与该报告替代前文历史性的“等待 D1 授权”状态，不改动 V0.1 审计快照。
+
+当前只有一个诊断配方：rank minimum 100、average ties、各层
+`ceil(0.5 × frozen child count)`，仍是 `policy_finalized=false`。
+不能仅因实现通过测试就升级为 ready for human freeze。完整 2010–2023 月度结构扫描
+和逐日独立 naive 重放由用户执行，提供每年以及九折 train/predict 日轴的计数。
+每个输出同时记录叶层有限样本数、输出有限样本数、有效 family、缺失损失和权重漂移；
+原始 U 不作 rank，有限值保留，infinity 按 V3 输入口径转为缺失。
+
+逐项 U 复核保留 61 个 raw 候选，但不把 32 个 Alpha101 的经济语义未解决状态
+改写成“已解决”。另有 23 个 provider scale、3 个 recursive quality、3 个 state/mask
+主原因；ATR 和 PSAR 等另有交叉限制，逐项说明随新 inventory 保存。
+已核对的 canonical research-usable 与 lineage 连续性是保留原输入的依据，
+不证明所有公式已完成独立专业经济解释；新 correctness blocker 必须硬停。
+
+实际公式规则自然产生 R=218、C=201、H=358：U=61，raw representatives=157，
+rank outputs=140，exact aliases 少计权 5 个。五个 dense fields 对应 16 个非空 bucket；
+287 个独立 dense 节点保留 16 个代表，主动舍弃 271 个单点 lag 的 raw 分辨率。
+Alpha158 的五个 canonical alias 身份仍保留在 inventory，不能按 source 直接删列。
+
+只有两个 C 输出包含多个 measurement family：20-session range intensity 的两个估计量，
+以及 30-session up-day balance 的两种统计。其余是单 family 聚合或 rank singleton。
+因此本候选主要检验 dense-lag 压缩、rank 表示和少量明确同轴聚合，
+不是已实现的大规模 economic-theme latent factor model。
+不为制造更多 multi-family composites 而放宽语义/horizon 规则。
+
+完整扫描后仅依据结构证据审阅这一套门槛；如需修改，说明经济含义缺陷、
+替换为唯一版本并重验，不能保留多个 threshold variants 进入 D2。
+本轮最终状态必须区分“代码已实施”“结构扫描完整”“配方可冻结”三个层次。
+任何层次均不构成 D2、六 contrasts 的真实 evaluation 或 2024+ 解封授权。

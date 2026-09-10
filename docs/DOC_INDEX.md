@@ -48,7 +48,7 @@ evidence 判断；历史报告与 archive 只说明当时发生了什么。
 ## Current Development Plans
 
 - [LITERATURE_GROUNDED_FACTOR_COMPRESSION_PLAN.md](LITERATURE_GROUNDED_FACTOR_COMPRESSION_PLAN.md)
-  — **PLAN V0.2 REVISED / D1 AUTHORIZED**；先提交计划再实施D1；R/C/H配方、rank/missing结构诊断与六项paired对比建议，D2/P3及近期数据未授权。
+  — **D1 CODE IMPLEMENTED / STRUCTURAL REVIEW PENDING**；[D1报告及运行命令](../reports/literature_factor_representation_d1/REPORT.md)，R218/C201/H358诊断候选；完整扫描由用户执行，门槛未冻结，D2/P3及近期数据未授权。
 - [RESEARCH_PROTOCOL_V3_MVP_PLAN.md](RESEARCH_PROTOCOL_V3_MVP_PLAN.md)
   — **RECOMPUTED / ENGINEERING VERIFIED / STOP FOR REVIEW**；P0/P1及两折8/494列重算和预测复核完成，P3仍未解锁。
 - [Research Protocol V3-MVP实施进度](../reports/research_protocol_v3_mvp/IMPLEMENTATION_PROGRESS.md)

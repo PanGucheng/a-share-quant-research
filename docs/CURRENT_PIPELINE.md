@@ -5,6 +5,11 @@ artifact 名称中的 `current` 不自动表示 ACTIVE。
 
 ## 1. Status At A Glance
 
+Literature Representation D1 已获单独实施授权，交付入口为
+[D1 报告与 PowerShell 命令](../reports/literature_factor_representation_d1/REPORT.md)。
+当前为 **CODE IMPLEMENTED / FULL STRUCTURAL SCAN USER-RUN / POLICY REVIEW PENDING**。
+R218/C201/H358 仅是诊断候选，D2、真实 outcome evaluation 与 2024+ 访问仍禁止。
+
 | 对象 | 状态 | 允许行为 |
 |---|---|---|
 | Forward Track | ACTIVE / time-priority | 日常 update、冻结 prediction、paper refresh、成熟标签评价 |
