@@ -176,3 +176,9 @@ large or high-risk refactor, requires long-lived parallel experiments, preserves
 competing research routes, may damage frozen/Forward/canonical authority, or the user
 explicitly requests branch/PR isolation. Removing branch protection does not weaken
 the correctness, immutability, testing, diff-review, or evidence-boundary rules above.
+
+2026-09-10: The user authorized evaluation and implementation of the D1 freeze and
+D2 R218/C201/H358 fixed-model precompute proposal. Formal approval is recorded in
+reports/literature_factor_representation_d1/freeze_v1/freeze.json. This supersedes
+the earlier D1-only boundary for these 27 annual models and independent replay.
+Long execution remains user-run. Outcomes, pool comparison and 2024+ values remain closed.

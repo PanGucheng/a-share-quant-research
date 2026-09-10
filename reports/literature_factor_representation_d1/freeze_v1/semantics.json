@@ -1,0 +1,18 @@
+{
+  "correctness_blocker": "stop; never waive because a factor belongs to U",
+  "dense_estimand": "Within a frozen field x horizon bucket, equal-weight average rank over available eligible lag nodes, provided at least half of frozen nodes are available.",
+  "fixed_complete_lag_path": false,
+  "fold_safety": "Each output is a deterministic function only of the complete canonical PIT cross-section on its own date and frozen metadata. No fitted state, inter-date normalization or recursive restart. Chunking/reuse introduces no future observations. Design itself remains retrospective 2010-2023, not selection-past-only.",
+  "multifamily": "all frozen families required; coverage loss accepted; no fallback",
+  "orientation": "economic-axis; measurement_orientation, expected_return_direction and representation_sign remain separate",
+  "rank": "float64 full dated universe, average ties, no jitter/ID tie breaking; constant/all-missing/below-min => NaN; infinity => NaN; no label or survivor mask",
+  "raw_U": "Common raw carry-through is not proof of quality or resolved economic semantics; preserve all item caveats and canonical missingness.",
+  "recursive_factors": [
+    "ta_trend_adx_neg",
+    "ta_trend_adx_pos",
+    "ta_volatility_atr"
+  ],
+  "recursive_status": "quality_limited_raw_carry_through",
+  "substitution": "0.995 high-confidence same-semantic same-scale gate; same mechanism/units/operator/inputs/horizon, Full/Era evidence, compatible masks and all-pair complete linkage; zero new substitutions",
+  "variable_node_composition": true
+}
