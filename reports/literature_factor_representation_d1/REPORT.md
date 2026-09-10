@@ -111,7 +111,9 @@ range有效输出从22640降到21276，新增1364个缺失。这项覆盖率损�
 覆盖2010-01-29至2023-12-29。每日使用完整dated universe，不抽股票后rank。
 
 - 428个rank叶×12日均达到100且非常数；140个rank输出每天有限样本数均≥100。
-- 3个recursive raw U在2010-01-29各仅1个有限值；保留限制、不rank。
+- 3个recursive raw U在2010-01-29各仅1个有限值，在2012-07-18均全缺失；
+  [6个稀疏date-factor单元](canary_v2/raw_U_sparse_days.csv)完整披露。保留已知canonical缺失限制，
+  不rank、不填补；它们的raw保留理由仍须人工审阅，不能用生成代码通过掩盖覆盖质量问题。
 - 无raw/生成infinity，无constant rank output；5组exact alias在每个切片值与mask一致。
 - naive oracle不导入生产rank/平均函数；各臂mask相同，绝对误差最大
   `2.7755575615628914e-16`，验收 `rtol=0, atol=1e-12`。
