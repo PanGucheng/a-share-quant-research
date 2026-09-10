@@ -47,6 +47,8 @@ evidence 判断；历史报告与 archive 只说明当时发生了什么。
 
 ## Current Development Plans
 
+- [LITERATURE_GROUNDED_FACTOR_COMPRESSION_PLAN.md](LITERATURE_GROUNDED_FACTOR_COMPRESSION_PLAN.md)
+  — **PLANNING / STOP FOR HUMAN REVIEW**；文献核验、494行结构审计、R/C/H表示与后续paired评价建议；未生成正式池，未授权P3或近期数据。
 - [RESEARCH_PROTOCOL_V3_MVP_PLAN.md](RESEARCH_PROTOCOL_V3_MVP_PLAN.md)
   — **RECOMPUTED / ENGINEERING VERIFIED / STOP FOR REVIEW**；P0/P1及两折8/494列重算和预测复核完成，P3仍未解锁。
 - [Research Protocol V3-MVP实施进度](../reports/research_protocol_v3_mvp/IMPLEMENTATION_PROGRESS.md)

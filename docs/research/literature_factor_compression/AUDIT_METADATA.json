@@ -1,0 +1,137 @@
+{
+  "status": "planning_metadata_snapshot_not_pool_manifest",
+  "date": "2026-09-10",
+  "repository_commit": "47ad9f4",
+  "inventory_rows": 494,
+  "sources": {
+    "alpha158": 85,
+    "alpha360": 287,
+    "project_basic": 12,
+    "alpha101": 32,
+    "mature_public": 21,
+    "ta": 57
+  },
+  "legacy_families": {
+    "PriceTrend": 292,
+    "ReturnDynamics": 44,
+    "LiquidityTrading": 32,
+    "RiskLottery": 57,
+    "TradingBehavior": 10,
+    "OpaqueMultiInput": 27,
+    "Valuation": 7,
+    "SizeStructure": 1,
+    "PriceLevelOrPriceDifference": 24
+  },
+  "semantic_resolved": {
+    "True": 462,
+    "False": 32
+  },
+  "replacement_hold_reasons": {
+    "none": 433,
+    "unresolved_semantics": 32,
+    "provider_price_scale_unverified": 23,
+    "recursive_missingness_quality_review": 3,
+    "state_or_event_mask_review": 3
+  },
+  "exact_groups": 5,
+  "dense_lag_families": {
+    "alpha360_CLOSE": {
+      "count": 57,
+      "min_lag": 3,
+      "max_lag": 59,
+      "missing_from_0_59": [
+        0,
+        1,
+        2
+      ]
+    },
+    "alpha360_HIGH": {
+      "count": 55,
+      "min_lag": 5,
+      "max_lag": 59,
+      "missing_from_0_59": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    "alpha360_LOW": {
+      "count": 60,
+      "min_lag": 0,
+      "max_lag": 59,
+      "missing_from_0_59": []
+    },
+    "alpha360_OPEN": {
+      "count": 58,
+      "min_lag": 2,
+      "max_lag": 59,
+      "missing_from_0_59": [
+        0,
+        1
+      ]
+    },
+    "alpha360_VWAP": {
+      "count": 57,
+      "min_lag": 3,
+      "max_lag": 59,
+      "missing_from_0_59": [
+        0,
+        1,
+        2
+      ]
+    }
+  },
+  "sealed_precompute": {
+    "Broad494": {
+      "folds": 9,
+      "prediction_rows": 4377824,
+      "prediction_dates": 2189,
+      "replay_status": "all_nine_exact"
+    },
+    "Strict332": {
+      "folds": 9,
+      "prediction_rows": 4377824,
+      "prediction_dates": 2189,
+      "replay_status": "all_nine_exact"
+    }
+  },
+  "run_status": {
+    "outcome_evaluation": false,
+    "pool": "Strict332",
+    "pool_comparison": false,
+    "recent_access": false,
+    "status": "all_precompute_and_replay_complete"
+  },
+  "limits": [
+    "No feature, price, label or prediction values loaded.",
+    "Precompute status/result metadata rechecked; no fresh model replay in this task.",
+    "Legacy correlation cluster labels are descriptive, not economic groups or approved replacements.",
+    "Direction, dated-event mapping and new roles remain explicitly pending.",
+    "No final pool identities generated."
+  ],
+  "source_file_sha256": {
+    "reports/candidate_consolidation_v0_5/working_set.csv": "cc49d7041c4481fb5232f818c55f8520fd99aabfa5b94d31f651cb4466f00ef6",
+    "reports/candidate_consolidation_v0_5/v0_5_1/economic_semantic_review.csv": "feab60f29dc97354b233600a940499ed5957f0176056f375152a462ddd13e5d4",
+    "reports/candidate_consolidation_v0_5/feature_quality.csv": "40fa5dd17aa968075fb4ed9d5012a0c467643aa6e265bbc3fb867a643cdb554d",
+    "reports/candidate_consolidation_v0_5/v0_5_1/exact_alias_registration.csv": "218d264fa2b0bd379a2a4158acbe783da9020014ada23d796c23f2364fef031f",
+    "reports/candidate_consolidation_v0_5/representative_proposal_board.csv": "66d2adbd88167b64e133c0258338159ab2fabea7fdd1e9ed72f7bcff2fe2e15f",
+    "outputs/canonical_historical_dataset_assembly_v1/current/factor_lineage.csv": "1d655cd0b099fdfd4317ec295821f897266ef42d3a0b7e6047e21348d461460b",
+    "outputs/research_protocol_v3_precompute/v3_precompute_broad494_strict332_20260909_v1/contract.json": "f002ee7a7786a9acc68fe8a688e43f456e47f5095cb03545636660568122ee68",
+    "outputs/research_protocol_v3_precompute/v3_precompute_broad494_strict332_20260909_v1/verification/Broad494/result.json": "6a624f4d884d32a606805b2fd7be6e1398974e1975d06e4d4d64f5b9d96db0db",
+    "outputs/research_protocol_v3_precompute/v3_precompute_broad494_strict332_20260909_v1/verification/Strict332/result.json": "88ce53fd7d12fe8980127276b0dd85777f9e9376d1069715956c14bb5f70af5b",
+    "outputs/research_protocol_v3_precompute/v3_precompute_broad494_strict332_20260909_v1/status.json": "22863fa24c92e45224546207abc2539fb79a34b309fe2376e01e9dde629ed007",
+    "reports/candidate_consolidation_v0_5/v0_5_1/RECEIPT.json": "7a37ae47984f856f26e8375a23f38625bf8764542a0c329a1eb1eb53e8b4f033",
+    "reports/candidate_consolidation_v0_5/v0_5_1/REPRESENTATIVE_POLICY.json": "a0bd749a7515dd11593070377d0334e16690e0f8fb77ac0022e485b21152274f",
+    "configs/research_protocol_v3_mvp.yaml": "cabecd08e49a071a38c53422fb60092787e807bfc8c80471bb4c337ecd85d41b"
+  },
+  "inventory_sha256": "8186b3ae91878c3e136e7c0d9e2bc9e5df9ee840ae805d51441cf8ba7956857f",
+  "local_papers": {
+    "1-s2.0-S0304405X21003743-main.pdf": "665fcc0aea0d6bf5c0effc64652de5802dc3a4fa1bee28a5a25a3d83083fc4e3",
+    "hhw107.pdf": "6ce660f919d8207ea3ea7cd56ad7de12f4005c9f0eb7edc8169b629bcab557ce",
+    "The Journal of Finance - 2023 - JENSEN - Is There a Replication Crisis in Finance.pdf": "9e4ecad41042163f9b9d2219244bfa4b5a4c07e5de61e54d3cadb6b9704e230f"
+  },
+  "inventory_sha256_lf": "98720656429da0d750d709c74beaa05b6aa01e1696aca2f6de77bbb86aa6d791",
+  "hash_semantics": "source_file_sha256 and inventory_sha256 record observed local bytes; inventory_sha256_lf normalizes only CRLF to LF for portable Git verification. This is an audit snapshot, not a frozen runner contract."
+}
