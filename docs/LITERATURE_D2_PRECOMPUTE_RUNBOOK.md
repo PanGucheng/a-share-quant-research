@@ -1,6 +1,8 @@
 # R218 / C201 / H358 九折预计算
 
-2026-09-10：**D1 CLOSED / REPRESENTATIONS FROZEN / D2 IMPLEMENTED, USER RUN PENDING**。
+2026-09-11：**D1 CLOSED / REPRESENTATIONS FROZEN / D2 COMPLETE / ALL FIVE ARMS SEALED**。
+用户已完成27模型及独立replay，核验通过，无需重跑；见[完成报告](../reports/literature_factor_representation_d2/COMPLETION_REPORT.md)。
+下述命令与资源预估保留为入口交付时运行说明，实际完成状态以上述报告为准。
 [D1 正式冻结](../reports/literature_factor_representation_d1/FORMAL_FREEZE.md)已先独立提交为 `d05e7eb`。
 [D2 实施报告](../reports/literature_factor_representation_d2/REPORT.md)说明验证范围和局限。
 

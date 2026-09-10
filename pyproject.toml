@@ -50,3 +50,4 @@ select = ["E4", "E7", "E9", "F"]
 [tool.ruff.lint.per-file-ignores]
 # This hash-bound freeze entry point bootstraps the repository path before imports.
 "scripts/freeze_literature_representation.py" = ["E402"]
+"scripts/review_literature_d2_completion.py" = ["E402"]

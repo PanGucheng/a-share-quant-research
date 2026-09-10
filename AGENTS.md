@@ -182,3 +182,8 @@ D2 R218/C201/H358 fixed-model precompute proposal. Formal approval is recorded i
 reports/literature_factor_representation_d1/freeze_v1/freeze.json. This supersedes
 the earlier D1-only boundary for these 27 annual models and independent replay.
 Long execution remains user-run. Outcomes, pool comparison and 2024+ values remain closed.
+
+2026-09-11: User-run D2 completed. All 27 R/C/H models and independent saved-model
+replays are verified; each arm is all_nine_exact and all five arms remain sealed.
+See reports/literature_factor_representation_d2/COMPLETION_REPORT.md. No rerun is
+needed; D3/outcomes, pool performance comparison and 2024+ values remain unauthorized.

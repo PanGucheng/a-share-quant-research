@@ -5,11 +5,12 @@ artifact 名称中的 `current` 不自动表示 ACTIVE。
 
 ## 1. Status At A Glance
 
-Literature Representation **D1 CLOSED / REPRESENTATIONS FROZEN / D2 USER RUN PENDING**。
+Literature Representation **D1 CLOSED / REPRESENTATIONS FROZEN / D2 COMPLETE / ALL FIVE ARMS SEALED**。
 168个月、3382日结构扫描及独立oracle已核验，R218/C201/H358已以 `d05e7eb`
 [正式冻结](../reports/literature_factor_representation_d1/FORMAL_FREEZE.md)。
-D2固定27模型及独立replay实现已交付：[PowerShell入口](LITERATURE_D2_PRECOMPUTE_RUNBOOK.md)。
-真实长任务由用户执行；outcome evaluation、pool comparison、D3与2024+研究值继续禁止。
+D2固定27模型及独立replay已由用户运行并核验，R/C/H均all_nine_exact：
+[完成报告](../reports/literature_factor_representation_d2/COMPLETION_REPORT.md)。
+无需重跑；outcome evaluation、pool comparison、D3与2024+研究值继续禁止。
 
 | 对象 | 状态 | 允许行为 |
 |---|---|---|

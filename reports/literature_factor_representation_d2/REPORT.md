@@ -1,5 +1,8 @@
 # Literature Representation D2 实施交付
 
+2026-09-11最新状态：**D2 COMPLETE / ALL FIVE ARMS SEALED**。
+27模型及独立replay已核验，见[完成报告](COMPLETION_REPORT.md)。下文保留2026-09-10入口交付时记录。
+
 2026-09-10。**D1已正式冻结；D2代码与轻量验证完成，真实27模型待用户运行。**
 [执行命令和恢复规则](../../docs/LITERATURE_D2_PRECOMPUTE_RUNBOOK.md)。
 

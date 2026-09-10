@@ -40,7 +40,8 @@
 2026-09-10：D1全量168个月、3382日结构扫描及独立oracle通过后，用户授权评估并实施正式冻结与D2。
 R218/C201/H358以 `d05e7eb` [正式冻结](../reports/literature_factor_representation_d1/FORMAL_FREEZE.md)，
 保留U质量限制、dense可变节点含义及跨family完整性代价。
-[D2入口](LITERATURE_D2_PRECOMPUTE_RUNBOOK.md)已实施并完成轻量验证；真实27模型与replay待用户执行。
+2026-09-11：[D2完成核验](../reports/literature_factor_representation_d2/COMPLETION_REPORT.md)，
+27模型、13,133,472行新prediction及独立replay全部通过，R/C/H均all_nine_exact；五臂封存，无需重跑。
 outcome、pool comparison、D3和2024+研究值仍封闭。
 
 | 对象 | 状态 | 当前含义 |
