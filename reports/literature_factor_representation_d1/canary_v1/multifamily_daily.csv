@@ -1,0 +1,25 @@
+output,frozen_families,needed_families,universe_n,valid_rows,missing_rows,single_family_valid_rows,effective_family_sum,raw_any_parent_rows,raw_available_but_output_missing,output_n_below_100,family_count_histogram,max_family_weight,mean_l1_weight_drift,constant_output,infinite_n,datetime,semantic_id
+erc_d05fc30b232b94ef,2,1,1544,1526,18,288,2764,1526,0,False,"{""0"": 18, ""1"": 288, ""2"": 1238}",1.0,0.18872870249017037,False,0,2010-01-29,range_intensity__window_20_distinct_estimators_and_min_observations
+erc_cd54b6130e29641c,2,1,1544,1544,0,0,3088,1544,0,False,"{""2"": 1544}",0.5,0.0,False,0,2010-01-29,up_day_balance__window_30
+erc_d05fc30b232b94ef,2,1,2000,1986,14,401,3571,1986,0,False,"{""0"": 14, ""1"": 401, ""2"": 1585}",1.0,0.20191339375629405,False,0,2012-07-18,range_intensity__window_20_distinct_estimators_and_min_observations
+erc_cd54b6130e29641c,2,1,2000,2000,0,0,4000,2000,0,False,"{""2"": 2000}",0.5,0.0,False,0,2012-07-18,up_day_balance__window_30
+erc_d05fc30b232b94ef,2,1,2000,1852,148,174,3530,1852,0,False,"{""0"": 148, ""1"": 174, ""2"": 1678}",1.0,0.0939524838012959,False,0,2014-12-31,range_intensity__window_20_distinct_estimators_and_min_observations
+erc_cd54b6130e29641c,2,1,2000,2000,0,0,4000,2000,0,False,"{""2"": 2000}",0.5,0.0,False,0,2014-12-31,up_day_balance__window_30
+erc_d05fc30b232b94ef,2,1,2000,1817,183,167,3467,1817,0,False,"{""0"": 183, ""1"": 167, ""2"": 1650}",1.0,0.09190974133186572,False,0,2015-01-05,range_intensity__window_20_distinct_estimators_and_min_observations
+erc_cd54b6130e29641c,2,1,2000,2000,0,0,4000,2000,0,False,"{""2"": 2000}",0.5,0.0,False,0,2015-01-05,up_day_balance__window_30
+erc_d05fc30b232b94ef,2,1,2000,1812,188,64,3560,1812,0,False,"{""0"": 188, ""1"": 64, ""2"": 1748}",1.0,0.03532008830022075,False,0,2016-07-04,range_intensity__window_20_distinct_estimators_and_min_observations
+erc_cd54b6130e29641c,2,1,2000,2000,0,0,4000,2000,0,False,"{""2"": 2000}",0.5,0.0,False,0,2016-07-04,up_day_balance__window_30
+erc_d05fc30b232b94ef,2,1,2000,1928,72,70,3786,1928,0,False,"{""0"": 72, ""1"": 70, ""2"": 1858}",1.0,0.03630705394190872,False,0,2017-12-29,range_intensity__window_20_distinct_estimators_and_min_observations
+erc_cd54b6130e29641c,2,1,2000,2000,0,0,4000,2000,0,False,"{""2"": 2000}",0.5,0.0,False,0,2017-12-29,up_day_balance__window_30
+erc_d05fc30b232b94ef,2,1,2000,1857,143,63,3651,1857,0,False,"{""0"": 143, ""1"": 63, ""2"": 1794}",1.0,0.033925686591276254,False,0,2018-01-02,range_intensity__window_20_distinct_estimators_and_min_observations
+erc_cd54b6130e29641c,2,1,2000,2000,0,0,4000,2000,0,False,"{""2"": 2000}",0.5,0.0,False,0,2018-01-02,up_day_balance__window_30
+erc_d05fc30b232b94ef,2,1,2000,1936,64,17,3855,1936,0,False,"{""0"": 64, ""1"": 17, ""2"": 1919}",1.0,0.00878099173553719,False,0,2019-07-04,range_intensity__window_20_distinct_estimators_and_min_observations
+erc_cd54b6130e29641c,2,1,2000,2000,0,0,4000,2000,0,False,"{""2"": 2000}",0.5,0.0,False,0,2019-07-04,up_day_balance__window_30
+erc_d05fc30b232b94ef,2,1,2000,2000,0,14,3986,2000,0,False,"{""1"": 14, ""2"": 1986}",1.0,0.007,False,0,2020-12-31,range_intensity__window_20_distinct_estimators_and_min_observations
+erc_cd54b6130e29641c,2,1,2000,2000,0,0,4000,2000,0,False,"{""2"": 2000}",0.5,0.0,False,0,2020-12-31,up_day_balance__window_30
+erc_d05fc30b232b94ef,2,1,2000,1929,71,13,3845,1929,0,False,"{""0"": 71, ""1"": 13, ""2"": 1916}",1.0,0.00673924313115604,False,0,2021-01-04,range_intensity__window_20_distinct_estimators_and_min_observations
+erc_cd54b6130e29641c,2,1,2000,2000,0,0,4000,2000,0,False,"{""2"": 2000}",0.5,0.0,False,0,2021-01-04,up_day_balance__window_30
+erc_d05fc30b232b94ef,2,1,2000,1997,3,85,3909,1997,0,False,"{""0"": 3, ""1"": 85, ""2"": 1912}",1.0,0.04256384576865298,False,0,2022-07-06,range_intensity__window_20_distinct_estimators_and_min_observations
+erc_cd54b6130e29641c,2,1,2000,2000,0,0,4000,2000,0,False,"{""2"": 2000}",0.5,0.0,False,0,2022-07-06,up_day_balance__window_30
+erc_d05fc30b232b94ef,2,1,2000,2000,0,8,3992,2000,0,False,"{""1"": 8, ""2"": 1992}",1.0,0.004,False,0,2023-12-29,range_intensity__window_20_distinct_estimators_and_min_observations
+erc_cd54b6130e29641c,2,1,2000,2000,0,0,4000,2000,0,False,"{""2"": 2000}",0.5,0.0,False,0,2023-12-29,up_day_balance__window_30

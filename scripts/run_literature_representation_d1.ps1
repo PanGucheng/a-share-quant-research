@@ -2,7 +2,7 @@
 param(
     [string]$Python = 'E:\anaconda_envs\qlib_env\python.exe',
     [ValidatePattern('^[A-Za-z0-9][A-Za-z0-9_-]{0,79}$')]
-    [string]$RunId = 'd1_structure_20260910_v1'
+    [string]$RunId = 'd1_structure_20260910_v2'
 )
 
 $ErrorActionPreference = 'Stop'

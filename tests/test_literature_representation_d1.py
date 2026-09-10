@@ -19,7 +19,7 @@ from scripts.run_literature_representation_d1 import compare_oracle, sha, verify
 def recipe():
     return dict(scope='D1_feature_only_candidate', d2_authorized=False,
         parents=['a','b','c','d','u'], u=['u'], representatives=['a','d'],
-        diagnostic_policy=dict(rank_min=2, child_fraction=.5),
+        diagnostic_policy=dict(rank_min=2, child_fraction=.5, family_fraction=.5),
         composites=[dict(id='composite', families=[
             dict(id='f1', members=[dict(factor='a', sign=1),dict(factor='b', sign=-1)]),
             dict(id='f2', members=[dict(factor='c', sign=1)]),
@@ -85,6 +85,20 @@ def test_near_lag_can_change_value_but_not_fixed_active_family_weight():
     after, _, _ = average_children([f1_new,f2],.5)
     np.testing.assert_allclose(after-before, .5*(f1_new-f1))
     assert not np.array_equal(before, after)
+
+
+def test_revised_complete_family_policy_removes_semantic_drift():
+    r = recipe()
+    r['diagnostic_policy']['family_fraction'] = 1.
+    actual, diag = transform_day(frame(), r)
+    # Only C has all three families; A and B each lack one, D lacks two.
+    np.testing.assert_array_equal(np.isfinite(actual['C'].composite), [False,False,True,False])
+    compare_oracle(actual, naive_day(frame(),r))
+    output = diag['outputs'][0]
+    assert output['single_family_valid_rows'] == 0
+    assert output['max_family_weight'] == 1/3
+    assert output['mean_l1_weight_drift'] == 0
+    assert output['raw_available_but_output_missing'] == 3
 
 
 def test_exact_alias_removed_before_rank_values_masks_and_denominators():

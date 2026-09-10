@@ -1,0 +1,7 @@
+factor,universe_n,finite_n,unique_n,n_below_100,rank_reason,infinite_n,datetime
+ta_trend_adx_neg,1544,1,1,True,raw_U_not_ranked,0,2010-01-29
+ta_trend_adx_pos,1544,1,1,True,raw_U_not_ranked,0,2010-01-29
+ta_volatility_atr,1544,1,1,True,raw_U_not_ranked,0,2010-01-29
+ta_trend_adx_neg,2000,0,0,True,raw_U_not_ranked,0,2012-07-18
+ta_trend_adx_pos,2000,0,0,True,raw_U_not_ranked,0,2012-07-18
+ta_volatility_atr,2000,0,0,True,raw_U_not_ranked,0,2012-07-18

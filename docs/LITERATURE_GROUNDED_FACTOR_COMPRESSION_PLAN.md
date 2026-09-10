@@ -870,8 +870,13 @@ GKX 作者发表版及补充一手资料检索；没有把未获全文的补充�
 提交并推送；D1 交付记录见 [D1 实施报告](../reports/literature_factor_representation_d1/REPORT.md)。
 本节与该报告替代前文历史性的“等待 D1 授权”状态，不改动 V0.1 审计快照。
 
-当前只有一个诊断配方：rank minimum 100、average ties、各层
-`ceil(0.5 × frozen child count)`，仍是 `policy_finalized=false`。
+初始 V1 诊断配方使用各层 `ceil(0.5 × frozen child count)`。
+12 日期 canary 随后证实 range-intensity 的两种估计量因 warmup/mask 不同，
+早期约19%–20%的有效输出只依赖一个 family，违背该组合的双估计量含义。
+因此当前唯一继续审阅的 V2 配方采用 rank minimum 100、average ties，
+family 内节点门槛 `ceil(0.5 × frozen node count)`，跨 family **要求全部 frozen families 可用**。
+不允许在缺失一个测量 family 时将另一个升为100%权重；接受因此产生的覆盖率损失。
+V1 仅作为失败诊断证据保留，不供 D2 选择。V2 仍是 `policy_finalized=false`。
 不能仅因实现通过测试就升级为 ready for human freeze。完整 2010–2023 月度结构扫描
 和逐日独立 naive 重放由用户执行，提供每年以及九折 train/predict 日轴的计数。
 每个输出同时记录叶层有限样本数、输出有限样本数、有效 family、缺失损失和权重漂移；

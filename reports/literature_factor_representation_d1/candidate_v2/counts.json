@@ -1,0 +1,43 @@
+{
+  "U_reasons": {
+    "provider_price_scale_unverified": 23,
+    "recursive_missingness_quality_review": 3,
+    "state_or_event_mask_review": 3,
+    "unresolved_semantics": 32
+  },
+  "arms": {
+    "C": 201,
+    "H": 358,
+    "R": 218
+  },
+  "common_raw_U": 61,
+  "composite_outputs": 140,
+  "dense_bucket_outputs": 16,
+  "dense_fields": 5,
+  "dense_lag_resolution_removed": 271,
+  "dense_unique_nodes": 287,
+  "exact_alias_removals": 5,
+  "identities": 494,
+  "known_canonical_blockers": 0,
+  "multifamily_outputs": 2,
+  "rank_singletons": 116,
+  "raw_representatives": 157,
+  "source_horizons": 99,
+  "themes": {
+    "asymmetry": 2,
+    "liquidity_cost": 1,
+    "price_path": 331,
+    "residual_risk": 1,
+    "return_trend": 34,
+    "size_conditioning": 1,
+    "technical_state": 42,
+    "trading_activity": 30,
+    "unresolved": 32,
+    "valuation": 7,
+    "volatility": 9,
+    "within_day_shape": 4
+  },
+  "unique_measurement_families": 115,
+  "unique_parents": 489,
+  "unresolved_semantics": 32
+}

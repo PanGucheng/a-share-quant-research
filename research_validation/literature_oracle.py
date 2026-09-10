@@ -39,7 +39,7 @@ def naive_day(frame, recipe):
                 if len(finite) >= math.ceil(q * len(leaves)):
                     available_families.append(sum(finite) / len(finite))
             generated.append(sum(available_families) / len(available_families)
-                if len(available_families) >= math.ceil(q * len(node['families'])) else float('nan'))
+                if len(available_families) >= math.ceil(recipe['diagnostic_policy']['family_fraction'] * len(node['families'])) else float('nan'))
         outputs[node['id']] = generated
     return {arm: pd.concat([frame[['datetime', 'instrument']].reset_index(drop=True),
              pd.DataFrame({k: np.asarray(outputs[k], dtype=np.float64) for k in names})], axis=1)

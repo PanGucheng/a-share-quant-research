@@ -1,0 +1,5248 @@
+{
+  "arms": {
+    "C": [
+      "erc_00117565632c65c3",
+      "erc_00788fafdcd6a5d7",
+      "erc_023793c16a68c052",
+      "erc_037ede19dfe67dad",
+      "erc_040fdbdf6f80eb9b",
+      "erc_0451fc1cf4a1975f",
+      "erc_0a1aac410f6966dc",
+      "erc_0a67371497d65238",
+      "erc_0c3d95428646e6a5",
+      "erc_11517d81c4a1cf82",
+      "erc_11b179c281e84335",
+      "erc_13382d0b01bbe5a4",
+      "erc_14febb1e2e22e3c8",
+      "erc_1712925a3a57565a",
+      "erc_184a9d5068007d83",
+      "erc_1881209c97b92e2e",
+      "erc_190c45a632cbee4f",
+      "erc_194a629a3014a2c0",
+      "erc_1c328f10dce0a438",
+      "erc_1c97f35e1c57a7ce",
+      "erc_1fe2bf6a7f56d591",
+      "erc_215a508805fe1c20",
+      "erc_228b22f6ffe04c86",
+      "erc_26bec51c7e111771",
+      "erc_2831b0e43d38e4b5",
+      "erc_2e1e5bd8ecff9dd8",
+      "erc_2e8b6cb0f9d7b86b",
+      "erc_2ed30c042ef65f0a",
+      "erc_310a9f67e8f80039",
+      "erc_32e317ff322f6e15",
+      "erc_34b9a4407e53a5bc",
+      "erc_350a39fe9841cb3f",
+      "erc_3560d64fb68e4d18",
+      "erc_358a00bb3fef169f",
+      "erc_37e550609cd38c9c",
+      "erc_38d851d16107ea47",
+      "erc_3a3186e77dff7370",
+      "erc_3cbadf7497f354e3",
+      "erc_3ce66b8c7c80ae6d",
+      "erc_401d8dfcc7503986",
+      "erc_4086289249c98f60",
+      "erc_408a3040f42d3aa2",
+      "erc_41781f0f49b6690f",
+      "erc_4198011de131cb6c",
+      "erc_4363a4c5b701b635",
+      "erc_485005ec7e9db28f",
+      "erc_4f1bcd69bd3f408a",
+      "erc_50446426a2469979",
+      "erc_51590f98fed38ca2",
+      "erc_52b20f87e810021b",
+      "erc_52fd4730aae4b5ee",
+      "erc_5ba005b55a84c807",
+      "erc_5c22c3b16e983dbe",
+      "erc_6140a537d206c638",
+      "erc_618fc830545cb661",
+      "erc_631efedd679b71e1",
+      "erc_64f656a225c40c87",
+      "erc_6666016380bb418a",
+      "erc_687f9778a5f68686",
+      "erc_68b1ddfe076f4115",
+      "erc_69a9de53d02b544f",
+      "erc_6be82424a71f9bc7",
+      "erc_6c25ed64ad6c567b",
+      "erc_6e5b9f3457c7130a",
+      "erc_6fdaebce7fbeb966",
+      "erc_702556b9583c13f0",
+      "erc_716af060ecb85801",
+      "erc_735659eb2774afc7",
+      "erc_7522921f6a7603d8",
+      "erc_76d829963fb2f9ee",
+      "erc_77a7e5e844591c15",
+      "erc_7ffe8e0e5f3cb5af",
+      "erc_816a4a8c2194f406",
+      "erc_819e0e0b8186a56f",
+      "erc_83b4f877804c5138",
+      "erc_83e327406890e267",
+      "erc_8706c2f0bfd43b03",
+      "erc_87e21dc6ff50ac34",
+      "erc_88b156b24b0926ee",
+      "erc_89fe4369113645bf",
+      "erc_8bcb0bbe96063a8a",
+      "erc_8ef02558087d3f63",
+      "erc_91ed70ebe8ab7f7b",
+      "erc_92f48216ed9e9323",
+      "erc_939c61f2596b9b3e",
+      "erc_93e92c042f6e574b",
+      "erc_9659483fe3c58fb1",
+      "erc_97070189f5d80692",
+      "erc_9b5603b83cfb0ed1",
+      "erc_9c6a81e5b35cf7c0",
+      "erc_9cc7f344785be999",
+      "erc_9dab8b78f9bba2f8",
+      "erc_a1539a6f4eff277a",
+      "erc_a4bd307d9681d1d0",
+      "erc_a62122354513b466",
+      "erc_abe10265409823ee",
+      "erc_ac2a69aef3f2ad78",
+      "erc_b494570b9f6c640d",
+      "erc_b7cf4414b07717e6",
+      "erc_b82f26d6b655fef4",
+      "erc_b9ff5bca8ee18bdb",
+      "erc_be40843e5fb9d5fd",
+      "erc_bf43c415efc83d87",
+      "erc_bf67b9249fd590f8",
+      "erc_c1373d3c21cdcf3f",
+      "erc_c30ec30ae026518f",
+      "erc_c36f4e900bbed946",
+      "erc_c403d40d7acc7d5f",
+      "erc_c74981a558c90dd1",
+      "erc_c7bade0851d0b522",
+      "erc_c95d8c672d045221",
+      "erc_cd54b6130e29641c",
+      "erc_ce402b81a19b777d",
+      "erc_cf0717ce8957d715",
+      "erc_cf2e9939172cbe6e",
+      "erc_cfa35104ce583e7d",
+      "erc_d05fc30b232b94ef",
+      "erc_d50fb0899624f1da",
+      "erc_d692a9c76eac7a47",
+      "erc_d6eb10b4c727a2b1",
+      "erc_da1565e6303757b2",
+      "erc_db11c9d7582061dd",
+      "erc_db3d561078c82ac3",
+      "erc_de16999187d03a2f",
+      "erc_deecfaa28672d890",
+      "erc_e0039336c9cf90d7",
+      "erc_e1375e9cc265601a",
+      "erc_e9a677039313f33b",
+      "erc_eb51e5bf1ab2107c",
+      "erc_ec2f12ea4d8480c4",
+      "erc_ec991f61e2fa8754",
+      "erc_ed30570272d1c57c",
+      "erc_eee9c6c4390e2340",
+      "erc_ef4f73c61c389b84",
+      "erc_f49640007a32dc45",
+      "erc_f6369a88c1589e3f",
+      "erc_f67f5315575f570b",
+      "erc_fc6da2cc3f2667a7",
+      "erc_fcdcc3255938b010",
+      "erc_ffe2253a1023c6b2",
+      "kunquant_alpha101_alpha003",
+      "kunquant_alpha101_alpha004",
+      "kunquant_alpha101_alpha005",
+      "kunquant_alpha101_alpha006",
+      "kunquant_alpha101_alpha007",
+      "kunquant_alpha101_alpha011",
+      "kunquant_alpha101_alpha011_canonical_vwap_v2",
+      "kunquant_alpha101_alpha012",
+      "kunquant_alpha101_alpha013",
+      "kunquant_alpha101_alpha014",
+      "kunquant_alpha101_alpha015",
+      "kunquant_alpha101_alpha016",
+      "kunquant_alpha101_alpha024",
+      "kunquant_alpha101_alpha026",
+      "kunquant_alpha101_alpha035",
+      "kunquant_alpha101_alpha040",
+      "kunquant_alpha101_alpha041",
+      "kunquant_alpha101_alpha042",
+      "kunquant_alpha101_alpha042_canonical_vwap_v2",
+      "kunquant_alpha101_alpha044",
+      "kunquant_alpha101_alpha045",
+      "kunquant_alpha101_alpha050",
+      "kunquant_alpha101_alpha050_canonical_vwap_v2",
+      "kunquant_alpha101_alpha055",
+      "kunquant_alpha101_alpha071",
+      "kunquant_alpha101_alpha077",
+      "kunquant_alpha101_alpha083",
+      "kunquant_alpha101_alpha084",
+      "kunquant_alpha101_alpha084_canonical_vwap_v2",
+      "kunquant_alpha101_alpha088",
+      "kunquant_alpha101_alpha094",
+      "kunquant_alpha101_alpha094_canonical_vwap_v2",
+      "ta_momentum_ao",
+      "ta_momentum_kama",
+      "ta_trend_adx_neg",
+      "ta_trend_adx_pos",
+      "ta_trend_ema_fast",
+      "ta_trend_ema_slow",
+      "ta_trend_ichimoku_a",
+      "ta_trend_ichimoku_b",
+      "ta_trend_ichimoku_base",
+      "ta_trend_ichimoku_conv",
+      "ta_trend_macd",
+      "ta_trend_macd_diff",
+      "ta_trend_macd_signal",
+      "ta_trend_psar_down",
+      "ta_trend_sma_fast",
+      "ta_trend_sma_slow",
+      "ta_volatility_atr",
+      "ta_volatility_bbh",
+      "ta_volatility_bbhi",
+      "ta_volatility_bbm",
+      "ta_volatility_dch",
+      "ta_volatility_dcl",
+      "ta_volatility_dcm",
+      "ta_volatility_kcc",
+      "ta_volatility_kch",
+      "ta_volatility_kchi",
+      "ta_volatility_kcl",
+      "ta_volume_fi",
+      "ta_volume_vwap"
+    ],
+    "H": [
+      "alpha158_BETA10",
+      "alpha158_BETA20",
+      "alpha158_BETA30",
+      "alpha158_BETA5",
+      "alpha158_BETA60",
+      "alpha158_CNTD30",
+      "alpha158_CNTP30",
+      "alpha158_CORD10",
+      "alpha158_CORD20",
+      "alpha158_CORD30",
+      "alpha158_CORD5",
+      "alpha158_CORD60",
+      "alpha158_CORR10",
+      "alpha158_CORR20",
+      "alpha158_CORR30",
+      "alpha158_CORR5",
+      "alpha158_CORR60",
+      "alpha158_IMAX20",
+      "alpha158_IMAX30",
+      "alpha158_IMAX60",
+      "alpha158_IMIN20",
+      "alpha158_IMIN30",
+      "alpha158_IMIN60",
+      "alpha158_IMXD20",
+      "alpha158_IMXD30",
+      "alpha158_IMXD60",
+      "alpha158_KLEN",
+      "alpha158_KLOW",
+      "alpha158_KUP",
+      "alpha158_LOW0",
+      "alpha158_MA10",
+      "alpha158_MA20",
+      "alpha158_MA30",
+      "alpha158_MA5",
+      "alpha158_MA60",
+      "alpha158_MAX5",
+      "alpha158_MIN10",
+      "alpha158_MIN20",
+      "alpha158_MIN30",
+      "alpha158_MIN5",
+      "alpha158_MIN60",
+      "alpha158_QTLD10",
+      "alpha158_QTLD20",
+      "alpha158_QTLD30",
+      "alpha158_QTLD5",
+      "alpha158_QTLD60",
+      "alpha158_QTLU20",
+      "alpha158_QTLU30",
+      "alpha158_QTLU60",
+      "alpha158_RANK10",
+      "alpha158_RANK20",
+      "alpha158_RANK30",
+      "alpha158_RANK60",
+      "alpha158_RESI60",
+      "alpha158_ROC60",
+      "alpha158_RSV20",
+      "alpha158_RSV30",
+      "alpha158_RSV60",
+      "alpha158_STD10",
+      "alpha158_STD5",
+      "alpha158_SUMD10",
+      "alpha158_SUMD20",
+      "alpha158_SUMD30",
+      "alpha158_SUMD60",
+      "alpha158_SUMN10",
+      "alpha158_SUMN20",
+      "alpha158_SUMN30",
+      "alpha158_SUMN60",
+      "alpha158_SUMP10",
+      "alpha158_SUMP20",
+      "alpha158_SUMP30",
+      "alpha158_SUMP60",
+      "alpha158_VSUMD20",
+      "alpha158_VSUMD30",
+      "alpha158_VSUMD60",
+      "alpha158_VSUMN20",
+      "alpha158_VSUMN30",
+      "alpha158_VSUMN60",
+      "alpha158_VSUMP20",
+      "alpha158_VSUMP30",
+      "alpha158_VSUMP60",
+      "alpha360_CLOSE13",
+      "alpha360_CLOSE4",
+      "alpha360_CLOSE40",
+      "alpha360_HIGH13",
+      "alpha360_HIGH40",
+      "alpha360_HIGH5",
+      "alpha360_LOW13",
+      "alpha360_LOW3",
+      "alpha360_LOW40",
+      "alpha360_OPEN13",
+      "alpha360_OPEN3",
+      "alpha360_OPEN40",
+      "alpha360_VWAP13",
+      "alpha360_VWAP4",
+      "alpha360_VWAP40",
+      "amount_cv_20",
+      "amount_mean_20",
+      "amount_std_20",
+      "amplitude_20",
+      "corr_ret_amount_20",
+      "corr_ret_volume_20",
+      "erc_00117565632c65c3",
+      "erc_00788fafdcd6a5d7",
+      "erc_023793c16a68c052",
+      "erc_037ede19dfe67dad",
+      "erc_040fdbdf6f80eb9b",
+      "erc_0451fc1cf4a1975f",
+      "erc_0a1aac410f6966dc",
+      "erc_0a67371497d65238",
+      "erc_0c3d95428646e6a5",
+      "erc_11517d81c4a1cf82",
+      "erc_11b179c281e84335",
+      "erc_13382d0b01bbe5a4",
+      "erc_14febb1e2e22e3c8",
+      "erc_1712925a3a57565a",
+      "erc_184a9d5068007d83",
+      "erc_1881209c97b92e2e",
+      "erc_190c45a632cbee4f",
+      "erc_194a629a3014a2c0",
+      "erc_1c328f10dce0a438",
+      "erc_1c97f35e1c57a7ce",
+      "erc_1fe2bf6a7f56d591",
+      "erc_215a508805fe1c20",
+      "erc_228b22f6ffe04c86",
+      "erc_26bec51c7e111771",
+      "erc_2831b0e43d38e4b5",
+      "erc_2e1e5bd8ecff9dd8",
+      "erc_2e8b6cb0f9d7b86b",
+      "erc_2ed30c042ef65f0a",
+      "erc_310a9f67e8f80039",
+      "erc_32e317ff322f6e15",
+      "erc_34b9a4407e53a5bc",
+      "erc_350a39fe9841cb3f",
+      "erc_3560d64fb68e4d18",
+      "erc_358a00bb3fef169f",
+      "erc_37e550609cd38c9c",
+      "erc_38d851d16107ea47",
+      "erc_3a3186e77dff7370",
+      "erc_3cbadf7497f354e3",
+      "erc_3ce66b8c7c80ae6d",
+      "erc_401d8dfcc7503986",
+      "erc_4086289249c98f60",
+      "erc_408a3040f42d3aa2",
+      "erc_41781f0f49b6690f",
+      "erc_4198011de131cb6c",
+      "erc_4363a4c5b701b635",
+      "erc_485005ec7e9db28f",
+      "erc_4f1bcd69bd3f408a",
+      "erc_50446426a2469979",
+      "erc_51590f98fed38ca2",
+      "erc_52b20f87e810021b",
+      "erc_52fd4730aae4b5ee",
+      "erc_5ba005b55a84c807",
+      "erc_5c22c3b16e983dbe",
+      "erc_6140a537d206c638",
+      "erc_618fc830545cb661",
+      "erc_631efedd679b71e1",
+      "erc_64f656a225c40c87",
+      "erc_6666016380bb418a",
+      "erc_687f9778a5f68686",
+      "erc_68b1ddfe076f4115",
+      "erc_69a9de53d02b544f",
+      "erc_6be82424a71f9bc7",
+      "erc_6c25ed64ad6c567b",
+      "erc_6e5b9f3457c7130a",
+      "erc_6fdaebce7fbeb966",
+      "erc_702556b9583c13f0",
+      "erc_716af060ecb85801",
+      "erc_735659eb2774afc7",
+      "erc_7522921f6a7603d8",
+      "erc_76d829963fb2f9ee",
+      "erc_77a7e5e844591c15",
+      "erc_7ffe8e0e5f3cb5af",
+      "erc_816a4a8c2194f406",
+      "erc_819e0e0b8186a56f",
+      "erc_83b4f877804c5138",
+      "erc_83e327406890e267",
+      "erc_8706c2f0bfd43b03",
+      "erc_87e21dc6ff50ac34",
+      "erc_88b156b24b0926ee",
+      "erc_89fe4369113645bf",
+      "erc_8bcb0bbe96063a8a",
+      "erc_8ef02558087d3f63",
+      "erc_91ed70ebe8ab7f7b",
+      "erc_92f48216ed9e9323",
+      "erc_939c61f2596b9b3e",
+      "erc_93e92c042f6e574b",
+      "erc_9659483fe3c58fb1",
+      "erc_97070189f5d80692",
+      "erc_9b5603b83cfb0ed1",
+      "erc_9c6a81e5b35cf7c0",
+      "erc_9cc7f344785be999",
+      "erc_9dab8b78f9bba2f8",
+      "erc_a1539a6f4eff277a",
+      "erc_a4bd307d9681d1d0",
+      "erc_a62122354513b466",
+      "erc_abe10265409823ee",
+      "erc_ac2a69aef3f2ad78",
+      "erc_b494570b9f6c640d",
+      "erc_b7cf4414b07717e6",
+      "erc_b82f26d6b655fef4",
+      "erc_b9ff5bca8ee18bdb",
+      "erc_be40843e5fb9d5fd",
+      "erc_bf43c415efc83d87",
+      "erc_bf67b9249fd590f8",
+      "erc_c1373d3c21cdcf3f",
+      "erc_c30ec30ae026518f",
+      "erc_c36f4e900bbed946",
+      "erc_c403d40d7acc7d5f",
+      "erc_c74981a558c90dd1",
+      "erc_c7bade0851d0b522",
+      "erc_c95d8c672d045221",
+      "erc_cd54b6130e29641c",
+      "erc_ce402b81a19b777d",
+      "erc_cf0717ce8957d715",
+      "erc_cf2e9939172cbe6e",
+      "erc_cfa35104ce583e7d",
+      "erc_d05fc30b232b94ef",
+      "erc_d50fb0899624f1da",
+      "erc_d692a9c76eac7a47",
+      "erc_d6eb10b4c727a2b1",
+      "erc_da1565e6303757b2",
+      "erc_db11c9d7582061dd",
+      "erc_db3d561078c82ac3",
+      "erc_de16999187d03a2f",
+      "erc_deecfaa28672d890",
+      "erc_e0039336c9cf90d7",
+      "erc_e1375e9cc265601a",
+      "erc_e9a677039313f33b",
+      "erc_eb51e5bf1ab2107c",
+      "erc_ec2f12ea4d8480c4",
+      "erc_ec991f61e2fa8754",
+      "erc_ed30570272d1c57c",
+      "erc_eee9c6c4390e2340",
+      "erc_ef4f73c61c389b84",
+      "erc_f49640007a32dc45",
+      "erc_f6369a88c1589e3f",
+      "erc_f67f5315575f570b",
+      "erc_fc6da2cc3f2667a7",
+      "erc_fcdcc3255938b010",
+      "erc_ffe2253a1023c6b2",
+      "kunquant_alpha101_alpha003",
+      "kunquant_alpha101_alpha004",
+      "kunquant_alpha101_alpha005",
+      "kunquant_alpha101_alpha006",
+      "kunquant_alpha101_alpha007",
+      "kunquant_alpha101_alpha011",
+      "kunquant_alpha101_alpha011_canonical_vwap_v2",
+      "kunquant_alpha101_alpha012",
+      "kunquant_alpha101_alpha013",
+      "kunquant_alpha101_alpha014",
+      "kunquant_alpha101_alpha015",
+      "kunquant_alpha101_alpha016",
+      "kunquant_alpha101_alpha024",
+      "kunquant_alpha101_alpha026",
+      "kunquant_alpha101_alpha035",
+      "kunquant_alpha101_alpha040",
+      "kunquant_alpha101_alpha041",
+      "kunquant_alpha101_alpha042",
+      "kunquant_alpha101_alpha042_canonical_vwap_v2",
+      "kunquant_alpha101_alpha044",
+      "kunquant_alpha101_alpha045",
+      "kunquant_alpha101_alpha050",
+      "kunquant_alpha101_alpha050_canonical_vwap_v2",
+      "kunquant_alpha101_alpha055",
+      "kunquant_alpha101_alpha071",
+      "kunquant_alpha101_alpha077",
+      "kunquant_alpha101_alpha083",
+      "kunquant_alpha101_alpha084",
+      "kunquant_alpha101_alpha084_canonical_vwap_v2",
+      "kunquant_alpha101_alpha088",
+      "kunquant_alpha101_alpha094",
+      "kunquant_alpha101_alpha094_canonical_vwap_v2",
+      "mature_amihud_illiquidity_20",
+      "mature_book_to_market_pit",
+      "mature_book_to_price",
+      "mature_dividend_yield_ttm",
+      "mature_downside_volatility_60",
+      "mature_earnings_to_price_pit",
+      "mature_earnings_yield_ttm",
+      "mature_idiosyncratic_volatility_60",
+      "mature_intraday_return_20",
+      "mature_log_total_market_cap",
+      "mature_max_daily_return_21",
+      "mature_parkinson_volatility_20",
+      "mature_realized_volatility_60",
+      "mature_return_skewness_60",
+      "mature_reversal_1m",
+      "mature_sales_to_price_pit",
+      "mature_sales_to_price_ttm",
+      "mature_turnover_mean_20",
+      "mature_turnover_rate_free_float",
+      "mature_turnover_volatility_20",
+      "mature_vwap_deviation_20",
+      "ret_10",
+      "ret_20",
+      "ret_5",
+      "rev_20_exclude_5",
+      "rev_5",
+      "std_20",
+      "ta_momentum_ao",
+      "ta_momentum_kama",
+      "ta_momentum_ppo",
+      "ta_momentum_ppo_hist",
+      "ta_momentum_ppo_signal",
+      "ta_momentum_pvo",
+      "ta_momentum_pvo_signal",
+      "ta_momentum_roc",
+      "ta_momentum_rsi",
+      "ta_momentum_tsi",
+      "ta_momentum_uo",
+      "ta_trend_adx_neg",
+      "ta_trend_adx_pos",
+      "ta_trend_aroon_down",
+      "ta_trend_aroon_ind",
+      "ta_trend_aroon_up",
+      "ta_trend_cci",
+      "ta_trend_ema_fast",
+      "ta_trend_ema_slow",
+      "ta_trend_ichimoku_a",
+      "ta_trend_ichimoku_b",
+      "ta_trend_ichimoku_base",
+      "ta_trend_ichimoku_conv",
+      "ta_trend_kst",
+      "ta_trend_kst_diff",
+      "ta_trend_kst_sig",
+      "ta_trend_macd",
+      "ta_trend_macd_diff",
+      "ta_trend_macd_signal",
+      "ta_trend_mass_index",
+      "ta_trend_psar_down",
+      "ta_trend_sma_fast",
+      "ta_trend_sma_slow",
+      "ta_trend_stc",
+      "ta_trend_trix",
+      "ta_trend_vortex_ind_diff",
+      "ta_trend_vortex_ind_neg",
+      "ta_trend_vortex_ind_pos",
+      "ta_volatility_atr",
+      "ta_volatility_bbh",
+      "ta_volatility_bbhi",
+      "ta_volatility_bbm",
+      "ta_volatility_bbp",
+      "ta_volatility_dch",
+      "ta_volatility_dcl",
+      "ta_volatility_dcm",
+      "ta_volatility_dcp",
+      "ta_volatility_dcw",
+      "ta_volatility_kcc",
+      "ta_volatility_kch",
+      "ta_volatility_kchi",
+      "ta_volatility_kcl",
+      "ta_volatility_kcw",
+      "ta_volume_cmf",
+      "ta_volume_fi",
+      "ta_volume_mfi",
+      "ta_volume_vwap"
+    ],
+    "R": [
+      "alpha158_BETA10",
+      "alpha158_BETA20",
+      "alpha158_BETA30",
+      "alpha158_BETA5",
+      "alpha158_BETA60",
+      "alpha158_CNTD30",
+      "alpha158_CNTP30",
+      "alpha158_CORD10",
+      "alpha158_CORD20",
+      "alpha158_CORD30",
+      "alpha158_CORD5",
+      "alpha158_CORD60",
+      "alpha158_CORR10",
+      "alpha158_CORR20",
+      "alpha158_CORR30",
+      "alpha158_CORR5",
+      "alpha158_CORR60",
+      "alpha158_IMAX20",
+      "alpha158_IMAX30",
+      "alpha158_IMAX60",
+      "alpha158_IMIN20",
+      "alpha158_IMIN30",
+      "alpha158_IMIN60",
+      "alpha158_IMXD20",
+      "alpha158_IMXD30",
+      "alpha158_IMXD60",
+      "alpha158_KLEN",
+      "alpha158_KLOW",
+      "alpha158_KUP",
+      "alpha158_LOW0",
+      "alpha158_MA10",
+      "alpha158_MA20",
+      "alpha158_MA30",
+      "alpha158_MA5",
+      "alpha158_MA60",
+      "alpha158_MAX5",
+      "alpha158_MIN10",
+      "alpha158_MIN20",
+      "alpha158_MIN30",
+      "alpha158_MIN5",
+      "alpha158_MIN60",
+      "alpha158_QTLD10",
+      "alpha158_QTLD20",
+      "alpha158_QTLD30",
+      "alpha158_QTLD5",
+      "alpha158_QTLD60",
+      "alpha158_QTLU20",
+      "alpha158_QTLU30",
+      "alpha158_QTLU60",
+      "alpha158_RANK10",
+      "alpha158_RANK20",
+      "alpha158_RANK30",
+      "alpha158_RANK60",
+      "alpha158_RESI60",
+      "alpha158_ROC60",
+      "alpha158_RSV20",
+      "alpha158_RSV30",
+      "alpha158_RSV60",
+      "alpha158_STD10",
+      "alpha158_STD5",
+      "alpha158_SUMD10",
+      "alpha158_SUMD20",
+      "alpha158_SUMD30",
+      "alpha158_SUMD60",
+      "alpha158_SUMN10",
+      "alpha158_SUMN20",
+      "alpha158_SUMN30",
+      "alpha158_SUMN60",
+      "alpha158_SUMP10",
+      "alpha158_SUMP20",
+      "alpha158_SUMP30",
+      "alpha158_SUMP60",
+      "alpha158_VSUMD20",
+      "alpha158_VSUMD30",
+      "alpha158_VSUMD60",
+      "alpha158_VSUMN20",
+      "alpha158_VSUMN30",
+      "alpha158_VSUMN60",
+      "alpha158_VSUMP20",
+      "alpha158_VSUMP30",
+      "alpha158_VSUMP60",
+      "alpha360_CLOSE13",
+      "alpha360_CLOSE4",
+      "alpha360_CLOSE40",
+      "alpha360_HIGH13",
+      "alpha360_HIGH40",
+      "alpha360_HIGH5",
+      "alpha360_LOW13",
+      "alpha360_LOW3",
+      "alpha360_LOW40",
+      "alpha360_OPEN13",
+      "alpha360_OPEN3",
+      "alpha360_OPEN40",
+      "alpha360_VWAP13",
+      "alpha360_VWAP4",
+      "alpha360_VWAP40",
+      "amount_cv_20",
+      "amount_mean_20",
+      "amount_std_20",
+      "amplitude_20",
+      "corr_ret_amount_20",
+      "corr_ret_volume_20",
+      "kunquant_alpha101_alpha003",
+      "kunquant_alpha101_alpha004",
+      "kunquant_alpha101_alpha005",
+      "kunquant_alpha101_alpha006",
+      "kunquant_alpha101_alpha007",
+      "kunquant_alpha101_alpha011",
+      "kunquant_alpha101_alpha011_canonical_vwap_v2",
+      "kunquant_alpha101_alpha012",
+      "kunquant_alpha101_alpha013",
+      "kunquant_alpha101_alpha014",
+      "kunquant_alpha101_alpha015",
+      "kunquant_alpha101_alpha016",
+      "kunquant_alpha101_alpha024",
+      "kunquant_alpha101_alpha026",
+      "kunquant_alpha101_alpha035",
+      "kunquant_alpha101_alpha040",
+      "kunquant_alpha101_alpha041",
+      "kunquant_alpha101_alpha042",
+      "kunquant_alpha101_alpha042_canonical_vwap_v2",
+      "kunquant_alpha101_alpha044",
+      "kunquant_alpha101_alpha045",
+      "kunquant_alpha101_alpha050",
+      "kunquant_alpha101_alpha050_canonical_vwap_v2",
+      "kunquant_alpha101_alpha055",
+      "kunquant_alpha101_alpha071",
+      "kunquant_alpha101_alpha077",
+      "kunquant_alpha101_alpha083",
+      "kunquant_alpha101_alpha084",
+      "kunquant_alpha101_alpha084_canonical_vwap_v2",
+      "kunquant_alpha101_alpha088",
+      "kunquant_alpha101_alpha094",
+      "kunquant_alpha101_alpha094_canonical_vwap_v2",
+      "mature_amihud_illiquidity_20",
+      "mature_book_to_market_pit",
+      "mature_book_to_price",
+      "mature_dividend_yield_ttm",
+      "mature_downside_volatility_60",
+      "mature_earnings_to_price_pit",
+      "mature_earnings_yield_ttm",
+      "mature_idiosyncratic_volatility_60",
+      "mature_intraday_return_20",
+      "mature_log_total_market_cap",
+      "mature_max_daily_return_21",
+      "mature_parkinson_volatility_20",
+      "mature_realized_volatility_60",
+      "mature_return_skewness_60",
+      "mature_reversal_1m",
+      "mature_sales_to_price_pit",
+      "mature_sales_to_price_ttm",
+      "mature_turnover_mean_20",
+      "mature_turnover_rate_free_float",
+      "mature_turnover_volatility_20",
+      "mature_vwap_deviation_20",
+      "ret_10",
+      "ret_20",
+      "ret_5",
+      "rev_20_exclude_5",
+      "rev_5",
+      "std_20",
+      "ta_momentum_ao",
+      "ta_momentum_kama",
+      "ta_momentum_ppo",
+      "ta_momentum_ppo_hist",
+      "ta_momentum_ppo_signal",
+      "ta_momentum_pvo",
+      "ta_momentum_pvo_signal",
+      "ta_momentum_roc",
+      "ta_momentum_rsi",
+      "ta_momentum_tsi",
+      "ta_momentum_uo",
+      "ta_trend_adx_neg",
+      "ta_trend_adx_pos",
+      "ta_trend_aroon_down",
+      "ta_trend_aroon_ind",
+      "ta_trend_aroon_up",
+      "ta_trend_cci",
+      "ta_trend_ema_fast",
+      "ta_trend_ema_slow",
+      "ta_trend_ichimoku_a",
+      "ta_trend_ichimoku_b",
+      "ta_trend_ichimoku_base",
+      "ta_trend_ichimoku_conv",
+      "ta_trend_kst",
+      "ta_trend_kst_diff",
+      "ta_trend_kst_sig",
+      "ta_trend_macd",
+      "ta_trend_macd_diff",
+      "ta_trend_macd_signal",
+      "ta_trend_mass_index",
+      "ta_trend_psar_down",
+      "ta_trend_sma_fast",
+      "ta_trend_sma_slow",
+      "ta_trend_stc",
+      "ta_trend_trix",
+      "ta_trend_vortex_ind_diff",
+      "ta_trend_vortex_ind_neg",
+      "ta_trend_vortex_ind_pos",
+      "ta_volatility_atr",
+      "ta_volatility_bbh",
+      "ta_volatility_bbhi",
+      "ta_volatility_bbm",
+      "ta_volatility_bbp",
+      "ta_volatility_dch",
+      "ta_volatility_dcl",
+      "ta_volatility_dcm",
+      "ta_volatility_dcp",
+      "ta_volatility_dcw",
+      "ta_volatility_kcc",
+      "ta_volatility_kch",
+      "ta_volatility_kchi",
+      "ta_volatility_kcl",
+      "ta_volatility_kcw",
+      "ta_volume_cmf",
+      "ta_volume_fi",
+      "ta_volume_mfi",
+      "ta_volume_vwap"
+    ]
+  },
+  "canonical_dataset_id": "canonical-dataset:27518ddbb28ba2b4b1247375d4e3d32d7d5be9935a5f2074dc272f84285f6423",
+  "code_hashes_lf": {
+    "factor_research/literature_design.py": "8734ba90094ce29e2151c5060d9ebedba2716a477d7465d05ee818fc24562dfa",
+    "factor_research/literature_inputs.py": "cb1f7494c7bde43943d0ace057195dc2c43397c702d71a62f3b67f07a4f67cc8",
+    "factor_research/literature_representation.py": "ade6b9cedab6c9a79a27e050e421653b7991b25f97b3fd9608a52d757273df6d",
+    "research_validation/canonical_dataset.py": "36470d94efacba842e8e3ed1d4e921de1295e0a688833394cb17398f5b93e265",
+    "research_validation/literature_oracle.py": "eb4325fb866aac747bb8e97f6426ea545456b3db9640ef3a802cea29831b2e2a",
+    "scripts/run_literature_representation_d1.py": "e19051ab8645c243ab371b17b53a7ee56bd0f188b80ef9ce22c3b39a5df2e139"
+  },
+  "composites": [
+    {
+      "axis": "amihud_cost",
+      "economic_theme": "liquidity_cost",
+      "families": [
+        {
+          "id": "mature_amihud_illiquidity",
+          "members": [
+            {
+              "factor": "mature_amihud_illiquidity_20",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_939c61f2596b9b3e",
+      "semantic_id": "amihud_cost__window_20_min_observations_10",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "amount_absolute_variability",
+      "economic_theme": "trading_activity",
+      "families": [
+        {
+          "id": "amount_std",
+          "members": [
+            {
+              "factor": "amount_std_20",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_93e92c042f6e574b",
+      "semantic_id": "amount_absolute_variability__window_20",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "amount_level",
+      "economic_theme": "trading_activity",
+      "families": [
+        {
+          "id": "amount_mean",
+          "members": [
+            {
+              "factor": "amount_mean_20",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_deecfaa28672d890",
+      "semantic_id": "amount_level__window_20",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "amount_relative_variability",
+      "economic_theme": "trading_activity",
+      "families": [
+        {
+          "id": "amount_cv",
+          "members": [
+            {
+              "factor": "amount_cv_20",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_819e0e0b8186a56f",
+      "semantic_id": "amount_relative_variability__window_20",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "aroon_balance",
+      "economic_theme": "technical_state",
+      "families": [
+        {
+          "id": "AroonIndicator.aroon_indicator",
+          "members": [
+            {
+              "factor": "ta_trend_aroon_ind",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_88b156b24b0926ee",
+      "semantic_id": "aroon_balance__{\"window\": 25}",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "aroon_down",
+      "economic_theme": "technical_state",
+      "families": [
+        {
+          "id": "AroonIndicator.aroon_down",
+          "members": [
+            {
+              "factor": "ta_trend_aroon_down",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_184a9d5068007d83",
+      "semantic_id": "aroon_down__{\"window\": 25}",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "aroon_up",
+      "economic_theme": "technical_state",
+      "families": [
+        {
+          "id": "AroonIndicator.aroon_up",
+          "members": [
+            {
+              "factor": "ta_trend_aroon_up",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_7522921f6a7603d8",
+      "semantic_id": "aroon_up__{\"window\": 25}",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "bollinger_position",
+      "economic_theme": "price_path",
+      "families": [
+        {
+          "id": "BollingerBands.bollinger_pband",
+          "members": [
+            {
+              "factor": "ta_volatility_bbp",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_bf43c415efc83d87",
+      "semantic_id": "bollinger_position__{\"window\": 20, \"window_dev\": 2}",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "book_value_latest_statement",
+      "economic_theme": "valuation",
+      "families": [
+        {
+          "id": "mature_book_to_market_pit",
+          "members": [
+            {
+              "factor": "mature_book_to_market_pit",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_4198011de131cb6c",
+      "semantic_id": "book_value_latest_statement__latest_available_consolidated_statement_period_not_TTM_rebuilt",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "book_value_vendor_daily",
+      "economic_theme": "valuation",
+      "families": [
+        {
+          "id": "mature_book_to_price",
+          "members": [
+            {
+              "factor": "mature_book_to_price",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_ec2f12ea4d8480c4",
+      "semantic_id": "book_value_vendor_daily__asof_daily_basic",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "cci",
+      "economic_theme": "technical_state",
+      "families": [
+        {
+          "id": "CCIIndicator.cci",
+          "members": [
+            {
+              "factor": "ta_trend_cci",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_6e5b9f3457c7130a",
+      "semantic_id": "cci__{\"constant\": 0.015, \"window\": 20}",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "chaikin_flow",
+      "economic_theme": "trading_activity",
+      "families": [
+        {
+          "id": "ChaikinMoneyFlowIndicator.chaikin_money_flow",
+          "members": [
+            {
+              "factor": "ta_volume_cmf",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_4f1bcd69bd3f408a",
+      "semantic_id": "chaikin_flow__{\"window\": 20}",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "close_range_position",
+      "economic_theme": "price_path",
+      "families": [
+        {
+          "id": "alpha158_rsv",
+          "members": [
+            {
+              "factor": "alpha158_RSV20",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_190c45a632cbee4f",
+      "semantic_id": "close_range_position__window_20",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "close_range_position",
+      "economic_theme": "price_path",
+      "families": [
+        {
+          "id": "alpha158_rsv",
+          "members": [
+            {
+              "factor": "alpha158_RSV30",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_2e8b6cb0f9d7b86b",
+      "semantic_id": "close_range_position__window_30",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "close_range_position",
+      "economic_theme": "price_path",
+      "families": [
+        {
+          "id": "alpha158_rsv",
+          "members": [
+            {
+              "factor": "alpha158_RSV60",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_97070189f5d80692",
+      "semantic_id": "close_range_position__window_60",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "close_relative_to_current_close",
+      "economic_theme": "price_path",
+      "families": [
+        {
+          "id": "historical_close_current_close_ratio",
+          "members": [
+            {
+              "factor": "alpha158_ROC5",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_CLOSE3",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_CLOSE4",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_8706c2f0bfd43b03",
+      "semantic_id": "close_relative_to_current_close__d1_5",
+      "type": "rank_composite"
+    },
+    {
+      "axis": "close_relative_to_current_close",
+      "economic_theme": "price_path",
+      "families": [
+        {
+          "id": "historical_close_current_close_ratio",
+          "members": [
+            {
+              "factor": "alpha158_ROC30",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_CLOSE22",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_CLOSE23",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_CLOSE24",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_CLOSE25",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_CLOSE26",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_CLOSE27",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_CLOSE28",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_CLOSE29",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_CLOSE31",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_CLOSE32",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_CLOSE33",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_CLOSE34",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_CLOSE35",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_CLOSE36",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_CLOSE37",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_CLOSE38",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_CLOSE39",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_CLOSE40",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_CLOSE41",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_CLOSE42",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_CLOSE43",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_CLOSE44",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_CLOSE45",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_CLOSE46",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_CLOSE47",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_CLOSE48",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_CLOSE49",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_CLOSE50",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_CLOSE51",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_CLOSE52",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_CLOSE53",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_CLOSE54",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_CLOSE55",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_CLOSE56",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_CLOSE57",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_CLOSE58",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_CLOSE59",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_5c22c3b16e983dbe",
+      "semantic_id": "close_relative_to_current_close__d22_63",
+      "type": "rank_composite"
+    },
+    {
+      "axis": "close_relative_to_current_close",
+      "economic_theme": "price_path",
+      "families": [
+        {
+          "id": "historical_close_current_close_ratio",
+          "members": [
+            {
+              "factor": "alpha158_ROC10",
+              "sign": 1
+            },
+            {
+              "factor": "alpha158_ROC20",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_CLOSE11",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_CLOSE12",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_CLOSE13",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_CLOSE14",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_CLOSE15",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_CLOSE16",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_CLOSE17",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_CLOSE18",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_CLOSE19",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_CLOSE21",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_CLOSE6",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_CLOSE7",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_CLOSE8",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_CLOSE9",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_3ce66b8c7c80ae6d",
+      "semantic_id": "close_relative_to_current_close__d6_21",
+      "type": "rank_composite"
+    },
+    {
+      "axis": "close_vwap_deviation",
+      "economic_theme": "price_path",
+      "families": [
+        {
+          "id": "mature_vwap_deviation",
+          "members": [
+            {
+              "factor": "mature_vwap_deviation_20",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_32e317ff322f6e15",
+      "semantic_id": "close_vwap_deviation__window_20_min_observations_10",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "current_time_series_rank",
+      "economic_theme": "price_path",
+      "families": [
+        {
+          "id": "alpha158_rank",
+          "members": [
+            {
+              "factor": "alpha158_RANK10",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_3a3186e77dff7370",
+      "semantic_id": "current_time_series_rank__window_10",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "current_time_series_rank",
+      "economic_theme": "price_path",
+      "families": [
+        {
+          "id": "alpha158_rank",
+          "members": [
+            {
+              "factor": "alpha158_RANK20",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_cf2e9939172cbe6e",
+      "semantic_id": "current_time_series_rank__window_20",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "current_time_series_rank",
+      "economic_theme": "price_path",
+      "families": [
+        {
+          "id": "alpha158_rank",
+          "members": [
+            {
+              "factor": "alpha158_RANK30",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_023793c16a68c052",
+      "semantic_id": "current_time_series_rank__window_30",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "current_time_series_rank",
+      "economic_theme": "price_path",
+      "families": [
+        {
+          "id": "alpha158_rank",
+          "members": [
+            {
+              "factor": "alpha158_RANK60",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_b82f26d6b655fef4",
+      "semantic_id": "current_time_series_rank__window_60",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "dividend_yield_vendor_ttm",
+      "economic_theme": "valuation",
+      "families": [
+        {
+          "id": "mature_dividend_yield_ttm",
+          "members": [
+            {
+              "factor": "mature_dividend_yield_ttm",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_34b9a4407e53a5bc",
+      "semantic_id": "dividend_yield_vendor_ttm__vendor_TTM_asof_daily_basic",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "donchian_position",
+      "economic_theme": "price_path",
+      "families": [
+        {
+          "id": "DonchianChannel.donchian_channel_pband",
+          "members": [
+            {
+              "factor": "ta_volatility_dcp",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_0451fc1cf4a1975f",
+      "semantic_id": "donchian_position__{\"offset\": 0, \"window\": 20}",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "donchian_width",
+      "economic_theme": "volatility",
+      "families": [
+        {
+          "id": "DonchianChannel.donchian_channel_wband",
+          "members": [
+            {
+              "factor": "ta_volatility_dcw",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_b7cf4414b07717e6",
+      "semantic_id": "donchian_width__{\"offset\": 0, \"window\": 20}",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "downside_return_volatility",
+      "economic_theme": "volatility",
+      "families": [
+        {
+          "id": "mature_downside_volatility",
+          "members": [
+            {
+              "factor": "mature_downside_volatility_60",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_83b4f877804c5138",
+      "semantic_id": "downside_return_volatility__window_60_min_observations_15",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "earnings_latest_statement",
+      "economic_theme": "valuation",
+      "families": [
+        {
+          "id": "mature_earnings_to_price_pit",
+          "members": [
+            {
+              "factor": "mature_earnings_to_price_pit",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_b494570b9f6c640d",
+      "semantic_id": "earnings_latest_statement__latest_available_consolidated_statement_period_not_TTM_rebuilt",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "earnings_vendor_ttm",
+      "economic_theme": "valuation",
+      "families": [
+        {
+          "id": "mature_earnings_yield_ttm",
+          "members": [
+            {
+              "factor": "mature_earnings_yield_ttm",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_51590f98fed38ca2",
+      "semantic_id": "earnings_vendor_ttm__vendor_TTM_asof_daily_basic",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "extrema_position_difference",
+      "economic_theme": "price_path",
+      "families": [
+        {
+          "id": "alpha158_imxd",
+          "members": [
+            {
+              "factor": "alpha158_IMXD20",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_41781f0f49b6690f",
+      "semantic_id": "extrema_position_difference__window_20",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "extrema_position_difference",
+      "economic_theme": "price_path",
+      "families": [
+        {
+          "id": "alpha158_imxd",
+          "members": [
+            {
+              "factor": "alpha158_IMXD30",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_69a9de53d02b544f",
+      "semantic_id": "extrema_position_difference__window_30",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "extrema_position_difference",
+      "economic_theme": "price_path",
+      "families": [
+        {
+          "id": "alpha158_imxd",
+          "members": [
+            {
+              "factor": "alpha158_IMXD60",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_2ed30c042ef65f0a",
+      "semantic_id": "extrema_position_difference__window_60",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "high_relative_to_current_close",
+      "economic_theme": "price_path",
+      "families": [
+        {
+          "id": "historical_high_current_close_ratio",
+          "members": [
+            {
+              "factor": "alpha360_HIGH5",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_c74981a558c90dd1",
+      "semantic_id": "high_relative_to_current_close__d1_5",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "high_relative_to_current_close",
+      "economic_theme": "price_path",
+      "families": [
+        {
+          "id": "historical_high_current_close_ratio",
+          "members": [
+            {
+              "factor": "alpha360_HIGH22",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_HIGH23",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_HIGH24",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_HIGH25",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_HIGH26",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_HIGH27",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_HIGH28",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_HIGH29",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_HIGH30",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_HIGH31",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_HIGH32",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_HIGH33",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_HIGH34",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_HIGH35",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_HIGH36",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_HIGH37",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_HIGH38",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_HIGH39",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_HIGH40",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_HIGH41",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_HIGH42",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_HIGH43",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_HIGH44",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_HIGH45",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_HIGH46",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_HIGH47",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_HIGH48",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_HIGH49",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_HIGH50",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_HIGH51",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_HIGH52",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_HIGH53",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_HIGH54",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_HIGH55",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_HIGH56",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_HIGH57",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_HIGH58",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_HIGH59",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_cfa35104ce583e7d",
+      "semantic_id": "high_relative_to_current_close__d22_63",
+      "type": "rank_composite"
+    },
+    {
+      "axis": "high_relative_to_current_close",
+      "economic_theme": "price_path",
+      "families": [
+        {
+          "id": "historical_high_current_close_ratio",
+          "members": [
+            {
+              "factor": "alpha360_HIGH10",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_HIGH11",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_HIGH12",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_HIGH13",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_HIGH14",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_HIGH15",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_HIGH16",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_HIGH17",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_HIGH18",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_HIGH19",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_HIGH20",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_HIGH21",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_HIGH6",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_HIGH7",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_HIGH8",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_HIGH9",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_f6369a88c1589e3f",
+      "semantic_id": "high_relative_to_current_close__d6_21",
+      "type": "rank_composite"
+    },
+    {
+      "axis": "idiosyncratic_volatility",
+      "economic_theme": "residual_risk",
+      "families": [
+        {
+          "id": "mature_idiosyncratic_volatility",
+          "members": [
+            {
+              "factor": "mature_idiosyncratic_volatility_60",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_816a4a8c2194f406",
+      "semantic_id": "idiosyncratic_volatility__beta_window_60_min40_then_residual_std_window_60_min40",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "intraday_range_open_normalized",
+      "economic_theme": "within_day_shape",
+      "families": [
+        {
+          "id": "intraday_klen",
+          "members": [
+            {
+              "factor": "alpha158_KLEN",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_f49640007a32dc45",
+      "semantic_id": "intraday_range_open_normalized__same_day",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "intraday_return_mean",
+      "economic_theme": "within_day_shape",
+      "families": [
+        {
+          "id": "mature_intraday_return",
+          "members": [
+            {
+              "factor": "mature_intraday_return_20",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_2e1e5bd8ecff9dd8",
+      "semantic_id": "intraday_return_mean__window_20_min_observations_10",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "keltner_width",
+      "economic_theme": "volatility",
+      "families": [
+        {
+          "id": "KeltnerChannel.keltner_channel_wband",
+          "members": [
+            {
+              "factor": "ta_volatility_kcw",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_b9ff5bca8ee18bdb",
+      "semantic_id": "keltner_width__{\"multiplier\": 2, \"original_version\": true, \"window\": 10, \"window_atr\": 10}",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "kst",
+      "economic_theme": "return_trend",
+      "families": [
+        {
+          "id": "KSTIndicator.kst",
+          "members": [
+            {
+              "factor": "ta_trend_kst",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_6140a537d206c638",
+      "semantic_id": "kst__{\"nsig\": 9, \"roc1\": 10, \"roc2\": 15, \"roc3\": 20, \"roc4\": 30, \"window1\": 10, \"window2\": 10, \"window3\": 10, \"window4\": 15}",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "kst_difference",
+      "economic_theme": "return_trend",
+      "families": [
+        {
+          "id": "KSTIndicator.kst_diff",
+          "members": [
+            {
+              "factor": "ta_trend_kst_diff",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_11517d81c4a1cf82",
+      "semantic_id": "kst_difference__{\"nsig\": 9, \"roc1\": 10, \"roc2\": 15, \"roc3\": 20, \"roc4\": 30, \"window1\": 10, \"window2\": 10, \"window3\": 10, \"window4\": 15}",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "kst_signal",
+      "economic_theme": "return_trend",
+      "families": [
+        {
+          "id": "KSTIndicator.kst_sig",
+          "members": [
+            {
+              "factor": "ta_trend_kst_sig",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_c403d40d7acc7d5f",
+      "semantic_id": "kst_signal__{\"nsig\": 9, \"roc1\": 10, \"roc2\": 15, \"roc3\": 20, \"roc4\": 30, \"window1\": 10, \"window2\": 10, \"window3\": 10, \"window4\": 15}",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "low_relative_to_current_close",
+      "economic_theme": "price_path",
+      "families": [
+        {
+          "id": "historical_low_current_close_ratio",
+          "members": [
+            {
+              "factor": "alpha158_LOW0",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_92f48216ed9e9323",
+      "semantic_id": "low_relative_to_current_close__d0",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "low_relative_to_current_close",
+      "economic_theme": "price_path",
+      "families": [
+        {
+          "id": "historical_low_current_close_ratio",
+          "members": [
+            {
+              "factor": "alpha360_LOW1",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_LOW2",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_LOW3",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_LOW4",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_LOW5",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_68b1ddfe076f4115",
+      "semantic_id": "low_relative_to_current_close__d1_5",
+      "type": "rank_composite"
+    },
+    {
+      "axis": "low_relative_to_current_close",
+      "economic_theme": "price_path",
+      "families": [
+        {
+          "id": "historical_low_current_close_ratio",
+          "members": [
+            {
+              "factor": "alpha360_LOW22",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_LOW23",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_LOW24",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_LOW25",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_LOW26",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_LOW27",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_LOW28",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_LOW29",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_LOW30",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_LOW31",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_LOW32",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_LOW33",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_LOW34",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_LOW35",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_LOW36",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_LOW37",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_LOW38",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_LOW39",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_LOW40",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_LOW41",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_LOW42",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_LOW43",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_LOW44",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_LOW45",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_LOW46",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_LOW47",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_LOW48",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_LOW49",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_LOW50",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_LOW51",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_LOW52",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_LOW53",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_LOW54",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_LOW55",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_LOW56",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_LOW57",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_LOW58",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_LOW59",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_50446426a2469979",
+      "semantic_id": "low_relative_to_current_close__d22_63",
+      "type": "rank_composite"
+    },
+    {
+      "axis": "low_relative_to_current_close",
+      "economic_theme": "price_path",
+      "families": [
+        {
+          "id": "historical_low_current_close_ratio",
+          "members": [
+            {
+              "factor": "alpha360_LOW10",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_LOW11",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_LOW12",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_LOW13",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_LOW14",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_LOW15",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_LOW16",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_LOW17",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_LOW18",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_LOW19",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_LOW20",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_LOW21",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_LOW6",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_LOW7",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_LOW8",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_LOW9",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_716af060ecb85801",
+      "semantic_id": "low_relative_to_current_close__d6_21",
+      "type": "rank_composite"
+    },
+    {
+      "axis": "lower_quantile_relative_to_current",
+      "economic_theme": "price_path",
+      "families": [
+        {
+          "id": "alpha158_qtld",
+          "members": [
+            {
+              "factor": "alpha158_QTLD10",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_485005ec7e9db28f",
+      "semantic_id": "lower_quantile_relative_to_current__window_10",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "lower_quantile_relative_to_current",
+      "economic_theme": "price_path",
+      "families": [
+        {
+          "id": "alpha158_qtld",
+          "members": [
+            {
+              "factor": "alpha158_QTLD20",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_a4bd307d9681d1d0",
+      "semantic_id": "lower_quantile_relative_to_current__window_20",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "lower_quantile_relative_to_current",
+      "economic_theme": "price_path",
+      "families": [
+        {
+          "id": "alpha158_qtld",
+          "members": [
+            {
+              "factor": "alpha158_QTLD30",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_fcdcc3255938b010",
+      "semantic_id": "lower_quantile_relative_to_current__window_30",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "lower_quantile_relative_to_current",
+      "economic_theme": "price_path",
+      "families": [
+        {
+          "id": "alpha158_qtld",
+          "members": [
+            {
+              "factor": "alpha158_QTLD5",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_00788fafdcd6a5d7",
+      "semantic_id": "lower_quantile_relative_to_current__window_5",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "lower_quantile_relative_to_current",
+      "economic_theme": "price_path",
+      "families": [
+        {
+          "id": "alpha158_qtld",
+          "members": [
+            {
+              "factor": "alpha158_QTLD60",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_be40843e5fb9d5fd",
+      "semantic_id": "lower_quantile_relative_to_current__window_60",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "lower_shadow",
+      "economic_theme": "within_day_shape",
+      "families": [
+        {
+          "id": "intraday_klow",
+          "members": [
+            {
+              "factor": "alpha158_KLOW",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_702556b9583c13f0",
+      "semantic_id": "lower_shadow__same_day",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "mass_index",
+      "economic_theme": "technical_state",
+      "families": [
+        {
+          "id": "MassIndex.mass_index",
+          "members": [
+            {
+              "factor": "ta_trend_mass_index",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_631efedd679b71e1",
+      "semantic_id": "mass_index__{\"window_fast\": 9, \"window_slow\": 25}",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "maximum_daily_return",
+      "economic_theme": "asymmetry",
+      "families": [
+        {
+          "id": "mature_max_daily_return",
+          "members": [
+            {
+              "factor": "mature_max_daily_return_21",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_c30ec30ae026518f",
+      "semantic_id": "maximum_daily_return__window_21_min_observations_11",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "maximum_position",
+      "economic_theme": "price_path",
+      "families": [
+        {
+          "id": "alpha158_imax",
+          "members": [
+            {
+              "factor": "alpha158_IMAX20",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_6fdaebce7fbeb966",
+      "semantic_id": "maximum_position__window_20",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "maximum_position",
+      "economic_theme": "price_path",
+      "families": [
+        {
+          "id": "alpha158_imax",
+          "members": [
+            {
+              "factor": "alpha158_IMAX30",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_0a1aac410f6966dc",
+      "semantic_id": "maximum_position__window_30",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "maximum_position",
+      "economic_theme": "price_path",
+      "families": [
+        {
+          "id": "alpha158_imax",
+          "members": [
+            {
+              "factor": "alpha158_IMAX60",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_ffe2253a1023c6b2",
+      "semantic_id": "maximum_position__window_60",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "maximum_relative_to_current",
+      "economic_theme": "price_path",
+      "families": [
+        {
+          "id": "alpha158_max",
+          "members": [
+            {
+              "factor": "alpha158_MAX5",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_350a39fe9841cb3f",
+      "semantic_id": "maximum_relative_to_current__window_5",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "mean_price_relative_to_current",
+      "economic_theme": "price_path",
+      "families": [
+        {
+          "id": "alpha158_ma",
+          "members": [
+            {
+              "factor": "alpha158_MA10",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_6be82424a71f9bc7",
+      "semantic_id": "mean_price_relative_to_current__window_10",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "mean_price_relative_to_current",
+      "economic_theme": "price_path",
+      "families": [
+        {
+          "id": "alpha158_ma",
+          "members": [
+            {
+              "factor": "alpha158_MA20",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_6c25ed64ad6c567b",
+      "semantic_id": "mean_price_relative_to_current__window_20",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "mean_price_relative_to_current",
+      "economic_theme": "price_path",
+      "families": [
+        {
+          "id": "alpha158_ma",
+          "members": [
+            {
+              "factor": "alpha158_MA30",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_ac2a69aef3f2ad78",
+      "semantic_id": "mean_price_relative_to_current__window_30",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "mean_price_relative_to_current",
+      "economic_theme": "price_path",
+      "families": [
+        {
+          "id": "alpha158_ma",
+          "members": [
+            {
+              "factor": "alpha158_MA5",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_687f9778a5f68686",
+      "semantic_id": "mean_price_relative_to_current__window_5",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "mean_price_relative_to_current",
+      "economic_theme": "price_path",
+      "families": [
+        {
+          "id": "alpha158_ma",
+          "members": [
+            {
+              "factor": "alpha158_MA60",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_040fdbdf6f80eb9b",
+      "semantic_id": "mean_price_relative_to_current__window_60",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "mfi",
+      "economic_theme": "technical_state",
+      "families": [
+        {
+          "id": "MFIIndicator.money_flow_index",
+          "members": [
+            {
+              "factor": "ta_volume_mfi",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_215a508805fe1c20",
+      "semantic_id": "mfi__{\"window\": 14}",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "minimum_position",
+      "economic_theme": "price_path",
+      "families": [
+        {
+          "id": "alpha158_imin",
+          "members": [
+            {
+              "factor": "alpha158_IMIN20",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_735659eb2774afc7",
+      "semantic_id": "minimum_position__window_20",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "minimum_position",
+      "economic_theme": "price_path",
+      "families": [
+        {
+          "id": "alpha158_imin",
+          "members": [
+            {
+              "factor": "alpha158_IMIN30",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_3560d64fb68e4d18",
+      "semantic_id": "minimum_position__window_30",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "minimum_position",
+      "economic_theme": "price_path",
+      "families": [
+        {
+          "id": "alpha158_imin",
+          "members": [
+            {
+              "factor": "alpha158_IMIN60",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_1881209c97b92e2e",
+      "semantic_id": "minimum_position__window_60",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "minimum_relative_to_current",
+      "economic_theme": "price_path",
+      "families": [
+        {
+          "id": "alpha158_min",
+          "members": [
+            {
+              "factor": "alpha158_MIN10",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_1fe2bf6a7f56d591",
+      "semantic_id": "minimum_relative_to_current__window_10",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "minimum_relative_to_current",
+      "economic_theme": "price_path",
+      "families": [
+        {
+          "id": "alpha158_min",
+          "members": [
+            {
+              "factor": "alpha158_MIN20",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_9cc7f344785be999",
+      "semantic_id": "minimum_relative_to_current__window_20",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "minimum_relative_to_current",
+      "economic_theme": "price_path",
+      "families": [
+        {
+          "id": "alpha158_min",
+          "members": [
+            {
+              "factor": "alpha158_MIN30",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_ed30570272d1c57c",
+      "semantic_id": "minimum_relative_to_current__window_30",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "minimum_relative_to_current",
+      "economic_theme": "price_path",
+      "families": [
+        {
+          "id": "alpha158_min",
+          "members": [
+            {
+              "factor": "alpha158_MIN5",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_7ffe8e0e5f3cb5af",
+      "semantic_id": "minimum_relative_to_current__window_5",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "minimum_relative_to_current",
+      "economic_theme": "price_path",
+      "families": [
+        {
+          "id": "alpha158_min",
+          "members": [
+            {
+              "factor": "alpha158_MIN60",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_89fe4369113645bf",
+      "semantic_id": "minimum_relative_to_current__window_60",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "normalized_price_slope",
+      "economic_theme": "return_trend",
+      "families": [
+        {
+          "id": "normalized_price_slope",
+          "members": [
+            {
+              "factor": "alpha158_BETA10",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_52b20f87e810021b",
+      "semantic_id": "normalized_price_slope__window_10",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "normalized_price_slope",
+      "economic_theme": "return_trend",
+      "families": [
+        {
+          "id": "normalized_price_slope",
+          "members": [
+            {
+              "factor": "alpha158_BETA20",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_eb51e5bf1ab2107c",
+      "semantic_id": "normalized_price_slope__window_20",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "normalized_price_slope",
+      "economic_theme": "return_trend",
+      "families": [
+        {
+          "id": "normalized_price_slope",
+          "members": [
+            {
+              "factor": "alpha158_BETA30",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_f67f5315575f570b",
+      "semantic_id": "normalized_price_slope__window_30",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "normalized_price_slope",
+      "economic_theme": "return_trend",
+      "families": [
+        {
+          "id": "normalized_price_slope",
+          "members": [
+            {
+              "factor": "alpha158_BETA5",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_11b179c281e84335",
+      "semantic_id": "normalized_price_slope__window_5",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "normalized_price_slope",
+      "economic_theme": "return_trend",
+      "families": [
+        {
+          "id": "normalized_price_slope",
+          "members": [
+            {
+              "factor": "alpha158_BETA60",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_3cbadf7497f354e3",
+      "semantic_id": "normalized_price_slope__window_60",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "normalized_regression_residual",
+      "economic_theme": "price_path",
+      "families": [
+        {
+          "id": "alpha158_resi",
+          "members": [
+            {
+              "factor": "alpha158_RESI60",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_abe10265409823ee",
+      "semantic_id": "normalized_regression_residual__window_60",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "open_relative_to_current_close",
+      "economic_theme": "price_path",
+      "families": [
+        {
+          "id": "historical_open_current_close_ratio",
+          "members": [
+            {
+              "factor": "alpha360_OPEN2",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_OPEN3",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_OPEN4",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_OPEN5",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_ec991f61e2fa8754",
+      "semantic_id": "open_relative_to_current_close__d1_5",
+      "type": "rank_composite"
+    },
+    {
+      "axis": "open_relative_to_current_close",
+      "economic_theme": "price_path",
+      "families": [
+        {
+          "id": "historical_open_current_close_ratio",
+          "members": [
+            {
+              "factor": "alpha360_OPEN22",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_OPEN23",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_OPEN24",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_OPEN25",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_OPEN26",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_OPEN27",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_OPEN28",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_OPEN29",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_OPEN30",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_OPEN31",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_OPEN32",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_OPEN33",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_OPEN34",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_OPEN35",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_OPEN36",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_OPEN37",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_OPEN38",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_OPEN39",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_OPEN40",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_OPEN41",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_OPEN42",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_OPEN43",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_OPEN44",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_OPEN45",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_OPEN46",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_OPEN47",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_OPEN48",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_OPEN49",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_OPEN50",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_OPEN51",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_OPEN52",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_OPEN53",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_OPEN54",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_OPEN55",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_OPEN56",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_OPEN57",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_OPEN58",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_OPEN59",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_e1375e9cc265601a",
+      "semantic_id": "open_relative_to_current_close__d22_63",
+      "type": "rank_composite"
+    },
+    {
+      "axis": "open_relative_to_current_close",
+      "economic_theme": "price_path",
+      "families": [
+        {
+          "id": "historical_open_current_close_ratio",
+          "members": [
+            {
+              "factor": "alpha360_OPEN10",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_OPEN11",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_OPEN12",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_OPEN13",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_OPEN14",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_OPEN15",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_OPEN16",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_OPEN17",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_OPEN18",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_OPEN19",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_OPEN20",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_OPEN21",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_OPEN6",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_OPEN7",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_OPEN8",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_OPEN9",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_de16999187d03a2f",
+      "semantic_id": "open_relative_to_current_close__d6_21",
+      "type": "rank_composite"
+    },
+    {
+      "axis": "past_return",
+      "economic_theme": "return_trend",
+      "families": [
+        {
+          "id": "mature_reversal_1m",
+          "members": [
+            {
+              "factor": "mature_reversal_1m",
+              "sign": -1
+            }
+          ]
+        }
+      ],
+      "id": "erc_d50fb0899624f1da",
+      "semantic_id": "past_return__lag_21",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "past_return",
+      "economic_theme": "return_trend",
+      "families": [
+        {
+          "id": "simple_close_to_close_return",
+          "members": [
+            {
+              "factor": "ret_10",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_6666016380bb418a",
+      "semantic_id": "past_return__window_10",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "past_return",
+      "economic_theme": "return_trend",
+      "families": [
+        {
+          "id": "simple_close_to_close_return",
+          "members": [
+            {
+              "factor": "ret_20",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_91ed70ebe8ab7f7b",
+      "semantic_id": "past_return__window_20",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "past_return",
+      "economic_theme": "return_trend",
+      "families": [
+        {
+          "id": "simple_close_to_close_return",
+          "members": [
+            {
+              "factor": "ret_5",
+              "sign": 1
+            },
+            {
+              "factor": "rev_5",
+              "sign": -1
+            }
+          ]
+        }
+      ],
+      "id": "erc_ce402b81a19b777d",
+      "semantic_id": "past_return__window_5",
+      "type": "rank_composite"
+    },
+    {
+      "axis": "past_return",
+      "economic_theme": "return_trend",
+      "families": [
+        {
+          "id": "alpha158_roc",
+          "members": [
+            {
+              "factor": "alpha158_ROC60",
+              "sign": -1
+            }
+          ]
+        }
+      ],
+      "id": "erc_26bec51c7e111771",
+      "semantic_id": "past_return__window_60",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "past_return",
+      "economic_theme": "return_trend",
+      "families": [
+        {
+          "id": "ROCIndicator.roc",
+          "members": [
+            {
+              "factor": "ta_momentum_roc",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_2831b0e43d38e4b5",
+      "semantic_id": "past_return__{\"window\": 12}",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "past_return_excluding_recent",
+      "economic_theme": "return_trend",
+      "families": [
+        {
+          "id": "rev_20_exclude_5",
+          "members": [
+            {
+              "factor": "rev_20_exclude_5",
+              "sign": -1
+            }
+          ]
+        }
+      ],
+      "id": "erc_da1565e6303757b2",
+      "semantic_id": "past_return_excluding_recent__lags_5_to_20",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "positive_price_variation",
+      "economic_theme": "return_trend",
+      "families": [
+        {
+          "id": "price_change_positive_negative_partition",
+          "members": [
+            {
+              "factor": "alpha158_SUMD10",
+              "sign": 1
+            },
+            {
+              "factor": "alpha158_SUMN10",
+              "sign": -1
+            },
+            {
+              "factor": "alpha158_SUMP10",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_228b22f6ffe04c86",
+      "semantic_id": "positive_price_variation__window_10",
+      "type": "rank_composite"
+    },
+    {
+      "axis": "positive_price_variation",
+      "economic_theme": "return_trend",
+      "families": [
+        {
+          "id": "price_change_positive_negative_partition",
+          "members": [
+            {
+              "factor": "alpha158_SUMD20",
+              "sign": 1
+            },
+            {
+              "factor": "alpha158_SUMN20",
+              "sign": -1
+            },
+            {
+              "factor": "alpha158_SUMP20",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_c36f4e900bbed946",
+      "semantic_id": "positive_price_variation__window_20",
+      "type": "rank_composite"
+    },
+    {
+      "axis": "positive_price_variation",
+      "economic_theme": "return_trend",
+      "families": [
+        {
+          "id": "price_change_positive_negative_partition",
+          "members": [
+            {
+              "factor": "alpha158_SUMD30",
+              "sign": 1
+            },
+            {
+              "factor": "alpha158_SUMN30",
+              "sign": -1
+            },
+            {
+              "factor": "alpha158_SUMP30",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_db3d561078c82ac3",
+      "semantic_id": "positive_price_variation__window_30",
+      "type": "rank_composite"
+    },
+    {
+      "axis": "positive_price_variation",
+      "economic_theme": "return_trend",
+      "families": [
+        {
+          "id": "price_change_positive_negative_partition",
+          "members": [
+            {
+              "factor": "alpha158_SUMD60",
+              "sign": 1
+            },
+            {
+              "factor": "alpha158_SUMN60",
+              "sign": -1
+            },
+            {
+              "factor": "alpha158_SUMP60",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_8ef02558087d3f63",
+      "semantic_id": "positive_price_variation__window_60",
+      "type": "rank_composite"
+    },
+    {
+      "axis": "positive_volume_variation",
+      "economic_theme": "trading_activity",
+      "families": [
+        {
+          "id": "volume_change_positive_negative_partition",
+          "members": [
+            {
+              "factor": "alpha158_VSUMD20",
+              "sign": 1
+            },
+            {
+              "factor": "alpha158_VSUMN20",
+              "sign": -1
+            },
+            {
+              "factor": "alpha158_VSUMP20",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_1c97f35e1c57a7ce",
+      "semantic_id": "positive_volume_variation__window_20",
+      "type": "rank_composite"
+    },
+    {
+      "axis": "positive_volume_variation",
+      "economic_theme": "trading_activity",
+      "families": [
+        {
+          "id": "volume_change_positive_negative_partition",
+          "members": [
+            {
+              "factor": "alpha158_VSUMD30",
+              "sign": 1
+            },
+            {
+              "factor": "alpha158_VSUMN30",
+              "sign": -1
+            },
+            {
+              "factor": "alpha158_VSUMP30",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_9dab8b78f9bba2f8",
+      "semantic_id": "positive_volume_variation__window_30",
+      "type": "rank_composite"
+    },
+    {
+      "axis": "positive_volume_variation",
+      "economic_theme": "trading_activity",
+      "families": [
+        {
+          "id": "volume_change_positive_negative_partition",
+          "members": [
+            {
+              "factor": "alpha158_VSUMD60",
+              "sign": 1
+            },
+            {
+              "factor": "alpha158_VSUMN60",
+              "sign": -1
+            },
+            {
+              "factor": "alpha158_VSUMP60",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_76d829963fb2f9ee",
+      "semantic_id": "positive_volume_variation__window_60",
+      "type": "rank_composite"
+    },
+    {
+      "axis": "ppo",
+      "economic_theme": "return_trend",
+      "families": [
+        {
+          "id": "PercentagePriceOscillator.ppo",
+          "members": [
+            {
+              "factor": "ta_momentum_ppo",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_c1373d3c21cdcf3f",
+      "semantic_id": "ppo__{\"window_fast\": 12, \"window_sign\": 9, \"window_slow\": 26}",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "ppo_hist",
+      "economic_theme": "return_trend",
+      "families": [
+        {
+          "id": "PercentagePriceOscillator.ppo_hist",
+          "members": [
+            {
+              "factor": "ta_momentum_ppo_hist",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_408a3040f42d3aa2",
+      "semantic_id": "ppo_hist__{\"window_fast\": 12, \"window_sign\": 9, \"window_slow\": 26}",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "ppo_signal",
+      "economic_theme": "return_trend",
+      "families": [
+        {
+          "id": "PercentagePriceOscillator.ppo_signal",
+          "members": [
+            {
+              "factor": "ta_momentum_ppo_signal",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_eee9c6c4390e2340",
+      "semantic_id": "ppo_signal__{\"window_fast\": 12, \"window_sign\": 9, \"window_slow\": 26}",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "price_dispersion",
+      "economic_theme": "volatility",
+      "families": [
+        {
+          "id": "alpha158_std",
+          "members": [
+            {
+              "factor": "alpha158_STD10",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_618fc830545cb661",
+      "semantic_id": "price_dispersion__window_10",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "price_dispersion",
+      "economic_theme": "volatility",
+      "families": [
+        {
+          "id": "alpha158_std",
+          "members": [
+            {
+              "factor": "alpha158_STD5",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_194a629a3014a2c0",
+      "semantic_id": "price_dispersion__window_5",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "price_log_volume_correlation",
+      "economic_theme": "trading_activity",
+      "families": [
+        {
+          "id": "alpha158_corr",
+          "members": [
+            {
+              "factor": "alpha158_CORR10",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_38d851d16107ea47",
+      "semantic_id": "price_log_volume_correlation__window_10",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "price_log_volume_correlation",
+      "economic_theme": "trading_activity",
+      "families": [
+        {
+          "id": "alpha158_corr",
+          "members": [
+            {
+              "factor": "alpha158_CORR20",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_9c6a81e5b35cf7c0",
+      "semantic_id": "price_log_volume_correlation__window_20",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "price_log_volume_correlation",
+      "economic_theme": "trading_activity",
+      "families": [
+        {
+          "id": "alpha158_corr",
+          "members": [
+            {
+              "factor": "alpha158_CORR30",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_037ede19dfe67dad",
+      "semantic_id": "price_log_volume_correlation__window_30",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "price_log_volume_correlation",
+      "economic_theme": "trading_activity",
+      "families": [
+        {
+          "id": "alpha158_corr",
+          "members": [
+            {
+              "factor": "alpha158_CORR5",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_64f656a225c40c87",
+      "semantic_id": "price_log_volume_correlation__window_5",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "price_log_volume_correlation",
+      "economic_theme": "trading_activity",
+      "families": [
+        {
+          "id": "alpha158_corr",
+          "members": [
+            {
+              "factor": "alpha158_CORR60",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_310a9f67e8f80039",
+      "semantic_id": "price_log_volume_correlation__window_60",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "pvo",
+      "economic_theme": "trading_activity",
+      "families": [
+        {
+          "id": "PercentageVolumeOscillator.pvo",
+          "members": [
+            {
+              "factor": "ta_momentum_pvo",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_0c3d95428646e6a5",
+      "semantic_id": "pvo__{\"window_fast\": 12, \"window_sign\": 9, \"window_slow\": 26}",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "pvo_signal",
+      "economic_theme": "trading_activity",
+      "families": [
+        {
+          "id": "PercentageVolumeOscillator.pvo_signal",
+          "members": [
+            {
+              "factor": "ta_momentum_pvo_signal",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_00117565632c65c3",
+      "semantic_id": "pvo_signal__{\"window_fast\": 12, \"window_sign\": 9, \"window_slow\": 26}",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "range_intensity",
+      "economic_theme": "volatility",
+      "families": [
+        {
+          "id": "amplitude",
+          "members": [
+            {
+              "factor": "amplitude_20",
+              "sign": 1
+            }
+          ]
+        },
+        {
+          "id": "mature_parkinson_volatility",
+          "members": [
+            {
+              "factor": "mature_parkinson_volatility_20",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_d05fc30b232b94ef",
+      "semantic_id": "range_intensity__window_20_distinct_estimators_and_min_observations",
+      "type": "rank_composite"
+    },
+    {
+      "axis": "return_amount_level_correlation",
+      "economic_theme": "trading_activity",
+      "families": [
+        {
+          "id": "corr_ret_amount",
+          "members": [
+            {
+              "factor": "corr_ret_amount_20",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_d6eb10b4c727a2b1",
+      "semantic_id": "return_amount_level_correlation__window_20",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "return_skewness",
+      "economic_theme": "asymmetry",
+      "families": [
+        {
+          "id": "mature_return_skewness",
+          "members": [
+            {
+              "factor": "mature_return_skewness_60",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_77a7e5e844591c15",
+      "semantic_id": "return_skewness__window_60_min_observations_30",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "return_volatility",
+      "economic_theme": "volatility",
+      "families": [
+        {
+          "id": "std",
+          "members": [
+            {
+              "factor": "std_20",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_a62122354513b466",
+      "semantic_id": "return_volatility__window_20",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "return_volatility",
+      "economic_theme": "volatility",
+      "families": [
+        {
+          "id": "mature_realized_volatility",
+          "members": [
+            {
+              "factor": "mature_realized_volatility_60",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_ef4f73c61c389b84",
+      "semantic_id": "return_volatility__window_60_min_observations_30",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "return_volume_growth_correlation",
+      "economic_theme": "trading_activity",
+      "families": [
+        {
+          "id": "alpha158_cord",
+          "members": [
+            {
+              "factor": "alpha158_CORD10",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_8bcb0bbe96063a8a",
+      "semantic_id": "return_volume_growth_correlation__window_10",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "return_volume_growth_correlation",
+      "economic_theme": "trading_activity",
+      "families": [
+        {
+          "id": "alpha158_cord",
+          "members": [
+            {
+              "factor": "alpha158_CORD20",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_4086289249c98f60",
+      "semantic_id": "return_volume_growth_correlation__window_20",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "return_volume_growth_correlation",
+      "economic_theme": "trading_activity",
+      "families": [
+        {
+          "id": "alpha158_cord",
+          "members": [
+            {
+              "factor": "alpha158_CORD30",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_9b5603b83cfb0ed1",
+      "semantic_id": "return_volume_growth_correlation__window_30",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "return_volume_growth_correlation",
+      "economic_theme": "trading_activity",
+      "families": [
+        {
+          "id": "alpha158_cord",
+          "members": [
+            {
+              "factor": "alpha158_CORD5",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_401d8dfcc7503986",
+      "semantic_id": "return_volume_growth_correlation__window_5",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "return_volume_growth_correlation",
+      "economic_theme": "trading_activity",
+      "families": [
+        {
+          "id": "alpha158_cord",
+          "members": [
+            {
+              "factor": "alpha158_CORD60",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_e0039336c9cf90d7",
+      "semantic_id": "return_volume_growth_correlation__window_60",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "return_volume_level_correlation",
+      "economic_theme": "trading_activity",
+      "families": [
+        {
+          "id": "corr_ret_volume",
+          "members": [
+            {
+              "factor": "corr_ret_volume_20",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_c7bade0851d0b522",
+      "semantic_id": "return_volume_level_correlation__window_20",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "rsi",
+      "economic_theme": "technical_state",
+      "families": [
+        {
+          "id": "RSIIndicator.rsi",
+          "members": [
+            {
+              "factor": "ta_momentum_rsi",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_0a67371497d65238",
+      "semantic_id": "rsi__{\"window\": 14}",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "sales_latest_statement",
+      "economic_theme": "valuation",
+      "families": [
+        {
+          "id": "mature_sales_to_price_pit",
+          "members": [
+            {
+              "factor": "mature_sales_to_price_pit",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_c95d8c672d045221",
+      "semantic_id": "sales_latest_statement__latest_available_consolidated_statement_period_not_TTM_rebuilt",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "sales_vendor_ttm",
+      "economic_theme": "valuation",
+      "families": [
+        {
+          "id": "mature_sales_to_price_ttm",
+          "members": [
+            {
+              "factor": "mature_sales_to_price_ttm",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_87e21dc6ff50ac34",
+      "semantic_id": "sales_vendor_ttm__vendor_TTM_asof_daily_basic",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "size",
+      "economic_theme": "size_conditioning",
+      "families": [
+        {
+          "id": "mature_log_total_market_cap",
+          "members": [
+            {
+              "factor": "mature_log_total_market_cap",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_1712925a3a57565a",
+      "semantic_id": "size__asof_daily_basic",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "stc",
+      "economic_theme": "technical_state",
+      "families": [
+        {
+          "id": "STCIndicator.stc",
+          "members": [
+            {
+              "factor": "ta_trend_stc",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_14febb1e2e22e3c8",
+      "semantic_id": "stc__{\"cycle\": 10, \"smooth1\": 3, \"smooth2\": 3, \"window_fast\": 23, \"window_slow\": 50}",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "trix",
+      "economic_theme": "return_trend",
+      "families": [
+        {
+          "id": "TRIXIndicator.trix",
+          "members": [
+            {
+              "factor": "ta_trend_trix",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_db11c9d7582061dd",
+      "semantic_id": "trix__{\"window\": 15}",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "tsi",
+      "economic_theme": "technical_state",
+      "families": [
+        {
+          "id": "TSIIndicator.tsi",
+          "members": [
+            {
+              "factor": "ta_momentum_tsi",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_d692a9c76eac7a47",
+      "semantic_id": "tsi__{\"window_fast\": 13, \"window_slow\": 25}",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "turnover_current",
+      "economic_theme": "trading_activity",
+      "families": [
+        {
+          "id": "mature_turnover_rate_free_float",
+          "members": [
+            {
+              "factor": "mature_turnover_rate_free_float",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_fc6da2cc3f2667a7",
+      "semantic_id": "turnover_current__asof_daily_basic",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "turnover_mean",
+      "economic_theme": "trading_activity",
+      "families": [
+        {
+          "id": "mature_turnover_mean",
+          "members": [
+            {
+              "factor": "mature_turnover_mean_20",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_83e327406890e267",
+      "semantic_id": "turnover_mean__window_20_min_observations_10",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "turnover_variability",
+      "economic_theme": "trading_activity",
+      "families": [
+        {
+          "id": "mature_turnover_volatility",
+          "members": [
+            {
+              "factor": "mature_turnover_volatility_20",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_5ba005b55a84c807",
+      "semantic_id": "turnover_variability__window_20_min_observations_10",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "ultimate_oscillator",
+      "economic_theme": "technical_state",
+      "families": [
+        {
+          "id": "UltimateOscillator.ultimate_oscillator",
+          "members": [
+            {
+              "factor": "ta_momentum_uo",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_a1539a6f4eff277a",
+      "semantic_id": "ultimate_oscillator__{\"weight1\": 4.0, \"weight2\": 2.0, \"weight3\": 1.0, \"window1\": 7, \"window2\": 14, \"window3\": 28}",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "up_day_balance",
+      "economic_theme": "return_trend",
+      "families": [
+        {
+          "id": "alpha158_cntd",
+          "members": [
+            {
+              "factor": "alpha158_CNTD30",
+              "sign": 1
+            }
+          ]
+        },
+        {
+          "id": "alpha158_cntp",
+          "members": [
+            {
+              "factor": "alpha158_CNTP30",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_cd54b6130e29641c",
+      "semantic_id": "up_day_balance__window_30",
+      "type": "rank_composite"
+    },
+    {
+      "axis": "upper_quantile_relative_to_current",
+      "economic_theme": "price_path",
+      "families": [
+        {
+          "id": "alpha158_qtlu",
+          "members": [
+            {
+              "factor": "alpha158_QTLU20",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_9659483fe3c58fb1",
+      "semantic_id": "upper_quantile_relative_to_current__window_20",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "upper_quantile_relative_to_current",
+      "economic_theme": "price_path",
+      "families": [
+        {
+          "id": "alpha158_qtlu",
+          "members": [
+            {
+              "factor": "alpha158_QTLU30",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_cf0717ce8957d715",
+      "semantic_id": "upper_quantile_relative_to_current__window_30",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "upper_quantile_relative_to_current",
+      "economic_theme": "price_path",
+      "families": [
+        {
+          "id": "alpha158_qtlu",
+          "members": [
+            {
+              "factor": "alpha158_QTLU60",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_13382d0b01bbe5a4",
+      "semantic_id": "upper_quantile_relative_to_current__window_60",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "upper_shadow",
+      "economic_theme": "within_day_shape",
+      "families": [
+        {
+          "id": "intraday_kup",
+          "members": [
+            {
+              "factor": "alpha158_KUP",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_4363a4c5b701b635",
+      "semantic_id": "upper_shadow__same_day",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "vortex_balance",
+      "economic_theme": "technical_state",
+      "families": [
+        {
+          "id": "VortexIndicator.vortex_indicator_diff",
+          "members": [
+            {
+              "factor": "ta_trend_vortex_ind_diff",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_1c328f10dce0a438",
+      "semantic_id": "vortex_balance__{\"window\": 14}",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "vortex_negative",
+      "economic_theme": "technical_state",
+      "families": [
+        {
+          "id": "VortexIndicator.vortex_indicator_neg",
+          "members": [
+            {
+              "factor": "ta_trend_vortex_ind_neg",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_52fd4730aae4b5ee",
+      "semantic_id": "vortex_negative__{\"window\": 14}",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "vortex_positive",
+      "economic_theme": "technical_state",
+      "families": [
+        {
+          "id": "VortexIndicator.vortex_indicator_pos",
+          "members": [
+            {
+              "factor": "ta_trend_vortex_ind_pos",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_bf67b9249fd590f8",
+      "semantic_id": "vortex_positive__{\"window\": 14}",
+      "type": "rank_singleton"
+    },
+    {
+      "axis": "vwap_relative_to_current_close",
+      "economic_theme": "price_path",
+      "families": [
+        {
+          "id": "historical_vwap_current_close_ratio",
+          "members": [
+            {
+              "factor": "alpha360_VWAP3",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_VWAP4",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_VWAP5",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_37e550609cd38c9c",
+      "semantic_id": "vwap_relative_to_current_close__d1_5",
+      "type": "rank_composite"
+    },
+    {
+      "axis": "vwap_relative_to_current_close",
+      "economic_theme": "price_path",
+      "families": [
+        {
+          "id": "historical_vwap_current_close_ratio",
+          "members": [
+            {
+              "factor": "alpha360_VWAP22",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_VWAP23",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_VWAP24",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_VWAP25",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_VWAP26",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_VWAP27",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_VWAP28",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_VWAP29",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_VWAP30",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_VWAP31",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_VWAP32",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_VWAP33",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_VWAP34",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_VWAP35",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_VWAP36",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_VWAP37",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_VWAP38",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_VWAP39",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_VWAP40",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_VWAP41",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_VWAP42",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_VWAP43",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_VWAP44",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_VWAP45",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_VWAP46",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_VWAP47",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_VWAP48",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_VWAP49",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_VWAP50",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_VWAP51",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_VWAP52",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_VWAP53",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_VWAP54",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_VWAP55",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_VWAP56",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_VWAP57",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_VWAP58",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_VWAP59",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_e9a677039313f33b",
+      "semantic_id": "vwap_relative_to_current_close__d22_63",
+      "type": "rank_composite"
+    },
+    {
+      "axis": "vwap_relative_to_current_close",
+      "economic_theme": "price_path",
+      "families": [
+        {
+          "id": "historical_vwap_current_close_ratio",
+          "members": [
+            {
+              "factor": "alpha360_VWAP10",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_VWAP11",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_VWAP12",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_VWAP13",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_VWAP14",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_VWAP15",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_VWAP16",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_VWAP17",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_VWAP18",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_VWAP19",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_VWAP20",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_VWAP21",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_VWAP6",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_VWAP7",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_VWAP8",
+              "sign": 1
+            },
+            {
+              "factor": "alpha360_VWAP9",
+              "sign": 1
+            }
+          ]
+        }
+      ],
+      "id": "erc_358a00bb3fef169f",
+      "semantic_id": "vwap_relative_to_current_close__d6_21",
+      "type": "rank_composite"
+    }
+  ],
+  "d2_authorized": false,
+  "diagnostic_policy": {
+    "child_fraction": 0.5,
+    "family_fraction": 1.0,
+    "policy_finalized": false,
+    "rank_min": 100,
+    "revision_reason": "V1 canary showed single-family range measurement drift; require all frozen families",
+    "ties": "average"
+  },
+  "discovery_scope": "retrospective_development_2010_2023",
+  "literature_provenance": {
+    "limitation": "themes motivate semantic grouping; no return-based literature clustering copied",
+    "local_papers": {
+      "1-s2.0-S0304405X21003743-main.pdf": "665fcc0aea0d6bf5c0effc64652de5802dc3a4fa1bee28a5a25a3d83083fc4e3",
+      "The Journal of Finance - 2023 - JENSEN - Is There a Replication Crisis in Finance.pdf": "9e4ecad41042163f9b9d2219244bfa4b5a4c07e5de61e54d3cadb6b9704e230f",
+      "hhw107.pdf": "6ce660f919d8207ea3ea7cd56ad7de12f4005c9f0eb7edc8169b629bcab557ce"
+    },
+    "plan": "docs/LITERATURE_GROUNDED_FACTOR_COMPRESSION_PLAN.md"
+  },
+  "outcomes_authorized": false,
+  "parents": [
+    "alpha158_BETA10",
+    "alpha158_BETA20",
+    "alpha158_BETA30",
+    "alpha158_BETA5",
+    "alpha158_BETA60",
+    "alpha158_CNTD30",
+    "alpha158_CNTP30",
+    "alpha158_CORD10",
+    "alpha158_CORD20",
+    "alpha158_CORD30",
+    "alpha158_CORD5",
+    "alpha158_CORD60",
+    "alpha158_CORR10",
+    "alpha158_CORR20",
+    "alpha158_CORR30",
+    "alpha158_CORR5",
+    "alpha158_CORR60",
+    "alpha158_IMAX20",
+    "alpha158_IMAX30",
+    "alpha158_IMAX60",
+    "alpha158_IMIN20",
+    "alpha158_IMIN30",
+    "alpha158_IMIN60",
+    "alpha158_IMXD20",
+    "alpha158_IMXD30",
+    "alpha158_IMXD60",
+    "alpha158_KLEN",
+    "alpha158_KLOW",
+    "alpha158_KUP",
+    "alpha158_LOW0",
+    "alpha158_MA10",
+    "alpha158_MA20",
+    "alpha158_MA30",
+    "alpha158_MA5",
+    "alpha158_MA60",
+    "alpha158_MAX5",
+    "alpha158_MIN10",
+    "alpha158_MIN20",
+    "alpha158_MIN30",
+    "alpha158_MIN5",
+    "alpha158_MIN60",
+    "alpha158_QTLD10",
+    "alpha158_QTLD20",
+    "alpha158_QTLD30",
+    "alpha158_QTLD5",
+    "alpha158_QTLD60",
+    "alpha158_QTLU20",
+    "alpha158_QTLU30",
+    "alpha158_QTLU60",
+    "alpha158_RANK10",
+    "alpha158_RANK20",
+    "alpha158_RANK30",
+    "alpha158_RANK60",
+    "alpha158_RESI60",
+    "alpha158_ROC10",
+    "alpha158_ROC20",
+    "alpha158_ROC30",
+    "alpha158_ROC5",
+    "alpha158_ROC60",
+    "alpha158_RSV20",
+    "alpha158_RSV30",
+    "alpha158_RSV60",
+    "alpha158_STD10",
+    "alpha158_STD5",
+    "alpha158_SUMD10",
+    "alpha158_SUMD20",
+    "alpha158_SUMD30",
+    "alpha158_SUMD60",
+    "alpha158_SUMN10",
+    "alpha158_SUMN20",
+    "alpha158_SUMN30",
+    "alpha158_SUMN60",
+    "alpha158_SUMP10",
+    "alpha158_SUMP20",
+    "alpha158_SUMP30",
+    "alpha158_SUMP60",
+    "alpha158_VSUMD20",
+    "alpha158_VSUMD30",
+    "alpha158_VSUMD60",
+    "alpha158_VSUMN20",
+    "alpha158_VSUMN30",
+    "alpha158_VSUMN60",
+    "alpha158_VSUMP20",
+    "alpha158_VSUMP30",
+    "alpha158_VSUMP60",
+    "alpha360_CLOSE11",
+    "alpha360_CLOSE12",
+    "alpha360_CLOSE13",
+    "alpha360_CLOSE14",
+    "alpha360_CLOSE15",
+    "alpha360_CLOSE16",
+    "alpha360_CLOSE17",
+    "alpha360_CLOSE18",
+    "alpha360_CLOSE19",
+    "alpha360_CLOSE21",
+    "alpha360_CLOSE22",
+    "alpha360_CLOSE23",
+    "alpha360_CLOSE24",
+    "alpha360_CLOSE25",
+    "alpha360_CLOSE26",
+    "alpha360_CLOSE27",
+    "alpha360_CLOSE28",
+    "alpha360_CLOSE29",
+    "alpha360_CLOSE3",
+    "alpha360_CLOSE31",
+    "alpha360_CLOSE32",
+    "alpha360_CLOSE33",
+    "alpha360_CLOSE34",
+    "alpha360_CLOSE35",
+    "alpha360_CLOSE36",
+    "alpha360_CLOSE37",
+    "alpha360_CLOSE38",
+    "alpha360_CLOSE39",
+    "alpha360_CLOSE4",
+    "alpha360_CLOSE40",
+    "alpha360_CLOSE41",
+    "alpha360_CLOSE42",
+    "alpha360_CLOSE43",
+    "alpha360_CLOSE44",
+    "alpha360_CLOSE45",
+    "alpha360_CLOSE46",
+    "alpha360_CLOSE47",
+    "alpha360_CLOSE48",
+    "alpha360_CLOSE49",
+    "alpha360_CLOSE50",
+    "alpha360_CLOSE51",
+    "alpha360_CLOSE52",
+    "alpha360_CLOSE53",
+    "alpha360_CLOSE54",
+    "alpha360_CLOSE55",
+    "alpha360_CLOSE56",
+    "alpha360_CLOSE57",
+    "alpha360_CLOSE58",
+    "alpha360_CLOSE59",
+    "alpha360_CLOSE6",
+    "alpha360_CLOSE7",
+    "alpha360_CLOSE8",
+    "alpha360_CLOSE9",
+    "alpha360_HIGH10",
+    "alpha360_HIGH11",
+    "alpha360_HIGH12",
+    "alpha360_HIGH13",
+    "alpha360_HIGH14",
+    "alpha360_HIGH15",
+    "alpha360_HIGH16",
+    "alpha360_HIGH17",
+    "alpha360_HIGH18",
+    "alpha360_HIGH19",
+    "alpha360_HIGH20",
+    "alpha360_HIGH21",
+    "alpha360_HIGH22",
+    "alpha360_HIGH23",
+    "alpha360_HIGH24",
+    "alpha360_HIGH25",
+    "alpha360_HIGH26",
+    "alpha360_HIGH27",
+    "alpha360_HIGH28",
+    "alpha360_HIGH29",
+    "alpha360_HIGH30",
+    "alpha360_HIGH31",
+    "alpha360_HIGH32",
+    "alpha360_HIGH33",
+    "alpha360_HIGH34",
+    "alpha360_HIGH35",
+    "alpha360_HIGH36",
+    "alpha360_HIGH37",
+    "alpha360_HIGH38",
+    "alpha360_HIGH39",
+    "alpha360_HIGH40",
+    "alpha360_HIGH41",
+    "alpha360_HIGH42",
+    "alpha360_HIGH43",
+    "alpha360_HIGH44",
+    "alpha360_HIGH45",
+    "alpha360_HIGH46",
+    "alpha360_HIGH47",
+    "alpha360_HIGH48",
+    "alpha360_HIGH49",
+    "alpha360_HIGH5",
+    "alpha360_HIGH50",
+    "alpha360_HIGH51",
+    "alpha360_HIGH52",
+    "alpha360_HIGH53",
+    "alpha360_HIGH54",
+    "alpha360_HIGH55",
+    "alpha360_HIGH56",
+    "alpha360_HIGH57",
+    "alpha360_HIGH58",
+    "alpha360_HIGH59",
+    "alpha360_HIGH6",
+    "alpha360_HIGH7",
+    "alpha360_HIGH8",
+    "alpha360_HIGH9",
+    "alpha360_LOW1",
+    "alpha360_LOW10",
+    "alpha360_LOW11",
+    "alpha360_LOW12",
+    "alpha360_LOW13",
+    "alpha360_LOW14",
+    "alpha360_LOW15",
+    "alpha360_LOW16",
+    "alpha360_LOW17",
+    "alpha360_LOW18",
+    "alpha360_LOW19",
+    "alpha360_LOW2",
+    "alpha360_LOW20",
+    "alpha360_LOW21",
+    "alpha360_LOW22",
+    "alpha360_LOW23",
+    "alpha360_LOW24",
+    "alpha360_LOW25",
+    "alpha360_LOW26",
+    "alpha360_LOW27",
+    "alpha360_LOW28",
+    "alpha360_LOW29",
+    "alpha360_LOW3",
+    "alpha360_LOW30",
+    "alpha360_LOW31",
+    "alpha360_LOW32",
+    "alpha360_LOW33",
+    "alpha360_LOW34",
+    "alpha360_LOW35",
+    "alpha360_LOW36",
+    "alpha360_LOW37",
+    "alpha360_LOW38",
+    "alpha360_LOW39",
+    "alpha360_LOW4",
+    "alpha360_LOW40",
+    "alpha360_LOW41",
+    "alpha360_LOW42",
+    "alpha360_LOW43",
+    "alpha360_LOW44",
+    "alpha360_LOW45",
+    "alpha360_LOW46",
+    "alpha360_LOW47",
+    "alpha360_LOW48",
+    "alpha360_LOW49",
+    "alpha360_LOW5",
+    "alpha360_LOW50",
+    "alpha360_LOW51",
+    "alpha360_LOW52",
+    "alpha360_LOW53",
+    "alpha360_LOW54",
+    "alpha360_LOW55",
+    "alpha360_LOW56",
+    "alpha360_LOW57",
+    "alpha360_LOW58",
+    "alpha360_LOW59",
+    "alpha360_LOW6",
+    "alpha360_LOW7",
+    "alpha360_LOW8",
+    "alpha360_LOW9",
+    "alpha360_OPEN10",
+    "alpha360_OPEN11",
+    "alpha360_OPEN12",
+    "alpha360_OPEN13",
+    "alpha360_OPEN14",
+    "alpha360_OPEN15",
+    "alpha360_OPEN16",
+    "alpha360_OPEN17",
+    "alpha360_OPEN18",
+    "alpha360_OPEN19",
+    "alpha360_OPEN2",
+    "alpha360_OPEN20",
+    "alpha360_OPEN21",
+    "alpha360_OPEN22",
+    "alpha360_OPEN23",
+    "alpha360_OPEN24",
+    "alpha360_OPEN25",
+    "alpha360_OPEN26",
+    "alpha360_OPEN27",
+    "alpha360_OPEN28",
+    "alpha360_OPEN29",
+    "alpha360_OPEN3",
+    "alpha360_OPEN30",
+    "alpha360_OPEN31",
+    "alpha360_OPEN32",
+    "alpha360_OPEN33",
+    "alpha360_OPEN34",
+    "alpha360_OPEN35",
+    "alpha360_OPEN36",
+    "alpha360_OPEN37",
+    "alpha360_OPEN38",
+    "alpha360_OPEN39",
+    "alpha360_OPEN4",
+    "alpha360_OPEN40",
+    "alpha360_OPEN41",
+    "alpha360_OPEN42",
+    "alpha360_OPEN43",
+    "alpha360_OPEN44",
+    "alpha360_OPEN45",
+    "alpha360_OPEN46",
+    "alpha360_OPEN47",
+    "alpha360_OPEN48",
+    "alpha360_OPEN49",
+    "alpha360_OPEN5",
+    "alpha360_OPEN50",
+    "alpha360_OPEN51",
+    "alpha360_OPEN52",
+    "alpha360_OPEN53",
+    "alpha360_OPEN54",
+    "alpha360_OPEN55",
+    "alpha360_OPEN56",
+    "alpha360_OPEN57",
+    "alpha360_OPEN58",
+    "alpha360_OPEN59",
+    "alpha360_OPEN6",
+    "alpha360_OPEN7",
+    "alpha360_OPEN8",
+    "alpha360_OPEN9",
+    "alpha360_VWAP10",
+    "alpha360_VWAP11",
+    "alpha360_VWAP12",
+    "alpha360_VWAP13",
+    "alpha360_VWAP14",
+    "alpha360_VWAP15",
+    "alpha360_VWAP16",
+    "alpha360_VWAP17",
+    "alpha360_VWAP18",
+    "alpha360_VWAP19",
+    "alpha360_VWAP20",
+    "alpha360_VWAP21",
+    "alpha360_VWAP22",
+    "alpha360_VWAP23",
+    "alpha360_VWAP24",
+    "alpha360_VWAP25",
+    "alpha360_VWAP26",
+    "alpha360_VWAP27",
+    "alpha360_VWAP28",
+    "alpha360_VWAP29",
+    "alpha360_VWAP3",
+    "alpha360_VWAP30",
+    "alpha360_VWAP31",
+    "alpha360_VWAP32",
+    "alpha360_VWAP33",
+    "alpha360_VWAP34",
+    "alpha360_VWAP35",
+    "alpha360_VWAP36",
+    "alpha360_VWAP37",
+    "alpha360_VWAP38",
+    "alpha360_VWAP39",
+    "alpha360_VWAP4",
+    "alpha360_VWAP40",
+    "alpha360_VWAP41",
+    "alpha360_VWAP42",
+    "alpha360_VWAP43",
+    "alpha360_VWAP44",
+    "alpha360_VWAP45",
+    "alpha360_VWAP46",
+    "alpha360_VWAP47",
+    "alpha360_VWAP48",
+    "alpha360_VWAP49",
+    "alpha360_VWAP5",
+    "alpha360_VWAP50",
+    "alpha360_VWAP51",
+    "alpha360_VWAP52",
+    "alpha360_VWAP53",
+    "alpha360_VWAP54",
+    "alpha360_VWAP55",
+    "alpha360_VWAP56",
+    "alpha360_VWAP57",
+    "alpha360_VWAP58",
+    "alpha360_VWAP59",
+    "alpha360_VWAP6",
+    "alpha360_VWAP7",
+    "alpha360_VWAP8",
+    "alpha360_VWAP9",
+    "amount_cv_20",
+    "amount_mean_20",
+    "amount_std_20",
+    "amplitude_20",
+    "corr_ret_amount_20",
+    "corr_ret_volume_20",
+    "kunquant_alpha101_alpha003",
+    "kunquant_alpha101_alpha004",
+    "kunquant_alpha101_alpha005",
+    "kunquant_alpha101_alpha006",
+    "kunquant_alpha101_alpha007",
+    "kunquant_alpha101_alpha011",
+    "kunquant_alpha101_alpha011_canonical_vwap_v2",
+    "kunquant_alpha101_alpha012",
+    "kunquant_alpha101_alpha013",
+    "kunquant_alpha101_alpha014",
+    "kunquant_alpha101_alpha015",
+    "kunquant_alpha101_alpha016",
+    "kunquant_alpha101_alpha024",
+    "kunquant_alpha101_alpha026",
+    "kunquant_alpha101_alpha035",
+    "kunquant_alpha101_alpha040",
+    "kunquant_alpha101_alpha041",
+    "kunquant_alpha101_alpha042",
+    "kunquant_alpha101_alpha042_canonical_vwap_v2",
+    "kunquant_alpha101_alpha044",
+    "kunquant_alpha101_alpha045",
+    "kunquant_alpha101_alpha050",
+    "kunquant_alpha101_alpha050_canonical_vwap_v2",
+    "kunquant_alpha101_alpha055",
+    "kunquant_alpha101_alpha071",
+    "kunquant_alpha101_alpha077",
+    "kunquant_alpha101_alpha083",
+    "kunquant_alpha101_alpha084",
+    "kunquant_alpha101_alpha084_canonical_vwap_v2",
+    "kunquant_alpha101_alpha088",
+    "kunquant_alpha101_alpha094",
+    "kunquant_alpha101_alpha094_canonical_vwap_v2",
+    "mature_amihud_illiquidity_20",
+    "mature_book_to_market_pit",
+    "mature_book_to_price",
+    "mature_dividend_yield_ttm",
+    "mature_downside_volatility_60",
+    "mature_earnings_to_price_pit",
+    "mature_earnings_yield_ttm",
+    "mature_idiosyncratic_volatility_60",
+    "mature_intraday_return_20",
+    "mature_log_total_market_cap",
+    "mature_max_daily_return_21",
+    "mature_parkinson_volatility_20",
+    "mature_realized_volatility_60",
+    "mature_return_skewness_60",
+    "mature_reversal_1m",
+    "mature_sales_to_price_pit",
+    "mature_sales_to_price_ttm",
+    "mature_turnover_mean_20",
+    "mature_turnover_rate_free_float",
+    "mature_turnover_volatility_20",
+    "mature_vwap_deviation_20",
+    "ret_10",
+    "ret_20",
+    "ret_5",
+    "rev_20_exclude_5",
+    "rev_5",
+    "std_20",
+    "ta_momentum_ao",
+    "ta_momentum_kama",
+    "ta_momentum_ppo",
+    "ta_momentum_ppo_hist",
+    "ta_momentum_ppo_signal",
+    "ta_momentum_pvo",
+    "ta_momentum_pvo_signal",
+    "ta_momentum_roc",
+    "ta_momentum_rsi",
+    "ta_momentum_tsi",
+    "ta_momentum_uo",
+    "ta_trend_adx_neg",
+    "ta_trend_adx_pos",
+    "ta_trend_aroon_down",
+    "ta_trend_aroon_ind",
+    "ta_trend_aroon_up",
+    "ta_trend_cci",
+    "ta_trend_ema_fast",
+    "ta_trend_ema_slow",
+    "ta_trend_ichimoku_a",
+    "ta_trend_ichimoku_b",
+    "ta_trend_ichimoku_base",
+    "ta_trend_ichimoku_conv",
+    "ta_trend_kst",
+    "ta_trend_kst_diff",
+    "ta_trend_kst_sig",
+    "ta_trend_macd",
+    "ta_trend_macd_diff",
+    "ta_trend_macd_signal",
+    "ta_trend_mass_index",
+    "ta_trend_psar_down",
+    "ta_trend_sma_fast",
+    "ta_trend_sma_slow",
+    "ta_trend_stc",
+    "ta_trend_trix",
+    "ta_trend_vortex_ind_diff",
+    "ta_trend_vortex_ind_neg",
+    "ta_trend_vortex_ind_pos",
+    "ta_volatility_atr",
+    "ta_volatility_bbh",
+    "ta_volatility_bbhi",
+    "ta_volatility_bbm",
+    "ta_volatility_bbp",
+    "ta_volatility_dch",
+    "ta_volatility_dcl",
+    "ta_volatility_dcm",
+    "ta_volatility_dcp",
+    "ta_volatility_dcw",
+    "ta_volatility_kcc",
+    "ta_volatility_kch",
+    "ta_volatility_kchi",
+    "ta_volatility_kcl",
+    "ta_volatility_kcw",
+    "ta_volume_cmf",
+    "ta_volume_fi",
+    "ta_volume_mfi",
+    "ta_volume_vwap"
+  ],
+  "recent_authorized": false,
+  "recipe_hash": "8b688bd098ebafd1c1da2bab32d029624f6da65f7166c59f702fbc18499cf51f",
+  "representatives": [
+    "alpha158_BETA10",
+    "alpha158_BETA20",
+    "alpha158_BETA30",
+    "alpha158_BETA5",
+    "alpha158_BETA60",
+    "alpha158_CNTD30",
+    "alpha158_CNTP30",
+    "alpha158_CORD10",
+    "alpha158_CORD20",
+    "alpha158_CORD30",
+    "alpha158_CORD5",
+    "alpha158_CORD60",
+    "alpha158_CORR10",
+    "alpha158_CORR20",
+    "alpha158_CORR30",
+    "alpha158_CORR5",
+    "alpha158_CORR60",
+    "alpha158_IMAX20",
+    "alpha158_IMAX30",
+    "alpha158_IMAX60",
+    "alpha158_IMIN20",
+    "alpha158_IMIN30",
+    "alpha158_IMIN60",
+    "alpha158_IMXD20",
+    "alpha158_IMXD30",
+    "alpha158_IMXD60",
+    "alpha158_KLEN",
+    "alpha158_KLOW",
+    "alpha158_KUP",
+    "alpha158_LOW0",
+    "alpha158_MA10",
+    "alpha158_MA20",
+    "alpha158_MA30",
+    "alpha158_MA5",
+    "alpha158_MA60",
+    "alpha158_MAX5",
+    "alpha158_MIN10",
+    "alpha158_MIN20",
+    "alpha158_MIN30",
+    "alpha158_MIN5",
+    "alpha158_MIN60",
+    "alpha158_QTLD10",
+    "alpha158_QTLD20",
+    "alpha158_QTLD30",
+    "alpha158_QTLD5",
+    "alpha158_QTLD60",
+    "alpha158_QTLU20",
+    "alpha158_QTLU30",
+    "alpha158_QTLU60",
+    "alpha158_RANK10",
+    "alpha158_RANK20",
+    "alpha158_RANK30",
+    "alpha158_RANK60",
+    "alpha158_RESI60",
+    "alpha158_ROC60",
+    "alpha158_RSV20",
+    "alpha158_RSV30",
+    "alpha158_RSV60",
+    "alpha158_STD10",
+    "alpha158_STD5",
+    "alpha158_SUMD10",
+    "alpha158_SUMD20",
+    "alpha158_SUMD30",
+    "alpha158_SUMD60",
+    "alpha158_SUMN10",
+    "alpha158_SUMN20",
+    "alpha158_SUMN30",
+    "alpha158_SUMN60",
+    "alpha158_SUMP10",
+    "alpha158_SUMP20",
+    "alpha158_SUMP30",
+    "alpha158_SUMP60",
+    "alpha158_VSUMD20",
+    "alpha158_VSUMD30",
+    "alpha158_VSUMD60",
+    "alpha158_VSUMN20",
+    "alpha158_VSUMN30",
+    "alpha158_VSUMN60",
+    "alpha158_VSUMP20",
+    "alpha158_VSUMP30",
+    "alpha158_VSUMP60",
+    "alpha360_CLOSE13",
+    "alpha360_CLOSE4",
+    "alpha360_CLOSE40",
+    "alpha360_HIGH13",
+    "alpha360_HIGH40",
+    "alpha360_HIGH5",
+    "alpha360_LOW13",
+    "alpha360_LOW3",
+    "alpha360_LOW40",
+    "alpha360_OPEN13",
+    "alpha360_OPEN3",
+    "alpha360_OPEN40",
+    "alpha360_VWAP13",
+    "alpha360_VWAP4",
+    "alpha360_VWAP40",
+    "amount_cv_20",
+    "amount_mean_20",
+    "amount_std_20",
+    "amplitude_20",
+    "corr_ret_amount_20",
+    "corr_ret_volume_20",
+    "mature_amihud_illiquidity_20",
+    "mature_book_to_market_pit",
+    "mature_book_to_price",
+    "mature_dividend_yield_ttm",
+    "mature_downside_volatility_60",
+    "mature_earnings_to_price_pit",
+    "mature_earnings_yield_ttm",
+    "mature_idiosyncratic_volatility_60",
+    "mature_intraday_return_20",
+    "mature_log_total_market_cap",
+    "mature_max_daily_return_21",
+    "mature_parkinson_volatility_20",
+    "mature_realized_volatility_60",
+    "mature_return_skewness_60",
+    "mature_reversal_1m",
+    "mature_sales_to_price_pit",
+    "mature_sales_to_price_ttm",
+    "mature_turnover_mean_20",
+    "mature_turnover_rate_free_float",
+    "mature_turnover_volatility_20",
+    "mature_vwap_deviation_20",
+    "ret_10",
+    "ret_20",
+    "ret_5",
+    "rev_20_exclude_5",
+    "rev_5",
+    "std_20",
+    "ta_momentum_ppo",
+    "ta_momentum_ppo_hist",
+    "ta_momentum_ppo_signal",
+    "ta_momentum_pvo",
+    "ta_momentum_pvo_signal",
+    "ta_momentum_roc",
+    "ta_momentum_rsi",
+    "ta_momentum_tsi",
+    "ta_momentum_uo",
+    "ta_trend_aroon_down",
+    "ta_trend_aroon_ind",
+    "ta_trend_aroon_up",
+    "ta_trend_cci",
+    "ta_trend_kst",
+    "ta_trend_kst_diff",
+    "ta_trend_kst_sig",
+    "ta_trend_mass_index",
+    "ta_trend_stc",
+    "ta_trend_trix",
+    "ta_trend_vortex_ind_diff",
+    "ta_trend_vortex_ind_neg",
+    "ta_trend_vortex_ind_pos",
+    "ta_volatility_bbp",
+    "ta_volatility_dcp",
+    "ta_volatility_dcw",
+    "ta_volatility_kcw",
+    "ta_volume_cmf",
+    "ta_volume_mfi"
+  ],
+  "scope": "D1_feature_only_candidate",
+  "source_hashes": {
+    "docs/LITERATURE_GROUNDED_FACTOR_COMPRESSION_PLAN.md": "df42c7be70d6fa9ac01a7c9a182851f16d3cf29d2c16faedbc73a4e5f6ecad12",
+    "docs/research/literature_factor_compression/AUDIT_METADATA.json": "5be7296f3f7b35e393845d3780bc3a45e394d7b0626936b8528537b3fb6b6137",
+    "factor_research/factor_library.py": "1c12ca437fa404bcd19027ed61e88523f867ad5ea660e5ec9c445c85f0d79f36",
+    "factor_universe_v2/historical_data.py": "87c6de02c47308d5229b0d522db6a7123f1f9e199152618a5ce2930bd32e6430",
+    "factor_universe_v2/mature_factors.py": "a98538090178b290a5f09f525e3205702e566097726e8266f9cb21840ef9d0e9",
+    "outputs/canonical_historical_dataset_assembly_v1/current/factor_lineage.csv": "1d655cd0b099fdfd4317ec295821f897266ef42d3a0b7e6047e21348d461460b",
+    "outputs/canonical_historical_dataset_assembly_v1/current/manifest.json": "0481785bf512d3f1d04202badae900a41cc0f49d7fb4b50a9219a331a527b837",
+    "outputs/canonical_historical_dataset_assembly_v1/current/partition_manifest.csv": "ef7bc044a34904159733a7f4540f47c87ce3191a8224757cc2757167cd0cd9af",
+    "outputs/research_protocol_v3_mvp/v3_recompute_audit_20260909_v1/contract.json": "a73a2a504c7e13d92273837c22d4bc087ac31190d1dc0d1aed7365f74671858e",
+    "outputs/research_protocol_v3_mvp/v3_recompute_audit_20260909_v1/p0/assignments.csv": "fd35003b902b57782f5b4c00c9de2ad64d361a8aac1a45ff5c2f18a170b02aed",
+    "outputs/research_protocol_v3_mvp/v3_recompute_audit_20260909_v1/p0/folds.csv": "2bd737c25b0437c53609685371d35e12c84ba46105646f384997e044e2e7230c",
+    "outputs/research_protocol_v3_mvp/v3_recompute_audit_20260909_v1/p0/intervals.csv": "0268fadba380f0109222ab640132926acce13d6215cbef76833253a56972b55d",
+    "reports/candidate_consolidation_v0_5/feature_quality.csv": "40fa5dd17aa968075fb4ed9d5012a0c467643aa6e265bbc3fb867a643cdb554d",
+    "reports/candidate_consolidation_v0_5/v0_5_1/SOURCE_AUDIT.json": "f6f6506f85d663991ead579d9542f62960644f912bc3f090253b7c24a2276a13",
+    "reports/candidate_consolidation_v0_5/v0_5_1/economic_semantic_review.csv": "feab60f29dc97354b233600a940499ed5957f0176056f375152a462ddd13e5d4",
+    "reports/candidate_consolidation_v0_5/v0_5_1/exact_alias_registration.csv": "218d264fa2b0bd379a2a4158acbe783da9020014ada23d796c23f2364fef031f",
+    "reports/candidate_consolidation_v0_5/v0_5_1/representative_proposal_board.csv": "158328ffc096d6f07727d4adc1c4ffad1f7e701de6d50603c11df9d5b8e58a8b",
+    "research_validation/overlap_lineage.py": "c59c80b03fa17b9e4f55eed47b4f4d38ede0251fd1331619205cde28b10a1be8",
+    "scripts/run_canonical_historical_dataset_assembly_v1.py": "50cd8f7b0f8c40f6f10d8c80f69d1c7f525fa055218387de027d9abf0416ffd3",
+    "scripts/run_full_research_feature_matrix_v1.py": "8f1860ad9ac992fbcd2505c7598ea44eea650f973a3ac4e251fa39226d2dfe2c",
+    "scripts/run_historical_data_engineering_extension_v1.py": "6b13756b2bf306ba6a86e84f0f1cf4666c7f41b28ccf6aedc193b7315d25edb7",
+    "tmp/reference_repos/ta/ta/__init__.py": "1e2dfe6c0e8d47790e41fd34f1fbcbfb352e5fba9b9bca817c69f38a56719296",
+    "tmp/reference_repos/ta/ta/momentum.py": "e2593ae19986fae7aaa5b842004c12acad03fd99cecc7f8832a5ed829ac51767",
+    "tmp/reference_repos/ta/ta/others.py": "1bc9a4d9bd3971088be57d753183ed93331bd9b3202818bcce783fb5386fbdc0",
+    "tmp/reference_repos/ta/ta/trend.py": "11b561e55daf4db14823b10b4d50be2cf09913dfd6939b0a8665edee3404f210",
+    "tmp/reference_repos/ta/ta/utils.py": "721f6f3a140dd3bfb2fc5253b4898348a44f91275cf9d2ea85f9596e822c1414",
+    "tmp/reference_repos/ta/ta/volatility.py": "647678eec5e0d195179d6d4993d1054f12540f469db538f313290c2496299b95",
+    "tmp/reference_repos/ta/ta/volume.py": "79106e89f5410aaabda31b0c8390db208c085442358ae59a0c7e77e5bcff5a22",
+    "tmp/reference_repos/ta/ta/wrapper.py": "ac03e6fc777121d9d569a0be8015bb9600fd2d61adc052aace207afd6c54acdc"
+  },
+  "status": "diagnostic_candidate_not_ready_for_human_freeze",
+  "u": [
+    "kunquant_alpha101_alpha003",
+    "kunquant_alpha101_alpha004",
+    "kunquant_alpha101_alpha005",
+    "kunquant_alpha101_alpha006",
+    "kunquant_alpha101_alpha007",
+    "kunquant_alpha101_alpha011",
+    "kunquant_alpha101_alpha011_canonical_vwap_v2",
+    "kunquant_alpha101_alpha012",
+    "kunquant_alpha101_alpha013",
+    "kunquant_alpha101_alpha014",
+    "kunquant_alpha101_alpha015",
+    "kunquant_alpha101_alpha016",
+    "kunquant_alpha101_alpha024",
+    "kunquant_alpha101_alpha026",
+    "kunquant_alpha101_alpha035",
+    "kunquant_alpha101_alpha040",
+    "kunquant_alpha101_alpha041",
+    "kunquant_alpha101_alpha042",
+    "kunquant_alpha101_alpha042_canonical_vwap_v2",
+    "kunquant_alpha101_alpha044",
+    "kunquant_alpha101_alpha045",
+    "kunquant_alpha101_alpha050",
+    "kunquant_alpha101_alpha050_canonical_vwap_v2",
+    "kunquant_alpha101_alpha055",
+    "kunquant_alpha101_alpha071",
+    "kunquant_alpha101_alpha077",
+    "kunquant_alpha101_alpha083",
+    "kunquant_alpha101_alpha084",
+    "kunquant_alpha101_alpha084_canonical_vwap_v2",
+    "kunquant_alpha101_alpha088",
+    "kunquant_alpha101_alpha094",
+    "kunquant_alpha101_alpha094_canonical_vwap_v2",
+    "ta_momentum_ao",
+    "ta_momentum_kama",
+    "ta_trend_adx_neg",
+    "ta_trend_adx_pos",
+    "ta_trend_ema_fast",
+    "ta_trend_ema_slow",
+    "ta_trend_ichimoku_a",
+    "ta_trend_ichimoku_b",
+    "ta_trend_ichimoku_base",
+    "ta_trend_ichimoku_conv",
+    "ta_trend_macd",
+    "ta_trend_macd_diff",
+    "ta_trend_macd_signal",
+    "ta_trend_psar_down",
+    "ta_trend_sma_fast",
+    "ta_trend_sma_slow",
+    "ta_volatility_atr",
+    "ta_volatility_bbh",
+    "ta_volatility_bbhi",
+    "ta_volatility_bbm",
+    "ta_volatility_dch",
+    "ta_volatility_dcl",
+    "ta_volatility_dcm",
+    "ta_volatility_kcc",
+    "ta_volatility_kch",
+    "ta_volatility_kchi",
+    "ta_volatility_kcl",
+    "ta_volume_fi",
+    "ta_volume_vwap"
+  ]
+}

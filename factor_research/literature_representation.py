@@ -54,7 +54,7 @@ def validate_recipe(recipe):
         raise ValueError('invalid parent identity')
     policy = recipe['diagnostic_policy']
     if (type(policy['rank_min']) is not int or policy['rank_min'] < 2
-            or not 0 < policy['child_fraction'] <= 1):
+            or not 0 < policy['child_fraction'] <= 1 or not 0 < policy['family_fraction'] <= 1):
         raise ValueError('invalid diagnostic policy')
     outputs = set(names)
     seen_parents = set()
@@ -143,7 +143,7 @@ def transform_day(frame, recipe):
                 valid_rows=int(np.isfinite(a).sum()), min_nodes=int(counts.min()),
                 mean_nodes=float(counts.mean()), max_nodes=int(counts.max()),
                 node_count_histogram=json.dumps({str(k):int(v) for k,v in zip(*np.unique(counts, return_counts=True))})))
-        c, counts, needed = average_children(families, policy['child_fraction'])
+        c, counts, needed = average_children(families, policy['family_fraction'])
         generated[node['id']] = c
         valid = np.isfinite(c)
         full = len(families)

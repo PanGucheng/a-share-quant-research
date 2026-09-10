@@ -28,7 +28,7 @@ from factor_research.literature_representation import KEYS, digest, legal_dates,
 from research_validation.canonical_dataset import canonical_dataset_identity
 from research_validation.literature_oracle import naive_day
 
-PACKET = Path('reports/literature_factor_representation_d1/candidate_v1')
+PACKET = Path('reports/literature_factor_representation_d1/candidate_v2')
 CANONICAL = Path('outputs/canonical_historical_dataset_assembly_v1/current')
 V3 = Path('outputs/research_protocol_v3_mvp/v3_recompute_audit_20260909_v1')
 REVIEW = Path('reports/candidate_consolidation_v0_5/v0_5_1')
@@ -396,7 +396,7 @@ def scan(root, run_id, mode, verify_only=False):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('action', choices=['build','check','canary','full','verify-canary','verify-full'])
-    parser.add_argument('--run-id', default='d1_structure_20260910_v1')
+    parser.add_argument('--run-id', default='d1_structure_20260910_v2')
     args = parser.parse_args()
     if args.action == 'build':
         result = build_packet()

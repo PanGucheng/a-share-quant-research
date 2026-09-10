@@ -285,7 +285,8 @@ def build_recipe(semantics, aliases, source_hashes):
     recipe = dict(scope='D1_feature_only_candidate', status='diagnostic_candidate_not_ready_for_human_freeze',
         d2_authorized=False, outcomes_authorized=False, recent_authorized=False,
         discovery_scope='retrospective_development_2010_2023',
-        diagnostic_policy=dict(rank_min=100, child_fraction=.5, policy_finalized=False, ties='average'),
+        diagnostic_policy=dict(rank_min=100, child_fraction=.5, family_fraction=1., policy_finalized=False,
+            ties='average', revision_reason='V1 canary showed single-family range measurement drift; require all frozen families'),
         source_hashes=source_hashes, parents=sorted(r['factor'] for r in unique),
         u=u, representatives=representatives, composites=composites)
     c = [x['id'] for x in composites]

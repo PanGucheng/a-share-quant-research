@@ -1,0 +1,48 @@
+{
+  "aggregate_hashes": {
+    "fold_arms.csv": "2eb8018475e5fcc927f43318e333f8bde7b442dc5faa22deb14ec005f59e127d",
+    "fold_leaves.csv": "ea11f8583cb3cddbe3cd7f483b75c9dab8fe376e405602a25ccb25ac30cee68d",
+    "fold_outputs.csv": "ad83c66fd54532e21cd897e477269cfca7b30aa245efa712c040c1560b4f8914",
+    "year_arms.csv": "b8e677ad66a1a9720029d3817125d0f26e44432c0b6594167cd546857e9c3327",
+    "year_leaves.csv": "33530e22086745b7f824ac9a60494a428b7281e15a418f515e8d051d91cb007c",
+    "year_outputs.csv": "f43a2d8799fa3b61584c698c064b7b2e86e1a19b00044a30e8730b5162531f3f"
+  },
+  "binding": {
+    "mode": "canary",
+    "recipe_hash": "8b688bd098ebafd1c1da2bab32d029624f6da65f7166c59f702fbc18499cf51f",
+    "runtime": {
+      "numpy": "2.2.6",
+      "pandas": "2.3.3",
+      "pyarrow": "23.0.1",
+      "python": "3.10.19 | packaged by Anaconda, Inc. | (main, Oct 21 2025, 16:41:31) [MSC v.1929 64 bit (AMD64)]"
+    }
+  },
+  "chunk_receipt_hashes": {
+    "2010-01": "6076f93fdf2e226f97f74ea5af323f1b53a24c291708f35b1f9ed6dda8dcafe4",
+    "2012-07": "ebf98d594d8c056310f2b4cf9dc3dae65e8de3ee95237d1d248d7efda0ed9108",
+    "2014-12": "fc8141e07288beae2959f235e41ffd06e84d84fdb2b68b34d0089f9559420088",
+    "2015-01": "05b9c4968b55cd4158d813385097e90f46c6f60276c2b4753fae037a48716ca5",
+    "2016-07": "ec1b5f622479a61db7cf2633e8e82e3dd3b4b8aca79035de64b96ad8ff9c8529",
+    "2017-12": "cc26078edb0221bd25bc3c31fd08a69419934e4787141283a97717d1c56b27c0",
+    "2018-01": "8d4a687a1d8d96f7c192e558edb85b6e1a713e3a813410f562dd9e6f87045691",
+    "2019-07": "bf9c69b53e7848364e118da9dea75a6b1b5812c89915e1332d1ab21c08791f3c",
+    "2020-12": "d179e932c8b2a1d377b56cf9a468e6572d4a44a98365fdf62a6a5077c254bb28",
+    "2021-01": "6d837de21a0c54a1c876ad9efa742ceacc90d78a7863cbb55efdf906f36f66c7",
+    "2022-07": "604ba443f4cdef636ee7a11c46011323b04edc002fcde0e5b6636440d1f40d93",
+    "2023-12": "6ee6864b28e05e44ab336ae4ac646ee481b06d8cd376a56e583d7ebc917a8868"
+  },
+  "chunks": 12,
+  "d2_authorized": false,
+  "dates": 12,
+  "limitations": [
+    "canary does not establish whole-year/fold rates",
+    "no trained models, prediction scores, outcome statistics or recent values"
+  ],
+  "oracle": "all_dates_pass",
+  "oracle_max_abs_error": 2.7755575615628914e-16,
+  "peak_input_frame_mib": 7.6772003173828125,
+  "resource_limit": "input frame size only; not process peak RSS; full scan includes independent naive oracle",
+  "rows": 23544,
+  "scan_wall_seconds": 54.84002600000531,
+  "status": "structural_scan_replayed_policy_review_required"
+}

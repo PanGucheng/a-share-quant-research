@@ -1,0 +1,17 @@
+{
+  "canary": "canary_v2/summary.json",
+  "current_packet": "candidate_v2",
+  "d2_authorized": false,
+  "full_scan_executed": false,
+  "policy_finalized": false,
+  "recipe_hash": "8b688bd098ebafd1c1da2bab32d029624f6da65f7166c59f702fbc18499cf51f",
+  "status": "D1_IMPLEMENTED_FULL_STRUCTURAL_SCAN_AND_HUMAN_REVIEW_REQUIRED",
+  "superseded": [
+    {
+      "eligible_for_D2": false,
+      "implementation_commit": "e5228d5",
+      "packet": "candidate_v1",
+      "reason": "single-family drift under 50% cross-family threshold"
+    }
+  ]
+}
