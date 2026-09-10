@@ -48,7 +48,9 @@ evidence 判断；历史报告与 archive 只说明当时发生了什么。
 ## Current Development Plans
 
 - [LITERATURE_GROUNDED_FACTOR_COMPRESSION_PLAN.md](LITERATURE_GROUNDED_FACTOR_COMPRESSION_PLAN.md)
-  — **D1 FULL SCAN VERIFIED / HUMAN REVIEW REQUIRED**；[全量结构审阅](../reports/literature_factor_representation_d1/FULL_STRUCTURAL_REVIEW.md)，168个月/3382日独立oracle通过；R218/C201/H358候选未冻结，D2/P3及近期数据未授权。
+  — **D1 CLOSED / REPRESENTATIONS FROZEN**；[正式冻结](../reports/literature_factor_representation_d1/FORMAL_FREEZE.md)，R218/C201/H358保持原recipe，历史计划保留。
+- [LITERATURE_D2_PRECOMPUTE_RUNBOOK.md](LITERATURE_D2_PRECOMPUTE_RUNBOOK.md)
+  — **D2 USER RUN PENDING**；固定27模型、独立replay与严格续跑；[实施报告](../reports/literature_factor_representation_d2/REPORT.md)。outcome、pool comparison和2024+仍封闭。
 - [RESEARCH_PROTOCOL_V3_MVP_PLAN.md](RESEARCH_PROTOCOL_V3_MVP_PLAN.md)
   — **RECOMPUTED / ENGINEERING VERIFIED / STOP FOR REVIEW**；P0/P1及两折8/494列重算和预测复核完成，P3仍未解锁。
 - [Research Protocol V3-MVP实施进度](../reports/research_protocol_v3_mvp/IMPLEMENTATION_PROGRESS.md)

@@ -1,5 +1,8 @@
 # Literature Factor Representation D1
 
+最新状态：**D1 CLOSED / REPRESENTATIONS FROZEN**，见[正式冻结](FORMAL_FREEZE.md)（`d05e7eb`）。
+下文保留冻结前诊断与人工审阅记录；当前D2入口见[运行说明](../../docs/LITERATURE_D2_PRECOMPUTE_RUNBOOK.md)。
+
 2026-09-10。用户要求先提交计划、再实施D1；计划修订已以 `b877ad3` 提交并推送。
 诊断V1实现在提交 `e5228d5`；当前唯一继续审阅的配方是 **candidate_v2**。
 

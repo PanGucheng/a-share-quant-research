@@ -5,11 +5,11 @@ artifact 名称中的 `current` 不自动表示 ACTIVE。
 
 ## 1. Status At A Glance
 
-Literature Representation D1 已获单独实施授权，交付入口为
-[D1 报告与 PowerShell 命令](../reports/literature_factor_representation_d1/REPORT.md)。
-当前为 **FULL STRUCTURAL SCAN VERIFIED / HUMAN REVIEW REQUIRED**：用户已完成168个月、3382日扫描，
-回执、汇总及独立oracle已核验；[全量审阅](../reports/literature_factor_representation_d1/FULL_STRUCTURAL_REVIEW.md)。
-R218/C201/H358 仅是诊断候选，D2、真实 outcome evaluation 与 2024+ 访问仍禁止。
+Literature Representation **D1 CLOSED / REPRESENTATIONS FROZEN / D2 USER RUN PENDING**。
+168个月、3382日结构扫描及独立oracle已核验，R218/C201/H358已以 `d05e7eb`
+[正式冻结](../reports/literature_factor_representation_d1/FORMAL_FREEZE.md)。
+D2固定27模型及独立replay实现已交付：[PowerShell入口](LITERATURE_D2_PRECOMPUTE_RUNBOOK.md)。
+真实长任务由用户执行；outcome evaluation、pool comparison、D3与2024+研究值继续禁止。
 
 | 对象 | 状态 | 允许行为 |
 |---|---|---|

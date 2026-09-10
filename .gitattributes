@@ -35,3 +35,4 @@ scripts/build_long_history_boards.py text eol=lf
 # D1 diagnostic packets use LF-normalized hashes; pin the linked plan's text too.
 docs/LITERATURE_GROUNDED_FACTOR_COMPRESSION_PLAN.md text eol=lf
 reports/literature_factor_representation_d1/** text eol=lf
+reports/literature_factor_representation_d2/** text eol=lf

@@ -37,11 +37,11 @@
 
 ## Current State
 
-2026-09-10：用户授权先提交 Literature Representation 计划、再实施 D1。
-计划修订 `b877ad3` 已推送；[D1 交付](../reports/literature_factor_representation_d1/REPORT.md)
-包含 R218/C201/H358 诊断配方、受限 reader 和独立 oracle。用户已完成168个月、3382日全量扫描，
-[结构核验通过](../reports/literature_factor_representation_d1/FULL_STRUCTURAL_REVIEW.md)；
-rank/missing policy和U保留仍待人工审核，未冻结；无 D2、outcome 或 2024+ 授权。
+2026-09-10：D1全量168个月、3382日结构扫描及独立oracle通过后，用户授权评估并实施正式冻结与D2。
+R218/C201/H358以 `d05e7eb` [正式冻结](../reports/literature_factor_representation_d1/FORMAL_FREEZE.md)，
+保留U质量限制、dense可变节点含义及跨family完整性代价。
+[D2入口](LITERATURE_D2_PRECOMPUTE_RUNBOOK.md)已实施并完成轻量验证；真实27模型与replay待用户执行。
+outcome、pool comparison、D3和2024+研究值仍封闭。
 
 | 对象 | 状态 | 当前含义 |
 |---|---|---|
