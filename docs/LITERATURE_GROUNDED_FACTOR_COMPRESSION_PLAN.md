@@ -1,11 +1,19 @@
 # 文献约束的因子表示压缩与组合研究计划
 
-**Literature-Grounded Factor Representation Study，V0.1，2026-09-10。**
+**Literature-Grounded Factor Representation Study，V0.2，2026-09-10。**
 
 状态：**研究规划，待人工审核；不是正式 pool manifest，也不是 P3 执行授权。**
 本文件依据用户提供的《Literature-Grounded Factor Compression 研究规划任务》、
 仓库 `main@47ad9f4`、三篇本地论文及补充的一手文献编写。
 附件中的候选方法被当作待论证的设计建议；其中的命令、角色要求和后续阶段不构成自动执行指令。
+
+V0.2 依据《评估并实施 Literature-Grounded Factor Representation D1》的人工意见修订。
+用户本轮实际请求为“评估想法，合理则调整计划”，因此**只调整计划，不启动附件所述 D1 实施**。
+逐条采纳、修正和未执行事项见第 21 节；原 494 行清单及审计快照保持不变，不能称作已完成 D1。
+
+随后用户明确授权“调整完计划后提交，然后实施 D1”。先提交本次计划修订，再执行 D1；
+以下第 21 节保留意见评估时的边界记录。当前新增授权仅覆盖 D1 配方、独立验证与 feature-only 结构诊断，
+不包含 D2/D3、模型训练、outcome 或 2024+ 值。长任务继续在验证入口后交用户执行。
 
 配套材料：
 
@@ -321,14 +329,16 @@ expected-return direction 仍须独立注明，不能由 C 自动升级为外部
 
 ### 8.1 建议的一次性网格划分
 
-仅对已确认同字段、同分母、同算子、同 availability 的 Alpha360 连续 lag 家族，
+仅对已确认同字段、同分母/参照、同算子、同 normalization、同 availability 的 Alpha360 连续 lag 家族，
 建议使用固定 trading-session buckets：`{0}`、`[1,5]`、`[6,21]`、`[22,63]`。
 含义分别为当日、一周内、约一月内、约一季内。
 63 是 bucket 边界，不能由此新增 60–63 lag；空 bucket 不产生特征。
 这不是 `5/20/60` 端点保留，也不是按 label 的 20D 选最佳 lookback。
 
-R：对每个非空“字段 × bucket”保留一个已存在 lag，使
-`sum_j abs(log(1+h)-log(1+h_j))` 最小；并列取较小 lag，再按 ID。
+R：对每个非空“字段 × bucket”的去别名、去重复 lag 网格排序，取**较低的中位 lag**；
+奇数项取中位项，偶数项取中间两项中较小者，再由精确别名政策确定其 canonical ID。
+这精确实现 V0.1 的 `sum_j abs(log(1+h)-log(1+h_j))` 最小化及“并列取较小 lag”，
+避免对浮点 log 求和的理论并列误差作额外容差判断。
 这是只依赖离散网格的中心代表规则，不读取相关、IC 或收益来决定 lag。
 先在结构节点上处理已登记跨库精确重复，别名不能因换库而漏掉相应的 horizon 节点。
 若实际公式核对显示字段或分母不一致，则拆分家族，不应用本条。
@@ -341,6 +351,11 @@ H：同时保留该 bucket 的 composite 与 R 的原始 lag 代表。
 按已审计的网格，这一局部规则有 16 个非空“字段 × bucket”结构单元；
 这是纸面结构计数，不是批准的最终 16 列名单，不包含跨库重用、特殊项或其他 207 个成员。
 因此不能把全池 feature count 从这里直接外推。
+
+D1 获授权后，先逐式确认只有 lag 不同，再验证节点重排、重复 alias、缺失 lag、奇偶网格及桶边界。
+四桶仅是唯一默认候选，未通过公式和 availability 审阅前不升级为 freeze。
+结构报告逐 family 列出原始列数、实际 bucket、R 代表、C/H 输出和丢弃的 lag 分辨率；
+不得把仅在小样本日期验证过的公式/缺失行为称为全部年份已验证。
 
 ### 8.2 其他 multi-window 与状态家族
 
@@ -368,9 +383,12 @@ u(i,j,t) = (average_rank(x(i,j,t)) - 0.5) / n(j,t) - 0.5
 z(i,j,t) = representation_sign(j) * u(i,j,t)
 ```
 
-rank 为从 1 起的升序名次。建议当 n<100 或全列常数时输出 NaN，并记录
-`insufficient_cross_section` 或 `constant_cross_section`；100 是与 V3 数量尺度一致的项目约定，
-不是 SY 论文原样规定。binary 采用 average ties，不加 jitter，不按 ID 打破相同取值。
+rank 为从 1 起的升序名次。average ties 保留为推荐规则；binary 不加 jitter，不按 ID 打破相同取值。
+全缺失、全列常数（包括 n=1）不产生有区分度的测量，输出 NaN 并记录独立原因。
+**feature rank 的 `n_min` 尚待 D1 结构审核，100 仅是诊断参考线，不是已冻结阈值。**
+V3 的每日 IC pair 门槛解决评价有效样本问题，不能据此证明特征横截面 rank 也应同样设为 100。
+数学上可排序也不代表经济代表性足够；最终须根据第 9.4 节的样本覆盖及轴稳定性选择一个明确规则，
+不得按 fold/source 分别调阈值。发布候选 recipe 前写入唯一整数；未决则标 blocked，不暗中默认 100。
 未知方向不靠取绝对值或 PCA 载荷符号消除，而是保留 raw 或停止该组审核。
 
 ### 9.2 防止 dense family 隐式加权
@@ -383,11 +401,20 @@ a(i,f,t) = mean(z(i,j,t) over valid unique nodes j in family f)
 c(i,g,t) = mean(a(i,f,t) over valid measurement families f in group g)
 ```
 
-所有层级均固定等权；一个家族增加大量近似 lag，不应增加其在组 g 的总权重。
+所有层级均固定等权；在家族集合与有效性不变的条件下，一个家族增加近似 lag，不增加其在组 g 的名义总权重。
 例如 50 个同家族 lag、3 个第二家族变量、2 个第三家族变量：
 feature-equal 平均使第一家族占 50/55；三级定义下家族各占 1/3，家族内部再平均。
 若 50 个 lag 已按四个经济尺度拆分，尺度权重必须在 g 的树上先固定，不能因某尺度列更多而增加权重。
 本版对 Alpha360 默认保留“字段 × bucket”输出，不额外叠加一个全路径平均特征。
+
+recipe 的 DAG 必须显式说明 bucket 在哪一层；不能实现时把 bucket 当家族、统计时又当主题。
+当前 Alpha360 的输出节点是“字段 × bucket”，其叶子为唯一 lag；若其他 composite 同时包含多个尺度，
+先按批准的测量家族分配权重，再按预定义尺度分配，不能由库名或节点数决定父层权重。
+
+验证区分两种不变性：**精确 alias** 在同值同 mask 的去重后，输出值、有效 mask、分母与权重均应不变；
+**近义但不相同的 lag** 可以改变组内均值和子节点可用性，只要求固定有效家族条件下父层名义权重不变。
+新增真实节点还可能改变 `ceil(q×children)`，进而改变有效家族和实际归一权重；必须单列诊断，
+不能要求或声称任意增列都保持输出及有效权重不变。任何增列都产生新的 recipe hash，不是冻结后可自由追加的操作。
 
 跨主题只为 taxonomy 汇总，默认不再平均成一个总 alpha。
 一个仅有一个唯一节点的组可输出 rank-transformed singleton，但必须标记 singleton，
@@ -396,24 +423,55 @@ R 中保留其 raw 版本；H 中允许 rank 与 raw 同时存在，因为二者
 
 ### 9.3 缺失、家族有效性与固定权重
 
-建议每层要求至少 `ceil(0.5 × 冻结子节点数)` 个有效子节点；达不到就输出 NaN。
+**50% 暂保留为 D1 诊断候选，不作为已批准的最终缺失政策。**
+诊断候选在每个聚合层要求至少 `ceil(0.5 × 冻结子节点数)` 个有效子节点；达不到就输出 NaN。
 分母使用预冻结成员数，不能按当日缺失情况先缩小成员表。
 达到门槛后对有效节点重新归一等权，输出有效节点数/有效家族数/缺失原因作为审计旁表，
 不默认把这些计数加入模型，以免新增一套 missingness features。
 
-50% 是待审核的工程折中，不是文献最优阈值；本轮只允许一个门槛，不跑 25/50/75/100% 网格。
+50% 是工程折中，不是文献最优阈值；本轮不扫描任何值；未来 D1 不跑 25/50/75/100% 候选网格。
 其代价是缺失造成有效权重随股票和日期变化，可能改变同一 composite 的含义。
-后续 feature-only canary 必须报告这种变化；若频繁出现“多家族组实际只有一个家族支撑”，
-停止审阅该组，不为了改善模型覆盖率自动降门槛。
+必须分别审核叶节点→family 与 family→composite 两层的有效性，不能只用总体有限率判定合格。
+尤其三家族组在该政策下至少需要两个有效家族；“只有一家族但仍有效”是实现/计数/层级定义错误，
+不是一个可接受的高 coverage 现象。两家族组则可能合法退化为一家族；须报告这种语义退化的频率。
+名义家族数、实际 family 数及多个高度相似家族的经济信息重叠也不同，不能混用一个计数。
 
 财务指标使用 canonical 决策时可得事件，不把报告期末当发布时间，也不重新全期前填；
 已经按合法 availability carry-forward 的值可以在当日参与 rank，其横截面排名随 universe 变化是允许的。
 市场/日频特征和会计比率默认不在同一 composite 内混合；TTM 与非 TTM 分开。
 状态掩码无效、尚未触发和真的缺测必须分别记录，不能用“缺失=中性排名”替代。
 
+### 9.4 待授权 D1 的结构诊断与唯一规则收敛
+
+先完成可追溯的 provisional DAG、叶节点及 family 定义，再登记固定日期采样、统计口径、资源预算与
+什么现象会触发人工审核，之后才运行 feature-only canary。记录全部失败组，不按诊断结果反复换抽样日期。
+
+| 层级 | 必须输出的结构证据 | 防止的误判 |
+|---|---|---|
+| 叶节点 × signal date | canonical universe 大小、有限 n、不同取值数、n<100 日期数/比例、all-missing/constant/Inf | 把 IC 门槛移植为 rank 门槛，或把所有缺失都归因于早期财务项 |
+| family × stock/date | 有效唯一节点数、冻结节点分母、有效率和原因 | 去重前后门槛变化被掩盖；dense grid 只剩少数 lag |
+| composite × stock/date | 有效 family 数、冻结分母、最终 mask、single-family 频率、可用轴/尺度 | 名义多家族但实际变成单代理 |
+| 实际权重 | 各家族名义/有效权重、最大权重及相对完整观测状态的偏移；缺失输出单列 | 只看总体 coverage，不看经济含义漂移 |
+| 输出列 × year/fold | finite/constant/Inf、早期可用性、parent dependencies、R/C/H 输出数 | 某些年份不可用，却用全期均值掩盖 |
+
+可定义 `N_eff=1/sum_f(w_f^2)` 描述有效权重分散度，w 为合计 1 的实际 family 权重。
+它不是“独立经济信息数”；等权有效家族下仅等于有效家族个数，相关 family 不因此变独立。
+频率同时给完整 universe 分母与 composite 有效键分母，避免缺失输出被分母悄悄移除。
+
+按 2010–2023 signal year 汇总，并明确九折的 train/predict 角色；同一训练日期会进入多个 expanding folds，
+各折统计不能再相加当作独立观测。n 在原始叶列定义，composite 另报输出有限数，不把二者混称“composite n”。
+抽样 canary 只能报告抽样结果；若要声称每年全部 n<100 日期数，必须复用匹配合同的全日证据或另做有界完整扫描。
+耗时较长的扫描仍在批准、轻量验证后交用户运行，不由本轮文档修订触发。
+
+审阅时先判断轴是否由足够的测量家族/尺度支撑，再判断可用性是否足够；不能选“coverage 最高”的门槛。
+没有证据证明 100/50% 合适，就不得把它们写成 finalized；也不能为绕过失败把全部成员塞入 U。
+如需修正规则，写明具体结构失败及机制理由，经审核确定一个替代规则，再作确认性结构验证；
+保留失败版本和变更记录，但只提交一个当前候选，不循环试阈值、不向 D2 提供 variants。
+如无法给出有依据的唯一规则，D1 返回 `BLOCKED_FOR_HUMAN_REVIEW`，而不是为了完成 freeze 强行选择。
+
 ## 10. 特殊项、共同 raw 部分及混合表示
 
-建议在三种新表示中定义相同集合 U：当前有 hold 的成员，以及完成逐项审核后仍不适合
+建议在三种新表示中定义相同集合 U：当前有 hold 且经逐项审核允许保留 raw 的成员，以及完成逐项审核后仍不适合
 共同方向或平均的 conditioning/state/raw-only 成员。U 的身份须在 outcome 前冻结。
 当前 61 个 hold 是 U 的初始审阅依据，不是本轮已生成的正式 U manifest。
 
@@ -421,6 +479,16 @@ R 中保留其 raw 版本；H 中允许 rank 与 raw 同时存在，因为二者
 也不表示可任意变换其单位。它们以 canonical 原值、原 mask 和原资格合同进入三个新表示，
 已有 anchor 的工程资格提供可用依据；一旦发现明确未来泄漏或错误，必须停下整个研究处理数据正确性，
 不能以“共同保留”绕过 correctness blocker。
+
+D1 须先为全部 494 项区分：未解语义、未解价格尺度、递归缺失、状态/事件、binary/conditioning、
+measurement orientation 未定、语义有效但 raw-only，以及 correctness blocker。
+`expected_return_direction=unknown` 本身不是进入 U 的理由：只要 measurement axis 明确，仍可能适合 C。
+每项附证据引用和处理原因；允许的去向是 `U_RAW`、`G_REPRESENTABLE`、
+`EXACT_ALIAS_OF` 或 `BLOCKED_FOR_HUMAN_REVIEW`，并分别记录 raw/composite 资格。
+精确 alias 的原身份留在清单，表示权重只计 canonical 节点。blocker 不计入 U 或“已就绪”的 recipe。
+
+共同 U 只控制特殊项被单独删除的混杂，不消除有损压缩自身的信息损失，也不能保证 R/C/H 与 B 信息等价。
+若共同 U 大到 C/H 只改变很小的一部分，报告实际改变范围并在 outcome 前审核研究问题，不能按希望的压缩比例缩小 U。
 
 令 G 为其余经过审核的可表示部分，R(G) 为其结构代表，C(G) 为其组合输出，则：
 
@@ -436,9 +504,9 @@ H 的定义直接来自 R/C，不能看模型重要性后只留“有用”的 r
 只允许报“固定表示的增量”，不把它等同于因果证明某个 horizon 或交互机制。
 
 32 个 Alpha101：先逐项对照 canonical override、原论文表达式、PIT rank 和输入口径；
-未解决者进入 U，不删除、不组合、不按 alpha 编号继承方向。
-23 个价格尺度 hold：进入 U，不能自行除 close、重建复权或 z-score 修补。
-3 个递归问题和 3 个状态问题：分别保留及审阅，不改变 canonical；新增有界诊断必须另授权。
+未解但无 correctness 疑点且具有保留 raw 依据者可进入 U，其余明确 blocked；不按 alpha 编号继承方向。
+23 个价格尺度 hold：逐项审阅 raw 保留依据，不能自行除 close、重建复权或 z-score 修补。
+3 个递归问题和 3 个状态问题：分别审阅 raw 的资格或 blocker，不改变 canonical；新增有界诊断必须另授权。
 对 no-hold 成员仍要审核 direction/测量含义，不能把 433 直接等同 composite eligible。
 
 这种设计可能使 C 的 raw 部分相当大。若“纯经济可解释的池”才是用户真正目标，
@@ -516,20 +584,31 @@ full-year prediction 保留 2,189 个日期；截至 2023-12-29 日历上最多 
 
 ### 13.2 预先限定的 contrasts 与 multiple comparisons
 
-建议只注册以下五个正式差值方向；方向是“前者减后者”，检验仍为双侧：
+建议只注册以下六个正式差值方向；方向是“前者减后者”，检验仍为双侧。
+四个 anchor contrasts 和两个表示机制 contrasts 共用一个校正 family：
 
 | 对比 | 研究含义 |
 |---|---|
 | S−B | 既有严格筛选身份相对 Broad anchor |
 | R−B | 结构代表压缩的整体改变 |
+| C−B | 组合表示能否直接替代完整 Broad raw anchor |
+| H−B | 整体混合表示相对完整 raw anchor |
 | C−R | 秩组合表示相对原始代表；包含变换和平均的共同作用 |
 | H−C | 在同一 composite core 外加 raw representatives |
-| H−B | 整体混合表示相对完整 raw anchor |
 
 使用 paired daily delta `d_t = IC_A,t − IC_B,t`，不是对两个各自 IC 序列分别估计标准误后相加。
-五个检验构成一个 family，alpha=0.05，Holm 校正；所有结果连同未通过者一起发布。
+六个检验构成一个 family，alpha=0.05，Holm 校正；所有结果连同未通过者一起发布。
 不再自动跑十个全两两 contrasts、每年九次显著性、每 Era 显著性或 worst-year 显著性作为新发现。
 若某臂不可评分，该 contrast 按不可拒绝处理并保留在原 family 中，不因删去失败臂缩小校正范围。
+
+增加 C−B 的代价可接受：它回答现有 C−R 无法单独回答的直接替代问题，例如 B>C>R。
+同一共同样本上 `delta(C,B)=delta(C,R)+delta(R,B)`，但均值的代数关系不使其标准误或显著性可以直接相加。
+无需新增臂或 fit，仅新增一个预定义检验。Holm 第一步阈值由 0.05/5=0.0100 变为
+0.05/6≈0.00833；这说明检验更严格，不代表功效按固定比例下降，实际代价在揭封前不能从本项目数据估计。
+Holm 可处理相依检验，因而不为这六个相关 contrasts 另拆 family；前提仍是各个输入 p-value 有效，
+它不能修复小样本 HAC 近似误差或此前的选择偏差。
+方法依据：[R stats 对 Holm/FWER 及相依性的官方说明](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/p.adjust.html)。
+H−R 未列为正式对比；不在结果出现后因为方向有利才补入。
 
 ### 13.3 时序依赖、区间与稳健性
 
@@ -558,7 +637,7 @@ importance 或 SHAP。它们既未获本轮授权，也会扩大假说和可调�
 ### 13.5 什么结论可以成立
 
 - 数量减少且 hash/重放通过：只能说工程降维实现有效。
-- R−B 或 H−B 显著为正，且对应模型列更少、覆盖达标：支持该固定配置下的压缩表示改善，仍是回顾性条件证据。
+- R−B、C−B 或 H−B 在上述统一校正后显著为正，且对应模型列更少、覆盖达标：支持该固定配置下的压缩表示改善，仍是回顾性条件证据。
 - H−C 显著为正：支持新增冻结 raw 的增量价值；不能仅凭这一项定位到非线性交互还是尺度信息。
 - C−R 显著为正：支持组合 pipeline，不单独证明 rank averaging 的降噪机制。
 - 未拒绝差异：不等于相等或非劣；worst-year 更好但 primary 未支持，只能描述。
@@ -636,7 +715,7 @@ checksum 可证明文件未改，不能证明研究者从未观察过 outcome；
 | `factor_inventory.csv` | 全部 494 身份、来源、主题与方向审核、角色及理由 |
 | `representation_manifest.json` | 有序模型列；每列 raw/composite 类型、依赖 DAG、唯一节点/家族权重/符号、availability、精确 alias 作用域 |
 | `freeze.json` | 父身份哈希、完整 design/列序哈希、文献版本/文件哈希、Git/runtime、批准人/日期、outcome 尚封闭声明 |
-| `evaluation_contract.json` | primary/secondary、共同样本、五 contrasts、Holm、HAC/bootstrap、覆盖门槛、margin 是否启用、停止条件 |
+| `evaluation_contract.json` | primary/secondary、共同样本、六 contrasts、Holm、HAC/bootstrap、覆盖门槛、`noninferiority_enabled=false`、停止条件 |
 | `access.json` 与工程回执 | 请求文件/列/角色/日期、边界检查、输入 slice hash、输出 hash、replay exact、失败原因 |
 
 对 JSON 采用确定性的 UTF-8、键排序及有限数字规范；feature order 是显式数组，不靠 dict 排序代替。
@@ -644,6 +723,8 @@ checksum 可证明文件未改，不能证明研究者从未观察过 outcome；
 先写临时目录，验证后原子发布；已发布产物只追加新版本，不覆盖旧回执。
 
 正式 freeze hash 只有人工批准具体名单/配方后才出现。
+候选 recipe 可以并且必须有内容哈希，但其状态为 `candidate_for_human_freeze`；
+哈希只说明内容可复核，不授予 D2 权限，也不意味着阈值/语义已获人工批准。
 本轮 `AUDIT_METADATA.json` 是来源快照，**不得被 runner 当作正式 pool 授权**。
 论文 PDF 保留本地，不将用户提供的全文自动推送到公共仓库；文档只发布出处、摘要和哈希。
 
@@ -656,9 +737,9 @@ checksum 可证明文件未改，不能证明研究者从未观察过 outcome；
 | 身份与确定性 | 494 行不丢失；B/S hash 不变；输入文件/列重排不改 recipe；相同配置生成完全相同有序列 |
 | 方向 | close ratio 与 return 反向、已有负号、跨零倒数、unknown direction、收益/IC 列注入均不影响设计 |
 | 相似关系 | A–B/B–C 近但 A–C 远；相同 unknown 不当同机制；Full 高但 Era 不稳；mask 不同拒绝等值 |
-| family 权重 | 增加精确 alias 不变；库名称改变不变；一个 dense family 增列不增加组间总权重；跨主题重复计权失败 |
-| rank/reference | ties、binary、n=99/100、constant、all-missing、Inf、单组、不同 mask；先全合法截面 rank 再按标签/训练 mask，与错误顺序明显不同 |
-| 缺失 | 50% 门槛临界、固定分母、家族不足、状态 NaN 不补零、PIT 未发布不能出现；有效权重审计可复算 |
+| family 权重 | 精确 alias 同值同 mask 时输出/分母不变；库名改变不变；近义 lag 在家族有效性固定时不增加名义组权重，但允许值改变；新增节点导致门槛变化须被捕获 |
+| rank/reference | ties、binary、n_min−1/n_min、n=99/100 诊断点、constant、all-missing、Inf、单组、不同 mask；先全合法截面 rank 再按标签/训练 mask，与错误顺序明显不同 |
+| 缺失 | 候选及最终唯一门槛的临界、固定分母、两家族可退化为一与三家族至少二的区别、状态 NaN 不补零、PIT 未发布不能出现；有效权重审计可复算 |
 | horizon | lag0 与 window0、1/5/6/21/22/59 边界；空 bucket；同字段不同分母；不同 TA 多窗口不套单 lag 规则 |
 | 日期与泄漏 | train label_end 恰等于 refit 边界必须 purge；2024 请求在 I/O 前失败；跨期 parent 不能无 predicate；禁止全期缓存 |
 | 固定训练数值 | float64 Sequence、100 轮、列序、每日目标 rank、daily-equal 权重、any-finite mask；对不变 raw 配方与既有 authority 一致 |
@@ -667,6 +748,9 @@ checksum 可证明文件未改，不能证明研究者从未观察过 outcome；
 | 未来评价 | paired 同键同日、NaN 日轴不压缩、共同 bootstrap 索引、Holm family 固定、覆盖不足无 winner、末 21 日不评分 |
 
 数学表达式的 reference 可用小型 synthetic 单日/多日数据做独立重算。
+生产实现和朴素 oracle 可共享冻结常量/schema，不能共享 rank、orientation 应用、层级归约、
+缺失门槛及 alias 处理的核心函数；关键结果还需手算小例子，避免两份代码重复同一理解错误。
+故意改变 sign、ceil/分母、mask 或 alias 路径应使测试失败；比较包括全部值和 mask，不仅比较最终相关性。
 真实 canary 应固定取样规则，不按相关性或模型表现挑日期；报告 CPU/RSS/临时磁盘和 missingness，
 先做新表示的数值与资源资格，再交付用户自行执行的长运行命令。
 若 runtime/精度改变，先证明等价或换版本，不能降低精度以通过资源门槛。
@@ -675,8 +759,8 @@ checksum 可证明文件未改，不能证明研究者从未观察过 outcome；
 
 | 阶段 | 工作内容 | 交付及停点 |
 |---|---|---|
-| D0：本轮 | 文献核验、现有元数据审计、详细方案 | 本文件及 494 行 inventory；**现在停止供人工审核** |
-| D1：另行批准设计实施 | 逐列主题/方向/availability；U/R/C/H 配方；synthetic 验证；必要的 feature-only 有界 canary | 完整 freeze packet、全部成员去向、真实输出数；仍不开 outcome |
+| D0：本轮 | V0.1 证据复核、人工意见评估与 V0.2 计划修订 | 保留原 494 行 inventory；**PLAN REVISED / D1 NOT STARTED** |
+| D1：另行批准设计实施 | 逐列主题/方向/availability；U/R/C/H 配方；独立 oracle；rank/missing 结构诊断；唯一规则收敛 | `candidate_for_human_freeze` packet、全部成员去向、真实输出数；仍不开 outcome，仍未授权 D2 |
 | D2：另行批准冻结与预计算 | 人工批准具体 recipe；资源 canary；用户运行最多 27 次新 fit 与独立 replay | 新池 prediction sealed；全部记录完整后再停 |
 | D3：另行批准 outcome evaluation | 同时打开已冻结全部臂的成熟开发期 outcome，执行冻结 paired 评价合同 | 完整结果、失败/不确定性、无选择偏差粉饰；停止，无 2024+ |
 | D4：本计划不授权 | 新时期研究、learned compression、portfolio、Strategy V2 | 各自独立问题、freeze 和用户授权 |
@@ -684,6 +768,24 @@ checksum 可证明文件未改，不能证明研究者从未观察过 outcome；
 本版建议 D1 先形成数个可审阅的小批次：taxonomy/direction → dense-lag 与 U → composite/reference → freeze packet。
 若共同 raw 部分过大，或需要在多个方案中凭主观偏好选一个，应先审核问题定义，而不是开展小规模 outcome pilot。
 开发投入以少量函数、配置、集中测试为原则；耗时主要是不明语义和公式映射，不能靠增加框架替代。
+
+### 18.1 D1 获授权后的验收包（本轮不生成）
+
+- 494 行逐因子 audit：主题、子主题、measurement family、三种 direction 字段、方向证据、
+  lag/window 类型、单位、分母、availability、hold/blocker、alias、统计证据及 U/R/C/H 去向。
+  不以表格行数冒充语义完成；unknown 有明示处理，未决项列对象/数量/原因，不保留无解释的 pending。
+- U 的逐项 raw 保留依据，R/C/H 各自有序输出、DAG、唯一成员权重、最终唯一 rank/missing 规则；
+  H 严格来自 U+R(G)+C(G)，不由 importance 选择子集。
+- 自然列数 F_R/F_C/F_H，拆分 U、raw reps、composite、rank singleton、精确去重、父依赖、主题/家族/尺度；
+  Alpha360 单列结构分解。遇到 blocked 不能报一个假定其已通过的最终数。
+- 第 9.4 节结构诊断、访问记录、资源估计与所有规则修订理由；抽样/全量边界明确，未运行的统计不能填零。
+- `candidate_for_human_freeze` 配置和 manifests、recipe/content hashes、文献/来源、direction authority、
+  拟议六对比评价合同与访问合同；tests/validators 报真实执行结果，不把本轮文档检查算作 oracle 测试。
+
+D1 只有在规则唯一、所有相关资格已处理、独立验证通过时才可报告
+`D1 IMPLEMENTED / REPRESENTATIONS READY FOR HUMAN FREEZE / D2 NOT AUTHORIZED`。
+否则报告 `D1 BLOCKED / HUMAN DECISION REQUIRED`，保存未完成范围及候选内容；
+不能自动剔除 blocked 成员、改 B/S 或调整模型以取得 ready 状态。
 
 以下任一情况立即停止并请求针对具体问题的人工审核：
 
@@ -695,20 +797,24 @@ checksum 可证明文件未改，不能证明研究者从未观察过 outcome；
 - 已观察到项目 outcome 或任何未授权近期研究值；
 - 新增方法、margin、指标或 contrasts 会扩大预注册假说家族。
 
-## 19. 人工审核应确认的六项决定
+## 19. 人工审核应分别确认的决定
 
 1. 是否接受五臂上限及旧 Baseline 仅作 provenance。
 2. 是否接受 R/C/H 共享 raw 特殊项 U，从而 C 并非纯 composite。
 3. 是否采用 economic-axis orientation，而不是要求所有组合都具有文献预期收益方向。
-4. 是否接受 Alpha360 的四个尺度 bucket、网格中心代表及其他多窗口暂不跨尺度合并。
-5. 是否接受单一 0.995 同层近似资格、family-balanced 平均、average ties、n≥100 和 50% 固定缺失门槛。
-6. 是否接受五个 primary contrasts、Holm/HAC 合同和“未定义 margin 就不声明非劣”；
-   以及 D1/D2/D3 分开授权。
+4. 是否以四尺度 bucket 和较低中位 lag 作为 D1 唯一默认候选，在真实公式/availability 验证后再冻结。
+5. 是否采用单一 0.995 的高置信同语义同尺度替代资格，并保留 Full/Era、全 pair 和 mask 边界。
+6. 是否采用 family-balanced 及显式尺度层级，并区分精确 alias 不变性与近义节点的名义权重不变性。
+7. 是否采用 average ties、无 jitter、常数截面单列无效原因。
+8. 是否接受 n_min 暂不冻结，以 100 作诊断参考线，按第 9.4 节结构证据提出一个最终规则。
+9. 是否接受 50% 仅为缺失诊断候选，独立审阅各聚合层的语义稳定性后提出唯一政策。
+10. 是否接受六个 primary contrasts、统一 Holm、现有 HAC/bootstrap 设置及本版不作非劣声明。
+11. 是否单独授权 D1 的配方/工程实现；D2 和 D3 仍须分别批准。
 
 这些是可评审的具体默认方案，不要求一次批准所有未来研究。
 下一步若仅批准 D1，表示允许完善配方与工程验证，**不表示允许新模型训练或打开 B/S outcome**。
 
-## 20. 本轮交付边界与检索限制
+## 20. V0.1 交付边界与检索限制（历史记录）
 
 本轮完成本地三篇论文正文提取、LWZ 补充材料 C.4 表格核对、JKP 附录 VII/IX 定位、
 GKX 作者发表版及补充一手资料检索；没有把未获全文的补充论文细则当作已核实方法。
@@ -725,3 +831,35 @@ GKX 作者发表版及补充一手资料检索；没有把未获全文的补充�
 
 正式池身份、新模型训练、prediction outcome、P3、近期数据和 Strategy V1/V2 均未解锁。
 交付后等待人工审核与单独实施授权。
+
+## 21. V0.2 人工意见评估与修订记录
+
+结论：附件主要意见合理，尤其纠正了两个门槛被过早绑定及 C 缺少直接 anchor contrast 的问题。
+本轮按用户实际请求只调整计划；附件第九节“现在开始实施 D1”和末尾代码/manifest 交付要求未执行。
+这不是否定 D1 的内容，而是区分评估材料和本轮行动授权。
+
+| 附件意见 | 处理 | 理由及对应章节 |
+|---|---|---|
+| 一：JKP、分层平均、economic-axis 三项原则 | 保留，补强 | 区分文献收益聚类与本地 feature-only；补精确/近义不变性边界；第 3、6、9 节 |
+| 二：最多五臂、无最佳 K、不重训旧 Baseline | 采纳并保留 | 明确研究假说而非列数优化；六 contrasts 不增加第六臂；第 1、11、13 节 |
+| 三：U 须逐项审核、blocker 不能保留 | 采纳，修正原文 | 撤去 61 hold 自动进入 U 的读法；未知收益方向不等于未知测量轴；第 10 节 |
+| 四：dense family 核对、中心确定性、分辨率报告 | 采纳并精化 | 同 normalization/availability；较低中位 lag 免去浮点 log 并列误差；16 格仍是纸面计数；第 8 节 |
+| 五：拆开五项决定 | 采纳 | 原第 5 项拆开；0.995 保守资格、family 平衡、ties 与两个待诊断门槛分开；第 7、9、19 节 |
+| 五：新增近义 lag 的“不变性” | 部分采纳 | 保证固定有效家族下名义父权重，不承诺输出值或缺失归一权重不变；第 9.2 节 |
+| 五：n<100、50% 的结构审计 | 采纳，修正计数与验收口径 | 叶 n 与输出 finite 数分开；三家族只剩一仍有效是错误；采样不能声称全年计数；第 9.3–9.4 节 |
+| 六：增加 C−B、统一六项 Holm | 采纳 | 直接替代问题值得增加一次预定义检验；不增加模型臂；依赖与代数关系不取消检验成本；第 13.2 节 |
+| 七：HAC/bootstrap 不再搜带宽 | 保留 | 原 20/40、1000 次、固定 seed 与日轴规则不变；不在本轮执行 evaluator；第 13.3 节 |
+| 八：无 margin 不作非劣 | 采纳并显式化 | 本版 `noninferiority_enabled=false`；如将来改变需独立预注册；第 13.5、16 节 |
+| 九：D1 具体工作内容 | 纳入待授权验收要求 | 全量 taxonomy、U、R/C/H recipes、结构 canary 及唯一规则；本轮不实际生成；第 18.1 节 |
+| 十：独立 composite oracle | 采纳并补反例 | 不共享核心计算函数；手算例子、mask 和故意错误检查；第 17 节 |
+| 十一、十二：outcome sealing 与 2024+ 封闭 | 保留 | 隔离 design 输入，边界在 I/O 前验证，疑似污染即停；第 14 节 |
+| 十三、十四：D1 交付和完成/blocked 状态 | 纳入未来验收，不宣称完成 | candidate hash 不等于批准；全列状态/真实 counts/tests 必须实际产生；第 16、18.1 节 |
+| 十五：允许基于结构证据修订 | 采纳但限制循环 | 可解释失败→审阅→单一修订→确认验证；不能借 feature-only 名义追 coverage/列数；第 9.4 节 |
+
+本轮重新核验 V0.1 审计快照所绑定的来源文件哈希，未发现变化；没有重新解封预测或扫描特征值。
+`STRUCTURAL_INVENTORY_494.csv` 和 `AUDIT_METADATA.json` 仍是原 V0.1 metadata-only 快照，
+其 pending 保持原样，不作为 D1 完成证据；未来 D1 应另发布新候选附件，保留原快照。
+本轮新增的一手方法核对仅为第 13.2 节 Holm 官方说明，未访问近期市场数据。
+
+意见评估完成时状态：PLAN V0.2 REVISED / D1 NOT STARTED / D2–D3 NOT AUTHORIZED。
+随后用户授权先提交计划、再实施 D1；实施状态由单独交付记录更新，不追改原审计快照。
