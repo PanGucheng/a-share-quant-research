@@ -7,7 +7,8 @@ artifact 名称中的 `current` 不自动表示 ACTIVE。
 
 Literature Representation D1 已获单独实施授权，交付入口为
 [D1 报告与 PowerShell 命令](../reports/literature_factor_representation_d1/REPORT.md)。
-当前为 **CODE IMPLEMENTED / FULL STRUCTURAL SCAN USER-RUN / POLICY REVIEW PENDING**。
+当前为 **FULL STRUCTURAL SCAN VERIFIED / HUMAN REVIEW REQUIRED**：用户已完成168个月、3382日扫描，
+回执、汇总及独立oracle已核验；[全量审阅](../reports/literature_factor_representation_d1/FULL_STRUCTURAL_REVIEW.md)。
 R218/C201/H358 仅是诊断候选，D2、真实 outcome evaluation 与 2024+ 访问仍禁止。
 
 | 对象 | 状态 | 允许行为 |

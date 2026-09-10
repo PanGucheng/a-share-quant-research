@@ -1,0 +1,12 @@
+{
+  "all_missing_leaf_dates.csv": "f9d01393a1f0ce27127f51150d9438f48490d8896911634fdf123790dc1f2e9d",
+  "fold_arms.csv": "34e4d73724cfb0d6a43a72a7048862f2411d76b6d3a2b4c07baad1d3c23ff3a8",
+  "fold_leaves.csv": "1ed6d4951b5ea939575d57063713b0bf45c510f3e49d1051a97464b1ccdf323f",
+  "fold_outputs.csv": "a4f54bac4db621bfd0dfc21aef07a6a01a9ec8677a632d67431481318f8d8cd1",
+  "run_summary.json": "b52fa37fc6c15485b51dd817251a71db851dd1216bece14c6b18ab78a8d3fe08",
+  "verification.json": "650b00f258f09daf63994ea24039e7c6d5669b2f76d927b96f6274cf3c9eb549",
+  "year_arms.csv": "f3f5cdf4726516a6b7fd9fb1ec691f8389c493c270465294664dd8ac7591ae2a",
+  "year_family_composition.csv": "3db757bd6640e9f1946d7dca0889ca9bd948bd1c323edfb89a85ffce0e7f05cd",
+  "year_leaves.csv": "c880c2f89845d1660046e967f7145cd02b510a9a6481fd752377d0da66d077de",
+  "year_outputs.csv": "1c8831f12c9d42bd191d27261480850053ed2c5dee4a42178e44556d11d6ef91"
+}

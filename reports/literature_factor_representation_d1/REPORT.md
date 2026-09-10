@@ -3,8 +3,10 @@
 2026-09-10。用户要求先提交计划、再实施D1；计划修订已以 `b877ad3` 提交并推送。
 诊断V1实现在提交 `e5228d5`；当前唯一继续审阅的配方是 **candidate_v2**。
 
-**D1 CODE IMPLEMENTED / FULL STRUCTURAL SCAN USER-RUN / HUMAN REVIEW REQUIRED / D2 NOT AUTHORIZED**。
-12日期canary和独立oracle已通过；完整逐年/九折计数尚未运行，不能宣称配方已可冻结。
+**D1 FULL STRUCTURAL SCAN VERIFIED / HUMAN REVIEW REQUIRED / D2 NOT AUTHORIZED**。
+用户已完成全量扫描，168个月、3382日期、6640610行及独立oracle已核验。
+最新结论见 [全量结构审阅](FULL_STRUCTURAL_REVIEW.md)。配方仍未正式冻结。
+下文第1–7节保留首次实施与canary交付记录，其中“尚未运行”描述的是当时状态；无需重复长扫描。
 
 ## 1. 交付与自然列数
 

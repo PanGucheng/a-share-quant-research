@@ -1,0 +1,21 @@
+{
+  "checks": [
+    "source/code/packet/chunk/aggregate hashes",
+    "calendar and leaf/output identity counts",
+    "logged requests within approved development dates and feature columns",
+    "all registered aliases checked in every month",
+    "family/node histogram denominator checks"
+  ],
+  "d2_authorized": false,
+  "feature_slice_requests_completed": 5376,
+  "policy_finalized": false,
+  "recipe_hash": "8b688bd098ebafd1c1da2bab32d029624f6da65f7166c59f702fbc18499cf51f",
+  "review_code_sha256_lf": "d4c3057869d9c1e1836801664cdceefb0194f1a1024c0d3efcfaf7f4d49bfaf1",
+  "run_id": "d1_structure_20260910_v2",
+  "source_packet": "reports/literature_factor_representation_d1/candidate_v2",
+  "source_summary_sha256": "b52fa37fc6c15485b51dd817251a71db851dd1216bece14c6b18ab78a8d3fe08",
+  "status": "FULL_SCAN_VERIFIED_HUMAN_REVIEW_REQUIRED",
+  "verification_scope": "diagnostic/receipt verification; independent numeric oracle ran in user full scan; no fresh canonical reload",
+  "verified_dates": 3382,
+  "verified_months": 168
+}

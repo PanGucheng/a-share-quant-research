@@ -39,8 +39,9 @@
 
 2026-09-10：用户授权先提交 Literature Representation 计划、再实施 D1。
 计划修订 `b877ad3` 已推送；[D1 交付](../reports/literature_factor_representation_d1/REPORT.md)
-包含 R218/C201/H358 诊断配方、受限 reader 和独立 oracle。完整结构扫描由用户运行，
-rank/missing policy 仍未冻结；无 D2、outcome 或 2024+ 授权。
+包含 R218/C201/H358 诊断配方、受限 reader 和独立 oracle。用户已完成168个月、3382日全量扫描，
+[结构核验通过](../reports/literature_factor_representation_d1/FULL_STRUCTURAL_REVIEW.md)；
+rank/missing policy和U保留仍待人工审核，未冻结；无 D2、outcome 或 2024+ 授权。
 
 | 对象 | 状态 | 当前含义 |
 |---|---|---|

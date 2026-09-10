@@ -1,0 +1,10 @@
+year,factor,all_missing_dates
+2010,ta_trend_adx_neg,180
+2010,ta_trend_adx_pos,180
+2010,ta_volatility_atr,180
+2011,ta_trend_adx_neg,79
+2011,ta_trend_adx_pos,79
+2011,ta_volatility_atr,79
+2012,ta_trend_adx_neg,155
+2012,ta_trend_adx_pos,155
+2012,ta_volatility_atr,155
