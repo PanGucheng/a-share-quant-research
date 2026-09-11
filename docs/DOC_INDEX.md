@@ -47,6 +47,11 @@ evidence 判断；历史报告与 archive 只说明当时发生了什么。
 
 ## Current Development Plans
 
+- [ECONOMIC_TRANSLATION_MVP_PLAN.md](ECONOMIC_TRANSLATION_MVP_PLAN.md)
+  — **PLAN DELIVERED / STOP FOR HUMAN REVIEW**；文献与 Qlib/项目代码审计、参考意见更正，
+  B494 单一信号、两种组合规则、A 股 dated execution/cost 与 E0–E6 分阶段提案。
+  本轮不运行 persistence/portfolio；实施与 2024+ 均未授权。
+
 - [LITERATURE_GROUNDED_FACTOR_COMPRESSION_PLAN.md](LITERATURE_GROUNDED_FACTOR_COMPRESSION_PLAN.md)
   — **D1 CLOSED / REPRESENTATIONS FROZEN**；[正式冻结](../reports/literature_factor_representation_d1/FORMAL_FREEZE.md)，R218/C201/H358保持原recipe，历史计划保留。
 - [LITERATURE_D2_PRECOMPUTE_RUNBOOK.md](LITERATURE_D2_PRECOMPUTE_RUNBOOK.md)
