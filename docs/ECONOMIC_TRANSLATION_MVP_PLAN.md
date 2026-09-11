@@ -1,6 +1,7 @@
 # Economic Translation MVP：研究与实施计划
 
-状态：**E1 + E2 AUTHORIZED / IMPLEMENTATION IN PROGRESS**。修订日期：2026-09-11。
+状态：**E1 IMPLEMENTED / AWAITING USER RUN；E2 BLOCKED BY EXECUTION / DATA GAP**。修订日期：2026-09-11。
+实施交付与真实数据缺口见 [E1/E2报告](../reports/economic_translation_mvp/REPORT.md)；运行见 [runbook](ECONOMIC_TRANSLATION_E1_E2_RUNBOOK.md)。
 初版审计基线 `main@99ff157`；本次人工意见基线 `main@bd2a060`。
 本轮先独立提交计划修订，再实施 E1、E2；E3 正式冻结、E4 组合评价未授权。
 
@@ -42,7 +43,7 @@
 首先用 prediction-only 研究解释信号变化，再补齐交易数据与执行语义，最后一次冻结并打开开发期组合结果。
 不再以五臂 representation 竞争为主线。MVP 的问题是：在明确的成交近似与成本下，冻结排名是否仍有经济价值，而非寻找最高 Sharpe 的参数组合。
 
-用户提供的《给 Codex：Economic Translation MVP 研究规划任务.md》是参考建议；实际请求为“参照文档规划，允许更正”。
+初版用户提供的《给 Codex：Economic Translation MVP 研究规划任务.md》是参考建议；当时请求为“参照文档规划，允许更正”。
 本文的参数均为**待审议提案**，不是已获授权的正式回测合同。文献结论、仓库事实、研究者选择分别标记，附件中的例子不自动升级为正式参数。
 本轮参考文档文件 SHA256：`34d886fdc17e0620de42e9d0c02d80d03ef0eded9082a25aec5b85a3d94b1202`；原文件保留在用户 Download 目录，不复制或修改。
 
@@ -115,7 +116,7 @@ value weight 仍带显著 size 配置，EW 也不是 size-neutral。score weight
 | Qlib `get_deal_price` | 缺失/无效指定价格时会 fallback 到 close | next-open 合同必须在调用前拒绝，并覆盖/隔离 fallback；现有子类在 `super()` 后检查不能单独保证此点 |
 | Qlib `SimulatorExecutor`、`Account`、`Position` | serial execution、cash/position/NAV、订单结果；settle_type 默认 ST_NO，cash settlement 也不等于股票 T+1 | 日级 simulator 足够；复用账户和成交结果，单独保留 opening sellable ledger；NestedExecutor/分钟撮合延期 |
 | [exchange_adapter.py](../qlib_integration/exchange_adapter.py) | PreparedQuoteExchange、component_costs、TPlusOneLedger、raw/adjusted 换算、动态 lot 和订单审计 | 优先复用，经新 synthetic oracle 验证；补齐面额费基、真实可得字段、corporate actions 与纯预演 |
-| [market_semantics.py](../qlib_integration/market_semantics.py) | dated fee resolver、board/limit/lot resolver、timing validator、有限 stale valuation | 复用纯函数；现费表只有 2022-04-29 起，主板 IPO 历史错误、旧创业板/ST 分支缺失；新建经济研究配置，不覆盖旧配置 |
+| [market_semantics.py](../qlib_integration/market_semantics.py) | dated fee resolver、board/limit/lot resolver、timing validator、有限 stale valuation | 复用纯函数；现费表只有 2022-04-29 起，主板 IPO 历史错误、旧创业板/ST 分支缺失；新增专用原语和参考表，保留旧配置 |
 | [instrument_state_evidence.py](../qlib_integration/instrument_state_evidence.py) | published_at、effective_from、来源等级与冲突检查 | 复用 event/availability 逻辑；代码有能力不代表 2015–2023 逐日官方状态已齐全 |
 | [strategy_adapter.py](../qlib_integration/strategy_adapter.py) | PeriodicEqualWeightSelector 在非 rebalance 日返回 None，避免每天重置权重 | 复用这一语义，新增真正月末日历与 buffered membership；不可把固定 20D schedule 改名 monthly |
 | [runner.py](../qlib_integration/runner.py) / [result_normalizer.py](../qlib_integration/result_normalizer.py) | prepared quote、executor、orders/fills/rejects/partials、cash fees、position raw shares | 复用输出与账本检查；runner 当前写死 EqualWeightTargetStrategy 和旧配置参数，不能原样跑新两臂 |
@@ -224,8 +225,8 @@ stress 只用于已定规则的描述性稳健性，不能因某个成本下赚�
 | Rank persistence | 交易日 lag 1/2/5/10/20，先各日在完整有限 score universe 排名，再在两日 ID 交集上做 Pearson correlation of percentile ranks；另列该交集内重新排序的 Spearman | 两种 estimand 不混名；不先保留整个九年都存在的股票 |
 | 单日排名 | 有限 score 降序；统计使用平均并列名次，选择使用固定 instrument ID tie-break；输出 tie rate | 不使用 score 水平跨年度拼接；年度模型切换另列标记 |
 | Membership persistence | descriptive p∈{5%,10%,20%}，`K=ceil(p*N)`；retention=`|S_t∩S_t-l|/|S_t-l|`，entry=`|S_t\S_t-l|/|S_t|`，exit=`|S_t-l\S_t|/|S_t-l|` | universe 进入/退出、NaN、排名迁移分开，分母写明；非空全覆盖规则不意味着未来有 label |
-| Rank migration | top10/top20/rest 的固定迁移表和首次越过阈值所需交易日；另设 absent 状态 | 相邻日 pairwise complete 与连续生存 cohort 都报告覆盖；不隐去 disappeared stocks |
-| Natural membership churn | 对每日 top p 的等权**抽象成员权重**，`0.5*sum|w_t-w_t-1|`；买侧/卖侧正差额另报 | 未含价格漂移、lot、cash、fill，命名 membership churn proxy，不能称真实 turnover |
+| Rank migration | 前期Top10向Top10/10–20/20外/absent的固定迁移表，lag=1/5/10/20 | 相邻日 pairwise complete 与连续生存 cohort 都报告覆盖；不隐去 disappeared stocks |
+| Natural membership churn | 对每日 Top10 的等权**抽象成员权重**，`0.5*sum|w_t-w_t-1|`；成员进入/退出数量另报 | 未含价格漂移、lot、cash、fill，命名 membership churn proxy，不能称真实 turnover |
 | Buffer structural proxy | 只演示一组待审议关系 `p=0.10, h=2p`，与同 p 无 buffer 对照；入池严格、老仓可留宽带，最多 K 名 | 数值只用于有文献形状依据的结构演示，不是已批准策略；禁止添加 10/15、10/30 等网格 |
 | 持有时长 | membership spell 的中位数、分位数、已退出 duration、右删失数；年界不断仓，切模单列 | 不能丢掉未结束长持仓只平均 closed spells；不是最优持仓期 |
 
@@ -406,7 +407,7 @@ E1 与 E2 已于本次明确授权下顺序实施；E3 仍需人工审议，E4 �
 |---|---|---|
 | O1 | [财政部/税务总局 2023 第39号](https://fgk.chinatax.gov.cn/zcfgk/c102416/c5211343/content.html) | 已核查 2023-08-28 减半；写入 dated 卖出税率 |
 | O2 | [中国结算 2022 通知的上海金融部门转载](https://jrj.sh.gov.cn/SCDT197/20220429/f715759a877b4158812eb6df70ccb49e.html) | 已核查0.02‰→0.01‰双向；不是佣金 |
-| O3 | [中国结算2015公告全文转载](https://finance.sina.com.cn/stock/y/20150709/222322641178.shtml?from=wap) | 文本可读，但原站归档未取得；E2 补强，确认早期面值与最低收费，不能冒称全期费表已认证 |
+| O3 | [中国结算2015公告全文转载](https://finance.sina.com.cn/stock/y/20150709/222322641178.shtml?from=wap) | 初版只有转载；E2已取得上交所官方三方答问补强费率/面值，早期最低收费与券商语义仍不齐 |
 | O4 | [深交所2020-08-21正式答问](https://www.szse.cn/aboutus/trends/news/t20200821_580924.html) | 创业板改革与过渡例外；发布日期不替代实际生效日 |
 | O5 | [深交所风险警示/退市整理过渡通知](https://www.szse.cn/disclosure/notice/general/t20200710_579459.html) | 风险警示20%与旧制度例外；ST不是全市场恒定5% |
 | O6 | [上交所2023规则历史归档](https://www.sse.com.cn/lawandrules/sselawsrules2025/repeal/rules/c/c_20250612_10824490.shtml) | 原规则现被标为失效，但历史回测需其当时有效版本；E2 锁定附件条文及实际实施日，不用2026新规则回填 |

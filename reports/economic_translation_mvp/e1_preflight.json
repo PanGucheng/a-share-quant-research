@@ -1,0 +1,149 @@
+{
+  "files": [
+    {
+      "kind": "keys",
+      "numeric_values_materialized": false,
+      "path": "outputs/research_protocol_v3_mvp/v3_recompute_audit_20260909_v1/audit/2015/keys.parquet",
+      "rows_metadata": 487993,
+      "sha256": "1af8634b36b6eada5506fb626089c469adc6269707802efd7a3e96319f52055d",
+      "year": "2015"
+    },
+    {
+      "kind": "scores",
+      "numeric_values_materialized": false,
+      "path": "outputs/research_protocol_v3_precompute/v3_precompute_broad494_strict332_20260909_v1/Broad494/annual_2015/engineering_predictions.parquet",
+      "rows_metadata": 487993,
+      "sha256": "0e5611d7e631e561245188bd5791f42ad6b056c10365dfef833fd4fd1797e701",
+      "year": "2015"
+    },
+    {
+      "kind": "keys",
+      "numeric_values_materialized": false,
+      "path": "outputs/research_protocol_v3_mvp/v3_recompute_audit_20260909_v1/audit/2016/keys.parquet",
+      "rows_metadata": 488000,
+      "sha256": "b9c3a3e19b9ca52259cf8c35bdce8b8919d2685a35726634ef92ca47ca322006",
+      "year": "2016"
+    },
+    {
+      "kind": "scores",
+      "numeric_values_materialized": false,
+      "path": "outputs/research_protocol_v3_precompute/v3_precompute_broad494_strict332_20260909_v1/Broad494/annual_2016/engineering_predictions.parquet",
+      "rows_metadata": 488000,
+      "sha256": "c2fb846b7b6dcbe38504561725333dd0ae914f7c501279996db6ef6358b37f4e",
+      "year": "2016"
+    },
+    {
+      "kind": "keys",
+      "numeric_values_materialized": false,
+      "path": "outputs/research_protocol_v3_mvp/v3_recompute_audit_20260909_v1/audit/2017/keys.parquet",
+      "rows_metadata": 488000,
+      "sha256": "dae6da5e8775c250fa521b39b969bbcb0b11b738aab874bc37c35a8e96155257",
+      "year": "2017"
+    },
+    {
+      "kind": "scores",
+      "numeric_values_materialized": false,
+      "path": "outputs/research_protocol_v3_precompute/v3_precompute_broad494_strict332_20260909_v1/Broad494/annual_2017/engineering_predictions.parquet",
+      "rows_metadata": 488000,
+      "sha256": "9861bc3e86b8fcda1cbfc37828d8c34d02a5114a2fbc5edad46ce7985d8ae746",
+      "year": "2017"
+    },
+    {
+      "kind": "keys",
+      "numeric_values_materialized": false,
+      "path": "outputs/research_protocol_v3_mvp/v3_recompute_audit_20260909_v1/audit/2018/keys.parquet",
+      "rows_metadata": 485999,
+      "sha256": "95281dc2fe5b4b9861c0a156e0a8f9b41e2e5c6c9b13a8ccf43b86edc0d166d9",
+      "year": "2018"
+    },
+    {
+      "kind": "scores",
+      "numeric_values_materialized": false,
+      "path": "outputs/research_protocol_v3_precompute/v3_precompute_broad494_strict332_20260909_v1/Broad494/annual_2018/engineering_predictions.parquet",
+      "rows_metadata": 485999,
+      "sha256": "441a946d8440781aef9a779dee9e10afb39f4d31e8dc8789cb62d77e3b38e95a",
+      "year": "2018"
+    },
+    {
+      "kind": "keys",
+      "numeric_values_materialized": false,
+      "path": "outputs/research_protocol_v3_mvp/v3_recompute_audit_20260909_v1/audit/2019/keys.parquet",
+      "rows_metadata": 487969,
+      "sha256": "c849988b4153d954b1b612ffae3bf5f56c840333da14f80746fd67830ac747b2",
+      "year": "2019"
+    },
+    {
+      "kind": "scores",
+      "numeric_values_materialized": false,
+      "path": "outputs/research_protocol_v3_precompute/v3_precompute_broad494_strict332_20260909_v1/Broad494/annual_2019/engineering_predictions.parquet",
+      "rows_metadata": 487969,
+      "sha256": "cd7287e78db3cdd264fb51dc7c7ae6dfcc84f70df1f80bab5e3348ff2538ceeb",
+      "year": "2019"
+    },
+    {
+      "kind": "keys",
+      "numeric_values_materialized": false,
+      "path": "outputs/research_protocol_v3_mvp/v3_recompute_audit_20260909_v1/audit/2020/keys.parquet",
+      "rows_metadata": 485973,
+      "sha256": "70ea6ac9c92acc0a5d0111a136fc2fa12dd197f2ce9b68729b24cbfdea74336e",
+      "year": "2020"
+    },
+    {
+      "kind": "scores",
+      "numeric_values_materialized": false,
+      "path": "outputs/research_protocol_v3_precompute/v3_precompute_broad494_strict332_20260909_v1/Broad494/annual_2020/engineering_predictions.parquet",
+      "rows_metadata": 485973,
+      "sha256": "34554e6c1c3bb9f7cefdc742ebd2acce1015fd1dc44d6daa0ea708f51a6ae242",
+      "year": "2020"
+    },
+    {
+      "kind": "keys",
+      "numeric_values_materialized": false,
+      "path": "outputs/research_protocol_v3_mvp/v3_recompute_audit_20260909_v1/audit/2021/keys.parquet",
+      "rows_metadata": 485981,
+      "sha256": "8f88d976b9d445899c79b6b0e6bd9ee6923df247404d9fbfd30e27f790eeb190",
+      "year": "2021"
+    },
+    {
+      "kind": "scores",
+      "numeric_values_materialized": false,
+      "path": "outputs/research_protocol_v3_precompute/v3_precompute_broad494_strict332_20260909_v1/Broad494/annual_2021/engineering_predictions.parquet",
+      "rows_metadata": 485981,
+      "sha256": "cd41500987027d5d7d899091214325c2f4ad78bf2d1dd06fe145339ed628844e",
+      "year": "2021"
+    },
+    {
+      "kind": "keys",
+      "numeric_values_materialized": false,
+      "path": "outputs/research_protocol_v3_mvp/v3_recompute_audit_20260909_v1/audit/2022/keys.parquet",
+      "rows_metadata": 483983,
+      "sha256": "d4fcde47056bafc98a18856ffe214de6015ca2b12a8f5b55df5ce068f2c002e8",
+      "year": "2022"
+    },
+    {
+      "kind": "scores",
+      "numeric_values_materialized": false,
+      "path": "outputs/research_protocol_v3_precompute/v3_precompute_broad494_strict332_20260909_v1/Broad494/annual_2022/engineering_predictions.parquet",
+      "rows_metadata": 483983,
+      "sha256": "29fd580fa13af1e001a931a221a08c22a000c04ecaae67ecc81cb8cb372a284c",
+      "year": "2022"
+    },
+    {
+      "kind": "keys",
+      "numeric_values_materialized": false,
+      "path": "outputs/research_protocol_v3_mvp/v3_recompute_audit_20260909_v1/audit/2023/keys.parquet",
+      "rows_metadata": 483926,
+      "sha256": "dfec3085dcb3d5e63724246dc8a09309fdad841129d7c714d955d76da436b8c0",
+      "year": "2023"
+    },
+    {
+      "kind": "scores",
+      "numeric_values_materialized": false,
+      "path": "outputs/research_protocol_v3_precompute/v3_precompute_broad494_strict332_20260909_v1/Broad494/annual_2023/engineering_predictions.parquet",
+      "rows_metadata": 483926,
+      "sha256": "288838facc083a7719bd0105a71d6c4c58bfac6a4558403791576684a857d291",
+      "year": "2023"
+    }
+  ],
+  "status": "18 sealed files verified; metadata/byte hashes only"
+}

@@ -5,10 +5,11 @@ artifact 名称中的 `current` 不自动表示 ACTIVE。
 
 ## 1. Status At A Glance
 
-Economic Translation MVP：**E1 + E2 AUTHORIZED / IMPLEMENTATION IN PROGRESS**。
-2026-09-11 用户授权评估修改意见、先独立提交计划修订，再实施 E1 prediction-only 与 E2 execution/data readiness。
-见 [详细计划](ECONOMIC_TRANSLATION_MVP_PLAN.md)。B494 是治理 incumbent，10/20 仅唯一结构候选。
-E2 数据缺口可阻断 readiness；长运行交用户。E3 冻结、E4/NAV、2024+、V2 仍禁止。
+Economic Translation MVP：**E1 IMPLEMENTED / AWAITING USER RUN；E2 BLOCKED BY EXECUTION / DATA GAP**。
+计划修订已先独立提交 `6464937`，E1封闭B494结构reader/独立重放、E2专用Qlib执行原语/合成验证与短真实行情canary已交付。
+见 [阶段报告](../reports/economic_translation_mvp/REPORT.md)、[执行合同与缺口](../reports/economic_translation_mvp/EXECUTION_CONTRACT.md)、
+[用户运行说明](ECONOMIC_TRANSLATION_E1_E2_RUNBOOK.md)。仅用户运行E1长扫描；E2数据/公司行为/状态缺口不因测试通过消失。
+B494是治理incumbent，10/20仅单一结构候选；E3冻结、E4/NAV、2024+、V2仍禁止。
 
 Literature Representation **D1 CLOSED / REPRESENTATIONS FROZEN / D2 COMPLETE / ALL FIVE ARMS SEALED**。
 168个月、3382日结构扫描及独立oracle已核验，R218/C201/H358已以 `d05e7eb`

@@ -222,3 +222,12 @@ See docs/ECONOMIC_TRANSLATION_MVP_PLAN.md. B494 only; one structural 10/20 candi
 Long scans remain user-run. E2 may end blocked by data/execution gaps. E3 freeze,
 E4/portfolio outcomes, 2024+ values and changes to frozen D1/D2/D3 remain forbidden.
 Stop after E1/E2 evidence and report for human review.
+
+2026-09-11: E1/E2 implementation delivered after separate plan commit 6464937.
+E1 is IMPLEMENTED / AWAITING USER RUN, not yet real-data complete. Use only
+scripts/study_economic_e1.ps1 for the authorized long structural study/replay.
+E2 is BLOCKED BY EXECUTION / DATA GAP: bounded quote-unit canary and synthetic
+Qlib validation do not certify full historical state, corporate actions, opening
+trade evidence or executable benchmark. See reports/economic_translation_mvp/REPORT.md
+and EXECUTION_CONTRACT.md there. No E3 freeze/E4 or 2024+ access. Preserve original
+adapters/configs, source receipts, D1/D2/D3 and new E1/E2 evidence. Stop for review.

@@ -1,0 +1,129 @@
+[
+  {
+    "bytes": 28071,
+    "content_type": "text/html",
+    "http_status": 200,
+    "id": "fee_2015_sse",
+    "path": "outputs/economic_translation_mvp/rule_source_snapshot_v1/fee_2015_sse.html",
+    "retrieved_at_utc": "2026-09-11T14:07:54.655362+00:00",
+    "sha256": "68d86fbded6d151eac74501ed285ce7c24a0746cd09a791ea927d81172266796",
+    "url": "https://www.sse.com.cn/aboutus/mediacenter/hotandd/c/c_20150912_3988866.shtml"
+  },
+  {
+    "bytes": 10194,
+    "content_type": "text/html; charset=utf-8",
+    "http_status": 200,
+    "id": "fee_2022_gov_reprint",
+    "path": "outputs/economic_translation_mvp/rule_source_snapshot_v1/fee_2022_gov_reprint.html",
+    "retrieved_at_utc": "2026-09-11T14:07:54.656362+00:00",
+    "sha256": "2dd2a8a1550e680afc16ef049cacc08fdf6744d5ba12b13bd85c65c2a9204bf9",
+    "url": "https://jrj.sh.gov.cn/SCDT197/20220429/f715759a877b4158812eb6df70ccb49e.html"
+  },
+  {
+    "bytes": 36736,
+    "content_type": "text/html",
+    "http_status": 200,
+    "id": "stamp_2023",
+    "path": "outputs/economic_translation_mvp/rule_source_snapshot_v1/stamp_2023.html",
+    "retrieved_at_utc": "2026-09-11T14:07:54.656362+00:00",
+    "sha256": "bdad8369ee854d205de9a1e355beecc4fa7841f7293e332997e6cadd2b923c35",
+    "url": "https://fgk.chinatax.gov.cn/zcfgk/c102416/c5211343/content.html"
+  },
+  {
+    "bytes": 28800,
+    "content_type": "text/html",
+    "http_status": 200,
+    "id": "commission_2002",
+    "path": "outputs/economic_translation_mvp/rule_source_snapshot_v1/commission_2002.html",
+    "retrieved_at_utc": "2026-09-11T14:07:54.656362+00:00",
+    "sha256": "cf021cd77d560641c6fda0621ddbf8da2fb2097d57877f48aaed7bbd55bfc79a",
+    "url": "https://www.chinatax.gov.cn/chinatax/n810341/n810765/n812203/200202/c1209808/content.html"
+  },
+  {
+    "bytes": 20316,
+    "content_type": "text/html",
+    "http_status": 200,
+    "id": "star_2019",
+    "path": "outputs/economic_translation_mvp/rule_source_snapshot_v1/star_2019.html",
+    "retrieved_at_utc": "2026-09-11T14:07:54.656362+00:00",
+    "sha256": "625193250b763a2a75ede487d1607464a9f12f754fb6e0765267712724b00a49",
+    "url": "https://edu.sse.com.cn/tib/ysptj/c/4869120.shtml"
+  },
+  {
+    "bytes": 15713,
+    "content_type": "text/html",
+    "http_status": 200,
+    "id": "chinext_st_2020",
+    "path": "outputs/economic_translation_mvp/rule_source_snapshot_v1/chinext_st_2020.html",
+    "retrieved_at_utc": "2026-09-11T14:07:54.657362+00:00",
+    "sha256": "c1ddedd1f5829690db8e7338925d3bc1b3485f937cd2e9a523b81f4188e7c31b",
+    "url": "https://www.szse.cn/disclosure/notice/general/t20200710_579459.html"
+  },
+  {
+    "bytes": 34508,
+    "content_type": "text/html",
+    "http_status": 200,
+    "id": "chinext_effective_2020",
+    "path": "outputs/economic_translation_mvp/rule_source_snapshot_v1/chinext_effective_2020.html",
+    "retrieved_at_utc": "2026-09-11T14:07:56.104682+00:00",
+    "sha256": "cba74610a5c582e2ac94f3bb21a04f2e5fa1fa175131b0cd287f9bbfc311b1ae",
+    "url": "https://www.szse.cn/aboutus/trends/news/t20200821_580924.html"
+  },
+  {
+    "bytes": 35712,
+    "content_type": "text/html",
+    "http_status": 200,
+    "id": "main_2023_notice",
+    "path": "outputs/economic_translation_mvp/rule_source_snapshot_v1/main_2023_notice.html",
+    "retrieved_at_utc": "2026-09-11T14:07:56.108500+00:00",
+    "sha256": "0a634408b2842a6cba4f4686d6013716aa5bf5cddf547139945d0eb7c6d9a27c",
+    "url": "https://www.sse.com.cn/lawandrules/sselawsrules2025/repeal/rules/c/c_20250612_10824490.shtml"
+  },
+  {
+    "bytes": 29585,
+    "content_type": "text/html",
+    "http_status": 200,
+    "id": "main_effective_2023",
+    "path": "outputs/economic_translation_mvp/rule_source_snapshot_v1/main_effective_2023.html",
+    "retrieved_at_utc": "2026-09-11T14:07:56.195222+00:00",
+    "sha256": "198e9cdf19da7f7d30fba19ab2e7582c8f69493288cd8575dd7fc25b1e15a8c1",
+    "url": "https://www.sse.com.cn/aboutus/mediacenter/hotandd/c/c_20230810_5725020.shtml"
+  },
+  {
+    "bytes": 29038,
+    "content_type": "text/html",
+    "http_status": 200,
+    "id": "old_ipo_sse",
+    "path": "outputs/economic_translation_mvp/rule_source_snapshot_v1/old_ipo_sse.html",
+    "retrieved_at_utc": "2026-09-11T14:07:56.615277+00:00",
+    "sha256": "e3b26bbeaa160a6837910dd1b218bbaec97319f24c237dc9f04edf4727c0d4eb",
+    "url": "https://www.sse.com.cn/aboutus/mediacenter/hotandd/c/c_20150912_3988762.shtml"
+  },
+  {
+    "bytes": 51948,
+    "content_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    "http_status": 200,
+    "id": "sse2023_rules_attachment",
+    "path": "outputs/economic_translation_mvp/rule_source_snapshot_v1/sse2023_rules_attachment.docx",
+    "retrieved_at_utc": "2026-09-11T14:07:56.679124+00:00",
+    "sha256": "7aa2319f6dcf597be1e86b3b69d7c2ad0e6acb2a5d0cc6be48a01af602fded40",
+    "url": "https://www.sse.com.cn/lawandrules/sselawsrules2025/repeal/rules/c/10824490/files/dcbe58edb194451d93f19b1f7dd8fb4c.docx"
+  },
+  {
+    "error": "404 Client Error: Not Found for url: https://docs.static.szse.cn/www/lawrules/index/rule/W020230217564423808793.pdf",
+    "http_status": 404,
+    "id": "szse2023_rules_pdf",
+    "retrieved_at_utc": "2026-09-11T14:07:56.974336+00:00",
+    "url": "https://docs.static.szse.cn/www/lawrules/index/rule/W020230217564423808793.pdf"
+  },
+  {
+    "bytes": 29036,
+    "content_type": "text/html",
+    "http_status": 200,
+    "id": "stamp_2008_sse",
+    "path": "outputs/economic_translation_mvp/rule_source_snapshot_v1/stamp_2008_sse.html",
+    "retrieved_at_utc": "2026-09-11T14:18:07.225368+00:00",
+    "sha256": "1ebe7a5ea80c7b0fb185c0aab507a66764ab2c9425c11730308c6daa473e7cec",
+    "url": "https://www.sse.com.cn/aboutus/mediacenter/hotandd/c/c_20150912_3988239.shtml"
+  }
+]

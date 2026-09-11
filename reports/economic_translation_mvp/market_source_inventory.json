@@ -1,0 +1,115 @@
+[
+  {
+    "access_role": "footer/schema metadata only; no materialized rows or whole-file hash",
+    "groups": [
+      {
+        "date_max_metadata": "2026-02-04 00:00:00",
+        "date_min_metadata": "2024-08-01 00:00:00",
+        "numeric_rows_read": 0,
+        "row_group": 0,
+        "rows": 52593
+      }
+    ],
+    "path": "outputs/data_source_audit_v2/current/normalized/baostock_daily.parquet",
+    "schema": [
+      "instrument",
+      "date",
+      "price_raw_open",
+      "price_raw_high",
+      "price_raw_low",
+      "price_raw_close",
+      "price_raw_preclose",
+      "volume_shares",
+      "amount_cny",
+      "is_trading",
+      "is_st",
+      "suspension_type",
+      "available_before_open",
+      "adjustment_mode",
+      "source",
+      "source_row_id"
+    ]
+  },
+  {
+    "access_role": "footer/schema metadata only; no materialized rows or whole-file hash",
+    "groups": [
+      {
+        "date_max_metadata": "2026-02-04 00:00:00",
+        "date_min_metadata": "2024-08-01 00:00:00",
+        "numeric_rows_read": 0,
+        "row_group": 0,
+        "rows": 52224
+      }
+    ],
+    "path": "outputs/data_source_audit_v2/current/normalized/community_daily.parquet",
+    "schema": [
+      "instrument",
+      "date",
+      "price_raw_open",
+      "price_raw_high",
+      "price_raw_low",
+      "price_raw_close",
+      "price_raw_preclose",
+      "volume_shares",
+      "amount_cny",
+      "is_trading",
+      "is_st",
+      "suspension_type",
+      "available_before_open",
+      "adjustment_mode",
+      "source",
+      "source_row_id"
+    ]
+  },
+  {
+    "access_role": "footer/schema metadata only; no materialized rows or whole-file hash",
+    "groups": [
+      {
+        "date_max_metadata": "2026-06-09 00:00:00",
+        "date_min_metadata": "2020-09-01 00:00:00",
+        "numeric_rows_read": 0,
+        "row_group": 0,
+        "rows": 1048576
+      },
+      {
+        "date_max_metadata": "2026-06-09 00:00:00",
+        "date_min_metadata": "2020-09-01 00:00:00",
+        "numeric_rows_read": 0,
+        "row_group": 1,
+        "rows": 1048576
+      },
+      {
+        "date_max_metadata": "2026-06-09 00:00:00",
+        "date_min_metadata": "2020-09-01 00:00:00",
+        "numeric_rows_read": 0,
+        "row_group": 2,
+        "rows": 1048576
+      },
+      {
+        "date_max_metadata": "2026-06-09 00:00:00",
+        "date_min_metadata": "2020-09-01 00:00:00",
+        "numeric_rows_read": 0,
+        "row_group": 3,
+        "rows": 1048576
+      },
+      {
+        "date_max_metadata": "2026-06-09 00:00:00",
+        "date_min_metadata": "2020-09-01 00:00:00",
+        "numeric_rows_read": 0,
+        "row_group": 4,
+        "rows": 1014318
+      }
+    ],
+    "path": "outputs/full_research_feature_matrix_v1/runtime/raw_ohlcva.parquet",
+    "schema": [
+      "instrument",
+      "datetime",
+      "$open",
+      "$high",
+      "$low",
+      "$close",
+      "$volume",
+      "$amount"
+    ]
+  }
+]

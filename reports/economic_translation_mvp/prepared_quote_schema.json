@@ -1,0 +1,47 @@
+{
+  "currency": "CNY",
+  "exact_columns": [
+    "adv20_shares",
+    "adv_asof",
+    "board",
+    "can_buy_known",
+    "can_sell_known",
+    "datetime",
+    "executable_at",
+    "instrument",
+    "known_at",
+    "lower_limit",
+    "open_evidence",
+    "order_time",
+    "previous_close",
+    "raw_close",
+    "raw_open",
+    "signal_time",
+    "source_id",
+    "state_known_at",
+    "suspended_known",
+    "upper_limit",
+    "valuation_time"
+  ],
+  "execution_date_boundary": [
+    "2015-01-01",
+    "2023-12-29"
+  ],
+  "keys": [
+    "datetime",
+    "instrument"
+  ],
+  "qlib_internal_factor": 1,
+  "requirements": [
+    "field-level provenance companion required before real assembly",
+    "signal candidates union actual holdings",
+    "no unknown boolean state",
+    "no score/label/high/low/current-volume/current-amount/change in execution input",
+    "raw_close valuation only; never a fallback execution price",
+    "special sessions unresolved must block whole readiness, not drop held rows"
+  ],
+  "shares": "raw",
+  "status": "NOT E3 FROZEN; production data readiness blocked",
+  "timezone": "Asia/Shanghai local naive, validated",
+  "version": "E2 prepared quote candidate v1"
+}

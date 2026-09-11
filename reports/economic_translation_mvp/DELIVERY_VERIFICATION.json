@@ -1,0 +1,125 @@
+{
+  "checks": {
+    "e1_preflight": "18 fixed source files: byte hashes, schema, row count metadata verified without materializing scores",
+    "fast": {
+      "command": "python scripts/check_quality.py fast",
+      "pytest_reported_seconds": 14.27,
+      "result": "PASS",
+      "tests_passed": 46
+    },
+    "focused": {
+      "command": "python -m pytest tests/test_economic_prediction_structure.py tests/test_economic_execution_contract.py tests/test_economic_qlib_runtime.py tests/test_economic_data_boundary.py --junitxml=outputs/economic_translation_mvp/focused_tests.xml --tb=short",
+      "junit_attributes": {
+        "errors": "0",
+        "failures": "0",
+        "hostname": "PanGucheng",
+        "name": "pytest",
+        "skipped": "0",
+        "tests": "56",
+        "time": "9.823",
+        "timestamp": "2026-09-11T22:30:14.780622+08:00"
+      },
+      "junit_sha256": "1ac522a91a511ad862856fb994b1d987ff3ebb74b200801bccb886dd5e02fccc"
+    },
+    "targeted_ruff_f": "PASS"
+  },
+  "code_hashes_lf": {
+    "model_research/economic_prediction_structure.py": "59f72e0c66a0253d12b25bfa96d459a485b4b5f53d14d57bf070e92310e6ef5a",
+    "qlib_integration/economic_data_readiness.py": "f5812724da7b6c3c242575195a553ad1f865868ac7cddc222bfaed9b708b5835",
+    "qlib_integration/economic_exchange.py": "8bac34946aada3a5b84731c7e6766f1ab03e0c4cebf806ce15d0b32bb403e2ce",
+    "qlib_integration/economic_execution_contract.py": "dc27be8e4b0397c58cf586e7fdc9645ea55ac9c2495dedb0172885014ae645f1",
+    "scripts/audit_economic_e2_data.py": "4e270a75e055ba39feb8b559831a2448c2dbe03a2729779d14cd21357a9ae18b",
+    "scripts/study_economic_e1.ps1": "889ba2b9ea650f905faee3ff75d6abea93ed88873e40b556f418fd05728515cb",
+    "scripts/study_economic_e1.py": "ef1582203bed2902021d9cce0b0a42f475332f28283c8a8a0b2e8d05d334b6ff",
+    "tests/test_economic_data_boundary.py": "2749c5efc5d2ecfe03a406a131ddf03768fd6008190099b02c93c135fbc33fd6",
+    "tests/test_economic_execution_contract.py": "fabb0bce36d76f5deed93e574b1ce0c0b3a4774569161e66b7983db9e731f5dd",
+    "tests/test_economic_prediction_structure.py": "57ea9bbf445528bb4ac79466324ce135c10e2c7b4dba181271ca503e4752c7d2",
+    "tests/test_economic_qlib_runtime.py": "99b9ce04f6f005a8c0ce4fd77683cf50c42a1488e4b53e6afe143a9b5ad9d35f",
+    "tests/test_economic_sleeves.py": "a2a9a3878eba495d2c9e62f886af35f9037084c42322ed3bc78cf1374dd5efaf"
+  },
+  "created_utc": "2026-09-11T14:29:02.709260+00:00",
+  "e1_execution_binding": {
+    "buffer": [
+      10,
+      20
+    ],
+    "canonical": "canonical-dataset:27518ddbb28ba2b4b1247375d4e3d32d7d5be9935a5f2074dc272f84285f6423",
+    "code_hashes_lf": {
+      "model_research/economic_prediction_structure.py": "59f72e0c66a0253d12b25bfa96d459a485b4b5f53d14d57bf070e92310e6ef5a",
+      "reports/economic_translation_mvp/e1_inputs.json": "1126e238b317518078b096f50b97c5e5e9cef54703b268c0fc0021337084f32b",
+      "scripts/study_economic_e1.ps1": "889ba2b9ea650f905faee3ff75d6abea93ed88873e40b556f418fd05728515cb",
+      "scripts/study_economic_e1.py": "ef1582203bed2902021d9cce0b0a42f475332f28283c8a8a0b2e8d05d334b6ff",
+      "tests/test_economic_prediction_structure.py": "57ea9bbf445528bb4ac79466324ce135c10e2c7b4dba181271ca503e4752c7d2"
+    },
+    "e3_authorized": false,
+    "e4_authorized": false,
+    "lags": [
+      1,
+      2,
+      5,
+      10,
+      20
+    ],
+    "outcome_access": false,
+    "percentiles": [
+      5,
+      10,
+      20
+    ],
+    "role": "E1_B_scores_keys_only",
+    "runtime": {
+      "numpy": "2.2.6",
+      "pandas": "2.3.3",
+      "pyarrow": "23.0.1",
+      "python": "3.10.19",
+      "scipy": "1.15.3"
+    }
+  },
+  "e1_real_scan_executed": false,
+  "e1_status": "IMPLEMENTED_SYNTHETIC_VERIFIED_AWAITING_USER_RUN",
+  "e2_bounded_canary": {
+    "full_market_readiness": false,
+    "numeric_date_max": "2023-12-29",
+    "numeric_date_min": "2015-01-05",
+    "requested_security_days": 596,
+    "stocks": 4,
+    "unit_checks_passed": 523,
+    "valid_pairs": 523
+  },
+  "e2_status": "BLOCKED_BY_EXECUTION_DATA_GAP",
+  "e3_authorized": false,
+  "e4_authorized": false,
+  "evidence_hashes_lf": {
+    "EXECUTION_CONTRACT.md": "0c1050d97338af79cad7186c18296fd902d2602429d8d6cb7f5d9223d97f8c01",
+    "REPORT.md": "05118c54c675db8bdff7ded58c72898fcfa5cacee045e9e43ae5180f242d1c06",
+    "dated_fee_schedule.csv": "03650bbc0b78b2771305f3adfae8e30ccce47edb071342eff2249a4c541afa97",
+    "dated_price_limits.csv": "7ca0870394ff35fbfb1cb5982f788ebb320df68fde7f2a1119d4c95a34683717",
+    "e1_inputs.json": "1126e238b317518078b096f50b97c5e5e9cef54703b268c0fc0021337084f32b",
+    "e1_preflight.json": "521f807bb8e2e0367b680f8b3ae58f84476beda99f484ccf7a9788068444b622",
+    "market_source_inventory.json": "dcfc26bb38e6428a193a8e827dca668e07fc11243377757c9409cbd90aa4e737",
+    "prepared_quote_schema.json": "53839eee508aacb7a84b5b60b7be4deb91720ef8b2641099ed055a5d9b0ac20c",
+    "quote_access.json": "6584c89cee5659338451a9680e4b36993e7a99ab690213c8939895c55fbf1245",
+    "quote_unit_canary.csv": "6d8baec3858586035dfdc8fb9f32ce4c6eab0eef337c3633a6d5c18ff7f4672a",
+    "rule_source_receipts.json": "352ec65ce3fa9e1683ac91e8f9fa12ad9164125320bc7d0387bfb0f53e0300c9",
+    "synthetic_aum_feasibility.csv": "a1d0cddd442b6060f742d119424c5b2428b26699acc03ddddf1082807ba9b3bd"
+  },
+  "limitations": [
+    "E1 nine-year scan and independent real replay await user execution.",
+    "E2 corporate action/account bridge, dated states, opening evidence and independent full-pool quote certification remain incomplete.",
+    "Full and legacy Qlib tiers were not run because their value readers exceed the current boundary; new Qlib tests deny provider value requests."
+  ],
+  "outcome_evaluation_executed": false,
+  "plan_commit": "6464937",
+  "qlib": {
+    "commit": "d5379c520f66a39953bad76234a7019a72796fd0",
+    "source_hashes_lf": {
+      "qlib/backtest/account.py": "0247a065ee00f0656320fcfe4db5e26e23cc10f57afeb1e063941cf4011bf10e",
+      "qlib/backtest/exchange.py": "4affc13ab45af464cfb5b55663b80b2fc3dadb4769045d34d0fd218f760d7e08",
+      "qlib/backtest/executor.py": "83c2596f569906663c18df6dc48033e57f0a365f706f963d47f6e6301c53ea1c",
+      "qlib/backtest/position.py": "b91246317db2eb6fefccc307441850ce919d93d3d69961120211b076d8485c26",
+      "qlib/contrib/strategy/signal_strategy.py": "b1b4145e94065879768cfc9750c08a7c3af8880d3c338e0de675f5fb6b78d932"
+    }
+  },
+  "research_values_2024_plus_accessed": false,
+  "schema_version": 1
+}
