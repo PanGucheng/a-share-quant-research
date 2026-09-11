@@ -1,0 +1,23 @@
+{
+  "bootstrap_full_support": true,
+  "common_pairs": 4144939,
+  "completed_accesses": 63,
+  "contract_hash": "57da47d77dbd5efba627020fdc57fdfacd1173394a411d2f7f4f7ed889f94212",
+  "formal_rejections": 0,
+  "hac_oracle_max_absolute_se_error": 8.673617379884035e-19,
+  "mature_canonical_keys": 4335824,
+  "mature_scoreable_dates": 2168,
+  "missing_or_failed_stages": false,
+  "models": 45,
+  "opening_marker_sha256": "8ac9470a6cf35c1627b1290ece36facd4226995fdef3759fda28e7e5bd6d9b02",
+  "outcome_opened_utc": "2026-09-11T02:25:42.352763+00:00",
+  "prediction_dates": 2189,
+  "recent_access": false,
+  "reviewer_sha256_lf": "3f5029acc7af23eef4a4b8dc557b5d65bd0a72875c325a1c7b36a1ee90c07ec0",
+  "scope": "Source and export byte/receipt checks; access audit; daily aggregate recomputation and independent dense-kernel HAC/Holm. No fresh score/label pairing.",
+  "sealed_receipt_sha256": "f5e762e9ceb8d26b6e7c266451011ce1dfbbcb53988e9327ea1e2e061c38b984",
+  "source_git_commit": "15da7e27d64e4afeb06c0c711ffbad6316fe0741",
+  "source_receipts": 252,
+  "status": "D3A_COMPLETE_VERIFIED_STOP_FOR_REVIEW",
+  "unscored_boundary_dates": 21
+}

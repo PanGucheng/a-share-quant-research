@@ -198,3 +198,11 @@ The append-only reports/literature_factor_representation_d3a/OUTCOME_OPENED.json
 the authority for whether D3-A has unsealed, including failed runs. Do not create
 new run ids or remove failure evidence to bypass that marker. D3-B, portfolios,
 SHAP, tuning, Strategy V2 and 2024+ research values remain unauthorized.
+
+2026-09-11: User-run D3-A completed and postrun verification passed. All 2,168
+mature score dates are scoreable on 4,144,939 common pairs. None of the six fixed
+HAC20/Holm contrasts rejects zero difference; this is not equivalence or noninferiority.
+See reports/literature_factor_representation_d3a/COMPLETION_REVIEW.md. Outcome opening
+at 2026-09-11T02:25:42 UTC is permanently recorded. Preserve sealed result bytes and
+stop for human review; no rerun or outcome-driven representation/model changes.
+D3-B, portfolios, SHAP, tuning, Strategy V2 and 2024+ research values remain closed.

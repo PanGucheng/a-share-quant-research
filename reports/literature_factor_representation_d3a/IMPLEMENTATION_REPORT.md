@@ -1,6 +1,9 @@
 # D3-A 实现交付
 
-2026-09-11：**IMPLEMENTED / OUTCOME UNOPENED / USER RUN PENDING**。
+当前：**D3-A COMPLETE / VERIFIED**；用户运行后的[完成审阅](COMPLETION_REVIEW.md)与
+[正式报告](completion_v1/REPORT.md)已交付。以下保留揭封前的实现历史。
+
+2026-09-11 实现交付时：**IMPLEMENTED / OUTCOME UNOPENED / USER RUN PENDING**。
 [计划](../../docs/LITERATURE_D3A_FROZEN_PREDICTION_EVALUATION_PLAN.md)先以 `2ab2456` 提交，随后实施。
 用户新授权限于五臂冻结预测的成熟开发期评价；长执行仍由用户自行运行。
 [PowerShell 入口与失败处理](../../docs/LITERATURE_D3A_EVALUATION_RUNBOOK.md)。

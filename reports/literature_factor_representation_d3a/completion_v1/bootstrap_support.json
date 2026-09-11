@@ -1,0 +1,34 @@
+{
+  "20": {
+    "available": true,
+    "block_length": 20,
+    "eligible_blocks": 2149,
+    "interval": "percentile_pointwise_not_simultaneous",
+    "reason": "available",
+    "sampled_session_indices_sha256": "dc3307254e34e789aba9dc02b311dc9f0b3a9d5c7c2f0f9d7e1e625b97bde352",
+    "samples": 1000,
+    "seed": 20260909,
+    "segment_lengths": [
+      2168
+    ],
+    "unsupported_dates": 0,
+    "unsupported_fraction": 0.0,
+    "valid_dates": 2168
+  },
+  "40": {
+    "available": true,
+    "block_length": 40,
+    "eligible_blocks": 2129,
+    "interval": "percentile_pointwise_not_simultaneous",
+    "reason": "available",
+    "sampled_session_indices_sha256": "934df8b8905344fd21ec09595a669fa052675d1782177a42910fd751236ac4ed",
+    "samples": 1000,
+    "seed": 20260909,
+    "segment_lengths": [
+      2168
+    ],
+    "unsupported_dates": 0,
+    "unsupported_fraction": 0.0,
+    "valid_dates": 2168
+  }
+}

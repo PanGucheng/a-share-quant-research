@@ -1,13 +1,14 @@
 # D3-A 执行说明
 
-状态：**IMPLEMENTED / OUTCOME UNOPENED / USER RUN PENDING**。
+状态：**D3-A COMPLETE / VERIFIED / STOP FOR HUMAN REVIEW**。
+用户已完成正式运行并通过核验，无需重跑；见[完成审阅](../reports/literature_factor_representation_d3a/COMPLETION_REVIEW.md)。
 按[实施计划](LITERATURE_D3A_FROZEN_PREDICTION_EVALUATION_PLAN.md)，仅执行冻结五臂的
 2015–2023 mature prediction evaluation。45 个模型不重训、不重放、不改表示。
-当前交付不是正式效果报告。
+正式效果报告已封存，以下命令保留为执行历史和已有结果完整性检查入口。
 
 ## 执行
 
-在 PowerShell 中运行：
+原正式运行命令（已执行完成，无需重跑）：
 
 ```powershell
 Set-Location -LiteralPath 'E:\qlib_prj\qlib_baseline'
@@ -31,8 +32,8 @@ Set-Location -LiteralPath 'E:\qlib_prj\qlib_baseline'
 
 正式评价按年度读取五份 predictions 和已审计的 keys/labels 缓存，然后做每日共同样本
 Spearman、六项 HAC/Holm 和共享索引 MBB，不读取 canonical 特征或 provider 价格。
-无需 D2 规模的训练临时盘。正式墙钟和峰值尚未实测，不能用合成测试时间推算；
-日志逐年显示进度，不在中途显示 IC 供选择。
+无需 D2 规模的训练临时盘。实际评价封存单元计时20.11秒，不含前置测试、preflight和最终副本复制，
+不作为端到端耗时；峰值内存没有单独记录。日志逐年显示进度，不在中途显示 IC 供选择。
 
 ## 输出与揭封记录
 
@@ -58,6 +59,6 @@ marker 保守地在读取前建立，即使读取前立即失败，也不恢复�
 成功后重复相同命令只做合成测试/完整性核验并返回 `already_complete_verified`，不再计算真实结果。
 如果仅最终报告副本复制失败，保留不完整副本并诊断；不重新评价。
 
-跑完后回复“跑完了”。随后核验/提交正式报告，状态改为 D3-A COMPLETE 并停止。
+正式运行、核验及报告已完成，状态为 D3-A COMPLETE，停止等待人工审阅。
 没有等价/非劣检验；年度/Era 是描述；不自动选 winner、改模型或进入 portfolio。
 D3-B、Strategy V2 与 2024+ 研究值始终不在本轮授权内。

@@ -1,0 +1,28 @@
+{
+  "arms": [
+    "B",
+    "S",
+    "R",
+    "C",
+    "H"
+  ],
+  "contract_hash": "57da47d77dbd5efba627020fdc57fdfacd1173394a411d2f7f4f7ed889f94212",
+  "file_hashes": {
+    "OUTCOME_ACCESS_RECEIPT.json": "268c6363ed8c733dc9b359fab3cfba842eaeac32c16edad69c67d0c33c21a7d1",
+    "REPORT.md": "1651f05d699b7dc090277df004cb62f244717f0cb481ad92eb2ab5a706b3f597",
+    "access.jsonl": "90c19a3ae3a5d3b28b01226e9d776b578af0c028f4cdcd172c571b4cc4b437ac",
+    "bootstrap_support.json": "ea5090164a8feae1800afe44fcbcf1c2d276fcdd4d997bfa75ae858e0cbd8145",
+    "contract.json": "c717e58add75ba9b643b34c60425c7a1b8a7f50bdf16996a5c6ca15b599a8ff0",
+    "contrasts.csv": "d3eb8907fc656f3cb4e2a45c63e60031c9a49e4432784c6ba10020a2218fc065",
+    "daily.csv": "16e03350b21a4fa077780481cab30e3f0191f617526201a50c39d9a71c468c4b",
+    "descriptive.csv": "c4259517a3d69c6ab741664f29f4d205f8062fc8f18bd86eb6a9efd7bbfb25f9"
+  },
+  "mature_dates": 2168,
+  "models": 45,
+  "outcome_opened": true,
+  "prediction_dates": 2189,
+  "recent_access": false,
+  "scoreable_dates": 2168,
+  "status": "complete",
+  "wall_seconds": 20.106980999997177
+}

@@ -1,0 +1,18 @@
+{
+  "authorization": "2026-09-11 user requested assessment, plan and implementation of D3-A frozen five-arm evaluation; long execution user-run",
+  "contract_hash": "57da47d77dbd5efba627020fdc57fdfacd1173394a411d2f7f4f7ed889f94212",
+  "git_commit": "15da7e27d64e4afeb06c0c711ffbad6316fe0741",
+  "run_id": "d3a_five_arm_20260911_v1",
+  "scope": {
+    "evidence_class": "retrospective_pseudo_oos_development",
+    "model_fit_scope": "past_only_purged",
+    "pool_discovery_scope": "retrospective_development_2010_2023",
+    "portfolio_authorized": false,
+    "recent_access": false,
+    "representation_design_scope": "outcome_blind_retrospective_metadata_and_feature_evidence",
+    "strategy_v2_authorized": false,
+    "unbiased_final_estimate": false
+  },
+  "status": "D3A_OUTCOME_OPENED_NO_LONGER_OUTCOME_BLIND",
+  "time_utc": "2026-09-11T02:25:42.352763+00:00"
+}
