@@ -1,0 +1,41 @@
+{
+  "checks": {
+    "powershell_parse": "passed",
+    "powershell_preflight": "passed",
+    "ruff": "passed"
+  },
+  "code_hashes_lf": {
+    "docs/LITERATURE_D3A_FROZEN_PREDICTION_EVALUATION_PLAN.md": "2e09e3bfdd7ed869a77b72e9d593cdb1d94d2d9943abc162f374afa047269e85",
+    "model_research/frozen_prediction_evaluation.py": "7946e62efd172dbe9c413d22c29fdde19da131a8cde20143424d2a7383732db4",
+    "research_validation/frozen_prediction_statistics.py": "3334f2adcdb0440048d0726179ef7d196f2b8c4f74a4e433115f8f455c701d77",
+    "scripts/evaluate_literature_d3a.ps1": "60cc72bce71b0450f564c0bb0a5582d03c0da3be0975a0f39c9bf02e1844733c",
+    "scripts/evaluate_literature_d3a.py": "577b0f8f5543573654bb8291538893120588cc10e376d15b3f490ac304b68c72",
+    "tests/test_frozen_prediction_d3a.py": "5552f89886fb3df38d8131af513e1ce454420c7fa56e3b4711ba43cf20159a9e"
+  },
+  "date": "2026-09-11",
+  "execution_contract_hash": "57da47d77dbd5efba627020fdc57fdfacd1173394a411d2f7f4f7ed889f94212",
+  "outcome_opened": false,
+  "plan_commit": "2ab2456",
+  "preflight": {
+    "cache_months": 168,
+    "independent_replays": "all_nine_exact for all five arms",
+    "latest_exit": "2023-12-29",
+    "latest_mature_signal": "2023-11-30",
+    "mature_candidate_dates": 2168,
+    "models": 45,
+    "numerical_readers_monkeypatched_to_raise": true,
+    "prediction_dates": 2189,
+    "seconds": 11.223777500003052,
+    "source_receipts": 252
+  },
+  "real_scores_or_labels_materialized": false,
+  "recent_access": false,
+  "status": "IMPLEMENTED_OUTCOME_UNOPENED_USER_RUN_PENDING",
+  "tests": {
+    "command": "python -m pytest -q tests/test_frozen_prediction_d3a.py tests/test_literature_precompute_d2.py tests/test_research_protocol_v3.py",
+    "d3a_tests": 27,
+    "passed": 58,
+    "scope": "synthetic and deterministic regression only",
+    "seconds": 19.08
+  }
+}

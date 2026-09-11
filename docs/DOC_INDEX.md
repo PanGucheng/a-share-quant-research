@@ -50,7 +50,11 @@ evidence 判断；历史报告与 archive 只说明当时发生了什么。
 - [LITERATURE_GROUNDED_FACTOR_COMPRESSION_PLAN.md](LITERATURE_GROUNDED_FACTOR_COMPRESSION_PLAN.md)
   — **D1 CLOSED / REPRESENTATIONS FROZEN**；[正式冻结](../reports/literature_factor_representation_d1/FORMAL_FREEZE.md)，R218/C201/H358保持原recipe，历史计划保留。
 - [LITERATURE_D2_PRECOMPUTE_RUNBOOK.md](LITERATURE_D2_PRECOMPUTE_RUNBOOK.md)
-  — **D2 COMPLETE / ALL FIVE ARMS SEALED**；固定27模型及独立replay通过；[完成报告](../reports/literature_factor_representation_d2/COMPLETION_REPORT.md)。outcome、pool comparison和2024+仍封闭。
+  — **D2 COMPLETE / ALL FIVE ARMS SEALED**；固定27模型及独立replay通过；[完成报告](../reports/literature_factor_representation_d2/COMPLETION_REPORT.md)。历史预计算不再运行。
+- [LITERATURE_D3A_FROZEN_PREDICTION_EVALUATION_PLAN.md](LITERATURE_D3A_FROZEN_PREDICTION_EVALUATION_PLAN.md)
+  — **IMPLEMENTED / OUTCOME UNOPENED / USER RUN PENDING**；五臂固定六项成熟开发期评价，
+  [执行命令](LITERATURE_D3A_EVALUATION_RUNBOOK.md)、[实现验证](../reports/literature_factor_representation_d3a/IMPLEMENTATION_REPORT.md)。
+  D3-B、组合、调参、Strategy V2 和 2024+ 继续关闭。
 - [RESEARCH_PROTOCOL_V3_MVP_PLAN.md](RESEARCH_PROTOCOL_V3_MVP_PLAN.md)
   — **RECOMPUTED / ENGINEERING VERIFIED / STOP FOR REVIEW**；P0/P1及两折8/494列重算和预测复核完成，P3仍未解锁。
 - [Research Protocol V3-MVP实施进度](../reports/research_protocol_v3_mvp/IMPLEMENTATION_PROGRESS.md)

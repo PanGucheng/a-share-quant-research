@@ -42,7 +42,10 @@ R218/C201/H358以 `d05e7eb` [正式冻结](../reports/literature_factor_represen
 保留U质量限制、dense可变节点含义及跨family完整性代价。
 2026-09-11：[D2完成核验](../reports/literature_factor_representation_d2/COMPLETION_REPORT.md)，
 27模型、13,133,472行新prediction及独立replay全部通过，R/C/H均all_nine_exact；五臂封存，无需重跑。
-outcome、pool comparison、D3和2024+研究值仍封闭。
+用户随后授权[计划并实施 D3-A 五臂冻结预测评价](LITERATURE_D3A_FROZEN_PREDICTION_EVALUATION_PLAN.md)。
+目前 **IMPLEMENTED / OUTCOME UNOPENED / USER RUN PENDING**，
+[PowerShell 入口](LITERATURE_D3A_EVALUATION_RUNBOOK.md)。仅成熟 2015–2023、固定六项共同样本比较；
+D3-B、组合、调参、Strategy V2 和 2024+ 继续关闭。实际揭封以 append-only OUTCOME_OPENED.json 为准。
 
 | 对象 | 状态 | 当前含义 |
 |---|---|---|

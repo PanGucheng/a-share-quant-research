@@ -10,7 +10,12 @@ Literature Representation **D1 CLOSED / REPRESENTATIONS FROZEN / D2 COMPLETE / A
 [正式冻结](../reports/literature_factor_representation_d1/FORMAL_FREEZE.md)。
 D2固定27模型及独立replay已由用户运行并核验，R/C/H均all_nine_exact：
 [完成报告](../reports/literature_factor_representation_d2/COMPLETION_REPORT.md)。
-无需重跑；outcome evaluation、pool comparison、D3与2024+研究值继续禁止。
+无需重跑 D2。用户随后授权 [D3-A 五臂冻结预测评价](LITERATURE_D3A_FROZEN_PREDICTION_EVALUATION_PLAN.md)，
+当前 **IMPLEMENTED / OUTCOME UNOPENED / USER RUN PENDING**；
+[命令与停止点](LITERATURE_D3A_EVALUATION_RUNBOOK.md)、
+[实现验证](../reports/literature_factor_representation_d3a/IMPLEMENTATION_REPORT.md)。
+仅可执行固定六项、2015–2023 已成熟 label 的共同样本评价；D3-B、组合、调参和 2024+ 继续禁止。
+揭封事实以 `reports/literature_factor_representation_d3a/OUTCOME_OPENED.json` 为准，失败也不能恢复 outcome-blind。
 
 | 对象 | 状态 | 允许行为 |
 |---|---|---|

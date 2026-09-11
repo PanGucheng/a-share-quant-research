@@ -187,3 +187,14 @@ Long execution remains user-run. Outcomes, pool comparison and 2024+ values rema
 replays are verified; each arm is all_nine_exact and all five arms remain sealed.
 See reports/literature_factor_representation_d2/COMPLETION_REPORT.md. No rerun is
 needed; D3/outcomes, pool performance comparison and 2024+ values remain unauthorized.
+
+2026-09-11: The user subsequently authorized assessment, planning and implementation
+of D3-A frozen five-arm prediction evaluation. This is a bounded new exception:
+paired prediction/label evaluation for mature 2015-2023 dates only, under the unchanged
+six-contrast D1 evaluation contract. See docs/LITERATURE_D3A_FROZEN_PREDICTION_EVALUATION_PLAN.md
+and docs/LITERATURE_D3A_EVALUATION_RUNBOOK.md. Implementation is outcome-blind; the
+formal long run remains user-run. Preserve all D1/D2 identities, models and receipts.
+The append-only reports/literature_factor_representation_d3a/OUTCOME_OPENED.json is
+the authority for whether D3-A has unsealed, including failed runs. Do not create
+new run ids or remove failure evidence to bypass that marker. D3-B, portfolios,
+SHAP, tuning, Strategy V2 and 2024+ research values remain unauthorized.

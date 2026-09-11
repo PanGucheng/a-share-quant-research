@@ -36,3 +36,5 @@ scripts/build_long_history_boards.py text eol=lf
 docs/LITERATURE_GROUNDED_FACTOR_COMPRESSION_PLAN.md text eol=lf
 reports/literature_factor_representation_d1/** text eol=lf
 reports/literature_factor_representation_d2/** text eol=lf
+reports/literature_factor_representation_d3a/** text eol=lf
+docs/LITERATURE_D3A_FROZEN_PREDICTION_EVALUATION_PLAN.md text eol=lf
