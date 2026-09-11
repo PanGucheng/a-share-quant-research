@@ -5,11 +5,10 @@ artifact 名称中的 `current` 不自动表示 ACTIVE。
 
 ## 1. Status At A Glance
 
-Economic Translation MVP：**PLAN DELIVERED / STOP FOR HUMAN REVIEW**。
-2026-09-11 用户授权参考建议进行规划及更正，已完成文献/源码/元数据审计与
-[详细计划](ECONOMIC_TRANSLATION_MVP_PLAN.md)。建议 B494 单一信号、monthly/buffer 两种规则、
-共同执行合同；已识别九年 dated fee/rule、时点、corporate action 等缺口。
-本轮未运行 persistence 或 portfolio，E1–E4 实施与 2024+ 数据均未解锁。
+Economic Translation MVP：**E1 + E2 AUTHORIZED / IMPLEMENTATION IN PROGRESS**。
+2026-09-11 用户授权评估修改意见、先独立提交计划修订，再实施 E1 prediction-only 与 E2 execution/data readiness。
+见 [详细计划](ECONOMIC_TRANSLATION_MVP_PLAN.md)。B494 是治理 incumbent，10/20 仅唯一结构候选。
+E2 数据缺口可阻断 readiness；长运行交用户。E3 冻结、E4/NAV、2024+、V2 仍禁止。
 
 Literature Representation **D1 CLOSED / REPRESENTATIONS FROZEN / D2 COMPLETE / ALL FIVE ARMS SEALED**。
 168个月、3382日结构扫描及独立oracle已核验，R218/C201/H358已以 `d05e7eb`

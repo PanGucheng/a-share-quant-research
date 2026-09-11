@@ -37,12 +37,10 @@
 
 ## Current State
 
-2026-09-11：用户请求评估 Economic Translation MVP 建议并制定计划，交付
-[ECONOMIC_TRANSLATION_MVP_PLAN.md](ECONOMIC_TRANSLATION_MVP_PLAN.md)。
-**PLAN DELIVERED / STOP FOR HUMAN REVIEW**：B494 单一信号、最多两个组合规则的待审议提案；
-每日 frozen 候选实际为 1,998–2,000，不能以全 A 扩容直接推断 fixed-K 缺陷。
-旧 dated fee/rule、next-open timing、T+1 与公司行为账本需补齐；本轮只做调研/代码与元数据审计，
-E1 persistence、E2/E3 实施、E4 组合评价均未启动。2024+ 与 Strategy V2 保持关闭。
+Economic Translation MVP：**E1 + E2 AUTHORIZED / IMPLEMENTATION IN PROGRESS**。
+2026-09-11 用户授权评估修改意见、先独立提交计划修订，再实施 E1 prediction-only 与 E2 execution/data readiness。
+见 [详细计划](ECONOMIC_TRANSLATION_MVP_PLAN.md)。B494 是治理 incumbent，10/20 仅唯一结构候选。
+E2 数据缺口可阻断 readiness；长运行交用户。E3 冻结、E4/NAV、2024+、V2 仍禁止。
 
 2026-09-10：D1全量168个月、3382日结构扫描及独立oracle通过后，用户授权评估并实施正式冻结与D2。
 R218/C201/H358以 `d05e7eb` [正式冻结](../reports/literature_factor_representation_d1/FORMAL_FREEZE.md)，

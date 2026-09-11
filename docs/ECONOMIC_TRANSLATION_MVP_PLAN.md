@@ -1,8 +1,40 @@
 # Economic Translation MVP：研究与实施计划
 
-状态：**PLAN DELIVERED / STOP FOR HUMAN REVIEW**。编写日期：2026-09-11。
-审计基线：项目 `main@99ff157`；本轮只做文献、代码与元数据审计、计划编写。
-E1 真实 prediction persistence、E2 数据准备/执行改造、E3 策略实现、E4 组合评价均未启动。
+状态：**E1 + E2 AUTHORIZED / IMPLEMENTATION IN PROGRESS**。修订日期：2026-09-11。
+初版审计基线 `main@99ff157`；本次人工意见基线 `main@bd2a060`。
+本轮先独立提交计划修订，再实施 E1、E2；E3 正式冻结、E4 组合评价未授权。
+
+### 2026-09-11 人工审核修订（优先于初版的未来阶段建议）
+
+用户要求评估并吸收《给 Codex：修改 Economic Translation MVP 计划并实施 E1 + E2.md》，
+并实施其中授权的任务。附件 SHA256：`24d5d20750456c197be7c6e13b7b1e0b05da71a89cad7127480981eb391ef0f7`。
+采纳 E1/E2 的范围授权、九类执行 blocker、单候选和人工停止点；附件的结果状态是验收目标，不能在真实运行或数据未齐时预先宣告完成。
+
+- **B494 是治理选择，不是统计 winner**：它是 reference incumbent；D3-A 没有授权新的 representation winner。
+  因 R/H 点估计略高改信号将新增 post-outcome selection。R218 仅留 future engineering robustness hypothesis，本轮不读 R/S/C/H prediction。
+- E1 仅四类：固定 lag **1/2/5/10/20** 的交集内 Spearman（另列全池 percentile Pearson，区分 estimand）；
+  Top10% primary、Top5/20% context-only membership；Top10 向 Top10/10–20/20外/absent 的固定 **1/5/10/20** lag migration；
+  daily Top10 rebuild 与唯一 **entry10/hold20** membership 状态机。含 Jaccard、age、duration、删失、年度/三段描述，不做显著性检验。
+- 10/20 是 **single pre-specified structural candidate**，不自动成为 E3 authority。只评估过短、几乎全重建、过黏和异常状态；
+  不存在 pathology 可建议审议，存在则最多提出一个非收益驱动修订，不运行 buffer grid。若证据不足，结论 `inconclusive`。
+- E1 的 reader 只允许固定 B score、keys、开发日历；E2 不导入 B score reader。两个 access role 分离，
+  不读取 label/旧策略结果，不联算价格与 B 形成 P&L，不输出真实 NAV/Sharpe/CAGR，不访问 2024+ 项目值。
+- E2 是 execution/data readiness 工作，不以配置和测试通过替代真实数据覆盖。
+  正式 blocker：field-level availability、严格 next-open 无 close fallback、raw sellable T+1、唯一 corporate-action 会计、
+  dated directional limits、全期 dated fees/母单最低费、真实 quote units、离池持仓连续覆盖、2023 terminal boundary。
+- 价格分 A（下单前已知）、B（开盘成交确认）、C（日终估值/诊断）。C 不进入开盘候选、数量或容量。
+  缺 open/有效开盘成交证据直接 NO FILL；production adapter 必须在任何父类 fallback 前拦截。
+- 采用 raw prices + raw shares + explicit corporate actions 作为执行会计方向；adjusted price/factor 不再同时计算收益或另加同一分红。
+  股息记录日权益、ex-date receivable、pay-date cash、送转可交易日期分别处理；事件覆盖不足即 E4 blocker。
+- AUM、ADV、fee/slippage、benchmark **延迟至 E3 审议**。E2 可仅以 lot/最低费/容量检验 100万/500万/1000万三个数量级，
+  不生成全期 reference NAV，不按收益选择。ADV20/1% 仍是唯一待审议容量候选，不自动冻结。
+- 复用 Qlib Exchange/Account/Position/SimulatorExecutor 与现有 integration；TopkDropout 仅合成序列工程核验，
+  特别验证 preview 对 live ledger 的副作用，不建设新的独立 production backtester。
+- 新证据仅写 `reports/economic_translation_mvp/`、`outputs/economic_translation_mvp/`；绑定 source/code hashes、
+  canonical identity、B prediction hashes、精确日期/字段白名单、规则来源与证据等级。源文件 hash 不代表 PIT 或制度已验证。
+- 顺序：计划独立提交 → E1 实现/验证 → E2 合同、真实有限数据核验与 synthetic oracle → 报告 → 人工审核。
+  长扫描仍交用户 PowerShell 执行；如尚待用户运行，明确 `IMPLEMENTED / AWAITING USER RUN`，不冒称 E1 COMPLETE。
+  E2 可诚实以 `BLOCKED BY EXECUTION / DATA GAP` 收尾；本轮不进入 E3/E4。
 
 ## 1. 建议与授权边界
 
@@ -335,19 +367,19 @@ stress 不新增显著性结论、不改变 primary，不与 weighting/execution
 
 | 阶段 | 输入与允许读取 | 禁止内容 | 输出/冻结点 | 人工审核与停止条件 |
 |---|---|---|---|---|
-| **E0 本轮** | 附件、仓库源码/config、已有 authority 与 D3 aggregate、论文及官方制度 | 新 prediction scans、price values、真实 portfolio/persistence、2024+ 项目值 | 本文、代码缺口与来源；git commit 固定本轮方案 | **本轮到此停止**，E1/E2/E3/E4 未自动授权 |
+| **E0 已完成** | 附件、仓库源码/config、已有 authority 与 D3 aggregate、论文及官方制度 | 新 prediction scans、price values、真实 portfolio/persistence、2024+ 项目值 | 本文、代码缺口与来源；git commit 固定本轮方案 | 初版停止点已被本次 E1/E2 授权取代；E3/E4 仍关闭 |
 | **E1 结构诊断** | B sealed scores/keys/calendar/membership，2015–2023；合成 fixture | labels、prices、其他四臂排名择优、真实收益/费用 | 固定诊断列表、访问日志、rank/membership 报告、可复现 hash；不产生账户 NAV | 用户审核结构解释；缺日/identity 不符/不明 universe 转换则停止；完成不自动授权经济评价 |
-| **E2 执行合同** | 经批准日期/字段的 OHLCV、量额、PIT state、corporate actions、fees、有限 2014 warmup；**可看价格做质量审计但不与策略收益联算** | 策略 NAV、参数 performance search、旧holdout、2024+ | dated rule/fee table、field timing、单位/事件证据、最小 prepared quote、synthetic execution oracle、data readiness；freeze execution assumptions | 审核数据缺口和近似；mandatory gap/终止事件无解/时间错配不得通过。不得靠削掉表现差的年份完成 |
+| **E2 执行合同** | 经批准日期/字段的 OHLCV、量额、PIT state、corporate actions、fees、本轮不读 2014，warmup 缺口另记；**可看价格做质量审计但不与策略收益联算** | 策略 NAV、参数 performance search、旧holdout、2024+ | dated rule/fee table、field timing、单位/事件证据、最小 prepared quote、synthetic execution oracle、data readiness；recommend execution assumptions，E3 才冻结 | 审核数据缺口和近似；mandatory gap/终止事件无解/时间错配不得通过。不得靠削掉表现差的年份完成 |
 | **E3 策略冻结** | E1、E2 报告与批准数值、合成数据；可读 sealed metadata | 开发期 portfolio return、参数收益试跑 | 2 strategies＋固定 benchmark、假说/参数来源表、账户/推断合同、code/runtime/input hashes、runbook；全部决定具体化 | 审核唯一 execution packet；所有 p/h/AUM/rf/fee/权重/重试/终点/缺失规则必须 resolved，才可申请下一阶段 |
 | **E4 开发期经济评价** | 冻结 B、执行数据与 benchmark，2015–2023 | 调参、增臂、改 base cost、recent、V2 | 用户运行正式长任务；append-only outcome marker、3/9账户输出、独立 replay/账本与统计重算、单一报告 | 完成或失败均保留证据并停止；不能因亏损/不显著反复试参数，bug fix 新版本保留旧结果 |
 | **E5 Held recent diagnostic（可选）** | 仅单独授权的精确 recent 日期/字段与事前冻结的新预测生成方案 | 据近期结果改模型/策略再称 holdout；自动追加2024+ | 若需要，先独立规划缺失模型/预测再一次性执行；报告 historical exposure inventory | D3 只覆盖至2023，不能假定已有等价2024+ predictions；未获新授权一直关闭，且不叫 untouched final OOS |
 | **E6 新 prospective track** | 新 freeze timestamp 之后才可得的信息/执行状态；成熟后才能评价 | 回写 V1、追溯优化、用未来标签生成信号 | 独立候选身份、前瞻决策/订单/账户与成熟标签证据；新的运行与评价时点协议 | 可在 E4 审阅后直接启动，不必先打开 E5；须单独授权模型续接/冻结，不能自动建 Strategy V2 |
 
 分阶段不是七套新框架。E0/E1 轻量；E2 是主要风险工作量，先做 data gap inventory 和最小事件样本，不先承诺“全九年保证真实可成交”。
-E1 与 E2 可在将来一次明确授权下顺序执行，但 E4 必须有具体 frozen packet 与单独运行许可。
+E1 与 E2 已于本次明确授权下顺序实施；E3 仍需人工审议，E4 必须有具体 frozen packet 与单独运行许可。
 维持此前习惯：长任务由用户运行 PowerShell；实现阶段先交付通过有意义测试的命令，本轮不提供会打开经济结果的命令。
 
-### 11.1 最小实施清单（下一轮可用，不是本轮执行）
+### 11.1 最小实施清单（本轮仅第 1–3 项及第 5 项合成执行验证；其余延期）
 
 1. 新建独立 `economic_translation_mvp` 研究输出目录；简单 YAML/JSON/Markdown 即可。不要重命名全仓，也不要构造机构级 manager/registry 服务。
 2. 一个 bounded B prediction reader＋E1 CLI，复用已有 hash/日期守卫；它无法访问 label/price 路径。
@@ -396,6 +428,6 @@ E1 的结构描述与 E4 的 fee stress 必须与正式 strategy arms 分离；�
 后续 MVP 应交付：能逐笔复核的 orders/fills/rejects/partials、cash/positions/receivables、daily NAV、费用分桶、turnover、容量限制、两个固定 contrasts 与完整失败证据。
 可信的负面结果或数据不可实施结论也算研究完成，不以“必须赚钱”驱动迭代。
 
-本轮已完成静态代码审计、sealed aggregate 数量核查、论文相关段落与制度来源检索、上述分阶段计划；尚未证明九年市场数据可成交性，尚未开展 E1，也未产生新的 portfolio outcome。
-推荐下一授权单元为 **E1 prediction-only 结构诊断＋E2 的数据缺口清单和合成执行修复**；其结束点是可审议的执行合同，不是正式回测。
+初版完成静态代码审计、sealed aggregate 数量核查、论文段落与制度来源检索；本次另获 **E1 prediction-only＋E2 execution/data readiness** 授权。
+实施结果以本阶段报告为准，不能用本计划宣告九年市场数据可成交性。结束点为结构证据与执行合同/缺口，不是正式回测。
 E3/E4、E5、E6 分别保持待授权；2024+ 项目研究数据与现有 Forward/Strategy V1 不随本文改变。
