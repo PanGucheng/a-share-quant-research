@@ -37,10 +37,10 @@
 
 ## Current State
 
-Economic Translation MVP：**E1 IMPLEMENTED / AWAITING USER RUN；E2 BLOCKED BY EXECUTION / DATA GAP**。
-计划修订已先独立提交 `6464937`，E1封闭B494结构reader/独立重放、E2专用Qlib执行原语/合成验证与短真实行情canary已交付。
+Economic Translation MVP：**E1 COMPLETE / PREDICTION STRUCTURE VERIFIED；E2 BLOCKED BY EXECUTION / DATA GAP**。
+2026-09-12：用户完成九年B494结构扫描与独立重放，封存和summary复核通过。见 [E1完成复核](../reports/economic_translation_mvp/e1_completion_v1/REPORT.md)。
 见 [阶段报告](../reports/economic_translation_mvp/REPORT.md)、[执行合同与缺口](../reports/economic_translation_mvp/EXECUTION_CONTRACT.md)、
-[用户运行说明](ECONOMIC_TRANSLATION_E1_E2_RUNBOOK.md)。仅用户运行E1长扫描；E2数据/公司行为/状态缺口不因测试通过消失。
+[用户运行说明](ECONOMIC_TRANSLATION_E1_E2_RUNBOOK.md)。E1无需重跑；E2数据/公司行为/状态缺口仍阻塞后续冻结。
 B494是治理incumbent，10/20仅单一结构候选；E3冻结、E4/NAV、2024+、V2仍禁止。
 
 2026-09-10：D1全量168个月、3382日结构扫描及独立oracle通过后，用户授权评估并实施正式冻结与D2。

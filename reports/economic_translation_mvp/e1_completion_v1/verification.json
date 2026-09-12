@@ -1,0 +1,82 @@
+{
+  "assessment": "single_candidate_structurally_plausible_for_further_execution_review_not_strategy_freeze",
+  "binding": {
+    "buffer": [
+      10,
+      20
+    ],
+    "canonical": "canonical-dataset:27518ddbb28ba2b4b1247375d4e3d32d7d5be9935a5f2074dc272f84285f6423",
+    "code_hashes_lf": {
+      "model_research/economic_prediction_structure.py": "59f72e0c66a0253d12b25bfa96d459a485b4b5f53d14d57bf070e92310e6ef5a",
+      "reports/economic_translation_mvp/e1_inputs.json": "1126e238b317518078b096f50b97c5e5e9cef54703b268c0fc0021337084f32b",
+      "scripts/study_economic_e1.ps1": "889ba2b9ea650f905faee3ff75d6abea93ed88873e40b556f418fd05728515cb",
+      "scripts/study_economic_e1.py": "ef1582203bed2902021d9cce0b0a42f475332f28283c8a8a0b2e8d05d334b6ff",
+      "tests/test_economic_prediction_structure.py": "57ea9bbf445528bb4ac79466324ce135c10e2c7b4dba181271ca503e4752c7d2"
+    },
+    "e3_authorized": false,
+    "e4_authorized": false,
+    "lags": [
+      1,
+      2,
+      5,
+      10,
+      20
+    ],
+    "outcome_access": false,
+    "percentiles": [
+      5,
+      10,
+      20
+    ],
+    "role": "E1_B_scores_keys_only",
+    "runtime": {
+      "numpy": "2.2.6",
+      "pandas": "2.3.3",
+      "pyarrow": "23.0.1",
+      "python": "3.10.19",
+      "scipy": "1.15.3"
+    }
+  },
+  "dates": 2189,
+  "e2_status": "BLOCKED_BY_EXECUTION_DATA_GAP",
+  "e3_authorized": false,
+  "e4_authorized": false,
+  "implementation_commit": "33fb7d29db18b2f15a2d83624223dfeac6b47692",
+  "independent_replay": {
+    "economic_values_read": false,
+    "max_spearman_error": 2.220446049250313e-16,
+    "membership_rows": 32721,
+    "migration_rows": 34880,
+    "rank_pairs": 10907,
+    "status": "verified",
+    "transitions": 4378
+  },
+  "mean_membership_churn": {
+    "buffer10_20": 0.0770086837294333,
+    "top10": 0.20983318098720302
+  },
+  "model_switches": 8,
+  "output_hashes": {
+    "REPORT.md": "35f208b0801a5405913ac8130542018a077cbabd4c87c70b75f74e2bf5a04b05",
+    "access.json": "7d269f5ab6de26460a55a881544fe8f50b233fc1cd53966df9cc3ba21317df85",
+    "ages.parquet": "3eba76c13c6e438fe6c009c28fa59ac949e5e0e28917d76d9ea10b6cd1908808",
+    "daily.parquet": "ae8c45108630ff6f47decf823e48d6b419efce4d89db278cf1a6deed413f8fcb",
+    "independent_replay.json": "67b4402bf775095f671ee5c62f187c5c2ee84a7ff5a6b660c7ee8ff8aca88102",
+    "membership.parquet": "a090e5ae9911500b1282655b7ee0d41138e0b086a67c9c7deb16f5c0ee107d37",
+    "migration.parquet": "c130d650e28aa2c990a3644a9efaea7883f0946500485702c42c3b1c8993753d",
+    "rank_lags.parquet": "dd62384944ded335b9dbcb64c5e3397be7a9c9639d23f1ee6be9295b5850e956",
+    "receipt.json": "2846e1be33b581ff117dc27d5428a01c68619c16857cc60fb46abaa7eb85bb24",
+    "spells.parquet": "4ffa6d5028182c1cf42f740f6b902c0f847040307cca1ff252028e24e3607639",
+    "started.json": "6c7c58ff76b228cb67d348c8d5dc8b398a8ac2c70abdc14cf43d8e80427cdc64",
+    "structural_review.json": "f59e6f1472b0344a1569d39cef4cfb5de8cc8db7ddc560780df59008f21ed3aa",
+    "summary.csv": "e2deecb33647b1bf96d4acfa7c519f1e1833d82bcaedfab88d264e97eb5fd84b",
+    "turnover.parquet": "b916f9b01e8c08f7b5417a2d6b520aa6678437dc34a4111f29c4ea4f7fd20c02"
+  },
+  "relative_churn_proxy_reduction": 0.6330004465112227,
+  "reviewed_utc": "2026-09-12T02:52:34.333139+00:00",
+  "sealed_files_verified": 12,
+  "source_requests_verified": 18,
+  "status": "E1_COMPLETE_PREDICTION_STRUCTURE_VERIFIED",
+  "summary_recomputation": "passed",
+  "verification_scope": "Postrun seal/binding/access/coverage validation and recomputation of summaries from sealed structural tables; no new score scan or full independent replay executed by Codex."
+}

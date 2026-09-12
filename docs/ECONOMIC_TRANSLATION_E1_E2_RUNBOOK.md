@@ -1,5 +1,7 @@
 # Economic Translation E1 / E2 运行说明
 
+2026-09-12：用户已完成本运行，封存与独立重放复核通过，**无需重跑**。见 [完成复核](../reports/economic_translation_mvp/e1_completion_v1/REPORT.md)。以下命令作为既有执行记录保留；E2阻塞、E3/E4未授权。
+
 本阶段授权：E1 B494 prediction-only 结构与 E2 execution/data readiness。
 E3/E4、真实NAV/收益比较、2024+、Strategy V2关闭。当前报告见 [E1/E2交付](../reports/economic_translation_mvp/REPORT.md)。
 

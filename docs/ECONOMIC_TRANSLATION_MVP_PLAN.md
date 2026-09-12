@@ -1,6 +1,7 @@
 # Economic Translation MVP：研究与实施计划
 
-状态：**E1 IMPLEMENTED / AWAITING USER RUN；E2 BLOCKED BY EXECUTION / DATA GAP**。修订日期：2026-09-11。
+状态：**E1 COMPLETE / PREDICTION STRUCTURE VERIFIED；E2 BLOCKED BY EXECUTION / DATA GAP**。状态更新：2026-09-12。
+用户正式运行完成，见 [E1完成复核](../reports/economic_translation_mvp/e1_completion_v1/REPORT.md)；本次不修改参数或解除E3/E4边界。
 实施交付与真实数据缺口见 [E1/E2报告](../reports/economic_translation_mvp/REPORT.md)；运行见 [runbook](ECONOMIC_TRANSLATION_E1_E2_RUNBOOK.md)。
 初版审计基线 `main@99ff157`；本次人工意见基线 `main@bd2a060`。
 本轮先独立提交计划修订，再实施 E1、E2；E3 正式冻结、E4 组合评价未授权。

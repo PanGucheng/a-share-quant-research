@@ -231,3 +231,9 @@ Qlib validation do not certify full historical state, corporate actions, opening
 trade evidence or executable benchmark. See reports/economic_translation_mvp/REPORT.md
 and EXECUTION_CONTRACT.md there. No E3 freeze/E4 or 2024+ access. Preserve original
 adapters/configs, source receipts, D1/D2/D3 and new E1/E2 evidence. Stop for review.
+
+2026-09-12: User-run E1 nine-year B494 structural scan and independent replay completed.
+Postrun hashes, bindings, closed access inventory and summary recomputation passed.
+See reports/economic_translation_mvp/e1_completion_v1/REPORT.md. E1 is COMPLETE /
+PREDICTION STRUCTURE VERIFIED; do not rerun or rewrite sealed outputs. E2 remains
+BLOCKED by execution/data gaps; E3/E4 and 2024+ values remain unauthorized.

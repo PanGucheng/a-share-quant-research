@@ -22,7 +22,9 @@ task-specific authority doc
 
 ## Current Authority
 
-- [Economic Translation E1/E2交付](../reports/economic_translation_mvp/REPORT.md) — E1实现/待用户运行；E2执行数据缺口阻塞。
+- [E1正式扫描完成复核](../reports/economic_translation_mvp/e1_completion_v1/REPORT.md) — 九年结构与独立重放已验证，E2仍阻塞。
+
+- [Economic Translation E1/E2交付](../reports/economic_translation_mvp/REPORT.md) — 初始实现交付记录；当前完成状态见上方复核。
 - [E1用户运行说明](ECONOMIC_TRANSLATION_E1_E2_RUNBOOK.md) — 唯一B494结构扫描及独立重放，E3/E4关闭。
 - [E2执行合同与Data Readiness](../reports/economic_translation_mvp/EXECUTION_CONTRACT.md) — dated fees/limits、T+1、公司行为、时点和真实覆盖限制。
 
