@@ -1,0 +1,30 @@
+{
+  "factors": 494,
+  "source_counts": {
+    "alpha101": 32,
+    "alpha158": 85,
+    "alpha360": 287,
+    "mature_public": 21,
+    "project_basic": 12,
+    "ta": 57
+  },
+  "daily_basic": [
+    "mature_book_to_price",
+    "mature_dividend_yield_ttm",
+    "mature_earnings_yield_ttm",
+    "mature_log_total_market_cap",
+    "mature_sales_to_price_ttm",
+    "mature_turnover_mean_20",
+    "mature_turnover_rate_free_float",
+    "mature_turnover_volatility_20"
+  ],
+  "fundamental": [
+    "mature_book_to_market_pit",
+    "mature_earnings_to_price_pit",
+    "mature_sales_to_price_pit"
+  ],
+  "moneyflow": [],
+  "actual_feature_values_read": false,
+  "score_values_read": false,
+  "hour_level_vintage_certified": false
+}

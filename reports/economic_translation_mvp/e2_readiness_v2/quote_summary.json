@@ -1,0 +1,23 @@
+{
+  "absent_files": 0,
+  "candidate_field_files": 30912,
+  "candidate_union": 4416,
+  "earlier_sessions_without_approved_adv": 20,
+  "extent_not_covering": 0,
+  "first_2015_adv20_execution_date": "2015-02-02",
+  "full_history_value_coverage_certified": false,
+  "full_market_execution_ready": false,
+  "quote_checks": {
+    "finite_all": 123910,
+    "implied_vwap_outside": 21,
+    "missing_any": 6461,
+    "negative_volume_amount": 0,
+    "nonpositive_price_factor": 0,
+    "ohlc_bad": 0,
+    "rows": 130371,
+    "valid_positive_pairs": 123910,
+    "zero_volume": 0
+  },
+  "sampled_security_days": 130371,
+  "sampled_stocks": 3382
+}

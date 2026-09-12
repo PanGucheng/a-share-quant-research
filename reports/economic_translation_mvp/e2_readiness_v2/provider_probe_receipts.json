@@ -1,0 +1,314 @@
+[
+  {
+    "adjustflag": "3",
+    "columns": [
+      "date",
+      "code",
+      "open",
+      "high",
+      "low",
+      "close",
+      "preclose",
+      "volume",
+      "amount",
+      "adjustflag",
+      "tradestatus",
+      "isST"
+    ],
+    "date_max": "2015-02-13",
+    "date_min": "2015-01-05",
+    "end": "2015-02-13",
+    "instrument": "SZ300001",
+    "provider": "baostock",
+    "rows": 30,
+    "sha256": "0153563513882363fb9c65db4cb4265a987726cb9ec85e1b256f68a7d1b242f7",
+    "start": "2015-01-05",
+    "status": "success",
+    "version": "0.9.3"
+  },
+  {
+    "adjustflag": "3",
+    "columns": [
+      "date",
+      "code",
+      "open",
+      "high",
+      "low",
+      "close",
+      "preclose",
+      "volume",
+      "amount",
+      "adjustflag",
+      "tradestatus",
+      "isST"
+    ],
+    "date_max": "2015-08-10",
+    "date_min": "2015-07-01",
+    "end": "2015-08-10",
+    "instrument": "SZ300001",
+    "provider": "baostock",
+    "rows": 29,
+    "sha256": "0ad0bf97479b665b8ed83de79922e0c636a89b08c7f38484a2a3e430f18081a1",
+    "start": "2015-07-01",
+    "status": "success",
+    "version": "0.9.3"
+  },
+  {
+    "adjustflag": "3",
+    "columns": [
+      "date",
+      "code",
+      "open",
+      "high",
+      "low",
+      "close",
+      "preclose",
+      "volume",
+      "amount",
+      "adjustflag",
+      "tradestatus",
+      "isST"
+    ],
+    "date_max": "2015-01-30",
+    "date_min": "2015-01-05",
+    "end": "2015-01-30",
+    "instrument": "SH600000",
+    "provider": "baostock",
+    "rows": 20,
+    "sha256": "39b591e3017cab9e35302801bf4bce3a603a7c19a3fec7887fbb0848f82a7ae2",
+    "start": "2015-01-05",
+    "status": "success",
+    "version": "0.9.3"
+  },
+  {
+    "adjustflag": "3",
+    "columns": [
+      "date",
+      "code",
+      "open",
+      "high",
+      "low",
+      "close",
+      "preclose",
+      "volume",
+      "amount",
+      "adjustflag",
+      "tradestatus",
+      "isST"
+    ],
+    "date_max": "2019-07-26",
+    "date_min": "2019-07-22",
+    "end": "2019-07-26",
+    "instrument": "SH688001",
+    "provider": "baostock",
+    "rows": 5,
+    "sha256": "7758682c0df777ff71053cbc7efc34bc13c8867fa805e359cc9a06167d033889",
+    "start": "2019-07-22",
+    "status": "success",
+    "version": "0.9.3"
+  },
+  {
+    "adjustflag": "3",
+    "columns": [
+      "date",
+      "code",
+      "open",
+      "high",
+      "low",
+      "close",
+      "preclose",
+      "volume",
+      "amount",
+      "adjustflag",
+      "tradestatus",
+      "isST"
+    ],
+    "date_max": "2020-08-28",
+    "date_min": "2020-08-24",
+    "end": "2020-08-28",
+    "instrument": "SH600000",
+    "provider": "baostock",
+    "rows": 5,
+    "sha256": "0af20b9dbd6c26aeae3a0539254ba2afeb85c66085e55bcf1f85d444f8feb762",
+    "start": "2020-08-24",
+    "status": "success",
+    "version": "0.9.3"
+  },
+  {
+    "adjustflag": "3",
+    "columns": [
+      "date",
+      "code",
+      "open",
+      "high",
+      "low",
+      "close",
+      "preclose",
+      "volume",
+      "amount",
+      "adjustflag",
+      "tradestatus",
+      "isST"
+    ],
+    "date_max": "2023-08-29",
+    "date_min": "2023-08-28",
+    "end": "2023-08-29",
+    "instrument": "SH600000",
+    "provider": "baostock",
+    "rows": 2,
+    "sha256": "2347ac90035d7265a4f075e83d0f6a0fc6fb9294faf0bb8cbf66adf9b2b413be",
+    "start": "2023-08-28",
+    "status": "success",
+    "version": "0.9.3"
+  },
+  {
+    "api": "stk_limit",
+    "columns": [
+      "ts_code",
+      "trade_date",
+      "pre_close",
+      "up_limit",
+      "down_limit"
+    ],
+    "date_max": "2015-01-15",
+    "date_min": "2015-01-15",
+    "fields": "ts_code,trade_date,pre_close,up_limit,down_limit",
+    "parameters": {
+      "trade_date": "20150115",
+      "ts_code": "600000.SH"
+    },
+    "provider": "tushare",
+    "rows": 1,
+    "sha256": "f5ff9f4b5a8f9c2ecebf7f871c115f53e6b3939bd05f6334f4d6c36d3d4296f5",
+    "status": "accessible_nonempty"
+  },
+  {
+    "api": "stk_limit",
+    "columns": [
+      "ts_code",
+      "trade_date",
+      "pre_close",
+      "up_limit",
+      "down_limit"
+    ],
+    "date_max": "2020-08-24",
+    "date_min": "2020-08-24",
+    "fields": "ts_code,trade_date,pre_close,up_limit,down_limit",
+    "parameters": {
+      "trade_date": "20200824",
+      "ts_code": "600000.SH"
+    },
+    "provider": "tushare",
+    "rows": 1,
+    "sha256": "cfea80e3ea2083ce709882799008ae97d0773afb4bea405af7743c7d4a9cab8e",
+    "status": "accessible_nonempty"
+  },
+  {
+    "api": "stk_limit",
+    "columns": [
+      "ts_code",
+      "trade_date",
+      "pre_close",
+      "up_limit",
+      "down_limit"
+    ],
+    "date_max": "2023-08-28",
+    "date_min": "2023-08-28",
+    "fields": "ts_code,trade_date,pre_close,up_limit,down_limit",
+    "parameters": {
+      "trade_date": "20230828",
+      "ts_code": "600000.SH"
+    },
+    "provider": "tushare",
+    "rows": 1,
+    "sha256": "ba73ffa41646495e24220b88c72739118619ee07cc9054a1ab79bc0442e0f6a4",
+    "status": "accessible_nonempty"
+  },
+  {
+    "api": "suspend_d",
+    "columns": [
+      "ts_code",
+      "trade_date",
+      "suspend_timing",
+      "suspend_type"
+    ],
+    "date_max": "2015-02-13",
+    "date_min": "2015-02-02",
+    "fields": "ts_code,trade_date,suspend_timing,suspend_type",
+    "parameters": {
+      "end_date": "20150213",
+      "start_date": "20150105",
+      "ts_code": "300001.SZ"
+    },
+    "provider": "tushare",
+    "rows": 10,
+    "sha256": "591fb1ad7a21cb69708a4a690f1c26fc8bc24d4fc8984c26527c4d4e968bc106",
+    "status": "accessible_nonempty"
+  },
+  {
+    "api": "dividend",
+    "columns": [
+      "ts_code",
+      "ann_date",
+      "div_proc",
+      "stk_div",
+      "stk_bo_rate",
+      "stk_co_rate",
+      "cash_div_tax",
+      "record_date",
+      "ex_date",
+      "pay_date",
+      "div_listdate",
+      "imp_ann_date"
+    ],
+    "date_max": "2015-07-16",
+    "date_min": "2015-07-16",
+    "fields": "ts_code,ann_date,div_proc,stk_div,stk_bo_rate,stk_co_rate,cash_div_tax,record_date,ex_date,pay_date,div_listdate,imp_ann_date",
+    "parameters": {
+      "ex_date": "20150716"
+    },
+    "provider": "tushare",
+    "rows": 32,
+    "sha256": "48468da3805307cd765f0bf57eba5254559556253d3ac9ceaf6988622327a5c5",
+    "status": "accessible_nonempty"
+  },
+  {
+    "api": "dividend",
+    "columns": [
+      "ts_code",
+      "ann_date",
+      "div_proc",
+      "stk_div",
+      "stk_bo_rate",
+      "stk_co_rate",
+      "cash_div_tax",
+      "record_date",
+      "ex_date",
+      "pay_date",
+      "div_listdate",
+      "imp_ann_date"
+    ],
+    "date_max": "2020-07-16",
+    "date_min": "2020-07-16",
+    "fields": "ts_code,ann_date,div_proc,stk_div,stk_bo_rate,stk_co_rate,cash_div_tax,record_date,ex_date,pay_date,div_listdate,imp_ann_date",
+    "parameters": {
+      "ex_date": "20200716"
+    },
+    "provider": "tushare",
+    "rows": 68,
+    "sha256": "cbf4c1f6c177d100d0778fdda1d25ab99108349e8fca748ace9311cb930efd96",
+    "status": "accessible_nonempty"
+  },
+  {
+    "api": "namechange",
+    "fields": "ts_code,name,start_date,ann_date,change_reason",
+    "parameters": {
+      "end_date": "20151231",
+      "start_date": "20150101",
+      "ts_code": "000033.SZ"
+    },
+    "provider": "tushare",
+    "rows": 0,
+    "status": "accessible_empty"
+  }
+]

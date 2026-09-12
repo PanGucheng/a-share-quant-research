@@ -1,0 +1,28 @@
+[
+  {
+    "source": "ts_4.parquet",
+    "rows": 32,
+    "positive_cash": 31,
+    "cash_missing_pay": 0,
+    "positive_stock": 6,
+    "stock_missing_listdate": 0,
+    "missing_imp_ann": 0,
+    "non_sh_sz": 0,
+    "implemented_status_values": [
+      "实施"
+    ]
+  },
+  {
+    "source": "ts_5.parquet",
+    "rows": 68,
+    "positive_cash": 67,
+    "cash_missing_pay": 0,
+    "positive_stock": 5,
+    "stock_missing_listdate": 0,
+    "missing_imp_ann": 0,
+    "non_sh_sz": 2,
+    "implemented_status_values": [
+      "实施"
+    ]
+  }
+]

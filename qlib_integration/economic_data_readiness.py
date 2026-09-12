@@ -31,6 +31,10 @@ class QuoteSliceReader:
     The logged hash covers approved bytes only, not the 2024+ parent file.
     """
 
+    instruments = INSTRUMENTS
+    fields = FIELDS
+    windows = WINDOWS
+
     def __init__(self, provider):
         self.provider = Path(provider).resolve()
         self.audit = []
@@ -46,13 +50,13 @@ class QuoteSliceReader:
         if len(self.calendar) != len(set(self.calendar)) or self.calendar != sorted(self.calendar):
             raise ValueError("provider calendar metadata integrity")
         self.offsets = {d: i for i, d in enumerate(self.calendar)}
-        self.approved = tuple(d for d in self.calendar if any(a <= d <= b for a, b in WINDOWS))
+        self.approved = tuple(d for d in self.calendar if any(a <= d <= b for a, b in self.windows))
 
     def read(self, stock, field, dates):
         dates = tuple(dates)
         if (
-            stock not in INSTRUMENTS
-            or field not in FIELDS
+            stock not in self.instruments
+            or field not in self.fields
             or not dates
             or not set(dates).issubset(self.approved)
         ):

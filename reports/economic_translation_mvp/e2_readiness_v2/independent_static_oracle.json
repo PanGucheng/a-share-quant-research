@@ -1,0 +1,79 @@
+{
+  "status": "passed",
+  "method": "enumerate all lot-valid quantities with independently rounded fees, choose maximal affordable reference quantity",
+  "first_algebraic_oracle_failed": "continuous proportional-fee bound ignores component cent rounding; replaced by exact enumeration",
+  "cases": [
+    {
+      "date": "2015-08-28",
+      "aum": 1000000,
+      "unknown_price": 309,
+      "below_lot": 1643,
+      "fee_error": 0.0,
+      "idle_error": 0.0
+    },
+    {
+      "date": "2015-08-28",
+      "aum": 5000000,
+      "unknown_price": 309,
+      "below_lot": 242,
+      "fee_error": 0.0,
+      "idle_error": -5.551115123125783e-16
+    },
+    {
+      "date": "2015-08-28",
+      "aum": 10000000,
+      "unknown_price": 309,
+      "below_lot": 36,
+      "fee_error": 0.0,
+      "idle_error": 3.3306690738754696e-16
+    },
+    {
+      "date": "2020-08-28",
+      "aum": 1000000,
+      "unknown_price": 7,
+      "below_lot": 1818,
+      "fee_error": 0.0,
+      "idle_error": 1.1102230246251565e-16
+    },
+    {
+      "date": "2020-08-28",
+      "aum": 5000000,
+      "unknown_price": 7,
+      "below_lot": 606,
+      "fee_error": 0.0,
+      "idle_error": 5.551115123125783e-16
+    },
+    {
+      "date": "2020-08-28",
+      "aum": 10000000,
+      "unknown_price": 7,
+      "below_lot": 264,
+      "fee_error": 0.0,
+      "idle_error": -7.771561172376096e-16
+    },
+    {
+      "date": "2023-08-28",
+      "aum": 1000000,
+      "unknown_price": 1,
+      "below_lot": 1824,
+      "fee_error": 0.0,
+      "idle_error": 0.0
+    },
+    {
+      "date": "2023-08-28",
+      "aum": 5000000,
+      "unknown_price": 1,
+      "below_lot": 638,
+      "fee_error": 0.0,
+      "idle_error": -7.771561172376096e-16
+    },
+    {
+      "date": "2023-08-28",
+      "aum": 10000000,
+      "unknown_price": 1,
+      "below_lot": 295,
+      "fee_error": 0.0,
+      "idle_error": 1.3877787807814457e-15
+    }
+  ]
+}

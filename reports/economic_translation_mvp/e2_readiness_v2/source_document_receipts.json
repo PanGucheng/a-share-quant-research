@@ -1,0 +1,38 @@
+[
+  {
+    "id": "tushare_limits",
+    "url": "https://tushare.pro/document/2?doc_id=183",
+    "http_status": 200,
+    "sha256": "45a8e5d564f4150a60e997fb475f1a253b1bd5acb01a8bf99e0604640304ed40"
+  },
+  {
+    "id": "tushare_suspension",
+    "url": "https://tushare.pro/document/2?doc_id=214",
+    "http_status": 200,
+    "sha256": "96615233147bbae817f1c6ae8f5d3fe60fef6f87337e51b80ba38d01e656a980"
+  },
+  {
+    "id": "tushare_dividend",
+    "url": "https://tushare.pro/document/2?doc_id=103",
+    "http_status": 200,
+    "sha256": "2d0eb65ee7d8bae576aa91f17748add56e5828376beb2b43c711adea3f909894"
+  },
+  {
+    "id": "tushare_auction",
+    "url": "https://tushare.pro/document/2?doc_id=353",
+    "http_status": 200,
+    "sha256": "44ad10819b0f3111e21234c015dc3d17c18d71e075f3124502a5468acca9c929"
+  },
+  {
+    "id": "tushare_dailybasic",
+    "url": "https://tushare.pro/document/2?doc_id=32",
+    "http_status": 200,
+    "sha256": "3fcf5d044216fb62819dc3e81bca18b63b43e611f8c823e11d7a7627b730325d"
+  },
+  {
+    "id": "issuer_alias_proposal",
+    "url": "https://static.cninfo.com.cn/finalpage/2018-02-02/1204386750.PDF",
+    "http_status": 200,
+    "sha256": "08b8003c482b5ff09f2f200ab8cff9c766d025953aae1802ea6c709066064ffd"
+  }
+]

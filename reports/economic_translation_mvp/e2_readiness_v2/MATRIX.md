@@ -1,0 +1,27 @@
+# E2 Data Readiness Matrix
+
+日期：2026-09-12；基线 main@186565d。**E2 BLOCKED；E2 READY FOR E3 FREEZE = false**。
+
+READY仅指该行指定范围已就绪；CAN BE RELIABLY ACQUIRED表示已实测采集路径及明确字段，仍须完成九年覆盖验收；EXISTING DATA BUT NOT WIRED不能当作可执行。ACCEPTABLE MVP APPROXIMATION是审计建议，不是E3批准。
+
+| ID | 要求 | 分类 | 当前证据及限制 | 解除条件 |
+|---|---|---|---|---|
+| Q01 | raw OHLCV/amount/factor 文件及索引范围 | `READY` | 4,416历史候选×7字段=30,912文件，全部存在且字节索引范围覆盖各自候选起止日。 仅文件/索引层；不是每个交易日的有效值覆盖。 | 保持字段与calendar索引校验；不得把extent合格当作值完整。 |
+| Q02 | 九年raw单位/有效值/异常 | `BLOCKING / UNRESOLVED` | 130,371证券日抽样：123,910完整正值配对，6,461缺值；21处量额隐含均价越界均属SH601313。77个普通有效跨源配对相对误差<1e-7。 SH601313单日跨源显示统一换算后的量约×100、额约×1000；全期未穷举。 | 核对该证券alias和分段单位源语义，补全逐段单位规则并独立验证；开展严格边界全值扫描，缺值按状态逐项解释。 |
+| S01 | 历史日终suspension/ST字段采集路径 | `CAN BE RELIABLY ACQUIRED` | BaoStock返回SZ300001共14停牌日；Tushare停牌接口交叉支持前10日；2个2015 ST阳性样本可取。 这是历史日终标记，不自带盘前公告时间。 | 分段采集并检查遗漏/冲突/空表；通过公告区分全日停牌与盘中暂停。 |
+| S02 | 逐股逐日盘前状态与board/IPO/delisting身份 | `BLOCKING / UNRESOLVED` | 现有official-canary和scope覆盖recent，未读取其研究值；代码前缀只够一般board提示。 没有九年完整PIT状态、注册/核准制度、真实IPO session、恢复/重上市及terminal生效包。 | 建立含公告可得时间、有效区间、来源和冲突检查的状态层；不能用当前名称/生命周期区间替代IPO登记与退市事实。 |
+| L01 | 普通日逐股上下限采集及规则核对路径 | `CAN BE RELIABLY ACQUIRED` | Tushare在2015/2020/2023的三个固定普通日返回上下限，分币规则逐项一致。 三条样本不等于逐股逐日覆盖；pre_close须确认是否除权参考。 | 全期有界采集、覆盖清单及普通/ST/改革边界交叉验证。 |
+| L02 | IPO/重上市/退市整理/除权等特殊限价 | `BLOCKING / UNRESOLVED` | SH688001上市首日接口返回100000/0.01占位价；新增适配校验拒绝当普通边界。 无涨跌幅限制不等于无申报价格约束；legacy IPO开盘范围和日内范围不同。 | 逐股special regime+生效条文+参考价证明；实现特殊日执行语义并验证，不能静默排除。 |
+| C01 | dividend与bonus数据采集路径 | `CAN BE RELIABLY ACQUIRED` | 固定两个ex-date共100条记录；98条沪深代码。98条有正现金分红，派息日均有值；11条正送转均有上市日。 数字含全接口100条样本；2条历史记录使用BJ代码，不能把返回全集当历史A股全集；未证明九年完整性。 | 按历史标的身份过滤、实施公告/登记/ex/pay/listable时点核验、事件去重、逐证券反向对账。 |
+| C02 | cash/bonus raw账户及应收/税/可卖桥 | `EXISTING DATA BUT NOT WIRED` | CorporateActionBook已有现金应收/到账、split手算原语；真实分红送转样本现已取得。 无完整Qlib receivable估值桥、record-date权益及延迟红股入账/可卖/税扣款实现。 | 把已验事件接到账户而不重复复权；手算对账覆盖停牌、登记后离池/卖出、跨年及延迟到账。 |
+| C03 | rights issue | `BLOCKING / UNRESOLVED` | 已检索的数据目录和现有primitive无完整rights事件表，代码明确unsupported。 不能由factor变化推断认购权益、认购价格、期限或不认购损失。 | 取得逐事件公告及认购/不认购会计和现金/上市时点；给出完整覆盖与独立守恒验证。 |
+| C04 | conversion/代码迁移 | `BLOCKING / UNRESOLVED` | 发行人2018拟变更公告解释601313→601360及原持有人股数不变；新代码历史查询能取得旧代码日线。 公告样本为拟实施方案；数据vendor回映代码与真实证券持仓迁移不是同一概念。 | 补最终生效公告与完整事件映射，保留数量/成本/持有期/冻结子账；不全局拼接或回填新代码。 |
+| C05 | delisting cash/terminal rights | `BLOCKING / UNRESOLVED` | 没有认证的九年终止交易/现金对价/后续权利数据包。 退市不自动等于现金兑付、归零或可以按末价卖出。 | 逐事件确定最后交易、托管迁移、现金/权利应收及不可交易库存估值，不无限前填伪造可实现价值。 |
+| H01 | held stock离池后的连续覆盖 | `BLOCKING / UNRESOLVED` | 18个年度离池样本×20日=360请求；2016 SH600070/SH600120及2017 SH600146存在48缺行情日。 实际未运行策略，样本只是可能持仓；缺日可以是停牌，但未知状态/公司行为无法完成账本。 | 候选∪真实持仓覆盖到退出/边界；绑定状态、事件、估值与pending sale，失败不能删仓。 |
+| T01 | B494 t close→t+1 open时点 | `BLOCKING / UNRESOLVED` | 494字段拆为483市场衍生、8 daily_basic、3 statement PIT；无moneyflow。代码采用当日/向后窗口，日频basic定义t+1可用。 严格t close即计算并不准确；盘后发布应在隔夜批次。3财务字段只有日期级重构PIT，旧版本/小时级发布与全链准备时间未证。 | 明确signal_time为t收盘后全部输入到齐，证明早于t+1订单；保持frozen分数，不用新增时点假设回填既有值或重训。 |
+| W01 | 2015 ADV20 warmup | `EXISTING DATA BUT NOT WIRED` | 2015首日2,000候选的volume文件索引覆盖2014-12-04至12-31的20个交易日。 只读calendar/header元数据，没有读2014量值；现2015下界函数最早到2015-02-02才有20日。 | 明确仅warmup数据访问边界并验证这20日raw量与停牌；接独立warmup输入，不能悄悄缩短起始评价期或把缺值填0。 |
+| F01 | dated法定费用区间 | `BLOCKING / UNRESOLVED` | 已有2015/2022过户费与2023印花税分段；early2015 SH面额费基、最低费及SZ历史佣金打包仍不齐。 完整日期行不等于收费语义完整。 | 取得适用历史收费证据及面额数据，明确含费/重复计费边界；不能直接用当前费率回填2015。 |
+| F02 | 佣金/母单分币舍入/隐含成本 | `ACCEPTABLE MVP APPROXIMATION` | 万三最低5元、逐母单累计费用、组件分币舍入已有合成及实际Qlib验证。 属研究执行约定；不是证明真实券商交割一致，10bps只是候选且未冻结。 | 在未来E3明确费率/母单/含费/舍入与成本解释；不能借此绕过F01法定费基缺口。 |
+| O01 | 真实竞价open-evidence | `BLOCKING / UNRESOLVED` | 当前只有日线open；2023-08-28的stk_auction_o历史请求被服务拒绝(code40203)。 不能认定已买到竞价数据，也不能用日终close或全天量替代盘前/开盘字段。 | 取得可用开盘证据，或明确接受O02的受限日级价格参考定义；特殊停牌日另行处理。 |
+| O02 | 日线open-reference、保守容量/现金近似 | `ACCEPTABLE MVP APPROXIMATION` | 可把普通日daily open明确作为首笔价格参考，方向限制保守拒绝；ADV20仅容量代理；批初cash不预支卖款。 不声称09:25竞价成交、排队可得性或真实冲击。真实raw异常/unknown状态/terminal不可用近似掩盖。 | 未来明确批准这些执行定义与失效条件；原始open缺失不回退close，无限价特殊日不能沿普通路径。 |
+| B01 | 全池EW lot/fee/liquidity基本可执行性 | `BLOCKING / UNRESOLVED` | 1000万静态样本：2015/2020/2023分别36/264/295只有已知昨收但不足最小买量；另309/7/1缺参考价。 全池EW不是当前可执行身份；九个静态场景未构造时间路径。已知ADV cap未触发不证明未知股/竞价容量。 | 保留原始全池分母，补raw与状态；明确lot/现金导致偏离EW的基准定义及容忍范围，E3审议，不按收益换基准。 |

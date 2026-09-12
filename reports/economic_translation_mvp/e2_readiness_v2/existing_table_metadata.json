@@ -1,0 +1,153 @@
+[
+  {
+    "path": "E:\\qlib_prj\\qlib_baseline\\outputs\\data_source_audit_v2\\current\\normalized\\baostock_daily.parquet",
+    "exists": true,
+    "rows": 52593,
+    "schema": [
+      "instrument",
+      "date",
+      "price_raw_open",
+      "price_raw_high",
+      "price_raw_low",
+      "price_raw_close",
+      "price_raw_preclose",
+      "volume_shares",
+      "amount_cny",
+      "is_trading",
+      "is_st",
+      "suspension_type",
+      "available_before_open",
+      "adjustment_mode",
+      "source",
+      "source_row_id"
+    ],
+    "numeric_rows_read": 0,
+    "row_groups": [
+      {
+        "rows": 52593,
+        "dates": [
+          {
+            "column": "date",
+            "min": "2024-08-01 00:00:00",
+            "max": "2026-02-04 00:00:00"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "path": "E:\\qlib_prj\\qlib_baseline\\outputs\\full_research_feature_matrix_v1\\runtime\\raw_ohlcva.parquet",
+    "exists": true,
+    "rows": 5208622,
+    "schema": [
+      "instrument",
+      "datetime",
+      "$open",
+      "$high",
+      "$low",
+      "$close",
+      "$volume",
+      "$amount"
+    ],
+    "numeric_rows_read": 0,
+    "row_groups": [
+      {
+        "rows": 1048576,
+        "dates": [
+          {
+            "column": "datetime",
+            "min": "2020-09-01 00:00:00",
+            "max": "2026-06-09 00:00:00"
+          }
+        ]
+      },
+      {
+        "rows": 1048576,
+        "dates": [
+          {
+            "column": "datetime",
+            "min": "2020-09-01 00:00:00",
+            "max": "2026-06-09 00:00:00"
+          }
+        ]
+      },
+      {
+        "rows": 1048576,
+        "dates": [
+          {
+            "column": "datetime",
+            "min": "2020-09-01 00:00:00",
+            "max": "2026-06-09 00:00:00"
+          }
+        ]
+      },
+      {
+        "rows": 1048576,
+        "dates": [
+          {
+            "column": "datetime",
+            "min": "2020-09-01 00:00:00",
+            "max": "2026-06-09 00:00:00"
+          }
+        ]
+      },
+      {
+        "rows": 1014318,
+        "dates": [
+          {
+            "column": "datetime",
+            "min": "2020-09-01 00:00:00",
+            "max": "2026-06-09 00:00:00"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "path": "E:\\qlib_prj\\qlib_baseline\\outputs\\historical_instrument_state_v2\\scope\\runtime\\valuation_scope.parquet",
+    "exists": true,
+    "rows": 36136,
+    "schema": [
+      "datetime",
+      "instrument",
+      "outer_split_id",
+      "method"
+    ],
+    "numeric_rows_read": 0,
+    "row_groups": [
+      {
+        "rows": 36136,
+        "dates": [
+          {
+            "column": "datetime",
+            "min": "2024-08-02 00:00:00",
+            "max": "2026-02-04 00:00:00"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "path": "E:\\qlib_prj\\qlib_baseline\\outputs\\historical_instrument_state_v2\\scope\\runtime\\decision_scope.parquet",
+    "exists": true,
+    "rows": 735882,
+    "schema": [
+      "datetime",
+      "instrument",
+      "outer_split_id"
+    ],
+    "numeric_rows_read": 0,
+    "row_groups": [
+      {
+        "rows": 735882,
+        "dates": [
+          {
+            "column": "datetime",
+            "min": "2024-08-01 00:00:00",
+            "max": "2026-02-04 00:00:00"
+          }
+        ]
+      }
+    ]
+  }
+]

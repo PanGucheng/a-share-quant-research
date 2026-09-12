@@ -22,6 +22,8 @@ task-specific authority doc
 
 ## Current Authority
 
+- [E2数据就绪闭环审计](../reports/economic_translation_mvp/e2_readiness_v2/REPORT.md) — 最新真实数据与独立验证；[分类矩阵](../reports/economic_translation_mvp/e2_readiness_v2/MATRIX.md)，E2仍BLOCKED。
+
 - [E1正式扫描完成复核](../reports/economic_translation_mvp/e1_completion_v1/REPORT.md) — 九年结构与独立重放已验证，E2仍阻塞。
 
 - [Economic Translation E1/E2交付](../reports/economic_translation_mvp/REPORT.md) — 初始实现交付记录；当前完成状态见上方复核。

@@ -237,3 +237,12 @@ Postrun hashes, bindings, closed access inventory and summary recomputation pass
 See reports/economic_translation_mvp/e1_completion_v1/REPORT.md. E1 is COMPLETE /
 PREDICTION STRUCTURE VERIFIED; do not rerun or rewrite sealed outputs. E2 remains
 BLOCKED by execution/data gaps; E3/E4 and 2024+ values remain unauthorized.
+
+2026-09-12: The user authorized the E2 data-readiness closure audit, bounded real
+canaries and necessary data/rule adapters. Audit completed: see reports/economic_translation_mvp/
+e2_readiness_v2/REPORT.md and MATRIX.md. E2 remains BLOCKED; not READY FOR E3 FREEZE.
+Preserve original E1/E2 receipts. New evidence is outputs/economic_translation_mvp/e2_closure_v1.
+A SH601313 unit/identity anomaly is unresolved; do not silently rescale, drop the
+security or change frozen models. Full historical states/events, held continuity,
+warmup wiring, early-2015 fees and benchmark feasibility remain incomplete.
+No E1 rerun, E3/E4, real NAV/outcomes, Strategy V2 or 2024+ research-value access.

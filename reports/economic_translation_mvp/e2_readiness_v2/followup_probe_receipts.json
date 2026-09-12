@@ -1,0 +1,23 @@
+[
+  {
+    "api": "daily",
+    "params": {
+      "ts_code": "601313.SH",
+      "start_date": "20150731",
+      "end_date": "20150828"
+    },
+    "fields": "ts_code,trade_date,open,high,low,close,vol,amount",
+    "status": "empty",
+    "rows": 0
+  },
+  {
+    "api": "stk_auction_o",
+    "params": {
+      "ts_code": "600000.SH",
+      "trade_date": "20230828"
+    },
+    "fields": "ts_code,trade_date,open,close,vol,amount",
+    "status": "source_denied",
+    "code": 40203
+  }
+]

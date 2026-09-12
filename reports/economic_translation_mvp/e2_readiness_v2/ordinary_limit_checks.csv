@@ -1,0 +1,4 @@
+date,instrument,calculated_low,source_low,calculated_high,source_high,exact
+20150115,600000.SH,13.94,13.94,17.04,17.04,True
+20200824,600000.SH,9.45,9.45,11.55,11.55,True
+20230828,600000.SH,6.35,6.35,7.76,7.76,True

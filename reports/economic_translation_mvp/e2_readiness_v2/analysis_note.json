@@ -1,0 +1,5 @@
+{
+  "static_unknown_adv_denominator": "all names; local first-pass table counted only known-reference names",
+  "original_local_outputs_preserved": true,
+  "prices_not_reread_for_feasibility": true
+}
