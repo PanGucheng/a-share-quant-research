@@ -246,3 +246,14 @@ A SH601313 unit/identity anomaly is unresolved; do not silently rescale, drop th
 security or change frozen models. Full historical states/events, held continuity,
 warmup wiring, early-2015 fees and benchmark feasibility remain incomplete.
 No E1 rerun, E3/E4, real NAV/outcomes, Strategy V2 or 2024+ research-value access.
+
+2026-09-13: The user authorized the small-capital E2/E3 prerequisite study and
+specified CNY 50k/100k, bilateral 0.00025 commission with CNY 5 minimum, separate
+historical stamp/transfer fees, and assumed STAR/ChiNext access. Bounded score-blind
+static study is complete; see reports/economic_translation_mvp/small_capital_v1/REPORT.md
+and MATRIX.md. K=5 for 50k and K=8 for 100k are review candidates, not frozen strategy
+parameters or certified executions. Academic benchmark definition is separate from
+personal full-pool replication; raw/state/event/accounting blockers remain.
+The fixed-K prediction-only check is designed and synthetically validated, not run
+on real scores; select one actual AUM/K for human review first. E1 is unchanged.
+Stop at E2 BLOCKED for review. No E3/E4, NAV/outcomes, B494 changes or 2024+ access.

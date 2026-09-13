@@ -1,0 +1,42 @@
+{
+  "dates": [
+    "2015-08-28",
+    "2020-08-28",
+    "2023-08-28"
+  ],
+  "aums": [
+    50000,
+    100000
+  ],
+  "ks": [
+    3,
+    5,
+    8,
+    12,
+    16,
+    24,
+    32,
+    50,
+    100,
+    200
+  ],
+  "replicates": 32,
+  "columns": [
+    "date",
+    "instrument",
+    "close",
+    "open",
+    "volume",
+    "amount",
+    "high",
+    "low"
+  ],
+  "reserve": 0.05,
+  "commission": 0.00025,
+  "minimum_commission": 5,
+  "source": "sealed E2 slices only",
+  "predictions": false,
+  "nav": false,
+  "sampling": "SHA256 small-capital-v1|date|replicate|instrument; first K; next K replacement",
+  "plan_sha256": "92ccc2d5206f79b6d32e0682528348e9526cc66da806892a83a4680cc14f1737"
+}

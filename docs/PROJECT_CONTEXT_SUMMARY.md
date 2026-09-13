@@ -38,8 +38,9 @@
 ## Current State
 
 Economic Translation MVP：**E1 COMPLETE / PREDICTION STRUCTURE VERIFIED；E2 BLOCKED BY EXECUTION / DATA GAP**。
-2026-09-12 E2闭环审计见 [最新Data Readiness Matrix](../reports/economic_translation_mvp/e2_readiness_v2/MATRIX.md) 与 [审计报告](../reports/economic_translation_mvp/e2_readiness_v2/REPORT.md)。
-4,416候选文件范围齐全，但有raw单位异常、状态/公司行为/离池连续性与全池EW可执行性缺口；**E2 READY FOR E3 FREEZE=false**。
+2026-09-13 [小资金研究完成](../reports/economic_translation_mvp/small_capital_v1/REPORT.md)；[最新E2矩阵](../reports/economic_translation_mvp/small_capital_v1/MATRIX.md)。
+5万K=5、10万K=8仅供审议；固定K真实预测结构尚未检查。全池EW复制要求改为benchmark定义审议，不是个人账户数据要求。
+前次[数据闭环审计](../reports/economic_translation_mvp/e2_readiness_v2/REPORT.md)的raw单位、状态/公司行为/离池连续性等hard blockers保留；**E2 READY FOR E3 FREEZE=false**。
 2026-09-12：用户完成九年B494结构扫描与独立重放，封存和summary复核通过。见 [E1完成复核](../reports/economic_translation_mvp/e1_completion_v1/REPORT.md)。
 见 [阶段报告](../reports/economic_translation_mvp/REPORT.md)、[执行合同与缺口](../reports/economic_translation_mvp/EXECUTION_CONTRACT.md)、
 [用户运行说明](ECONOMIC_TRANSLATION_E1_E2_RUNBOOK.md)。E1无需重跑；E2数据/公司行为/状态缺口仍阻塞后续冻结。

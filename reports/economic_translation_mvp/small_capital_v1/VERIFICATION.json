@@ -1,0 +1,84 @@
+{
+  "created_utc": "2026-09-13T07:19:13.379824+00:00",
+  "baseline_commit": "447c87a311869822074f298408fdc18742d3d498",
+  "supplied_plan_sha256": "16966ea7ac6c91c35c2b738921b67082bba2a5ce4012054ec4e6db5d1317796d",
+  "input_authority": "reports/economic_translation_mvp/e2_readiness_v2/VERIFICATION.json and sealed local/receipt.json",
+  "input_authority_sha256": "ff41a1b25481dd68c56fa25bfb3aa0580456f2ece91125cbb3ae3f61b82f3d45",
+  "user_assumptions": {
+    "aum_cny": [
+      50000,
+      100000
+    ],
+    "commission_rate": 0.00025,
+    "minimum_commission_cny": 5,
+    "stamp_transfer_separate": true,
+    "star_chinext_permissions": true
+  },
+  "code_hashes_lf": {
+    "qlib_integration/small_capital_feasibility.py": "9ea78aa7d3b0c91dd3170c8a308483272fb9a355bfeacc619256637653b04ba2",
+    "qlib_integration/economic_execution_contract.py": "dc27be8e4b0397c58cf586e7fdc9645ea55ac9c2495dedb0172885014ae645f1",
+    "scripts/study_small_capital_feasibility.py": "326b7bc5cddaf91edf919953346b7b2cb05311710b528d32f4f921300d25e047",
+    "scripts/verify_small_capital_feasibility.py": "e90f109c4e54c32f81f44e630ad2aa7e82df599dd150344bc096f093a4cfacd8",
+    "tests/test_small_capital_feasibility.py": "ef4f5ab4cc5a2d956e35ae6a6f57f74a01c1c8c3c9208c14f978454d8d7424b0"
+  },
+  "runtime_hashes": {
+    "baskets.csv": "e30de39b158a94a1e86fa2d8c16b2f7e46ea50af81710a388e4b733a5af051b5",
+    "pool_affordability.csv": "71bfb6e88977c7fe69e86119132a452b632d790f423d4a10989f39227cc00e46",
+    "price_distribution.csv": "6eadb28e7c1599cd71661407fe8f33b1529c9aaef0a9a4d3a7e5a17db586d07f",
+    "receipt.json": "32bf805c5f671530bd6d8956edc1ee6485c4ec2d73c00767ce0d7eb6476634da",
+    "samples.json": "186a55e07f098bba3c4f96d769b12e53651193aa21edf71f3424121c5d98d7f5",
+    "scope.json": "62e1ebbac1f85e8f4290f2632626a6849a2c3343d64bc0b8923e17c899f0eeff",
+    "summary.csv": "2bfc531c476ed495e813520aaa4fa404061b3d489cbc18ec5dfff127df752cb0",
+    "tests.xml": "906b3b7d24105a848d45e59e08c5754cbf2014c681aaf4452674537be36c7c15"
+  },
+  "report_hashes_lf": {
+    "MATRIX.md": "51d8e2bd4847a64636f5604f7c9dbbb458296b85c740372c7b0e735772383d28",
+    "pool_affordability.csv": "7258ce220c0fe72053d795815f6a58e78e462eea6b7f3117ccfdbe814e9cbe04",
+    "price_distribution.csv": "a96db903207050aa408afa227ffcc1a3686a8c7ef3186bc532e466bf5316d9de",
+    "receipt.json": "7a2935a02c88b2ca5c79b931d2f825df0b429d4137783c76f382f59b7ad91647",
+    "REPORT.md": "f9542ba61affb2916f29b45e7e4bbe0a809d56d2a843b56bddae9345bf0d25ee",
+    "scope.json": "f615b7ff847155d677f4d5c786b012f11a31681e6b91d109bbde9052df1e3f12",
+    "summary.csv": "1bbb68aa90657fa2db95dc779bdec34ced8926213201ec96642cc3bbe2b9c273"
+  },
+  "tests": {
+    "focused_passed": 57,
+    "focused_seconds": 21.34,
+    "fast_passed": 46,
+    "fast_seconds": 26.4,
+    "targeted_ruff": "passed"
+  },
+  "independent_verification": {
+    "baskets": 1920,
+    "pool_cases": 60,
+    "method": "binary search legal quantities plus independent Decimal fee calculation",
+    "checks": [
+      "seals",
+      "hash selections",
+      "unknown counts",
+      "full pool affordability",
+      "initial invested/cash/fees/effective names",
+      "replacement fees and newly infeasible minimum lots"
+    ],
+    "passed": true
+  },
+  "E1_binding_unchanged": true,
+  "E1_recomputed": false,
+  "predictions_read": false,
+  "outcome_evaluation": false,
+  "nav_generated": false,
+  "provider_read": false,
+  "recent_values_accessed": false,
+  "e2_ready_for_e3_freeze": false,
+  "e3_authorized": false,
+  "e4_authorized": false,
+  "limitations": [
+    "Three old audit dates only; no nine-year completion inference",
+    "ID hash baskets are not B TopK; same-date keys are not certified pre-open membership",
+    "Quantiles describe overlapping deterministic baskets, not confidence intervals",
+    "Known price and lagged ADV do not establish historical tradability",
+    "2015 unknown quotes and SH601313 anomaly retained; anomalous ADV marked unknown",
+    "No real fixed-K score scan; design plus synthetic membership validation only",
+    "Full legacy quality tiers were not run because some preserved validators/fixtures fall outside the authorized value/outcome boundary; focused synthetic Qlib and E2 boundary tests substituted",
+    "Official rule pages timed out; official indexed text cross-check only, existing audited lot rules unchanged"
+  ]
+}

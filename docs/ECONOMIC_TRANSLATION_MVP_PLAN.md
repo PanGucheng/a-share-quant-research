@@ -1,10 +1,22 @@
 # Economic Translation MVP：研究与实施计划
 
-状态：**E1 COMPLETE / PREDICTION STRUCTURE VERIFIED；E2 BLOCKED BY EXECUTION / DATA GAP**。状态更新：2026-09-12。
+状态：**E1 COMPLETE / PREDICTION STRUCTURE VERIFIED；E2 BLOCKED BY EXECUTION / DATA GAP**。状态更新：2026-09-13。
 用户正式运行完成，见 [E1完成复核](../reports/economic_translation_mvp/e1_completion_v1/REPORT.md)；本次不修改参数或解除E3/E4边界。
 实施交付与真实数据缺口见 [E1/E2报告](../reports/economic_translation_mvp/REPORT.md)；运行见 [runbook](ECONOMIC_TRANSLATION_E1_E2_RUNBOOK.md)。
 初版审计基线 `main@99ff157`；本次人工意见基线 `main@bd2a060`。
 本轮先独立提交计划修订，再实施 E1、E2；E3 正式冻结、E4 组合评价未授权。
+
+### 2026-09-13 小资金前置研究（优先于下文旧AUM和组合身份建议）
+
+用户授权实施5万/10万元执行可行性研究，并指定佣金万2.5双向、最低5元，印花税/过户费按历史表单算，创业板/科创板权限假设已开通。
+已完成 [小资金实施计划](SMALL_CAPITAL_EXECUTION_FEASIBILITY_PLAN.md) 与 [Small-Capital Report](../reports/economic_translation_mvp/small_capital_v1/REPORT.md)。
+三个既有行情快照、10档K、32个ID哈希篮子、两档资金，共1,920静态场景及独立验证；未读预测/收益或重跑E1。
+建议5万优先审议K=5、10万优先审议K=8；只作机械候选，真实TopK价格分布、成员结构和执行尚未认证。
+percentile宽组合作为academic/reference候选，个人策略转为fixed-K名额审议；不再要求个人账户复制约200/2000只股票。
+全池EW复制失败改列benchmark定义问题，不能靠提高AUM解决，也不能据此解除真实数据/会计阻塞。
+本轮 [最新E2矩阵](../reports/economic_translation_mvp/small_capital_v1/MATRIX.md) 保留其余hard blockers；旧百万级证据与费用表不变。
+fixed-K structural check只交付轻量设计及synthetic验证，待人工选择一个实际AUM/K再决定运行。TopK/Hold2K未冻结。
+**E2 BLOCKED；E3 READY=false。** 本轮结束后人工审核，不运行正式策略/NAV/E3/E4。
 
 ### 2026-09-11 人工审核修订（优先于初版的未来阶段建议）
 

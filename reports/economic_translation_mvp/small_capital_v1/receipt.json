@@ -1,0 +1,16 @@
+{
+  "inputs": {
+    "scope.json": "52e52349ed1ed5b052e720a92a9cd3aefe04f8029fcbd0bce9a844c14bc40d14",
+    "bounded_raw_units.parquet": "6650152e4f6d9ad4f8007e0cf9b4f82088b4bb37d012ad9600fbbeda12ca4517"
+  },
+  "outputs": {
+    "baskets.csv": "e30de39b158a94a1e86fa2d8c16b2f7e46ea50af81710a388e4b733a5af051b5",
+    "pool_affordability.csv": "71bfb6e88977c7fe69e86119132a452b632d790f423d4a10989f39227cc00e46",
+    "price_distribution.csv": "6eadb28e7c1599cd71661407fe8f33b1529c9aaef0a9a4d3a7e5a17db586d07f",
+    "samples.json": "186a55e07f098bba3c4f96d769b12e53651193aa21edf71f3424121c5d98d7f5",
+    "scope.json": "62e1ebbac1f85e8f4290f2632626a6849a2c3343d64bc0b8923e17c899f0eeff",
+    "summary.csv": "2bfc531c476ed495e813520aaa4fa404061b3d489cbc18ec5dfff127df752cb0"
+  },
+  "e2_ready_for_e3_freeze": false,
+  "actual_execution": false
+}
