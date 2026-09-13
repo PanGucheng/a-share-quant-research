@@ -1,0 +1,12 @@
+{
+  "normalized_alias_rows": 2719,
+  "independent_source_pairs": 2065,
+  "old_code_corrected_rows": 654,
+  "warmup_independently_corrected_rows": 20,
+  "warmup_volume_available_stocks": 1706,
+  "warmup_unknown_stocks": 294,
+  "identity_collision_days": 444,
+  "full_inventory": false,
+  "real_account_run": false,
+  "e2_ready": false
+}

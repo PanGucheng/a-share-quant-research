@@ -22,7 +22,9 @@ task-specific authority doc
 
 ## Current Authority
 
-- [Small-Capital Execution Feasibility](../reports/economic_translation_mvp/small_capital_v1/REPORT.md) — 5万/10万元静态机械证据；[最新E2矩阵](../reports/economic_translation_mvp/small_capital_v1/MATRIX.md)，仍BLOCKED。
+- [E2 Hard-Blocker Closure](../reports/economic_translation_mvp/e2_hard_closure_v1/REPORT.md) — 最新[矩阵](../reports/economic_translation_mvp/e2_hard_closure_v1/MATRIX.md)与[长扫描命令](../reports/economic_translation_mvp/e2_hard_closure_v1/RUNBOOK.md)；E2 STILL BLOCKED。
+
+- [Small-Capital Execution Feasibility](../reports/economic_translation_mvp/small_capital_v1/REPORT.md) — 5万/10万元静态机械证据；[当时E2矩阵](../reports/economic_translation_mvp/small_capital_v1/MATRIX.md)，仍BLOCKED。
 - [小资金前置研究计划](SMALL_CAPITAL_EXECUTION_FEASIBILITY_PLAN.md) — 预定静态方法、benchmark身份更正及单K预测结构检查设计。
 - [E2数据就绪闭环审计](../reports/economic_translation_mvp/e2_readiness_v2/REPORT.md) — 原始数据审计与独立验证；[原分类矩阵](../reports/economic_translation_mvp/e2_readiness_v2/MATRIX.md)，保留历史证据。
 

@@ -257,3 +257,19 @@ personal full-pool replication; raw/state/event/accounting blockers remain.
 The fixed-K prediction-only check is designed and synthetically validated, not run
 on real scores; select one actual AUM/K for human review first. E1 is unchanged.
 Stop at E2 BLOCKED for review. No E3/E4, NAV/outcomes, B494 changes or 2024+ access.
+
+2026-09-13: The user authorized bounded E2 Hard-Blocker Closure. See
+`reports/economic_translation_mvp/e2_hard_closure_v1/REPORT.md` and its MATRIX/RUNBOOK.
+Only the twenty sessions 2014-12-04 through 2014-12-31 were additionally authorized
+for 2015 ADV20 warmup; all other research-value access stays within 2015-2023.
+Alias unit overlay, held-gap explanations and synthetic Qlib event bridge are
+verified; E2 STILL BLOCKED. Full Quotes/States/Dividends scans are user-run only.
+Do not silently exclude difficult stocks, change frozen IDs/scores, or drop held
+rights; prospective eligibility is a review proposal, not a new authorization.
+No E1 rerun, E3/E4, real portfolio outcomes or 2024+ value access.
+
+2026-09-14: User ran the historical scans: Quotes complete (4,416 chunks),
+States 118 complete then failed at SH600143; Dividends 5 dates then interrupted.
+Completed file hashes verified. Resume only via `scripts/resume_e2_hard_history.ps1`
+one network phase at a time; parent receipts are immutable, new attempts append.
+See the E2 hard-closure USER_RUN_20260914.md. No full recovery run by Codex.

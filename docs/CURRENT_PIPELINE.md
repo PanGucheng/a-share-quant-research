@@ -6,7 +6,7 @@ artifact 名称中的 `current` 不自动表示 ACTIVE。
 ## 1. Status At A Glance
 
 Economic Translation MVP：**E1 COMPLETE / PREDICTION STRUCTURE VERIFIED；E2 BLOCKED BY EXECUTION / DATA GAP**。
-2026-09-13 [小资金研究完成](../reports/economic_translation_mvp/small_capital_v1/REPORT.md)；[最新E2矩阵](../reports/economic_translation_mvp/small_capital_v1/MATRIX.md)。
+2026-09-13 [E2 Hard-Blocker Closure](../reports/economic_translation_mvp/e2_hard_closure_v1/REPORT.md)；[最新E2矩阵](../reports/economic_translation_mvp/e2_hard_closure_v1/MATRIX.md)。旧代码654日单位修正、48缺日停牌解释及Qlib事件桥已验证；444日身份碰撞、全期状态/事件及294只warmup未知仍阻塞。[续跑由用户执行](../reports/economic_translation_mvp/e2_hard_closure_v1/RUNBOOK.md)。2026-09-14 用户已完成 Quotes；States 118只后源错误、Dividends 5日后停止，见[中断复核](../reports/economic_translation_mvp/e2_hard_closure_v1/USER_RUN_20260914.md)。
 5万K=5、10万K=8仅供审议；固定K真实预测结构尚未检查。全池EW复制要求改为benchmark定义审议，不是个人账户数据要求。
 前次[数据闭环审计](../reports/economic_translation_mvp/e2_readiness_v2/REPORT.md)的raw单位、状态/公司行为/离池连续性等hard blockers保留；**E2 READY FOR E3 FREEZE=false**。
 2026-09-12：用户完成九年B494结构扫描与独立重放，封存和summary复核通过。见 [E1完成复核](../reports/economic_translation_mvp/e1_completion_v1/REPORT.md)。

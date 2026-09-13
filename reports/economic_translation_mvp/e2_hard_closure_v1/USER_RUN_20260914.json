@@ -1,0 +1,50 @@
+{
+  "quotes": {
+    "completed_chunks": 4416,
+    "rows": 7429962,
+    "checked_files": 17664,
+    "failed": [],
+    "complete": true
+  },
+  "states": {
+    "completed_chunks": 118,
+    "rows": 245439,
+    "checked_files": 118,
+    "failed": [
+      {
+        "key": "SH600143",
+        "receipt": {
+          "status": "failed",
+          "error_type": "RuntimeError",
+          "files": {}
+        }
+      }
+    ],
+    "complete": false
+  },
+  "dividends": {
+    "completed_chunks": 5,
+    "rows": 2,
+    "checked_files": 5,
+    "failed": [],
+    "complete": false
+  },
+  "bounded_retry": {
+    "login_code": "0",
+    "status": "10002007:网络接收错误。",
+    "rows": 0,
+    "scope_sha256": "2cbcd0ddaf1723ea763adbce9b070d0c2f353e8d5a5552796a892f9e8d3f03b6",
+    "result_sha256": "2ab8f39d1f0842151f73236db08d13a02f2a4dedf51bab32a22718264565043f"
+  },
+  "e2_ready": false,
+  "recovery_validation": {
+    "synthetic_tests": 6,
+    "ruff": "passed",
+    "full_recovery_run": false,
+    "code_lf": {
+      "scripts/resume_e2_hard_history.py": "6675f747279c7e547e72f275aeeaa9e8012d690bb336cd77392dcb34f43caaf0",
+      "scripts/resume_e2_hard_history.ps1": "2652143a90c209c0b912819b9f81f2ae86ef4cdbbd1398627bd8b6845d22ee29",
+      "tests/test_e2_history_recovery.py": "c551484e15f2ab0c26a5af8b8dc3ccce73b679f7126ba45b9435ccda1f203306"
+    }
+  }
+}

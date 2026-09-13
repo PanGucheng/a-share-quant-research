@@ -1,0 +1,14 @@
+{
+  "warmup_rows": 40000,
+  "warmup_valid_volume_rows": 37053,
+  "warmup_all20_stocks": 1705,
+  "warmup_unit_bad": 20,
+  "held_missing": 48,
+  "held_bao_suspended": 48,
+  "held_tushare_full_day": 48,
+  "alias_independent_pairs": 2065,
+  "alias_source_agreed": 2065,
+  "events_in_slices": 264,
+  "full_inventory": false,
+  "e2_ready": false
+}
