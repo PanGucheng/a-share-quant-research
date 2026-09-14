@@ -273,3 +273,9 @@ States 118 complete then failed at SH600143; Dividends 5 dates then interrupted.
 Completed file hashes verified. Resume only via `scripts/resume_e2_hard_history.ps1`
 one network phase at a time; parent receipts are immutable, new attempts append.
 See the E2 hard-closure USER_RUN_20260914.md. No full recovery run by Codex.
+
+2026-09-14: User authorized bounded automatic retries for repeated network timeouts.
+The existing resume PowerShell entry now wraps unchanged hash-bound recovery code
+with scripts/retry_e2_hard_history.py: up to 8 transport retries per invocation,
+30/60/120-second capped waits, reconnect and preserved attempts. Validation,
+permission and hash errors do not retry. Full scans remain user-run only.
