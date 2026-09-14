@@ -1,0 +1,169 @@
+{
+  "all_source_rows": {
+    "rows": 28681,
+    "instruments": 5367,
+    "cash_positive": 27864,
+    "cash_unknown": 672,
+    "bonus_positive": 5431,
+    "bonus_unknown": 0,
+    "record_date_missing": 0,
+    "implementation_announcement_missing": 36,
+    "cash_positive_payment_missing": 0,
+    "bonus_positive_listing_missing": 6,
+    "duplicate_identity_record_ex_keys": 1387
+  },
+  "candidate_id_rows": {
+    "rows": 24746,
+    "instruments": 4169,
+    "cash_positive": 24075,
+    "cash_unknown": 629,
+    "bonus_positive": 4724,
+    "bonus_unknown": 0,
+    "record_date_missing": 0,
+    "implementation_announcement_missing": 36,
+    "cash_positive_payment_missing": 0,
+    "bonus_positive_listing_missing": 6,
+    "duplicate_identity_record_ex_keys": 1293
+  },
+  "process_counts": {
+    "实施": 28645,
+    "股东大会通过": 23,
+    "预案": 13
+  },
+  "by_year": {
+    "2015": {
+      "rows": 2405,
+      "instruments": 2165,
+      "cash_positive": 2195,
+      "cash_unknown": 190,
+      "bonus_positive": 816,
+      "bonus_unknown": 0,
+      "record_date_missing": 0,
+      "implementation_announcement_missing": 0,
+      "cash_positive_payment_missing": 0,
+      "bonus_positive_listing_missing": 0,
+      "duplicate_identity_record_ex_keys": 164
+    },
+    "2016": {
+      "rows": 2416,
+      "instruments": 2257,
+      "cash_positive": 2286,
+      "cash_unknown": 102,
+      "bonus_positive": 679,
+      "bonus_unknown": 0,
+      "record_date_missing": 0,
+      "implementation_announcement_missing": 0,
+      "cash_positive_payment_missing": 0,
+      "bonus_positive_listing_missing": 1,
+      "duplicate_identity_record_ex_keys": 188
+    },
+    "2017": {
+      "rows": 2805,
+      "instruments": 2673,
+      "cash_positive": 2727,
+      "cash_unknown": 59,
+      "bonus_positive": 583,
+      "bonus_unknown": 0,
+      "record_date_missing": 0,
+      "implementation_announcement_missing": 0,
+      "cash_positive_payment_missing": 0,
+      "bonus_positive_listing_missing": 0,
+      "duplicate_identity_record_ex_keys": 132
+    },
+    "2018": {
+      "rows": 3209,
+      "instruments": 3052,
+      "cash_positive": 3131,
+      "cash_unknown": 57,
+      "bonus_positive": 690,
+      "bonus_unknown": 0,
+      "record_date_missing": 0,
+      "implementation_announcement_missing": 0,
+      "cash_positive_payment_missing": 0,
+      "bonus_positive_listing_missing": 1,
+      "duplicate_identity_record_ex_keys": 112
+    },
+    "2019": {
+      "rows": 3016,
+      "instruments": 2907,
+      "cash_positive": 2959,
+      "cash_unknown": 46,
+      "bonus_positive": 519,
+      "bonus_unknown": 0,
+      "record_date_missing": 0,
+      "implementation_announcement_missing": 3,
+      "cash_positive_payment_missing": 0,
+      "bonus_positive_listing_missing": 0,
+      "duplicate_identity_record_ex_keys": 54
+    },
+    "2020": {
+      "rows": 3174,
+      "instruments": 3035,
+      "cash_positive": 3116,
+      "cash_unknown": 48,
+      "bonus_positive": 434,
+      "bonus_unknown": 0,
+      "record_date_missing": 0,
+      "implementation_announcement_missing": 7,
+      "cash_positive_payment_missing": 0,
+      "bonus_positive_listing_missing": 2,
+      "duplicate_identity_record_ex_keys": 58
+    },
+    "2021": {
+      "rows": 3604,
+      "instruments": 3420,
+      "cash_positive": 3551,
+      "cash_unknown": 38,
+      "bonus_positive": 487,
+      "bonus_unknown": 0,
+      "record_date_missing": 0,
+      "implementation_announcement_missing": 6,
+      "cash_positive_payment_missing": 0,
+      "bonus_positive_listing_missing": 1,
+      "duplicate_identity_record_ex_keys": 131
+    },
+    "2022": {
+      "rows": 3886,
+      "instruments": 3662,
+      "cash_positive": 3822,
+      "cash_unknown": 57,
+      "bonus_positive": 593,
+      "bonus_unknown": 0,
+      "record_date_missing": 0,
+      "implementation_announcement_missing": 11,
+      "cash_positive_payment_missing": 0,
+      "bonus_positive_listing_missing": 1,
+      "duplicate_identity_record_ex_keys": 256
+    },
+    "2023": {
+      "rows": 4166,
+      "instruments": 3851,
+      "cash_positive": 4077,
+      "cash_unknown": 75,
+      "bonus_positive": 630,
+      "bonus_unknown": 0,
+      "record_date_missing": 0,
+      "implementation_announcement_missing": 9,
+      "cash_positive_payment_missing": 0,
+      "bonus_positive_listing_missing": 0,
+      "duplicate_identity_record_ex_keys": 292
+    }
+  },
+  "candidate_filter": "historical candidate ID membership only; not actual holdings or event-date eligibility",
+  "e2_ready": false,
+  "completion": {
+    "dates": 2189,
+    "empty_dates": 574,
+    "parent_reused": 5,
+    "all_reference_and_data_hashes_verified": true,
+    "complete_sha256": "feb3e39fd7876f9bc6358cf205d6e92cfc736f6459d822152effc03506a74bb2"
+  },
+  "semantic_followup": {
+    "implemented_rows": 28645,
+    "implemented_cash_unknown": 672,
+    "implemented_bonus_listing_missing": 6,
+    "exact_duplicate_excess_rows": 10,
+    "ambiguous_duplicate_key_groups": 682,
+    "automatic_dedup_applied": false
+  }
+}

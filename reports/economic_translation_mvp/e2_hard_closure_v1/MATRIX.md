@@ -1,5 +1,7 @@
 # E2 Data Readiness Matrix
 
+最新进度：[三项采集均完成，Dividends内容复核](DIVIDENDS_COMPLETION.md)。事件记录28,681条，存在36条非实施、672条现金缺值、6条红股上市日缺失及682组内容不同的重复键；E2仍BLOCKED，无需重跑采集。
+
 最新进度：[States 全部采集完成并验 hash](STATES_COMPLETION.md)，共4,416块/7,347,019行；下一步由用户运行 Dividends。采集完成不等于数据语义和覆盖验收完成，E2仍BLOCKED。
 
 2026-09-14 更新：[用户运行/中断复核](USER_RUN_20260914.md)。Quotes 全部完成并验 hash，States 完成118只、Dividends完成5日；使用新版[续跑命令](RUNBOOK.md)。以下为本轮原始就绪评估，E2仍BLOCKED。
@@ -12,13 +14,13 @@ READY 仅覆盖该行限定对象；READY WITH MVP APPROXIMATION 的候选近似
 |---|---|---|---|
 | Q01 文件与索引 | READY | 保留前轮 4,416 股 × 7 字段文件/索引审计 | 不代表逐值完整 |
 | Q02 旧代码单位 | READY | SH601313 654 有效日及独立 20 日 warmup 修正；双源逐日核对，隔离 overlay | 仅观测日期，不涵盖身份/缺失日 |
-| Q03 全期 raw OHLCV / amount / factor | BLOCKING / UNRESOLVED | 既有抽样 + 本轮双代码全期 | 用户 Quotes 全值扫描、逐段单位与异常闭环 |
+| Q03 全期 raw OHLCV / amount / factor | BLOCKING / UNRESOLVED | 既有抽样 + 本轮双代码全期 | Quotes 4,416块扫描和hash验收已完成；逐段单位与异常闭环待完成 |
 | I01 alias / economic identity | BLOCKING / UNRESOLVED | 两代码候选并存 444 日；入口已拒绝同资产双代码 | 完整生效映射；未来执行层去重/分数处理另行审议，不改冻结训练 |
-| S01 日终停牌/ST数据 | EXISTING DATA BUT NOT WIRED | 可获取样本，48 缺行情日均为双源停牌 | 用户 States 全期采集与日终覆盖核验 |
+| S01 日终停牌/ST数据 | EXISTING DATA BUT NOT WIRED | States 4,416块/7,347,019行已采集验hash；48缺行情日双源停牌解释保留 | 逐股逐日日终覆盖、冲突及原始缺值配对核验 |
 | S02 历史盘前状态/board/IPO/退市 | BLOCKING / UNRESOLVED | 有时间、制度及三态检查原语，unknown 不会变 ordinary | 九年 effective 状态表及可得日期、来源冲突清单 |
 | L01 普通日价格上下限 | EXISTING DATA BUT NOT WIRED | 已有 dated rules 和独立普通日样本；新入口核对 prepared 一致性 | 逐日参考价、上下限与状态输入；全覆盖核验 |
 | L02 特殊 regime | BLOCKING / UNRESOLVED | 明确 special 不走普通成交路径 | 禁止新开仓可作为候选规则；持仓日估值/权益与制度证据仍不能省略 |
-| C01 dividend/bonus 数据 | EXISTING DATA BUT NOT WIRED | 264 条 ex-date 样本、261 正现金、29 正送转 | 用户 Dividends 全 ex-date 查询；身份、遗漏事件、时间、净额/税核验 |
+| C01 dividend/bonus 数据 | EXISTING DATA BUT NOT WIRED | 2,189日/28,681条已采集验hash；含36非实施及682组内容不同的重复键 | 公告版本与身份、遗漏事件、672现金缺值、6上市日缺值、净额/税核验 |
 | C02 Qlib 应收与红股桥 | READY | synthetic Account/Position 守恒、登记后卖出、到账/上市/T+1 已验证 | 仅最小桥；真实数据和税/复杂事件仍受其他行阻塞 |
 | C03 税/rights issue | BLOCKING / UNRESOLVED | 税前不充税后；未知配股/非整数分配拒绝 | 实际事件量未知，需公告与会计，不得记零 |
 | C04 conversion/代码迁移 | BLOCKING / UNRESOLVED | 同股数迁移原语与公告/操作通知样本 | 完整身份、登记结算及待结权益映射；非一般换股实现 |

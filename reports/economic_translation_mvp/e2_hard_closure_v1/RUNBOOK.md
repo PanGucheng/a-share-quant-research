@@ -1,8 +1,10 @@
 # E2 历史采集续跑命令
 
+最新状态：**Quotes、States、Dividends 均已完成**，见[Dividends完成复核](DIVIDENDS_COMPLETION.md)。当前无需再执行任何采集命令；以下命令仅保留作历史操作说明，已完成入口会拒绝覆盖。
+
 用户已完成 Quotes 和 States；[States 完成复核](STATES_COMPLETION.md)通过全部4,416个证券的引用与数据hash校验。不要重跑这两个阶段。
 
-现在只执行 Dividends 续跑（自动重试已启用）：
+历史 Dividends 续跑命令（本次已完成，请勿重跑）：
 
 ```powershell
 Set-Location -LiteralPath 'E:\qlib_prj\qlib_baseline'

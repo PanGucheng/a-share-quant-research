@@ -289,3 +289,9 @@ This is inventory completion, not E2 READY or complete semantic coverage.
 User increased the automatic transport retry budget to 100 per invocation.
 Default and allowed maximum are now 100; delays and non-network fail-fast rules
 are unchanged. Existing running processes retain their original retry budget.
+
+Dividends recovery is complete: 2,189 dates, 28,681 records; referenced hashes
+verified. All three user inventories are now complete; do not rerun them.
+See reports/economic_translation_mvp/e2_hard_closure_v1/DIVIDENDS_COMPLETION.md
+for non-implemented records, missing cash/listing dates and conflicting event keys.
+E2 remains BLOCKED; next work is semantic reconciliation, not more stage commands.
