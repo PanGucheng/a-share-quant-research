@@ -1,5 +1,7 @@
 # Execution-only quote normalization
 
+2026-09-15：当前 scope 与优先级以 [MVP Scope Review](MVP_SCOPE_SIMPLIFICATION_REVIEW.md) 和 [Matrix](MATRIX.md) 为准；下文保留原语义审计方法与证据，不是事后准入黑名单或全库修复前置清单。
+
 两个供应源在 SH601360 的 2,065 个有效日上 OHLC、成交量和成交额均一致（比较容差 rtol=2e-5、atol=0.02）。BaoStock 历史新代码还返回停牌日，旧代码查询为空；空表不能解释为旧证券从未存在。
 
 本地 SH601313 有 654 个有限 close 日，全部落在上述一致配对日期中；最晚为 2018-02-14。既有 community 转换对该代码多乘 volume 100、amount 1000，价格换算正确。新隔离规则采用 native volume × factor、native amount × 1；SH601360 保留 native volume × factor × 100、native amount × 1000，OHLC 均除 factor。两个规则只证明列出的证券和观测日期，不向其他代码推广，也不把缺失日补成有效报价。

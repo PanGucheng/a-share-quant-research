@@ -1,5 +1,7 @@
 # Timing, warmup and fees
 
+2026-09-15：当前 scope 与优先级以 [MVP Scope Review](MVP_SCOPE_SIMPLIFICATION_REVIEW.md) 和 [Matrix](MATRIX.md) 为准；下文保留原语义审计方法与证据，不是事后准入黑名单或全库修复前置清单。
+
 B494 已有元数据拆分为 483 个市场衍生字段、8 个 daily_basic、3 个 statement PIT；本轮不读真实 feature/prediction 值。务实候选合同为 t 日收盘后输入到齐、隔夜批次完成、t+1 下一交易日订单。日期级可得性和重构 PIT 是明确近似，不能声称所有数据在 t 15:00 到齐，也不能伪造历史小时级 receipt。
 
 overnight_timing 要求显式接受 date-PIT、全部传入来源日期不晚于 t、批次在 t 收盘后且早于订单。真实运行接入时调用方必须保证 required inputs 完整，包括上述全部字段来源，不能用子集验收。实际下一 canonical session 由已有 EconomicOpenExchange 再验。历史数据修订/原始 vintage 和真实批次 receipts 没有补齐；工程合同不是冻结分数时点认证。无须为 MVP 做无边界逐小时研究，但必须记录这项近似与尚缺的来源证据。
@@ -16,4 +18,4 @@ overnight_timing 要求显式接受 date-PIT、全部传入来源日期不晚于
 
 可审议近似还包括普通日 daily open 仅作首笔价格参考、ADV20 作保守容量代理、批初现金不预支卖款。它们不认证 09:25 竞价排队/实际冲击；缺 open、未知状态、特殊 regime 和公司行动不得被近似掩盖。全池 EW 与个人 5 万/10 万账户的定义问题沿用上轮结论，benchmark 尚未冻结。
 
-2026-09-14 当前分级：日期级 PIT/隔夜批次、daily-open-reference 和严格 ADV20 缺值门槛可作为明确 MVP 范围采用；这不补造历史小时 receipts 或豁免公司行动。294 只 warmup 未知仅阻止新开仓，保留整个日历和原持仓，所以不再作为独立 E2 hard blocker。早期费用面值/pass-through/舍入及个人佣金接入属于 E3 明确假设与接线事项，本轮未冻结费率表或宣称旧默认已生效；未知面值预算不保证上界。benchmark/K/AUM 决策仍留待人工授权。当前硬阻塞只见[MATRIX 的 H1–H4](MATRIX.md)。
+2026-09-14 当前分级：日期级 PIT/隔夜批次、daily-open-reference 和严格 ADV20 缺值门槛可作为明确 MVP 范围采用；这不补造历史小时 receipts 或豁免公司行动。294 只 warmup 未知仅阻止新开仓，保留整个日历和原持仓，所以不再作为独立 E2 hard blocker。早期费用面值/pass-through/舍入及个人佣金接入属于 E3 明确假设与接线事项，本轮未冻结费率表或宣称旧默认已生效；未知面值预算不保证上界。benchmark/K/AUM 决策仍留待人工授权。当前只保留 [MATRIX 的 R1–R3](MATRIX.md) exposure 条件问题。

@@ -1,8 +1,11 @@
 # Economic Translation MVP：研究与实施计划
 
-2026-09-14：已使用封存 Quotes/States/Dividends 完成全期离线语义核对；当前结论 **E2 STILL BLOCKED**。见 [最新报告](../reports/economic_translation_mvp/e2_hard_closure_v1/REPORT.md)与[当前矩阵](../reports/economic_translation_mvp/e2_hard_closure_v1/MATRIX.md)。三项采集和 E1 均不重跑；只保留行情/身份/权益/执行状态的真实未决问题。warmup、新开仓门槛、日线开盘参考及费用细节按矩阵分级，不再与 hard blockers 混列。
+2026-09-15：E2 已完成 [MVP Scope Simplification 评审与实现](../reports/economic_translation_mvp/e2_hard_closure_v1/MVP_SCOPE_SIMPLIFICATION_REVIEW.md)，当前 [Matrix](../reports/economic_translation_mvp/e2_hard_closure_v1/MATRIX.md) 优先于下文旧全库覆盖要求。E1 COMPLETE；**E2 STILL BLOCKED**。本次 scope 调整不冻结 E3。
 
-状态：**E1 COMPLETE / PREDICTION STRUCTURE VERIFIED；E2 STILL BLOCKED**。状态更新：2026-09-14。
+新增独立 PIT investability layer：不能安全新开仓的个股返回 NO_NEW_ENTRY，不要求修完全部历史异常或构建完整特殊日模拟器。Model Universe、B494/canonical/冻结预测保持不变。已有股数、现金应收和红股权利按独立 Holding contract 保留；禁止交易不能替代未知权益结算。剩余只保留 R1 估值、R2 身份/结算、R3 权益三个 exposure 条件下的处理方向，不要求预先人工修完所有 inventory。未验证实际持仓可达性，也不以全部拒买宣布 E2 READY。
+
+三项采集与 E1 不重跑；K/AUM/benchmark、真实 NAV/收益、E3/E4、2024+ 均未授权。提交推送后停止等待人工审核。
+
 用户正式运行完成，见 [E1完成复核](../reports/economic_translation_mvp/e1_completion_v1/REPORT.md)；本次不修改参数或解除E3/E4边界。
 实施交付与真实数据缺口见 [E1/E2报告](../reports/economic_translation_mvp/REPORT.md)；运行见 [runbook](ECONOMIC_TRANSLATION_E1_E2_RUNBOOK.md)。
 初版审计基线 `main@99ff157`；本次人工意见基线 `main@bd2a060`。

@@ -1,5 +1,7 @@
 # Historical execution state
 
+2026-09-15：当前 scope 与优先级以 [MVP Scope Review](MVP_SCOPE_SIMPLIFICATION_REVIEW.md) 和 [Matrix](MATRIX.md) 为准；下文保留原语义审计方法与证据，不是事后准入黑名单或全库修复前置清单。
+
 新增执行状态检查复用已有发布时间分类与 dated_limit_rule / price_bounds。明确 instrument/date、board、上市/ST/停牌、ordinary/special、IPO session、核准/注册制度、限价参考及上下限、有效区间、known_at、日期精度、来源与证据等级。
 
 输出区分 ordinary_known、known_suspension、known_special_blocked、terminal_requires_event、unresolved。未知布尔值、同日只有日期精度的公告、未验证 special regime、占位上下限和 NaN 都不能变成普通可交易日。状态与 prepared quote 的订单时点、普通日 board/上下限必须一致。

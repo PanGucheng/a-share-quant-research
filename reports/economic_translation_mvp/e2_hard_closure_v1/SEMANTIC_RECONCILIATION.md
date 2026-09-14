@@ -1,5 +1,7 @@
 # E2 离线语义闭环与消费边界
 
+2026-09-15：当前 scope 与优先级以 [MVP Scope Review](MVP_SCOPE_SIMPLIFICATION_REVIEW.md) 和 [Matrix](MATRIX.md) 为准；下文保留原语义审计方法与证据，不是事后准入黑名单或全库修复前置清单。
+
 本轮基线 `main@2776029`。当前结论和数量以 [REPORT](REPORT.md)、[MATRIX](MATRIX.md) 和 [SEMANTIC_VERIFICATION.json](SEMANTIC_VERIFICATION.json) 为准；本文说明实际实现及限制，不另立策略计划。
 
 输入只来自已经封存的 Quotes、States、Dividends。`scripts/reconcile_e2_semantics.py` 在每个 parquet 打开前核对分块 receipt、文件 hash、白名单和日期；进程禁用网络连接。输出单独位于 `outputs/economic_translation_mvp/e2_semantic_v1`，已有目录拒绝覆盖。逐股从首次候选日延续到 2023-12-29，不读取分数、收益或 2024+ 值。

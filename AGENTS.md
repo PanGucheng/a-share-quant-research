@@ -306,3 +306,15 @@ continuity, raw conflicts and execution-state evidence cannot be bypassed.
 Warmup/auction/early fee details are graded separately under explicit MVP scope.
 No K/AUM/benchmark selection, structural search, real account/outcomes, E3/E4
 or 2024+ value access. Stop after delivery for human review.
+
+2026-09-15: User authorized assessment and implementation of E2 MVP scope
+simplification. See e2_hard_closure_v1/MVP_SCOPE_SIMPLIFICATION_REVIEW.md and
+current MATRIX.md. An independent PIT Entry gate may deny unheld candidates
+without blocking unrelated holdings; full special-session simulation is no
+longer an E2 requirement. Existing shares/receivables/bonus rights must persist.
+Only exposed valuation, identity/settlement and entitlement gaps remain R1-R3
+conditional account blockers. A halt or all-NO_ENTRY result is not E2 READY.
+No retrospective exclusions or claims of never-held securities without evidence.
+E2 STILL BLOCKED; preserve original scans/receipts, canonical/B494 and E1.
+No recollection, K/AUM/benchmark selection, real outcomes/NAV, E3/E4 or 2024+
+values. Commit/push scope delivery and stop for human review.

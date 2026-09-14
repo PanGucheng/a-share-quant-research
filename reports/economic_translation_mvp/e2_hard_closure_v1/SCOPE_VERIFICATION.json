@@ -1,0 +1,89 @@
+{
+  "e2_status": "E2 STILL BLOCKED",
+  "entry_contract": "IMPLEMENTED / SYNTHETIC VERIFIED",
+  "actual_entry_coverage": "NOT_CERTIFIED: sealed daily observations have no preopen known_at",
+  "actual_held_reachability": "NOT_MEASURED; no scores, strategy or holdings replay",
+  "proven_never_held_case_count": null,
+  "closed_via_all_no_entry": false,
+  "lifecycle_coverage_incidents": 148,
+  "confirmed_true_delistings": null,
+  "confirmed_rights_issues": null,
+  "confirmed_general_conversions": null,
+  "known_same_share_identity_migrations": 1,
+  "lifecycle_last_observed_status": {
+    "suspended": 147,
+    "ordinary": 1
+  },
+  "lifecycle_with_recent_special_observation": 60,
+  "quote_incidents": 7,
+  "quote_held_mark_conflicts": 3,
+  "quote_no_trade_with_cross_source_mark": 3,
+  "quote_vendor_provisional_mark": 1,
+  "unresolved_conditional_event_keys": 528,
+  "unresolved_handler_families": {
+    "unknown_cash_terms": 514,
+    "conflicting_entitlement_terms": 6,
+    "cash_and_listing_terms": 6,
+    "historical_record_snapshot": 2
+  },
+  "fractional_conditional_event_keys": 183,
+  "unique_dividend_or_fractional_or_reference_event_keys": 921,
+  "reference_bridge_diagnostics": 225,
+  "unclassified_reference_reset_days": 89,
+  "dedicated_special_simulator_required": false,
+  "retrospective_global_exclusion": false,
+  "scope_rule_frozen_for_e3": false,
+  "collection_run": false,
+  "outcomes_run": false,
+  "independent_verification": {
+    "status": "PASS",
+    "source_audit_receipt_sha256": "a20a3362f5615dffdc7d75fc61e8387b586bbfe8a064e18605fcce444b1f1563",
+    "verified_input_files": 210,
+    "verified_output_files": 6,
+    "lifecycle_incidents": 148,
+    "held_mark_conflicts": 3,
+    "conditional_event_keys": 528,
+    "never_held_inference": false,
+    "real_execution_or_outcome_replay": false,
+    "verifier_code_lf": "6b47077737c4b236d532bfd6b0c76e92e5b1c911eb96278025c321f6e6b3c5d3"
+  },
+  "audit_receipt": {
+    "files": {
+      "conditional_event_cases.csv": "4e765e03936ee262c9228f1559b72a272ca511063874ce66be8e4e142d498573",
+      "fractional_cases.csv": "1c8e42120b204d84e02dab19ac6f539cc4ae0d13b21a3c60d771de007f8ef21a",
+      "inputs.json": "c3aecd3a8838601fc8d7e7ce17fcf74ca87ac4d4277463ceeb51990283f29d43",
+      "lifecycle_incidents.csv": "5cc07fcfd0de1ee8b5f9ff50fc58f760aef3bd4820e29a32066ff2034bca9a55",
+      "quote_incidents.csv": "b712b6d33329bc033345c374b46e397041f340d040d990284977397cdfd1dcf2",
+      "summary.json": "03196590cc089c573f98b70b00f5fa2f932ac03f6d4ee389429fdddfeb73be2a"
+    },
+    "code_lf": {
+      "qlib_integration/economic_mvp_scope.py": "73d3417d98f9de15f22aee51271dbc5feea048d639aa235f3e4bda409869e794",
+      "scripts/audit_e2_mvp_scope.py": "8d7771fa63b08481c409023c39102c858ea640b7866bc66ef1ad1f20bf72410c",
+      "tests/test_economic_mvp_scope.py": "73140d53777ceac348c4003f631147a8c821b25b1122ab6786d06907669b9724"
+    },
+    "baseline": "bbaae7e",
+    "source_receipt_sha256": "74e2f02fc3b88542fc2463f18311111eb0bea93ef696a85a16cb30d9aa52bf2c"
+  },
+  "proposal_sha256": "12142cf0191c5eb88cd3ddae8c5541917577b0f5b23c2abed94339c8f2a0882a",
+  "tests": {
+    "new_scope": 22,
+    "existing_e2_regressions": 71,
+    "fast": 46,
+    "qlib_synthetic_runtime": 6,
+    "combined_scope_and_e2_passed": 93,
+    "legacy_full": "Not run: preserve no-real-outcomes/no-2024+ boundary; scoped regressions used"
+  },
+  "compact_evidence_sha256_lf": {
+    "scope_conditional_event_cases.csv": "42c25d97f4ce9f972e9e5c68402d9b14bb543599993da2c4d690243633e8aa29",
+    "scope_fractional_cases.csv": "c32f8a0d8a4ee3521a480be1338513c7c1b0df9bc5e1209ce85578a13b17a4ed",
+    "scope_lifecycle_incidents.csv": "b58c61f0e23271eebfa9d0a9bcc676975be2d06cf7b9cdb4ad26ed4c8325eb6b",
+    "scope_quote_incidents.csv": "ec998a0382b1dc6d5ca84bb766c673ef3044dcace8e348618f44daaa3e24ba1f"
+  },
+  "run_notes": [
+    "v1 stopped on Windows receipt path separator before value output; original receipts unchanged",
+    "v2-v4 are preserved intermediate bounded audits before the final trade/date/terminal guards",
+    "v5 is the verified delivery; no collection or actual holdings replay"
+  ],
+  "e1_delivery_binding": "PASS; metadata/code only; no scores loaded",
+  "documentation_checks": "PASS: Markdown links, doc index, changed-file sizes, whitespace"
+}

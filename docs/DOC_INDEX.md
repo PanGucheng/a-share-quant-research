@@ -22,6 +22,7 @@ task-specific authority doc
 
 ## Current Authority
 
+- [E2 MVP Scope Simplification Review](../reports/economic_translation_mvp/e2_hard_closure_v1/MVP_SCOPE_SIMPLIFICATION_REVIEW.md) — Entry 与 Holding 分离；仅保留 R1–R3 条件账户问题，E2 STILL BLOCKED。
 - [E2 Hard-Blocker Closure](../reports/economic_translation_mvp/e2_hard_closure_v1/REPORT.md) — 最新[矩阵](../reports/economic_translation_mvp/e2_hard_closure_v1/MATRIX.md)与[离线语义闭环](../reports/economic_translation_mvp/e2_hard_closure_v1/SEMANTIC_RECONCILIATION.md)；采集已完成，E2 STILL BLOCKED。
 
 - [Small-Capital Execution Feasibility](../reports/economic_translation_mvp/small_capital_v1/REPORT.md) — 5万/10万元静态机械证据；[当时E2矩阵](../reports/economic_translation_mvp/small_capital_v1/MATRIX.md)，仍BLOCKED。

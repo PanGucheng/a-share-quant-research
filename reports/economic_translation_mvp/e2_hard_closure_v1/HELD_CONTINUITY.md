@@ -1,5 +1,7 @@
 # Held-stock continuity
 
+2026-09-15：当前 scope 与优先级以 [MVP Scope Review](MVP_SCOPE_SIMPLIFICATION_REVIEW.md) 和 [Matrix](MATRIX.md) 为准；下文保留原语义审计方法与证据，不是事后准入黑名单或全库修复前置清单。
+
 此前有界审计解释的是潜在持仓延续样本，不是运行策略得到的真实持仓。48 个缺行情日分为 SH600070 8 日、SH600120 20 日、SH600146 20 日；全部有独立两源的全日停牌记录。明细见 [held_gap_explanations.csv](held_gap_explanations.csv)。因此“这些日期没有 active OHLC”有数据解释；盘前可得性、持仓估值和停牌期间事件未因此自动成立。
 
 新入口始终处理 current candidates ∪ positive holdings。未知持仓状态、terminal 权利或估值使会话在账户变更前失败。估值须有确切日期、正有限价格和来源，不能把最后价无限前填；开盘前的参考估值与收盘后的账户估值必须由调用方按时点分开提交。当前观察 overlay 可提供 source close 或带来源停牌暂估；不能作为盘前或终止权利估值认证。

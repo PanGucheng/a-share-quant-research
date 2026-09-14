@@ -1,26 +1,22 @@
 # E2 Data Readiness Matrix
 
-2026-09-14；基于 main@2776029 的已封存数据语义审计。**E2 STILL BLOCKED；E2 READY FOR E3 FREEZE = false。** 当前报告见 [REPORT](REPORT.md)，方法与消费边界见 [SEMANTIC_RECONCILIATION](SEMANTIC_RECONCILIATION.md)。旧矩阵由 Git 历史保留；三项采集均完成，不再列为待执行事项。
+2026-09-15；基于 main@bbaae7e 的 MVP scope 调整。**E2 STILL BLOCKED；E2 READY FOR E3 FREEZE = false。** [范围评审](MVP_SCOPE_SIMPLIFICATION_REVIEW.md)、[当前报告](REPORT.md)、[验证](SCOPE_VERIFICATION.json)。原全库语义审计仍保留，当前不再要求先修完所有历史候选异常。
 
-READY 只代表该行限定范围；单个数据层通过不等于真实账户可运行。下表只有 H1–H4 是当前 E2 hard blockers。近似不允许填补未知行情、登记权益或终止结算。
-
-| 项目 | 分类 | 本轮验收与明确边界 | 当前处置 |
+| 范围 | 当前分类 | 本轮结论 | 残余条件 |
 |---|---|---|---|
-| 封存数据与连续索引 | READY | 4,416 个历史代码，7,429,962 个证券日，首次候选至 2023-12-29；全部输入 hash 和输出索引复核 | 已完成，不重采 |
-| 通常量价单位与旧代码修正 | READY（限定有效配对） | 7,105,530 日两源六字段一致；旧 SH601313 654 个有效日保留隔离单位修正；本地 factor 不进入 raw 会计 | 不外推为所有未决日正确 |
-| 旧代码行情延续 | READY（报价关系） | 新代码已采集源补足旧 ID 的 1,411 个有效日；research ID 不改，economic asset 相同 | 444 日候选身份并存仍拒绝双算；登记权益迁移归 H2 |
-| H1 原始报价冲突与未解释报价 | BLOCKING / UNRESOLVED | 原 9 个有效双源冲突日中 4 个 amount-only 日已按明确 1 元预算降级近似，5 日实质冲突未决；1 个非尾部 unresolved 日；SZ001872 另有 1 日只本地整组报价有效但源字段冲突；其他单源 overlay 明确留出处 | 按证券/日期核对，不选源赢家或放宽容差掩盖差异 |
-| 日终停牌/ST观察层 | READY（观察层） | 逐日 observed_status、ST、停牌、来源及临时估值已接入；241,912 个停牌观察日；unknown 从不默认 ordinary | 不是盘前状态许可；实际数值表可供诊断/估值适配 |
-| H2 身份、尾部失联与终止权利 | BLOCKING / UNRESOLVED | 148 个代码、80,754 个尾部缺失证券日；同股数改代码关系已有证据，完整待结权益/登记迁移未齐 | 逐资产解释 terminal、换股、代码或源覆盖；保留库存与权益，不末价卖出/归零 |
-| 事件版本与普通税前桥 | READY（限定已解析条款） | 28,681 个源版本完整保留；原 682 个不同内容重复组中 674 个已合并、8 个保留；36 条现金缺值获得兼容实施版本补证（候选内 34 条）；候选资产 23,488 个键满足普通税前条款合同 | 事件解析不等于公司行动全集或所有持仓数量可结算 |
-| H3 事件条款、除权与会计连续性 | BLOCKING / UNRESOLVED | 候选历史 inventory 602 个未决键/533 个资产，其中潜在持仓登记范围 528 键/470 个 ID；含 600 个现金缺值或冲突键、6 个上市日缺失及 2 个公告登记顺序问题；225 次除权参考不符/171 个代码；89 个无匹配事件参考价重置日/84 个代码；191 个已解析事件对 100 股产生非整数红股权益（潜在登记范围 183 键/158 个 ID） | 以公告/登记结算补证，含差异化分红、零碎股与复杂事件；配股/一般换股/终止现金的可信总数仍 unknown，不能写零。各范围有重叠 |
-| H4 特殊交易制度与盘前状态证据 | BLOCKING / UNRESOLVED | 70 个日/70 个代码超出普通制度族诊断上下限；历史 IPO/relisting/terminal 和状态可得日期未形成完整证据；全表盘前许可均 false | 普通 dated rules 已复用，但 provisional bounds 不能冒充真实限价；未知或特殊时拒绝成交，已持仓仍受 H2/H3 约束 |
-| B494 t close → next open | ACCEPTABLE MVP APPROXIMATION（日期级 PIT） | 沿用 t 日来源齐全、隔夜批次在订单前完成的合同；不声称 t 15:00 全部到齐或历史 vintage 已认证 | E3 接入时验证完整来源清单与批次；本轮未重读真实分数/特征 |
-| ADV20 warmup | ACCEPTABLE MVP APPROXIMATION（严格缺值门槛） | 已有 1,706/2,000 首日候选具完整 20 日量；294 个未知时禁止新开仓，直到自然形成完整滞后窗口 | 保留全部日期，不填零、不推迟研究起点、不强制卖出旧仓；不再独立阻塞 E2 |
-| 日线 open / auction | ACCEPTABLE MVP APPROXIMATION（open-reference 研究定义） | 日线 open 只作参考成交价格；滞后 ADV、批初现金约束、全日零成交只作不成交否决；不声称竞价排队或实际冲击可复原 | open 缺失、未知状态与公司行动仍 fail closed；竞价证据不再另列硬阻塞 |
-| 成交额精度 | ACCEPTABLE MVP APPROXIMATION | 4 日价/股数一致而成交额差异不超过 1 元；另存 patch，成交额取较低值 | 价格/股数差异不豁免，保留原审计与来源；盘前许可不变 |
-| 停牌持仓暂估 | ACCEPTABLE MVP APPROXIMATION（有日期来源） | 当天供应商停牌 close 可作为带陈旧期的暂估；不能成交，也不覆盖未知事件/终止权利 | 终止/失联仍为 H2，禁止无限前填掩盖缺口 |
-| 股息税与交易费用 | ACCEPTABLE MVP APPROXIMATION / EXISTING DATA BUT NOT WIRED | 明确 before-dividend-income-tax，不充税后；用户佣金万 2.5 双向、母单最低 5 元，法定费另列；现有 dated schedule 沿用 | E3 费用接入时固定舍入/面值/pass-through 等早期假设；未知面值的预算不是已证实上界。本轮未启用旧引擎默认费率，不与 H1–H4 同级 |
-| benchmark 与个人资金组合身份 | ACCEPTABLE MVP APPROXIMATION（研究对象分开） | 学术全池 EW reference 与个人可执行账户不要求同一复制能力 | K/AUM/benchmark 选择与真实 lot/fee/liquidity 验收留给另行授权的 E3；本轮未选择或搜索 |
+| Model universe / B494 / canonical / E1 | FROZEN / UNCHANGED | 执行层门控独立，不回溯删股、不改预测 | 不用执行异常重训/选分数 |
+| PIT Entry gate | IMPLEMENTED / VERIFIED | 唯一身份、普通非 ST 状态、此前 quote/ADV、必要事件证据；不满足则 NO_NEW_ENTRY | 当日事后异常不可回写；未知单股不再是 E2 必须修复项目 |
+| 真实 Entry coverage | NOT CERTIFIED | 已封存日终观察不能直接当盘前证据；未读分数或重放策略 | 不以全体 NO_NEW_ENTRY 证明 E2 就绪，不宣称未持有名单 |
+| H4 完整特殊交易制度模拟 | REMOVED FROM E2 REQUIREMENTS | special/uncertified → 禁止新买/主动交易；已有持仓按独立 contract 检查 | 有估值与权益则 CARRY_ONLY；否则归下方账户问题，不另建完整 simulator |
+| H1 非估值冲突部分 | NO TRADE / CARRY WITH EVIDENCE | 3 日双源 close 一致，1 日单源 close 临时估值；此前 4 日 amount 精度近似保留 | 仅对应信息可得之后使用，不授权盘前读取当日 close |
+| 残余 R1：已有市场敞口的估值 | CONDITIONAL HARD BLOCKER | 3 个 close 冲突案例，见[报价清单](scope_quote_incidents.csv) | 仅有股数/股票权利时须解决，未知保留账本并停止，不随意选价 |
+| 残余 R2：已有敞口的身份/终止结算 | CONDITIONAL HARD BLOCKER | 80,754 个缺失日归并为[148 起资产覆盖事件](scope_lifecycle_incidents.csv)；另 1 组已知同股数迁移关系 | 148 起经济原因尚未确认；不是 148 个已确认现金退市，不预设绝不会持有 |
+| 普通权益、现金应收、版本与税基 | READY WITHIN EXISTING CONTRACT | 旧 gross bridge/等价版本保留；仅现金应收仍留在 exposure 中，无须旧股票行情 | 应收不是可花现金；原股卖出不删除权利 |
+| 残余 R3：已有登记权利的未知会计语义 | CONDITIONAL HARD BLOCKER | [528 个条件事件键](scope_conditional_event_cases.csv)分 514/6/6/2 四类；225 个参考诊断、89 个未分类重置保留 | 不要求预先人工修完 528 条；遇到实际权益时按类处理，不能 NaN→0 |
+| Fractional bonus | UNIFIED CLAIM HANDLER / ALLOCATION CONDITIONAL | [183 个潜在键](scope_fractional_cases.csv)归同一类；Decimal 保留整数及残余权利 | 不舍弃、不虚构现金；实际触发取决于登记股数，分配证据未齐时仍阻塞交割 |
+| 无持仓且无待结权利对象 | NO ACCOUNT BLOCKER | 准入失败只拒绝新买，不能中断其他合格持仓 | 本轮未证明哪些历史对象确实从未持有，数量 unknown |
+| Date-PIT / warmup / open / fees / benchmark | PRIOR MVP GRADING RETAINED | 沿用严格 ADV 不足不新买、open-reference、税前口径、用户佣金等已有分级 | 本轮不选择 K/AUM/benchmark，不冻结 E3；早期费用假设及真实交易接线留待授权 |
 
-可正式采用的近似范围是上述明确的研究定义和保守入口限制；实际账户尚未运行，也没有冻结 E3。**H1–H4 未关闭，停止等待人工审核。**
+当前只保留 R1–R3 三个**已有 exposure 条件下**的处理方向；不是三个已确认低频案例。权益相关 inventory 去重为 921 个键，不能宣称它们均实际触发，也不能宣称已排除。rights/general conversion/terminal cash 的可信总数仍 unknown。
+
+**未达到 E2 READY FOR E3 FREEZE。拒绝新买的安全性已验证，持仓遇到未知后停止也已验证；停止不等于整段连续结算成功。提交后停止等待人工审核。**
