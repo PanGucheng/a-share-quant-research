@@ -279,3 +279,9 @@ The existing resume PowerShell entry now wraps unchanged hash-bound recovery cod
 with scripts/retry_e2_hard_history.py: up to 8 transport retries per invocation,
 30/60/120-second capped waits, reconnect and preserved attempts. Validation,
 permission and hash errors do not retry. Full scans remain user-run only.
+
+States recovery inventory is now complete: 4,416 keys, 7,347,019 rows; all referenced
+receipt/data hashes checked. Only SH601313 has an empty response, still requiring
+identity reconciliation. Next user-run phase is Dividends; do not rerun Quotes or
+States. See reports/economic_translation_mvp/e2_hard_closure_v1/STATES_COMPLETION.md.
+This is inventory completion, not E2 READY or complete semantic coverage.

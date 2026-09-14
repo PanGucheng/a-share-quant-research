@@ -1,5 +1,7 @@
 # E2 Hard-Blocker Closure
 
+最新进度：[States 全部采集完成并验 hash](STATES_COMPLETION.md)，共4,416块/7,347,019行；下一步由用户运行 Dividends。采集完成不等于数据语义和覆盖验收完成，E2仍BLOCKED。
+
 2026-09-14 更新：[用户运行/中断复核](USER_RUN_20260914.md)。Quotes 全部完成并验 hash，States 完成118只、Dividends完成5日；使用新版[续跑命令](RUNBOOK.md)。以下为本轮原始就绪评估，E2仍BLOCKED。
 
 2026-09-13；基线 main@8501456。**E2 STILL BLOCKED；E2 READY FOR E3 FREEZE = false。**

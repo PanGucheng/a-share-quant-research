@@ -1,0 +1,13 @@
+{
+  "stage": "States inventory completion",
+  "chunks": 4416,
+  "rows": 7347019,
+  "parent_reused": 118,
+  "empty_response_instruments": [
+    "SH601313"
+  ],
+  "all_selected_receipt_and_data_hashes_verified": true,
+  "complete_sha256": "06f3689cfad291cfcc7777be573eeed39b3de7b7f9e241e96bfe5599bba818e2",
+  "e2_ready": false,
+  "next": "User-run Dividends recovery; no full scan by Codex"
+}
