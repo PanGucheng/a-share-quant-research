@@ -24,10 +24,24 @@ class Distribution:
     announced_date: str
     source: str
     tax_policy: str
+    gross_cash_per_share: float | None = None
+
+    @property
+    def entitlement_cash_per_share(self):
+        return (
+            self.gross_cash_per_share
+            if self.tax_policy == "before_dividend_income_tax"
+            else self.net_cash_per_share
+        )
 
     def validate(self):
-        for d in (self.record_date, self.ex_date, self.announced_date):
+        for d in (self.record_date, self.ex_date):
             bounded_date(d)
+        # Announcement metadata may precede the account window. This does not
+        # authorize earlier market-data reads; record/ex sessions remain bounded.
+        announced = pd.Timestamp(self.announced_date)
+        if pd.isna(announced) or str(announced.date()) != self.announced_date:
+            raise ValueError("invalid announcement metadata date")
         for d in (self.pay_date, self.listable_date):
             if d:
                 parsed = pd.Timestamp(d)
@@ -39,13 +53,23 @@ class Distribution:
             or not self.event_id
         ):
             raise ValueError("event identity/announcement/record ordering")
-        if self.tax_policy not in ("explicit_net_entitlement", "synthetic"):
+        if self.tax_policy not in (
+            "explicit_net_entitlement",
+            "synthetic",
+            "before_dividend_income_tax",
+        ):
             raise ValueError("tax entitlement unresolved; no guessed universal net rate")
+        if self.tax_policy == "before_dividend_income_tax":
+            if self.gross_cash_per_share is None or self.net_cash_per_share != 0:
+                raise ValueError("gross research basis must be explicit and separate from net cash")
+        elif self.gross_cash_per_share is not None:
+            raise ValueError("gross cash cannot enter a net entitlement policy")
         if any(
-            not math.isfinite(v) or v < 0 for v in (self.net_cash_per_share, self.bonus_per_share)
+            not math.isfinite(v) or v < 0
+            for v in (self.entitlement_cash_per_share, self.bonus_per_share)
         ):
             raise ValueError("missing event quantity/cash semantics")
-        if self.net_cash_per_share and (not self.pay_date or self.pay_date < self.ex_date):
+        if self.entitlement_cash_per_share and (not self.pay_date or self.pay_date < self.ex_date):
             raise ValueError("payment date unresolved")
         if self.bonus_per_share and (not self.listable_date or self.listable_date < self.ex_date):
             raise ValueError("listable date unresolved")
@@ -119,7 +143,7 @@ class EventPosition(Position):
                     and (key, phase) not in self.applied
                     and (
                         phase == "ex"
-                        or (phase == "pay" and event.net_cash_per_share)
+                        or (phase == "pay" and event.entitlement_cash_per_share)
                         or (phase == "list" and event.bonus_per_share)
                     )
                 ):
@@ -142,12 +166,12 @@ class EventPosition(Position):
         for key, event in self.events.items():
             shares = self.entitlements.get(key, 0)
             if event.ex_date == date:
-                if event.net_cash_per_share:
-                    self.book.dividend_ex(key, shares, event.net_cash_per_share)
+                if event.entitlement_cash_per_share:
+                    self.book.dividend_ex(key, shares, event.entitlement_cash_per_share)
                 if event.bonus_per_share and shares:
                     self.pending_bonus[key] = round(shares * event.bonus_per_share)
                 self.applied.add((key, "ex"))
-            if event.pay_date == date and event.net_cash_per_share:
+            if event.pay_date == date and event.entitlement_cash_per_share:
                 self.position["cash"] += self.book.dividend_pay(key)
                 self.applied.add((key, "pay"))
             if event.listable_date == date and event.bonus_per_share:

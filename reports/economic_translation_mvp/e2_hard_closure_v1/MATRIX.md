@@ -1,39 +1,26 @@
 # E2 Data Readiness Matrix
 
-最新进度：[三项采集均完成，Dividends内容复核](DIVIDENDS_COMPLETION.md)。事件记录28,681条，存在36条非实施、672条现金缺值、6条红股上市日缺失及682组内容不同的重复键；E2仍BLOCKED，无需重跑采集。
+2026-09-14；基于 main@2776029 的已封存数据语义审计。**E2 STILL BLOCKED；E2 READY FOR E3 FREEZE = false。** 当前报告见 [REPORT](REPORT.md)，方法与消费边界见 [SEMANTIC_RECONCILIATION](SEMANTIC_RECONCILIATION.md)。旧矩阵由 Git 历史保留；三项采集均完成，不再列为待执行事项。
 
-最新进度：[States 全部采集完成并验 hash](STATES_COMPLETION.md)，共4,416块/7,347,019行；下一步由用户运行 Dividends。采集完成不等于数据语义和覆盖验收完成，E2仍BLOCKED。
+READY 只代表该行限定范围；单个数据层通过不等于真实账户可运行。下表只有 H1–H4 是当前 E2 hard blockers。近似不允许填补未知行情、登记权益或终止结算。
 
-2026-09-14 更新：[用户运行/中断复核](USER_RUN_20260914.md)。Quotes 全部完成并验 hash，States 完成118只、Dividends完成5日；使用新版[续跑命令](RUNBOOK.md)。以下为本轮原始就绪评估，E2仍BLOCKED。
-
-2026-09-13。**E2 STILL BLOCKED；E2 READY FOR E3 FREEZE = false。**
-
-READY 仅覆盖该行限定对象；READY WITH MVP APPROXIMATION 的候选近似须在 E3 前明确接受，未接受部分不能拿来放行。旧矩阵中的 CAN BE RELIABLY ACQUIRED 在本轮拆成“已取得样本”和“仍缺完整历史验收”，不因接口成功就升级。详见 [报告](REPORT.md)。
-
-| Blocker | 分类 | 当前证据 / 已解决范围 | 尚缺或下一步 |
+| 项目 | 分类 | 本轮验收与明确边界 | 当前处置 |
 |---|---|---|---|
-| Q01 文件与索引 | READY | 保留前轮 4,416 股 × 7 字段文件/索引审计 | 不代表逐值完整 |
-| Q02 旧代码单位 | READY | SH601313 654 有效日及独立 20 日 warmup 修正；双源逐日核对，隔离 overlay | 仅观测日期，不涵盖身份/缺失日 |
-| Q03 全期 raw OHLCV / amount / factor | BLOCKING / UNRESOLVED | 既有抽样 + 本轮双代码全期 | Quotes 4,416块扫描和hash验收已完成；逐段单位与异常闭环待完成 |
-| I01 alias / economic identity | BLOCKING / UNRESOLVED | 两代码候选并存 444 日；入口已拒绝同资产双代码 | 完整生效映射；未来执行层去重/分数处理另行审议，不改冻结训练 |
-| S01 日终停牌/ST数据 | EXISTING DATA BUT NOT WIRED | States 4,416块/7,347,019行已采集验hash；48缺行情日双源停牌解释保留 | 逐股逐日日终覆盖、冲突及原始缺值配对核验 |
-| S02 历史盘前状态/board/IPO/退市 | BLOCKING / UNRESOLVED | 有时间、制度及三态检查原语，unknown 不会变 ordinary | 九年 effective 状态表及可得日期、来源冲突清单 |
-| L01 普通日价格上下限 | EXISTING DATA BUT NOT WIRED | 已有 dated rules 和独立普通日样本；新入口核对 prepared 一致性 | 逐日参考价、上下限与状态输入；全覆盖核验 |
-| L02 特殊 regime | BLOCKING / UNRESOLVED | 明确 special 不走普通成交路径 | 禁止新开仓可作为候选规则；持仓日估值/权益与制度证据仍不能省略 |
-| C01 dividend/bonus 数据 | EXISTING DATA BUT NOT WIRED | 2,189日/28,681条已采集验hash；含36非实施及682组内容不同的重复键 | 公告版本与身份、遗漏事件、672现金缺值、6上市日缺值、净额/税核验 |
-| C02 Qlib 应收与红股桥 | READY | synthetic Account/Position 守恒、登记后卖出、到账/上市/T+1 已验证 | 仅最小桥；真实数据和税/复杂事件仍受其他行阻塞 |
-| C03 税/rights issue | BLOCKING / UNRESOLVED | 税前不充税后；未知配股/非整数分配拒绝 | 实际事件量未知，需公告与会计，不得记零 |
-| C04 conversion/代码迁移 | BLOCKING / UNRESOLVED | 同股数迁移原语与公告/操作通知样本 | 完整身份、登记结算及待结权益映射；非一般换股实现 |
-| C05 delisting cash/terminal rights | BLOCKING / UNRESOLVED | 未知终止权利保留库存并停止 | 实际事件 inventory、结算与估值，不假设末价退出 |
-| H01 已知 48 个缺行情日原因 | READY | 全部有两源全日停牌记录 | 不代表其盘前证据或持仓估值已就绪 |
-| H02 离池后的连续账户覆盖 | BLOCKING / UNRESOLVED | 候选 ∪ 持仓入口检查；全期扫描覆盖潜在延续 | 全期行情/状态/事件、待结权利及有来源估值 |
-| T01 隔夜 date-PIT 合同 | READY WITH MVP APPROXIMATION | 已实现显式接受开关及日期/批次守卫；不要求虚构 15:00 到齐 | 近似待接受；真实完整输入 receipts/vintage 说明未认证 |
-| W01 ADV20 warmup 接口 | READY | 2014 明确 20 日读取、因果窗口、独立均值校验 | 仅工程接入，不代表全池覆盖 |
-| W02 warmup 全池有效性 | BLOCKING / UNRESOLVED | 1,706/2,000 有完整量；294 仍未知；四股单位交叉 | 解释 2,927 缺量日、扩展单位核验，不未知填零 |
-| F01 dated 法定费用 | BLOCKING / UNRESOLVED | 官方 2015 沪深旧费基/新费率补证；后续沿已有表 | 早期面值、最低费/pass-through 语义；近似候选未自动采用 |
-| F02 个人佣金假设 | READY WITH MVP APPROXIMATION | 用户已明确万 2.5 双向最低 5 元，税/过户另计 | 未来真实入口替换旧万三默认并验母单分币舍入 |
-| O01 竞价 open-evidence | BLOCKING / UNRESOLVED | 未取得完整可用竞价证据，前轮权限失败保留 | 可审议 O02 替代研究定义，不声称已具竞价能力 |
-| O02 日线 open-reference | READY WITH MVP APPROXIMATION | 普通日首笔价格参考、滞后 ADV、批初现金规则候选 | 待明确接受；不认证排队/冲击，不豁免真实缺值和事件 |
-| B01 全池 EW / 小资金组合身份 | BLOCKING / UNRESOLVED | 上轮证据保留：不要求个人账户复制数千只股票 | 收益打开前单独确认 reference 与 executable strategy 定义；本轮不再选择 K/AUM |
+| 封存数据与连续索引 | READY | 4,416 个历史代码，7,429,962 个证券日，首次候选至 2023-12-29；全部输入 hash 和输出索引复核 | 已完成，不重采 |
+| 通常量价单位与旧代码修正 | READY（限定有效配对） | 7,105,530 日两源六字段一致；旧 SH601313 654 个有效日保留隔离单位修正；本地 factor 不进入 raw 会计 | 不外推为所有未决日正确 |
+| 旧代码行情延续 | READY（报价关系） | 新代码已采集源补足旧 ID 的 1,411 个有效日；research ID 不改，economic asset 相同 | 444 日候选身份并存仍拒绝双算；登记权益迁移归 H2 |
+| H1 原始报价冲突与未解释报价 | BLOCKING / UNRESOLVED | 原 9 个有效双源冲突日中 4 个 amount-only 日已按明确 1 元预算降级近似，5 日实质冲突未决；1 个非尾部 unresolved 日；SZ001872 另有 1 日只本地整组报价有效但源字段冲突；其他单源 overlay 明确留出处 | 按证券/日期核对，不选源赢家或放宽容差掩盖差异 |
+| 日终停牌/ST观察层 | READY（观察层） | 逐日 observed_status、ST、停牌、来源及临时估值已接入；241,912 个停牌观察日；unknown 从不默认 ordinary | 不是盘前状态许可；实际数值表可供诊断/估值适配 |
+| H2 身份、尾部失联与终止权利 | BLOCKING / UNRESOLVED | 148 个代码、80,754 个尾部缺失证券日；同股数改代码关系已有证据，完整待结权益/登记迁移未齐 | 逐资产解释 terminal、换股、代码或源覆盖；保留库存与权益，不末价卖出/归零 |
+| 事件版本与普通税前桥 | READY（限定已解析条款） | 28,681 个源版本完整保留；原 682 个不同内容重复组中 674 个已合并、8 个保留；36 条现金缺值获得兼容实施版本补证（候选内 34 条）；候选资产 23,488 个键满足普通税前条款合同 | 事件解析不等于公司行动全集或所有持仓数量可结算 |
+| H3 事件条款、除权与会计连续性 | BLOCKING / UNRESOLVED | 候选历史 inventory 602 个未决键/533 个资产，其中潜在持仓登记范围 528 键/470 个 ID；含 600 个现金缺值或冲突键、6 个上市日缺失及 2 个公告登记顺序问题；225 次除权参考不符/171 个代码；89 个无匹配事件参考价重置日/84 个代码；191 个已解析事件对 100 股产生非整数红股权益（潜在登记范围 183 键/158 个 ID） | 以公告/登记结算补证，含差异化分红、零碎股与复杂事件；配股/一般换股/终止现金的可信总数仍 unknown，不能写零。各范围有重叠 |
+| H4 特殊交易制度与盘前状态证据 | BLOCKING / UNRESOLVED | 70 个日/70 个代码超出普通制度族诊断上下限；历史 IPO/relisting/terminal 和状态可得日期未形成完整证据；全表盘前许可均 false | 普通 dated rules 已复用，但 provisional bounds 不能冒充真实限价；未知或特殊时拒绝成交，已持仓仍受 H2/H3 约束 |
+| B494 t close → next open | ACCEPTABLE MVP APPROXIMATION（日期级 PIT） | 沿用 t 日来源齐全、隔夜批次在订单前完成的合同；不声称 t 15:00 全部到齐或历史 vintage 已认证 | E3 接入时验证完整来源清单与批次；本轮未重读真实分数/特征 |
+| ADV20 warmup | ACCEPTABLE MVP APPROXIMATION（严格缺值门槛） | 已有 1,706/2,000 首日候选具完整 20 日量；294 个未知时禁止新开仓，直到自然形成完整滞后窗口 | 保留全部日期，不填零、不推迟研究起点、不强制卖出旧仓；不再独立阻塞 E2 |
+| 日线 open / auction | ACCEPTABLE MVP APPROXIMATION（open-reference 研究定义） | 日线 open 只作参考成交价格；滞后 ADV、批初现金约束、全日零成交只作不成交否决；不声称竞价排队或实际冲击可复原 | open 缺失、未知状态与公司行动仍 fail closed；竞价证据不再另列硬阻塞 |
+| 成交额精度 | ACCEPTABLE MVP APPROXIMATION | 4 日价/股数一致而成交额差异不超过 1 元；另存 patch，成交额取较低值 | 价格/股数差异不豁免，保留原审计与来源；盘前许可不变 |
+| 停牌持仓暂估 | ACCEPTABLE MVP APPROXIMATION（有日期来源） | 当天供应商停牌 close 可作为带陈旧期的暂估；不能成交，也不覆盖未知事件/终止权利 | 终止/失联仍为 H2，禁止无限前填掩盖缺口 |
+| 股息税与交易费用 | ACCEPTABLE MVP APPROXIMATION / EXISTING DATA BUT NOT WIRED | 明确 before-dividend-income-tax，不充税后；用户佣金万 2.5 双向、母单最低 5 元，法定费另列；现有 dated schedule 沿用 | E3 费用接入时固定舍入/面值/pass-through 等早期假设；未知面值的预算不是已证实上界。本轮未启用旧引擎默认费率，不与 H1–H4 同级 |
+| benchmark 与个人资金组合身份 | ACCEPTABLE MVP APPROXIMATION（研究对象分开） | 学术全池 EW reference 与个人可执行账户不要求同一复制能力 | K/AUM/benchmark 选择与真实 lot/fee/liquidity 验收留给另行授权的 E3；本轮未选择或搜索 |
 
-最有价值的下一步是执行有界的全期 quote / 日终 state / ex-date inventory 三个扫描，并对异常和事件做闭环。不能在扫描完成前以“个股少、影响小”代替证据。限制未来新开仓范围是可审议的研究定义，已有持仓及后来发生的特殊事件仍须如实结算；当前未实施事后删股。
+可正式采用的近似范围是上述明确的研究定义和保守入口限制；实际账户尚未运行，也没有冻结 E3。**H1–H4 未关闭，停止等待人工审核。**

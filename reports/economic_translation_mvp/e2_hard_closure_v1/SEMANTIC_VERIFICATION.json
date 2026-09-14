@@ -1,0 +1,151 @@
+{
+  "status": "PASS",
+  "production_receipt_sha256": "74e2f02fc3b88542fc2463f18311111eb0bea93ef696a85a16cb30d9aa52bf2c",
+  "bound_input_files": 35294,
+  "bound_output_files": 4425,
+  "exact_calendar_sessions": 7429962,
+  "quote_status": {
+    "cross_source_agreed": 7105530,
+    "known_suspension_no_fill": 241912,
+    "unresolved": 80755,
+    "source_only_valid_overlay": 1755,
+    "source_conflict": 9,
+    "local_only_valid_overlay": 1
+  },
+  "observed_status": {
+    "ordinary": 6887686,
+    "suspended": 241912,
+    "unresolved": 80754,
+    "ST": 219540,
+    "special_or_rule_conflict": 70
+  },
+  "independent_quote_sample_rows": 242,
+  "independent_quote_sample_stocks": 14,
+  "source_versions_preserved": 28681,
+  "differing_duplicate_groups": 682,
+  "differing_duplicate_group_status": {
+    "resolved_gross_entitlement": 674,
+    "unresolved": 8
+  },
+  "nonimplemented_versions": 36,
+  "candidate_unresolved_events": 602,
+  "candidate_unresolved_assets": 533,
+  "candidate_corroborated_cash_missing_rows": 34,
+  "candidate_missing_cash_events": 600,
+  "candidate_missing_listable_events": 6,
+  "candidate_fractional_bonus_per_100_events": 191,
+  "candidate_fractional_bonus_per_100_assets": 166,
+  "comparable_reference_bridges": 21744,
+  "reference_bridge_mismatches": 225,
+  "reference_bridge_uncomparable": 534,
+  "special_limit_stock_days": 70,
+  "research_values_after_2023": false,
+  "scores_read": false,
+  "account_or_outcomes_run": false,
+  "e2_status": "E2 STILL BLOCKED",
+  "base_main": "277602957564830006872d9fce4dd9005b9d023c",
+  "semantic_summary": {
+    "stocks": 4416,
+    "sessions": 7429962,
+    "quote_status": {
+      "cross_source_agreed": 7105530,
+      "known_suspension_no_fill": 241912,
+      "unresolved": 80755,
+      "source_only_valid_overlay": 1755,
+      "source_conflict": 9,
+      "local_only_valid_overlay": 1
+    },
+    "gap_counts": {
+      "terminal_candidate_gap": 80754,
+      "event_unresolved": 743966,
+      "unexplained_reference_reset": 89,
+      "factor_change_without_event": 5219577,
+      "account_gap": 813451,
+      "execution_special_gap": 70
+    },
+    "stocks_with_account_gap": 833,
+    "terminal_candidate_stocks": 148,
+    "confirmed_delisting_cash_count": null,
+    "confirmed_rights_issue_count": null,
+    "confirmed_generic_conversion_count": null,
+    "known_same_share_code_migration_count": 1,
+    "events_raw_rows": 28681,
+    "economic_event_keys": 27978,
+    "event_status": {
+      "resolved_gross_entitlement": 26790,
+      "unresolved": 1188
+    },
+    "candidate_asset_event_status": {
+      "resolved_gross_entitlement": 23488,
+      "unresolved": 602
+    },
+    "cash_missing_rows_corroborated": 36,
+    "full_preopen_state_certified": false,
+    "e2_ready": false
+  },
+  "precision_adjudication": {
+    "base_receipt_sha256": "74e2f02fc3b88542fc2463f18311111eb0bea93ef696a85a16cb30d9aa52bf2c",
+    "policy": "explicit CNY1 amount-only approximation; use lower amount; preopen permission unchanged",
+    "cases": 9,
+    "accepted": 4,
+    "unresolved": 5,
+    "code_lf": "9b97113ebcc263f529fff4d8176da609172712d7d2da5d8ca8d3ad37fe88b31d",
+    "files": {
+      "daily_patches.parquet": "ce5bdb33c98146b95f7e1ef154e34d4646c574c7b553d6570cb4c0a0dee3ef24",
+      "quote_adjudications.csv": "7aa728241e2d1422f04480cd2adcbb99651eaa487989b0547d851b6b286589ca"
+    }
+  },
+  "precision_independent_check": "PASS: exact four IDs, lower amount, <=CNY1, no preopen permission",
+  "tests": {
+    "focused_e2_passed": 70,
+    "precision_policy_passed": 1,
+    "fast_passed": 46,
+    "qlib_synthetic_runtime_passed": 6,
+    "full_tier": "not run: legacy full validators may access real frozen outcomes or 2024+ values outside this authorization"
+  },
+  "delivery_code_lf": {
+    "scripts/reconcile_e2_semantics.py": "e5dcee5932c2ddce02acec968a7dff2d8fb42e70c6773c0b0eb289096ba99aac",
+    "scripts/verify_e2_semantics.py": "876e46d99d1fb1ce01b0a56470d9bf66a3a12a44bf379e7fe5202ff1c4e78fef",
+    "scripts/adjudicate_e2_quote_precision.py": "9b97113ebcc263f529fff4d8176da609172712d7d2da5d8ca8d3ad37fe88b31d",
+    "qlib_integration/economic_semantic_reconciliation.py": "3e57677da2c6221ab91eb652e50724727ef6f7f2955c2fd6e92c4a66c3c264a1",
+    "qlib_integration/economic_event_position.py": "359e68d63c7d29e4657800d94f9d04c2ca4860074a76a8d795425dbc92e66d50",
+    "tests/test_e2_semantic_reconciliation.py": "e2489d2e2155f80baa62f8a415494244c1754122924919d59cdaee13031ca38e",
+    "tests/test_e2_quote_precision.py": "308d77870d59556bd2e3baeb342143ab09e53b86c37cbf2251c429fa831f8e2a"
+  },
+  "independent_receipt_sha256": "3d9e26d9a36d18e1adc42fdf879155b937d8810b4893448f49db38d78c62b4ae",
+  "precision_receipt_sha256": "861797b02c3f59c8e1534b55aee4e3b54c5e7d147bde1b8f7647bb79bfb5170a",
+  "potential_held_event_scope": {
+    "filter": "event-reference bridge exists within ID window and record_date >= first_candidate_date",
+    "unresolved_event_keys": 528,
+    "unresolved_research_ids": 470,
+    "fractional_per_100_keys": 183,
+    "fractional_research_ids": 158
+  },
+  "prior_window_announcement_adapter_canary": [
+    {
+      "instrument": "SH600016",
+      "announced_date": "2014-12-31",
+      "record_date": "2015-01-08",
+      "ex_date": "2015-01-09"
+    },
+    {
+      "instrument": "SZ000511",
+      "announced_date": "2014-12-25",
+      "record_date": "2015-01-05",
+      "ex_date": "2015-01-06"
+    }
+  ],
+  "compact_evidence_sha256_lf": {
+    "semantic_fractional_bonus_terms.csv": "ad08c2681a7ff92677f516d8eaefcbdd9fbda9a78faa960db9f8478e889d44f5",
+    "semantic_other_quote_issues.csv": "f26071187b48b40b2218abca5a92e69d73528027daf8264e04af6a547208c69d",
+    "semantic_potential_held_unresolved_events.csv": "313d26e44eab17d0ef5e6d9ec6f3392146f5ec54663f3e880aedec9cf5700d22",
+    "semantic_quote_adjudications.csv": "79a8d7d724cd6ef22601f25b2f96095b13e9b0fea13e834f8fa63f7bb61f9e8c",
+    "semantic_reference_mismatches.csv": "0c9fc13961efa2334361cdef03e62f9cea081af29026ffbad935d587b6763dc6",
+    "semantic_reference_resets.csv": "83df765501c8e73c40ed69d2eecb520ce54b222cd505da12c65842b39a6e90fc",
+    "semantic_special_days.csv": "a2518df966dcc6154315b92781fc1d4fbdc079d15fbb08ad59a5c5a5aa8ba4a6",
+    "semantic_terminal_candidates.csv": "b62ac17851463624ff8fb20579b6a90cadf2697344d1d2b6933e043874e09422",
+    "semantic_unresolved_events.csv": "b1b77e79a46ff2c50cfc3b0dced1fa128b218dee877e74fd6ebace2134aa30e6"
+  },
+  "e1_delivery_binding_check": "PASS; metadata/code only, no scores loaded",
+  "documentation_checks": "PASS: changed Markdown links, doc index, size, diff whitespace"
+}

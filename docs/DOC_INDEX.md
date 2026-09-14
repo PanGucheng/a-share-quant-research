@@ -22,7 +22,7 @@ task-specific authority doc
 
 ## Current Authority
 
-- [E2 Hard-Blocker Closure](../reports/economic_translation_mvp/e2_hard_closure_v1/REPORT.md) — 最新[矩阵](../reports/economic_translation_mvp/e2_hard_closure_v1/MATRIX.md)与[长扫描命令](../reports/economic_translation_mvp/e2_hard_closure_v1/RUNBOOK.md)；E2 STILL BLOCKED。
+- [E2 Hard-Blocker Closure](../reports/economic_translation_mvp/e2_hard_closure_v1/REPORT.md) — 最新[矩阵](../reports/economic_translation_mvp/e2_hard_closure_v1/MATRIX.md)与[离线语义闭环](../reports/economic_translation_mvp/e2_hard_closure_v1/SEMANTIC_RECONCILIATION.md)；采集已完成，E2 STILL BLOCKED。
 
 - [Small-Capital Execution Feasibility](../reports/economic_translation_mvp/small_capital_v1/REPORT.md) — 5万/10万元静态机械证据；[当时E2矩阵](../reports/economic_translation_mvp/small_capital_v1/MATRIX.md)，仍BLOCKED。
 - [小资金前置研究计划](SMALL_CAPITAL_EXECUTION_FEASIBILITY_PLAN.md) — 预定静态方法、benchmark身份更正及单K预测结构检查设计。

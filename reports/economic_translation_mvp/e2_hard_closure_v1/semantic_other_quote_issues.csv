@@ -1,0 +1,3 @@
+instrument,date,quote_status,observed_status,terminal_candidate_gap,unexplained_reference_reset
+SH600656,2016-05-12,unresolved,ordinary,False,False
+SZ001872,2017-10-24,local_only_valid_overlay,ordinary,False,False
