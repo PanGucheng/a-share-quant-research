@@ -30,8 +30,8 @@ def transient_network_error(exc):
     )
 
 
-def run(mode, *, max_retries=8, retry_delay=30, max_delay=120):
-    if mode not in ("states", "dividends") or not 0 <= max_retries <= 20:
+def run(mode, *, max_retries=100, retry_delay=30, max_delay=120):
+    if mode not in ("states", "dividends") or not 0 <= max_retries <= 100:
         raise ValueError("invalid retry mode/budget")
     if not 1 <= retry_delay <= max_delay <= 600:
         raise ValueError("invalid retry delay")
@@ -99,7 +99,7 @@ def run(mode, *, max_retries=8, retry_delay=30, max_delay=120):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("mode", choices=["states", "dividends"])
-    parser.add_argument("--max-retries", type=int, default=8)
+    parser.add_argument("--max-retries", type=int, default=100)
     parser.add_argument("--retry-delay", type=int, default=30)
     parser.add_argument("--max-delay", type=int, default=120)
     args = parser.parse_args()

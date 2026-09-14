@@ -2,8 +2,8 @@ param(
     [Parameter(Mandatory = $true)]
     [ValidateSet('States', 'Dividends')]
     [string]$Phase,
-    [ValidateRange(0, 20)]
-    [int]$MaxRetries = 8,
+    [ValidateRange(0, 100)]
+    [int]$MaxRetries = 100,
     [ValidateRange(1, 600)]
     [int]$RetryDelaySeconds = 30,
     [ValidateRange(1, 600)]

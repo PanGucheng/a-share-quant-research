@@ -285,3 +285,7 @@ receipt/data hashes checked. Only SH601313 has an empty response, still requirin
 identity reconciliation. Next user-run phase is Dividends; do not rerun Quotes or
 States. See reports/economic_translation_mvp/e2_hard_closure_v1/STATES_COMPLETION.md.
 This is inventory completion, not E2 READY or complete semantic coverage.
+
+User increased the automatic transport retry budget to 100 per invocation.
+Default and allowed maximum are now 100; delays and non-network fail-fast rules
+are unchanged. Existing running processes retain their original retry budget.

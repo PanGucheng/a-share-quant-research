@@ -34,7 +34,8 @@ def test_real_resume_retry_preserves_failed_attempt_and_skips_completed(tmp_path
     assert json.loads((attempts / "attempt_0002/receipt.json").read_text())["status"] == "complete"
 
 
-def test_backoff_budget_and_cap(tmp_path, monkeypatch):
+@pytest.mark.parametrize("budget", [4, 100])
+def test_backoff_budget_and_cap(tmp_path, monkeypatch, budget):
     setup_case(tmp_path, monkeypatch)
     calls = []
     waits = []
@@ -46,8 +47,11 @@ def test_backoff_budget_and_cap(tmp_path, monkeypatch):
     monkeypatch.setattr(retry.recovery, "resume", fail)
     monkeypatch.setattr(retry.time, "sleep", waits.append)
     with pytest.raises(requests.exceptions.ReadTimeout):
-        retry.run("states", max_retries=4)
-    assert len(calls) == 5 and waits == [30, 60, 120, 120]
+        if budget == 100:
+            retry.run("states")  # default budget, no real waits or network
+        else:
+            retry.run("states", max_retries=budget)
+    assert len(calls) == budget + 1 and waits == [30, 60] + [120] * (budget - 2)
 
 
 @pytest.mark.parametrize(
