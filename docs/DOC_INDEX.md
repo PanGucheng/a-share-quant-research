@@ -6,6 +6,7 @@
 
 ## Economic Translation 当前入口
 
+- [E3 Strategy V2候选审核结论](../reports/economic_translation_mvp/e3_parameter_research_v1/CANDIDATE_DECISION.md) — 当前停止点CANDIDATE PENDING；30个结构结果齐备，真实经济路径受阻，未强选赢家。
 - [E3有限参数研究计划](ECONOMIC_E3_PARAMETER_RESEARCH.md) — 30候选、development域调参与实际路径前置；2024+关闭。
 - [E3参数研究报告](../reports/economic_translation_mvp/e3_parameter_research_v1/REPORT.md) — 目标结构/独立重放完成，ACTUAL PATH BLOCKED，尚未选择Strategy V2。
 - [E3单一策略冻结计划](ECONOMIC_E3_FREEZE_PREPARATION.md) — 历史Candidate v1：100k/K8/Hold16/5日/max-drop1；冻结字节不改写。

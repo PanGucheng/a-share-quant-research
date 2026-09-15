@@ -37,7 +37,10 @@
 
 ## Current State
 
-Economic Translation MVP：**E1 COMPLETE；E2 CORE READY；E3 PARAMETER RESEARCH / ACTUAL PATH BLOCKED**。
+Economic Translation MVP：**E1 COMPLETE；E2 CORE READY；E3 PORTFOLIO PARAMETER RESEARCH / STRATEGY V2 CANDIDATE PENDING**。
+2026-09-16按用户最新停止点交付[候选结论](../reports/economic_translation_mvp/e3_parameter_research_v1/CANDIDATE_DECISION.md)：
+30个结构候选全部完成，实际经济路径0个，因执行来源和现金/费率/事件接线问题不强选V2。
+统一对照显式保留真实收益/费用/现金指标null；停止人工审核，不开模型研究或新增参数。
 2026-09-15用户新授权2015–2023 development参数/经济研究，见[研究计划](ECONOMIC_E3_PARAMETER_RESEARCH.md)。
 [报告](../reports/economic_translation_mvp/e3_parameter_research_v1/REPORT.md)：30个预冻结候选的目标结构
 及独立重放完成，V1保持原证据；尚无真实经济比较或Strategy V2 freeze。

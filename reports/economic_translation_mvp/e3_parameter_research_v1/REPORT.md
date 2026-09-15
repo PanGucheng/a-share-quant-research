@@ -1,5 +1,11 @@
 # E3 Portfolio Parameter Research Report
 
+2026-09-16候选审核停止点：**E3 PORTFOLIO PARAMETER RESEARCH / STRATEGY V2 CANDIDATE PENDING**。
+见[候选结论](CANDIDATE_DECISION.md)与[全部30候选统一对照](CANDIDATE_COMPARISON.json)。
+30/30结构完成，0/30完整实际经济路径；既有执行来源、现金/费率与事件接线问题足以阻止
+推荐候选成立，按用户最新允许的例外如实pending。没有新参数、新模型研究或结构重跑。
+以下为原结构研究报告；其运行receipt、SUMMARY与所有V1证据不修改。
+
 2026-09-15，基线 `main@7202dea`。**E3 PARAMETER RESEARCH / ACTUAL PATH BLOCKED**。
 Phase A 搜索空间冻结、Phase B 目标结构对照与独立重放完成；Phase C–E 尚未完成。
 **未选择/冻结 Strategy V2，未产生真实账户经济结果。** E1 COMPLETE、E2 CORE READY不变。

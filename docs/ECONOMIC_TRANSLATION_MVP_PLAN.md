@@ -1,5 +1,11 @@
 # Economic Translation MVP：研究与实施计划
 
+2026-09-16当前停止点为**E3 PORTFOLIO PARAMETER RESEARCH / STRATEGY V2 CANDIDATE PENDING**。
+用户要求在V2推荐候选处收尾，实际路径存在足以阻止候选成立的问题则允许pending。
+见[候选结论](../reports/economic_translation_mvp/e3_parameter_research_v1/CANDIDATE_DECISION.md)：
+30/30结构完成、0/30完整经济路径，真实限价/ordinary证据与现金/个人费用/事件接线仍受阻。
+报告保留全30候选及分段对照，无新增组合/模型研究；提交推送后停止人工审核。
+
 2026-09-15最新授权优先于下文历史阶段：用户要求参考Portfolio Parameter Research计划实施，
 2015–2023明确作为可调参、可经济评价的development域。见[新研究计划](ECONOMIC_E3_PARAMETER_RESEARCH.md)
 与[参数研究报告](../reports/economic_translation_mvp/e3_parameter_research_v1/REPORT.md)。

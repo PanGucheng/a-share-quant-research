@@ -390,3 +390,13 @@ Economic evaluation is authorized once these dependencies and actual-path valida
 are ready, not forbidden by earlier historical paragraphs. Long execution stays
 user-run. No V2 freeze until actual economic/stability evidence exists; preserve both
 failed e3_parameter_research_v1 and final v2 outputs. Commit/push and stop for review.
+
+2026-09-16: User narrowed the current stop to a Strategy V2 candidate conclusion,
+allowing pending when actual execution/path has a material blocker. See
+reports/economic_translation_mvp/e3_parameter_research_v1/CANDIDATE_DECISION.md.
+Current E3 PORTFOLIO PARAMETER RESEARCH / STRATEGY V2 CANDIDATE PENDING:
+30/30 target runs verified, 0/30 complete actual economic paths. Candidate comparison
+retains null actual returns/fees/cash metrics, annual/era fields and all originals.
+No winner was selected from target proxies. Stop for human review after commit/push;
+do not add parameters, open a model study or access 2024+. Prior development economic
+authorization remains valid, but actual source/cash/fee/event wiring is still required.

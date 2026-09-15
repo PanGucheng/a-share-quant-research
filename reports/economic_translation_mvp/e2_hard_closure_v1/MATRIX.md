@@ -1,5 +1,9 @@
 # E2 Data Readiness Matrix
 
+2026-09-16最新候选收尾：**E3 PORTFOLIO PARAMETER RESEARCH / STRATEGY V2 CANDIDATE PENDING**，
+见[候选结论及统一对照](../e3_parameter_research_v1/CANDIDATE_DECISION.md)。30/30结构、0/30实际经济路径；
+执行来源、现金/个人费率及held-event接线实质影响候选成立。停止审核，不新增模型/参数，E2 Core READY不变。
+
 2026-09-15；基于 `main@c312469` 完成历史可得性合同修订与同一固定 canary 验收。
 **E2 CORE READY / STRATEGY PATH VERIFICATION PENDING。C1 与 C2 均 CLOSED。**
 通用 E2 infrastructure 已收尾。2026-09-15用户最新授权有限参数与development经济研究：

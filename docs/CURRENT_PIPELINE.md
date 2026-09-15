@@ -5,7 +5,10 @@ artifact 名称中的 `current` 不自动表示 ACTIVE。
 
 ## 1. Status At A Glance
 
-Economic Translation MVP：**E1 COMPLETE；E2 CORE READY；E3 PARAMETER RESEARCH / ACTUAL PATH BLOCKED**。
+Economic Translation MVP：**E1 COMPLETE；E2 CORE READY；E3 PORTFOLIO PARAMETER RESEARCH / STRATEGY V2 CANDIDATE PENDING**。
+2026-09-16用户要求停止在V2候选审核；[候选结论](../reports/economic_translation_mvp/e3_parameter_research_v1/CANDIDATE_DECISION.md)
+与全30候选对照已交付。30/30目标结构完成、0/30实际经济路径完成，实质执行依赖仍阻止推荐成立。
+停止等待人工审核，不开启模型研究、不新增组合，不将target结果冒充完成的economic search。
 2026-09-15新授权允许2015–2023 development portfolio tuning，见[研究计划](ECONOMIC_E3_PARAMETER_RESEARCH.md)。
 [参数研究报告](../reports/economic_translation_mvp/e3_parameter_research_v1/REPORT.md)：预先冻结30候选，
 全部2,189日目标路径独立重放通过；V1控制与旧证据一致。尚未选择/冻结Strategy V2。

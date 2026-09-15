@@ -1,5 +1,9 @@
 # E2 Core 收尾报告
 
+2026-09-16：[E3候选审核结论](../e3_parameter_research_v1/CANDIDATE_DECISION.md)为
+**STRATEGY V2 CANDIDATE PENDING**。全部30候选结构已完成，actual路径未就绪，未选择V2。
+按用户最新停止点提交统一对照后等待审核；不新增参数/模型研究，Core READY继续有效。
+
 2026-09-15 E3最新状态：[参数研究](../e3_parameter_research_v1/REPORT.md)，
 **E3 PARAMETER RESEARCH / ACTUAL PATH BLOCKED**。用户已授权2015–2023 development调参与
 经济评价；30个预先冻结候选完成target-only对照，尚无实际账户结果或Strategy V2 freeze。
