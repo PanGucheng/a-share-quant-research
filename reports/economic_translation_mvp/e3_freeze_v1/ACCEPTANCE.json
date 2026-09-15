@@ -1,0 +1,301 @@
+{
+  "actual_dependency_probe": {
+    "actual_R1": null,
+    "actual_R2": null,
+    "actual_R3": null,
+    "actual_sessions": 0,
+    "later_sessions": "NOT_REACHED",
+    "missing": "source-bound A assembly (limits, strict ADV, current event review); personal fee/conditional cash integration",
+    "no_entry_is_not_acceptance": true,
+    "original_top8": [
+      "SZ300246",
+      "SZ300245",
+      "SZ002196",
+      "SZ300331",
+      "SH600070",
+      "SZ300354",
+      "SZ002401",
+      "SZ300220"
+    ],
+    "rows": [
+      {
+        "action": "NO_NEW_ENTRY",
+        "asset_id": "SZ300246",
+        "classification": "INPUT_ASSEMBLY_PENDING_NOT_EXCHANGE_REJECTION",
+        "daily_rows": 2,
+        "independent_limit_receipts": 0,
+        "instrument": "SZ300246",
+        "reasons": [
+          "prior_quote_quality_unknown_or_bad",
+          "event_evidence_unknown_or_pending",
+          "adv_not_ready",
+          "ordinary_execution_not_certified"
+        ],
+        "state_rows": 1
+      },
+      {
+        "action": "NO_NEW_ENTRY",
+        "asset_id": "SZ300245",
+        "classification": "INPUT_ASSEMBLY_PENDING_NOT_EXCHANGE_REJECTION",
+        "daily_rows": 2,
+        "independent_limit_receipts": 0,
+        "instrument": "SZ300245",
+        "reasons": [
+          "prior_quote_quality_unknown_or_bad",
+          "event_evidence_unknown_or_pending",
+          "adv_not_ready",
+          "ordinary_execution_not_certified"
+        ],
+        "state_rows": 1
+      },
+      {
+        "action": "NO_NEW_ENTRY",
+        "asset_id": "SZ002196",
+        "classification": "INPUT_ASSEMBLY_PENDING_NOT_EXCHANGE_REJECTION",
+        "daily_rows": 2,
+        "independent_limit_receipts": 0,
+        "instrument": "SZ002196",
+        "reasons": [
+          "prior_quote_quality_unknown_or_bad",
+          "event_evidence_unknown_or_pending",
+          "adv_not_ready",
+          "ordinary_execution_not_certified"
+        ],
+        "state_rows": 1
+      },
+      {
+        "action": "NO_NEW_ENTRY",
+        "asset_id": "SZ300331",
+        "classification": "INPUT_ASSEMBLY_PENDING_NOT_EXCHANGE_REJECTION",
+        "daily_rows": 2,
+        "independent_limit_receipts": 0,
+        "instrument": "SZ300331",
+        "reasons": [
+          "prior_quote_quality_unknown_or_bad",
+          "event_evidence_unknown_or_pending",
+          "adv_not_ready",
+          "ordinary_execution_not_certified"
+        ],
+        "state_rows": 1
+      },
+      {
+        "action": "NO_NEW_ENTRY",
+        "asset_id": "SH600070",
+        "classification": "INPUT_ASSEMBLY_PENDING_NOT_EXCHANGE_REJECTION",
+        "daily_rows": 2,
+        "independent_limit_receipts": 0,
+        "instrument": "SH600070",
+        "reasons": [
+          "prior_quote_quality_unknown_or_bad",
+          "event_evidence_unknown_or_pending",
+          "adv_not_ready",
+          "ordinary_execution_not_certified"
+        ],
+        "state_rows": 1
+      },
+      {
+        "action": "NO_NEW_ENTRY",
+        "asset_id": "SZ300354",
+        "classification": "INPUT_ASSEMBLY_PENDING_NOT_EXCHANGE_REJECTION",
+        "daily_rows": 2,
+        "independent_limit_receipts": 0,
+        "instrument": "SZ300354",
+        "reasons": [
+          "prior_quote_quality_unknown_or_bad",
+          "event_evidence_unknown_or_pending",
+          "adv_not_ready",
+          "ordinary_execution_not_certified"
+        ],
+        "state_rows": 1
+      },
+      {
+        "action": "NO_NEW_ENTRY",
+        "asset_id": "SZ002401",
+        "classification": "INPUT_ASSEMBLY_PENDING_NOT_EXCHANGE_REJECTION",
+        "daily_rows": 2,
+        "independent_limit_receipts": 0,
+        "instrument": "SZ002401",
+        "reasons": [
+          "prior_quote_quality_unknown_or_bad",
+          "event_evidence_unknown_or_pending",
+          "adv_not_ready",
+          "ordinary_execution_not_certified"
+        ],
+        "state_rows": 1
+      },
+      {
+        "action": "NO_NEW_ENTRY",
+        "asset_id": "SZ300220",
+        "classification": "INPUT_ASSEMBLY_PENDING_NOT_EXCHANGE_REJECTION",
+        "daily_rows": 2,
+        "independent_limit_receipts": 0,
+        "instrument": "SZ300220",
+        "reasons": [
+          "prior_quote_quality_unknown_or_bad",
+          "event_evidence_unknown_or_pending",
+          "adv_not_ready",
+          "ordinary_execution_not_certified"
+        ],
+        "state_rows": 1
+      }
+    ],
+    "session": "2015-01-06",
+    "signal": "2015-01-05",
+    "status": "ACTUAL_PATH_NOT_STARTED"
+  },
+  "baseline": "33c43bd",
+  "code_sha256_lf": {
+    "model_research/economic_e3_projection.py": "e4c4fde0a1caa9e7edec5ff24c8dc496dbba659eb478a785c624770ed16b96b1",
+    "model_research/economic_prediction_structure.py": "59f72e0c66a0253d12b25bfa96d459a485b4b5f53d14d57bf070e92310e6ef5a",
+    "qlib_integration/economic_mvp_scope.py": "5a7005438ae52a94bc6dcb34b90631a7d405530702b776564dbe506ae426f341",
+    "qlib_integration/economic_strategy_budget.py": "47551b3747eb7d83acde99c7822c64491727d616f8d164145a7635e770a9960a",
+    "qlib_integration/economic_strategy_membership.py": "926f9173d7874861cdfb748e73e8aa08caef763c116a309d963ad97860e89138",
+    "scripts/preflight_e3_structure.py": "46a7f8c6a598d721fdcd22b98804c0dd0a57ff3ddcbbd3785affec01454f2a3d",
+    "scripts/verify_e3_structure.py": "3ebfc76b32d59c01abdf75b97fb5ac193d7298190cf26538e81866124d0141b0"
+  },
+  "freeze_sha256": "6dcd4bbe70f21d615d2d28659c629bd1543825dc940e65c3593980652691e8c2",
+  "independent_sha256": "e9087c4038974891bbe2ca38569f1ea2e9a2677e843af8affec85bb5ae86a012",
+  "independent_verification": {
+    "actual_R1": null,
+    "actual_R2": null,
+    "actual_R3": null,
+    "freeze_sha256": "6dcd4bbe70f21d615d2d28659c629bd1543825dc940e65c3593980652691e8c2",
+    "independently_reranked": true,
+    "receipt_sha256": "3d586aa1270f2a752eb0c919d9ed065f96fe51ff4ef985772f1f9124748dcf4d",
+    "source_files": 27,
+    "status": "PASS_TARGET_ONLY_ACTUAL_PENDING",
+    "target_sessions": 2189,
+    "target_spells": 445
+  },
+  "output_directory": "outputs/economic_translation_mvp/e3_preflight_v2",
+  "output_hashes": {
+    "access.json": "d1dac86afff4b87131a6d62100528c5d4081a2e76b02e91da49d0c1017496456",
+    "actual_dependency_probe.json": "404772735448fd8680b4f033bbd6839fb285964855b40222bcc152efdd6cfc0e",
+    "binding.json": "186ea20f32dbdeb8d1100fde8060f8cf52bfefc4ef0dc73530e06dd5f0901e79",
+    "started.json": "d6a52e0147b12369960066c3f72fa87645cfeca34b3c97f834c1d3b8f0eb7c76",
+    "target_days.json": "60f96ba6578940c3f3038e575f52358c0ea5ccd18ae796ba257c8e7dcdfba86f",
+    "target_spells.json": "c103dd096652706c426539176909333a8706d962ba6841966c4da1e024eea244",
+    "target_summary.json": "f4bdb9284032f09f541093c8301acd4f5b31172885366a1773c478402ef748cc"
+  },
+  "output_receipt_sha256": "3d586aa1270f2a752eb0c919d9ed065f96fe51ff4ef985772f1f9124748dcf4d",
+  "previous_failure": {
+    "directory": "outputs/economic_translation_mvp/e3_preflight_v1",
+    "failure_sha256": "c0ddf3fcc1bd9f7baa1ed549b26b7c43af408a61881d8dee16096232330ced23",
+    "parameter_change": false,
+    "reason": "receipt-declared recovered States data.parquet filename",
+    "same_target_outputs_verified": true,
+    "sample_change": false
+  },
+  "scope": {
+    "account_created": false,
+    "actual_path_started": false,
+    "candidate_count": 1,
+    "e1_rerun": false,
+    "e4": false,
+    "frozen_B494_canonical_changed": false,
+    "labels_or_outcomes": false,
+    "prices_materialized": false,
+    "project_2024_plus_values": false,
+    "source_collection": false,
+    "stop": "commit_push_human_review"
+  },
+  "status": "E3 STRATEGY FROZEN / PATH PREFLIGHT PENDING",
+  "target_review": "HUMAN_REVIEW_REQUIRED_REPLACEMENT_CAP_SATURATION",
+  "target_summary": {
+    "actual_R1": null,
+    "actual_R2": null,
+    "actual_R3": null,
+    "actual_blocked_exits": null,
+    "actual_cash_idle": null,
+    "actual_holding_spells": null,
+    "actual_membership_churn": null,
+    "actual_unfilled_duration": null,
+    "annual": [
+      {
+        "cap_backlog_decisions": 48,
+        "scheduled": 49,
+        "target_entries": 56,
+        "target_exits": 48,
+        "year": 2015
+      },
+      {
+        "cap_backlog_decisions": 48,
+        "scheduled": 49,
+        "target_entries": 49,
+        "target_exits": 49,
+        "year": 2016
+      },
+      {
+        "cap_backlog_decisions": 49,
+        "scheduled": 49,
+        "target_entries": 49,
+        "target_exits": 49,
+        "year": 2017
+      },
+      {
+        "cap_backlog_decisions": 48,
+        "scheduled": 48,
+        "target_entries": 48,
+        "target_exits": 48,
+        "year": 2018
+      },
+      {
+        "cap_backlog_decisions": 49,
+        "scheduled": 49,
+        "target_entries": 49,
+        "target_exits": 49,
+        "year": 2019
+      },
+      {
+        "cap_backlog_decisions": 48,
+        "scheduled": 49,
+        "target_entries": 49,
+        "target_exits": 49,
+        "year": 2020
+      },
+      {
+        "cap_backlog_decisions": 48,
+        "scheduled": 48,
+        "target_entries": 48,
+        "target_exits": 48,
+        "year": 2021
+      },
+      {
+        "cap_backlog_decisions": 49,
+        "scheduled": 49,
+        "target_entries": 49,
+        "target_exits": 49,
+        "year": 2022
+      },
+      {
+        "cap_backlog_decisions": 48,
+        "scheduled": 48,
+        "target_entries": 48,
+        "target_exits": 48,
+        "year": 2023
+      }
+    ],
+    "buffer_retained_fraction": 0.07408466819221968,
+    "cap_backlog_decisions": 435,
+    "dates": 2189,
+    "longest_target_underfilled_sessions": 0,
+    "minimum_target_slots_after_initial": 8,
+    "model_boundaries": 8,
+    "right_censored_spells": 8,
+    "role": "IDEAL_TARGET_PROJECTION_NOT_ACTUAL_EXPOSURE",
+    "scheduled": 438,
+    "target_closed_spell_mean": 39.359267734553775,
+    "target_closed_spell_median": 30,
+    "target_closed_spells": 437,
+    "target_daily_churn_ex_initial": 0.024977137631458618
+  },
+  "tests": {
+    "e3_and_related_targeted": 174,
+    "fast": 46,
+    "full_tier": "not run: old outcome/recent real-evidence validators outside scope; bounded targeted substitution",
+    "qlib": 6,
+    "qlib_warnings": "4 existing synthetic Mean of empty slice",
+    "ruff": "PASS",
+    "total": 226
+  }
+}

@@ -1,5 +1,10 @@
 # E2 Core 收尾报告
 
+2026-09-15 E3后续状态：[唯一策略已冻结](../e3_freeze_v1/REPORT.md)，
+**E3 STRATEGY FROZEN / PATH PREFLIGHT PENDING**。target-only预检发现replacement积压，
+actual exposure与R1–R3仍unknown；当前状态见[Matrix](MATRIX.md)。
+下文是此前Core收尾记录，其中“未冻结”是当时状态。通用E2仍停止，E4继续关闭。
+
 2026-09-15；基线 `main@c312469`。
 **E2 CORE READY / STRATEGY PATH VERIFICATION PENDING。C1 与 C2 均已关闭。**
 

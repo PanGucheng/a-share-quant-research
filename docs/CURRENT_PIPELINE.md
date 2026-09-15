@@ -5,10 +5,12 @@ artifact 名称中的 `current` 不自动表示 ACTIVE。
 
 ## 1. Status At A Glance
 
-Economic Translation MVP：**E1 COMPLETE；C1/C2 CLOSED；E2 CORE READY / STRATEGY PATH VERIFICATION PENDING**。
-2026-09-15：[历史输入验收](../reports/economic_translation_mvp/e2_hard_closure_v1/CORE_IMPLEMENTATION_ACCEPTANCE.md)采用显式 session-effective / known-event review，原固定 canary 已普通成交并 COMMITTED；known_at 未伪造，live freshness 独立。
-[当前矩阵](../reports/economic_translation_mvp/e2_hard_closure_v1/MATRIX.md)无通用 Core blocker，R1–R3 仍待实际 exposure 验证；220 项测试通过。停止 E2 infrastructure，等待人工审核；未选择策略参数、未进入真实路径或 E3/E4。
-三项采集与 E1 不重跑；B494/canonical 不变；真实收益/NAV和2024+禁止。提交推送后停止等待人工审核。
+Economic Translation MVP：**E1 COMPLETE；E2 CORE READY；E3 STRATEGY FROZEN / PATH PREFLIGHT PENDING**。
+2026-09-15：[单一策略冻结](ECONOMIC_E3_FREEZE_PREPARATION.md)为100k/K8/Hold16/5日/max-drop1/near-EW；
+[E3结构报告](../reports/economic_translation_mvp/e3_freeze_v1/REPORT.md)记录438次目标决策、435次退出积压，需要人工审议。
+目标投影与独立oracle通过不代表actual path通过；首批实际执行输入/现金接线待完成，R1–R3触发数unknown。
+[当前矩阵](../reports/economic_translation_mvp/e2_hard_closure_v1/MATRIX.md)维持Core Ready，停止通用E2治理。
+E1/三项长采集不重跑、B494/canonical不变、无经济评价/2024+项目值访问；提交推送后停止，不自动改参数或进入E4。
 
 Literature Representation **D1 CLOSED / REPRESENTATIONS FROZEN / D2 COMPLETE / ALL FIVE ARMS SEALED**。
 168个月、3382日结构扫描及独立oracle已核验，R218/C201/H358已以 `d05e7eb`

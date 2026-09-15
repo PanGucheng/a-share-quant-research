@@ -1,0 +1,283 @@
+{
+  "baseline": "33c43bd",
+  "provenance": {
+    "benchmark": {
+      "classification": "research_reference_identity_only",
+      "mvp_approximation": true,
+      "sources": [
+        "proposal",
+        "plan"
+      ]
+    },
+    "continuity": {
+      "classification": "accounting_and_accepted_MVP_contract",
+      "mvp_approximation": true,
+      "sources": [
+        "core",
+        "plan"
+      ]
+    },
+    "execution": {
+      "classification": "existing_MVP_execution_contract",
+      "mvp_approximation": true,
+      "sources": [
+        "core",
+        "plan"
+      ]
+    },
+    "fees": {
+      "classification": "user_commission_dated_rules_and_early_approximation",
+      "mvp_approximation": true,
+      "sources": [
+        "fees",
+        "capital",
+        "plan"
+      ]
+    },
+    "membership": {
+      "classification": "human_prespecified_research_definition",
+      "mvp_approximation": true,
+      "sources": [
+        "proposal",
+        "capital",
+        "e1"
+      ]
+    },
+    "orders": {
+      "classification": "conservative_engineering_constraint",
+      "mvp_approximation": true,
+      "sources": [
+        "core",
+        "plan"
+      ]
+    },
+    "preflight": {
+      "classification": "authorization_and_evidence_boundary",
+      "mvp_approximation": false,
+      "sources": [
+        "proposal",
+        "plan"
+      ]
+    },
+    "schedule": {
+      "classification": "research_definition_not_optimality_claim",
+      "mvp_approximation": true,
+      "sources": [
+        "proposal",
+        "e1"
+      ]
+    },
+    "signal": {
+      "classification": "research_definition",
+      "mvp_approximation": true,
+      "sources": [
+        "scores",
+        "proposal"
+      ]
+    },
+    "sizing": {
+      "classification": "user_capital_and_research_definition",
+      "mvp_approximation": true,
+      "sources": [
+        "proposal",
+        "capital",
+        "plan"
+      ]
+    },
+    "slots": {
+      "classification": "accounting_constraint",
+      "mvp_approximation": false,
+      "sources": [
+        "core",
+        "plan"
+      ]
+    }
+  },
+  "research_context": "retrospective_development_prior_D3A_opened_this_turn_no_outcomes",
+  "rules": {
+    "benchmark": {
+      "benchmark_values_authorized": false,
+      "external_code": "000985",
+      "external_name": "中证全指价格指数",
+      "external_role": "noninvestable_market_context_price_only_not_net_total_return_alpha",
+      "internal": "PIT_executable_universe_EW_research_reference_design_deferred",
+      "official_method": "https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/indices/detail/files/zh_CN/20231208175438-000985_Index_Methodology_cn.pdf"
+    },
+    "continuity": {
+      "annual_reset": false,
+      "daily_processing": true,
+      "dividend": "gross_tax_approximation",
+      "final_boundary": "open_rights_and_right_censored_no_liquidation",
+      "generic_R_cleanup": false,
+      "on_unresolved_exposure": "HALT_RETAIN_then_NOT_REACHED",
+      "pending_rights_persist": true,
+      "persistence": "whole_day_commit_state_and_confirmations_no_duplicate_replay"
+    },
+    "execution": {
+      "adv_cap": 0.01,
+      "adv_prior_sessions": 20,
+      "lot": "existing_dated_board_lot_quantity",
+      "missing_adv": "no_new_entry",
+      "open_fallback": false,
+      "state_mode": "historical_session_effective_known_at_null",
+      "t_plus_one": true,
+      "warmup": "2014-12-04_through_2014-12-31_only"
+    },
+    "fees": {
+      "commission_bundle": "exchange_handling_and_regulatory_included_stamp_transfer_separate",
+      "commission_rate": 0.00025,
+      "early_minimum_cny": 0,
+      "early_pass_through": "separate_assumption",
+      "implicit_bps_per_side": 10,
+      "implicit_mode": "cash_cost_not_changed_open_price",
+      "minimum_commission_cny": 5,
+      "missing_par_value": "block",
+      "mother_order": "instrument_session_side",
+      "rounding": "HALF_UP_cent_per_cumulative_component",
+      "stamp_sell": [
+        {
+          "rate": 0.001,
+          "start": "2015-01-01"
+        },
+        {
+          "rate": 0.0005,
+          "start": "2023-08-28"
+        }
+      ],
+      "transfer": [
+        {
+          "SH": 0.0003,
+          "SH_basis": "shares_times_verified_par_value",
+          "SZ": 2.55e-05,
+          "SZ_basis": "consideration",
+          "end": "2015-07-31",
+          "start": "2015-01-01"
+        },
+        {
+          "end": "2022-04-28",
+          "rate": 2e-05,
+          "start": "2015-08-01"
+        },
+        {
+          "end": "2023-12-29",
+          "rate": 1e-05,
+          "start": "2022-04-29"
+        }
+      ]
+    },
+    "membership": {
+      "cold_start": "first_scheduled_decision_only_up_to_8",
+      "entry_rank": 8,
+      "hold_rank": 16,
+      "k": 8,
+      "max_normal_entries": 1,
+      "max_normal_exits": 1,
+      "minimum_holding_sessions": 0,
+      "missing_rank": "worst_exit_priority",
+      "priority": "absent_first_then_rank_desc_then_instrument_asc"
+    },
+    "orders": {
+      "blocked_or_partial_sell": "no_new_buy_this_decision",
+      "cash_receivable_spendable": false,
+      "entry_gate": "E2_ALLOW_ENTRY",
+      "failed_exit": "no_second_exit_attempt",
+      "gate_rejection": "next_within_original_top8",
+      "holding_gate": "E2_HALT_RETAIN_or_CARRY_or_ORDINARY",
+      "intent_expiry": "session_end",
+      "missing_gate": "deny",
+      "opening_failure": "no_intraday_reselection",
+      "sell_before_buy": true,
+      "slot_release": "full_sale_and_no_pending_right",
+      "unspent_attempts": "do_not_accumulate"
+    },
+    "preflight": {
+      "actual_probe": "first_signal_top8_next_session_only",
+      "actual_unmeasured": "null_not_zero",
+      "candidate_count": 1,
+      "e4": false,
+      "grids": false,
+      "long_scans": "user_run_only_no_recollection",
+      "outcome_access": false,
+      "parameters_may_change_after_results": false,
+      "target_role": "ideal_membership_projection_not_actual_exposure",
+      "target_scope": "2015-2023_all_sealed_score_sessions"
+    },
+    "schedule": {
+      "anchor_index": 0,
+      "execute": "next_calendar_session_open_reference",
+      "final_signal_without_next_session": "no_order",
+      "interval": 5,
+      "reset_at_year_boundary": false
+    },
+    "signal": {
+      "arm": "Broad494",
+      "chinext_access": true,
+      "end": "2023-12-29",
+      "exchanges": [
+        "SH",
+        "SZ"
+      ],
+      "rank": "score_desc_then_original_instrument_asc",
+      "rank_before_eligibility": true,
+      "star_access": true,
+      "start": "2015-01-05",
+      "universe": "same_day_sealed_keys"
+    },
+    "sizing": {
+      "base": "A_certified_assets_excluding_receivables_and_unlisted_rights",
+      "cash_ceiling": "max(0,actual_spendable_cash-0.05*base)",
+      "cash_reserve": 0.05,
+      "initial_cash_cny": 100000,
+      "leftover_redistribution": false,
+      "opening": "only_check_or_reduce_never_increase",
+      "partial_topup": false,
+      "per_entry_all_in_budget": "0.95*base/8",
+      "quantity_reference": "prior_signal_close",
+      "retained_reweight": false,
+      "weighting": "near_equal_new_identity_only"
+    },
+    "slots": {
+      "alias_held": "halt_retain",
+      "alias_new": "reject_duplicate_economic_identity",
+      "includes": [
+        "shares",
+        "unlisted_bonus",
+        "registered_right",
+        "cash_receivable"
+      ],
+      "max_identities": 8
+    }
+  },
+  "sources": {
+    "capital": {
+      "path": "E:\\qlib_prj\\qlib_baseline\\reports\\economic_translation_mvp\\small_capital_v1\\REPORT.md",
+      "sha256": "f9542ba61affb2916f29b45e7e4bbe0a809d56d2a843b56bddae9345bf0d25ee"
+    },
+    "core": {
+      "path": "E:\\qlib_prj\\qlib_baseline\\reports\\economic_translation_mvp\\e2_hard_closure_v1\\HISTORICAL_CORE_ACCEPTANCE.json",
+      "sha256": "2f2a31d41dc4c5ad35b809aa8d37b72e30e4f37dfe59e3523a2c19733063434e"
+    },
+    "e1": {
+      "path": "E:\\qlib_prj\\qlib_baseline\\reports\\economic_translation_mvp\\e1_completion_v1\\REPORT.md",
+      "sha256": "e03bdc8646c075c4de8fdbe2e7376658f02f23e1f773f5bbdc9baae9425bc686"
+    },
+    "fees": {
+      "path": "E:\\qlib_prj\\qlib_baseline\\reports\\economic_translation_mvp\\dated_fee_schedule.csv",
+      "sha256": "edffeb1cc2d53936f98d047d5d1accf49ec542116589882b61f6108e3fcd1eee"
+    },
+    "plan": {
+      "path": "E:\\qlib_prj\\qlib_baseline\\docs\\ECONOMIC_E3_FREEZE_PREPARATION.md",
+      "sha256": "4293a98fe227a152ec5753de8d18cc22414a2327197428cddd9403956918384f"
+    },
+    "proposal": {
+      "path": "D:\\Download\\给 Codex：E3 Strategy Freeze Preparation 与 Outcome-Blind 结构预验收.md",
+      "sha256": "c17a68d01d52eb09207318f65bc1573e61d969e65292fcc7310449d4c9694cba"
+    },
+    "scores": {
+      "path": "E:\\qlib_prj\\qlib_baseline\\reports\\economic_translation_mvp\\e1_inputs.json",
+      "sha256": "8641bd3c72a80b20c8c41b18e62ee548261d2e0d29630596b94c12d19f25a66a"
+    }
+  },
+  "status": "E3 STRATEGY FROZEN / PATH PREFLIGHT PENDING",
+  "strategy_id": "economic_e3_b494_100k_k8_h16_d5_drop1_v1"
+}

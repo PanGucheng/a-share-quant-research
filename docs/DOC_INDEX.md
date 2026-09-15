@@ -4,6 +4,12 @@
 `docs/operations/` 保存活动工作流的 operational contracts；`docs/_archive/` 与
 `reports/` 保存 historical evidence。Archive 中的命令和“下一步”不构成当前授权。
 
+## Economic Translation 当前入口
+
+- [E3单一策略冻结计划](ECONOMIC_E3_FREEZE_PREPARATION.md) — 100k/K8/Hold16/5日/max-drop1；先冻结、后单候选结构检查。
+- [E3结构预验收报告](../reports/economic_translation_mvp/e3_freeze_v1/REPORT.md) — FROZEN / PATH PREFLIGHT PENDING；435次目标退出积压，actual R1–R3 unknown，停止人工审核。
+- [E2当前Matrix](../reports/economic_translation_mvp/e2_hard_closure_v1/MATRIX.md) — Core维持READY，通用E2停止；历史下方条目的BLOCKED是当时状态。
+
 ## Recommended Reading
 
 新 Codex 会话默认只需要：

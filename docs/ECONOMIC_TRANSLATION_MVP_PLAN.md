@@ -1,5 +1,13 @@
 # Economic Translation MVP：研究与实施计划
 
+2026-09-15 当前E3授权与结论优先于下文历史阶段：用户授权按E3 Freeze Preparation方案推进，
+已按[单一冻结计划](ECONOMIC_E3_FREEZE_PREPARATION.md)冻结100k/K8/Hold16/5日/max-drop1/near-EW。
+**E3 STRATEGY FROZEN / PATH PREFLIGHT PENDING；TARGET STRUCTURE REQUIRES HUMAN REVIEW。**
+[E3报告](../reports/economic_translation_mvp/e3_freeze_v1/REPORT.md)与[freeze](../reports/economic_translation_mvp/e3_freeze_v1/freeze.json)为当前权威。
+438次目标决策、435次退出积压；该证据不能宣称actual path通过，也不自动授权改cap再测。
+R1–R3实际触发仍unknown；E2 Core维持READY，通用治理停止；不再保留Monthly第二臂。
+E1/采集不重跑、B494/canonical不变、无2024+项目值/经济评价；提交推送后停止人工审核。
+
 2026-09-15：用户授权调整 C1 历史可得性合同，见[实施验收](../reports/economic_translation_mvp/e2_hard_closure_v1/CORE_IMPLEMENTATION_ACCEPTANCE.md)和[当前 Matrix](../reports/economic_translation_mvp/e2_hard_closure_v1/MATRIX.md)。
 **E1 COMPLETE；C1/C2 CLOSED；E2 CORE READY / STRATEGY PATH VERIFICATION PENDING。**
 
