@@ -1,5 +1,10 @@
 # E2 Data Readiness Matrix
 
+2026-09-16研究顺序更新：**E2 CORE READY；STRATEGY PATH PENDING / PAUSED**。
+E3经济选择暂停，转入[限定B494超参数研究](../../../docs/LIGHTGBM_HYPERPARAMETER_RESEARCH.md)。
+未解决的实际账户条件性问题原样保留；本轮不扩E2、不接actual path、不重采集。
+原Model Baseline V1、canonical/B494和E1证据不变；新模型另存，不覆写旧模型。
+
 2026-09-16最新候选收尾：**E3 PORTFOLIO PARAMETER RESEARCH / STRATEGY V2 CANDIDATE PENDING**，
 见[候选结论及统一对照](../e3_parameter_research_v1/CANDIDATE_DECISION.md)。30/30结构、0/30实际经济路径；
 执行来源、现金/个人费率及held-event接线实质影响候选成立。停止审核，不新增模型/参数，E2 Core READY不变。

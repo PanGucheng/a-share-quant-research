@@ -1,5 +1,10 @@
 # E3 Portfolio Parameter Research Report
 
+2026-09-16后续研究顺序调整：**E3 ECONOMIC SELECTION PAUSED / CANDIDATE PENDING**。
+本报告及`5af341e`的30个结构候选长期保留为Portfolio Mechanism Research / Candidate Set V1，
+不重跑、不继续actual path工程。新主线为[限定LightGBM超参数研究](../../../docs/LIGHTGBM_HYPERPARAMETER_RESEARCH.md)。
+下方数字与历史候选结论不变，未从结构结果选出经济赢家。
+
 2026-09-16候选审核停止点：**E3 PORTFOLIO PARAMETER RESEARCH / STRATEGY V2 CANDIDATE PENDING**。
 见[候选结论](CANDIDATE_DECISION.md)与[全部30候选统一对照](CANDIDATE_COMPARISON.json)。
 30/30结构完成，0/30完整实际经济路径；既有执行来源、现金/费率与事件接线问题足以阻止

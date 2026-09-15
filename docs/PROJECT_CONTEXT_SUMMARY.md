@@ -37,6 +37,13 @@
 
 ## Current State
 
+2026-09-16最新调整：**LightGBM Hyperparameter Research IMPLEMENTED / AWAITING USER RUN**。
+[计划](LIGHTGBM_HYPERPARAMETER_RESEARCH.md)与[报告/命令](../reports/lightgbm_hyperparameter_research_v1/REPORT.md)。
+E3经济选择暂停，30个结构候选保持原样；不再优先接actual path。B494新模型调参已获限定授权，
+每折inner过去数据选参/早停，完整outer重训，九折独立重放后才开启新两臂标签评价。
+长运行仍用户执行，未得到欠拟合/最优轮数/Model V2结论。其他training regime、组合及2024+不开放。
+下方先前“不启动模型研究”和“下一步账户接线”是历史停止点，以本段新授权为准。
+
 Economic Translation MVP：**E1 COMPLETE；E2 CORE READY；E3 PORTFOLIO PARAMETER RESEARCH / STRATEGY V2 CANDIDATE PENDING**。
 2026-09-16按用户最新停止点交付[候选结论](../reports/economic_translation_mvp/e3_parameter_research_v1/CANDIDATE_DECISION.md)：
 30个结构候选全部完成，实际经济路径0个，因执行来源和现金/费率/事件接线问题不强选V2。

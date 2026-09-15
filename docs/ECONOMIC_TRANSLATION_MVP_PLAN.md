@@ -1,5 +1,12 @@
 # Economic Translation MVP：研究与实施计划
 
+2026-09-16最新顺序调整：**E3 ECONOMIC SELECTION PAUSED / STRATEGY V2 CANDIDATE PENDING**。
+转入[LightGBM Hyperparameter Research](LIGHTGBM_HYPERPARAMETER_RESEARCH.md)，
+见[实施状态](../reports/lightgbm_hyperparameter_research_v1/REPORT.md)。`5af341e`的30个结构结果
+长期保留，不重跑、不强选经济赢家；actual execution/现金费率/held-event接线暂缓。
+E1 COMPLETE、E2 CORE READY不变，现存条件性账户问题没有被宣布解决。
+新模型研究仅限固定B494和既有年度development协议；不授权后续组合重调参或2024+。
+
 2026-09-16当前停止点为**E3 PORTFOLIO PARAMETER RESEARCH / STRATEGY V2 CANDIDATE PENDING**。
 用户要求在V2推荐候选处收尾，实际路径存在足以阻止候选成立的问题则允许pending。
 见[候选结论](../reports/economic_translation_mvp/e3_parameter_research_v1/CANDIDATE_DECISION.md)：

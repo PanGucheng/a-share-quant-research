@@ -1,5 +1,18 @@
 # Repository Working Agreement
 
+2026-09-16 latest authority: user authorized pausing E3 economic selection and
+implementing LightGBM Hyperparameter Research. See docs/LIGHTGBM_HYPERPARAMETER_RESEARCH.md
+and reports/lightgbm_hyperparameter_research_v1/REPORT.md. This supersedes earlier
+no-model-tuning stop instructions ONLY for B494 nested annual 2015-2023 development
+research (2010+ past training/inner validation). E3 is PAUSED / CANDIDATE PENDING;
+30 target results and Model Baseline V1 remain immutable. E1 COMPLETE, E2 CORE READY.
+Nine fixed inner trials per fold, train/validation label-maturity purge, inner-only
+early stopping, full outer refit and separate post-replay two-arm evaluation.
+Long fits are user-run only. Current IMPLEMENTED / AWAITING USER RUN, not tuning
+complete or Model V2 selected. No new factors, training regimes, portfolio retuning,
+actual-path engineering, production replacement or 2024+ research values. Preserve
+all failed attempts, trials and frozen evidence. Commit/push and stop for review.
+
 ## Project Positioning
 
 `A-Share Quant Research`（`A 股量化研究框架`）is a personal,
