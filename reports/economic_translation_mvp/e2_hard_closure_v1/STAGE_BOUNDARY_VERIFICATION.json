@@ -1,0 +1,80 @@
+{
+  "baseline_commit": "6656a421c6bee75a61057f007d93ee36f67363d7",
+  "proposal_sha256": "d72bc39736906247b06aa4cc7ea32ff24dca7fca9cefd7413df441b1d1db2e85",
+  "core_status": "E2 CORE PARTIAL / GENERIC INTEGRATION GAPS",
+  "overall_status": "E2 STILL BLOCKED",
+  "core_open_gaps": [
+    "C1 source-bound PIT input adapter and bounded canary",
+    "C2 scope/Qlib session integration and multistage validation"
+  ],
+  "strategy_path_status": "NOT STARTED / NOT FROZEN",
+  "conditional_cases_block_core_readiness": false,
+  "global_case_cleanup_required": false,
+  "strategy_path_irrelevant_count": null,
+  "e3_parameter_selection_activated": false,
+  "economic_evaluation_authorized": false,
+  "probe": {
+    "status": "PASS: current integration gaps reproduced, not Core Ready",
+    "cases": [
+      {
+        "case": "bad_unheld_candidate",
+        "scope": "PREFLIGHT_PASSED",
+        "legacy_error": "SH600999: unresolved; account cannot advance"
+      },
+      {
+        "case": "held_carry_without_trade_state",
+        "scope": "PREFLIGHT_PASSED",
+        "legacy_error": "SH600000: unresolved; account cannot advance"
+      }
+    ],
+    "unknown_known_at_rejected": true,
+    "account_unchanged": true,
+    "fixture_kind": "synthetic; existing scope test fixtures",
+    "historical_values_read": false,
+    "exchange_session_or_strategy_run": false,
+    "code_sha256_lf": {
+      "scripts/probe_e2_core_boundary.py": "2b90061acce25ec285f1173392fdc30fe0e5fa8b302f33d4ac8f11cb348ad51b",
+      "tests/test_economic_mvp_scope.py": "73140d53777ceac348c4003f631147a8c821b25b1122ab6786d06907669b9724",
+      "qlib_integration/economic_mvp_scope.py": "73d3417d98f9de15f22aee51271dbc5feea048d639aa235f3e4bda409869e794",
+      "qlib_integration/execution_readiness.py": "0c2a35012c3d1ba0196168a459516a1af1b5187cf29239f363629aec68631199",
+      "qlib_integration/economic_event_position.py": "359e68d63c7d29e4657800d94f9d04c2ca4860074a76a8d795425dbc92e66d50",
+      "qlib_integration/economic_exchange.py": "8bac34946aada3a5b84731c7e6766f1ab03e0c4cebf806ce15d0b32bb403e2ce",
+      "qlib_integration/economic_semantic_reconciliation.py": "3e57677da2c6221ab91eb652e50724727ef6f7f2955c2fd6e92c4a66c3c264a1"
+    }
+  },
+  "prior_scope_code_and_compact_hashes": "PASS; 3 code and 4 compact files",
+  "prior_scope_receipt_sha256_lf": "42292c464052213324ea6c2d85153d608e07034c2eff0469e8afbf9e33f402f5",
+  "scoped_e2_tests": {
+    "passed": 93,
+    "seconds": 8.49
+  },
+  "access_boundary": {
+    "new_acquisition": false,
+    "real_predictions": false,
+    "real_account_path": false,
+    "real_economic_outcomes": false,
+    "2024_plus_values": false
+  },
+  "verification_limits": [
+    "Probe compares pure scope and legacy continuity, not a complete Exchange session",
+    "Prior full data receipts reused; no full source scan repeated",
+    "No Core C1/C2 implementation or readiness certification",
+    "Legacy full validators not run: preserve real-outcome and 2024+ boundary; scoped tests used"
+  ],
+  "probe_development_note": "Initial pre-output probe failed because replacing socket class broke ssl import; deny connect methods instead. No historical data or receipt was written by failed attempt.",
+  "fast_quality": {
+    "passed": 46,
+    "seconds": 14.96,
+    "ruff": "PASS"
+  },
+  "probe_ruff": "PASS",
+  "reproduce_probe": "python scripts/probe_e2_core_boundary.py",
+  "qlib_synthetic_quality": {
+    "passed": 6,
+    "seconds": 4.57,
+    "warnings": 4,
+    "warning_detail": "Existing Qlib synthetic Mean of empty slice"
+  },
+  "documentation_checks": "PASS: all changed Markdown links, DOC_INDEX, file sizes",
+  "final_probe_code_bindings": "PASS"
+}

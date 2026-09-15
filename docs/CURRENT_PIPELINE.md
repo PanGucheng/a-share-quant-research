@@ -5,13 +5,11 @@ artifact 名称中的 `current` 不自动表示 ACTIVE。
 
 ## 1. Status At A Glance
 
-Economic Translation MVP：**E1 COMPLETE / PREDICTION STRUCTURE VERIFIED；E2 BLOCKED BY EXECUTION / DATA GAP**。
-2026-09-15：[E2 MVP Scope Simplification](../reports/economic_translation_mvp/e2_hard_closure_v1/MVP_SCOPE_SIMPLIFICATION_REVIEW.md) 已实现 PIT Entry 与 Holding/未结权利分离；不能安全新买只拒绝 entry，不要求完整特殊日模拟器。当前[矩阵](../reports/economic_translation_mvp/e2_hard_closure_v1/MATRIX.md)保留 R1 估值、R2 身份结算、R3 权益三个已有 exposure 条件下的处理方向；E2 STILL BLOCKED。未认证真实持仓可达性或非空 PIT 执行路径，不以全体 NO_NEW_ENTRY 宣布就绪。
-三项采集与 E1 不重跑；不选择 K/AUM/benchmark，不读真实收益/2024+，不进入 E3/E4；提交后停止等待审核。
-2026-09-12：用户完成九年B494结构扫描与独立重放，封存和summary复核通过。见 [E1完成复核](../reports/economic_translation_mvp/e1_completion_v1/REPORT.md)。
-见 [阶段报告](../reports/economic_translation_mvp/REPORT.md)、[执行合同与缺口](../reports/economic_translation_mvp/EXECUTION_CONTRACT.md)、
-[用户运行说明](ECONOMIC_TRANSLATION_E1_E2_RUNBOOK.md)。E1无需重跑；E2数据/公司行为/状态缺口仍阻塞后续冻结。
-B494是治理incumbent，10/20仅单一结构候选；E3冻结、E4/NAV、2024+、V2仍禁止。
+Economic Translation MVP：**E1 COMPLETE；E2 CORE PARTIAL / GENERIC INTEGRATION GAPS；STRATEGY PATH NOT STARTED**。
+2026-09-15：[Core / Strategy Path 阶段评审](../reports/economic_translation_mvp/e2_hard_closure_v1/STAGE_BOUNDARY_REVIEW.md) 与[当前矩阵](../reports/economic_translation_mvp/e2_hard_closure_v1/MATRIX.md)已将 R1–R3 转为冻结路径的条件事项，停止以全库异常清零为前提的治理。
+整体 E2 STILL BLOCKED，仅 C1 来源/PIT 输入适配与有界验收、C2 scope/Qlib 日级事件和估值接线是通用缺口。安全原语已验证，尚未认证统一执行链。
+Core 经审查通过后才激活 E3 Freeze Preparation；本轮仅交付 path contract，未选择/冻结 K/AUM/buffer/benchmark，未运行真实路径。策略先冻结、异常后检查，不因路径难处理而改策略。
+三项采集与 [E1](../reports/economic_translation_mvp/e1_completion_v1/REPORT.md)已完成，不重跑；B494/canonical不变。真实收益/NAV、自动E4和2024+禁止。提交后停止等待审核。
 
 Literature Representation **D1 CLOSED / REPRESENTATIONS FROZEN / D2 COMPLETE / ALL FIVE ARMS SEALED**。
 168个月、3382日结构扫描及独立oracle已核验，R218/C201/H358已以 `d05e7eb`

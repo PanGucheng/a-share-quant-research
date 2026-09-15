@@ -1,5 +1,7 @@
 # E2 MVP Scope Simplification Review
 
+2026-09-15 后续阶段调整以 [Core / Strategy Path Review](STAGE_BOUNDARY_REVIEW.md) 和 [Matrix](MATRIX.md) 为准。本文保留上一轮实现及当时验收结论；R1–R3 已移出 Core 前置条件，当前通用缺口为 C1/C2。
+
 2026-09-15；基线 main@bbaae7e。参考用户提供的调整计划，采纳 Entry/Holding 分离、按经济事件归类与条件触发补证；不采纳“工程范围缩小就已经证明历史影响很小”的隐含推断。附件 hash 和实际验证见 [SCOPE_VERIFICATION](SCOPE_VERIFICATION.json)。
 
 **E2 STILL BLOCKED；不自动进入 E3/E4。** 原全体候选审计作为潜在风险 inventory 保留，不再作为“每条记录修完才允许研究”的清单。本文调整 E2 的验收范围，不冻结 E3 资格、策略或参数。

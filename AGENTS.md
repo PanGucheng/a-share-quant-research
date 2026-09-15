@@ -318,3 +318,16 @@ No retrospective exclusions or claims of never-held securities without evidence.
 E2 STILL BLOCKED; preserve original scans/receipts, canonical/B494 and E1.
 No recollection, K/AUM/benchmark selection, real outcomes/NAV, E3/E4 or 2024+
 values. Commit/push scope delivery and stop for human review.
+
+2026-09-15: User authorized the E2 Core / Strategy-Specific Path boundary review.
+Current authority is e2_hard_closure_v1/STAGE_BOUNDARY_REVIEW.md and MATRIX.md.
+Core and account-path readiness are separate. Stop global case-cleanup as a Core
+prerequisite; R1-R3 are conditional on frozen actual exposure, not Core blockers.
+Current E2 CORE PARTIAL / GENERIC INTEGRATION GAPS: C1 source-bound PIT input
+adapter/bounded canary and C2 scope/Qlib session/event/valuation wiring remain open.
+E2 STILL BLOCKED; existing primitives verified, real path not started. E3 freeze
+preparation/parameter selection is conditional on reviewed Core Ready and was not
+activated this turn. Freeze rules before constructing any real path; never change
+rules to avoid triggered incidents. Target membership is not actual exposure.
+Keep outcomes/metrics closed; E4 needs separate authorization. No reacquisition,
+E1 rerun, frozen modifications or 2024+ values. Commit/push and stop for review.

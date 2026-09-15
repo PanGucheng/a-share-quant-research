@@ -1,10 +1,18 @@
 # Economic Translation MVP：研究与实施计划
 
-2026-09-15：E2 已完成 [MVP Scope Simplification 评审与实现](../reports/economic_translation_mvp/e2_hard_closure_v1/MVP_SCOPE_SIMPLIFICATION_REVIEW.md)，当前 [Matrix](../reports/economic_translation_mvp/e2_hard_closure_v1/MATRIX.md) 优先于下文旧全库覆盖要求。E1 COMPLETE；**E2 STILL BLOCKED**。本次 scope 调整不冻结 E3。
+2026-09-15：已完成 [E2 Core / Strategy Path 阶段边界评审](../reports/economic_translation_mvp/e2_hard_closure_v1/STAGE_BOUNDARY_REVIEW.md)，当前 [Matrix](../reports/economic_translation_mvp/e2_hard_closure_v1/MATRIX.md) 优先于下文历史阶段要求。
+**E1 COMPLETE；E2 CORE PARTIAL / GENERIC INTEGRATION GAPS；STRATEGY PATH NOT STARTED。整体 E2 STILL BLOCKED。**
 
-新增独立 PIT investability layer：不能安全新开仓的个股返回 NO_NEW_ENTRY，不要求修完全部历史异常或构建完整特殊日模拟器。Model Universe、B494/canonical/冻结预测保持不变。已有股数、现金应收和红股权利按独立 Holding contract 保留；禁止交易不能替代未知权益结算。剩余只保留 R1 估值、R2 身份/结算、R3 权益三个 exposure 条件下的处理方向，不要求预先人工修完所有 inventory。未验证实际持仓可达性，也不以全部拒买宣布 E2 READY。
+正式拆分 Core 与冻结策略账户路径验收；R1 估值、R2 身份/结算、R3 权益转为 strategy-specific conditional issues。
+停止以全库异常清零为前提的 E2 治理，只剩 C1 来源绑定的 PIT input adapter/canary、C2 scope 与 Qlib 日级执行/事件/估值接线两个通用缺口。
+PIT Entry/Holding 原语与普通执行组件已验证；不把全体拒买、单次 preflight 或 halt 视为完整路径通过。
 
-三项采集与 E1 不重跑；K/AUM/benchmark、真实 NAV/收益、E3/E4、2024+ 均未授权。提交推送后停止等待人工审核。
+流程调整为 Core → E3 Freeze Preparation → 冻结策略函数 → 顺序构造 target/intent 与实际成交/权利路径 → 独立 preflight → 命中 R1–R3 补证 → 另行授权 economic evaluation。
+Core Ready 不要求未触发历史个案全部解决；但当前 C1/C2 尚未关闭，故本轮仅完成准备合同，不激活条件授权下的 E3 参数选择/冻结或真实路径。
+规则必须先冻结、后观察异常；不得依收益或路径更易跑通来改变 K、universe、buffer、AUM。
+
+三项采集与 E1 不重跑，B494/canonical/旧 receipts 不变；真实 NAV/收益、自动 E4、2024+ 禁止。提交推送后停止等待人工审核。
+下文带日期段落保留历史决策，阶段状态以本节和新 Matrix 为准。
 
 用户正式运行完成，见 [E1完成复核](../reports/economic_translation_mvp/e1_completion_v1/REPORT.md)；本次不修改参数或解除E3/E4边界。
 实施交付与真实数据缺口见 [E1/E2报告](../reports/economic_translation_mvp/REPORT.md)；运行见 [runbook](ECONOMIC_TRANSLATION_E1_E2_RUNBOOK.md)。

@@ -1,34 +1,57 @@
 # Economic Translation MVP — 当前 E2 状态
 
-2026-09-15；基线 main@bbaae7e。**E2 STILL BLOCKED；未达到 E2 READY FOR E3 FREEZE。**
+2026-09-15；基线 `main@6656a42`。**E2 CORE PARTIAL / GENERIC INTEGRATION GAPS；
+STRATEGY PATH NOT STARTED。整体 E2 STILL BLOCKED。**
 
-已按用户的 Scope Simplification 计划调整并实现：Model/Research Universe 保持冻结，新增独立 PIT 新开仓门控，将 Entry 与 Holding/未结权利检查拆开。当前不再要求先补齐所有 4,416 个历史代码的特殊事件，也不把“某只股票不能安全新买”本身作为 E2 hard blocker。
+已采纳 Core Infrastructure 与 Strategy-specific Account Path 分开验收。
+停止以全库历史异常清零为前提的 E2 治理工作流；R1–R3 不再阻止 Core 验收，
+只有实际冻结路径形成 exposure 后，才要求补证、处理或保留账本停止。
 
-完整交付见 [Scope Simplification Review](MVP_SCOPE_SIMPLIFICATION_REVIEW.md)、[新 E2 Matrix](MATRIX.md)、[SCOPE_VERIFICATION](SCOPE_VERIFICATION.json)。bbaae7e 的完整语义证据仍保留于 [SEMANTIC_RECONCILIATION](SEMANTIC_RECONCILIATION.md) 和 [SEMANTIC_VERIFICATION](SEMANTIC_VERIFICATION.json)；原 3 项采集和 E1 均不重跑。
+详细 [阶段评审与 path contract](STAGE_BOUNDARY_REVIEW.md)、[当前 Matrix](MATRIX.md)、
+[本轮验证](STAGE_BOUNDARY_VERIFICATION.json)。原 [Scope Review](MVP_SCOPE_SIMPLIFICATION_REVIEW.md)、
+[Scope 验证](SCOPE_VERIFICATION.json)、[语义审计](SEMANTIC_RECONCILIATION.md) 和
+[语义验证](SEMANTIC_VERIFICATION.json) 保留为历史证据，不重写原始结论/receipts。
 
-## 本轮推进
+## 仍缺的通用能力
 
-- PIT 门控只读取决策前可得且有效的证据，未知/冲突返回 NO_NEW_ENTRY；未来不良事件不反向排除历史股票。没有将事后异常表当作准入黑名单。
-- 未持有候选不合格，不再阻断其他持仓；已有股数、现金应收、待上市红股始终纳入检查。特殊/未认证制度可 CARRY_ONLY，不需要完整特殊撮合模拟器；估值明确也不自动允许交易。
-- 固定现金应收可独立保留，不因旧股票没有行情而阻塞；仍按原事件桥处理付款，不能提前用于下单。
-- Fractional bonus 统一为精确 Decimal 权利拆分，残余权利不得丢失或虚构现金。实际分配证据未知仍停止；没有声称已完成真实零碎股交割。
-- 7 个剩余报价案例中，3 个有双源一致收盘、1 个可保留单源临时估值，改按不主动交易处理；已有持仓的 close 冲突剩 3 个，见[清单](scope_quote_incidents.csv)。
-- 80,754 个尾部缺失日整理为[148 起资产覆盖事件](scope_lifecycle_incidents.csv)。147 起最后状态为停牌、60 起此前 20 日有特殊观察，这些不能当作退市或长期停牌的原因证明。
+1. **C1：来源绑定的 PIT 执行输入适配与有界验收。** 原始采集已完成，
+   但日终状态的 known_at 仍为空、ordinary regime 未认证；缺少从现有证据到 Fact/prepared
+   的可消费输入交付。只需验证预先固定的非空普通 canary 与拒绝分支，不要求全池每个事件补完。
+2. **C2：新 scope 与 Qlib 日级生命周期接通。** 旧 continuity 仍可能因坏的未持有候选而停止，
+   旧 prepared schema 要求普通上下限；新的 carry 原语尚未接入统一执行/事件/估值流程。
+   需要阶段检查点、失败后账本保留及跨日集成验收，不需要完整特殊制度模拟器。
 
-## 简化后仍须面对什么
+PIT 拒买、持仓/权利保留、未知停机、普通成交和普通公司行动组件已有验证，
+不能因此宣称整个基础设施失败；也不能把组件通过升级为已经完成 C1/C2。
+本轮没有修改这些生产组件或实现通用接线。
 
-当前残余是 **3 个条件处理方向**：R1 已有市场敞口的估值冲突，R2 已有敞口的身份/生命周期/结算，R3 已有登记权利的公司行动语义。它们不是要求全库每条先修完的总清单，只有实际 exposure 触发时才需要解决或停止。
+## 已转为路径条件事项
 
-528 个条件事件键已分为 514 个现金条款未知、6 个权益条款冲突、6 个现金与上市条款问题、2 个历史登记快照问题；另有 183 个潜在零碎股键、225 次除权参考诊断与 89 个未分类参考重置日。前三组去重共 921 个事件键。配股、一般换股和终止现金的可信总数仍 unknown，已知同股数代码迁移关系为 1 组。
+R1 是实际市场敞口的估值冲突；R2 是实际敞口的身份/生命周期/结算；R3 是实际登记/未结权益。
+3 个 close 冲突、148 起覆盖事件、528 个未决权益键、183 个潜在零碎股键及 921 个去重诊断键
+全部保留，但不再作为 Core 前置修复清单。实际触发数、已证明 irrelevant 数量目前 unknown。
 
-本轮没有策略或持仓重放，因此不能宣称这些问题仅涉及“从未持有”的股票，也不能宣称真实问题已只剩几个案例。已封存日终状态缺乏盘前 known_at，真实非空 PIT 可执行范围仍未认证；不能通过全体 NO_NEW_ENTRY 得到一个表面 READY。
+普通分红、整数红股、固定现金应收、限定同股数迁移有处理原语；一般换股/退市/零碎股分配
+尚不能自动结算，触发则补证或 halt。安全 halt 可以通过 Core 故障测试，不能通过完整路径验收。
 
-现有 warmup 缺值门槛、日期级 PIT、日线 open-reference、税前股息、用户佣金与小额成交额精度等分级保留。特殊状态完整模拟已从 E2 必须条件移除，但实际持仓的未知估值与权益不能用不交易来消除。
+## 后续阶段怎样推进
+
+C1/C2 关闭并审查后，可进入 E3 Freeze Preparation，完成 universe/holding、K/buffer、AUM、
+现金保留、费用和 benchmark 等字段。当前仅交付准备合同，未冻结/选择参数，未激活真实 path。
+固定策略函数必须先冻结，再由冻结分数和逐日真实模拟成交生成 exposure；不能把目标名单等同持仓。
+
+独立 preflight 不读分数，检查实际股数、现金、应收和红股的连续性；结果开放仍关闭。
+遇到 R1–R3 保留最后完整检查点并停机，不能修改策略躲避异常；halt 后未来未走到的区间不能标无影响。
+仅当路径完整、触发事项解决、独立验证和边界会计通过，且用户另行授权，才允许 economic evaluation。
+
+严格 ADV warmup 缺值拒买、date-PIT、daily-open-reference、税前口径等既有 MVP 近似保留。
+不能用它们填零未知权益、伪造盘前证据或绕过身份/估值冲突。
 
 ## 验证与停止点
 
-22 项新 scope 测试、71 项既有 E2 回归、46 项 fast 和 6 项 Qlib synthetic runtime 通过；独立验证核对 210 个输入绑定、6 个输出及事件计数。只对已封存的 148 起覆盖事件和 7 日报价作有界离线复核，没有重新采集、计算真实 NAV/收益或访问 2024+。
+93 项既有 E2 范围测试通过；synthetic probe 重现 scope 接受/旧 continuity 拒绝的两个接线边界，
+并确认账户不变、空 known_at 不可用。它是缺口定位，不是统一执行路径验收。
+本轮未重采 Quotes/States/Dividends，未重跑 E1、读 B494 分数、生成真实 NAV/收益或访问 2024+。
 
-新层是 opt-in 前置 contract 和持仓/权利适配；旧 Exchange 及其准备数据要求没有被绕过，未新增真实策略 runner。详细能力边界和最小后续工作见 [Review](MVP_SCOPE_SIMPLIFICATION_REVIEW.md)。
-
-**E2 STILL BLOCKED。提交、推送后停止等待人工审核；不修改 B494/canonical/E1/旧 receipts，不选择 K/AUM/benchmark，不自动进入 E3/E4。**
+**全库修复前置要求已关闭；通用 C1/C2 尚未关闭；当前不宣布 E2 CORE READY。**
+提交推送后停止等待人工审核，不自动进入 E3/E4。
