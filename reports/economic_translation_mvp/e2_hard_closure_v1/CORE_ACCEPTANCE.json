@@ -1,0 +1,83 @@
+{
+  "baseline_commit": "146cb04d30b92c884cfd9644404290e2e04674c1",
+  "status": "E2 STILL BLOCKED / C1 REAL-SOURCE ACCEPTANCE",
+  "c1": "IMPLEMENTED; fixed real-source ordinary PIT canary NOT ACCEPTED",
+  "c2": "CLOSED / SYNTHETIC INTEGRATION ACCEPTED",
+  "c1_source_canary": {
+    "scope_sha256": "ae9292a72357597e3b65ad554550e2d5f184011aa249e6b00e6c528cfaf6df14",
+    "source_rows": 21,
+    "prior_sessions": 20,
+    "c1_implementation": "MARKET ADAPTER VERIFIED; explicit certificates required for identity/state/events",
+    "c1_acceptance": "NOT ACCEPTED: no nonempty certified ordinary PIT path",
+    "entry_action": "NO_NEW_ENTRY",
+    "reasons": [
+      "identity_unknown",
+      "event_evidence_unknown_or_pending",
+      "ordinary_execution_not_certified"
+    ],
+    "ordinary_state_certificate_present": false,
+    "complete_event_coverage_certificate_present": false,
+    "identity_availability_certificate_present": false,
+    "independent_adv20": 50322888.6,
+    "adapter_adv20": 50322888.6,
+    "positive_open_and_independent_limits": true,
+    "source_observed_event_rows": 0,
+    "empty_event_slice_proves_absence": false,
+    "approximations": [
+      "SH600000:quote_quality:prior_session_eod; source_known_at=null",
+      "SH600000:adv20_shares:prior_session_eod; source_known_at=null",
+      "SH600000:raw_open:daily_open_reference; source_known_at=null",
+      "SH600000:open_evidence:daily_open_reference; source_known_at=null",
+      "SH600000:close_mark:daily_close_observation; source_known_at=null"
+    ],
+    "no_new_collection": true,
+    "no_real_account": true,
+    "no_scores_outcomes_or_2024plus": true,
+    "code_sha256_lf": {
+      "scripts/accept_e2_core_canary.py": "09ac75d303a38e13d128c85cdd819eb2e8033f71cdb66aea879d9c8c9f7e3292",
+      "qlib_integration/economic_core_inputs.py": "009504d238c6f7339939c5a130349df6231a5fae50924688df52b43ab4b86087",
+      "qlib_integration/economic_core_session.py": "ef5c16a7683f80c2f378222a67a7ab07229526f07e9698527f62fb5e7a3074b1",
+      "tests/test_economic_core.py": "3559037c1b752ec0605c5b708673252f535db3188eeceaff4c0bf24236dff7a3"
+    }
+  },
+  "c1_independent_verification": {
+    "status": "PASS",
+    "c1_acceptance": "NOT ACCEPTED",
+    "input_hashes": 14,
+    "output_hashes": 4,
+    "independent_adv20": 50322888.6,
+    "no_production_adapter_import": true,
+    "real_account_or_outcome": false,
+    "source_receipt_sha256": "aec8b403855c2fbf16602c4af24c0e4f4570c2ae1fbfbe3f2103b314ef96ece8",
+    "verifier_sha256_lf": "0f5f94dc86744f6c83e4ea004f77681d935a1278fc24eedbba6da63b31762cf4"
+  },
+  "final_output": "outputs/economic_translation_mvp/e2_core_acceptance_v4",
+  "prior_attempts_preserved": [
+    "e2_core_acceptance_v1",
+    "e2_core_acceptance_v2",
+    "e2_core_acceptance_v3"
+  ],
+  "prior_attempt_note": "Same fixed sample and acceptance standard. Final code includes future-event filtering and refusal to commit unknown newly reported close entitlements. No real account or strategy executed.",
+  "tests": {
+    "new_core": 32,
+    "existing_e2": 93,
+    "scoped_total": 125,
+    "scoped_seconds": 8.82,
+    "fast": 46,
+    "qlib": 6,
+    "qlib_warnings": 4,
+    "targeted_ruff": "PASS"
+  },
+  "old_scope_code_and_inventory_bindings": "PASS; original source and execution modules unchanged",
+  "full_tier": "Not run: legacy real-outcome/recent validators are outside authorization; scoped regressions and isolated Qlib checks used",
+  "boundaries": {
+    "no_new_full_scan": true,
+    "no_e1_rerun": true,
+    "no_strategy_freeze": true,
+    "no_real_account": true,
+    "no_outcomes": true,
+    "no_2024plus": true,
+    "no_scope_expansion": true
+  },
+  "documentation_checks": "PASS: all changed Markdown local links, DOC_INDEX, changed-file size limit"
+}

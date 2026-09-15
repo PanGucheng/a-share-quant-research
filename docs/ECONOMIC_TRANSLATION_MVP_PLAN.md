@@ -1,18 +1,16 @@
 # Economic Translation MVP：研究与实施计划
 
-2026-09-15：已完成 [E2 Core / Strategy Path 阶段边界评审](../reports/economic_translation_mvp/e2_hard_closure_v1/STAGE_BOUNDARY_REVIEW.md)，当前 [Matrix](../reports/economic_translation_mvp/e2_hard_closure_v1/MATRIX.md) 优先于下文历史阶段要求。
-**E1 COMPLETE；E2 CORE PARTIAL / GENERIC INTEGRATION GAPS；STRATEGY PATH NOT STARTED。整体 E2 STILL BLOCKED。**
+2026-09-15：用户授权仅实现并验收 C1 + C2，交付见 [实施验收](../reports/economic_translation_mvp/e2_hard_closure_v1/CORE_IMPLEMENTATION_ACCEPTANCE.md) 与 [当前 Matrix](../reports/economic_translation_mvp/e2_hard_closure_v1/MATRIX.md)。
+**E1 COMPLETE；C2 CLOSED / SYNTHETIC INTEGRATION ACCEPTED；C1 IMPLEMENTED / REAL-SOURCE ACCEPTANCE BLOCKED。E2 STILL BLOCKED；STRATEGY PATH NOT STARTED。**
 
-正式拆分 Core 与冻结策略账户路径验收；R1 估值、R2 身份/结算、R3 权益转为 strategy-specific conditional issues。
-停止以全库异常清零为前提的 E2 治理，只剩 C1 来源绑定的 PIT input adapter/canary、C2 scope 与 Qlib 日级执行/事件/估值接线两个通用缺口。
-PIT Entry/Holding 原语与普通执行组件已验证；不把全体拒买、单次 preflight 或 halt 视为完整路径通过。
+C2 已接通 A→事件/准入→B成交→C估值/登记的整日工作副本提交，carry 无普通报价，失败保留全部权利并支持同输入恢复。
+C1 已实现来源绑定与量价分阶段适配；固定 SH600000 / 2020-08-24 canary 的量价/ADV/涨跌停核对通过，但缺普通状态、身份可得性和完整事件覆盖的盘前证明，实际 NO_NEW_ENTRY。不因此宣布 Core Ready，不换样本或扩展采集。
 
-流程调整为 Core → E3 Freeze Preparation → 冻结策略函数 → 顺序构造 target/intent 与实际成交/权利路径 → 独立 preflight → 命中 R1–R3 补证 → 另行授权 economic evaluation。
-Core Ready 不要求未触发历史个案全部解决；但当前 C1/C2 尚未关闭，故本轮仅完成准备合同，不激活条件授权下的 E3 参数选择/冻结或真实路径。
-规则必须先冻结、后观察异常；不得依收益或路径更易跑通来改变 K、universe、buffer、AUM。
+继续沿用 [Core / Strategy Path 合同](../reports/economic_translation_mvp/e2_hard_closure_v1/STAGE_BOUNDARY_REVIEW.md)：不要求全库异常清零；R1–R3 只在 frozen path 实际 exposure 后处理。当前通用待验收项仅 C1，不新增阶段。
+Core 审查通过后才激活 E3 Freeze Preparation。策略先冻结、异常后检查；目标名单不等于实际成交/权利路径。不得按收益或更易跑通选择规则。
 
 三项采集与 E1 不重跑，B494/canonical/旧 receipts 不变；真实 NAV/收益、自动 E4、2024+ 禁止。提交推送后停止等待人工审核。
-下文带日期段落保留历史决策，阶段状态以本节和新 Matrix 为准。
+下文历史段落保留，当前状态以本节和 Matrix 为准。
 
 用户正式运行完成，见 [E1完成复核](../reports/economic_translation_mvp/e1_completion_v1/REPORT.md)；本次不修改参数或解除E3/E4边界。
 实施交付与真实数据缺口见 [E1/E2报告](../reports/economic_translation_mvp/REPORT.md)；运行见 [runbook](ECONOMIC_TRANSLATION_E1_E2_RUNBOOK.md)。

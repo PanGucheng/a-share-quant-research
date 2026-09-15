@@ -331,3 +331,15 @@ activated this turn. Freeze rules before constructing any real path; never chang
 rules to avoid triggered incidents. Target membership is not actual exposure.
 Keep outcomes/metrics closed; E4 needs separate authorization. No reacquisition,
 E1 rerun, frozen modifications or 2024+ values. Commit/push and stop for review.
+
+2026-09-15: User authorized implementing and accepting C1+C2 only, without expanding
+E2 scope. See e2_hard_closure_v1/CORE_IMPLEMENTATION_ACCEPTANCE.md and MATRIX.md.
+C2 is CLOSED / SYNTHETIC INTEGRATION ACCEPTED: opt-in whole-day Qlib transaction,
+phase-separated inputs, carry without fake quotes, and full rollback/replay.
+C1 input adaptation is implemented; fixed SH600000 / 2020-08-24 source canary remains
+NOT ACCEPTED because source-bound ordinary state, identity availability and event
+coverage evidence is missing. E2 STILL BLOCKED solely on C1 acceptance, no new scope.
+Daily market phase clocks are explicit existing MVP approximations, not source
+publication timestamps; they cannot generate state/event-clearance certificates.
+Do not swap the failed sample, recollect full scans, rerun E1, freeze/select strategy,
+read real outcomes/2024+ or activate E3/E4. Preserve all prior evidence and stop for review.

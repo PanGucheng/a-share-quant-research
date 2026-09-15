@@ -37,11 +37,10 @@
 
 ## Current State
 
-Economic Translation MVP：**E1 COMPLETE；E2 CORE PARTIAL / GENERIC INTEGRATION GAPS；STRATEGY PATH NOT STARTED**。
-2026-09-15：[Core / Strategy Path 阶段评审](../reports/economic_translation_mvp/e2_hard_closure_v1/STAGE_BOUNDARY_REVIEW.md) 与[当前矩阵](../reports/economic_translation_mvp/e2_hard_closure_v1/MATRIX.md)已将 R1–R3 转为冻结路径的条件事项，停止以全库异常清零为前提的治理。
-整体 E2 STILL BLOCKED，仅 C1 来源/PIT 输入适配与有界验收、C2 scope/Qlib 日级事件和估值接线是通用缺口。安全原语已验证，尚未认证统一执行链。
-Core 经审查通过后才激活 E3 Freeze Preparation；本轮仅交付 path contract，未选择/冻结 K/AUM/buffer/benchmark，未运行真实路径。策略先冻结、异常后检查，不因路径难处理而改策略。
-三项采集与 [E1](../reports/economic_translation_mvp/e1_completion_v1/REPORT.md)已完成，不重跑；B494/canonical不变。真实收益/NAV、自动E4和2024+禁止。提交后停止等待审核。
+Economic Translation MVP：**E1 COMPLETE；C2 CLOSED / SYNTHETIC INTEGRATION ACCEPTED；C1 IMPLEMENTED / REAL-SOURCE ACCEPTANCE BLOCKED；E2 STILL BLOCKED**。
+2026-09-15：[C1/C2 实施验收](../reports/economic_translation_mvp/e2_hard_closure_v1/CORE_IMPLEMENTATION_ACCEPTANCE.md)已交付来源/阶段适配及 Qlib 整日事务接线，当前[矩阵](../reports/economic_translation_mvp/e2_hard_closure_v1/MATRIX.md)只保留 C1 真实来源验收。固定 canary 量价通过但盘前普通状态/身份/事件覆盖证明未齐，不以 NO_NEW_ENTRY 宣告 Core Ready。
+C2 已验证普通交易/事件、特殊 carry、未结权利及故障恢复。R1–R3 仍为 frozen exposure 条件事项，不扩展全库治理。真实策略未冻结/未运行，不进入 E3/E4。
+三项采集与 E1 不重跑；B494/canonical 不变；真实收益/NAV和2024+禁止。提交推送后停止等待人工审核。
 
 2026-09-10：D1全量168个月、3382日结构扫描及独立oracle通过后，用户授权评估并实施正式冻结与D2。
 R218/C201/H358以 `d05e7eb` [正式冻结](../reports/literature_factor_representation_d1/FORMAL_FREEZE.md)，

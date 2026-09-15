@@ -1,5 +1,7 @@
 # E2 Core 与冻结策略路径：阶段边界评审
 
+2026-09-15 后续 [C1/C2 实施验收](CORE_IMPLEMENTATION_ACCEPTANCE.md) 已完成：C2 关闭，C1 适配实现但固定真实来源验收仍 BLOCKED。本文保留阶段定义及实施前状态，当前状态以 [Matrix](MATRIX.md) 为准。
+
 2026-09-15；审查基线 `main@6656a42`，已核对与 origin/main 一致。参考用户提供的
 《E2 Core Readiness 与 Strategy-Specific Path Verification 调整计划》，附件 SHA256：
 `d72bc39736906247b06aa4cc7ea32ff24dca7fca9cefd7413df441b1d1db2e85`。

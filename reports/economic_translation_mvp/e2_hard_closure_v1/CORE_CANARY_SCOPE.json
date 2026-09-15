@@ -1,0 +1,17 @@
+{
+  "baseline": "146cb04",
+  "purpose": "C1 bounded source adapter acceptance; no real orders or account",
+  "instrument": "SH600000",
+  "order_date": "2020-08-24",
+  "history_start": "2020-07-27",
+  "history_end": "2020-08-21",
+  "selection_reason": "Previously fixed provider probe stock/date with existing independent stk_limit receipt; selected before this turn reads values",
+  "inputs": ["sealed Quotes SH600000 slice", "sealed States SH600000 slice", "existing stk_limit 20200824", "sealed semantic event rows for SH600000 with record/ex dates intersecting the bounded window"],
+  "fields": ["date", "instrument", "open", "high", "low", "close", "volume", "amount", "factor", "tradestatus", "isST", "preclose", "pre_close", "up_limit", "down_limit", "event_id", "record_date", "ex_date", "implementation announcement metadata", "source hashes", "availability metadata"],
+  "success": "Nonempty ordinary A/B/C adapter path with source-bound availability, plus missing/conflicting input denials; no manufactured known_at or events_clear",
+  "failure": "Retain failed source canary and C1 NOT ACCEPTED if ordinary PIT facts cannot be supported; do not replace sample or broaden acquisition",
+  "network_collection": false,
+  "scores_or_outcomes": false,
+  "real_account": false,
+  "values_2024plus": false
+}

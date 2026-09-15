@@ -1,57 +1,42 @@
 # Economic Translation MVP — 当前 E2 状态
 
-2026-09-15；基线 `main@6656a42`。**E2 CORE PARTIAL / GENERIC INTEGRATION GAPS；
-STRATEGY PATH NOT STARTED。整体 E2 STILL BLOCKED。**
+2026-09-15；基线 `main@146cb04`。**C2 已验收关闭；C1 已实现但真实来源验收未通过。
+E2 CORE PARTIAL / E2 STILL BLOCKED；STRATEGY PATH NOT STARTED。**
 
-已采纳 Core Infrastructure 与 Strategy-specific Account Path 分开验收。
-停止以全库历史异常清零为前提的 E2 治理工作流；R1–R3 不再阻止 Core 验收，
-只有实际冻结路径形成 exposure 后，才要求补证、处理或保留账本停止。
+用户本轮要求只实现并验收 C1 + C2。本轮已交付两个 opt-in 模块、定向测试、固定真实 canary
+与独立验证，没有扩展 E2 scope。详见 [实施验收](CORE_IMPLEMENTATION_ACCEPTANCE.md)、
+[当前 Matrix](MATRIX.md)、[机器证据](CORE_ACCEPTANCE.json)。
 
-详细 [阶段评审与 path contract](STAGE_BOUNDARY_REVIEW.md)、[当前 Matrix](MATRIX.md)、
-[本轮验证](STAGE_BOUNDARY_VERIFICATION.json)。原 [Scope Review](MVP_SCOPE_SIMPLIFICATION_REVIEW.md)、
-[Scope 验证](SCOPE_VERIFICATION.json)、[语义审计](SEMANTIC_RECONCILIATION.md) 和
-[语义验证](SEMANTIC_VERIFICATION.json) 保留为历史证据，不重写原始结论/receipts。
+## 已解决：C2
 
-## 仍缺的通用能力
+CoreSession 复用 Qlib Account/EventPosition/EconomicOpenExchange，将盘前 A、公司行动、
+Entry/Holding 门控、开盘 B、日终 C 与登记接通。坏的未持有候选只拒买；特殊持仓和现金应收
+通过独立 carry 分支保留，不构造假的普通限价或行情。普通订单沿用原 lot、T+1、容量和费用检查。
 
-1. **C1：来源绑定的 PIT 执行输入适配与有界验收。** 原始采集已完成，
-   但日终状态的 known_at 仍为空、ordinary regime 未认证；缺少从现有证据到 Fact/prepared
-   的可消费输入交付。只需验证预先固定的非空普通 canary 与拒绝分支，不要求全池每个事件补完。
-2. **C2：新 scope 与 Qlib 日级生命周期接通。** 旧 continuity 仍可能因坏的未持有候选而停止，
-   旧 prepared schema 要求普通上下限；新的 carry 原语尚未接入统一执行/事件/估值流程。
-   需要阶段检查点、失败后账本保留及跨日集成验收，不需要完整特殊制度模拟器。
+账户日只在工作副本全部检查通过后提交。事件后、成交后、收盘后和提交前故障均保留原账户；
+恢复重放结果一致。现金/红股在原股卖出后继续存在，未知权益/估值和非整数分配继续停机。
+C2 为 **CLOSED / ACCEPTED WITHIN CORE SCOPE**，不是实际策略路径已经跑通。
 
-PIT 拒买、持仓/权利保留、未知停机、普通成交和普通公司行动组件已有验证，
-不能因此宣称整个基础设施失败；也不能把组件通过升级为已经完成 C1/C2。
-本轮没有修改这些生产组件或实现通用接线。
+## 尚未验收通过：C1
 
-## 已转为路径条件事项
+输入适配已实现 instrument/field/phase/source/hash 绑定，未可得版本先过滤；
+现有量价 overlay 接入严格 prior-20 ADV，开盘价单独使用固定原始源，避免日终诊断影响开盘。
+已允许的日线阶段近似显式标注 source_known_at=null，不拿它补造 state/events_clear。
 
-R1 是实际市场敞口的估值冲突；R2 是实际敞口的身份/生命周期/结算；R3 是实际登记/未结权益。
-3 个 close 冲突、148 起覆盖事件、528 个未决权益键、183 个潜在零碎股键及 921 个去重诊断键
-全部保留，但不再作为 Core 前置修复清单。实际触发数、已证明 irrelevant 数量目前 unknown。
+真实样本固定为 SH600000 / 2020-08-24。21 行切片、独立量价和涨跌停表验证通过；
+ADV20 双方均为 50,322,888.6 股。但固定来源未提供普通状态、身份可得性和完整事件覆盖的
+盘前证明，实际为 **NO_NEW_ENTRY**。事件切片为空也不代表完整无事件。
+因此 C1 为 **IMPLEMENTED / REAL-SOURCE ACCEPTANCE BLOCKED**，不能把拒绝分支通过当作普通路径成功。
 
-普通分红、整数红股、固定现金应收、限定同股数迁移有处理原语；一般换股/退市/零碎股分配
-尚不能自动结算，触发则补证或 halt。安全 halt 可以通过 Core 故障测试，不能通过完整路径验收。
+这仍是原 C1 的证据缺口，不新增 blocker 或扩展采集，也不退回全库异常修复。
+R1–R3 保持冻结实际 exposure 的条件事项；148/528/921 inventory 和旧 receipts 均保留。
 
-## 后续阶段怎样推进
+## 验证与边界
 
-C1/C2 关闭并审查后，可进入 E3 Freeze Preparation，完成 universe/holding、K/buffer、AUM、
-现金保留、费用和 benchmark 等字段。当前仅交付准备合同，未冻结/选择参数，未激活真实 path。
-固定策略函数必须先冻结，再由冻结分数和逐日真实模拟成交生成 exposure；不能把目标名单等同持仓。
+新增定向测试覆盖分阶段输入、普通会计、carry、拒绝与失败恢复；既有 E2/fast/Qlib 检查通过。
+独立 canary 程序核验 14 个输入 hash、4 个输出 hash，并从原始数据单独复算 ADV。
+最终输出 e2_core_acceptance_v4，前版同一固定样本的核验结果保留；未换样本、未改通过标准。
 
-独立 preflight 不读分数，检查实际股数、现金、应收和红股的连续性；结果开放仍关闭。
-遇到 R1–R3 保留最后完整检查点并停机，不能修改策略躲避异常；halt 后未来未走到的区间不能标无影响。
-仅当路径完整、触发事项解决、独立验证和边界会计通过，且用户另行授权，才允许 economic evaluation。
-
-严格 ADV warmup 缺值拒买、date-PIT、daily-open-reference、税前口径等既有 MVP 近似保留。
-不能用它们填零未知权益、伪造盘前证据或绕过身份/估值冲突。
-
-## 验证与停止点
-
-93 项既有 E2 范围测试通过；synthetic probe 重现 scope 接受/旧 continuity 拒绝的两个接线边界，
-并确认账户不变、空 known_at 不可用。它是缺口定位，不是统一执行路径验收。
-本轮未重采 Quotes/States/Dividends，未重跑 E1、读 B494 分数、生成真实 NAV/收益或访问 2024+。
-
-**全库修复前置要求已关闭；通用 C1/C2 尚未关闭；当前不宣布 E2 CORE READY。**
-提交推送后停止等待人工审核，不自动进入 E3/E4。
+未重采三项长扫描、未重跑 E1、未读取分数或 2024+、未运行真实账户/收益评价。
+旧执行组件、B494/canonical/冻结证据保持不变；费用参数选择仍在原 E3 范围。
+**当前不能宣布 E2 CORE READY，不进入 E3/E4。提交推送后停止等待人工审核。**
