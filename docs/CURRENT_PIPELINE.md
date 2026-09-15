@@ -5,9 +5,9 @@ artifact 名称中的 `current` 不自动表示 ACTIVE。
 
 ## 1. Status At A Glance
 
-Economic Translation MVP：**E1 COMPLETE；C2 CLOSED / SYNTHETIC INTEGRATION ACCEPTED；C1 IMPLEMENTED / REAL-SOURCE ACCEPTANCE BLOCKED；E2 STILL BLOCKED**。
-2026-09-15：[C1/C2 实施验收](../reports/economic_translation_mvp/e2_hard_closure_v1/CORE_IMPLEMENTATION_ACCEPTANCE.md)已交付来源/阶段适配及 Qlib 整日事务接线，当前[矩阵](../reports/economic_translation_mvp/e2_hard_closure_v1/MATRIX.md)只保留 C1 真实来源验收。固定 canary 量价通过但盘前普通状态/身份/事件覆盖证明未齐，不以 NO_NEW_ENTRY 宣告 Core Ready。
-C2 已验证普通交易/事件、特殊 carry、未结权利及故障恢复。R1–R3 仍为 frozen exposure 条件事项，不扩展全库治理。真实策略未冻结/未运行，不进入 E3/E4。
+Economic Translation MVP：**E1 COMPLETE；C1/C2 CLOSED；E2 CORE READY / STRATEGY PATH VERIFICATION PENDING**。
+2026-09-15：[历史输入验收](../reports/economic_translation_mvp/e2_hard_closure_v1/CORE_IMPLEMENTATION_ACCEPTANCE.md)采用显式 session-effective / known-event review，原固定 canary 已普通成交并 COMMITTED；known_at 未伪造，live freshness 独立。
+[当前矩阵](../reports/economic_translation_mvp/e2_hard_closure_v1/MATRIX.md)无通用 Core blocker，R1–R3 仍待实际 exposure 验证；220 项测试通过。停止 E2 infrastructure，等待人工审核；未选择策略参数、未进入真实路径或 E3/E4。
 三项采集与 E1 不重跑；B494/canonical 不变；真实收益/NAV和2024+禁止。提交推送后停止等待人工审核。
 
 Literature Representation **D1 CLOSED / REPRESENTATIONS FROZEN / D2 COMPLETE / ALL FIVE ARMS SEALED**。

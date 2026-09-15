@@ -343,3 +343,16 @@ Daily market phase clocks are explicit existing MVP approximations, not source
 publication timestamps; they cannot generate state/event-clearance certificates.
 Do not swap the failed sample, recollect full scans, rerun E1, freeze/select strategy,
 read real outcomes/2024+ or activate E3/E4. Preserve all prior evidence and stop for review.
+
+2026-09-15: User authorized revising C1 historical availability under the supplied
+Historical/Live separation memo. Current authority is CORE_IMPLEMENTATION_ACCEPTANCE.md
+and MATRIX.md in e2_hard_closure_v1. C1+C2 CLOSED; E2 CORE READY / STRATEGY PATH
+VERIFICATION PENDING. Historical session-effective evidence keeps known_at null;
+known-event review is explicitly incomplete, not a five-family absence certificate.
+Fixed SH600000 / 2020-08-24 ordinary one-day engineering canary COMMITTED; 220 tests
+passed. Live receipt/freshness validation rejects historical approximations; no live
+provider/execution implemented. Prior strict-PIT failure/receipts remain immutable.
+Stop generic E2 infrastructure. No full R1-R3 cleanup, source recollection, E1 rerun,
+B494/canonical edits, parameter selection, real strategy path, outcomes or 2024+.
+Core Ready does not certify any actual strategy path. Commit/push and stop for human
+review; do not auto-activate E3/E4.

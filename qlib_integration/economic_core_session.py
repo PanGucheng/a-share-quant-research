@@ -38,12 +38,14 @@ def exposures(position):
 
 
 def check_scope(account, candidates, phase):
-    result = scope_account(account, candidates, phase.at, phase.facts, phase.states)
+    historical = phase.mode == "historical"
+    result = scope_account(account, candidates, phase.at, phase.facts, phase.states, historical=historical)
     p = account.current_position
     for stock in exposures(p) - set(result["holdings"]):
         needs_mark = any(e.instrument == stock and e.bonus_per_share > 0 for e in p.events.values())
         result["holdings"][stock] = holding_continuity(
-            stock, phase.at, phase.facts.get(stock, {}), phase.states.get(stock), needs_market_mark=needs_mark
+            stock, phase.at, phase.facts.get(stock, {}), phase.states.get(stock), needs_market_mark=needs_mark,
+            historical=historical
         )
         result["entries"].pop(stock, None)
     for key, event in p.events.items():
@@ -60,13 +62,13 @@ def check_scope(account, candidates, phase):
                 result["holdings"][stock] = Decision("HALT_RETAIN", ("new_close_event_requires_terms_and_record_capture",))
     assets = set()
     for stock in result["holdings"]:
-        fact = visible_fact(phase.facts.get(stock, {}).get("asset_id", ()), phase.at)
+        fact = visible_fact(phase.facts.get(stock, {}).get("asset_id", ()), phase.at, historical=historical)
         if fact and fact.value in assets:
             result["holdings"][stock] = Decision("HALT_RETAIN", ("duplicate_held_asset",))
         if fact:
             assets.add(fact.value)
     for stock in result["entries"]:
-        fact = visible_fact(phase.facts.get(stock, {}).get("asset_id", ()), phase.at)
+        fact = visible_fact(phase.facts.get(stock, {}).get("asset_id", ()), phase.at, historical=historical)
         if fact and fact.value in assets:
             result["entries"][stock] = Decision("NO_NEW_ENTRY", ("pending_right_asset_collision",))
     result["preserved_exposures"] = tuple(sorted(exposures(p)))
@@ -78,7 +80,7 @@ def check_scope(account, candidates, phase):
 def marks(phase):
     result = {}
     for stock, facts in phase.facts.items():
-        mark = visible_fact(facts.get("valuation_mark", ()), phase.at)
+        mark = visible_fact(facts.get("valuation_mark", ()), phase.at, historical=phase.mode == "historical")
         if mark and mark.observed_on == phase.date and not isinstance(mark.value, bool):
             if isinstance(mark.value, (int, float)) and math.isfinite(mark.value) and mark.value > 0:
                 result[stock] = mark.value
@@ -115,7 +117,10 @@ class CoreSession:
     Only the Qlib account is durable; intraday fee/capacity/T+1 state is day-local.
     """
 
-    def __init__(self, account, calendar):
+    def __init__(self, account, calendar, *, mode="strict"):
+        if mode not in {"strict", "historical"}:
+            raise ValueError("CoreSession is research only; live execution is not implemented")
+        self.mode = mode
         if account.is_port_metr_enabled() or account.benchmark_config.get("benchmark") is not None:
             raise ValueError("core requires metrics and benchmark return access disabled")
         if not isinstance(account.current_position, EventPosition):
@@ -150,7 +155,7 @@ class CoreSession:
 
         def load(phase):
             snapshot = loader(phase)
-            if snapshot.phase != phase or snapshot.date != date:
+            if snapshot.phase != phase or snapshot.date != date or snapshot.mode != self.mode:
                 raise ValueError("loader phase/date mismatch")
             instant = pd.Timestamp(snapshot.at)
             clock = instant.strftime("%H:%M:%S")
@@ -200,7 +205,8 @@ class CoreSession:
             frame = prepared_rows(a, b, {x.instrument for x in allowed}, self.calendar)
             filled = 0
             if frame is not None:
-                exchange = _ScopedExchange(execution_quotes=frame, calendar=self.calendar)
+                exchange = _ScopedExchange(execution_quotes=frame, calendar=self.calendar,
+                                           historical_inputs=self.mode == "historical")
                 exchange.activate(date, work, scope)
                 for intent in allowed:
                     order = Order(stock_id=intent.instrument, amount=intent.shares,
@@ -241,7 +247,7 @@ class CoreSession:
         self.account.__dict__.clear()
         self.account.__dict__.update(replacement, current_position=durable_position)
         self.last_date = date
-        receipt = dict(date=date, status="COMMITTED", fills=filled, denied=denied,
+        receipt = dict(date=date, status="COMMITTED", fills=filled, denied=denied, input_mode=self.mode,
                        exposed=len(exposures(durable_position)), metrics_enabled=False)
         self.receipts.append(receipt)
         return receipt

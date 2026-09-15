@@ -1,0 +1,94 @@
+{
+  "baseline_commit": "c312469",
+  "proposal_sha256": "68512c2fbb9a799c0214cf8ee0a78117459329562c6f627f2ff6242e40a7cef4",
+  "status": "E2 CORE READY / STRATEGY PATH VERIFICATION PENDING",
+  "c1": "CLOSED / HISTORICAL APPROXIMATION ACCEPTED",
+  "c2": "CLOSED / SYNTHETIC INTEGRATION ACCEPTED; regression passed",
+  "summary": {
+    "status": "PASS",
+    "c1": "CLOSED / HISTORICAL APPROXIMATION ACCEPTED",
+    "source_rows": 21,
+    "session_event_rows": 0,
+    "event_coverage_complete": false,
+    "source_known_at_remains_null": true,
+    "exact_preopen_pit_certified": false,
+    "approximations": [
+      "SH600000:quote_quality:prior_session_eod;source_known_at=null",
+      "SH600000:adv20_shares:prior_session_eod;source_known_at=null",
+      "SH600000:asset_id:historical_session_effective;source_known_at=null",
+      "SH600000:state:historical_session_effective;source_known_at=null",
+      "SH600000:reference_mark:historical_session_effective;source_known_at=null",
+      "SH600000:events_clear:historical_session_effective;source_known_at=null",
+      "SH600000:raw_open:daily_open_reference;source_known_at=null",
+      "SH600000:open_evidence:daily_open_reference;source_known_at=null",
+      "SH600000:close_mark:daily_close_observation;source_known_at=null",
+      "SH600000:asset_id:historical_session_effective;source_known_at=null",
+      "SH600000:events_clear:historical_session_effective;source_known_at=null"
+    ],
+    "no_strategy_path_or_outcomes": true,
+    "code_sha256_lf": {
+      "qlib_integration/economic_core_inputs.py": "6ce791cc50b75da0cd0c19c9312a412f83a8b7146f261d2b3b82351a773b422b",
+      "qlib_integration/economic_core_session.py": "e256b48788b12afedf3ad61dcb762609a21f76ca939faf29091cee14bdf7811c",
+      "qlib_integration/economic_historical_inputs.py": "63306296b744c975ec5f3eb3fc3c736f324c7028f03dc9e840750b63b26c1f31",
+      "qlib_integration/economic_mvp_scope.py": "5a7005438ae52a94bc6dcb34b90631a7d405530702b776564dbe506ae426f341",
+      "qlib_integration/execution_readiness.py": "a99954d9673fabb133427ba7abeb54d8c377ffa3482f02d01a1cb7c4b6125cbf",
+      "qlib_integration/economic_exchange.py": "c1683de8be84ae153bfedb3a42d5b2084e5a7971b488a7c0870f4444e7add0fe",
+      "scripts/accept_e2_historical_core.py": "9d9840063c7f6def1ccc183948dfc6186baa9ea1f80d34ffcab789128e5a4631",
+      "scripts/verify_e2_historical_core.py": "ff22864d9aae29ccae5e8827004ba234ac34605048d73eb0d735dcca408f14a2",
+      "tests/test_economic_historical_core.py": "ef8fd16b63e6d79b816f84ac4c71b9bd1c710b3673fc6af9ee8a647076bf7083"
+    }
+  },
+  "session": {
+    "date": "2020-08-24",
+    "status": "COMMITTED",
+    "fills": 1,
+    "denied": [],
+    "input_mode": "historical",
+    "exposed": 1,
+    "metrics_enabled": false,
+    "entry_action": "ALLOW_ENTRY",
+    "phase_order": [
+      "A",
+      "B",
+      "C"
+    ],
+    "quantity": 100,
+    "cash_arithmetic_checked": true,
+    "close_mark_checked": true
+  },
+  "independent": {
+    "status": "PASS",
+    "input_hashes": 16,
+    "output_hashes": 5,
+    "independent_source_and_scalar_checks": true,
+    "no_production_import": true,
+    "no_exact_pit_or_complete_event_claim": true,
+    "source_receipt_sha256": "bfd3aa1b3c56aabb353eebcab759d3c0c888298d1c160ff1c04cfd5c6548a06b"
+  },
+  "final_output": "outputs/economic_translation_mvp/e2_historical_core_v2",
+  "prior_evidence_preserved": [
+    "CORE_ACCEPTANCE.json",
+    "CORE_CANARY_SCOPE.json",
+    "outputs/economic_translation_mvp/e2_core_acceptance_v4",
+    "outputs/economic_translation_mvp/e2_historical_core_v1"
+  ],
+  "tests": {
+    "scoped_e2": 168,
+    "historical_new": 43,
+    "prior_e2_regressions": 125,
+    "fast": 46,
+    "qlib": 6,
+    "total": 220
+  },
+  "test_scope": "Full tier replaced with outcome-isolated E2 suites and fast/qlib tiers; legacy full validators include unauthorized real outcome/recent artifacts.",
+  "boundaries": {
+    "no_recollection": true,
+    "no_scores_strategy_or_outcomes": true,
+    "no_2024plus": true,
+    "live_execution_implemented": false,
+    "exact_historical_pit_certified": false,
+    "complete_event_coverage": false,
+    "e3_or_e4_activated": false,
+    "stop_for_human_review": true
+  }
+}

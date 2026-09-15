@@ -1,15 +1,23 @@
 # Economic Translation MVP：研究与实施计划
 
-2026-09-15：用户授权仅实现并验收 C1 + C2，交付见 [实施验收](../reports/economic_translation_mvp/e2_hard_closure_v1/CORE_IMPLEMENTATION_ACCEPTANCE.md) 与 [当前 Matrix](../reports/economic_translation_mvp/e2_hard_closure_v1/MATRIX.md)。
-**E1 COMPLETE；C2 CLOSED / SYNTHETIC INTEGRATION ACCEPTED；C1 IMPLEMENTED / REAL-SOURCE ACCEPTANCE BLOCKED。E2 STILL BLOCKED；STRATEGY PATH NOT STARTED。**
+2026-09-15：用户授权调整 C1 历史可得性合同，见[实施验收](../reports/economic_translation_mvp/e2_hard_closure_v1/CORE_IMPLEMENTATION_ACCEPTANCE.md)和[当前 Matrix](../reports/economic_translation_mvp/e2_hard_closure_v1/MATRIX.md)。
+**E1 COMPLETE；C1/C2 CLOSED；E2 CORE READY / STRATEGY PATH VERIFICATION PENDING。**
 
-C2 已接通 A→事件/准入→B成交→C估值/登记的整日工作副本提交，carry 无普通报价，失败保留全部权利并支持同输入恢复。
-C1 已实现来源绑定与量价分阶段适配；固定 SH600000 / 2020-08-24 canary 的量价/ADV/涨跌停核对通过，但缺普通状态、身份可得性和完整事件覆盖的盘前证明，实际 NO_NEW_ENTRY。不因此宣布 Core Ready，不换样本或扩展采集。
+C1 采用显式 historical session-effective：可信日级状态按 session 生效，known_at 保持 null；
+identity/state/独立限价仍须来源一致，缺失、冲突、special 和已知 unresolved event 继续拒绝。
+事件 entry 采用已知当期阻塞风险审查，不要求五类事件全集完整证明；覆盖不完整明确保留。
+实盘 decision-time freshness 独立要求真实 receipt/timestamp、明确 TTL 与当前证券/session 绑定；
+历史近似不能流入 live，本轮不接实盘 provider/执行器。
 
-继续沿用 [Core / Strategy Path 合同](../reports/economic_translation_mvp/e2_hard_closure_v1/STAGE_BOUNDARY_REVIEW.md)：不要求全库异常清零；R1–R3 只在 frozen path 实际 exposure 后处理。当前通用待验收项仅 C1，不新增阶段。
-Core 审查通过后才激活 E3 Freeze Preparation。策略先冻结、异常后检查；目标名单不等于实际成交/权利路径。不得按收益或更易跑通选择规则。
+原固定 SH600000 / 2020-08-24 已通过 Historical A→B 普通成交→C 估值→COMMITTED，
+43 项新增历史/live 测试与 125 项 E2 回归、46 项 fast、6 项 Qlib 通过，共 220 项。
+旧严格 PIT canary 的 NO_NEW_ENTRY 及原始证据保留；新验收不声称历史精确盘前已被认证。
+C2 整日事务、失败保留与重放继续通过。通用 E2 infrastructure 在此收尾。
 
-三项采集与 E1 不重跑，B494/canonical/旧 receipts 不变；真实 NAV/收益、自动 E4、2024+ 禁止。提交推送后停止等待人工审核。
+沿用 [Core / Strategy Path 合同](../reports/economic_translation_mvp/e2_hard_closure_v1/STAGE_BOUNDARY_REVIEW.md)：R1–R3 按 frozen 实际 exposure 条件验证，不全库清零；Core Ready 不是全九年策略账户认证。
+本轮未选择/冻结 E3 参数，未构造真实策略路径；先人工审核，再按后续授权推进。
+三项扫描/E1 不重跑、B494/canonical/原 receipts 不变；NAV/PnL/收益、2024+、自动 E3/E4 禁止。
+提交推送后停止等待人工审核。
 下文历史段落保留，当前状态以本节和 Matrix 为准。
 
 用户正式运行完成，见 [E1完成复核](../reports/economic_translation_mvp/e1_completion_v1/REPORT.md)；本次不修改参数或解除E3/E4边界。

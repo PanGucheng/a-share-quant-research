@@ -1,90 +1,89 @@
 # C1 + C2 实施与验收
 
-2026-09-15；基线 `main@146cb04`。用户授权“实现并验收 C1 + C2，不再扩展 E2 scope”。
-本轮按 [既定阶段合同](STAGE_BOUNDARY_REVIEW.md) 实施，不重新设计策略或全库治理。
+2026-09-15；基线 `main@c312469`。用户要求根据《调整 C1 历史可得性要求并完成 E2 Core 收尾》调整。
+附件 SHA256：`68512c2fbb9a799c0214cf8ee0a78117459329562c6f627f2ff6242e40a7cef4`。
 
-**C2 已实现并通过 synthetic 集成验收；C1 已实现输入适配，但固定真实 canary 未通过普通 PIT 路径验收。
-E2 STILL BLOCKED，仅剩 C1 的真实来源可得性验收；不宣布 E2 CORE READY。**
+**C1 CLOSED / HISTORICAL APPROXIMATION ACCEPTED；C2 CLOSED / SYNTHETIC INTEGRATION ACCEPTED。**
+当前为 **E2 CORE READY / STRATEGY PATH VERIFICATION PENDING**。通用 E2 infrastructure 在此停止。
+验收对象是受支持的 Core 机制，不是九年全池或某个策略账户连续运行证明。
 
-## C1：实现与真实验收分开
+## C1 历史要求的调整
 
-[economic_core_inputs.py](../../../qlib_integration/economic_core_inputs.py) 接收绑定 instrument、
-field、phase、Fact/source/hash 的 Evidence，复用原 PIT Fact 和 execution_state。
-A 只接盘前数据，B 只接开盘价格/证据，C 只接日终身份、权益覆盖及估值。
-未来版本在校验其业务条款前过滤，避免未来错误事件反向拒绝过去入场。
-同时间冲突不选赢家；event clearance 必须显式带覆盖区间、五类事件范围、事件 ID 和依据。
-空事件表不产生 events_clear=True。无效未持有候选被拒绝，不删除研究证券。
+采纳历史日级研究与实盘 freshness 分开的建议。可信逐日状态在对应 session 生效，标记
+`historical_session_effective`，`known_at` 保持 null，不生成具体发布时间。
+这是用户授权的研究近似，不能表述为精确盘前 PIT 已认证。
 
-`market_phase_records` 直接消费已封存 semantic overlay 的有界切片，复用 causal_adv20。
-旧 overlay 的 raw_open 曾受当日 high/low/量价质量诊断筛选，**不能直接拿它作开盘输入**；
-新 B 入口固定使用单独原始 BaoStock open 字段，不根据收盘/全日量或事后质量挑价格源。
-普通 prepared row 仅在 A 资格已通过且 B 到达后生成，raw_close 留空；C 尚未传入。
+[输入适配](../../../qlib_integration/economic_core_inputs.py)与[历史来源适配](../../../qlib_integration/economic_historical_inputs.py)
+保留 instrument、effective session、source/hash、availability basis 和 approximation 清单。
+原 strict 模式仍为默认；历史事实必须由显式 historical 模式消费。
+旧 overlay 的 `ordinary_regime_certified=false`、原 receipts 和旧失败验收均保持原样。
 
-沿用既有 daily-data MVP 近似：前一交易日量价用 prior-session EOD，日线 open 作开盘参考，
-日终估值在收盘后使用。模型阶段时钟与 source_known_at=null 分开标注；它不是历史发布时间证明。
-这些近似不允许重构普通状态、ST/停牌、身份迁移或 events_clear 的盘前发布时间。
+ordinary 要求日级 ST/停牌状态、无歧义身份/board、至少五个此前已观察到的交易 session，
+以及独立当日涨跌停与原始 preclose、已有 dated rule 一致。此前 session 数是上市年龄下界，
+不是精确 IPO 天数；日级证券与独立限价作为在市普通制度的研究近似，不精确证明从未重新上市。
+已知特殊、缺失、冲突、身份不明和阻塞事件仍禁止准入。
+不将旧 overlay 使用当日 high/low 诊断得到的 ordinary/special 标签直接用于 A。
 
-真实样本在读取值前固定于 [CORE_CANARY_SCOPE](CORE_CANARY_SCOPE.json)：
-SH600000，2020-08-24，历史量窗口 2020-07-27 至 2020-08-21。复用该证券原已固定探针，
-没有按分数、表现或本次成功率选择样本；失败后未换证券、日期或扩大采集。
+A 只消费状态、身份、事件审查、前 20 日量与前一日质量；A 的参考估值用独立当日 reference，
+不充当开盘成交价。B 使用另行绑定的原始 daily open/reference evidence；C 才消费 close。
+historical prepared 的 known_at/state_known_at 留空并附 basis；strict prepared 拒绝此 schema。
+缺 open 不回退 close，缺 ADV/质量不准入；未来版本先过滤，不倒灌历史黑名单。
 
-| 检查 | 结果 |
+## 事件语义与持仓边界
+
+历史 entry 的 `events_clear` 是内部兼容字段，表示已审查来源中未发现已知、当前生效的未解决阻塞事件，
+不再声称 distribution/rights/conversion/terminal/identity 五类事件全集完整。
+必须提供 dated review、reviewed sources、event IDs、状态和 `coverage_complete=false`。
+状态区分 no_known_blocking、known_handled、known_blocking、unresolved；后两者拒绝新买。
+覆盖不完整是独立维度，不自动等于存在当前未决事件；仅空表也不能产生完整无事件证明。
+
+固定 canary 检查既有当日状态、身份、独立限价，以及登记日/除权日在该 session 的事件元数据。
+未来公告版本不作为历史黑名单；日期未知的当期事件按未解决处理。该日匹配记录为 0。
+这是 flat-start 一日样本的已知风险检查，没有声称审清历史遗留应收或未来事件。
+一般 rights/conversion/terminal 数据仍可能不完整，实际 exposure 的 R1–R3 验证继续负责发现缺口。
+
+股数、登记权利、应收和未上市红股仍全检。已登记未结事件若遗漏于当日 review，或事件缺处理条款，
+仍 HALT_RETAIN；C 新事件缺登记条款不能提交。没有处理 148/528/921 全库案例或把未知权益记零。
+
+## Live contract 独立保留
+
+`adapt_phase(mode="live", live_ttl_seconds=...)` 要求真实 known_at、observed_at、fetched_at，
+来源与 receipt hash 一致，instrument/session 一致，无冲突，获取早于 cutoff，观测在明确 TTL 内。
+TTL 必须显式提供，没有冻结实盘 TTL。required entry 字段缺失/过期即 NO_NEW_ENTRY。
+所有 historical/date-level phase approximation 都被 live 模式拒绝。
+
+本轮仅实现输入校验接口；CoreSession 明确拒绝 live mode，没有 live provider 或券商接入。
+live 测试是 synthetic receipts，不代表真实供应商 freshness 已验收；2015–2023 边界未解除。
+
+## 固定 canary 与独立验收
+
+保留[原 scope](CORE_CANARY_SCOPE.json)，本轮模式与工程订单先固定在[补充 scope](HISTORICAL_CORE_SCOPE.json)。
+仍为 SH600000 / 2020-08-24，历史窗口 2020-07-27 至 2020-08-21；没有更换样本或搜索成功案例。
+
+| 检查 | 最终结果 |
 |---|---|
-| 封存源、既有 overlay、独立涨跌停表绑定 | PASS；14 个输入 hash，21 个证券日 |
-| 精确 20 个此前交易日 ADV | PASS；adapter 与原始源独立求和均为 50,322,888.6 股 |
-| 单独原始 open 与既有独立价格/涨跌停表 | PASS；正价格且位于已有上下限内 |
-| 盘前 ordinary state / identity availability / complete event coverage 证明 | 固定输入未提供这些可得性证明；日终状态 known_at 为空、ordinary_regime_certified=false |
-| 事件切片为空 | 0 条匹配行；不能据此证明完整无事件或 rights/terminal coverage |
-| 非空普通 PIT 准入路径 | **NOT ACCEPTED**；实际返回 NO_NEW_ENTRY，不能以全拒买认证 Core |
+| 源 hash、状态/身份/限价绑定 | PASS；16 个输入 hash，21 个证券日 |
+| 严格 prior-20 ADV | 原始源独立求和与适配均为 50,322,888.6 股 |
+| 历史准入及非空执行 | ALLOW_ENTRY；固定 100 股买单成交一次，A→B→C→COMMITTED |
+| 工程会计/估值 | 股数、独立标量现金/费用与 C 价格一致性通过；不生成 NAV/PnL |
+| 负例与 C2 回归 | 43 项历史/live 新测试 + 125 项原 E2 检查通过 |
+| 仓库检查 | fast 46 项、Qlib 6 项通过；总计 220 项，定向 Ruff 通过 |
 
-这不是新增三个 blocker，而是既定 **C1 source-bound input** 尚未满足的字段。
-adapter 的量价接入和拒绝分支已经落地；synthetic 显式来源可通过普通分支，真实来源不能补造证据。
-既有日终原始数据不能直接变成盘前完整证明。该 canary 不覆盖九年可交易范围，
-也没有把少量匹配事件数量当成完整 corporate-action inventory。
+工程账户固定 10,000 元测试现金，不选择策略 AUM/K。旧万三费率仅用于既有引擎工程断言，
+不冒充用户万2.5；个人费用配置及历史税费字段仍按原 E3 合同审议。
+[独立核验器](../../../scripts/verify_e2_historical_core.py)不导入生产适配代码，重算 ADV，核对
+state/identity/open/close/限价来源、阶段隔离、空 known_at、事件范围和输出 hashes。
+完整账户故障恢复与权益算式由原 C2 synthetic 集成及本轮回归验收。
 
-最终输出 `outputs/economic_translation_mvp/e2_core_acceptance_v4`，前三版同一固定样本的实现核验
-保留；最后一版包含未来未可得事件先过滤、日终新增未知权益拒绝提交的修正及 code hashes，样本/验收标准未变。
-[独立核验器](../../../scripts/verify_e2_core_canary.py) 不导入 production adapter，
-逐 hash 验证、从原始量源单独求均值，并复核缺证不能取得普通准入的结论。
-机器证据汇总见 [CORE_ACCEPTANCE](CORE_ACCEPTANCE.json)。
+最终输出 `outputs/economic_translation_mvp/e2_historical_core_v2`，见[机器汇总](HISTORICAL_CORE_ACCEPTANCE.json)。
+v1 同样本核验保留；v2 绑定非有限限价拒绝、未来版本过滤和历史持仓 reference 的最终保护。
+原 [CORE_ACCEPTANCE](CORE_ACCEPTANCE.json) 的严格 PIT 失败结论仍有效于旧合同，未改写为 PASS。
+本次按新合同通过，不声称原始证据曾包含历史发布时间。
 
-## C2：日级执行与会计接线
+## 停止点
 
-[economic_core_session.py](../../../qlib_integration/economic_core_session.py) 的 CoreSession
-复用 Qlib Account、EventPosition、EconomicOpenExchange，不新建 backtester/策略框架。
-既有实现和 receipts 未改写；新入口是独立 opt-in 层，要求 metrics/benchmark-return 关闭。
-
-顺序固定为 A → 事件应用 → Entry/Holding 门控 → 已给定意图的允许/拒绝 → B → 普通成交 →
-C → 全部股数/权利估值 → 收盘登记 → 整日提交。意图在读取 B 前复制，
-不向 A 暴露 C 的 close，也不允许跨阶段或跨日替代。登记日至除权之间尚未入账的已取得权利
-也纳入 exposure，不能只检查已上市股数或已生成应收。
-
-被拒绝未持有候选不进入旧的全候选 continuity 检查；CARRY_ONLY / CASH_CLAIM 不构造普通
-prepared rows，不伪造限价/ADV/factor。普通订单继续经过原 open、方向限价、lot、T+1、
-容量、母单费及现金预算检查。未知权益、terminal、遗漏事件条款仍 HALT_RETAIN。
-现有 scope 不支持的持仓加仓意图仍拒绝，本轮不借机定义 E3 加仓规则。
-
-每个账户日先在完整工作副本执行，所有事件、成交和收盘检查通过后才提交。
-失败丢弃工作副本及当天 exchange 的 T+1/费用/容量状态，保留上一完整日；
-没有留下可继续使用的半日账本。重复成功日和跳过日历会拒绝，失败日可重放。
-账户内部维护现金/股数/权利及当日估值一致性，未调用 Qlib 收益报告、benchmark、历史 NAV 输出。
-这是研究模拟的事务边界，不是对真实券商已执行订单的撤销机制。
-
-验收覆盖：多日买入/卖出、登记→除权→支付→红股上市、原股卖出后现金/股票权利持续存在、
-cash-only 无旧股行情、特殊 carry 与另一只普通证券成交共存、未知新候选不阻塞、未知持仓停机、
-零碎权益拒绝交割、部分成交/容量/T+1、母单最低费、missing open 不使用 close。
-事件后、成交后、收盘后、提交前故障注入均不改持久账本；从相同检查点重放与干净执行一致。
-普通分配和现金余额用独立标量算式验证，而非仅比较两个生产函数。
-
-旧 dated fee 引擎的默认费率没有在本轮冒充用户万2.5。个人费用配置/早期费基等继续按原计划
-留在 E3 字段冻结与接入事项，不扩展本次 C1/C2 验收范围。
-
-## 当前结论与停止点
-
-**C2 CLOSED / ACCEPTED WITHIN CORE SCOPE；C1 IMPLEMENTED / REAL-SOURCE ACCEPTANCE BLOCKED。**
-剩余仅是本次固定输入没有支持 ordinary PIT 路径所需的 C1 证据；不重新展开 148/528/921 个案例。
-没有引入 C3、扩大模拟器、放宽未知状态或事件标准。R1–R3 保持冻结实际 exposure 的条件事项。
-
-本轮未重采 Quotes/States/Dividends、未重跑 E1、未访问 B494 分数或 2024+；
-没有真实账户路径、K/AUM/buffer 选择、收益评价或 E3/E4。
-不提供重跑长扫描命令。完成代码/文档核验后提交推送，停止等待人工审核。
+**C1 与 C2 均关闭；E2 CORE READY / STRATEGY PATH VERIFICATION PENDING。**
+不再开发通用 E2 infrastructure；策略未冻结/未启动，R1–R3 仍可能触发 HALT_RETAIN。
+未重采三项长扫描、重跑 E1、修改 B494/canonical、选择参数、运行正式策略、生成 NAV/PnL/Sharpe/CAGR 或访问 2024+。
+完整 full tier 含超出本轮授权的旧实值验证，本轮使用上述 outcome-isolated 定向套件及 fast/qlib。
+提交推送后停止等待人工审核；不自动进入 E3/E4。

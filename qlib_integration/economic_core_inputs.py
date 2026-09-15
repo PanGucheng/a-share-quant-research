@@ -29,6 +29,7 @@ class Evidence:
     sha256: str
     coverage: dict | None = None
     phase_basis: str = "source"
+    live_receipt: dict | None = None
 
 
 @dataclass
@@ -43,9 +44,10 @@ class PhaseInputs:
     covered_events: dict = field(default_factory=dict)
     issues: dict = field(default_factory=dict)
     approximations: list = field(default_factory=list)
+    mode: str = "strict"
 
 
-def adapt_phase(records, *, date, at, phase):
+def adapt_phase(records, *, date, at, phase, mode="strict", live_ttl_seconds=None):
     """Reject malformed evidence per instrument; never infer absence from an empty table.
 
     The caller supplies only the currently available phase, not a future daily row.
@@ -58,7 +60,16 @@ def adapt_phase(records, *, date, at, phase):
     clock = cutoff.strftime("%H:%M:%S")
     if not {"A": clock < "09:25:00", "B": "09:25:00" <= clock <= "09:30:00", "C": clock > "15:00:00"}[phase]:
         raise ValueError("phase clock boundary")
-    result = PhaseInputs(date, str(cutoff), phase)
+    if mode not in {"strict", "historical", "live"}:
+        raise ValueError("unknown input mode")
+    if mode == "live" and (type(live_ttl_seconds) not in {int, float}
+                           or not math.isfinite(live_ttl_seconds) or live_ttl_seconds <= 0):
+        raise ValueError("live freshness TTL must be supplied explicitly")
+    historical = mode == "historical"
+    result = PhaseInputs(date, str(cutoff), phase, mode=mode)
+
+    def visible(facts, *, prior_session=False):
+        return visible_fact(facts, cutoff, prior_session=prior_session, historical=historical)
     groups, invalid = {}, set()
     for rec in records:
         if not re.fullmatch(r"(?:SH|SZ)\d{6}", rec.instrument):
@@ -70,7 +81,44 @@ def adapt_phase(records, *, date, at, phase):
                 raise ValueError("source hash missing")
             if not isinstance(rec.fact.source, str) or not rec.fact.source:
                 raise ValueError("source identity missing")
-            if rec.phase_basis != "source":
+            if mode == "live":
+                receipt = rec.live_receipt or {}
+                if (rec.phase_basis != "source" or rec.fact.precision != "timestamp"
+                        or not rec.fact.known_at or receipt.get("instrument") != rec.instrument
+                        or receipt.get("session") != date or receipt.get("source") != rec.fact.source
+                        or receipt.get("sha256") != rec.sha256):
+                    raise ValueError("live source/session receipt required; historical evidence forbidden")
+                observed, fetched, known = [pd.Timestamp(x) for x in
+                    (receipt.get("observed_at"), receipt.get("fetched_at"), rec.fact.known_at)]
+                if (any(pd.isna(x) or x.tz is not None for x in (observed, fetched, known))
+                        or not known <= observed <= fetched < cutoff
+                        or (cutoff - observed).total_seconds() > live_ttl_seconds
+                        or str(fetched.date()) != date or str(observed.date()) != date):
+                    raise ValueError("live inputs missing, stale or later than decision cutoff")
+            if historical and rec.phase_basis != "source":
+                allowed = {"prior_session_eod": {"asset_id", "quote_quality", "adv20_shares"},
+                           "daily_open_reference": {"raw_open", "open_evidence"},
+                           "daily_close_observation": {"close_mark"},
+                           "historical_session_effective": {"asset_id", "state", "events_clear", "reference_mark"}}
+                if rec.name not in allowed.get(rec.phase_basis, ()) or rec.fact.known_at is not None:
+                    raise ValueError("unsupported historical approximation")
+                observed = str(bounded_date(rec.fact.observed_on).date())
+                if observed > date:
+                    result.issues.setdefault(rec.instrument, []).append(f"{rec.name}: future historical version ignored")
+                    continue
+                if rec.phase_basis == "prior_session_eod" and observed >= date:
+                    raise ValueError("prior EOD must precede session")
+                if rec.phase_basis == "historical_session_effective" and observed != date:
+                    raise ValueError("historical effective session must match")
+                if ((rec.phase_basis == "prior_session_eod" and phase != "A")
+                        or (rec.phase_basis == "daily_open_reference" and phase != "B")
+                        or (rec.phase_basis == "daily_close_observation" and phase != "C")):
+                    raise ValueError("historical market phase crossing")
+                result.approximations.append(f"{rec.instrument}:{rec.name}:{rec.phase_basis};source_known_at=null")
+                rec = Evidence(rec.instrument, rec.name, rec.phase,
+                    Fact(**{**rec.fact.__dict__, "precision": "historical_session_effective"}),
+                    rec.sha256, rec.coverage, rec.phase_basis)
+            elif rec.phase_basis != "source":
                 # Explicit clocks for existing daily-data MVP approximations only.
                 # Never reconstruct a state/announcement/rights clearance timestamp.
                 permitted = {
@@ -93,7 +141,7 @@ def adapt_phase(records, *, date, at, phase):
                 }), rec.sha256, rec.coverage)
             # Filter unavailable versions before inspecting their business terms.
             # A future malformed event must not become a retrospective exclusion.
-            if visible_fact([rec.fact], cutoff, prior_session=rec.name in {"quote_quality", "adv20_shares"}) is None:
+            if visible([rec.fact], prior_session=rec.name in {"quote_quality", "adv20_shares"}) is None:
                 result.issues.setdefault(rec.instrument, []).append(f"{rec.name}: unavailable version")
                 continue
             if rec.name in {"reference_mark", "close_mark", "raw_open", "open_evidence"}:
@@ -103,12 +151,20 @@ def adapt_phase(records, *, date, at, phase):
                 c = rec.coverage or {}
                 if (
                     not c.get("start", "~") <= date <= c.get("end", "")
-                    or set(c.get("families", ())) != EVENT_FAMILIES
+                    or (not historical and set(c.get("families", ())) != EVENT_FAMILIES)
                     or not isinstance(c.get("event_ids"), list)
                     or not c.get("basis")
                     or type(rec.fact.value) is not bool
                 ):
                     raise ValueError("event coverage/absence semantics missing")
+                if historical:
+                    status = c.get("status")
+                    if (c.get("semantics") != "known_session_events" or c.get("coverage_complete") is not False
+                            or status not in {"no_known_blocking", "known_handled", "known_blocking", "unresolved"}
+                            or rec.fact.value != (status in {"no_known_blocking", "known_handled"})
+                            or not c.get("reviewed_sources") or c.get("review_asof") != date
+                            or (status == "no_known_blocking" and c["event_ids"])):
+                        raise ValueError("known-event review semantics missing or inconsistent")
                 if any(str(pd.Timestamp(c[k]).date()) != c[k] for k in ("start", "end")):
                     raise ValueError("invalid event coverage dates")
                 if len(set(c["event_ids"])) != len(c["event_ids"]) or any(
@@ -130,7 +186,7 @@ def adapt_phase(records, *, date, at, phase):
         if stock in invalid:
             continue
         facts = [e.fact for e in entries]
-        selected = visible_fact(facts, cutoff, prior_session=name in {"quote_quality", "adv20_shares"})
+        selected = visible(facts, prior_session=name in {"quote_quality", "adv20_shares"})
         if selected is None:
             result.issues.setdefault(stock, []).append(f"{name}: unavailable/conflicting")
             continue
@@ -148,7 +204,7 @@ def adapt_phase(records, *, date, at, phase):
             state.update(known_at=bound.known_at, publication_precision=bound.precision, source=bound.source)
             result.states[stock] = state
             try:
-                ordinary = execution_state(state, cutoff) == "ordinary_known"
+                ordinary = execution_state(state, cutoff, historical=historical) == "ordinary_known"
             except (ValueError, TypeError):
                 ordinary = False
             result.facts.setdefault(stock, {})["voluntary_trade_ready"] = [Fact(**{**bound.__dict__, "value": ordinary})]
@@ -167,8 +223,8 @@ def adapt_phase(records, *, date, at, phase):
     for stock, facts in result.facts.items():
         ready = facts.get("voluntary_trade_ready")
         if ready:
-            adv = visible_fact(facts.get("adv20_shares", ()), cutoff, prior_session=True)
-            quality = visible_fact(facts.get("quote_quality", ()), cutoff, prior_session=True)
+            adv = visible(facts.get("adv20_shares", ()), prior_session=True)
+            quality = visible(facts.get("quote_quality", ()), prior_session=True)
             usable = (adv is not None and not isinstance(adv.value, bool)
                       and isinstance(adv.value, (int, float)) and math.isfinite(adv.value) and adv.value > 0
                       and quality is not None and quality.value is True)
@@ -178,7 +234,7 @@ def adapt_phase(records, *, date, at, phase):
 
 def prepared_rows(before, opening, instruments, calendar):
     """Only ordinary traded objects enter legacy prepared schema; carry has no row."""
-    if before.phase != "A" or opening.phase != "B" or before.date != opening.date:
+    if before.phase != "A" or opening.phase != "B" or before.date != opening.date or before.mode != opening.mode:
         raise ValueError("prepared phases mismatch")
     if pd.Timestamp(opening.at) <= pd.Timestamp(before.at):
         raise ValueError("opening must follow frozen intents")
@@ -190,10 +246,10 @@ def prepared_rows(before, opening, instruments, calendar):
     rows = []
     for stock in sorted(instruments):
         state = before.states.get(stock)
-        if execution_state(state, before.at) != "ordinary_known":
+        if execution_state(state, before.at, historical=before.mode == "historical") != "ordinary_known":
             raise ValueError("nonordinary instrument cannot have a prepared trade row")
         f = before.facts.get(stock, {})
-        adv = visible_fact(f.get("adv20_shares", ()), before.at, prior_session=True)
+        adv = visible_fact(f.get("adv20_shares", ()), before.at, prior_session=True, historical=before.mode == "historical")
         if adv is None or isinstance(adv.value, bool) or not math.isfinite(adv.value) or adv.value <= 0:
             raise ValueError("ordinary order lacks lagged ADV")
         b = opening.values.get(stock, {})
@@ -201,7 +257,7 @@ def prepared_rows(before, opening, instruments, calendar):
         evidence = b.get("open_evidence") is True
         if isinstance(price, bool) or not isinstance(price, (int, float)):
             price, evidence = float("nan"), False
-        rows.append(dict(
+        row = dict(
             datetime=day, instrument=stock, raw_open=price, raw_close=float("nan"),
             previous_close=state["limit_reference"], adv20_shares=float(adv.value),
             upper_limit=state["upper_limit"], lower_limit=state["lower_limit"],
@@ -210,8 +266,11 @@ def prepared_rows(before, opening, instruments, calendar):
             known_at=adv.known_at, state_known_at=state["known_at"], adv_asof=adv.observed_on,
             order_time=before.at, executable_at=opening.at, valuation_time=day + pd.Timedelta(hours=15),
             source_id=adv.source + ";" + state["source"],
-        ))
-    return validate_prepared(pd.DataFrame(rows)) if rows else None
+        )
+        if before.mode == "historical":
+            row.update(availability_basis=adv.precision, state_availability_basis=state["publication_precision"])
+        rows.append(row)
+    return validate_prepared(pd.DataFrame(rows), historical=before.mode == "historical") if rows else None
 
 
 def market_phase_records(daily, *, instrument, date, calendar, sha256, opening_reference=None):

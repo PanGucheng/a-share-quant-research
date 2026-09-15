@@ -77,7 +77,7 @@ def require_distinct_assets(instruments, identity_map):
         )
 
 
-def execution_state(state, order_time):
+def execution_state(state, order_time, *, historical=False):
     """Tri-state evidence. This returns a gate result, never fabricates a quote."""
     required = {
         "instrument",
@@ -101,6 +101,11 @@ def execution_state(state, order_time):
         "ipo_session",
         "listing_regime",
     }
+    approximate = bool(historical and state and state.get("publication_precision") == "historical_session_effective"
+                       and state.get("known_at") is None)
+    if approximate:
+        required -= {"ipo_session", "listing_regime"}
+        required |= {"prior_session_count", "regime_basis"}
     if state is None or not required <= set(state):
         return "unresolved"
     date = bounded_date(state["date"])
@@ -117,7 +122,7 @@ def execution_state(state, order_time):
         "synthetic",
     }:
         return "unresolved"
-    phase = classify_available_phase(
+    phase = "before_open" if approximate else classify_available_phase(
         published_at=state["known_at"],
         effective_date=date,
         publication_precision=state["publication_precision"],
@@ -138,17 +143,29 @@ def execution_state(state, order_time):
         return "unresolved"
     try:
         reference, ratio = float(state["limit_reference"]), float(state["limit_ratio"])
-        if not all(
-            math.isfinite(float(state[k])) for k in ("upper_limit", "lower_limit", "ipo_session")
-        ):
+        if not all(math.isfinite(float(state[k])) for k in ("upper_limit", "lower_limit")):
             return "unresolved"
-        if state["ipo_session"] < 1 or int(state["ipo_session"]) != state["ipo_session"]:
-            return "unresolved"
-        rule = dated_limit_rule(
-            date, state["board"], bool(state["st"]), state["ipo_session"], state["listing_regime"]
-        )
-        if rule["kind"] != "ordinary_dated" or rule["limit_ratio"] != ratio:
-            return "unresolved"
+        if approximate:
+            # Observed seasoned security + independent session limits. This is a
+            # research approximation, not an invented exact IPO age/publication.
+            count = state["prior_session_count"]
+            if (type(count) is not int or count < 5
+                    or state["regime_basis"] != "independent_dated_limits_with_prior_sessions"):
+                return "unresolved"
+            expected = (0.2 if state["board"] == "star" or
+                        (state["board"] == "chinext" and date >= pd.Timestamp("2020-08-24"))
+                        else 0.05 if state["st"] else 0.1)
+            if ratio != expected or (state["board"] == "star" and date < pd.Timestamp("2019-07-22")):
+                return "unresolved"
+        else:
+            if (not math.isfinite(float(state["ipo_session"])) or state["ipo_session"] < 1
+                    or int(state["ipo_session"]) != state["ipo_session"]):
+                return "unresolved"
+            rule = dated_limit_rule(
+                date, state["board"], bool(state["st"]), state["ipo_session"], state["listing_regime"]
+            )
+            if rule["kind"] != "ordinary_dated" or rule["limit_ratio"] != ratio:
+                return "unresolved"
         if (
             not math.isfinite(reference)
             or not math.isfinite(ratio)

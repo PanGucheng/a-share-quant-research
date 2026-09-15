@@ -1,0 +1,17 @@
+{
+  "baseline": "c312469",
+  "original_scope": "CORE_CANARY_SCOPE.json",
+  "original_scope_sha256": "ae9292a72357597e3b65ad554550e2d5f184011aa249e6b00e6c528cfaf6df14",
+  "instrument": "SH600000",
+  "session": "2020-08-24",
+  "history_start": "2020-07-27",
+  "history_end": "2020-08-21",
+  "mode": "historical_session_effective",
+  "source_extension": "Same sealed instrument/day identity fields; existing event metadata with record_date or ex_date on the fixed session. No sample search, provider access or full inventory cleanup.",
+  "state_approximation": "Daily ST/suspension, unambiguous identity, at least five observed prior active sessions plus independently sourced ordinary session limits. Lower-bound age, not fabricated IPO session count; known risks still block.",
+  "events": "Mandatory review of known session-blocking evidence from named existing sources, coverage incomplete. Same-day distribution dates inspected before version terms; future announcement versions cannot certify clearance. Registered holding rights remain mandatory.",
+  "order": "One engineering buy of 100 shares, cash fixture 10000 CNY; no strategy/AUM choice, no outcome output.",
+  "success": "Historical A entry allowed; raw daily B open produces a nonempty CoreSession fill; C marks checked and COMMITTED; independent scalar checks and negative cases pass.",
+  "live": "Reject all historical approximations; require source/session-bound observed/fetched receipt and explicitly supplied TTL. No live provider or execution implemented.",
+  "stop": "Commit/push and human review; no E3 strategy/path or E4, no 2024+ values. A changed contract does not rewrite previous failed PIT acceptance."
+}

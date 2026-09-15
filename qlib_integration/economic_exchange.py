@@ -47,8 +47,9 @@ FIELDS = {
 }
 
 
-def validate_prepared(frame):
-    if set(frame.columns) != FIELDS:
+def validate_prepared(frame, *, historical=False):
+    expected = FIELDS | ({"availability_basis", "state_availability_basis"} if historical else set())
+    if set(frame.columns) != expected:
         raise ValueError(
             f"prepared quote exact schema required: missing={FIELDS - set(frame.columns)}, extra={set(frame.columns) - FIELDS}"
         )
@@ -64,7 +65,8 @@ def validate_prepared(frame):
         "valuation_time",
     ):
         f[col] = pd.to_datetime(f[col], errors="raise")
-        if f[col].isna().any() or f[col].dt.tz is not None:
+        allowed_null = historical and col in {"known_at", "state_known_at"}
+        if (f[col].isna().any() and not allowed_null) or f[col].dt.tz is not None:
             raise ValueError("timestamps must be explicit Asia/Shanghai local naive values")
     for d in f.datetime:
         bounded_date(d)
@@ -77,11 +79,21 @@ def validate_prepared(frame):
         raise ValueError("invalid prepared keys/source")
     if not (f.datetime == f.datetime.dt.normalize()).all():
         raise ValueError("prepared dates must be normalized")
+    availability = (f.known_at >= f.signal_time) & (f.known_at < f.order_time)
+    state_availability = f.state_known_at < f.order_time
+    if historical:
+        for col in ("availability_basis", "state_availability_basis"):
+            if not f[col].isin(["timestamp", "date", "historical_session_effective"]).all():
+                raise ValueError("unknown historical availability basis")
+        if ((f.availability_basis.eq("historical_session_effective") & f.known_at.notna()).any()
+                or (f.state_availability_basis.eq("historical_session_effective") & f.state_known_at.notna()).any()):
+            raise ValueError("historical approximation cannot manufacture known_at")
+        availability |= f.known_at.isna() & f.availability_basis.eq("historical_session_effective")
+        state_availability |= f.state_known_at.isna() & f.state_availability_basis.eq("historical_session_effective")
     temporal = (
         (f.signal_time.dt.normalize() < f.datetime)
-        & (f.known_at >= f.signal_time)
-        & (f.known_at < f.order_time)
-        & (f.state_known_at < f.order_time)
+        & availability
+        & state_availability
         & (f.adv_asof.dt.normalize() < f.datetime)
         & (f.adv_asof < f.order_time)
         & (f.order_time < f.executable_at)
@@ -151,8 +163,8 @@ class EconomicOpenExchange(PreparedQuoteExchange):
     Dates, cash budget and opening sellability must be established before either.
     """
 
-    def __init__(self, *, execution_quotes, calendar, implicit_bps=0.0, **kwargs):
-        f = validate_prepared(execution_quotes)
+    def __init__(self, *, execution_quotes, calendar, implicit_bps=0.0, historical_inputs=False, **kwargs):
+        f = validate_prepared(execution_quotes, historical=historical_inputs)
         self.execution_rows = f.set_index(["instrument", "datetime"]).sort_index()
         self.execution_calendar = pd.DatetimeIndex(calendar)
         for date in self.execution_calendar:

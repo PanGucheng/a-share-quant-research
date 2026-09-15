@@ -1,6 +1,19 @@
 # E2 Core 与冻结策略路径：阶段边界评审
 
-2026-09-15 后续 [C1/C2 实施验收](CORE_IMPLEMENTATION_ACCEPTANCE.md) 已完成：C2 关闭，C1 适配实现但固定真实来源验收仍 BLOCKED。本文保留阶段定义及实施前状态，当前状态以 [Matrix](MATRIX.md) 为准。
+2026-09-15 当前补充：用户已授权调整 C1 历史可得性要求，C1/C2 均通过[实施验收](CORE_IMPLEMENTATION_ACCEPTANCE.md)。
+**E2 CORE READY / STRATEGY PATH VERIFICATION PENDING**；当前状态以 [Matrix](MATRIX.md) 为准。
+本补充优先于下文实施前 OPEN/BLOCKED 状态以及精确历史盘前证明要求。
+
+C1 Historical Research Input Contract 采用显式 session-effective approximation，来源、证券与日期绑定，
+known_at 保持 null；ordinary 仍需日级状态、此前交易记录和独立普通限价证据。
+事件 entry 采用有来源的 known-session-event review，coverage incomplete 独立记录，
+不证明事件全集完整。已持仓未知权益/身份/估值继续 HALT_RETAIN。
+Live Decision-Time Input Contract 独立要求真实获取与观测时间、来源、明确 TTL 和 session 一致；
+历史近似不得直接进入 live。本轮无 live provider/券商或真实策略路径。
+
+下文保留原审查背景及 Core/Strategy Path 分层、R1–R3 和先冻结后验证的顺序；
+其中“本轮未实现/未运行”和 C1/C2 OPEN 是当时状态，已由本补充及当前验收取代。
+通用 E2 infrastructure 在此停止，E3 准备/实际路径需人工审核后另行推进，不自动启动。
 
 2026-09-15；审查基线 `main@6656a42`，已核对与 origin/main 一致。参考用户提供的
 《E2 Core Readiness 与 Strategy-Specific Path Verification 调整计划》，附件 SHA256：

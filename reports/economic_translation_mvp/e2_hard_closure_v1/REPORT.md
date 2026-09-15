@@ -1,42 +1,25 @@
-# Economic Translation MVP — 当前 E2 状态
+# E2 Core 收尾报告
 
-2026-09-15；基线 `main@146cb04`。**C2 已验收关闭；C1 已实现但真实来源验收未通过。
-E2 CORE PARTIAL / E2 STILL BLOCKED；STRATEGY PATH NOT STARTED。**
+2026-09-15；基线 `main@c312469`。
+**E2 CORE READY / STRATEGY PATH VERIFICATION PENDING。C1 与 C2 均已关闭。**
 
-用户本轮要求只实现并验收 C1 + C2。本轮已交付两个 opt-in 模块、定向测试、固定真实 canary
-与独立验证，没有扩展 E2 scope。详见 [实施验收](CORE_IMPLEMENTATION_ACCEPTANCE.md)、
-[当前 Matrix](MATRIX.md)、[机器证据](CORE_ACCEPTANCE.json)。
+C1 改为显式 historical session-effective 研究近似：可信日级身份/状态视为对应 session 有效，
+保留来源、hash、日期和近似标记，known_at 为空。事件准入要求审查已知当期阻塞风险，
+不再要求五类公司行动全集完整证明；未知持仓权益仍 HALT_RETAIN。
 
-## 已解决：C2
+原固定 SH600000 / 2020-08-24 canary 已通过 ALLOW_ENTRY→B 普通成交→C 估值→COMMITTED。
+仅一笔固定 100 股工程订单，无策略选择、分数或收益输出。来源/独立算式验证通过，
+43 项新增历史/live 测试与 125 项 E2 回归通过；fast 46、Qlib 6，共 220 项测试通过。
 
-CoreSession 复用 Qlib Account/EventPosition/EconomicOpenExchange，将盘前 A、公司行动、
-Entry/Holding 门控、开盘 B、日终 C 与登记接通。坏的未持有候选只拒买；特殊持仓和现金应收
-通过独立 carry 分支保留，不构造假的普通限价或行情。普通订单沿用原 lot、T+1、容量和费用检查。
+Live 输入接口要求真实观测/获取时间、明确 TTL、来源/证券/session 绑定，无缺失或冲突。
+历史近似不能进入 live；本轮没有接实盘 provider 或执行器。C2 普通会计、持仓/权利保留、
+整日事务提交与失败恢复继续通过验收。
 
-账户日只在工作副本全部检查通过后提交。事件后、成交后、收盘后和提交前故障均保留原账户；
-恢复重放结果一致。现金/红股在原股卖出后继续存在，未知权益/估值和非整数分配继续停机。
-C2 为 **CLOSED / ACCEPTED WITHIN CORE SCOPE**，不是实际策略路径已经跑通。
+详见[实施验收](CORE_IMPLEMENTATION_ACCEPTANCE.md)、[Matrix](MATRIX.md)、
+[机器证据](HISTORICAL_CORE_ACCEPTANCE.json)。旧[严格 PIT 失败验收](CORE_ACCEPTANCE.json)
+和所有原始扫描/semantic receipts 保持原样。合同变化不改写旧结论。
 
-## 尚未验收通过：C1
-
-输入适配已实现 instrument/field/phase/source/hash 绑定，未可得版本先过滤；
-现有量价 overlay 接入严格 prior-20 ADV，开盘价单独使用固定原始源，避免日终诊断影响开盘。
-已允许的日线阶段近似显式标注 source_known_at=null，不拿它补造 state/events_clear。
-
-真实样本固定为 SH600000 / 2020-08-24。21 行切片、独立量价和涨跌停表验证通过；
-ADV20 双方均为 50,322,888.6 股。但固定来源未提供普通状态、身份可得性和完整事件覆盖的
-盘前证明，实际为 **NO_NEW_ENTRY**。事件切片为空也不代表完整无事件。
-因此 C1 为 **IMPLEMENTED / REAL-SOURCE ACCEPTANCE BLOCKED**，不能把拒绝分支通过当作普通路径成功。
-
-这仍是原 C1 的证据缺口，不新增 blocker 或扩展采集，也不退回全库异常修复。
-R1–R3 保持冻结实际 exposure 的条件事项；148/528/921 inventory 和旧 receipts 均保留。
-
-## 验证与边界
-
-新增定向测试覆盖分阶段输入、普通会计、carry、拒绝与失败恢复；既有 E2/fast/Qlib 检查通过。
-独立 canary 程序核验 14 个输入 hash、4 个输出 hash，并从原始数据单独复算 ADV。
-最终输出 e2_core_acceptance_v4，前版同一固定样本的核验结果保留；未换样本、未改通过标准。
-
-未重采三项长扫描、未重跑 E1、未读取分数或 2024+、未运行真实账户/收益评价。
-旧执行组件、B494/canonical/冻结证据保持不变；费用参数选择仍在原 E3 范围。
-**当前不能宣布 E2 CORE READY，不进入 E3/E4。提交推送后停止等待人工审核。**
+**停止通用 E2 infrastructure 开发，等待人工审核。**
+实际策略未冻结，R1–R3 仍需按实际 exposure 验证；Core Ready 不是全池九年可执行性声明。
+未重采 Quotes/States/Dividends、重跑 E1、修改 B494/canonical、选择 K/AUM/buffer/benchmark、
+运行正式策略或 NAV/PnL/Sharpe/CAGR、访问 2024+。不自动进入 E3/E4。

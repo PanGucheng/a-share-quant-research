@@ -22,7 +22,7 @@ task-specific authority doc
 
 ## Current Authority
 
-- [E2 C1/C2 实施验收](../reports/economic_translation_mvp/e2_hard_closure_v1/CORE_IMPLEMENTATION_ACCEPTANCE.md) — C2 已关闭，C1 适配已实现但固定真实来源验收 BLOCKED；不扩展 scope。
+- [E2 C1/C2 实施验收](../reports/economic_translation_mvp/e2_hard_closure_v1/CORE_IMPLEMENTATION_ACCEPTANCE.md) — C1/C2 已关闭；历史 session-effective / live freshness 分离；固定 canary COMMITTED，策略路径待验证。
 - [E2 Core / Strategy Path 阶段评审](../reports/economic_translation_mvp/e2_hard_closure_v1/STAGE_BOUNDARY_REVIEW.md) — 保留 Core 与冻结路径两层定义；实施后的状态见上方验收，附 path contract。
 - [E2 MVP Scope Simplification Review](../reports/economic_translation_mvp/e2_hard_closure_v1/MVP_SCOPE_SIMPLIFICATION_REVIEW.md) — 前次 Entry/Holding 原语实现证据；当前阶段定义以上方 Core Review 为准。
 - [E2 Hard-Blocker Closure](../reports/economic_translation_mvp/e2_hard_closure_v1/REPORT.md) — 最新[矩阵](../reports/economic_translation_mvp/e2_hard_closure_v1/MATRIX.md)与[离线语义闭环](../reports/economic_translation_mvp/e2_hard_closure_v1/SEMANTIC_RECONCILIATION.md)；采集已完成，E2 STILL BLOCKED。

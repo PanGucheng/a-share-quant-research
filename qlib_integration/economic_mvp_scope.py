@@ -25,7 +25,7 @@ class Fact:
     precision: str = "timestamp"
 
 
-def visible_fact(history, at, *, prior_session=False):
+def visible_fact(history, at, *, prior_session=False, historical=False):
     """Future revisions are ignored; conflicting equally dated versions deny."""
     cutoff = pd.Timestamp(at)
     day = str(bounded_date(cutoff).date())
@@ -33,10 +33,13 @@ def visible_fact(history, at, *, prior_session=False):
         raise ValueError("use Asia/Shanghai local naive timestamps")
     visible = []
     for fact in history:
-        if not isinstance(fact.source, str) or not fact.source or not fact.known_at:
+        if not isinstance(fact.source, str) or not fact.source:
             continue
         try:
-            known = pd.Timestamp(fact.known_at)
+            approximate = historical and fact.precision == "historical_session_effective" and fact.known_at is None
+            if not approximate and not fact.known_at:
+                continue
+            known = pd.Timestamp(fact.observed_on if approximate else fact.known_at)
             observed = pd.Timestamp(fact.observed_on)
             dates = [fact.observed_on, fact.effective_from, fact.effective_to]
             if any(str(pd.Timestamp(d).date()) != d for d in dates):
@@ -50,9 +53,11 @@ def visible_fact(history, at, *, prior_session=False):
                 continue
             if not fact.effective_from <= day <= fact.effective_to:
                 continue
-            if known >= cutoff or observed.normalize() > known.normalize():
+            if not approximate and (known >= cutoff or observed.normalize() > known.normalize()):
                 continue
-            if fact.precision == "date":
+            if approximate:
+                pass  # Date ordering only; `known` above is a version key, never a publication time.
+            elif fact.precision == "date":
                 if known.normalize() >= cutoff.normalize():
                     continue
             elif fact.precision != "timestamp":
@@ -73,16 +78,16 @@ def visible_fact(history, at, *, prior_session=False):
     return chosen[0]
 
 
-def _value(facts, name, at, *, prior=False):
-    fact = visible_fact(facts.get(name, ()), at, prior_session=prior)
+def _value(facts, name, at, *, prior=False, historical=False):
+    fact = visible_fact(facts.get(name, ()), at, prior_session=prior, historical=historical)
     return None if fact is None else fact.value
 
 
-def _state(instrument, state, at):
+def _state(instrument, state, at, *, historical=False):
     if state is None or state.get("instrument") != instrument:
         return "unresolved"
     try:
-        return execution_state(state, at)
+        return execution_state(state, at, historical=historical)
     except (TypeError, ValueError):
         return "unresolved"
 
@@ -93,20 +98,20 @@ class Decision:
     reasons: tuple
 
 
-def entry_eligibility(instrument, at, facts, state, existing_assets=None):
+def entry_eligibility(instrument, at, facts, state, existing_assets=None, *, historical=False):
     """No current-day OHLC, retrospective failure list, or empty event inference."""
     bounded_date(at)
     reasons = []
-    asset = _value(facts, "asset_id", at)
+    asset = _value(facts, "asset_id", at, historical=historical)
     if not isinstance(asset, str) or not asset:
         reasons.append("identity_unknown")
     elif asset in (existing_assets or {}) and existing_assets[asset] != instrument:
         reasons.append("duplicate_economic_identity")
-    if _value(facts, "quote_quality", at, prior=True) is not True:
+    if _value(facts, "quote_quality", at, prior=True, historical=historical) is not True:
         reasons.append("prior_quote_quality_unknown_or_bad")
-    if _value(facts, "events_clear", at) is not True:
+    if _value(facts, "events_clear", at, historical=historical) is not True:
         reasons.append("event_evidence_unknown_or_pending")
-    adv = _value(facts, "adv20_shares", at, prior=True)
+    adv = _value(facts, "adv20_shares", at, prior=True, historical=historical)
     if (
         isinstance(adv, bool)
         or not isinstance(adv, (int, float))
@@ -114,7 +119,7 @@ def entry_eligibility(instrument, at, facts, state, existing_assets=None):
         or adv <= 0
     ):
         reasons.append("adv_not_ready")
-    status = _state(instrument, state, at)
+    status = _state(instrument, state, at, historical=historical)
     if status != "ordinary_known":
         reasons.append("ordinary_execution_not_certified")
     elif state["st"]:
@@ -122,19 +127,19 @@ def entry_eligibility(instrument, at, facts, state, existing_assets=None):
     return Decision("NO_NEW_ENTRY" if reasons else "ALLOW_ENTRY", tuple(reasons))
 
 
-def holding_continuity(instrument, at, facts, state, *, needs_market_mark=True):
+def holding_continuity(instrument, at, facts, state, *, needs_market_mark=True, historical=False):
     """Unknown trading regime alone can forbid trades while preserving a mark.
 
     Identity, dated valuation and entitlement uncertainty still block accounting.
     A close observed later today cannot mark the account before open.
     """
     reasons = []
-    asset = _value(facts, "asset_id", at)
+    asset = _value(facts, "asset_id", at, historical=historical)
     if not isinstance(asset, str) or not asset:
         reasons.append("held_identity_unresolved")
-    if _value(facts, "events_clear", at) is not True:
+    if _value(facts, "events_clear", at, historical=historical) is not True:
         reasons.append("held_entitlement_unresolved")
-    mark = visible_fact(facts.get("valuation_mark", ()), at)
+    mark = visible_fact(facts.get("valuation_mark", ()), at, historical=historical)
     if needs_market_mark and (
         mark is None
         or mark.observed_on != str(bounded_date(at).date())
@@ -148,10 +153,10 @@ def holding_continuity(instrument, at, facts, state, *, needs_market_mark=True):
         return Decision("HALT_RETAIN", tuple(reasons))
     if not needs_market_mark:
         return Decision("CARRY_CASH_CLAIM", ("existing_denomination_no_stock_quote_required",))
-    status = _state(instrument, state, at)
+    status = _state(instrument, state, at, historical=historical)
     if status == "terminal_requires_event":
         return Decision("HALT_RETAIN", ("terminal_equity_requires_resolution",))
-    if status != "ordinary_known" or _value(facts, "voluntary_trade_ready", at) is not True:
+    if status != "ordinary_known" or _value(facts, "voluntary_trade_ready", at, historical=historical) is not True:
         return Decision("CARRY_ONLY", ("no_voluntary_trade",))
     return Decision("ORDINARY_EXECUTION_CANDIDATE", ())
 
@@ -184,7 +189,7 @@ def position_exposures(position):
     return exposed
 
 
-def scope_account(account, candidates, at, facts_by_id, states):
+def scope_account(account, candidates, at, facts_by_id, states, *, historical=False):
     """Pure preflight: bad unheld candidates cannot halt unrelated holdings.
 
     HALT_RETAIN is returned before any account mutation. Callers must honor
@@ -200,26 +205,26 @@ def scope_account(account, candidates, at, facts_by_id, states):
     }
     held = {
         s: holding_continuity(
-            s, at, facts_by_id.get(s, {}), states.get(s), needs_market_mark=s in market_exposure
+            s, at, facts_by_id.get(s, {}), states.get(s), needs_market_mark=s in market_exposure, historical=historical
         )
         for s in sorted(exposed)
     }
     assets = {}
     for stock in sorted(exposed):
-        asset = _value(facts_by_id.get(stock, {}), "asset_id", at)
+        asset = _value(facts_by_id.get(stock, {}), "asset_id", at, historical=historical)
         if isinstance(asset, str) and asset:
             if asset in assets:
                 held[stock] = Decision("HALT_RETAIN", ("held_identity_collision",))
             assets[asset] = stock
     entries = {
-        s: entry_eligibility(s, at, facts_by_id.get(s, {}), states.get(s), assets)
+        s: entry_eligibility(s, at, facts_by_id.get(s, {}), states.get(s), assets, historical=historical)
         for s in sorted(set(candidates) - exposed)
     }
     # Colliding unheld aliases both deny; never choose a score or winner.
     by_asset = {}
     for stock, decision in entries.items():
         if decision.action == "ALLOW_ENTRY":
-            by_asset.setdefault(_value(facts_by_id[stock], "asset_id", at), []).append(stock)
+            by_asset.setdefault(_value(facts_by_id[stock], "asset_id", at, historical=historical), []).append(stock)
     for stocks in by_asset.values():
         if len(stocks) > 1:
             for stock in stocks:
