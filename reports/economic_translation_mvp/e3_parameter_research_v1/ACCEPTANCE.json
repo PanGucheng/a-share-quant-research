@@ -1,0 +1,375 @@
+{
+  "actual_R1": null,
+  "actual_R2": null,
+  "actual_R3": null,
+  "development_tuning_complete": false,
+  "failed_attempt": {
+    "cause": "generic market adapter rejects 2014; fixed first-session bridge reuses approved adv20_with_warmup",
+    "failure_sha256": "b03bd39f8a898a9c8d265947ecb22584cdbf29c60d5377517b2032223b2332ac",
+    "path": "outputs\\economic_translation_mvp\\e3_parameter_research_v1",
+    "target_bytes_unchanged": {
+      "k10_h15_d1_c5.json": "6fa2e3469cd209571a5bac27e618dc7b88a5e22a7d341a4f2cdef078c6c2c49b",
+      "k10_h15_d1_cnone.json": "52c36b52c11fc86a46f53b2fac6c8b3dde69bd0c17e3403b11a9fa06da73a6ec",
+      "k10_h20_d1_c5.json": "e6173579e36ff89a32b0af6496a99f2bc475d1550c8290da6bdd2c2280bb3a24",
+      "k10_h20_d1_cnone.json": "ff90b6da0142202f2d1d201f5a83ddfc7dad1121c40d1a307a062bfeb9dc567b",
+      "k5_h10_d1_c3.json": "422a045666f8c5ab0c7ea250e1a5fb0c799a84548d0fa334d8e319b1611dc4f5",
+      "k5_h10_d1_cnone.json": "8c1ef52ab1492298378ee3d8493afad9c4aa8b5753bb46828304c38e1ef537e7",
+      "k5_h8_d1_c3.json": "6e65b01e0a1b618ded19a334f1b97506857dfa2a3cf610aa0702f9e662854616",
+      "k5_h8_d1_cnone.json": "b0ca4b8d3c8d1c51f1d502eb43602ec5143483c3ec18502afd2db75df4e3532e",
+      "k8_h12_d1_c4.json": "bb07665862e48912a1ed956f4de5e5ae7abe4a2c439108113571196796e048eb",
+      "k8_h12_d1_cnone.json": "46f92e0115521af5ff5a7ac1affaf0f29f3cf6269d3513c97fa4809aa4bf57a4",
+      "k8_h16_d10_c1.json": "667e971b4b27903c115ee8eb9c2aa183c42d49f4e3dddc0028544f2ca1113511",
+      "k8_h16_d10_c2.json": "3bbf2eee8fc8ff2e546bee400343c63ffc39d4aa8371492648319feadbbee8e7",
+      "k8_h16_d10_c4.json": "9a2fa8f5d1dda53b8d9c2a53a09eb2128af84985e8318275f4f85cb3ae29e20c",
+      "k8_h16_d10_cnone.json": "0c6ac0d31781eb3833660ae4b0e5a3c97043fb90abb80362f0b18cf06be73000",
+      "k8_h16_d1_c1.json": "3032ddbc54fc7610fb680675df8d431c9c79e03d6d2a0dd3ac864ebb731eec7b",
+      "k8_h16_d1_c2.json": "10f2c217be4dc67745c8fc460fad1cd4b0481ada495bd992bca2f1c44e57f522",
+      "k8_h16_d1_c4.json": "2b81f61a571998ac86d634396bf3b1d8d158feaf858f698ea5c789132fa82676",
+      "k8_h16_d1_cnone.json": "cbf6689cf432ad1b2bd717a2821c1c9a23adee71f0725ca303ffddc99d8d8cb1",
+      "k8_h16_d3_c1.json": "eef40f584a1d0026e1caf7689db25c5ca26b1292e497a4cf1ace550bfa704cbd",
+      "k8_h16_d3_c2.json": "aa3bea9fbb1e490690448397c438f89556abc30b2d9d308b746a1a62278964c3",
+      "k8_h16_d3_c4.json": "7645fa92deff8f2c19533d0733a9663b7976325b20e5ca2a3361013199b53564",
+      "k8_h16_d3_cnone.json": "2a1bdd6d11c8003259ecba9230cd3bc798b2c188ffd55f51bb1445350058e940",
+      "k8_h16_d5_c1.json": "76d4fe16291f5a9d76cc3e2652d5ea0dc11b040ab0feb78b164fba0391e9828e",
+      "k8_h16_d5_c2.json": "db3d12311d9301839e35a5b479fde1afd236842414cef48ebcc0064c709ecf28",
+      "k8_h16_d5_c4.json": "dd92ed318b2b8999c0de20c097b0c2d83adf34944b4ea51d1f505afeee046735",
+      "k8_h16_d5_cnone.json": "a78f39d9ca8c1396bf8dea69352815793e9d9cf48255ba97dc8e09d848c7a6ab",
+      "k8_h20_d1_c4.json": "c2080c050e499d18b768197a688e97e5c0bb816060b42bcd7958e65e9cd42f6f",
+      "k8_h20_d1_cnone.json": "bddf08da0722f587a1ef49e7f520c60cb0b461841a9b6f7d310072b9f60d5477",
+      "k8_h8_d1_c4.json": "08bf80ef88f837e65c0d61058927d1b9c34f0e498208fd070bc7c2350eceae0a",
+      "k8_h8_d1_cnone.json": "df9a222814854ad1909c596c103c1432132b7bbec5f9e3762c38cf2354f766b9"
+    }
+  },
+  "first_input_audit": {
+    "actual_R1": null,
+    "actual_R2": null,
+    "actual_R3": null,
+    "actual_sessions": 0,
+    "event_limit": "first flat-start record/ex-date review only; no held-event or full-family certification",
+    "not_actual_gate_rejections": true,
+    "original_top10": [
+      "SZ300246",
+      "SZ300245",
+      "SZ002196",
+      "SZ300331",
+      "SH600070",
+      "SZ300354",
+      "SZ002401",
+      "SZ300220",
+      "SZ002382",
+      "SZ300076"
+    ],
+    "remaining": [
+      "independent session limits / ordinary-state certification for touched entries",
+      "strategy-specific multi-sale and actual-cash/personal-fee Core integration",
+      "daily held-event/valuation/identity path and independent account validation"
+    ],
+    "rows": [
+      {
+        "adv20": 2256509.512545923,
+        "asset_id": "SZ300246",
+        "bounded_identity_consistent": true,
+        "complete_event_coverage": false,
+        "early_sh_par_evidence": "NOT_APPLICABLE",
+        "entry_action": "NO_NEW_ENTRY",
+        "instrument": "SZ300246",
+        "matching_existing_independent_limits": 0,
+        "open_reference_available": true,
+        "phase_issues": {},
+        "prior_quote_quality": true,
+        "raw_state_values": {
+          "active": "1",
+          "st": "0"
+        },
+        "reasons": [
+          "ordinary_execution_not_certified"
+        ],
+        "scoped_session_distribution_rows": 0,
+        "state_rows": 1
+      },
+      {
+        "adv20": 5029422.398708923,
+        "asset_id": "SZ300245",
+        "bounded_identity_consistent": true,
+        "complete_event_coverage": false,
+        "early_sh_par_evidence": "NOT_APPLICABLE",
+        "entry_action": "NO_NEW_ENTRY",
+        "instrument": "SZ300245",
+        "matching_existing_independent_limits": 0,
+        "open_reference_available": true,
+        "phase_issues": {},
+        "prior_quote_quality": true,
+        "raw_state_values": {
+          "active": "1",
+          "st": "0"
+        },
+        "reasons": [
+          "ordinary_execution_not_certified"
+        ],
+        "scoped_session_distribution_rows": 0,
+        "state_rows": 1
+      },
+      {
+        "adv20": 3458520.848905691,
+        "asset_id": "SZ002196",
+        "bounded_identity_consistent": true,
+        "complete_event_coverage": false,
+        "early_sh_par_evidence": "NOT_APPLICABLE",
+        "entry_action": "NO_NEW_ENTRY",
+        "instrument": "SZ002196",
+        "matching_existing_independent_limits": 0,
+        "open_reference_available": true,
+        "phase_issues": {},
+        "prior_quote_quality": true,
+        "raw_state_values": {
+          "active": "1",
+          "st": "0"
+        },
+        "reasons": [
+          "ordinary_execution_not_certified"
+        ],
+        "scoped_session_distribution_rows": 0,
+        "state_rows": 1
+      },
+      {
+        "adv20": 1514354.9568646327,
+        "asset_id": "SZ300331",
+        "bounded_identity_consistent": true,
+        "complete_event_coverage": false,
+        "early_sh_par_evidence": "NOT_APPLICABLE",
+        "entry_action": "NO_NEW_ENTRY",
+        "instrument": "SZ300331",
+        "matching_existing_independent_limits": 0,
+        "open_reference_available": true,
+        "phase_issues": {},
+        "prior_quote_quality": true,
+        "raw_state_values": {
+          "active": "1",
+          "st": "0"
+        },
+        "reasons": [
+          "ordinary_execution_not_certified"
+        ],
+        "scoped_session_distribution_rows": 0,
+        "state_rows": 1
+      },
+      {
+        "adv20": 6081255.15806527,
+        "asset_id": "SH600070",
+        "bounded_identity_consistent": true,
+        "complete_event_coverage": false,
+        "early_sh_par_evidence": "NOT_ASSEMBLED",
+        "entry_action": "NO_NEW_ENTRY",
+        "instrument": "SH600070",
+        "matching_existing_independent_limits": 0,
+        "open_reference_available": true,
+        "phase_issues": {},
+        "prior_quote_quality": true,
+        "raw_state_values": {
+          "active": "1",
+          "st": "0"
+        },
+        "reasons": [
+          "ordinary_execution_not_certified"
+        ],
+        "scoped_session_distribution_rows": 0,
+        "state_rows": 1
+      },
+      {
+        "adv20": 1130420.2940984233,
+        "asset_id": "SZ300354",
+        "bounded_identity_consistent": true,
+        "complete_event_coverage": false,
+        "early_sh_par_evidence": "NOT_APPLICABLE",
+        "entry_action": "NO_NEW_ENTRY",
+        "instrument": "SZ300354",
+        "matching_existing_independent_limits": 0,
+        "open_reference_available": true,
+        "phase_issues": {},
+        "prior_quote_quality": true,
+        "raw_state_values": {
+          "active": "1",
+          "st": "0"
+        },
+        "reasons": [
+          "ordinary_execution_not_certified"
+        ],
+        "scoped_session_distribution_rows": 0,
+        "state_rows": 1
+      },
+      {
+        "adv20": 5965274.841338692,
+        "asset_id": "SZ002401",
+        "bounded_identity_consistent": true,
+        "complete_event_coverage": false,
+        "early_sh_par_evidence": "NOT_APPLICABLE",
+        "entry_action": "NO_NEW_ENTRY",
+        "instrument": "SZ002401",
+        "matching_existing_independent_limits": 0,
+        "open_reference_available": true,
+        "phase_issues": {},
+        "prior_quote_quality": true,
+        "raw_state_values": {
+          "active": "1",
+          "st": "0"
+        },
+        "reasons": [
+          "ordinary_execution_not_certified"
+        ],
+        "scoped_session_distribution_rows": 0,
+        "state_rows": 1
+      },
+      {
+        "adv20": null,
+        "asset_id": "SZ300220",
+        "bounded_identity_consistent": true,
+        "complete_event_coverage": false,
+        "early_sh_par_evidence": "NOT_APPLICABLE",
+        "entry_action": "NO_NEW_ENTRY",
+        "instrument": "SZ300220",
+        "matching_existing_independent_limits": 0,
+        "open_reference_available": true,
+        "phase_issues": {},
+        "prior_quote_quality": true,
+        "raw_state_values": {
+          "active": "1",
+          "st": "0"
+        },
+        "reasons": [
+          "adv_not_ready",
+          "ordinary_execution_not_certified"
+        ],
+        "scoped_session_distribution_rows": 0,
+        "state_rows": 1
+      },
+      {
+        "adv20": null,
+        "asset_id": "SZ002382",
+        "bounded_identity_consistent": true,
+        "complete_event_coverage": false,
+        "early_sh_par_evidence": "NOT_APPLICABLE",
+        "entry_action": "NO_NEW_ENTRY",
+        "instrument": "SZ002382",
+        "matching_existing_independent_limits": 0,
+        "open_reference_available": true,
+        "phase_issues": {},
+        "prior_quote_quality": true,
+        "raw_state_values": {
+          "active": "1",
+          "st": "0"
+        },
+        "reasons": [
+          "adv_not_ready",
+          "ordinary_execution_not_certified"
+        ],
+        "scoped_session_distribution_rows": 0,
+        "state_rows": 1
+      },
+      {
+        "adv20": 3299928.640252515,
+        "asset_id": "SZ300076",
+        "bounded_identity_consistent": true,
+        "complete_event_coverage": false,
+        "early_sh_par_evidence": "NOT_APPLICABLE",
+        "entry_action": "NO_NEW_ENTRY",
+        "instrument": "SZ300076",
+        "matching_existing_independent_limits": 0,
+        "open_reference_available": true,
+        "phase_issues": {},
+        "prior_quote_quality": true,
+        "raw_state_values": {
+          "active": "1",
+          "st": "0"
+        },
+        "reasons": [
+          "ordinary_execution_not_certified"
+        ],
+        "scoped_session_distribution_rows": 0,
+        "state_rows": 1
+      }
+    ],
+    "session": "2015-01-06",
+    "source_limit": "absence checked only in existing C1 independent-limit receipt inventory",
+    "status": "ACTUAL_PATH_NOT_STARTED_SOURCE_INTAKE_BLOCKED"
+  },
+  "independent_verification": {
+    "actual_path_verified": false,
+    "candidates": 30,
+    "original_scores_independently_sorted": true,
+    "receipt_sha256": "0c079db968b8d7e4a4d0b22614885db3b198c7af906c51d269a9ee52c9c62cbf",
+    "search_sha256": "08e281cfa4986350aa8bddc4791c5e32ff83d793aae746ceb0104cd55201545a",
+    "sessions": 2189,
+    "source_inputs_hash_verified": true,
+    "status": "PASS_ALL_TARGET_ROWS_SPELLS_QUEUES",
+    "summary_scope": "production aggregations over independently matched raw diagnostics; not economic validation"
+  },
+  "independent_verification_sha256": "941b340346033b2371ea7b1b07d86d1801a6a1130535f12435159cfecedf6f13",
+  "original_v1_target_sha256": "60f96ba6578940c3f3038e575f52358c0ea5ccd18ae796ba257c8e7dcdfba86f",
+  "receipt": {
+    "actual_metrics": null,
+    "code_lf": {
+      "model_research/economic_e3_parameter_structure.py": "b6c60b70c096585f191501dccf3f82d5091721a58b65e243b0e9edb2f7cda278",
+      "model_research/economic_prediction_structure.py": "59f72e0c66a0253d12b25bfa96d459a485b4b5f53d14d57bf070e92310e6ef5a",
+      "qlib_integration/economic_core_inputs.py": "6ce791cc50b75da0cd0c19c9312a412f83a8b7146f261d2b3b82351a773b422b",
+      "qlib_integration/economic_historical_inputs.py": "63306296b744c975ec5f3eb3fc3c736f324c7028f03dc9e840750b63b26c1f31",
+      "qlib_integration/economic_mvp_scope.py": "5a7005438ae52a94bc6dcb34b90631a7d405530702b776564dbe506ae426f341",
+      "qlib_integration/economic_strategy_membership.py": "926f9173d7874861cdfb748e73e8aa08caef763c116a309d963ad97860e89138",
+      "qlib_integration/execution_readiness.py": "a99954d9673fabb133427ba7abeb54d8c377ffa3482f02d01a1cb7c4b6125cbf",
+      "scripts/audit_e3_parameter_inputs.py": "ea47d02cf450141933d060a0685358c93c0f70e0687c38d5eb9af7306341b5df",
+      "scripts/preflight_e3_structure.py": "46a7f8c6a598d721fdcd22b98804c0dd0a57ff3ddcbbd3785affec01454f2a3d",
+      "scripts/study_e3_parameter_research.py": "e88f58b2c84fbd16b20af78703aa807e94bcc5a4d197066faf437e8c24828ef2",
+      "scripts/verify_e3_parameter_research.py": "44aaab546812ab8f47ab2b6fb267d8d7896d3b3e3962d953a0b61edd84b1b6db"
+    },
+    "development_tuning_complete": false,
+    "files": {
+      "access.json": "eafdbbbacac76ee4c619ee5b68de9556386616c13ca0d9c1aaacc18105461ecd",
+      "actual_input_audit.json": "41374390051a451a4c2774b0f8f50c5da3136ee31bb1721400d22faac59d19ea",
+      "k10_h15_d1_c5.json": "6fa2e3469cd209571a5bac27e618dc7b88a5e22a7d341a4f2cdef078c6c2c49b",
+      "k10_h15_d1_cnone.json": "52c36b52c11fc86a46f53b2fac6c8b3dde69bd0c17e3403b11a9fa06da73a6ec",
+      "k10_h20_d1_c5.json": "e6173579e36ff89a32b0af6496a99f2bc475d1550c8290da6bdd2c2280bb3a24",
+      "k10_h20_d1_cnone.json": "ff90b6da0142202f2d1d201f5a83ddfc7dad1121c40d1a307a062bfeb9dc567b",
+      "k5_h10_d1_c3.json": "422a045666f8c5ab0c7ea250e1a5fb0c799a84548d0fa334d8e319b1611dc4f5",
+      "k5_h10_d1_cnone.json": "8c1ef52ab1492298378ee3d8493afad9c4aa8b5753bb46828304c38e1ef537e7",
+      "k5_h8_d1_c3.json": "6e65b01e0a1b618ded19a334f1b97506857dfa2a3cf610aa0702f9e662854616",
+      "k5_h8_d1_cnone.json": "b0ca4b8d3c8d1c51f1d502eb43602ec5143483c3ec18502afd2db75df4e3532e",
+      "k8_h12_d1_c4.json": "bb07665862e48912a1ed956f4de5e5ae7abe4a2c439108113571196796e048eb",
+      "k8_h12_d1_cnone.json": "46f92e0115521af5ff5a7ac1affaf0f29f3cf6269d3513c97fa4809aa4bf57a4",
+      "k8_h16_d10_c1.json": "667e971b4b27903c115ee8eb9c2aa183c42d49f4e3dddc0028544f2ca1113511",
+      "k8_h16_d10_c2.json": "3bbf2eee8fc8ff2e546bee400343c63ffc39d4aa8371492648319feadbbee8e7",
+      "k8_h16_d10_c4.json": "9a2fa8f5d1dda53b8d9c2a53a09eb2128af84985e8318275f4f85cb3ae29e20c",
+      "k8_h16_d10_cnone.json": "0c6ac0d31781eb3833660ae4b0e5a3c97043fb90abb80362f0b18cf06be73000",
+      "k8_h16_d1_c1.json": "3032ddbc54fc7610fb680675df8d431c9c79e03d6d2a0dd3ac864ebb731eec7b",
+      "k8_h16_d1_c2.json": "10f2c217be4dc67745c8fc460fad1cd4b0481ada495bd992bca2f1c44e57f522",
+      "k8_h16_d1_c4.json": "2b81f61a571998ac86d634396bf3b1d8d158feaf858f698ea5c789132fa82676",
+      "k8_h16_d1_cnone.json": "cbf6689cf432ad1b2bd717a2821c1c9a23adee71f0725ca303ffddc99d8d8cb1",
+      "k8_h16_d3_c1.json": "eef40f584a1d0026e1caf7689db25c5ca26b1292e497a4cf1ace550bfa704cbd",
+      "k8_h16_d3_c2.json": "aa3bea9fbb1e490690448397c438f89556abc30b2d9d308b746a1a62278964c3",
+      "k8_h16_d3_c4.json": "7645fa92deff8f2c19533d0733a9663b7976325b20e5ca2a3361013199b53564",
+      "k8_h16_d3_cnone.json": "2a1bdd6d11c8003259ecba9230cd3bc798b2c188ffd55f51bb1445350058e940",
+      "k8_h16_d5_c1.json": "76d4fe16291f5a9d76cc3e2652d5ea0dc11b040ab0feb78b164fba0391e9828e",
+      "k8_h16_d5_c2.json": "db3d12311d9301839e35a5b479fde1afd236842414cef48ebcc0064c709ecf28",
+      "k8_h16_d5_c4.json": "dd92ed318b2b8999c0de20c097b0c2d83adf34944b4ea51d1f505afeee046735",
+      "k8_h16_d5_cnone.json": "a78f39d9ca8c1396bf8dea69352815793e9d9cf48255ba97dc8e09d848c7a6ab",
+      "k8_h20_d1_c4.json": "c2080c050e499d18b768197a688e97e5c0bb816060b42bcd7958e65e9cd42f6f",
+      "k8_h20_d1_cnone.json": "bddf08da0722f587a1ef49e7f520c60cb0b461841a9b6f7d310072b9f60d5477",
+      "k8_h8_d1_c4.json": "08bf80ef88f837e65c0d61058927d1b9c34f0e498208fd070bc7c2350eceae0a",
+      "k8_h8_d1_cnone.json": "df9a222814854ad1909c596c103c1432132b7bbec5f9e3762c38cf2354f766b9",
+      "started.json": "668dc5a23a58284136d3d9b29a37ef200000c4e3f6fbace6be2888f3c872e5d5",
+      "summary.json": "e853b1e9e13c760e418255941a17d90123f95f9db369836af2057e7b7a47ac03"
+    },
+    "search_sha256": "08e281cfa4986350aa8bddc4791c5e32ff83d793aae746ceb0104cd55201545a",
+    "selected_strategy": null,
+    "status": "E3 PARAMETER RESEARCH / ACTUAL PATH BLOCKED"
+  },
+  "receipt_sha256": "0c079db968b8d7e4a4d0b22614885db3b198c7af906c51d269a9ee52c9c62cbf",
+  "selected_strategy": null,
+  "status": "E3 PARAMETER RESEARCH / ACTUAL PATH BLOCKED",
+  "v1_control_exact_all_days": true,
+  "validation": {
+    "fast_tests": 46,
+    "full_tier": "bounded substitute; legacy recent/Forward validators outside current value-access authorization",
+    "new_tests": 37,
+    "qlib_tests": 6,
+    "scoped_tests": 183
+  }
+}

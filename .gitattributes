@@ -43,3 +43,6 @@ docs/LITERATURE_D3A_FROZEN_PREDICTION_EVALUATION_PLAN.md text eol=lf
 reports/economic_translation_mvp/e3_freeze_v1/*.json -text
 reports/economic_translation_mvp/e3_freeze_v1/*.sha256 -text whitespace=cr-at-eol
 docs/ECONOMIC_E3_FREEZE_PREPARATION.md text eol=lf
+docs/ECONOMIC_E3_PARAMETER_RESEARCH.md text eol=lf
+reports/economic_translation_mvp/e3_parameter_research_v1/*.json -text
+reports/economic_translation_mvp/e3_parameter_research_v1/*.sha256 -text

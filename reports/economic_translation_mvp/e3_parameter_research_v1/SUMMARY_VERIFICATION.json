@@ -1,0 +1,9 @@
+{
+  "candidates": 30,
+  "code_sha256_lf": "3c61843e44ed445a6648375e6d050390b0db40ba85ca3cd1bec5adcb3f23e16c",
+  "economic_validation": false,
+  "raw_oracle_sha256": "941b340346033b2371ea7b1b07d86d1801a6a1130535f12435159cfecedf6f13",
+  "receipt_sha256": "0c079db968b8d7e4a4d0b22614885db3b198c7af906c51d269a9ee52c9c62cbf",
+  "status": "PASS_ALL_30_SUMMARIES_INDEPENDENT_AGGREGATION",
+  "summary_sha256": "e853b1e9e13c760e418255941a17d90123f95f9db369836af2057e7b7a47ac03"
+}

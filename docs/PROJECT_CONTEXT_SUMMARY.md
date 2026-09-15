@@ -37,12 +37,13 @@
 
 ## Current State
 
-Economic Translation MVP：**E1 COMPLETE；E2 CORE READY；E3 STRATEGY FROZEN / PATH PREFLIGHT PENDING**。
-2026-09-15：[单一策略冻结](ECONOMIC_E3_FREEZE_PREPARATION.md)为100k/K8/Hold16/5日/max-drop1/near-EW；
-[E3结构报告](../reports/economic_translation_mvp/e3_freeze_v1/REPORT.md)记录438次目标决策、435次退出积压，需要人工审议。
-目标投影与独立oracle通过不代表actual path通过；首批实际执行输入/现金接线待完成，R1–R3触发数unknown。
-[当前矩阵](../reports/economic_translation_mvp/e2_hard_closure_v1/MATRIX.md)维持Core Ready，停止通用E2治理。
-E1/三项长采集不重跑、B494/canonical不变、无经济评价/2024+项目值访问；提交推送后停止，不自动改参数或进入E4。
+Economic Translation MVP：**E1 COMPLETE；E2 CORE READY；E3 PARAMETER RESEARCH / ACTUAL PATH BLOCKED**。
+2026-09-15用户新授权2015–2023 development参数/经济研究，见[研究计划](ECONOMIC_E3_PARAMETER_RESEARCH.md)。
+[报告](../reports/economic_translation_mvp/e3_parameter_research_v1/REPORT.md)：30个预冻结候选的目标结构
+及独立重放完成，V1保持原证据；尚无真实经济比较或Strategy V2 freeze。
+首Top10有8只严格ADV，2只未知；现有独立限价receipt无首日匹配，实际现金/费率/事件接线待完成。
+R1–R3未知，不把target当实际暴露；E2不重开通用治理、三项采集与E1不重跑，B494/canonical不改。
+下一步为策略专属输入与非空账户canary；长程执行仍用户运行，2024+保持封闭。提交推送后停止审核。
 
 2026-09-10：D1全量168个月、3382日结构扫描及独立oracle通过后，用户授权评估并实施正式冻结与D2。
 R218/C201/H358以 `d05e7eb` [正式冻结](../reports/literature_factor_representation_d1/FORMAL_FREEZE.md)，

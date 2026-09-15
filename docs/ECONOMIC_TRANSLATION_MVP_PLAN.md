@@ -1,12 +1,15 @@
 # Economic Translation MVP：研究与实施计划
 
-2026-09-15 当前E3授权与结论优先于下文历史阶段：用户授权按E3 Freeze Preparation方案推进，
-已按[单一冻结计划](ECONOMIC_E3_FREEZE_PREPARATION.md)冻结100k/K8/Hold16/5日/max-drop1/near-EW。
-**E3 STRATEGY FROZEN / PATH PREFLIGHT PENDING；TARGET STRUCTURE REQUIRES HUMAN REVIEW。**
-[E3报告](../reports/economic_translation_mvp/e3_freeze_v1/REPORT.md)与[freeze](../reports/economic_translation_mvp/e3_freeze_v1/freeze.json)为当前权威。
-438次目标决策、435次退出积压；该证据不能宣称actual path通过，也不自动授权改cap再测。
-R1–R3实际触发仍unknown；E2 Core维持READY，通用治理停止；不再保留Monthly第二臂。
-E1/采集不重跑、B494/canonical不变、无2024+项目值/经济评价；提交推送后停止人工审核。
+2026-09-15最新授权优先于下文历史阶段：用户要求参考Portfolio Parameter Research计划实施，
+2015–2023明确作为可调参、可经济评价的development域。见[新研究计划](ECONOMIC_E3_PARAMETER_RESEARCH.md)
+与[参数研究报告](../reports/economic_translation_mvp/e3_parameter_research_v1/REPORT.md)。
+**E3 PARAMETER RESEARCH / ACTUAL PATH BLOCKED**：30候选搜索合同冻结、目标结构与独立重放完成；
+尚未运行真实账户经济比较，尚未冻结Strategy V2。旧[单一freeze](../reports/economic_translation_mvp/e3_freeze_v1/freeze.json)
+及435/437积压保留为Candidate v1证据。此次授权不更改原Forward Strategy V1。
+经济评价当前因真实来源/账户接线受阻，不是未获用户授权；actual R1–R3仍unknown。
+E2 Core保持READY，不扩通用治理；E1/三项采集不重跑，B494/canonical不变，2024+继续封闭。
+不从目标投影选择赢家；下一步为策略专属来源、现金/个人费率和持仓事件路径，长程执行用户运行。
+提交推送后停止人工审核。下文先前“单候选/不许调参/不许经济评价”只记录历史权限。
 
 2026-09-15：用户授权调整 C1 历史可得性合同，见[实施验收](../reports/economic_translation_mvp/e2_hard_closure_v1/CORE_IMPLEMENTATION_ACCEPTANCE.md)和[当前 Matrix](../reports/economic_translation_mvp/e2_hard_closure_v1/MATRIX.md)。
 **E1 COMPLETE；C1/C2 CLOSED；E2 CORE READY / STRATEGY PATH VERIFICATION PENDING。**

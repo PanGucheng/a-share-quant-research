@@ -5,12 +5,15 @@ artifact 名称中的 `current` 不自动表示 ACTIVE。
 
 ## 1. Status At A Glance
 
-Economic Translation MVP：**E1 COMPLETE；E2 CORE READY；E3 STRATEGY FROZEN / PATH PREFLIGHT PENDING**。
-2026-09-15：[单一策略冻结](ECONOMIC_E3_FREEZE_PREPARATION.md)为100k/K8/Hold16/5日/max-drop1/near-EW；
-[E3结构报告](../reports/economic_translation_mvp/e3_freeze_v1/REPORT.md)记录438次目标决策、435次退出积压，需要人工审议。
-目标投影与独立oracle通过不代表actual path通过；首批实际执行输入/现金接线待完成，R1–R3触发数unknown。
-[当前矩阵](../reports/economic_translation_mvp/e2_hard_closure_v1/MATRIX.md)维持Core Ready，停止通用E2治理。
-E1/三项长采集不重跑、B494/canonical不变、无经济评价/2024+项目值访问；提交推送后停止，不自动改参数或进入E4。
+Economic Translation MVP：**E1 COMPLETE；E2 CORE READY；E3 PARAMETER RESEARCH / ACTUAL PATH BLOCKED**。
+2026-09-15新授权允许2015–2023 development portfolio tuning，见[研究计划](ECONOMIC_E3_PARAMETER_RESEARCH.md)。
+[参数研究报告](../reports/economic_translation_mvp/e3_parameter_research_v1/REPORT.md)：预先冻结30候选，
+全部2,189日目标路径独立重放通过；V1控制与旧证据一致。尚未选择/冻结Strategy V2。
+首Top10输入8只ADV可用、2只未知；已有独立限价receipt无首日匹配，策略现金/个人费率和实际事件路径待接。
+经济评价已获development授权但尚无真实路径结果；实际R1–R3仍unknown，不能从target判定赢家。
+[当前矩阵](../reports/economic_translation_mvp/e2_hard_closure_v1/MATRIX.md)保持Core Ready。
+本轮结构结果无需重跑；下一步是策略专属来源/账户接线与非空canary，长程执行仍由用户运行。
+保留V1、两个研究attempt，E1/三项长采集不重跑、B494/canonical不变、2024+封闭；提交推送后停止审核。
 
 Literature Representation **D1 CLOSED / REPRESENTATIONS FROZEN / D2 COMPLETE / ALL FIVE ARMS SEALED**。
 168个月、3382日结构扫描及独立oracle已核验，R218/C201/H358已以 `d05e7eb`

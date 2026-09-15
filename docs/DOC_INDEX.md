@@ -6,8 +6,10 @@
 
 ## Economic Translation 当前入口
 
-- [E3单一策略冻结计划](ECONOMIC_E3_FREEZE_PREPARATION.md) — 100k/K8/Hold16/5日/max-drop1；先冻结、后单候选结构检查。
-- [E3结构预验收报告](../reports/economic_translation_mvp/e3_freeze_v1/REPORT.md) — FROZEN / PATH PREFLIGHT PENDING；435次目标退出积压，actual R1–R3 unknown，停止人工审核。
+- [E3有限参数研究计划](ECONOMIC_E3_PARAMETER_RESEARCH.md) — 30候选、development域调参与实际路径前置；2024+关闭。
+- [E3参数研究报告](../reports/economic_translation_mvp/e3_parameter_research_v1/REPORT.md) — 目标结构/独立重放完成，ACTUAL PATH BLOCKED，尚未选择Strategy V2。
+- [E3单一策略冻结计划](ECONOMIC_E3_FREEZE_PREPARATION.md) — 历史Candidate v1：100k/K8/Hold16/5日/max-drop1；冻结字节不改写。
+- [E3结构预验收报告](../reports/economic_translation_mvp/e3_freeze_v1/REPORT.md) — 历史单候选证据：435次目标退出积压，保留其当时状态与限制。
 - [E2当前Matrix](../reports/economic_translation_mvp/e2_hard_closure_v1/MATRIX.md) — Core维持READY，通用E2停止；历史下方条目的BLOCKED是当时状态。
 
 ## Recommended Reading

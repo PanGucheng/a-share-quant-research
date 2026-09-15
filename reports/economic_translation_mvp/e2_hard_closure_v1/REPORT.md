@@ -1,9 +1,11 @@
 # E2 Core 收尾报告
 
-2026-09-15 E3后续状态：[唯一策略已冻结](../e3_freeze_v1/REPORT.md)，
-**E3 STRATEGY FROZEN / PATH PREFLIGHT PENDING**。target-only预检发现replacement积压，
-actual exposure与R1–R3仍unknown；当前状态见[Matrix](MATRIX.md)。
-下文是此前Core收尾记录，其中“未冻结”是当时状态。通用E2仍停止，E4继续关闭。
+2026-09-15 E3最新状态：[参数研究](../e3_parameter_research_v1/REPORT.md)，
+**E3 PARAMETER RESEARCH / ACTUAL PATH BLOCKED**。用户已授权2015–2023 development调参与
+经济评价；30个预先冻结候选完成target-only对照，尚无实际账户结果或Strategy V2 freeze。
+首批8/10严格ADV已有接入证据，2只缺量局部拒绝；独立限价及策略现金/个人费率接线未完成。
+actual exposure与R1–R3仍unknown，见[Matrix](MATRIX.md)。通用E2维持READY，不再扩scope。
+下文是此前Core收尾记录；经济评价的旧禁止不再是当前授权边界，2024+仍严格封闭。
 
 2026-09-15；基线 `main@c312469`。
 **E2 CORE READY / STRATEGY PATH VERIFICATION PENDING。C1 与 C2 均已关闭。**

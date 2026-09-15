@@ -371,3 +371,22 @@ means percentiles (~200/400 stocks), not 10/20 stocks. No outcome-guided changes
 E1/scan reruns, generic E2 cleanup, frozen B494/canonical changes or 2024+ values.
 Preserve both failed e3_preflight_v1 and final v2 outputs. Commit/push and stop for
 human review; no automatic cap adjustment, actual economic evaluation or E4.
+
+2026-09-15: User subsequently authorized E3 Portfolio Parameter Research under
+docs/ECONOMIC_E3_PARAMETER_RESEARCH.md. This supersedes the previous single-candidate
+and outcome prohibition ONLY for Economic Translation portfolio development within
+2015-2023. It does not open 2024+, change canonical/B494, retrain models, or alter
+Forward Strategy V1. Economic Candidate v1 remains immutable diagnostic evidence.
+Thirty sparse candidates are frozen in e3_parameter_research_v1/search.json before
+new score access. No result-driven candidate additions. Structural target checks
+do not certify actual cash, fees, exposure, outcomes or a Strategy V2 winner.
+Current E3 PARAMETER RESEARCH / ACTUAL PATH BLOCKED; see its REPORT.md and E2 MATRIX.
+Warmup source intake now reuses adv20_with_warmup under the existing December-2014
+exception; do not relax bounded_date or the generic Core adapter. First Top10 has
+8 usable ADV inputs and 2 missing, no matching existing C1 independent-limit receipt.
+Actual ordinary-state evidence, conditional multi-sale/cash/personal-fee Core wiring
+and held-event path remain pending. No full source rescans or generic R1-R3 cleanup.
+Economic evaluation is authorized once these dependencies and actual-path validation
+are ready, not forbidden by earlier historical paragraphs. Long execution stays
+user-run. No V2 freeze until actual economic/stability evidence exists; preserve both
+failed e3_parameter_research_v1 and final v2 outputs. Commit/push and stop for review.

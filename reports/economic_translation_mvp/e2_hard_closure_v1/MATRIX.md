@@ -2,9 +2,10 @@
 
 2026-09-15；基于 `main@c312469` 完成历史可得性合同修订与同一固定 canary 验收。
 **E2 CORE READY / STRATEGY PATH VERIFICATION PENDING。C1 与 C2 均 CLOSED。**
-通用 E2 infrastructure 已收尾。2026-09-15 用户随后授权 E3 单一策略冻结与结构预验收：
-**E3 STRATEGY FROZEN / PATH PREFLIGHT PENDING**，见[E3报告](../e3_freeze_v1/REPORT.md)。
-100k/K8/Hold16/5日/max-drop1已冻结；目标投影有明显退出积压，actual path未启动，R1–R3仍unknown。
+通用 E2 infrastructure 已收尾。2026-09-15用户最新授权有限参数与development经济研究：
+**E3 PARAMETER RESEARCH / ACTUAL PATH BLOCKED**，见[当前报告](../e3_parameter_research_v1/REPORT.md)。
+30候选搜索合同及目标结构核验完成；原100k/K8/Hold16/5日/max-drop1保留为Candidate v1。
+尚未选择Strategy V2，actual path未启动，R1–R3仍unknown；2024+继续封闭。
 见[实施验收](CORE_IMPLEMENTATION_ACCEPTANCE.md)和[本轮机器证据](HISTORICAL_CORE_ACCEPTANCE.json)。
 原严格 PIT [失败验收](CORE_ACCEPTANCE.json)、采集与语义 receipts 保留，不改写历史结果。
 
@@ -24,9 +25,12 @@
 | 现金应收独立 carry | CONDITIONAL HANDLER AVAILABLE | 固定金额已知且有来源时无须旧股票行情；未支付不能下单，付款仍需事件证据 |
 | 无实际 exposure 的历史异常 | IRRELEVANT ONLY AFTER PATH PROOF | 目前已认证 irrelevant 数量 unknown；中途 halt 后未到达日期标 NOT_REACHED |
 | Historical session-effective、known-event review、daily open-reference、严格 ADV20、税前股息 | ACCEPTED MVP APPROXIMATIONS | 日级有效状态不证明具体发布时间；已知事件审查不证明全集完整；缺失/冲突/未知权益仍拒绝或停止 |
-| 个人佣金、early fee、AUM/K/buffer、cash reserve、benchmark | E3 DEFINITION FROZEN / EXECUTION WIRING PENDING | 万2.5、最低5元、5%reserve、dated税费/early最低0近似与10bps代理已写入单一freeze；未知early沪市面值仍阻止费用计算；旧万三引擎未被冒充为新配置 |
-| Frozen strategy / actual account path | E3 FROZEN / PATH PREFLIGHT PENDING | 独立目标投影通过算式核验，不是actual exposure；435/437次后续决策有退出积压，需人工审议。首日Top8已有身份/States，但来源限价与A组装及策略现金接线未就绪 |
-| Economic evaluation / E4 | NOT AUTHORIZED | 路径完整且独立验收后仍需另行授权；2024+ 禁止 |
+| 个人佣金、early fee、cash reserve、benchmark | DEFINITIONS PRESERVED / EXECUTION WIRING PENDING | 万2.5、最低5元、5%reserve、dated税费/early最低0与10bps代理沿用；首批SH600070面值未组装，旧万三/批初buy budget不能冒充新合同 |
+| K/buffer/interval/cap有限搜索 | SEARCH FROZEN / TARGET SCREEN VERIFIED | 30候选共享B494与日历、独立重放全量目标路径；V1控制与旧逐日证据一致，没有真实收益/成本排名或V2选择 |
+| 首日策略专属市场/ADV输入 | BOUNDED INTAKE VERIFIED / LOCAL DENIALS | Top10身份、prior quote quality、原始open可用；已有warmup函数接出8个ADV；SZ300220/SZ002382缺量不填零。只验证首个session，不宣称全2015接线完成 |
+| 首日ordinary执行状态 | SOURCE INTAKE BLOCKED | 原States均active且非ST，但现有C1独立限价receipt对10只首日均无匹配，不能将provisional限价升级认证；限定现有receipt库存结论 |
+| Strategy actual account path | NOT_STARTED / INTEGRATION PENDING | 源限价、conditional multi-sale/cash/personal-fee Core wiring、持仓事件与独立账户验证待完成；不能用全NO_ENTRY路径通过，R1–R3仍unknown |
+| Development economic evaluation | AUTHORIZED / NOT EXECUTABLE YET | 用户最新授权2015–2023调参与经济评价；须先完成真实路径和独立验证，无需再申请同一权限。2024+ 禁止 |
 
 R1–R3 的 handler 分为普通成功处理和未知检测停机，不能把后者写成一般公司行动已实现。
 148/528/921 数量不是 Core blocker，也不是实际影响次数；可信 rights/conversion/terminal 总数仍 unknown。
@@ -35,6 +39,7 @@ R1–R3 的 handler 分为普通成功处理和未知检测停机，不能把后
 C1 按新历史研究合同验收通过；C2 回归通过。R1–R3 的实际路径验证仍 pending，
 Core Ready 不代表已证明 2015–2023 全池或特定策略无账户断点。
 不再以精确历史发布时间缺失阻塞 Core，也不以空事件表宣称不存在未知公司行动。
-E3本轮已冻结唯一参数并完成target-only结构投影；没有产生真实持仓路径或收益。
+E3本轮已冻结30候选搜索空间并完成target-only结构对照；没有产生真实持仓路径或收益，尚未选择V2。
 actual R1/R2/R3数均unknown；目标成员不能证明异常从未暴露。已完成采集不再列blocker。
-E2机制不扩scope；E3专项接线与target积压判断待人工审核，提交推送后停止，不进入E4。
+E2机制不扩scope；E3专项来源与账户接线为下一责任，不通过改变候选绕过问题。
+提交推送后停止审核；当前停止因实际执行依赖，而不是development调参/经济评价未获授权。
