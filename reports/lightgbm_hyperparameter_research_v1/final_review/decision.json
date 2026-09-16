@@ -1,0 +1,31 @@
+{
+  "status": "LIGHTGBM HYPERPARAMETER RESEARCH COMPLETE / MODEL V2 CANDIDATE",
+  "run_id": "lgbm_nested_20260916_v1",
+  "candidate": "B494 annual nested tuned procedure under the original fixed contract",
+  "review_date": "2026-09-16",
+  "decision_type": "postrun research judgment, not a preregistered automatic promotion test",
+  "production_replacement": false,
+  "baseline_preserved": true,
+  "new_training": false,
+  "evidence": "retrospective_development_not_fresh_OOS",
+  "e3_status": "PAUSED / STRATEGY V2 CANDIDATE PENDING",
+  "next_action": "STOP FOR HUMAN REVIEW",
+  "limitations": [
+    "2021-2023 mean IC deterioration",
+    "2015 material regression",
+    "12 of 72 ES trials exhaust the 800-round budget; selected 2020 trial included",
+    "Sparse axes and variable annual selection do not prove a stable optimum",
+    "Previously observed development period and finite-label coverage limit generalization"
+  ],
+  "run_contract_hash": "cb72acb4941d330f09e9cde49448f5ceda42dce77e0633f8f1c7f102c6323e31",
+  "audit_sha256": "491b0d9dabfb5d0445bd1ba5fb26649f65a587183d5ad49b614fc3e9f13ca749",
+  "report_sha256": "2d5ddff0bae459294a536d0d5ace3af61439d8750a785fbe553cbeeda5c55658",
+  "table_sha256": {
+    "all_trials.csv": "36e679f029291cf1a9353b106d61daf891bb27b924c34c5678146b92b45cb3d4",
+    "parameter_axes.csv": "34f2c33273e7783b197719b24e30b162fe7af4e41f9a39ecfdc5e0df8d8fafd2",
+    "resources.csv": "75b0a75ead51ee7821fc3a759f25d6816ba06cb333508ba3a8a0babae3fee109",
+    "selections.csv": "d3da2b534a18f393d60c4c54ff5226faa6a2b2afb6a42862c08dc9d3f68a0dda",
+    "stability.csv": "0961b78e7b7c5bb21996ab3c9174fdf1f539f2dd8fb19a163d9028b5ce500e82"
+  },
+  "tests": "5 passed; no training tests executed"
+}

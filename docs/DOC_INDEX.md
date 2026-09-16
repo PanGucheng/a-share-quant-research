@@ -7,7 +7,8 @@
 ## Economic Translation 当前入口
 
 - [LightGBM超参数研究计划](LIGHTGBM_HYPERPARAMETER_RESEARCH.md) — 最新主线；E3经济选择暂停，过去内层调参/早停、九折外层重训。
-- [LightGBM实施状态与命令](../reports/lightgbm_hyperparameter_research_v1/REPORT.md) — IMPLEMENTED / AWAITING USER RUN，尚无Model V2结论。
+- [LightGBM最终结果审阅](../reports/lightgbm_hyperparameter_research_v1/FINAL_REVIEW.md) — RESEARCH COMPLETE / MODEL V2 CANDIDATE；81 inner / 9 outer 复核，后段稳定性与预算限制明确。
+- [LightGBM实施记录与历史命令](../reports/lightgbm_hyperparameter_research_v1/REPORT.md) — 已跑完，不重跑；原合同和模型保持不变。
 
 - [E3 Strategy V2候选审核结论](../reports/economic_translation_mvp/e3_parameter_research_v1/CANDIDATE_DECISION.md) — 当前停止点CANDIDATE PENDING；30个结构结果齐备，真实经济路径受阻，未强选赢家。
 - [E3有限参数研究计划](ECONOMIC_E3_PARAMETER_RESEARCH.md) — 30候选、development域调参与实际路径前置；2024+关闭。

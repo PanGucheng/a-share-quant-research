@@ -5,12 +5,14 @@ artifact 名称中的 `current` 不自动表示 ACTIVE。
 
 ## 1. Status At A Glance
 
-2026-09-16最新主线：**LIGHTGBM HYPERPARAMETER RESEARCH / IMPLEMENTED / AWAITING USER RUN**。
-见[固定研究计划](LIGHTGBM_HYPERPARAMETER_RESEARCH.md)和[实施报告/运行命令](../reports/lightgbm_hyperparameter_research_v1/REPORT.md)。
-E3经济选择及actual path接线暂停，保留30个target候选，不重跑；E1 COMPLETE、E2 CORE READY。
-本次新授权覆盖B494的inner-only调参、九折outer refit与两臂development评价；旧“不开模型研究”
-指令由本段限定替代。长训练用户运行，尚无调参结果、Model V2或新prediction stream。
-后续training window/recency/cadence、portfolio retuning、production和2024+均未开放。
+2026-09-16最新主线：**LIGHTGBM HYPERPARAMETER RESEARCH COMPLETE / MODEL V2 CANDIDATE**。
+见[最终结果审阅](../reports/lightgbm_hyperparameter_research_v1/FINAL_REVIEW.md)。
+81 inner trials / 9 outer refits 完成；已核验原独立模型重放并重新复算全部 inner/outer 统计。
+候选为固定合同的年度 nested procedure；整体 ΔIC +0.007807、HAC20 p=0.00823，
+6/9 年 mean IC 改善，但 2021–2023 阶段退步；不替换 baseline，不宣称稳定支配。
+原始机器运行 receipt 的 REVIEW_PENDING 是审阅前历史，当前判断见 final_review/decision.json。
+E3经济选择及actual path暂停；E1 COMPLETE、E2 CORE READY。停止等待人工审核。
+不重跑训练、不扩大研究、不进入组合/production/2024+。
 下方经济研究段落是上一阶段交付记录，其“下一步账户接线”当前不执行。
 
 Economic Translation MVP：**E1 COMPLETE；E2 CORE READY；E3 PORTFOLIO PARAMETER RESEARCH / STRATEGY V2 CANDIDATE PENDING**。

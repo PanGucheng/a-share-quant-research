@@ -1,6 +1,9 @@
 # LightGBM Hyperparameter Research V1 — 实施交付
 
-2026-09-16。**IMPLEMENTED / AWAITING USER RUN**，未开始真实长训练或新outer结果评价。
+2026-09-16 最终状态：**RESEARCH COMPLETE / MODEL V2 CANDIDATE**。
+用户已完成全部长运行；[最终审阅](FINAL_REVIEW.md)记录 81 inner / 9 outer 的独立统计复核、
+HAC20、年度稳定性与候选限制。候选为年度 nested procedure，不替换 baseline。
+本页以下实施说明和用户运行命令保留为历史记录，**不需重跑**。
 E3 ECONOMIC SELECTION PAUSED / STRATEGY V2 CANDIDATE PENDING。
 
 ## 对提案的吸收和修正

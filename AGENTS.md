@@ -8,8 +8,11 @@ research (2010+ past training/inner validation). E3 is PAUSED / CANDIDATE PENDIN
 30 target results and Model Baseline V1 remain immutable. E1 COMPLETE, E2 CORE READY.
 Nine fixed inner trials per fold, train/validation label-maturity purge, inner-only
 early stopping, full outer refit and separate post-replay two-arm evaluation.
-Long fits are user-run only. Current IMPLEMENTED / AWAITING USER RUN, not tuning
-complete or Model V2 selected. No new factors, training regimes, portfolio retuning,
+Long fits are user-run only. Final review: LIGHTGBM HYPERPARAMETER RESEARCH COMPLETE /
+MODEL V2 CANDIDATE (the annual nested procedure, not production replacement).
+See reports/lightgbm_hyperparameter_research_v1/FINAL_REVIEW.md. All 81 inner trials
+and nine outer folds reviewed; no new training. Stop for human review.
+No new factors, training regimes, portfolio retuning,
 actual-path engineering, production replacement or 2024+ research values. Preserve
 all failed attempts, trials and frozen evidence. Commit/push and stop for review.
 
