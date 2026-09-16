@@ -1,5 +1,13 @@
 # Repository Working Agreement
 
+2026-09-16 isolated branch authority: RQAlpha Integration Migration Audit / bounded
+PoC only; see docs/RQALPHA_INTEGRATION_AUDIT.md. The main worktree has an active
+LightGBM run: do not change its files, environment, run-id or receipts. This branch
+uses a separate worktree and venv; do not merge to main automatically. No full
+strategy run, outcome/parameter selection, data recollection or 2024+ value access.
+Current FEASIBLE WITH ADAPTERS, not production migration accepted. Keep existing
+Core/evidence as oracle. Commit/push this branch and stop for human review.
+
 2026-09-16 latest authority: user authorized pausing E3 economic selection and
 implementing LightGBM Hyperparameter Research. See docs/LIGHTGBM_HYPERPARAMETER_RESEARCH.md
 and reports/lightgbm_hyperparameter_research_v1/REPORT.md. This supersedes earlier

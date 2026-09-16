@@ -5,6 +5,11 @@ artifact 名称中的 `current` 不自动表示 ACTIVE。
 
 ## 1. Status At A Glance
 
+2026-09-16独立支线：[RQAlpha Migration Audit / PoC](RQALPHA_INTEGRATION_AUDIT.md) 已完成，
+**FEASIBLE WITH ADAPTERS / PRODUCTION MIGRATION NOT ACCEPTED**。仅在独立 worktree/venv 实施，
+commit/push支线后等待审核；不合并main。用户报告主LightGBM长训练正在运行，本轮25个绑定文件及
+合同只读复核通过；不检查其结果、不变更训练状态、不恢复E3经济选择。下文的AWAITING USER RUN是此前交付记录。
+
 2026-09-16最新主线：**LIGHTGBM HYPERPARAMETER RESEARCH / IMPLEMENTED / AWAITING USER RUN**。
 见[固定研究计划](LIGHTGBM_HYPERPARAMETER_RESEARCH.md)和[实施报告/运行命令](../reports/lightgbm_hyperparameter_research_v1/REPORT.md)。
 E3经济选择及actual path接线暂停，保留30个target候选，不重跑；E1 COMPLETE、E2 CORE READY。

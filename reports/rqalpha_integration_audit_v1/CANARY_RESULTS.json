@@ -1,0 +1,850 @@
+{
+  "exitstatus": 0,
+  "tests": 27,
+  "cases": {
+    "A": {
+      "result": {
+        "trades": [
+          {
+            "date": "2020-08-24",
+            "instrument": "600000.XSHG",
+            "side": "BUY",
+            "shares": 100,
+            "price": 10.57,
+            "cost": 5.02,
+            "commission": 5.0,
+            "tax": 0.0
+          }
+        ],
+        "snapshots": [
+          {
+            "date": "2020-08-21",
+            "phase": "open",
+            "cash": 10000.0,
+            "positions": {}
+          },
+          {
+            "date": "2020-08-21",
+            "phase": "close",
+            "cash": 10000.0,
+            "positions": {}
+          },
+          {
+            "date": "2020-08-21",
+            "phase": "settlement",
+            "cash": 10000.0,
+            "positions": {}
+          },
+          {
+            "date": "2020-08-24",
+            "phase": "open",
+            "cash": 8937.98,
+            "positions": {
+              "600000.XSHG": {
+                "quantity": 100,
+                "closable": 0,
+                "today_non_closable": 100,
+                "avg": 10.57,
+                "mark": 10.57,
+                "receivable": 0
+              }
+            }
+          },
+          {
+            "date": "2020-08-24",
+            "phase": "close",
+            "cash": 8937.98,
+            "positions": {
+              "600000.XSHG": {
+                "quantity": 100,
+                "closable": 0,
+                "today_non_closable": 100,
+                "avg": 10.57,
+                "mark": 10.46,
+                "receivable": 0
+              }
+            }
+          },
+          {
+            "date": "2020-08-24",
+            "phase": "settlement",
+            "cash": 8937.98,
+            "positions": {
+              "600000.XSHG": {
+                "quantity": 100,
+                "closable": 0,
+                "today_non_closable": 100,
+                "avg": 10.57,
+                "mark": 10.46,
+                "receivable": 0
+              }
+            }
+          }
+        ],
+        "orders": [
+          {
+            "status": "FILLED",
+            "quantity": 100,
+            "filled": 100,
+            "message": ""
+          }
+        ],
+        "source_access": [
+          [
+            "600000.XSHG",
+            "2020-08-24"
+          ]
+        ]
+      },
+      "core_scalar_cash": 8937.98,
+      "old_core_rate": 0.0003,
+      "note": "Matched existing C1 scalar oracle; 24-Aug real evidence, idle dates synthetic; no strategy NAV"
+    },
+    "B": {
+      "trades": [
+        {
+          "date": "2020-08-21",
+          "instrument": "600000.XSHG",
+          "side": "BUY",
+          "shares": 100,
+          "price": 10.0,
+          "cost": 5.02,
+          "commission": 5.0,
+          "tax": 0.0
+        },
+        {
+          "date": "2020-08-24",
+          "instrument": "600000.XSHG",
+          "side": "SELL",
+          "shares": 100,
+          "price": 10.0,
+          "cost": 6.02,
+          "commission": 5.0,
+          "tax": 1.0
+        }
+      ],
+      "snapshots": [
+        {
+          "date": "2020-08-21",
+          "phase": "open",
+          "cash": 8994.98,
+          "positions": {
+            "600000.XSHG": {
+              "quantity": 100,
+              "closable": 0,
+              "today_non_closable": 100,
+              "avg": 10.0,
+              "mark": 10.0,
+              "receivable": 0
+            }
+          }
+        },
+        {
+          "date": "2020-08-21",
+          "phase": "close",
+          "cash": 8994.98,
+          "positions": {
+            "600000.XSHG": {
+              "quantity": 100,
+              "closable": 0,
+              "today_non_closable": 100,
+              "avg": 10.0,
+              "mark": 10.0,
+              "receivable": 0
+            }
+          }
+        },
+        {
+          "date": "2020-08-21",
+          "phase": "settlement",
+          "cash": 8994.98,
+          "positions": {
+            "600000.XSHG": {
+              "quantity": 100,
+              "closable": 0,
+              "today_non_closable": 100,
+              "avg": 10.0,
+              "mark": 10.0,
+              "receivable": 0
+            }
+          }
+        },
+        {
+          "date": "2020-08-24",
+          "phase": "open",
+          "cash": 9988.96,
+          "positions": {}
+        },
+        {
+          "date": "2020-08-24",
+          "phase": "close",
+          "cash": 9988.96,
+          "positions": {}
+        },
+        {
+          "date": "2020-08-24",
+          "phase": "settlement",
+          "cash": 9988.96,
+          "positions": {}
+        }
+      ],
+      "orders": [
+        {
+          "status": "FILLED",
+          "quantity": 100,
+          "filled": 100,
+          "message": ""
+        },
+        null,
+        {
+          "status": "FILLED",
+          "quantity": 100,
+          "filled": 100,
+          "message": ""
+        }
+      ],
+      "source_access": [
+        [
+          "600000.XSHG",
+          "2020-08-21"
+        ],
+        [
+          "600000.XSHG",
+          "2020-08-24"
+        ]
+      ]
+    },
+    "C_fee": {
+      "adapter_commissions": [
+        5,
+        0,
+        2.5
+      ],
+      "native_commissions": [
+        5,
+        0,
+        2.500000000000001
+      ],
+      "transfer": 0.6,
+      "estimates_pure": true,
+      "custom_fee_restore_exact": true
+    },
+    "C_execution": {
+      "insufficient_cash": {
+        "trades": [
+          {
+            "date": "2020-08-21",
+            "instrument": "600000.XSHG",
+            "side": "BUY",
+            "shares": 200,
+            "price": 10.0,
+            "cost": 5.04,
+            "commission": 5.0,
+            "tax": 0.0
+          }
+        ],
+        "snapshots": [
+          {
+            "date": "2020-08-21",
+            "phase": "open",
+            "cash": 494.96000000000004,
+            "positions": {
+              "600000.XSHG": {
+                "quantity": 200,
+                "closable": 0,
+                "today_non_closable": 200,
+                "avg": 10.0,
+                "mark": 10.0,
+                "receivable": 0
+              }
+            }
+          },
+          {
+            "date": "2020-08-21",
+            "phase": "close",
+            "cash": 494.96000000000004,
+            "positions": {
+              "600000.XSHG": {
+                "quantity": 200,
+                "closable": 0,
+                "today_non_closable": 200,
+                "avg": 10.0,
+                "mark": 10.0,
+                "receivable": 0
+              }
+            }
+          },
+          {
+            "date": "2020-08-21",
+            "phase": "settlement",
+            "cash": 494.96000000000004,
+            "positions": {
+              "600000.XSHG": {
+                "quantity": 200,
+                "closable": 0,
+                "today_non_closable": 200,
+                "avg": 10.0,
+                "mark": 10.0,
+                "receivable": 0
+              }
+            }
+          }
+        ],
+        "orders": [
+          {
+            "status": "CANCELLED",
+            "quantity": 1000,
+            "filled": 200,
+            "message": "订单取消：标的 600000.XSHG 实际成交 200"
+          }
+        ],
+        "source_access": [
+          [
+            "600000.XSHG",
+            "2020-08-21"
+          ]
+        ]
+      },
+      "volume": {
+        "trades": [
+          {
+            "date": "2020-08-21",
+            "instrument": "600000.XSHG",
+            "side": "BUY",
+            "shares": 100,
+            "price": 10.0,
+            "cost": 5.02,
+            "commission": 5.0,
+            "tax": 0.0
+          }
+        ],
+        "snapshots": [
+          {
+            "date": "2020-08-21",
+            "phase": "open",
+            "cash": 18994.98,
+            "positions": {
+              "600000.XSHG": {
+                "quantity": 100,
+                "closable": 0,
+                "today_non_closable": 100,
+                "avg": 10.0,
+                "mark": 10.0,
+                "receivable": 0
+              }
+            }
+          },
+          {
+            "date": "2020-08-21",
+            "phase": "close",
+            "cash": 18994.98,
+            "positions": {
+              "600000.XSHG": {
+                "quantity": 100,
+                "closable": 0,
+                "today_non_closable": 100,
+                "avg": 10.0,
+                "mark": 10.0,
+                "receivable": 0
+              }
+            }
+          },
+          {
+            "date": "2020-08-21",
+            "phase": "settlement",
+            "cash": 18994.98,
+            "positions": {
+              "600000.XSHG": {
+                "quantity": 100,
+                "closable": 0,
+                "today_non_closable": 100,
+                "avg": 10.0,
+                "mark": 10.0,
+                "receivable": 0
+              }
+            }
+          }
+        ],
+        "orders": [
+          {
+            "status": "CANCELLED",
+            "quantity": 1000,
+            "filled": 100,
+            "message": "Order Cancelled: market order 600000.XSHG volume 1000 is larger than 100.0 percent of current bar volume, fill 100 actually"
+          }
+        ],
+        "source_access": [
+          [
+            "600000.XSHG",
+            "2020-08-21"
+          ]
+        ]
+      },
+      "multisale": {
+        "trades": [
+          {
+            "date": "2020-08-21",
+            "instrument": "600000.XSHG",
+            "side": "BUY",
+            "shares": 200,
+            "price": 10.0,
+            "cost": 5.04,
+            "commission": 5.0,
+            "tax": 0.0
+          },
+          {
+            "date": "2020-08-24",
+            "instrument": "600000.XSHG",
+            "side": "SELL",
+            "shares": 100,
+            "price": 10.0,
+            "cost": 6.02,
+            "commission": 5.0,
+            "tax": 1.0
+          },
+          {
+            "date": "2020-08-24",
+            "instrument": "600000.XSHG",
+            "side": "SELL",
+            "shares": 100,
+            "price": 10.0,
+            "cost": 6.02,
+            "commission": 5.0,
+            "tax": 1.0
+          },
+          {
+            "date": "2020-08-24",
+            "instrument": "600000.XSHG",
+            "side": "BUY",
+            "shares": 100,
+            "price": 10.0,
+            "cost": 5.02,
+            "commission": 5.0,
+            "tax": 0.0
+          }
+        ],
+        "snapshots": [
+          {
+            "date": "2020-08-21",
+            "phase": "open",
+            "cash": 494.96000000000004,
+            "positions": {
+              "600000.XSHG": {
+                "quantity": 200,
+                "closable": 0,
+                "today_non_closable": 200,
+                "avg": 10.0,
+                "mark": 10.0,
+                "receivable": 0
+              }
+            }
+          },
+          {
+            "date": "2020-08-21",
+            "phase": "close",
+            "cash": 494.96000000000004,
+            "positions": {
+              "600000.XSHG": {
+                "quantity": 200,
+                "closable": 0,
+                "today_non_closable": 200,
+                "avg": 10.0,
+                "mark": 10.0,
+                "receivable": 0
+              }
+            }
+          },
+          {
+            "date": "2020-08-21",
+            "phase": "settlement",
+            "cash": 494.96000000000004,
+            "positions": {
+              "600000.XSHG": {
+                "quantity": 200,
+                "closable": 0,
+                "today_non_closable": 200,
+                "avg": 10.0,
+                "mark": 10.0,
+                "receivable": 0
+              }
+            }
+          },
+          {
+            "date": "2020-08-24",
+            "phase": "open",
+            "cash": 1477.9,
+            "positions": {
+              "600000.XSHG": {
+                "quantity": 100,
+                "closable": 0,
+                "today_non_closable": 100,
+                "avg": 10.0,
+                "mark": 10.0,
+                "receivable": 0
+              }
+            }
+          },
+          {
+            "date": "2020-08-24",
+            "phase": "close",
+            "cash": 1477.9,
+            "positions": {
+              "600000.XSHG": {
+                "quantity": 100,
+                "closable": 0,
+                "today_non_closable": 100,
+                "avg": 10.0,
+                "mark": 10.0,
+                "receivable": 0
+              }
+            }
+          },
+          {
+            "date": "2020-08-24",
+            "phase": "settlement",
+            "cash": 1477.9,
+            "positions": {
+              "600000.XSHG": {
+                "quantity": 100,
+                "closable": 0,
+                "today_non_closable": 100,
+                "avg": 10.0,
+                "mark": 10.0,
+                "receivable": 0
+              }
+            }
+          }
+        ],
+        "orders": [
+          {
+            "status": "FILLED",
+            "quantity": 200,
+            "filled": 200,
+            "message": ""
+          },
+          {
+            "status": "FILLED",
+            "quantity": 100,
+            "filled": 100,
+            "message": ""
+          },
+          {
+            "status": "FILLED",
+            "quantity": 100,
+            "filled": 100,
+            "message": ""
+          },
+          {
+            "status": "FILLED",
+            "quantity": 100,
+            "filled": 100,
+            "message": ""
+          }
+        ],
+        "source_access": [
+          [
+            "600000.XSHG",
+            "2020-08-21"
+          ],
+          [
+            "600000.XSHG",
+            "2020-08-24"
+          ]
+        ]
+      }
+    },
+    "D": {
+      "real_event_terms": {
+        "cash": 9060.0,
+        "receivable": 0
+      },
+      "delayed_synthetic": {
+        "cash": 10000.0,
+        "receivable": 0
+      },
+      "price_basis": "synthetic 10; real event terms only",
+      "tax_basis": "gross before dividend income tax"
+    },
+    "D_gaps": {
+      "short_holding_tax_event": 12,
+      "separated_record_ex_native_cash": 10000,
+      "project_oracle_cash": 10060,
+      "disposition": "guard non-adjacent record/ex"
+    },
+    "E_100": {
+      "native_shares": 110,
+      "avg": 13.636363636363635,
+      "closable": 110,
+      "fractional_guard": false,
+      "delayed_bonus_guard": true,
+      "real_event": false
+    },
+    "E_101": {
+      "native_shares": 152,
+      "avg": 10.0,
+      "closable": 152,
+      "fractional_guard": true,
+      "delayed_bonus_guard": true,
+      "real_event": false
+    },
+    "F": {
+      "synthetic_transform": {
+        "old": 0,
+        "new": 200,
+        "cost": 4,
+        "mark": 5,
+        "cash_continuous": true
+      },
+      "unsafe_default_terminal_cash": 1000,
+      "guard_required": true,
+      "real_migration_accepted": false
+    },
+    "guard_suspended_10": {
+      "trades": [],
+      "snapshots": [
+        {
+          "date": "2020-08-21",
+          "phase": "open",
+          "cash": 10000.0,
+          "positions": {}
+        },
+        {
+          "date": "2020-08-21",
+          "phase": "close",
+          "cash": 10000.0,
+          "positions": {}
+        },
+        {
+          "date": "2020-08-21",
+          "phase": "settlement",
+          "cash": 10000.0,
+          "positions": {}
+        }
+      ],
+      "orders": [
+        null
+      ],
+      "source_access": [
+        [
+          "600000.XSHG",
+          "2020-08-21"
+        ]
+      ]
+    },
+    "guard_ordinary_100": {
+      "trades": [],
+      "snapshots": [
+        {
+          "date": "2020-08-21",
+          "phase": "open",
+          "cash": 10000.0,
+          "positions": {}
+        },
+        {
+          "date": "2020-08-21",
+          "phase": "close",
+          "cash": 10000.0,
+          "positions": {}
+        },
+        {
+          "date": "2020-08-21",
+          "phase": "settlement",
+          "cash": 10000.0,
+          "positions": {}
+        }
+      ],
+      "orders": [
+        null
+      ],
+      "source_access": [
+        [
+          "600000.XSHG",
+          "2020-08-21"
+        ]
+      ]
+    },
+    "C_native_parent_partial": {
+      "trades": [
+        {
+          "date": "2020-08-21",
+          "instrument": "600000.XSHG",
+          "side": "BUY",
+          "shares": 100,
+          "price": 10.0,
+          "cost": 5.02,
+          "commission": 5.0,
+          "tax": 0.0
+        },
+        {
+          "date": "2020-08-21",
+          "instrument": "600000.XSHG",
+          "side": "BUY",
+          "shares": 100,
+          "price": 10.0,
+          "cost": 0.02,
+          "commission": 0.0,
+          "tax": 0.0
+        }
+      ],
+      "snapshots": [
+        {
+          "date": "2020-08-21",
+          "phase": "open",
+          "cash": 6991.606666666667,
+          "positions": {
+            "600000.XSHG": {
+              "quantity": 100,
+              "closable": 0,
+              "today_non_closable": 100,
+              "avg": 10.0,
+              "mark": 10.0,
+              "receivable": 0
+            }
+          }
+        },
+        {
+          "date": "2020-08-21",
+          "phase": "close",
+          "cash": 6993.273333333333,
+          "positions": {
+            "600000.XSHG": {
+              "quantity": 200,
+              "closable": 0,
+              "today_non_closable": 200,
+              "avg": 10.0,
+              "mark": 10.0,
+              "receivable": 0
+            }
+          }
+        },
+        {
+          "date": "2020-08-21",
+          "phase": "settlement",
+          "cash": 7994.959999999999,
+          "positions": {
+            "600000.XSHG": {
+              "quantity": 200,
+              "closable": 0,
+              "today_non_closable": 200,
+              "avg": 10.0,
+              "mark": 10.0,
+              "receivable": 0
+            }
+          }
+        }
+      ],
+      "orders": [
+        {
+          "status": "REJECTED",
+          "quantity": 300,
+          "filled": 200,
+          "message": "订单被拒单: 600000.XSHG 当天交易结束，订单无法成交。"
+        }
+      ],
+      "source_access": [
+        [
+          "600000.XSHG",
+          "2020-08-21"
+        ]
+      ]
+    },
+    "phase_isolation": "open/state independent of current end-of-day fields",
+    "native_daily_next_bar_counterexample": {
+      "trades": [
+        {
+          "date": "2020-08-21",
+          "instrument": "600000.XSHG",
+          "side": "BUY",
+          "shares": 100,
+          "price": 12,
+          "cost": 5.02,
+          "commission": 5.0,
+          "tax": 0.0
+        }
+      ],
+      "snapshots": [
+        {
+          "date": "2020-08-21",
+          "phase": "open",
+          "cash": 10000.0,
+          "positions": {}
+        },
+        {
+          "date": "2020-08-21",
+          "phase": "close",
+          "cash": 8794.98,
+          "positions": {
+            "600000.XSHG": {
+              "quantity": 100,
+              "closable": 0,
+              "today_non_closable": 100,
+              "avg": 12.0,
+              "mark": 12.0,
+              "receivable": 0
+            }
+          }
+        },
+        {
+          "date": "2020-08-21",
+          "phase": "settlement",
+          "cash": 8794.98,
+          "positions": {
+            "600000.XSHG": {
+              "quantity": 100,
+              "closable": 0,
+              "today_non_closable": 100,
+              "avg": 12.0,
+              "mark": 12.0,
+              "receivable": 0
+            }
+          }
+        }
+      ],
+      "orders": [
+        {
+          "status": "FILLED",
+          "quantity": 100,
+          "filled": 100,
+          "message": ""
+        }
+      ],
+      "source_access": [
+        [
+          "600000.XSHG",
+          "2020-08-21"
+        ]
+      ]
+    },
+    "E_real_bonus": {
+      "event_id": "ff5570414a4164a1f6117327",
+      "ex_date": "20160623",
+      "listable_date": "20160624",
+      "native_immediate_closable": 110,
+      "project_required_closable": 100,
+      "pending_bonus_required": 10,
+      "status": "INCOMPATIBLE DIRECT MAPPING / GUARD PASSED",
+      "price_basis": "synthetic"
+    },
+    "fee_2022-04-28": {
+      "commission": 5.0,
+      "tax": 10.0,
+      "other_fees": 0.2
+    },
+    "fee_2022-04-29": {
+      "commission": 5.0,
+      "tax": 10.0,
+      "other_fees": 0.1
+    },
+    "fee_2023-08-25": {
+      "commission": 5.0,
+      "tax": 10.0,
+      "other_fees": 0.1
+    },
+    "fee_2023-08-28": {
+      "commission": 5.0,
+      "tax": 5.0,
+      "other_fees": 0.1
+    },
+    "missing_limit_native": "native returns False; adapter rejects NaN before matching"
+  }
+}

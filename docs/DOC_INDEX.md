@@ -6,6 +6,8 @@
 
 ## Economic Translation 当前入口
 
+- [RQAlpha 独立迁移审计与 PoC](RQALPHA_INTEGRATION_AUDIT.md) — FEASIBLE WITH ADAPTERS；隔离分支，不切换 backend，不改正在运行的 LightGBM。
+
 - [LightGBM超参数研究计划](LIGHTGBM_HYPERPARAMETER_RESEARCH.md) — 最新主线；E3经济选择暂停，过去内层调参/早停、九折外层重训。
 - [LightGBM实施状态与命令](../reports/lightgbm_hyperparameter_research_v1/REPORT.md) — IMPLEMENTED / AWAITING USER RUN，尚无Model V2结论。
 

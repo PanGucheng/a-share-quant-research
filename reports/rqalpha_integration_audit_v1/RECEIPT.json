@@ -1,0 +1,43 @@
+{
+  "baseline": "e06f9d1",
+  "status": "RQALPHA INTEGRATION FEASIBLE WITH ADAPTERS",
+  "production_migration_accepted": false,
+  "human_review_required": true,
+  "main_read_only_verification": {
+    "status": "PASS",
+    "active_bound_files": 25,
+    "active_contract_sha256": "86ca07f8005990225443febe287662ddf0a66189d116b441777e37332f590a74",
+    "canary_receipt_files": 5,
+    "event_rows": 3,
+    "market_value_rows": 1,
+    "network": false,
+    "main_modified": false,
+    "no_model_or_prediction_read": true,
+    "no_2024plus_values": true
+  },
+  "proposal_sha256": "ef35d39740b1ad83217eee6a1be1e8068378ef039f7c6856fe33605ebdf511e2",
+  "hash_semantics": "SHA256 after CRLF to LF normalization; Git-portable",
+  "files_lf": {
+    "docs/RQALPHA_INTEGRATION_AUDIT.md": "9224fc2a049f1215b8f29adbfc7fab081b20c25f4969b471cfeb8e6dd019177d",
+    "experiments/rqalpha_poc/__init__.py": "927dec07ec5e214f6dcbb70757d04626aa589c709b31a0762a3de46cbd34ff89",
+    "experiments/rqalpha_poc/adapter.py": "b40f0e6f60ae82489b8db4f4e0768e5e4067dc504d2fc152fd7e0dbe1f219932",
+    "experiments/rqalpha_poc/conftest.py": "419d967ea399edf385abcf1d7e9c891f6cb0503b19ba6fb2cc81e27a76bf5b63",
+    "experiments/rqalpha_poc/fixtures/main_guard_before.json": "d0ef279e8f5204650bb8a2b7c8ee5bff1f39670ab4a68351ed3734a28207f0b2",
+    "experiments/rqalpha_poc/fixtures/sealed_canary.json": "1d4b5702db3c3d58b5561c01127bcedc4927cc50ade851843e71292b7e8866ee",
+    "experiments/rqalpha_poc/harness.py": "463beb900cbe1996e482edb808cb245a9ee2ecd9f258a903b8a75bc9fa6887e9",
+    "experiments/rqalpha_poc/requirements.lock.txt": "8769e9d05a07dd85622d8dc0a2e69168acce1566ca59307fc1a3057046d652c6",
+    "experiments/rqalpha_poc/run.ps1": "8953d3fd05afbe5503fd62d177d2f964dceafcb2eb297ffcb35c989c97cda1a8",
+    "experiments/rqalpha_poc/test_canaries.py": "4bb3c77b3e1d3e4dc8205cc4f288563dac914c07560cb89fd9badbb3b0c41a18",
+    "experiments/rqalpha_poc/verify_inputs.py": "b1c4a9835bbad59ebff8c5dab3ce2d574367e789b89fa0767efc8caead880649",
+    "qlib_integration/contracts.py": "b3168fd02a2bba8babf73b3dc427f7ff40b92d3787c51192f8c5f16c899cf869",
+    "qlib_integration/economic_execution_contract.py": "dc27be8e4b0397c58cf586e7fdc9645ea55ac9c2495dedb0172885014ae645f1",
+    "qlib_integration/exchange_adapter.py": "084c3c755e41480b8932dc088263453226e84ea63d980515ef528fb88e9119ac",
+    "qlib_integration/market_semantics.py": "84ce5ca274ac5dce8f2134d19392b661aca514e9b28ba951f2d9ec3e538648fa",
+    "reports/rqalpha_integration_audit_v1/CANARIES.md": "44750c1586c79ab038ceecd6b5ba424d634bd4b783e8e0f1d6f7803260aa6587",
+    "reports/rqalpha_integration_audit_v1/CANARY_RESULTS.json": "0fe7dfaea34cf38cd28aaeb485718c5f5f2cbe01b83629284cac50912cf8a61c",
+    "reports/rqalpha_integration_audit_v1/ENVIRONMENT.json": "3b55ab68b055a01f3927b7987a50251d99509a9e2cc5321bbc705ef99b55c214",
+    "reports/rqalpha_integration_audit_v1/ENVIRONMENT_SKILLS.md": "a239629649a9af89e89cab0fc520d67c71f5726a9cdf5b26547f899a482c5227",
+    "reports/rqalpha_integration_audit_v1/MATRIX.md": "83de6b3dad2abfde68b5210fd4d50a80934b3ba0edd84e8019a832e65406c761",
+    "reports/rqalpha_integration_audit_v1/REPORT.md": "6ed4f31cc9abdfac3a476667d0cf60083ac07c3e1038bcc369dda5109d2fa2aa"
+  }
+}

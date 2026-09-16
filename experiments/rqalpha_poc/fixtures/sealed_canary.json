@@ -1,0 +1,98 @@
+{
+  "real_canary": {
+    "signal_day": "2020-08-21",
+    "execution_day": "2020-08-24",
+    "open": 10.57,
+    "close": 10.46,
+    "reference": 10.5,
+    "state": {
+      "instrument": "SH600000",
+      "date": "2020-08-24",
+      "board": "main",
+      "listed": true,
+      "st": false,
+      "suspended": false,
+      "ordinary_session": true,
+      "special_session": "none",
+      "limit_ratio": 0.1,
+      "lower_limit": 9.45,
+      "upper_limit": 11.55,
+      "limit_reference": 10.5,
+      "effective_from": "2020-08-24",
+      "effective_to": "2020-08-24",
+      "evidence_level": "cross_source",
+      "prior_session_count": 20,
+      "regime_basis": "independent_dated_limits_with_prior_sessions"
+    },
+    "adv20": 50322888.6
+  },
+  "provenance": {
+    "outputs\\economic_translation_mvp\\e2_historical_core_v2\\evidence.json": "e5b42b6ed6458ed5ba74f76a6ed2f1846fb4b540a56c031528dbf6e5b1fa27e8",
+    "outputs\\economic_translation_mvp\\e2_historical_core_v2\\receipt.json": "bfd3aa1b3c56aabb353eebcab759d3c0c888298d1c160ff1c04cfd5c6548a06b",
+    "outputs\\economic_translation_mvp\\e2_semantic_v1\\events.parquet": "aea4744936990f392c248cf77cb37abf99f9d4da8fabdd77496470db894a5f3f"
+  },
+  "dividend_rows": [
+    {
+      "event_id": "770b3bd974ea3b971210f0aa",
+      "asset_id": "SH600000",
+      "record_date": "20200722",
+      "ex_date": "20200723",
+      "implementation_known_date": "20200716",
+      "status": "resolved_gross_entitlement",
+      "source_row_ids": "[\"2c19fc9a5a8a37fbc710fd6e13cc54b24242ebcf5294e5530ea4c9ff2b8092b7:16\"]",
+      "source_rows": 1,
+      "implemented_rows": 1,
+      "ignored_nonimplemented_rows": 0,
+      "conflicts": "",
+      "missing": "",
+      "gross_cash_per_share": 0.6,
+      "bonus_per_share": 0.0,
+      "pay_date": "20200723",
+      "listable_date": null,
+      "corroborated_cash_missing_rows": 0,
+      "source_instruments": "SH600000"
+    }
+  ],
+  "bonus_rows": [
+    {
+      "event_id": "ff5570414a4164a1f6117327",
+      "asset_id": "SH600000",
+      "record_date": "20160622",
+      "ex_date": "20160623",
+      "implementation_known_date": "20160616",
+      "status": "resolved_gross_entitlement",
+      "source_row_ids": "[\"6ab32bf1f83231de5c75390bd50fc554d645a7f2c984628585669061d8fd4d1b:6\"]",
+      "source_rows": 1,
+      "implemented_rows": 1,
+      "ignored_nonimplemented_rows": 0,
+      "conflicts": "",
+      "missing": "",
+      "gross_cash_per_share": 0.515,
+      "bonus_per_share": 0.1,
+      "pay_date": "20160623",
+      "listable_date": "20160624",
+      "corroborated_cash_missing_rows": 0,
+      "source_instruments": "SH600000"
+    },
+    {
+      "event_id": "5c37c6e11eb2f697c2cbaac5",
+      "asset_id": "SH600000",
+      "record_date": "20170524",
+      "ex_date": "20170525",
+      "implementation_known_date": "20170519",
+      "status": "resolved_gross_entitlement",
+      "source_row_ids": "[\"f0f4dc81157ead844e5a649ec2dad1f18f848be068ed35d60330ec7b042823ab:58\"]",
+      "source_rows": 1,
+      "implemented_rows": 1,
+      "ignored_nonimplemented_rows": 0,
+      "conflicts": "",
+      "missing": "",
+      "gross_cash_per_share": 0.2,
+      "bonus_per_share": 0.3,
+      "pay_date": "20170525",
+      "listable_date": "20170526",
+      "corroborated_cash_missing_rows": 0,
+      "source_instruments": "SH600000"
+    }
+  ]
+}
