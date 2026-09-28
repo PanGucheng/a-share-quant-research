@@ -95,6 +95,21 @@ def test_held_missing_valuation_stops(market):
         run_backtest(scores, cal[25:27], cfg)
 
 
+def test_confirmed_suspension_carries_then_resumes(market, tmp_path):
+    cal, scores, setup = market
+    cfg = setup([('SH600000', 'close', 26, np.nan), ('SH600000', 'open', 26, np.nan)])
+    cfg['known_suspensions'] = {'SH600000': [str(cal[26].date())]}
+    scores.loc[scores.datetime <= cal[26], 'score'] = scores.instrument.map({'SH600000': 1, 'SH600001': 0})
+    log = tmp_path/'carry.jsonl'
+    report, pos = run_backtest(scores, cal[25:29], cfg, carry_log=log)
+    assert pos[cal[26]].get_stock_amount('SH600000') == 9400
+    assert report.account.iloc[1] == report.account.iloc[0]
+    assert report.total_cost.iloc[1] == report.total_cost.iloc[0]
+    assert log.read_text().count('SH600000') == 1
+    assert pos[cal[27]].get_stock_amount('SH600000') == 9400  # Missing previous close still blocks this day.
+    assert pos[cal[28]].get_stock_list() == ['SH600001']
+
+
 def test_held_stock_leaving_signal_persists_if_sale_blocked(market):
     cal, scores, setup = market
     cfg = setup([('SH600000', 'open', 26, np.nan)])

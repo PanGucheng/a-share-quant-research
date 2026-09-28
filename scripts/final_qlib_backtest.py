@@ -93,16 +93,30 @@ class CheckedExchange(Exchange):
 
 class CheckedExecutor(SimulatorExecutor):
     """Stop missing held valuations rather than silently carry stale prices."""
+    def __init__(self, *, known_suspensions=None, carry_log=None, **kwargs):
+        super().__init__(**kwargs)
+        self.known_suspensions = known_suspensions or {}
+        self.carry_log = carry_log
+
     def _collect_data(self, trade_decision, level=0):
         start, end = self.trade_calendar.get_step_time()
         for code in self.trade_account.current_position.get_stock_list():
             close = self.trade_exchange.get_close(code, start, end)
             if close is None or not np.isfinite(close) or close <= 0:
+                previous = self.trade_account.current_position.get_stock_price(code)
+                if (str(start.date()) in self.known_suspensions.get(code, [])
+                        and (close is None or np.isnan(close)) and np.isfinite(previous) and previous > 0):
+                    # Native Qlib leaves the position/mark unchanged and forbids suspended trades.
+                    if self.carry_log is not None:
+                        with Path(self.carry_log).open('a', encoding='utf-8') as stream:
+                            stream.write(json.dumps(dict(date=str(start.date()), instrument=code,
+                                                         carried_price=float(previous))) + '\n')
+                    continue
                 raise ValueError(f'Unvalued holding: {start.date()} {code}')
         return super()._collect_data(trade_decision, level)
 
 
-def run_backtest(scores, days, config):
+def run_backtest(scores, days, config, carry_log=None):
     slip, limit = config['slippage'], config['open_limit']
     codes = sorted(scores.instrument.unique())  # Includes all past candidates, not today's signal universe.
     exchange = CheckedExchange(
@@ -115,7 +129,8 @@ def run_backtest(scores, days, config):
     strategy = TopkDropoutStrategy(signal=signal, **config['strategy'])
     report, positions = backtest_daily(
         start_time=days[0], end_time=days[-1], strategy=strategy,
-        executor=CheckedExecutor(time_per_step='day', generate_portfolio_metrics=True),
+        executor=CheckedExecutor(time_per_step='day', generate_portfolio_metrics=True,
+                                 known_suspensions=config.get('known_suspensions'), carry_log=carry_log),
         account=config['account'], benchmark=config['benchmark'], exchange_kwargs={'exchange': exchange})
     if not report.index.equals(days) or not np.isfinite(report[['account', 'return', 'cost', 'bench']]).all().all():
         raise ValueError('Incomplete/nonfinite account or benchmark')
@@ -192,6 +207,7 @@ def write_results(out, report, positions, config, canary=False):
 原生TopkDropout(8,1)，不是旧buffer策略；最低5元应用于合计费率，非逐项券商收费。
 统一开盘±9.5%限制、100股单位不精确还原各板块/ST制度；使用复权行情，不另建公司行动账本。
 前20日均量1%不是开盘竞价流动性保证。价格/因子异常可能影响结果；缺失实际持仓估值会中止。
+公告确认的停牌日按原生Qlib保留持仓及上一价格，并在suspension_carry.jsonl显式记录；不按未来复牌价格估值。
 这是后续历史模拟，未证明此前所有项目研究都没有观察过该时期；不称全项目全新样本外证据。
 固定模型未学习2023及以后新增训练样本。本结果只代表这一个模型和预先选定配置。
 '''
@@ -205,7 +221,7 @@ def write_results(out, report, positions, config, canary=False):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--mode', choices=['check', 'canary', 'run'], default='run')
+    parser.add_argument('--mode', choices=['check', 'canary', 'run', 'backtest'], default='run')
     parser.add_argument('--config', default='configs/final_qlib_backtest.yaml')
     args = parser.parse_args()
     config = yaml.safe_load((ROOT/args.config).read_text(encoding='utf-8'))
@@ -244,6 +260,17 @@ def main():
     if days.empty:
         raise ValueError('No common backtest dates')
     signals = calendar[calendar.get_indexer(days)-1]
+    prediction_dir = out
+    if args.mode == 'backtest':
+        original = json.loads((out/'run.json').read_text(encoding='utf-8'))
+        original_config = dict(original['config'])
+        current_config = {k: v for k, v in config.items() if k != 'known_suspensions'}
+        original_config.pop('known_suspensions', None)
+        if (original_config != current_config or original['model_sha256'] != sha(model_path)
+                or original['partitions_sha256'] != sha(ROOT/config['partitions'])
+                or original['start'] != str(days[0].date()) or original['end'] != str(days[-1].date())):
+            raise ValueError('Existing predictions do not match this model/config/date range')
+        out = out/'backtest_suspension_fix_v1'  # Preserve the failed original run and all predictions.
     out.mkdir(parents=True, exist_ok=True)
     binding = dict(config=config, model_sha256=sha(model_path), partitions_sha256=sha(ROOT/config['partitions']),
                    script_sha256=hashlib.sha256(Path(__file__).read_text(encoding='utf-8').encode()).hexdigest(),
@@ -257,9 +284,11 @@ def main():
     try:
         chunks = []
         for month in signals.to_period('M').unique():
-            path = out/f'predictions_{month}.parquet'
+            path = prediction_dir/f'predictions_{month}.parquet'
             selected = signals[signals.to_period('M') == month]
             if not path.exists():
+                if args.mode == 'backtest':
+                    raise ValueError(f'Backtest-only mode cannot generate missing predictions: {path}')
                 frame = predict(model, features(partitions, factors, selected), factors)
                 tmp = path.with_suffix('.tmp')
                 frame.to_parquet(tmp, index=False)
@@ -270,7 +299,7 @@ def main():
             chunks.append(frame)
             print(f'Predictions ready: {month}, rows={len(frame)}', flush=True)
         scores = pd.concat(chunks, ignore_index=True)
-        report, positions = run_backtest(scores, days, config)
+        report, positions = run_backtest(scores, days, config, carry_log=out/'suspension_carry.jsonl')
         write_results(out, report, positions, config, canary=args.mode == 'canary')
         print('Complete:', out)
     except Exception as exc:

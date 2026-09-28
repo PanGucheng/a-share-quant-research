@@ -5,6 +5,10 @@ artifact 名称中的 `current` 不自动表示 ACTIVE。
 
 ## 1. Status At A Glance
 
+2026-09-28补充：极简回测**全部预测已完成**，账户因SH603959已确认停牌日误拦截而中断。
+已修复，用户按[更新命令](FINAL_QLIB_BACKTEST.md)执行`--mode backtest`，只重跑账户。
+保留原预测/失败记录；新结果在`backtest_suspension_fix_v1`子目录。
+
 2026-09-28最新：**FINAL QLIB BACKTEST IMPLEMENTED / CANARY PASSED / AWAITING USER RUN**。
 [运行说明与唯一正式命令](FINAL_QLIB_BACKTEST.md)。固定annual_2023 tuned模型，不重训；
 2024+至最晚2026-06-09已获本轮授权，100k/K8/drop1原生Qlib单配置，按明确近似运行。

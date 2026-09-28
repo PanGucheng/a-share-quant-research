@@ -24,3 +24,7 @@ exchange:
 slippage: 0.001
 open_limit: 0.095
 adv_fraction: 0.01
+# Company announcement 2024-026: one-session suspension, resumes 2024-05-06.
+# https://money.finance.sina.com.cn/corp/view/vCB_AllBulletinDetail.php?id=10168008&stockid=603959
+known_suspensions:
+  SH603959: ['2024-04-30']

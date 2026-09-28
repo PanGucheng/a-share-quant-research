@@ -1,16 +1,24 @@
 # 重构前收尾：固定模型的 Qlib 极简回测
 
-2026-09-28：**IMPLEMENTED / CANARY PASSED / AWAITING USER FULL RUN**。
+2026-09-28：**PREDICTIONS COMPLETE / SUSPENSION FIX / AWAITING USER BACKTEST RETRY**。
 本次用户授权读取2024+现有数据、执行单配置回测；不重训、不搜索参数、不启动重构。
 旧E2/E3、Forward和LightGBM实验全部保留，不用这次近似结果回填旧阶段验收。
 
 ## 一条正式运行命令
 
 ```powershell
-& 'E:\anaconda_envs\qlib_env\python.exe' 'E:\qlib_prj\qlib_baseline\scripts\final_qlib_backtest.py' --mode run
+& 'E:\anaconda_envs\qlib_env\python.exe' 'E:\qlib_prj\qlib_baseline\scripts\final_qlib_backtest.py' --mode backtest
 ```
 
-无需切换目录。完整预测和回测由用户运行；本次仅执行一致性检查和首20日canary。
+无需切换目录。用户已完成全部预测，首次账户运行遇到2024-04-30 SH603959停牌而停止。
+新命令只读取原月度预测，绝不重算；模型/配置（除已确认停牌日）/日期/分区元数据需一致。
+修复后的账户结果单独写入`outputs/final_qlib_backtest_v1/backtest_suspension_fix_v1/`，
+原run.json、failure.json和预测不修改。缺少任何月份时明确报错，不自动启动预测。
+已确认SH603959于2024-04-30停牌一天、5月6日复牌，来源为
+[公司公告2024-026](https://money.finance.sina.com.cn/corp/view/vCB_AllBulletinDetail.php?id=10168008&stockid=603959)。
+这一天由原生Qlib保留持仓和上一有效价格、禁止成交；显式记录`suspension_carry.jsonl`。
+未知缺失或超出确认停牌日期仍报错，不笼统把所有行情缺口都当停牌。
+完整账户重跑仍由用户执行。本次未代跑完整账户或读取收益进行调参。
 同一命令可在中断后再次运行：复用已完成的月度预测，账户回测从初始现金重新运行。
 已完成整轮则直接提示完成，不覆盖结果。配置/代码/模型变更会拒绝复用旧运行目录。
 没有网络请求、训练入口、因子重算或参数搜索。
@@ -26,7 +34,7 @@
 - 同canonical历史日期键和494列顺序，float64；无穷转NaN，全部特征缺失的证券不生成有效分数。
   不对后续数据重新拟合任何预处理，不读取预测标签。
 - 原生TopkDropout：100,000元、topk=8、n_drop=1、risk_degree=0.95、hold_thresh=1；每日决策。
-  前日分数→次日开盘成交。不会每天把全部持仓重新等权，实际仓位/持仓数可以低于目标。
+  前日分数→次日开盘成交。不会每天把全部持仓重新等权；无法卖出的持仓仍保留，实际持仓数可能偏离目标。
 - 沪深300价格收益作参照；跨年账户连续，结束日收盘估值，不清仓。
 
 ## 执行近似与必要检查
@@ -43,7 +51,7 @@
 | 流动性 | 前20日平均量×1%，以Qlib复权量口径限制；不是竞价量证明 |
 | 缺失开盘/参考价/均量 | 该证券当日禁止成交，不允许自动改收盘成交 |
 | 持仓退出候选范围 | 保留证券持仓和后续行情；不能因不在新分数里而删除 |
-| 实际持仓缺失估值 | 中止并保存failure.json的证券/日期；不静默长期沿用旧价 |
+| 实际持仓缺失估值 | 已公告确认停牌日显式记录并沿用前价；其余中止并保存failure.json |
 | 分红/配股/特殊制度 | 接受现有复权行情；不另建账本，不精确模拟ST、各板块、退市等制度 |
 
 结果为有成本的日级历史模拟，不是实盘成交认证。2024+可能已在项目其他研究中观察过，

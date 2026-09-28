@@ -1,5 +1,11 @@
 # Repository Working Agreement
 
+2026-09-28 follow-up: user completed all final-Qlib monthly predictions; account
+stopped on SH603959 2024-04-30, an announcement-confirmed one-day suspension.
+Use --mode backtest to reuse predictions and write backtest_suspension_fix_v1;
+known suspension carry is explicitly logged, unknown valuation gaps still stop.
+Do not run full account replay for the user or regenerate completed predictions.
+
 2026-09-28 latest authority: implement the user-approved minimal Qlib final backtest.
 See docs/FINAL_QLIB_BACKTEST.md. The saved annual_2023 tuned model stays fixed;
 2024 through at most 2026-06-09 feature/market access and one native TopkDropout
