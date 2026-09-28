@@ -1,5 +1,15 @@
 # Repository Working Agreement
 
+2026-09-28 latest authority: implement the user-approved minimal Qlib final backtest.
+See docs/FINAL_QLIB_BACKTEST.md. The saved annual_2023 tuned model stays fixed;
+2024 through at most 2026-06-09 feature/market access and one native TopkDropout
+100k/K8/drop1 backtest are now authorized. No training, search, downloads or refactor.
+Implementation, 4,000-row exact parity and first-20-session canary passed. Full run
+is USER-RUN ONLY via scripts/final_qlib_backtest.py --mode run; await its results.
+Use the explicitly accepted simplified execution assumptions, not the old E2/E3
+certification gates. Preserve all old evidence; do not edit hash-bound training code.
+The 2026-09-16 stop/2024+ prohibition below is superseded only for this narrow run.
+
 2026-09-16 latest authority: user authorized pausing E3 economic selection and
 implementing LightGBM Hyperparameter Research. See docs/LIGHTGBM_HYPERPARAMETER_RESEARCH.md
 and reports/lightgbm_hyperparameter_research_v1/REPORT.md. This supersedes earlier

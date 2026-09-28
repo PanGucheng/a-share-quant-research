@@ -1,0 +1,26 @@
+model: outputs/lightgbm_hyperparameter_research/lgbm_nested_20260916_v1/annual_2023/outer/model.txt
+model_sha256: b6493152aa7850e52fbed96bb4f95075a007c1d9142af317f51853894a7aa463
+training_contract: outputs/lightgbm_hyperparameter_research/lgbm_nested_20260916_v1/contract.json
+partitions: outputs/canonical_historical_dataset_assembly_v1/current/partition_manifest.csv
+provider: ../qlib_data/cn_data_community_20260609_derived
+output: outputs/final_qlib_backtest_v1
+start: '2024-01-01'
+end: '2026-06-09'
+account: 100000
+benchmark: SH000300
+strategy:
+  topk: 8
+  n_drop: 1
+  risk_degree: 0.95
+  hold_thresh: 1
+  only_tradable: false
+  forbid_all_trade_at_limit: true
+exchange:
+  open_cost: 0.00026
+  close_cost: 0.00076
+  min_cost: 5
+  trade_unit: 100
+  impact_cost: 0
+slippage: 0.001
+open_limit: 0.095
+adv_fraction: 0.01

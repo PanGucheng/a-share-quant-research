@@ -5,6 +5,12 @@ artifact 名称中的 `current` 不自动表示 ACTIVE。
 
 ## 1. Status At A Glance
 
+2026-09-28最新：**FINAL QLIB BACKTEST IMPLEMENTED / CANARY PASSED / AWAITING USER RUN**。
+[运行说明与唯一正式命令](FINAL_QLIB_BACKTEST.md)。固定annual_2023 tuned模型，不重训；
+2024+至最晚2026-06-09已获本轮授权，100k/K8/drop1原生Qlib单配置，按明确近似运行。
+4,000条预测exact、首20日实际canary和9项测试通过；完整预测/回测由用户执行。
+不恢复旧E2/E3工程或30候选搜索。下方2024+禁止和停止指令为上一阶段历史。
+
 2026-09-16最新主线：**LIGHTGBM HYPERPARAMETER RESEARCH COMPLETE / MODEL V2 CANDIDATE**。
 见[最终结果审阅](../reports/lightgbm_hyperparameter_research_v1/FINAL_REVIEW.md)。
 81 inner trials / 9 outer refits 完成；已核验原独立模型重放并重新复算全部 inner/outer 统计。

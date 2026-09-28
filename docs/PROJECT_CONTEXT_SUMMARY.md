@@ -1,5 +1,9 @@
 # Project Context Summary
 
+2026-09-28当前任务：[固定模型Qlib极简回测](FINAL_QLIB_BACKTEST.md)。实现与首20日canary已验收，
+等待用户执行完整命令。此次允许2024+至最晚2026-06-09，固定最新模型，100k/K8/drop1；
+不重训、不搜索、不恢复E2/E3工程、不启动重构。后续旧阶段限制不覆盖这次明确授权。
+
 本文件用于让新会话在 1–3 分钟内恢复当前上下文。阶段历史和详细数字不在此重复，
 按需从 [DOC_INDEX.md](DOC_INDEX.md)、`reports/` 或 `docs/_archive/` 追溯。
 

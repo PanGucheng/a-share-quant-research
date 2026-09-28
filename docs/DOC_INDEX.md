@@ -6,7 +6,10 @@
 
 ## Economic Translation 当前入口
 
-- [LightGBM超参数研究计划](LIGHTGBM_HYPERPARAMETER_RESEARCH.md) — 最新主线；E3经济选择暂停，过去内层调参/早停、九折外层重训。
+- [重构前Qlib极简回测](FINAL_QLIB_BACKTEST.md) — 当前入口；固定已有模型，2024+单配置，canary通过，完整运行由用户执行。
+- [极简回测实施验收](../reports/final_qlib_backtest_v1/REPORT.md) — exact预测一致性、20日实际路径及9项测试；尚无全期收益结论。
+
+- [LightGBM超参数研究计划](LIGHTGBM_HYPERPARAMETER_RESEARCH.md) — 已完成；E3经济选择暂停，过去内层调参/早停、九折外层重训。
 - [LightGBM最终结果审阅](../reports/lightgbm_hyperparameter_research_v1/FINAL_REVIEW.md) — RESEARCH COMPLETE / MODEL V2 CANDIDATE；81 inner / 9 outer 复核，后段稳定性与预算限制明确。
 - [LightGBM实施记录与历史命令](../reports/lightgbm_hyperparameter_research_v1/REPORT.md) — 已跑完，不重跑；原合同和模型保持不变。
 
