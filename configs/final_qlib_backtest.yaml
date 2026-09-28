@@ -29,3 +29,6 @@ adv_fraction: 0.01
 # https://disc.static.szse.cn/download/disc/disk03/finalpage/2024-08-14/4e9bbfce-9b8e-4eca-9a30-8ec5b2dcff4b.PDF
 terminal_events:
   SZ000413: '2024-08-15'
+  # Announcement 2024-054, published 2024-08-22; no delisting trading period.
+  # https://epaper.stcn.com/pic/202408/23/131f879795b36135e17ff7349b986502.pdf
+  SZ002308: '2024-08-23'

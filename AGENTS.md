@@ -1,5 +1,10 @@
 # Repository Working Agreement
 
+2026-09-28 latest user run completed terminal_v1 with unresolved SZ002308 valuation.
+See reports/final_qlib_backtest_v1/PROVISIONAL_REVIEW.md. Add its announcement-bound
+2024-08-23 zero-recovery event under existing authorization; --mode backtest now
+writes backtest_terminal_v2. Preserve v1, reuse predictions, full replay user-run.
+
 2026-09-28 latest follow-up: user explicitly accepted native suspension carry plus
 zero-recovery writeoff of confirmed delisted/unexitable holdings. SZ000413 event
 is effective 2024-08-15; preserve historical investments, credit no cash, retain

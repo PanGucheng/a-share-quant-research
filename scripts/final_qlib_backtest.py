@@ -308,7 +308,7 @@ def main():
                 or original['partitions_sha256'] != sha(ROOT/config['partitions'])
                 or original['start'] != str(days[0].date()) or original['end'] != str(days[-1].date())):
             raise ValueError('Existing predictions do not match this model/config/date range')
-        out = out/'backtest_terminal_v1'  # Preserve both prior failed account runs and all predictions.
+        out = out/'backtest_terminal_v2'  # Preserve v1's provisional results and all predictions.
     out.mkdir(parents=True, exist_ok=True)
     binding = dict(config=config, model_sha256=sha(model_path), partitions_sha256=sha(ROOT/config['partitions']),
                    script_sha256=hashlib.sha256(Path(__file__).read_text(encoding='utf-8').encode()).hexdigest(),

@@ -5,6 +5,10 @@ artifact 名称中的 `current` 不自动表示 ACTIVE。
 
 ## 1. Status At A Glance
 
+2026-09-28最新运行：terminal_v1全期完成但含SZ002308期末估值缺口，见
+[暂估结果审阅](../reports/final_qlib_backtest_v1/PROVISIONAL_REVIEW.md)。
+该股已按用户授权补齐退市零回收，等待同一命令只重跑账户至`backtest_terminal_v2`。
+
 2026-09-28最新补充：用户已同意“停牌原生前价保留、确认退市零回收计提”。
 SZ000413于2024-08-15的退市停牌已接入；新结果目录`backtest_terminal_v1`，
 命令仍为`--mode backtest`。预测不重算；期末未知估值缺口明确标记，不隐藏。
