@@ -88,17 +88,16 @@ def test_open_limit_does_not_use_close_change(market):
     assert not pos[cal[25]].get_stock_list()
 
 
-def test_held_missing_valuation_stops(market):
+def test_invalid_nonpositive_valuation_stops(market):
     cal, scores, setup = market
-    cfg = setup([('SH600000', 'close', 26, np.nan)])
+    cfg = setup([('SH600000', 'close', 26, 0)])
     with pytest.raises(ValueError, match=f'Unvalued holding: {cal[26].date()} SH600000'):
         run_backtest(scores, cal[25:27], cfg)
 
 
-def test_confirmed_suspension_carries_then_resumes(market, tmp_path):
+def test_native_suspension_carries_then_resumes(market, tmp_path):
     cal, scores, setup = market
     cfg = setup([('SH600000', 'close', 26, np.nan), ('SH600000', 'open', 26, np.nan)])
-    cfg['known_suspensions'] = {'SH600000': [str(cal[26].date())]}
     scores.loc[scores.datetime <= cal[26], 'score'] = scores.instrument.map({'SH600000': 1, 'SH600001': 0})
     log = tmp_path/'carry.jsonl'
     report, pos = run_backtest(scores, cal[25:29], cfg, carry_log=log)
@@ -108,6 +107,38 @@ def test_confirmed_suspension_carries_then_resumes(market, tmp_path):
     assert log.read_text().count('SH600000') == 1
     assert pos[cal[27]].get_stock_amount('SH600000') == 9400  # Missing previous close still blocks this day.
     assert pos[cal[28]].get_stock_list() == ['SH600001']
+
+
+def test_terminal_loss_no_cash_no_reentry_no_repeated_writeoff(market, tmp_path):
+    cal, scores, setup = market
+    cfg = setup()  # Even a stale positive provider quote cannot enable a terminal sale/re-entry.
+    cfg['terminal_events'] = {'SH600000': str(cal[26].date())}
+    scores = scores.loc[scores.instrument == 'SH600000']
+    report, pos = run_backtest(scores, cal[25:29], cfg, carry_log=tmp_path/'events.jsonl')
+    events = report.attrs['valuation_events']
+    assert len(events) == 1 and events[0]['kind'] == 'terminal_zero_recovery'
+    assert events[0]['amount'] == 9400 and events[0]['loss'] == 94000
+    assert events[0]['cash_recovery'] == 0
+    assert pos[cal[25]].get_stock_amount('SH600000') == 9400  # History is not retroactively excluded.
+    for day in cal[26:29]:
+        assert not pos[day].get_stock_list()
+        assert pos[day].get_cash() == pos[cal[25]].get_cash()
+    assert report.account.iloc[1] == pytest.approx(report.account.iloc[0]-94000)
+    assert report.total_cost.iloc[1] == report.total_cost.iloc[0]
+    assert report.total_turnover.iloc[1] == report.total_turnover.iloc[0]
+
+
+def test_unresolved_carry_is_explicit_in_final_summary(market, tmp_path):
+    cal, scores, setup = market
+    cfg = setup([('SH600000', 'close', 26, np.nan), ('SH600000', 'open', 26, np.nan)])
+    scores = scores.loc[scores.instrument == 'SH600000']
+    report, pos = run_backtest(scores, cal[25:27], cfg)
+    write_results(tmp_path, report, pos, cfg)
+    import json
+    result = json.loads((tmp_path/'summary.json').read_text())
+    assert result['status'] == 'COMPLETE_WITH_UNRESOLVED_VALUATION'
+    assert result['unresolved_valuation'] == {'SH600000': 1}
+    assert result['max_carried_sessions'] == 1
 
 
 def test_held_stock_leaving_signal_persists_if_sale_blocked(market):

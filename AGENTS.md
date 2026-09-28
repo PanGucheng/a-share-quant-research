@@ -1,5 +1,12 @@
 # Repository Working Agreement
 
+2026-09-28 latest follow-up: user explicitly accepted native suspension carry plus
+zero-recovery writeoff of confirmed delisted/unexitable holdings. SZ000413 event
+is effective 2024-08-15; preserve historical investments, credit no cash, retain
+share/loss records. --mode backtest now writes backtest_terminal_v1, reusing the
+completed predictions. Unknown ending valuation gaps must remain explicit as
+COMPLETE_WITH_UNRESOLVED_VALUATION. Full replay remains user-run only.
+
 2026-09-28 follow-up: user completed all final-Qlib monthly predictions; account
 stopped on SH603959 2024-04-30, an announcement-confirmed one-day suspension.
 Use --mode backtest to reuse predictions and write backtest_suspension_fix_v1;

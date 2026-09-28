@@ -5,6 +5,10 @@ artifact 名称中的 `current` 不自动表示 ACTIVE。
 
 ## 1. Status At A Glance
 
+2026-09-28最新补充：用户已同意“停牌原生前价保留、确认退市零回收计提”。
+SZ000413于2024-08-15的退市停牌已接入；新结果目录`backtest_terminal_v1`，
+命令仍为`--mode backtest`。预测不重算；期末未知估值缺口明确标记，不隐藏。
+
 2026-09-28补充：极简回测**全部预测已完成**，账户因SH603959已确认停牌日误拦截而中断。
 已修复，用户按[更新命令](FINAL_QLIB_BACKTEST.md)执行`--mode backtest`，只重跑账户。
 保留原预测/失败记录；新结果在`backtest_suspension_fix_v1`子目录。

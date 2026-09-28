@@ -80,6 +80,10 @@ def predict(model, frame, factors):
 
 class CheckedExchange(Exchange):
     """Keep native execution; forbid its close-price and fractional-lot fallbacks."""
+    def __init__(self, *, terminal_events=None, **kwargs):
+        self.terminal_events = terminal_events or {}
+        super().__init__(**kwargs)
+
     def get_quote_from_qlib(self):
         super().get_quote_from_qlib()
         q = self.quote_df
@@ -89,48 +93,70 @@ class CheckedExchange(Exchange):
         fields = ['$open', '$close', PREV_CLOSE, ADV]
         blocked = (~np.isfinite(q[fields]) | q[fields].le(0)).any(axis=1)
         q.loc[blocked, ['limit_buy', 'limit_sell']] = True
+        for code, date in self.terminal_events.items():
+            terminal = ((q.index.get_level_values('instrument') == code) &
+                        (q.index.get_level_values('datetime') >= pd.Timestamp(date)))
+            q.loc[terminal, ['limit_buy', 'limit_sell']] = True
 
 
 class CheckedExecutor(SimulatorExecutor):
-    """Stop missing held valuations rather than silently carry stale prices."""
-    def __init__(self, *, known_suspensions=None, carry_log=None, **kwargs):
+    """Native suspension carry, explicit zero-recovery terminal accounting."""
+    def __init__(self, *, terminal_events=None, carry_log=None, **kwargs):
         super().__init__(**kwargs)
-        self.known_suspensions = known_suspensions or {}
+        self.terminal_events = terminal_events or {}
         self.carry_log = carry_log
+        self.events, self.missing_sessions = [], {}
+
+    def record(self, **event):
+        self.events.append(event)
+        if self.carry_log is not None:
+            with Path(self.carry_log).open('a', encoding='utf-8') as stream:
+                stream.write(json.dumps(event) + '\n')
 
     def _collect_data(self, trade_decision, level=0):
         start, end = self.trade_calendar.get_step_time()
+        position = self.trade_account.current_position
+        terminal = []
         for code in self.trade_account.current_position.get_stock_list():
+            if code in self.terminal_events and start >= pd.Timestamp(self.terminal_events[code]):
+                terminal.append(code)
+                continue
             close = self.trade_exchange.get_close(code, start, end)
             if close is None or not np.isfinite(close) or close <= 0:
-                previous = self.trade_account.current_position.get_stock_price(code)
-                if (str(start.date()) in self.known_suspensions.get(code, [])
-                        and (close is None or np.isnan(close)) and np.isfinite(previous) and previous > 0):
-                    # Native Qlib leaves the position/mark unchanged and forbids suspended trades.
-                    if self.carry_log is not None:
-                        with Path(self.carry_log).open('a', encoding='utf-8') as stream:
-                            stream.write(json.dumps(dict(date=str(start.date()), instrument=code,
-                                                         carried_price=float(previous))) + '\n')
+                previous = position.get_stock_price(code)
+                if (close is None or np.isnan(close)) and np.isfinite(previous) and previous > 0:
+                    self.missing_sessions[code] = self.missing_sessions.get(code, 0) + 1
+                    self.record(kind='native_missing_quote_carry', date=str(start.date()), instrument=code,
+                                carried_price=float(previous), sessions=self.missing_sessions[code])
                     continue
                 raise ValueError(f'Unvalued holding: {start.date()} {code}')
-        return super()._collect_data(trade_decision, level)
+            self.missing_sessions.pop(code, None)
+        result = super()._collect_data(trade_decision, level)
+        for code in terminal:
+            amount, price = position.get_stock_amount(code), position.get_stock_price(code)
+            self.record(kind='terminal_zero_recovery', date=str(start.date()), instrument=code,
+                        amount=float(amount), last_price=float(price), loss=float(amount*price), cash_recovery=0)
+            position._del_stock(code)  # Move shares into the event ledger, never turn them into sale cash.
+            self.missing_sessions.pop(code, None)
+        return result
 
 
 def run_backtest(scores, days, config, carry_log=None):
     slip, limit = config['slippage'], config['open_limit']
     codes = sorted(scores.instrument.unique())  # Includes all past candidates, not today's signal universe.
     exchange = CheckedExchange(
-        freq='day', start_time=days[0], end_time=days[-1], codes=codes,
+        freq='day', start_time=days[0], end_time=days[-1], codes=codes, terminal_events=config.get('terminal_events'),
         deal_price=(f'$open*{1+slip}', f'$open*{1-slip}'),
         limit_threshold=(f'$open/{PREV_CLOSE}-1>={limit}', f'$open/{PREV_CLOSE}-1<=-{limit}'),
         volume_threshold=('cum', f'{config["adv_fraction"]}*{ADV}'),
         subscribe_fields=['$open', PREV_CLOSE, ADV], **config['exchange'])
     signal = scores.set_index(KEYS).score.dropna().sort_index()
     strategy = TopkDropoutStrategy(signal=signal, **config['strategy'])
+    executor = CheckedExecutor(time_per_step='day', generate_portfolio_metrics=True,
+                               terminal_events=config.get('terminal_events'), carry_log=carry_log)
     report, positions = backtest_daily(
         start_time=days[0], end_time=days[-1], strategy=strategy,
-        executor=CheckedExecutor(time_per_step='day', generate_portfolio_metrics=True,
-                                 known_suspensions=config.get('known_suspensions'), carry_log=carry_log),
+        executor=executor,
         account=config['account'], benchmark=config['benchmark'], exchange_kwargs={'exchange': exchange})
     if not report.index.equals(days) or not np.isfinite(report[['account', 'return', 'cost', 'bench']]).all().all():
         raise ValueError('Incomplete/nonfinite account or benchmark')
@@ -138,6 +164,8 @@ def run_backtest(scores, days, config, carry_log=None):
         raise ValueError('Negative cash')
     net = report['return'] - report.cost
     np.testing.assert_allclose((1 + net).cumprod(), report.account / config['account'], rtol=1e-10)
+    report.attrs['valuation_events'] = executor.events
+    report.attrs['unresolved_valuation'] = executor.missing_sessions
     return report, positions
 
 
@@ -167,6 +195,12 @@ def write_results(out, report, positions, config, canary=False):
     summary['mean_holdings'] = float(counts.mean())
     summary['start'], summary['end'] = str(report.index[0].date()), str(report.index[-1].date())
     summary['status'] = 'CANARY_PASS' if canary else 'COMPLETE'
+    events = report.attrs.get('valuation_events', [])
+    summary['terminal_writeoff'] = sum(e['loss'] for e in events if e['kind'] == 'terminal_zero_recovery')
+    summary['unresolved_valuation'] = report.attrs.get('unresolved_valuation', {})
+    summary['max_carried_sessions'] = max((e.get('sessions', 0) for e in events), default=0)
+    if summary['unresolved_valuation']:
+        summary['status'] = 'COMPLETE_WITH_UNRESOLVED_VALUATION'
     if canary:
         save_json(out/'summary.json', summary)
         return  # Do not interpret short-run performance or tune from it.
@@ -198,6 +232,8 @@ def write_results(out, report, positions, config, canary=False):
 - 沪深300累计收益：{summary['benchmark_return']:.2%}。
 - 显式交易费用：{summary['explicit_cost']:.2f}元；10bps单边滑点已计入成交价。
 - 平均持仓：{summary['mean_holdings']:.2f}；平均现金比例：{summary['mean_cash_fraction']:.2%}。
+- 退市零回收计提：{summary['terminal_writeoff']:.2f}元（已包含在净值损失中，不是交易费，不重复扣除）。
+- 估值状态：{summary['status']}；期末仍缺行情持仓：{summary['unresolved_valuation']}；最长前价沿用：{summary['max_carried_sessions']}个交易日。
 
 盈利：{'是' if summary['total_return'] > 0 else '否'}；跑赢沪深300：{'是' if summary['total_return'] > summary['benchmark_return'] else '否'}。
 回撤是否可接受由个人风险承受能力决定，未预设通过线。逐年结果见yearly.csv，2026为不完整年度；
@@ -206,8 +242,9 @@ def write_results(out, report, positions, config, canary=False):
 ## 已接受的近似
 原生TopkDropout(8,1)，不是旧buffer策略；最低5元应用于合计费率，非逐项券商收费。
 统一开盘±9.5%限制、100股单位不精确还原各板块/ST制度；使用复权行情，不另建公司行动账本。
-前20日均量1%不是开盘竞价流动性保证。价格/因子异常可能影响结果；缺失实际持仓估值会中止。
-公告确认的停牌日按原生Qlib保留持仓及上一价格，并在suspension_carry.jsonl显式记录；不按未来复牌价格估值。
+前20日均量1%不是开盘竞价流动性保证。停牌/缺失行情按Qlib沿用前价并禁止成交，逐笔记录valuation_events.jsonl。
+缺行情不等于已证明正常停牌；期末仍未恢复者明确标为估值未解决，相关净值为暂估，不能当作可清算价值。
+已确认退市且无法退出者按用户接受的零回收假设计提，股数转入事件记录，不产生现金，不事后抹除历史持仓。
 这是后续历史模拟，未证明此前所有项目研究都没有观察过该时期；不称全项目全新样本外证据。
 固定模型未学习2023及以后新增训练样本。本结果只代表这一个模型和预先选定配置。
 '''
@@ -264,13 +301,14 @@ def main():
     if args.mode == 'backtest':
         original = json.loads((out/'run.json').read_text(encoding='utf-8'))
         original_config = dict(original['config'])
-        current_config = {k: v for k, v in config.items() if k != 'known_suspensions'}
-        original_config.pop('known_suspensions', None)
+        current_config = {k: v for k, v in config.items() if k not in ('known_suspensions', 'terminal_events')}
+        for key in ('known_suspensions', 'terminal_events'):
+            original_config.pop(key, None)
         if (original_config != current_config or original['model_sha256'] != sha(model_path)
                 or original['partitions_sha256'] != sha(ROOT/config['partitions'])
                 or original['start'] != str(days[0].date()) or original['end'] != str(days[-1].date())):
             raise ValueError('Existing predictions do not match this model/config/date range')
-        out = out/'backtest_suspension_fix_v1'  # Preserve the failed original run and all predictions.
+        out = out/'backtest_terminal_v1'  # Preserve both prior failed account runs and all predictions.
     out.mkdir(parents=True, exist_ok=True)
     binding = dict(config=config, model_sha256=sha(model_path), partitions_sha256=sha(ROOT/config['partitions']),
                    script_sha256=hashlib.sha256(Path(__file__).read_text(encoding='utf-8').encode()).hexdigest(),
@@ -297,9 +335,10 @@ def main():
             if frame.duplicated(KEYS).any() or not pd.DatetimeIndex(frame.datetime.unique()).equals(selected):
                 raise ValueError(f'Invalid cached predictions: {path}')
             chunks.append(frame)
-            print(f'Predictions ready: {month}, rows={len(frame)}', flush=True)
+            action = 'Loaded existing predictions' if args.mode == 'backtest' else 'Predictions ready'
+            print(f'{action}: {month}, rows={len(frame)}', flush=True)
         scores = pd.concat(chunks, ignore_index=True)
-        report, positions = run_backtest(scores, days, config, carry_log=out/'suspension_carry.jsonl')
+        report, positions = run_backtest(scores, days, config, carry_log=out/'valuation_events.jsonl')
         write_results(out, report, positions, config, canary=args.mode == 'canary')
         print('Complete:', out)
     except Exception as exc:
