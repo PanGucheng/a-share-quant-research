@@ -1,5 +1,11 @@
 # Repository Working Agreement
 
+2026-09-28 FINAL STATE: user completed backtest_terminal_v2; read-only result review
+passed, no unresolved ending valuations. Net return 18.16%, CAGR 7.42%, Sharpe .4435,
+MDD -21.53%, CSI300 +37.38%. See reports/final_qlib_backtest_v1/FINAL_REVIEW.md.
+STOP: no more reruns, training, tuning, data work or automatic refactor. Preserve
+all model/prediction/account artifacts including prior provisional runs.
+
 2026-09-28 latest user run completed terminal_v1 with unresolved SZ002308 valuation.
 See reports/final_qlib_backtest_v1/PROVISIONAL_REVIEW.md. Add its announcement-bound
 2024-08-23 zero-recovery event under existing authorization; --mode backtest now

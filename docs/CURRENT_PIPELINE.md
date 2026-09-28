@@ -5,6 +5,11 @@ artifact 名称中的 `current` 不自动表示 ACTIVE。
 
 ## 1. Status At A Glance
 
+**最新状态：FINAL QLIB BACKTEST COMPLETE / REVIEWED / STOP**。
+用户完成terminal_v2；净收益18.16%、年化7.42%、Sharpe0.4435、最大回撤21.53%，
+无期末估值缺口。见[最终审阅](../reports/final_qlib_backtest_v1/FINAL_REVIEW.md)。
+不再重跑或调参，重构需用户下一步指令。下方为执行历史。
+
 2026-09-28最新运行：terminal_v1全期完成但含SZ002308期末估值缺口，见
 [暂估结果审阅](../reports/final_qlib_backtest_v1/PROVISIONAL_REVIEW.md)。
 该股已按用户授权补齐退市零回收，等待同一命令只重跑账户至`backtest_terminal_v2`。

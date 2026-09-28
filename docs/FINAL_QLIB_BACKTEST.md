@@ -1,5 +1,9 @@
 # 重构前收尾：固定模型的 Qlib 极简回测
 
+**最终状态：COMPLETE / REVIEWED / STOP**。用户已运行terminal_v2，当前不需要重跑。
+[最终审阅](../reports/final_qlib_backtest_v1/FINAL_REVIEW.md)：净收益18.16%、年化7.42%、
+Sharpe0.4435、最大回撤21.53%；无期末估值缺口。以下命令和修改记录留作复现说明。
+
 2026-09-28：**PREDICTIONS COMPLETE / TERMINAL ACCOUNTING IMPLEMENTED / AWAITING USER BACKTEST RETRY**。
 本次用户授权读取2024+现有数据、执行单配置回测；不重训、不搜索参数、不启动重构。
 旧E2/E3、Forward和LightGBM实验全部保留，不用这次近似结果回填旧阶段验收。

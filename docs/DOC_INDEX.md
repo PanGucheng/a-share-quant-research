@@ -6,6 +6,8 @@
 
 ## Economic Translation 当前入口
 
+- [极简Qlib回测最终审阅](../reports/final_qlib_backtest_v1/FINAL_REVIEW.md) — COMPLETE / REVIEWED / STOP；terminal_v2全期完成，无需再运行。
+
 - [重构前Qlib极简回测](FINAL_QLIB_BACKTEST.md) — 当前入口；固定已有模型，2024+单配置，canary通过，完整运行由用户执行。
 - [极简回测实施验收](../reports/final_qlib_backtest_v1/REPORT.md) — exact预测一致性、20日实际路径及9项测试；尚无全期收益结论。
 
